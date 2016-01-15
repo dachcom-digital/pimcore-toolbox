@@ -1,0 +1,22 @@
+{
+  "name": "dachcom-digital/pimcore-toolbox",
+  "type": "pimcore-plugin",
+  "license": "Simple BSD",
+  "description": "Kickstarter for Pimcore Projects.",
+  "keywords": [
+    "pimcore",
+    "toolbox"
+  ],
+  "homepage": "https://github.com/dachcom-digital/pimcore-toolbox",
+  "authors": [
+    {
+      "name": "DACHCOM.DIGITAL Stefan Hagspiel",
+      "email": "shagspiel@dachcom.ch",
+      "homepage": "http://www.dachcom.com/",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "pimcore/installer-plugin": ">=1"
+  }
+}

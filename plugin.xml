@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<zend-config>
+    <plugin>
+
+        <!-- the plugin name [A-Za-z_] -->
+        <pluginName>Toolbox</pluginName>
+
+        <!-- a short description -->
+        <pluginDescription><![CDATA[]]></pluginDescription>
+
+        <!-- meta data -->
+        <pluginVersion>1.0</pluginVersion>
+        <pluginRevision>1</pluginRevision>
+        <pluginBuildTimestamp>0</pluginBuildTimestamp>
+
+        <!-- put in the URL for the plugin configuration eg. /plugin/Toolbox/admin/index -->
+        <pluginIframeSrc></pluginIframeSrc>
+
+        <!-- className of the plugin which extends Pimcore_API_Plugin_Abstract-->
+        <pluginClassName>\Toolbox\Plugin</pluginClassName>
+
+        <!-- include paths relative to plugin-directory -->
+        <pluginIncludePaths>
+            <path>/Toolbox/lib</path>
+        </pluginIncludePaths>
+
+        <!-- namespaces to register with autoloader-->
+        <pluginNamespaces>
+            <namespace>Toolbox</namespace>
+        </pluginNamespaces>
+
+        <!-- js files with path relative to plugin-directory -->
+        <pluginJsPaths>
+            <path>/plugins/Toolbox/static/js/startup.js</path>
+        </pluginJsPaths>
+
+        <!-- css files with path relative to plugin-directory
+        <pluginCssPaths>
+        </pluginCssPaths>
+        -->
+    </plugin>
+</zend-config>
