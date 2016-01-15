@@ -10,7 +10,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
     public function preDispatch($e) {
 
-        $e->getTarget()->registerPlugin(new Controller\Plugin\Assets(), 10001);
+        $e->getTarget()->registerPlugin(new Controller\Plugin\Assets());
         $e->getTarget()->registerPlugin(new Controller\Plugin\Frontend());
 
     }
