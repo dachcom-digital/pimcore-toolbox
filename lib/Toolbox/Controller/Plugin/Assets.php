@@ -33,6 +33,9 @@ class Assets extends \Zend_Controller_Plugin_Abstract {
 
         $view = \Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer')->view;
 
+        if( is_null( $view ) )
+            return false;
+
         return $view->footFile()->getHtml( );
 
     }
