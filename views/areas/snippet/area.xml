@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>snippet</id>
+    <name>Snippet</name>
+    <description></description>
+    <version>1.0.0</version>
+</zend-config>

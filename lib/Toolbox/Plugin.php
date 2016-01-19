@@ -19,7 +19,6 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
         parent::init();
 
-
     }
 
     public function handleDocument ($event) {
@@ -33,6 +32,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
         $install = new Install();
 
+        $install->installConfigFile();
         $install->addUserData();
 
         return 'Toolbox has been successfully installed.';
@@ -41,17 +41,32 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
 	public static function uninstall () {
 
+        $install = new Install();
+
         return true;
 
 	}
 
 	public static function isInstalled () {
 
-        $userM = new \Pimcore\Model\User();
-        $user = $userM->getByName('kunde');
+        $install = new Install();
 
-        return $user !== FALSE;
+        return $install->isInstalled();
 
 	}
+
+    public static function getTranslationFileDirectory()
+    {
+        return PIMCORE_PLUGINS_PATH . '/Toolbox/lang';
+    }
+
+    public static function getTranslationFile($language)
+    {
+        if (is_file(self::getTranslationFileDirectory() . "/$language.csv")) {
+            return "/Toolbox/lang/$language.csv";
+        }
+
+        return '/Toolbox/lang/en.csv';
+    }
 
 }

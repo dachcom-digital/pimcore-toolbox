@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>gallery</id>
+    <name>Gallery</name>
+    <description>Toolbox Gallery</description>
+    <version>1.0.0</version>
+</zend-config>

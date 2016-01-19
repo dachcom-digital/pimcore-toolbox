@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>columns</id>
+    <name>Columns</name>
+    <description>Toolbox Columns.</description>
+    <version>1.0.0</version>
+</zend-config>

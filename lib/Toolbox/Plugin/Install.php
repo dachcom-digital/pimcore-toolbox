@@ -5,6 +5,32 @@ namespace Toolbox\Plugin;
 
 class Install {
 
+    private $configFile = NULL;
+
+    public function __construct() {
+
+        $this->configFile = PIMCORE_CONFIGURATION_DIRECTORY . "/toolbox-config.xml";
+
+    }
+
+    public function isInstalled() {
+
+        $userM = new \Pimcore\Model\User();
+        $user = $userM->getByName('kunde');
+
+        return $user !== FALSE && is_file( $this->configFile );
+
+    }
+
+    public function installConfigFile() {
+
+        if(!is_file( $this->configFile ) ) {
+
+            copy(PIMCORE_PLUGINS_PATH . '/Toolbox/install/toolbox-config.xml', $this->configFile );
+        }
+
+    }
+
     /**
      * Adds an default customer user role & user itself
      */

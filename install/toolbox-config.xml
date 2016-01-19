@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<zend-config>
+    <columnElements>
+        <column_12>1 Spalte</column_12>
+        <column_4_8>2 Spalten (33:66)</column_4_8>
+        <column_8_4>2 Spalten (66:33)</column_8_4>
+        <column_3_9>2 Spalten (25:75)</column_3_9>
+        <column_9_3>2 Spalten (75:25)</column_9_3>
+        <column_6_6>2 Spalten (50:50)</column_6_6>
+        <column_4_4_4>3 Spalten (33:33:33)</column_4_4_4>
+    </columnElements>
+</zend-config>
