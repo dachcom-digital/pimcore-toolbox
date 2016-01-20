@@ -55,18 +55,23 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
 	}
 
-    public static function getTranslationFileDirectory()
-    {
+    public static function getTranslationFileDirectory() {
         return PIMCORE_PLUGINS_PATH . '/Toolbox/lang';
     }
 
-    public static function getTranslationFile($language)
-    {
+    /**
+     *
+     * @param string $language
+     * @return string $languageFile for the specified language relative to plugin directory
+     */
+    public static function getTranslationFile($language) {
+
         if (is_file(self::getTranslationFileDirectory() . "/$language.csv")) {
             return "/Toolbox/lang/$language.csv";
         }
 
         return '/Toolbox/lang/en.csv';
+
     }
 
 }

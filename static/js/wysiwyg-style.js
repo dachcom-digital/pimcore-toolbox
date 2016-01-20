@@ -23,12 +23,12 @@ CKEDITOR.stylesSet.add('default',
 
         {name: 'Visible Extra Small Devices', attributes: {'class': 'visible-xs'}},
         {name: 'Visible Small Devices', attributes: {'class': 'visible-sm'}},
-        {name: 'Visible Meidum Devices', attributes: {'class': 'visible-md'}},
+        {name: 'Visible Medium Devices', attributes: {'class': 'visible-md'}},
         {name: 'Visible Large Devices', attributes: {'class': 'visible-lg'}},
 
         {name: 'Hidden Extra Small Devices', element: '*', attributes: {'class': 'hidden-xs'}},
         {name: 'Hidden Small Devices', element: '*', attributes: {'class': 'hidden-sm'}},
-        {name: 'Hidden Meidum Devices', element: '*', attributes: {'class': 'hidden-md'}},
+        {name: 'Hidden Medium Devices', element: '*', attributes: {'class': 'hidden-md'}},
         {name: 'Hidden Large Devices', element: '*', attributes: {'class': 'hidden-lg'}},
 
         {name: 'Label Default', element: 'span', attributes: {'class': 'label label-default'}},
@@ -61,18 +61,6 @@ CKEDITOR.stylesSet.add('default',
 
         {name: 'List Group Heading', element: 'h4', attributes: {'class': 'list-group-item-heading'}},
         {name: 'List Group Text', element: 'p', attributes: {'class': 'list-group-item-text'}},
-
-        {name: 'Panel', element: 'div', attributes: {'class': 'panel panel-default'}},
-        {name: 'Panel Body', element: 'div', attributes: {'class': 'panel-body'}},
-        {name: 'Panel Primary', element: 'div', attributes: {'class': 'panel panel-primary'}},
-        {name: 'Panel Success', element: 'div', attributes: {'class': 'panel panel-success'}},
-        {name: 'Panel Info', element: 'div', attributes: {'class': 'panel panel-info'}},
-        {name: 'Panel Warning', element: 'div', attributes: {'class': 'panel panel-warning'}},
-        {name: 'Panel Danger', element: 'div', attributes: {'class': 'panel panel-danger'}},
-
-        {name: 'Panel Heading', element: 'div', attributes: {'class': 'panel-heading'}},
-        {name: 'Panel Heading Title', element: 'h3', attributes: {'class': 'panel-title'}},
-        {name: 'Panel Footer', element: 'div', attributes: {'class': 'panel-footer'}},
 
         {name: 'Well', element: 'div', attributes: {'class': 'well'}},
         {name: 'Well Large', element: 'div', attributes: {'class': 'well well-lg'}},

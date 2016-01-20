@@ -1,0 +1,28 @@
+.pimcore_area_entry .pimcore_area_edit_button, .pimcore_tag_area .pimcore_area_edit_button {
+    top: -25px !important;
+}
+.pimcore_tag_button .pimcore_edit_link_button {
+    width: auto !important;
+}
+
+.toolbox-image {
+    min-height:100px;
+}
+
+.toolbox-teaser {
+
+}
+
+/* trim bootstrap in backend */
+.alert {
+    padding:5px 10px;
+}
+
+/* only in single edit mode*/
+body > .single-teaser {
+    max-width: 250px;
+}
+
+body > .single-teaser img {
+    max-width: 100%;
+}

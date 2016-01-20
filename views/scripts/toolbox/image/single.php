@@ -1,0 +1,1 @@
+<?= $this->image('ci', array('thumbnail' => 'contentImage', 'class' => $this->class)); ?>

@@ -29,6 +29,7 @@
         $params = array(
 
             'columns' => $columns
+
         );
 
         $this->template('toolbox/columns/' . $partialName . '.php', $params);

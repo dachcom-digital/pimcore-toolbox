@@ -1,31 +1,32 @@
-<?php
+<?php if ($this->editmode) { ?>
 
-if ($this->editmode) {
+    <div class="alert alert-info form-inline">
 
-    $store = array(
+        <div class="form-group">
+            <label>Grösse:</label>
+        </div>
+        <div class="form-group">
 
-        array("1", "Headline 1"),
-        array("2", "Headline 2"),
-        array("3", "Headline 3"),
-        array("4", "Headline 4"),
-        array("5", "Headline 5"),
-        array("6", "Headline 6")
+            <?php
 
-    );
+            $store = $this->toolboxHelper()->getConfigArray( 'headlines', TRUE );
 
-    if ($this->select("headlineType")->isEmpty()) {
-        $this->select("headlineType")->setDataFromResource("1");
-    }
+            if ($this->select("headlineType")->isEmpty()) {
 
-    echo $this->select("headlineType", array("store" => $store, "width" => 200, "reload" => true));
+                $this->select("headlineType")->setDataFromResource("h3");
 
-    ?>
+            }
 
+            echo $this->select("headlineType", array("store" => $store, "width" => 200, "reload" => true));
 
-<?php
-}
+            ?>
 
-?>
-<h<?= $this->select("headlineType")->getData();?>>
-    <?= $this->input("headlineText"); ?>
-</h<?=$this->select("headlineType")->getData();?>>
+        </div>
+
+    </div>
+
+<?php } ?>
+
+<div class="toolbox-headline">
+    <<?= $this->select("headlineType")->getData();?>><?= $this->input("headlineText"); ?></<?=$this->select("headlineType")->getData();?>>
+</div>

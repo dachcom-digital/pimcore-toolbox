@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>standard-teaser</id>
+    <name>Teaser</name>
+    <version>1.0.0</version>
+</zend-config>

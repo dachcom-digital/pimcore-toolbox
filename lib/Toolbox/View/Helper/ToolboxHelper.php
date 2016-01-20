@@ -27,7 +27,10 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
             'headline',
             'gallery',
             'image',
+            'teaser',
             'snippet',
+            'video',
+            'separator'
 
         );
 

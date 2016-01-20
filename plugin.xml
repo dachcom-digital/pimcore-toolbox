@@ -31,8 +31,12 @@
 
         <!-- js files with path relative to plugin-directory -->
         <pluginJsPaths>
-            <path>/plugins/Toolbox/static/js/startup.js</path>
+            <path>/Toolbox/static/js/startup.js</path>
         </pluginJsPaths>
+
+        <pluginDocumentEditmodeCssPaths>
+            <path>/Toolbox/static/css/admin.css</path>
+        </pluginDocumentEditmodeCssPaths>
 
         <!-- css files with path relative to plugin-directory
         <pluginCssPaths>

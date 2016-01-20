@@ -1,14 +1,14 @@
-<?php
+<?php foreach ($this->columns as $i => $column) { ?>
 
-$params = $this->toolboxHelper()->getAvailableBricks( array("columns") );
-
-foreach ($this->columns as $i => $column) { ?>
-
-    <?php $name = "cs" . $column . "_" . $i; ?>
+    <?php $name = 'column' . $column . '_' . $i; ?>
 
     <div class="col-md-<?= $column ?> col-sm-<?= $column ?> col-xs-12">
 
-        <?= $this->areablock('c' . $name, array( 'allowed' => $params['allowed'], 'params' => $params['additional'] )); ?>
+        <div class="toolbox-column">
+
+            <?= $this->template('helper/areablock.php', [ 'name' => $name, 'excludeBricks' => array('columns') ] ); ?>
+
+        </div>
 
     </div>
 
