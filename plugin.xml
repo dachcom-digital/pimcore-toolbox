@@ -38,9 +38,5 @@
             <path>/Toolbox/static/css/admin.css</path>
         </pluginDocumentEditmodeCssPaths>
 
-        <!-- css files with path relative to plugin-directory
-        <pluginCssPaths>
-        </pluginCssPaths>
-        -->
     </plugin>
 </zend-config>
