@@ -4,35 +4,52 @@ $accordionSettings = $this->toolboxHelper()->getConfigArray( 'accordion' );
 
 $store = array();
 
-if( !empty( $accordionSettings )&& isset( $accordionSettings['layouts'] ) ) {
+$id = uniqid('accordion-');
 
-    foreach( $accordionSettings['layouts'] as $key => $val ) {
-
+if( !empty( $accordionSettings )&& isset( $accordionSettings['layouts'] ) )
+{
+    foreach( $accordionSettings['layouts'] as $key => $val )
+    {
         $store[] = array(0 => str_replace('_','-', $key ), 1 => $val );
 
     }
-
-} else {
-
+}
+else
+{
     $store[] = array('panel-default', 'Default');
 }
 
-if ($this->editmode) {
+?>
 
-    if ($this->select("type")->isEmpty()) {
+<?php if ($this->editmode) { ?>
 
-        $this->select("type")->setDataFromResource("panel-default");
+    <div class="alert alert-info form-inline">
 
-    }
+        <div class="form-group">
+            <label>Typ:</label>
+        </div>
+        <div class="form-group">
 
-    echo $this->select("type", array("reload" => true, "store" => $store));
-}
+        <?php
+
+            if ($this->select("type")->isEmpty()) {
+                $this->select("type")->setDataFromResource("panel-default");
+            }
+
+            echo $this->select("type", array("reload" => true, "store" => $store));
+
+        ?>
+
+        </div>
+
+    </div>
+
+<?php } ?>
+
+<?php
 
 $type = $this->select("type")->getData();
-
 $panels = $this->block('panels', array('default' => 2 ));
-
-$id = uniqid('accordion-');
 
 ?>
 
@@ -44,13 +61,14 @@ $id = uniqid('accordion-');
 
             <div class="panel <?= $type ?>">
 
-                <div class="panel-heading" role="tab">
-
+                <div
+                    class="panel-heading collapsed"
+                    data-toggle="<?= $this->editmode ? '' : 'collapse' ?>"
+                    data-parent="#<?= $id ?>"
+                    data-target="#panel-<?= $id ?>-<?= $panels->getCurrentIndex() ?>">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle collapsed" role="button"
-                           data-toggle="<?= $this->editmode ? '' : 'collapse' ?>"
-                           data-parent="#<?= $id ?>"
-                           href="#panel-<?= $id ?>-<?= $panels->getCurrentIndex() ?>">
+                        <a class="accordion-toggle"
+                            role="button">
                             <?= $this->input('name') ?>
                         </a>
                     </h4>
