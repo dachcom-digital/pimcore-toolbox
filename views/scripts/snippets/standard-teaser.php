@@ -28,7 +28,7 @@ $useLightBox = $this->checkbox('useLightBox')->isChecked() && !$this->editmode;
     </div>
 
     <p>
-        <?= $this->link('link', ['class' => 'btn btn-default']); ?>
+        <?= $this->globallink('link', ['class' => 'btn btn-default']); ?>
     </p>
 
     <?php
