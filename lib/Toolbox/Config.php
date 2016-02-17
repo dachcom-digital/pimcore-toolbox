@@ -12,29 +12,29 @@ class Config {
      */
     public static function getConfig() {
 
-        $config = null;
+        $config = NULL;
 
-        $configFile = PIMCORE_CONFIGURATION_DIRECTORY . "/toolbox-config.xml";
-
-        if(\Zend_Registry::isRegistered('toolbox_config')) {
-
+        if(\Zend_Registry::isRegistered('toolbox_config'))
+        {
             $config = \Zend_Registry::get("toolbox_config");
+        }
+        else
+        {
+            $configFile = TOOLBOX_CONFIGURATION_FILE;
 
-        } else  {
-
-            try {
-
-                $config = new \Zend_Config_Xml($configFile);
+            try
+            {
+                $config = new \Zend_Config(include($configFile));
                 self::setConfig($config);
 
-            } catch (\Exception $e) {
-
+            }
+            catch (\Exception $e)
+            {
                 \Logger::emergency("Cannot find system configuration, should be located at: " . $configFile);
 
-                if(is_file( $configFile )) {
-
-                    Tool::exitWithError("Your toolbox-config.xml located at " . $configFile . " is invalid, please check and correct it manually!");
-
+                if(is_file( $configFile ))
+                {
+                    Tool::exitWithError("Your toolbox_configuration.php located at " . $configFile . " is invalid, please check and correct it manually!");
                 }
             }
         }
@@ -54,3 +54,4 @@ class Config {
 
     }
 }
+

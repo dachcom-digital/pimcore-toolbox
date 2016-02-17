@@ -10,20 +10,29 @@ class Assets extends \Zend_Controller_Plugin_Abstract {
 
     public function dispatchLoopShutdown() {
 
-        if( !Tool::isHtmlResponse($this->getResponse()) ) {
-
-            return;
-
+        if( !Tool::isHtmlResponse($this->getResponse()) )
+        {
+            return FALSE;
         }
 
         $body = $this->getResponse()->getBody();
-        $string = $this->getEventData();
+        $htmlData = $this->getEventData();
 
-        $endTag = '</body>' ."\n" . '</html>';
+        if( isset( $htmlData['header'] ) && !empty( $htmlData['header'] ) )
+        {
+            $headEndPosition = stripos($body, "</head>");
+            if ($headEndPosition !== false) {
+                $body = substr_replace($body, $htmlData['header']."</head>", $headEndPosition, 7);
+            }
 
-        $replace = $string . $endTag;
-
-        $body = str_replace($endTag, $replace, $body);
+        }
+        if( isset( $htmlData['footer'] ) && !empty( $htmlData['footer'] ) )
+        {
+            $bodyEndPosition = stripos($body, "</body>");
+            if ($bodyEndPosition !== false) {
+                $body = substr_replace($body, $htmlData['footer']."</body>", $bodyEndPosition, 7);
+            }
+        }
 
         $this->getResponse()->setBody($body);
 
@@ -36,7 +45,7 @@ class Assets extends \Zend_Controller_Plugin_Abstract {
         if( is_null( $view ) )
             return false;
 
-        return $view->footFile()->getHtml( );
+        return $view->assetHelper()->getHtmlData( );
 
     }
 

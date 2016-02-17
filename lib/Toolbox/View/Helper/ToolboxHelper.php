@@ -15,38 +15,15 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
         $excludeBricks = is_array( $excludeBricks ) ? $excludeBricks : [];
         $extraBricks = is_array( $extraBricks ) ? $extraBricks : [];
 
-        $bricks = []; //Projects AreaBricks
+        $defaultBricks = \Toolbox\Config::getConfig()->allowedPlugins->toArray();
 
-        $extraBricks = array_merge($extraBricks, $bricks);
-
-        $defaultBricks = array(
-
-            'accordion',
-            'columns',
-            'content',
-            'headline',
-            'gallery',
-            'image',
-            'teaser',
-            'snippet',
-            'video',
-            'separator'
-
-        );
+        $bricks = array_merge($extraBricks, array_keys($defaultBricks ));
 
         $params = array();
-
-        $bricks = $defaultBricks;
 
         foreach ($excludeBricks as $brick) {
             if (in_array($brick, $bricks)) {
                 $bricks = array_diff($bricks, array($brick));
-            }
-        }
-
-        foreach ($extraBricks as $brick) {
-            if (!in_array($brick, $bricks)) {
-                $bricks[] = $brick;
             }
         }
 

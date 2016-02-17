@@ -25,8 +25,8 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
         $view->addScriptPath(PIMCORE_PLUGINS_PATH . '/Toolbox/views/scripts');
         $view->addHelperPath(PIMCORE_PLUGINS_PATH . '/Toolbox/lib/Toolbox/View/Helper', 'Toolbox\View\Helper');
 
-        /** @var \Toolbox\View\Helper\FootFile $view->footFile() */
-        $view->footFile()->appendScript('toolbox-wysiwyg', '/plugins/Toolbox/static/js/wysiwyg.js', array(), array('showInFrontEnd' => false ));
+        /** @var \Toolbox\View\Helper\AssetHelper $view->appendScript() */
+        $view->assetHelper()->appendScript('toolbox-wysiwyg', '/plugins/Toolbox/static/js/wysiwyg.js', array(), array('showInFrontEnd' => false ));
 
         $this->initialized = true;
 

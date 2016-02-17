@@ -8,7 +8,14 @@ use Toolbox\Plugin\Install;
 
 class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterface {
 
+    public function __construct() {
+
+        define('TOOLBOX_CONFIGURATION_FILE', PIMCORE_CONFIGURATION_DIRECTORY . '/toolbox_configuration.php');
+
+    }
+
     public function preDispatch($e) {
+
 
         $e->getTarget()->registerPlugin(new Controller\Plugin\Assets());
         $e->getTarget()->registerPlugin(new Controller\Plugin\Frontend());
@@ -18,13 +25,6 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     public function init() {
 
         parent::init();
-
-    }
-
-    public function handleDocument ($event) {
-
-        // do something
-        //$document = $event->getTarget();
 
     }
 
@@ -40,8 +40,6 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 	}
 
 	public static function uninstall () {
-
-        $install = new Install();
 
         return true;
 

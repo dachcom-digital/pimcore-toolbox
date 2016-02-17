@@ -9,7 +9,7 @@ class Install {
 
     public function __construct() {
 
-        $this->configFile = PIMCORE_CONFIGURATION_DIRECTORY . "/toolbox-config.xml";
+        $this->configFile = TOOLBOX_CONFIGURATION_FILE;
 
     }
 
@@ -26,7 +26,48 @@ class Install {
 
         if(!is_file( $this->configFile ) ) {
 
-            copy(PIMCORE_PLUGINS_PATH . '/Toolbox/install/toolbox-config.xml', $this->configFile );
+            $settings = array(
+
+                'columnElements' => [
+                    'column_12' => '1 Spalte',
+                    'column_4_8' => '2 Spalte (33:66)',
+                    'column_8_4' => '2 Spalte (66:33)',
+                    'column_3_9' => '2 Spalte (25:75)',
+                    'column_9_3' => '2 Spalte (75:25)',
+                    'column_6_6' => '2 Spalte (50:50)',
+                    'column_4_4_4' => '3 Spalte (33:33:33)',
+                ],
+                'accordion' => [
+                    'layouts' => [
+                        'panel_default' => 'Default',
+                        'panel_danger' => 'Dangers'
+                    ]
+                ],
+                'headlines' => [
+                    'headlines' => [
+                        'h1' => 'Headline 1',
+                        'h2' => 'Headline 2',
+                        'h3' => 'Headline 3',
+                        'h4' => 'Headline 4',
+                        'h5' => 'Headline 5',
+                        'h6' => 'Headline 6'
+                    ]
+                ],
+                'allowedPlugins' => [
+                    'accordion' => TRUE,
+                    'columns' => TRUE,
+                    'content' => TRUE,
+                    'headline' => TRUE,
+                    'gallery' => TRUE,
+                    'image' => TRUE,
+                    'teaser' => TRUE,
+                    'snippet' => TRUE,
+                    'video' => TRUE,
+                    'separator' => TRUE
+                ]
+            );
+
+            \Pimcore\File::putPhpFile($this->configFile, to_php_data_file_format($settings));
         }
 
     }
@@ -143,11 +184,11 @@ class Install {
 
             foreach ($spaces as $space) {
 
-                $element = \Pimcore\Model\Element\Service::getElementByPath($type, $space["path"]);
+                $element = \Pimcore\Model\Element\Service::getElementByPath($type, $space['path']);
 
                 if ($element) {
 
-                    $className = "\\Pimcore\\Model\\User\\Workspace\\" . ucfirst($type);
+                    $className = '\\Pimcore\\Model\\User\\Workspace\\' . ucfirst($type);
                     $workspace = new $className();
                     $workspace->setValues($space);
 
@@ -159,7 +200,7 @@ class Install {
                 }
             }
 
-            $user->{"setWorkspaces" . ucfirst($type)}($newWorkspaces);
+            $user->{'setWorkspaces' . ucfirst($type)}($newWorkspaces);
         }
 
         foreach ($permissions as $permName => $permAccess) {
