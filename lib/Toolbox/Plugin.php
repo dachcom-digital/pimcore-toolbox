@@ -14,11 +14,29 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
 
     }
 
-    public function preDispatch($e) {
-
-
-        $e->getTarget()->registerPlugin(new Controller\Plugin\Assets());
+    public function preDispatch($e)
+    {
+        $e->getTarget()->registerPlugin(new Controller\Plugin\HtmlParser());
         $e->getTarget()->registerPlugin(new Controller\Plugin\Frontend());
+
+        $front  = \Zend_Controller_Front::getInstance();
+        $router = $front->getRouter();
+
+        $staticAssetRoute = new \Zend_Controller_Router_Route_Regex(
+            'static\/(js|css)\/(.*?)\.(js|css)',
+            array(
+                'module' => 'Toolbox',
+                'controller' => 'minify',
+                'action' => 'render',
+            ),
+            array(
+                1 => 'assetType',
+                2 => 'fileName',
+                3 => 'fileExtension'
+            )
+        );
+
+        $router->addRoute('toolbox_static_assets', $staticAssetRoute);
 
     }
 

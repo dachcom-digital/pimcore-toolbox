@@ -4,7 +4,7 @@ namespace Toolbox\Controller\Plugin;
 
 use \Pimcore\Tool;
 
-class Assets extends \Zend_Controller_Plugin_Abstract {
+class HtmlParser extends \Zend_Controller_Plugin_Abstract {
 
     protected $enabled = true;
 
@@ -36,16 +36,19 @@ class Assets extends \Zend_Controller_Plugin_Abstract {
 
         $this->getResponse()->setBody($body);
 
+
     }
 
     private function getEventData() {
 
-        $view = \Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer')->view;
+        $viewRenderer = \Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer')->view;
 
-        if( is_null( $view ) )
-            return false;
+        $assetHelper = new \Toolbox\Tools\Asset();
+        $assetHelper->setIsBackEnd( $viewRenderer->editmode )->setIsFrontEnd( !$viewRenderer->editmode )->setBaseUrl( $viewRenderer->urlHelper()->hostUrl());
 
-        return $view->assetHelper()->getHtmlData( );
+        \Pimcore::getEventManager()->trigger('toolbox.addAsset', $assetHelper);
+
+        return $assetHelper->getHtmlData( );
 
     }
 

@@ -1,15 +1,36 @@
 <?php
 
-namespace Toolbox\View\Helper;
+namespace Toolbox\Tools;
 
-class AssetHelper extends \Zend_View_Helper_Abstract {
+class Asset {
 
-    const QUEUE_REGISTRY_ID    = 'tb_script_queue';
-    const POSITION_REGISTRY_ID = 'tb_script_positions';
+    var $scriptQueue = array( 'header' => '', 'footer' => '' );
 
-    public function assetHelper( )
+    var $scriptPosition = array();
+
+    var $isFrontEnd = FALSE;
+
+    var $isBackEnd = FALSE;
+
+    var $baseUrl = '';
+
+    public function setIsFrontEnd( $isFrontend )
     {
-       return $this;
+        $this->isFrontEnd = $isFrontend;
+
+        return $this;
+    }
+
+    public function setIsBackEnd( $isBackEnd )
+    {
+        $this->isBackEnd = $isBackEnd;
+
+        return $this;
+    }
+
+    public function setBaseUrl( $baseUrl )
+    {
+        $this->baseUrl = $baseUrl;
     }
 
     /**
@@ -112,15 +133,6 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
     }
 
     /**
-     * Uses the default Zend HeadScript. @fixme: better idea?
-     * @param $scriptData
-     */
-    public function appendScriptSnipped( $scriptData )
-    {
-        $this->view->headScript()->appendScript( $scriptData );
-    }
-
-    /**
      * @param string $name
      * @param string $path
      * @param array  $dependencies
@@ -132,19 +144,11 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
      */
     private function appendFile( $name = '', $path = '', $dependencies = array(), $params = array(), $fileType )
     {
-        if(\Zend_Registry::isRegistered(self::QUEUE_REGISTRY_ID))
-        {
-            $scriptQueue     = \Zend_Registry::get(self::QUEUE_REGISTRY_ID);
-            $scriptPositions = \Zend_Registry::get(self::POSITION_REGISTRY_ID);
-        }
-        else
-        {
-            $scriptQueue     = array( 'header' => array(), 'footer' => array() );
-            $scriptPositions = array();
-        }
+        $scriptQueue = $this->scriptQueue;
+        $scriptPosition = $this->scriptPosition;
 
-        $scriptPositions[$name] = count($scriptQueue);
-        $scriptQueue[$params['position']][$name] = array(
+        $scriptPosition[$name . '-' . $fileType] = count($scriptQueue);
+        $scriptQueue[$params['position']][$name . '-' . $fileType] = array(
 
             'path'              => $path,
             'dependencies'      => $dependencies,
@@ -153,8 +157,9 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
 
         );
 
-        \Zend_Registry::set(self::QUEUE_REGISTRY_ID,  $scriptQueue);
-        \Zend_Registry::set(self::POSITION_REGISTRY_ID, $scriptPositions);
+
+        $this->scriptQueue = $scriptQueue;
+        $this->scriptPosition = $scriptPosition;
 
         return $this;
 
@@ -166,17 +171,14 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
      */
     public function getHtmlData()
     {
-        if(!\Zend_Registry::isRegistered(self::QUEUE_REGISTRY_ID))
+
+        if( empty( $this->scriptPosition ) )
         {
-            return '';
+            return FALSE;
         }
 
-        $isFrontEnd = !$this->view->editmode;
-        $isBackend = !$isFrontEnd;
-
-        //put each script name in a queue
-        $scriptQueue      = \Zend_Registry::get(self::QUEUE_REGISTRY_ID);
-        $scriptPositions  = \Zend_Registry::get(self::POSITION_REGISTRY_ID);
+        $scriptQueue      = $this->scriptQueue;
+        $scriptPositions  = $this->scriptPosition;
 
         if( empty( $scriptQueue ) )
         {
@@ -197,7 +199,7 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
             {
                 $p = $details['params'];
 
-                if( ($p['showInFrontEnd'] === FALSE && $isFrontEnd ) || ( $p['showInBackend'] === FALSE && $isBackend )  ) {
+                if( ($p['showInFrontEnd'] === FALSE && $this->isFrontEnd ) || ( $p['showInBackend'] === FALSE && $this->isBackEnd )  ) {
 
                     unset( $scriptPositions[ $scriptName] );
                     continue;
@@ -223,13 +225,13 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
 
             unset($scriptName, $position);
 
-            if(\Pimcore::inDebugMode())
+            if( \Pimcore::inDebugMode() || !$this->isFrontEnd )
             {
                 $htmlData[ $scriptPosition ] = $this->getUncompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition] );
             }
             else
             {
-                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition] );
+                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
             }
 
         }
@@ -261,9 +263,99 @@ class AssetHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    private function getCompressedHtml( $scriptPositions, $scriptQueue )
+    private function getCompressedHtml( $scriptPositions, $scriptQueue, $scriptPosition )
     {
         $html = '';
+
+        $jsFiles = array();
+        $cssFiles = array();
+
+        $absoluteJs = array();
+        $absoluteCss = array();
+
+        foreach($scriptPositions as $scriptName => $position)
+        {
+            $el = $scriptQueue[$scriptName];
+
+            if( $el['fileType'] == 'javascript')
+            {
+                $jsFiles[] = $el['path'];
+            }
+            else if( $el['fileType'] == 'stylesheet')
+            {
+                $cssFiles[] = $el['path'];
+            }
+        }
+
+        foreach( $jsFiles as $jsFile)
+        {
+            $websitePath = PIMCORE_WEBSITE_PATH;
+            $absoluteJs[] = $websitePath . str_replace('/website', '', $jsFile );
+        }
+
+        foreach( $cssFiles as $cssFile)
+        {
+            $websitePath = PIMCORE_WEBSITE_PATH;
+            $absoluteCss[] = $websitePath . str_replace('/website', '', $cssFile );
+        }
+
+        $jsFileName = 'data-' . $scriptPosition . '.js';
+        $cssFileName = 'style-' . $scriptPosition . '.css';
+
+        $min_cacheFileLocking = true;
+
+        //Serve Javascript
+        $serveController = new \Toolbox\Controller\Minify\Minify();
+        $serveController->setGroup( array('g' => 'js') );
+
+        $serveOptions = array(
+
+            'groupsOnly' => TRUE,
+            'debug' => FALSE,
+            'quiet' => TRUE,
+            'encodeMethod' => '',
+            'minApp' => array(
+                'groups' => array(
+                    'js' => $absoluteJs
+                )
+            )
+
+        );
+
+        \Minify::setCache( PIMCORE_TEMPORARY_DIRECTORY ,$min_cacheFileLocking );
+
+        $servedJsData = \Minify::serve($serveController, $serveOptions);
+
+        if( $servedJsData['success'] == 'true')
+        {
+            \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $jsFileName, $servedJsData['content']);
+        }
+
+        //Serve Css
+        $serveController = new \Toolbox\Controller\Minify\Minify();
+        $serveController->setGroup( array('g' => 'css') );
+
+        $serveOptions['minApp'] = array(
+            'groups' => array(
+                'css' => $absoluteCss
+            )
+        );
+
+        $servedCssData = \Minify::serve($serveController, $serveOptions);
+
+        if( $servedCssData['success'] == 'true')
+        {
+            \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $cssFileName, $servedCssData['content']);
+        }
+
+        if( !empty( $cssFiles ) )
+        {
+            $html .= '<link href="' . $this->baseUrl . '/static/css/' . $cssFileName . '" rel="stylesheet" type="text/css">' . PHP_EOL;
+        }
+        if( !empty( $jsFiles ) )
+        {
+            $html .= '<script type="text/javascript" src="' . $this->baseUrl . '/static/js/' . $jsFileName . '"></script>' . PHP_EOL;
+        }
 
         return $html;
 
