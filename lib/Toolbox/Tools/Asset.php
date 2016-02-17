@@ -225,13 +225,13 @@ class Asset {
 
             unset($scriptName, $position);
 
-            if( \Pimcore::inDebugMode() || $this->isFrontEnd )
+            if( !\Pimcore::inDebugMode() && $this->isFrontEnd )
             {
-                $htmlData[ $scriptPosition ] = $this->getUncompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition] );
+                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
             }
             else
             {
-                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
+                $htmlData[ $scriptPosition ] = $this->getUncompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition] );
             }
 
         }
