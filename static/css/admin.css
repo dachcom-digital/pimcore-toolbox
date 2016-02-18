@@ -18,6 +18,23 @@
     padding:5px 10px;
 }
 
+/* set list to default */
+ul li.x-boundlist-item {
+    list-style: inherit;
+    background: inherit;
+    padding: inherit;
+    margin: inherit;
+    line-height: inherit;
+}
+ul li.x-boundlist-item:hover {
+    color:inherit;
+}
+ul li.x-boundlist-selected {
+    color: #fff;
+    background: #3c3f41;
+    border-color: #3c3f41;
+}
+
 /* only in single edit mode*/
 body > .single-teaser {
     max-width: 250px;

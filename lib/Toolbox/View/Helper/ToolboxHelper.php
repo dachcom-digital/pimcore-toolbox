@@ -62,42 +62,43 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    public function getConfigArray( $section = '', $createKeyValuePairs = FALSE ) {
-
+    public function getConfigArray( $section = '', $createKeyValuePairs = FALSE )
+    {
         if( empty( $section ) )
             return array();
 
         $values = \Toolbox\Config::getConfig();
-        $valueArray = $values->toArray();
 
-        $store = array();
+        $sectionPaths = explode('/', $section );
 
-        if( isset( $valueArray[ $section ] ) && !empty( $valueArray[ $section ] ) ) {
+        $data = $values;
 
-            $store = $valueArray[ $section ];
-
+        foreach( $sectionPaths as $sectionPath)
+        {
+            $data = $data->{$sectionPath};
         }
 
-        if( $createKeyValuePairs && !empty( $store ) ) {
+        $sectionDataArray = array();
 
+        if( !empty( $data ) )
+        {
+            $sectionDataArray = $data->toArray();
+        }
+
+        if( $createKeyValuePairs && !empty( $sectionDataArray ) )
+        {
             $pairs = array();
 
-            foreach( $store as $key => $value) {
-
+            foreach( $sectionDataArray as $key => $value)
+            {
                 $pairs[] = array($key, $value);
-
             }
 
             return $pairs;
 
         }
 
-        return $store;
-
-
-    }
-
-    public function getDefaultInputSettings( ) {
+        return $sectionDataArray;
 
     }
 

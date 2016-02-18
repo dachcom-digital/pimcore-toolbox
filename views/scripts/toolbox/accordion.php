@@ -1,18 +1,14 @@
 <?php
 
-$accordionSettings = $this->toolboxHelper()->getConfigArray( 'accordion' );
+$accordionSettings = $this->toolboxHelper()->getConfigArray( 'accordion/layouts', TRUE );
 
 $store = array();
 
 $id = uniqid('accordion-');
 
-if( !empty( $accordionSettings )&& isset( $accordionSettings['layouts'] ) )
+if( !empty( $accordionSettings ) )
 {
-    foreach( $accordionSettings['layouts'] as $key => $val )
-    {
-        $store[] = array(0 => str_replace('_','-', $key ), 1 => $val );
-
-    }
+    $store = $accordionSettings;
 }
 else
 {

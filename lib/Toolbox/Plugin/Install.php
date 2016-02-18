@@ -39,19 +39,17 @@ class Install {
                 ],
                 'accordion' => [
                     'layouts' => [
-                        'panel_default' => 'Default',
-                        'panel_danger' => 'Dangers'
+                        'panel-default' => 'Default',
+                        'panel-danger' => 'Dangers'
                     ]
                 ],
                 'headlines' => [
-                    'headlines' => [
-                        'h1' => 'Headline 1',
-                        'h2' => 'Headline 2',
-                        'h3' => 'Headline 3',
-                        'h4' => 'Headline 4',
-                        'h5' => 'Headline 5',
-                        'h6' => 'Headline 6'
-                    ]
+                    'h1' => 'Headline 1',
+                    'h2' => 'Headline 2',
+                    'h3' => 'Headline 3',
+                    'h4' => 'Headline 4',
+                    'h5' => 'Headline 5',
+                    'h6' => 'Headline 6'
                 ],
                 'allowedPlugins' => [
                     'accordion' => TRUE,
