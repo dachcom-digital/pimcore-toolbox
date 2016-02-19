@@ -25,11 +25,14 @@ class Globallink extends Model\Document\Tag\Link
      */
     protected function updatePathFromInternal()
     {
-        if ($this->data["internal"]) {
-            if ($this->data["internalType"] == "document") {
-                if ($doc = Document::getById($this->data["internalId"])) {
-                    if (!Document::doHideUnpublished() || $doc->isPublished()) {
-
+        if ($this->data["internal"])
+        {
+            if ($this->data["internalType"] == "document")
+            {
+                if ($doc = Document::getById($this->data["internalId"]))
+                {
+                    if (!Document::doHideUnpublished() || $doc->isPublished())
+                    {
                         $path = $doc->getFullPath();
 
                         if( \Zend_Registry::isRegistered('Website_Country'))
@@ -38,38 +41,64 @@ class Globallink extends Model\Document\Tag\Link
                             $currentCountry = \Zend_Registry::get('Website_Country');
                             $validLanguages = Tool::getValidLanguages();
 
+                            //its global
+                            $currentIsoCode = NULL;
+
+                            if( $currentCountry instanceof \CoreShop\Model\Country) {
+
+                                $currentIsoCode = strtolower( $currentCountry->getIsoCode() );
+                            }
+                            else if( is_string( $currentCountry ) )
+                            {
+                                $currentIsoCode = $currentCountry;
+                            }
+
                             $urlPath = parse_url($path, PHP_URL_PATH);
                             $urlPathFragments = explode('/', ltrim($urlPath, '/'));
 
                             //first needs to be country
-                            $country = isset($urlPathFragments[0]) ? $urlPathFragments[0] : NULL;
+                            $pathCountry = isset($urlPathFragments[0]) ? $urlPathFragments[0] : NULL;
 
                             //second needs to be language.
-                            $language = isset($urlPathFragments[1]) ? $urlPathFragments[1] : NULL;
+                            $pathLanguage = isset($urlPathFragments[1]) ? $urlPathFragments[1] : NULL;
 
-                            $isValidLanguage = in_array($language, $validLanguages);
+                            $isValidLanguage = in_array($pathLanguage, $validLanguages);
 
                             //if 2. fragment is invalid language and 1. fragment is valid language, 1. fragment is missing!
-                            $shiftCountry = $isValidLanguage == FALSE && in_array($country, $validLanguages);
+                            $shiftCountry = $isValidLanguage == FALSE && in_array($pathCountry, $validLanguages);
 
+                            //country is missing. add it.
                             if ($shiftCountry)
                             {
-                                $path = '/' . $currentCountry . $path;
+                                $path = '/' . $currentIsoCode . $path;
                             }
+                            //if country is set, but in wrong context, replace it!
+                            else if( $pathCountry !== $currentIsoCode )
+                            {
+                                $path = '/' . $currentIsoCode . str_replace($pathCountry . '/', '', $path);
+                            }
+
                         }
 
                         $this->data["path"] = $path;
 
-                    } else {
+                    } else
+                    {
                         $this->data["path"] = "";
                     }
                 }
-            } elseif ($this->data["internalType"] == "asset") {
-                if ($asset = Asset::getById($this->data["internalId"])) {
+            }
+            else if ($this->data["internalType"] == "asset")
+            {
+                if ($asset = Asset::getById($this->data["internalId"]))
+                {
                     $this->data["path"] = $asset->getFullPath();
                 }
+
             }
+
         }
+
     }
 
 }
