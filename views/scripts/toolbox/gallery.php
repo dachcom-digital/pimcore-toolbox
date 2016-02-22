@@ -11,7 +11,7 @@ $galId = "gallery-" . uniqid();
 
         <?php if( !empty( $assets ) ) { ?>
 
-            <ul class="slick-slider <?= $galId; ?>-gal" data-as-nav-for=".<?= $galId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="true" data-arrows="true">
+            <ul class="slick-slider list-unstyled <?= $galId; ?>-gal" data-as-nav-for=".<?= $galId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="true" data-arrows="true">
 
                 <?php foreach ($assets as $asset) { ?>
 
@@ -25,7 +25,7 @@ $galId = "gallery-" . uniqid();
 
             <?php if( $this->checkbox('useThumbnails')->isChecked() ) { ?>
 
-                <ul class="slick-slider <?= $galId; ?>-thumbs" data-as-nav-for=".<?= $galId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="3" data-dots="false" data-arrows="false">
+                <ul class="slick-slider slick-slider-thumbs list-unstyled <?= $galId; ?>-thumbs" data-as-nav-for=".<?= $galId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="4" data-dots="false" data-arrows="true">
 
                     <?php foreach ($assets as $asset) { ?>
 
