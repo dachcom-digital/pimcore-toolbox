@@ -11,7 +11,7 @@ $galId = "gallery-" . uniqid();
 
         <?php if( !empty( $assets ) ) { ?>
 
-            <ul class="slick-slider list-unstyled <?= $galId; ?>-gal" data-as-nav-for=".<?= $galId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="true" data-arrows="true">
+            <ul class="slick-slider list-unstyled <?= $galId; ?>-gal responsive-dots" data-as-nav-for=".<?= $galId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true">
 
                 <?php foreach ($assets as $asset) { ?>
 
