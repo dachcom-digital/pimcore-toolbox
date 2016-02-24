@@ -26,7 +26,7 @@ else
         </div>
         <div class="form-group">
 
-        <?php
+            <?php
 
             if ($this->select("type")->isEmpty()) {
                 $this->select("type")->setDataFromResource("panel-default");
@@ -34,7 +34,7 @@ else
 
             echo $this->select("type", array("reload" => true, "store" => $store));
 
-        ?>
+            ?>
 
         </div>
 
@@ -62,12 +62,12 @@ $panels = $this->block('panels', array('default' => 2 ));
                     data-toggle="<?= $this->editmode ? '' : 'collapse' ?>"
                     data-parent="#<?= $id ?>"
                     data-target="#panel-<?= $id ?>-<?= $panels->getCurrentIndex() ?>">
-                    <h4 class="panel-title">
+                    <h3 class="panel-title">
                         <a class="accordion-toggle"
                             role="button">
                             <?= $this->input('name') ?>
                         </a>
-                    </h4>
+                    </h3>
 
                 </div>
 

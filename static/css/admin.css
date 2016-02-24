@@ -43,3 +43,8 @@ body > .single-teaser {
 body > .single-teaser img {
     max-width: 100%;
 }
+
+/* Override theme tridon stuff */
+.x-panel-body-default {
+    font-family:inherit;
+}
