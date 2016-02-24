@@ -32,7 +32,7 @@ class Globallink extends Model\Document\Tag\Link
                     {
                         $path = $doc->getFullPath();
 
-                        $this->data['path'] = \ToolBox\Tools\GlobalLink::parse($path);
+                        $this->data['path'] = \Toolbox\Tools\GlobalLink::parse($path);
                     }
                 }
             }
