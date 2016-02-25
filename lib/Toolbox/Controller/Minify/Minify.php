@@ -96,7 +96,7 @@ class Minify extends \Minify_Controller_Base {
                     try
                     {
                         $this->checkType($sources[0]);
-                    } catch (Exception $e)
+                    } catch (\Exception $e)
                     {
                         $this->log($e->getMessage());
                         return $options;
@@ -115,7 +115,7 @@ class Minify extends \Minify_Controller_Base {
                     'lastModified' => 0
                     // due to caching, filename is unreliable.
                 ,
-                    'content' => "/* Minify: at least one missing file. See " . Minify::URL_DEBUG . " */\n",
+                    'content' => "/* Minify: at least one missing file. See " . \Minify::URL_DEBUG . " */\n",
                     'minifier' => ''
                 )));
             }
@@ -132,7 +132,7 @@ class Minify extends \Minify_Controller_Base {
      * @param string $file
      * @param array  $cOptions
      *
-     * @return Minify_Source
+     * @return \Minify_Source
      */
     protected function _getFileSource($file, $cOptions)
     {
@@ -164,11 +164,11 @@ class Minify extends \Minify_Controller_Base {
     {
         if ($sourceOrExt === 'js')
         {
-            $type = Minify::TYPE_JS;
+            $type = \Minify::TYPE_JS;
         }
         elseif ($sourceOrExt === 'css')
         {
-            $type = Minify::TYPE_CSS;
+            $type = \Minify::TYPE_CSS;
         }
         elseif ($sourceOrExt->contentType !== NULL)
         {
