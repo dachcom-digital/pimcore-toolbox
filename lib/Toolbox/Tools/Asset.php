@@ -61,6 +61,7 @@ class Asset {
 
             'showInFrontEnd' => true,
             'showInBackend' => true,
+            'includeInMinify' => true,
             'position' => 'footer',
             'type' => 'text/css',
             'media' => 'screen',
@@ -111,6 +112,7 @@ class Asset {
 
             'showInFrontEnd' => true,
             'showInBackend' => true,
+            'includeInMinify' => true,
             'position' => 'footer',
             'type' => 'text/javascript'
 
@@ -171,7 +173,6 @@ class Asset {
      */
     public function getHtmlData()
     {
-
         if( empty( $this->scriptPosition ) )
         {
             return FALSE;
@@ -225,7 +226,7 @@ class Asset {
 
             unset($scriptName, $position);
 
-            if( !\Pimcore::inDebugMode() && $this->isFrontEnd )
+            if( \Pimcore::inDebugMode() && $this->isFrontEnd )
             {
                 $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
             }
@@ -273,17 +274,36 @@ class Asset {
         $absoluteJs = array();
         $absoluteCss = array();
 
+        $jsFilePaths = array();
+        $cssFilePaths = array();
+
         foreach($scriptPositions as $scriptName => $position)
         {
             $el = $scriptQueue[$scriptName];
+            $p = $el['params'];
 
             if( $el['fileType'] == 'javascript')
             {
-                $jsFiles[] = $el['path'];
+                if( $p['includeInMinify'])
+                {
+                    $jsFiles[] = $el['path'];
+                }
+                else
+                {
+                    $jsFilePaths[] = $el['path'];
+                }
+
             }
             else if( $el['fileType'] == 'stylesheet')
             {
-                $cssFiles[] = $el['path'];
+                if( $p['includeInMinify'])
+                {
+                    $cssFiles[] = $el['path'];
+                }
+                else
+                {
+                    $cssFilePaths[] = $el['path'];
+                }
             }
         }
 
@@ -329,6 +349,7 @@ class Asset {
         if( $servedJsData['success'] == 'true')
         {
             \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $jsFileName, $servedJsData['content']);
+            $jsFilePaths[] = $jsFileName;
         }
 
         //Serve Css
@@ -346,19 +367,43 @@ class Asset {
         if( $servedCssData['success'] == 'true')
         {
             \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $cssFileName, $servedCssData['content']);
+            $cssFilePaths[] = $cssFileName;
         }
 
-        if( !empty( $cssFiles ) )
+        if( !empty( $cssFilePaths ) )
         {
-            $html .= '<link href="' . $this->baseUrl . '/static/css/' . $cssFileName . '" rel="stylesheet" type="text/css">' . PHP_EOL;
+            $cssFilePaths = array_reverse($cssFilePaths);
+            foreach( $cssFilePaths as $cssFilePath)
+            {
+                $html .= '<link href="' . $this->getFilePath($cssFilePath, 'css'). '" rel="stylesheet" type="text/css">' . PHP_EOL;
+            }
         }
+
         if( !empty( $jsFiles ) )
         {
-            $html .= '<script type="text/javascript" src="' . $this->baseUrl . '/static/js/' . $jsFileName . '"></script>' . PHP_EOL;
+            $jsFilePaths = array_reverse($jsFilePaths);
+            foreach( $jsFilePaths as $jsFilePath)
+            {
+                $html .= '<script type="text/javascript" src="' . $this->getFilePath($jsFilePath, 'js') . '"></script>' . PHP_EOL;
+            }
+
         }
 
         return $html;
 
     }
 
+    private function getFilePath($file, $fileType)
+    {
+        if( preg_match("~^(?:f|ht)tps?://~i", $file) )
+        {
+            return $file;
+        }
+        if( substr( $file, 0, 8 ) === '/website' )
+        {
+            return $file;
+        }
+        return $this->baseUrl . '/static/' . $fileType .'/' . $file;
+
+    }
 }
