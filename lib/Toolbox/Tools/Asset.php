@@ -226,7 +226,7 @@ class Asset {
 
             unset($scriptName, $position);
 
-            if( \Pimcore::inDebugMode() && $this->isFrontEnd )
+            if( !\Pimcore::inDebugMode() && $this->isFrontEnd )
             {
                 $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
             }
