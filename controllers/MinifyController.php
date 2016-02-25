@@ -1,6 +1,6 @@
 <?php
 
-class Toolbox_MinifyController extends \Pimcore\Controller\Action\Admin {
+class Toolbox_MinifyController extends \Pimcore\Controller\Action {
 
     public function renderAction()
     {
