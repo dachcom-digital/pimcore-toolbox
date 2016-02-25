@@ -6,8 +6,6 @@ class Asset {
 
     var $scriptQueue = array( 'header' => '', 'footer' => '' );
 
-    var $scriptPosition = array();
-
     var $isFrontEnd = FALSE;
 
     var $isBackEnd = FALSE;
@@ -147,9 +145,7 @@ class Asset {
     private function appendFile( $name = '', $path = '', $dependencies = array(), $params = array(), $fileType )
     {
         $scriptQueue = $this->scriptQueue;
-        $scriptPosition = $this->scriptPosition;
 
-        $scriptPosition[$name . '-' . $fileType] = count($scriptQueue);
         $scriptQueue[$params['position']][$name . '-' . $fileType] = array(
 
             'path'              => $path,
@@ -159,9 +155,7 @@ class Asset {
 
         );
 
-
         $this->scriptQueue = $scriptQueue;
-        $this->scriptPosition = $scriptPosition;
 
         return $this;
 
@@ -173,13 +167,12 @@ class Asset {
      */
     public function getHtmlData()
     {
-        if( empty( $this->scriptPosition ) )
+        if( empty( $this->scriptQueue ) )
         {
             return FALSE;
         }
 
         $scriptQueue      = $this->scriptQueue;
-        $scriptPositions  = $this->scriptPosition;
 
         if( empty( $scriptQueue ) )
         {
@@ -187,6 +180,7 @@ class Asset {
         }
 
         $htmlData = array('header' => '', 'footer' => '' );
+        $appendData = array();
 
         foreach($scriptQueue as $scriptPosition => $scripts)
         {
@@ -195,68 +189,68 @@ class Asset {
                 continue;
             }
 
+            $assetDependencyWatcher = new AssetDependency();
+
             //for every script name
             foreach($scripts as $scriptName => &$details)
             {
                 $p = $details['params'];
 
-                if( ($p['showInFrontEnd'] === FALSE && $this->isFrontEnd ) || ( $p['showInBackend'] === FALSE && $this->isBackEnd )  ) {
-
-                    unset( $scriptPositions[ $scriptName] );
-                    continue;
-
-                }
-
-                if(is_array($details['dependencies']))
+                if( ($p['showInFrontEnd'] === FALSE && $this->isFrontEnd ) || ( $p['showInBackend'] === FALSE && $this->isBackEnd )  )
                 {
-                    $currentPosition = $details['pos'];
-
-                    foreach($details['dependencies'] as $dep) {
-
-                        if(array_key_exists($dep, $scriptPositions) && $scriptPositions[$dep] > $currentPosition) {
-
-                            $scriptPositions[$scriptName] = $details['pos'] = $scriptPositions[$dep] + 1;
-
-                        }
-                    }
+                    continue;
                 }
+
+                $deps = array();
+                foreach($details['dependencies'] as $depFile)
+                {
+                    $deps[] = $depFile . '-' . $details['fileType'];
+                }
+
+                unset($details['dependencies']);
+
+                $assetDependencyWatcher->add($scriptName, $details, $deps);
             }
 
-            asort($scriptPositions);
+            foreach($assetDependencyWatcher->sort() as $dependency) {
 
-            unset($scriptName, $position);
+                $appendData[$scriptPosition][] = $dependency;
 
+            }
+
+        }
+
+        foreach($appendData as $scriptPosition => $scripts)
+        {
             if( !\Pimcore::inDebugMode() && $this->isFrontEnd )
             {
-                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition], $scriptPosition );
+                $htmlData[ $scriptPosition ] = $this->getCompressedHtml( $scripts, $scriptPosition );
             }
             else
             {
-                $htmlData[ $scriptPosition ] = $this->getUncompressedHtml( $scriptPositions, $scriptQueue[$scriptPosition] );
+                $htmlData[ $scriptPosition ] = $this->getUncompressedHtml( $scripts );
             }
-
         }
 
         return $htmlData;
 
     }
 
-    private function getUncompressedHtml( $scriptPositions, $scriptQueue )
+    private function getUncompressedHtml( $scripts )
     {
         $html = '';
 
-        foreach($scriptPositions as $scriptName => $position)
+        foreach($scripts as $scriptData)
         {
-            $el = $scriptQueue[$scriptName];
-            $p = $el['params'];
+            $p = $scriptData->data['params'];
 
-            if( $el['fileType'] == 'javascript')
+            if( $scriptData->data['fileType'] == 'javascript')
             {
-                $html .= '<script type="' . $p['type'] . '" src="' . $el['path'] . '"></script>' . PHP_EOL;
+                $html .= '<script type="' . $p['type'] . '" src="' . $scriptData->data['path'] . '"></script>' . PHP_EOL;
             }
-            else if( $el['fileType'] == 'stylesheet')
+            else if( $scriptData->data['fileType'] == 'stylesheet')
             {
-                $html .= '<link href="' . $el['path'] . '" media="' . $p['media'] . '" rel="' . $p['rel'] . '" type="' . $p['type'] . '">' . PHP_EOL;
+                $html .= '<link href="' .$scriptData->data['path'] . '" media="' . $p['media'] . '" rel="' . $p['rel'] . '" type="' . $p['type'] . '">' . PHP_EOL;
             }
         }
 
@@ -264,7 +258,7 @@ class Asset {
 
     }
 
-    private function getCompressedHtml( $scriptPositions, $scriptQueue, $scriptPosition )
+    private function getCompressedHtml( $scripts, $scriptPosition)
     {
         $html = '';
 
@@ -277,32 +271,31 @@ class Asset {
         $jsFilePaths = array();
         $cssFilePaths = array();
 
-        foreach($scriptPositions as $scriptName => $position)
+        foreach($scripts as $scriptName => $scriptData)
         {
-            $el = $scriptQueue[$scriptName];
-            $p = $el['params'];
+            $p = $scriptData->data['params'];
 
-            if( $el['fileType'] == 'javascript')
+            if( $scriptData->data['fileType'] == 'javascript')
             {
                 if( $p['includeInMinify'])
                 {
-                    $jsFiles[] = $el['path'];
+                    $jsFiles[] = $scriptData->data['path'];
                 }
                 else
                 {
-                    $jsFilePaths[] = $el['path'];
+                    $jsFilePaths[] = $scriptData->data['path'];
                 }
 
             }
-            else if( $el['fileType'] == 'stylesheet')
+            else if( $scriptData->data['fileType'] == 'stylesheet')
             {
                 if( $p['includeInMinify'])
                 {
-                    $cssFiles[] = $el['path'];
+                    $cssFiles[] = $scriptData->data['path'];
                 }
                 else
                 {
-                    $cssFilePaths[] = $el['path'];
+                    $cssFilePaths[] = $scriptData->data['path'];
                 }
             }
         }
