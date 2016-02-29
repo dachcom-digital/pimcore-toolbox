@@ -41,15 +41,19 @@ class Install {
                     'layouts' => [
                         'panel-default' => 'Default',
                         'panel-danger' => 'Dangers'
-                    ]
+                    ],
+                    'additionalClasses' => []
                 ],
                 'headlines' => [
-                    'h1' => 'Headline 1',
-                    'h2' => 'Headline 2',
-                    'h3' => 'Headline 3',
-                    'h4' => 'Headline 4',
-                    'h5' => 'Headline 5',
-                    'h6' => 'Headline 6'
+                    'tags' => [
+                        'h1' => 'Headline 1',
+                        'h2' => 'Headline 2',
+                        'h3' => 'Headline 3',
+                        'h4' => 'Headline 4',
+                        'h5' => 'Headline 5',
+                        'h6' => 'Headline 6'
+                    ],
+                    'additionalClasses' => []
                 ],
                 'allowedPlugins' => [
                     'accordion' => TRUE,

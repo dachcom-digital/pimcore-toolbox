@@ -4,14 +4,13 @@ namespace Toolbox\View\Helper;
 
 class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
-    public function toolboxhelper() {
-
+    public function toolboxhelper()
+    {
         return $this;
-
     }
 
-    public function getAvailableBricks( $excludeBricks = array(), $extraBricks = array() ) {
-
+    public function getAvailableBricks( $excludeBricks = array(), $extraBricks = array() )
+    {
         $excludeBricks = is_array( $excludeBricks ) ? $excludeBricks : [];
         $extraBricks = is_array( $extraBricks ) ? $extraBricks : [];
 
@@ -21,13 +20,16 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
         $params = array();
 
-        foreach ($excludeBricks as $brick) {
-            if (in_array($brick, $bricks)) {
+        foreach ($excludeBricks as $brick)
+        {
+            if (in_array($brick, $bricks))
+            {
                 $bricks = array_diff($bricks, array($brick));
             }
         }
 
-        foreach ($bricks as $brick) {
+        foreach ($bricks as $brick)
+        {
             $params[$brick] = array(
                 "forceEditInView" => true
             );
@@ -37,20 +39,33 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    public function getAssetArray( $data ) {
+    public function hasAdditionalClasses( $areaElement )
+    {
+        $additionalClasses = $this->getConfigArray($areaElement . '/additionalClasses');
 
-        if( empty( $data ) ) {
+        return !empty( $additionalClasses );
+
+    }
+
+    public function getAssetArray( $data )
+    {
+        if( empty( $data ) )
+        {
             return array();
         }
 
         $assets = array();
 
-        foreach ( $data as $element) {
-
-            if ($element instanceof \Pimcore\Model\Asset\Image) {
+        foreach ( $data as $element)
+        {
+            if ($element instanceof \Pimcore\Model\Asset\Image)
+            {
                 $assets[] = $element;
-            } else if ($element instanceof \Pimcore\Model\Asset\Folder) {
-                foreach ($element->getChilds() as $child) {
+            }
+            else if ($element instanceof \Pimcore\Model\Asset\Folder)
+            {
+                foreach ($element->getChilds() as $child)
+                {
                     if ($child instanceof \Pimcore\Model\Asset\Image)
                         $assets[] = $child;
                 }

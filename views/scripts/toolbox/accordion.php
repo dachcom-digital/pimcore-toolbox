@@ -38,6 +38,22 @@ else
 
         </div>
 
+        <?php if( $this->toolboxHelper()->hasAdditionalClasses('accordion') ) { ?>
+
+            <div class="form-group">
+                <label> Zusatz:</label>
+            </div>
+            <div class="form-group">
+
+                <?php
+
+                $acStore = $this->toolboxHelper()->getConfigArray( 'accordion/additionalClasses', TRUE );
+                echo $this->select('accordionAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
+                ?>
+
+            </div>
+        <?php } ?>
+
     </div>
 
 <?php } ?>
@@ -48,8 +64,7 @@ $type = $this->select("type")->getData();
 $panels = $this->block('panels', array('default' => 2 ));
 
 ?>
-
-<div class="toolbox-accordion">
+<div class="toolbox-accordion <?= $this->select('accordionAdditionalClasses')->getData();?>">
 
     <div class="panel-group" id="<?= $id ?>" role="tablist" aria-multiselectable="true">
 

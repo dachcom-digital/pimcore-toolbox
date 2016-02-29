@@ -26,10 +26,29 @@
             ?>
         </div>
 
+        <?php if ($this->toolboxHelper()->hasAdditionalClasses('separator')) { ?>
+
+            <div class="form-group">
+                <label>Zusatz:</label>
+            </div>
+            <div class="form-group">
+
+                <?php
+
+                $acStore = $this->toolboxHelper()->getConfigArray( 'separator/additionalClasses', TRUE );
+                echo $this->select('separatorAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
+                ?>
+
+            </div>
+
+
+        <?php } ?>
+
+
     </div>
 
 <?php } ?>
 
-<div class="toolbox-separator">
+<div class="toolbox-separator <?= $this->select('separatorAdditionalClasses')->getData();?>">
     <hr class="<?=$this->select('space')->getData();?>">
 </div>
