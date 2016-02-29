@@ -7,29 +7,6 @@ use Pimcore\Tool;
 class GlobalLink {
 
     /**
-     * @param $page
-     *
-     * @return mixed
-     */
-    public static function setPageNavContext( $page, $navigation )
-    {
-
-        $realUrl = self::parse( $page->getRealFullPath() );
-
-        $front = \Zend_Controller_Front::getInstance();
-        $request = $front->getRequest();
-
-        $currentRequestPath = (string) $request->getPathInfo();
-
-        $page->setUri( $realUrl );
-
-        if( $currentRequestPath == $realUrl )
-        {
-            $page->setActive(true);
-        }
-    }
-
-    /**
      * @param $path
      *
      * @return string
