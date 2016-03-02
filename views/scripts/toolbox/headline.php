@@ -31,7 +31,7 @@
 
                 <?php
 
-                    $acStore = $this->toolboxHelper()->getConfigArray( 'headlines/additionalClasses', TRUE );
+                    $acStore = $this->toolboxHelper()->getConfigArray( 'headlines/additionalClasses', TRUE, TRUE );
                     echo $this->select('headlineAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
                 ?>
 

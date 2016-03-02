@@ -47,7 +47,7 @@ else
 
                 <?php
 
-                $acStore = $this->toolboxHelper()->getConfigArray( 'accordion/additionalClasses', TRUE );
+                $acStore = $this->toolboxHelper()->getConfigArray( 'accordion/additionalClasses', TRUE, TRUE );
                 echo $this->select('accordionAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
                 ?>
 

@@ -16,7 +16,7 @@ $galId = "gallery-" . uniqid();
 
             <?php
 
-            $acStore = $this->toolboxHelper()->getConfigArray( 'gallery/additionalClasses', TRUE );
+            $acStore = $this->toolboxHelper()->getConfigArray( 'gallery/additionalClasses', TRUE, TRUE );
             echo $this->select('galleryAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
             ?>
 

@@ -35,7 +35,7 @@
 
                 <?php
 
-                $acStore = $this->toolboxHelper()->getConfigArray( 'separator/additionalClasses', TRUE );
+                $acStore = $this->toolboxHelper()->getConfigArray( 'separator/additionalClasses', TRUE, TRUE );
                 echo $this->select('separatorAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
                 ?>
 

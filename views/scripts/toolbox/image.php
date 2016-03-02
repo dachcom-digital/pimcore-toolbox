@@ -15,7 +15,7 @@ $useLightBox = $this->checkbox("useLightbox")->isChecked() && !$this->editmode;
 
             <?php
 
-            $acStore = $this->toolboxHelper()->getConfigArray( 'image/additionalClasses', TRUE );
+            $acStore = $this->toolboxHelper()->getConfigArray( 'image/additionalClasses', TRUE, TRUE );
             echo $this->select('imageAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
             ?>
 

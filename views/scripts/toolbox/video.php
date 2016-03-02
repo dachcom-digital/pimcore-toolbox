@@ -9,7 +9,7 @@
 
             <?php
 
-            $acStore = $this->toolboxHelper()->getConfigArray( 'video/additionalClasses', TRUE );
+            $acStore = $this->toolboxHelper()->getConfigArray( 'video/additionalClasses', TRUE, TRUE );
             echo $this->select('videoAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
             ?>
 

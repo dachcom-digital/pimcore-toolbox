@@ -77,7 +77,7 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    public function getConfigArray( $section = '', $createKeyValuePairs = FALSE )
+    public function getConfigArray( $section = '', $createKeyValuePairs = FALSE, $addDefault = FALSE )
     {
         if( empty( $section ) )
             return array();
@@ -98,6 +98,10 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
         if( !empty( $data ) )
         {
             $sectionDataArray = $data->toArray();
+        }
+
+        if ( $addDefault ) {
+            $sectionDataArray = array('default' => 'Standard') + $sectionDataArray;
         }
 
         if( $createKeyValuePairs && !empty( $sectionDataArray ) )

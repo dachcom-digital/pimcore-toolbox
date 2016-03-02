@@ -11,7 +11,7 @@
 
             <?php
 
-            $acStore = $this->toolboxHelper()->getConfigArray( 'content/additionalClasses', TRUE );
+            $acStore = $this->toolboxHelper()->getConfigArray( 'content/additionalClasses', TRUE, TRUE );
             echo $this->select('contentAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
             ?>
 
