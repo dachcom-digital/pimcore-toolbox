@@ -1,11 +1,12 @@
 <?php
 
 $useLightBox = $this->checkbox('useLightBox')->isChecked() && !$this->editmode;
+$hasLink = !$this->globallink('link')->isEmpty();
 ?>
 
 <div class="single-teaser <?= $useLightBox ? 'light-gallery' : ''; ?>">
 
-    <?= $useLightBox ? '<a href="' . $this->image('image', array('thumbnail' => 'contentImage'))->getSrc() . '" class="item">' : ''; ?>
+    <?= $useLightBox ? '<a href="' . $this->image('image', array('thumbnail' => 'contentImage'))->getSrc() . '" class="item">' : ($hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
 
     <?= $this->image('image', [
 
@@ -14,7 +15,7 @@ $useLightBox = $this->checkbox('useLightBox')->isChecked() && !$this->editmode;
 
     ]) ?>
 
-    <?= $useLightBox ? '</a>' : ''; ?>
+    <?= $useLightBox || $hasLink ? '</a>' : ''; ?>
 
     <?php if($this->editmode) { ?>
 
