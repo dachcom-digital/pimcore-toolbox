@@ -12,11 +12,27 @@ class GlobalLink {
      * @return string
      * @throws \Zend_Exception
      */
-    public static function parse( $path )
+    public static function parse( $path, $tryServerVars = FALSE )
     {
+        $currentCountry = NULL;
+
         if( \Zend_Registry::isRegistered('Website_Country'))
         {
             $currentCountry = \Zend_Registry::get('Website_Country');
+        }
+        else if( $tryServerVars === TRUE )
+        {
+            if( isset( $_SERVER['REQUEST_URI'] ) && !empty( $_SERVER['REQUEST_URI'] ) )
+            {
+                $urlPath = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                $urlPathFragments = explode('/', ltrim($urlPath, '/'));
+                $currentCountry = isset($urlPathFragments[0]) ? $urlPathFragments[0] : NULL;
+            }
+
+        }
+
+        if( !is_null( $currentCountry ) )
+        {
             $validLanguages = Tool::getValidLanguages();
 
             //its global
@@ -57,7 +73,6 @@ class GlobalLink {
             }
 
             return $path;
-
         }
 
         return $path;
