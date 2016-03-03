@@ -2,9 +2,9 @@
 
     <?php $name = 'column' . $column . '_' . $i; ?>
 
-    <div class="col-md-<?= $column ?> col-sm-<?= $column ?> col-xs-12<?php echo $this->equalHeight ? ' equal-height-item' : '' ?>">
+    <div class="col-md-<?= $column ?> col-sm-<?= $column ?> col-xs-12">
 
-        <div class="toolbox-column">
+        <div class="toolbox-column<?php echo $this->equalHeight ? ' equal-height-item' : '' ?>">
 
             <?= $this->template('helper/areablock.php', [ 'name' => $name, 'excludeBricks' => array('columns') ] ); ?>
 
