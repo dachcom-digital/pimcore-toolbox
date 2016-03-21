@@ -20,7 +20,7 @@
     </div>
 
 <?php } ?>
-<div class="toolbox-content <?= $this->select('contentAdditionalClasses')->getData();?>">
+<div class="container toolbox-content <?= $this->select('contentAdditionalClasses')->getData();?>">
     <div class="wysiwyg">
         <?= $more_content ?>
     </div>
