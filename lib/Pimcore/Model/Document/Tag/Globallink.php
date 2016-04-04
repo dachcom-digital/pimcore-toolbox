@@ -46,6 +46,13 @@ class Globallink extends Model\Document\Tag\Link
             }
 
         }
+        else
+        {
+            if( !empty( $this->data['path']))
+            {
+                $this->data['path'] = \Toolbox\Tools\GlobalLink::parse($this->data['path']);
+            }
+        }
 
     }
 
