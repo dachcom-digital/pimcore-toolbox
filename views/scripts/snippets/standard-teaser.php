@@ -1,7 +1,6 @@
 <?php
-
 $useLightBox = $this->checkbox('useLightBox')->isChecked() && !$this->editmode;
-$hasLink = !$this->globallink('link')->isEmpty();
+$hasLink = !$this->editmode && !$this->globallink('link')->isEmpty();
 ?>
 
 <div class="single-teaser <?= $useLightBox ? 'light-gallery' : ''; ?>">
