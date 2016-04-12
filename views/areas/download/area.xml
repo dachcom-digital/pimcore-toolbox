@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>download</id>
+    <name>Download</name>
+    <description>Add downloads.</description>
+    <version>1.0.0</version>
+</zend-config>
