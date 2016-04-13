@@ -100,7 +100,7 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
             $sectionDataArray = $data->toArray();
         }
 
-        if ( $addDefault ) {
+        if ( $addDefault && count($sectionDataArray) > 0 ) {
             $sectionDataArray = array('default' => 'Standard') + $sectionDataArray;
         }
 

@@ -67,3 +67,8 @@ body > .single-teaser img {
 .x-panel-body-default {
     font-family:inherit;
 }
+
+.toolbox-parallax-container .editmode-label {
+    position: relative;
+    z-index: 3;
+}
