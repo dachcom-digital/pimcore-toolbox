@@ -1,4 +1,4 @@
-<div class="parallax-container-snippet">
+<div class="parallax-container-snippet <?= $this->select('parallaxContainerAdditionalClasses')->getData();?>">
 
     <div class="background">
 
