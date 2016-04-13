@@ -80,7 +80,7 @@ $panels = $this->block('panels', array('default' => 2 ));
                     <h3 class="panel-title">
                         <a class="accordion-toggle"
                             role="button">
-                            <?= $this->input('name') ?>
+                            <?= $this->input('name', ['width' => 500]) ?>
                         </a>
                     </h3>
 
