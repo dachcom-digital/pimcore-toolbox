@@ -1,4 +1,4 @@
-<div class="parallax-container-image <?= $this->select('parallaxContainerAdditionalClasses')->getData();?>">
+<div class="parallax-container-image">
 
     <?php if($this->editmode) { ?>
         <div class="editmode-parallax-container-image">

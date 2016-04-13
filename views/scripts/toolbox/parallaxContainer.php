@@ -3,7 +3,7 @@
 
 
 ?>
-<div class="toolbox-parallax-container">
+<div class="toolbox-parallax-container <?= $this->select('parallaxContainerAdditionalClasses')->getData();?>">
 
     <?php if($this->editmode) { ?>
 
