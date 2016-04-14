@@ -44,6 +44,11 @@ class Install {
                     ],
                     'additionalClasses' => []
                 ],
+                "parallaxContainer" => [
+                    "additionalClasses" => [
+                        "window-full-height" => "mind. Fensterhöhe",
+                    ]
+                ],
                 'headlines' => [
                     'tags' => [
                         'h1' => 'Headline 1',

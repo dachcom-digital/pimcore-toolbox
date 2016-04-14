@@ -29,6 +29,7 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
 
             $assetHandler = $e->getTarget();
             $assetHandler->appendScript('toolbox-wysiwyg', '/plugins/Toolbox/static/js/wysiwyg.js', array(), array('showInFrontEnd' => false ));
+            $assetHandler->appendScript('toolbox-wysiwyg', '/plugins/Toolbox/static/js/frontend/toolbox.js', array(), array('showInFrontEnd' => true ));
 
         });
 

@@ -54,6 +54,10 @@ ul li.x-boundlist-selected {
     border-color: #3c3f41;
 }
 
+ul li.x-boundlist-selected.x-boundlist-item-over {
+    color:#fff;
+}
+
 /* only in single edit mode*/
 body > .single-teaser {
     max-width: 250px;

@@ -6,7 +6,7 @@
 
                 "thumbnail" => [
                     "width" => 200,
-                    "height" => 200,
+                    "height" => 100,
                     "interlace" => true,
                     "quality" => 90
                 ],
