@@ -3,7 +3,7 @@
     <plugin>
         <pluginName>Toolbox</pluginName>
         <pluginDescription><![CDATA[]]></pluginDescription>
-        <pluginVersion>1.0.12</pluginVersion>
+        <pluginVersion>1.0.13</pluginVersion>
         <pluginRevision>1</pluginRevision>
         <pluginBuildTimestamp>0</pluginBuildTimestamp>
         <pluginClassName>\Toolbox\Plugin</pluginClassName>
