@@ -302,14 +302,28 @@ class Asset {
 
         foreach( $jsFiles as $jsFile)
         {
-            $websitePath = PIMCORE_WEBSITE_PATH;
-            $absoluteJs[] = $websitePath . str_replace('/website', '', $jsFile );
+            if( strpos($jsFile, '/plugins') !== FALSE)
+            {
+                $absoluteJs[] = PIMCORE_PLUGINS_PATH . str_replace('/plugins', '', $jsFile );
+            }
+            else
+            {
+                $absoluteJs[] = PIMCORE_WEBSITE_PATH . str_replace('/website', '', $jsFile );
+            }
+
         }
 
         foreach( $cssFiles as $cssFile)
         {
-            $websitePath = PIMCORE_WEBSITE_PATH;
-            $absoluteCss[] = $websitePath . str_replace('/website', '', $cssFile );
+            if( strpos($cssFile, '/plugins') !== FALSE)
+            {
+                $absoluteCss[] = PIMCORE_PLUGINS_PATH . str_replace('/plugins', '', $cssFile );
+            }
+            else
+            {
+                $absoluteCss[] = PIMCORE_WEBSITE_PATH . str_replace('/website', '', $cssFile );
+            }
+
         }
 
         $jsFileName = 'data-' . $scriptPosition . '.js';

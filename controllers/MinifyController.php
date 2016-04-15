@@ -13,7 +13,10 @@ class Toolbox_MinifyController extends \Pimcore\Controller\Action {
         if ( file_exists($filePath) )
         {
             $response = $this->getResponse()
-                ->setHeader('Content-Type', $assetType == 'js' ? 'text/javascript' : 'text/css')
+                ->setHeader('Expires', 0, true)
+                ->setHeader('Cache-Control', 'public', true)
+                ->setHeader('Cache-Control', 'max-age=3600')
+                ->setHeader('Content-Type', $assetType == 'js' ? 'application/javascript' : 'text/css')
                 ->appendBody(file_get_contents($filePath));
 
             $response->sendResponse();
