@@ -1,28 +1,100 @@
-.pimcore_area_entry .pimcore_area_edit_button, .pimcore_tag_area .pimcore_area_edit_button {
-    top: -25px !important;
-}
-.pimcore_tag_button .pimcore_edit_link_button {
-    width: auto !important;
-}
+/**
 
+    Toolbox Columns
+
+**/
 .toolbox-columns .toolbox-column {
     background: rgba(242, 242, 242, 0.5);
     border: 1px dashed #D6D6D6;
     padding:10px;
 }
 
+
+/**
+
+    Toolbox Container
+
+**/
 .toolbox-container {
     background: rgba(242, 242, 242, 0.5);
     border: 1px dashed #D6D6D6;
     padding: 2px;
 }
 
+
+/**
+
+    Toolbox Image
+
+**/
 .toolbox-image {
     min-height:100px;
 }
 
+
+/**
+
+    Toolbox Teaser
+
+**/
 .toolbox-teaser {
 
+}
+
+
+/**
+
+    Toolbox Parallax Container
+
+**/
+.toolbox-parallax-container {
+
+}
+
+.toolbox-parallax-container .editmode-parallax-container-image {
+    position:absolute;
+    z-index: 3;
+    top: 0;
+}
+
+.toolbox-parallax-container .parallax-container-snippet .background,
+.toolbox-parallax-container .parallax-container-image .background {
+    position:absolute;
+}
+
+.toolbox-parallax-container .parallax-container-image > .content {
+    padding-top:100px;
+}
+
+.toolbox-parallax-container .parallax-container-snippet > .content {
+    padding-top:0;
+}
+
+.toolbox-parallax-container .parallax-container-snippet .parallax-video .inner video {
+    opacity: 1 !important;
+}
+
+.toolbox-parallax-container .parallax-container-snippet .background  {
+
+}
+
+.toolbox-parallax-container .parallax-container-snippet > .content {
+    margin-top: 0;
+    top: 70px;
+    position: relative;
+}
+
+
+/**
+
+    Toolbox Defaults
+
+**/
+.pimcore_area_entry .pimcore_area_edit_button, .pimcore_tag_area .pimcore_area_edit_button {
+    top: -25px !important;
+}
+.pimcore_tag_button .pimcore_edit_link_button {
+    width: auto !important;
 }
 
 /* trim bootstrap in backend */
@@ -43,19 +115,27 @@ ul li.x-boundlist-item {
     background: inherit;
     padding: inherit;
     margin: inherit;
-    line-height: inherit;
+    line-height: 30px;
 }
+
 ul li.x-boundlist-item:hover {
     color:inherit;
 }
+
 ul li.x-boundlist-selected {
     color: #fff;
     background: #3c3f41;
     border-color: #3c3f41;
 }
 
+ul li.x-boundlist-item-over{
+    color: #404040;
+    border-color:transparent;
+    background: #DFE6EC;
+}
 ul li.x-boundlist-selected.x-boundlist-item-over {
     color:#fff;
+    background: #404040;
 }
 
 /* only in single edit mode*/
