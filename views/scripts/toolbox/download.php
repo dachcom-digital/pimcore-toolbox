@@ -24,35 +24,35 @@
 
 <div class="toolbox-download <?= $this->select('downloadsAdditionalClasses')->getData();?>">
 
-    <?php if ($this->editmode) { ?>
-        <?= $this->multihref("downloads"); ?>
-    <?php } else { ?>
+    <?php if ( count($this->multihref("downloads")) > 0 ) { ?>
 
-        <?php if ( count($this->multihref("downloads")) > 0 ) { ?>
-            <div class="download-list">
-                <ul class="list-unstyled">
-                <?php foreach($this->multihref("downloads") as $download) { ?>
-                    <?php if ($download instanceof \Pimcore\Model\Asset\Document) {
+        <div class="download-list">
+            <ul class="list-unstyled">
 
-                        $dPath = $download->getFullPath();
-                        $dSize = $download->getFileSize('kb', 2);
-                        $dType = Pimcore\File::getFileExtension($download->getFilename());
-                        $dName = ($download->getMetadata('name')) ? $download->getMetadata('name') : 'Download';
+            <?php foreach($this->multihref("downloads") as $download) { ?>
 
-                        ?>
+                <?php if ($download instanceof \Pimcore\Model\Asset\Document) {
 
-                        <li>
-                            <a href="<?= $dPath; ?>" target="_blank" class="icon-<?= $dType; ?>">
-                                <?= $dName; ?>
-                            </a>
-                        </li>
+                    $dPath = $download->getFullPath();
+                    $dSize = $download->getFileSize('kb', 2);
+                    $dType = Pimcore\File::getFileExtension($download->getFilename());
+                    $dName = ($download->getMetadata('name')) ? $download->getMetadata('name') : 'Download';
 
-                    <?php } ?>
+                    ?>
+
+                    <li>
+                        <a href="<?= $dPath; ?>" target="_blank" class="icon-<?= $dType; ?>">
+                            <?= $dName; ?>
+                        </a>
+                    </li>
+
                 <?php } ?>
-                </ul>
-            </div>
-        <?php } ?>
-    <?php } ?>
 
+            <?php } ?>
+
+            </ul>
+        </div>
+
+    <?php } ?>
 
 </div>

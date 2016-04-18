@@ -155,22 +155,8 @@ var DachcomToolbox = (function () {
 
             if( typeof Modernizr !== 'undefined' && Modernizr.touchevents ) return;
 
-            var $parallaxContainers = $('.toolbox-parallax-container:not(.window-full-height) .parallax-container-image');
-
-            $parallaxContainers.each(function() {
-
-                var $el = $(this),
-                    scrollTop = _self.$doc.scrollTop() - $el.offset().top,
-                    pos = typeof $el.data('pos') == 'undefined' ? -50 : $el.data('pos'),
-                    lastWindowPosition = typeof $el.data('lastWindowPosition') == 'undefined' ? 0 : $el.data('lastWindowPosition');
-
-                pos += (scrollTop - lastWindowPosition) * .3;
-
-                $el.data('lastWindowPosition', scrollTop);
-                $el.data('pos', pos);
-
-                $el.find('.canvas').css('background-position-y', pos + 'px');
-
+            $('.toolbox-parallax-container .parallax-container-image .canvas').parallaxScroll({
+                friction: 0.5
             });
 
         },

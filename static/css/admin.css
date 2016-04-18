@@ -84,7 +84,25 @@
     position: relative;
 }
 
+/**
 
+    Toolbox edit.php Overlay Defaults
+
+**/
+.toolbox-edit-overlay {
+    width: calc( 100% - 12px );
+    min-height: 300px; /* always force min height! */
+}
+
+.toolbox-edit-overlay .t-row {
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px dashed #D8D8D8;
+}
+
+.toolbox-edit-overlay .t-row .pimcore_editable .x-panel-default {
+    width:510px !important;
+}
 /**
 
     Toolbox Defaults

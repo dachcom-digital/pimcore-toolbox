@@ -26,7 +26,7 @@
     <div class="background">
 
         <?php $thumbnail = $this->image("parallaxContainerImage")->getThumbnail("parallaxContainerImage"); ?>
-        <div class="canvas" style="background-image:url('<?= $thumbnail; ?>');"></div>
+        <div class="canvas" data-width="1024" data-height="768" style="background-image:url('<?= $thumbnail; ?>');"></div>
 
     </div>
 

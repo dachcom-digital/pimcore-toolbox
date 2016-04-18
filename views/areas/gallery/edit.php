@@ -1,9 +1,12 @@
-<div>
+<div class="toolbox-edit-overlay">
 
-    <label><?= $this->translate("Images or Folder") ?></label>
-    <?= $this->multihref("images", array('width' => '524px')) ?>
-    <br>
-    <label><?= $this->translate("Use Thumbnails") ?></label>
-    <?= $this->checkbox("useThumbnails") ?>
+    <div class="t-row">
+        <label><?= $this->translate("Images or Folder") ?></label>
+        <?= $this->multihref("images", array('width' => '524px')) ?>
+    </div>
+    <div class="t-row">
+        <label><?= $this->translate("Use Thumbnails") ?></label>
+        <?= $this->checkbox("useThumbnails") ?>
+    </div>
 
 </div>
