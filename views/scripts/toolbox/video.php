@@ -26,6 +26,7 @@
             "data-setup" => "{}"
         ],
         "thumbnail" => "content",
+        "disableProgressReload" => TRUE,
         "height" => 250
     ]); ?>
 
