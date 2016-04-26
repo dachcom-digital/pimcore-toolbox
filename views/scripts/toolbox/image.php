@@ -41,6 +41,12 @@ $useLightBox = $this->checkbox("useLightbox")->isChecked() && !$this->editmode;
 
             <?php } ?>
 
+            <?php if( $this->checkbox("showCaption")->isChecked() ) { ?>
+                <span class="caption">
+                    <?= $this->image('ci')->getText() ?>
+                </span>
+            <?php } ?>
+
         </div>
 
     </div>

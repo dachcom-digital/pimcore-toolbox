@@ -103,6 +103,13 @@
 .toolbox-edit-overlay .t-row .pimcore_editable .x-panel-default {
     width:510px !important;
 }
+
+.toolbox-edit-overlay .pimcore_tag_input {
+    border: 1px solid #B7B7B7;
+    padding: 5px;
+    box-shadow: none;
+}
+
 /**
 
     Toolbox Defaults
