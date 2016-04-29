@@ -269,6 +269,8 @@ class Asset {
         $absoluteCss = array();
 
         $jsFilePaths = array();
+        $rawFiles = array();
+
         $cssFilePaths = array();
 
         foreach($scripts as $scriptName => $scriptData)
@@ -283,19 +285,20 @@ class Asset {
                 }
                 else
                 {
-                    $jsFilePaths[] = $scriptData->data['path'];
+                    $rawFiles[] = $scriptData;
                 }
 
             }
             else if( $scriptData->data['fileType'] == 'stylesheet')
             {
+
                 if( $p['includeInMinify'])
                 {
                     $cssFiles[] = $scriptData->data['path'];
                 }
                 else
                 {
-                    $cssFilePaths[] = $scriptData->data['path'];
+                    $rawFiles[] = $scriptData;
                 }
             }
         }
@@ -396,6 +399,11 @@ class Asset {
 
         }
 
+        if( !empty( $rawFiles ) )
+        {
+            $html .= $this->getUncompressedHtml( $rawFiles );
+
+        }
         return $html;
 
     }
