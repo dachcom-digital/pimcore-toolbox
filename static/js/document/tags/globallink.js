@@ -25,7 +25,7 @@ pimcore.document.tags.globallink = Class.create(pimcore.document.tags.link, {
             fieldCls: "pimcore_droptarget_input",
             enableKeyEvents: true,
             listeners: {
-                keyup: function (el) { console.log(el);
+                keyup: function (el) {
                     if(el.getValue().match(/^www\./)) {
                         el.setValue("http://" + el.getValue());
                     }
