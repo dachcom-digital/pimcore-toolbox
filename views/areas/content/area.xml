@@ -2,6 +2,6 @@
 <zend-config>
     <id>content</id>
     <name>WYSIWYG Editor</name>
-    <description>Toolbox text content.</description>
+    <description>Toolbox text content</description>
     <version>1.0.0</version>
 </zend-config>

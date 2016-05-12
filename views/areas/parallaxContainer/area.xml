@@ -2,6 +2,6 @@
 <zend-config>
     <id>parallaxContainer</id>
     <name>Parallax Container</name>
-    <description>Toolbox Parallax Container.</description>
+    <description>Toolbox Parallax Container</description>
     <version>1.0.0</version>
 </zend-config>

@@ -2,6 +2,6 @@
 <zend-config>
     <id>container</id>
     <name>Container</name>
-    <description>Toolbox Container.</description>
+    <description>Toolbox Container</description>
     <version>1.0.0</version>
 </zend-config>

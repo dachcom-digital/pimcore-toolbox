@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<zend-config>
+    <id>linklist</id>
+    <name>Link List</name>
+    <description>Toolbox Link List</description>
+    <version>1.0.0</version>
+</zend-config>

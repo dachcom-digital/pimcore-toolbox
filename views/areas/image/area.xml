@@ -2,6 +2,6 @@
 <zend-config>
     <id>image</id>
     <name>Image</name>
-    <description>Toolbox Image.</description>
+    <description>Toolbox Image</description>
     <version>1.0.0</version>
 </zend-config>
