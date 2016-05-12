@@ -332,53 +332,15 @@ class Asset {
         $jsFileName = 'data-' . $scriptPosition . '.js';
         $cssFileName = 'style-' . $scriptPosition . '.css';
 
-        $min_cacheFileLocking = true;
+        $serveController = new \Toolbox\Controller\Minify\Builder();
 
         //Serve Javascript
-        $serveController = new \Toolbox\Controller\Minify\Minify();
-        $serveController->setGroup( array('g' => 'js') );
+        $serveController->setAssets( $absoluteJs, 'js', PIMCORE_TEMPORARY_DIRECTORY, $jsFileName );
+        $jsFilePaths[] = $jsFileName;
 
-        $serveOptions = array(
-
-            'groupsOnly' => TRUE,
-            'debug' => FALSE,
-            'quiet' => TRUE,
-            'encodeMethod' => '',
-            'minApp' => array(
-                'groups' => array(
-                    'js' => $absoluteJs
-                )
-            )
-
-        );
-
-        \Minify::setCache( PIMCORE_TEMPORARY_DIRECTORY ,$min_cacheFileLocking );
-
-        $servedJsData = \Minify::serve($serveController, $serveOptions);
-
-        if( $servedJsData['success'] == 'true')
-        {
-            \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $jsFileName, $servedJsData['content']);
-            $jsFilePaths[] = $jsFileName;
-        }
-
-        //Serve Css
-        $serveController = new \Toolbox\Controller\Minify\Minify();
-        $serveController->setGroup( array('g' => 'css') );
-
-        $serveOptions['minApp'] = array(
-            'groups' => array(
-                'css' => $absoluteCss
-            )
-        );
-
-        $servedCssData = \Minify::serve($serveController, $serveOptions);
-
-        if( $servedCssData['success'] == 'true')
-        {
-            \Pimcore\File::put(PIMCORE_TEMPORARY_DIRECTORY . '/' . $cssFileName, $servedCssData['content']);
-            $cssFilePaths[] = $cssFileName;
-        }
+        //Serve CSS
+        $serveController->setAssets( $absoluteCss, 'css', PIMCORE_TEMPORARY_DIRECTORY, $cssFileName );
+        $cssFilePaths[] = $cssFileName;
 
         if( !empty( $cssFilePaths ) )
         {
@@ -418,7 +380,7 @@ class Asset {
         {
             return $file;
         }
-        return $this->baseUrl . '/static/' . $fileType .'/' . $file;
+        return $this->baseUrl . '/website/static/' . $fileType .'/' . $file;
 
     }
 }

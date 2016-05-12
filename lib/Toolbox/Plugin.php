@@ -22,7 +22,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         $router = $front->getRouter();
 
         $staticAssetRoute = new \Zend_Controller_Router_Route_Regex(
-            'static\/(js|css)\/(.*?)\.(js|css)',
+            'website\/static\/(js|css)\/(.*?)\.(js|css)',
             array(
                 'module' => 'Toolbox',
                 'controller' => 'minify',
