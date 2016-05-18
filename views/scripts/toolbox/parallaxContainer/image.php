@@ -10,6 +10,8 @@
                     "interlace" => true,
                     "quality" => 90
                 ],
+                "width" => 200,
+                "height" => 100,
                 "reload"    => true,
                 "class"     => "img-responsive",
                 "dropClass" => "canvas",
