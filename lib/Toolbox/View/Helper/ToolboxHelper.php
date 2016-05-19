@@ -2,6 +2,9 @@
 
 namespace Toolbox\View\Helper;
 
+use Toolbox\Config;
+use Pimcore\ExtensionManager;
+
 class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     public function toolboxhelper()
@@ -9,29 +12,34 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
         return $this;
     }
 
-    public function getAvailableBricks( $excludeBricks = array(), $extraBricks = array() )
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getAvailableBricks( $type = '' )
     {
-        $excludeBricks = is_array( $excludeBricks ) ? $excludeBricks : [];
-        $extraBricks = is_array( $extraBricks ) ? $extraBricks : [];
+        $areaElements = array_keys(ExtensionManager::getBrickConfigs());
+        $disallowedSubAreas = Config::getConfig()->disallowedSubAreas->toArray();
 
-        $defaultBricks = \Toolbox\Config::getConfig()->allowedPlugins->toArray();
+        $bricks = [];
 
-        $bricks = array_merge($extraBricks, array_keys($defaultBricks ));
+        $elementDisallowed = isset( $disallowedSubAreas[$type]) ? $disallowedSubAreas[$type] : array();
 
-        $params = array();
-
-        foreach ($excludeBricks as $brick)
+        foreach( $areaElements as $a )
         {
-            if (in_array($brick, $bricks))
+            if (!in_array($a, $elementDisallowed))
             {
-                $bricks = array_diff($bricks, array($brick));
+                $bricks[] = $a;
             }
         }
+
+        $params = array();
 
         foreach ($bricks as $brick)
         {
             $params[$brick] = array(
-                "forceEditInView" => true
+                'forceEditInView' => true
             );
         }
 
@@ -39,14 +47,12 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    public function hasAdditionalClasses( $areaElement )
-    {
-        $additionalClasses = $this->getConfigArray($areaElement . '/additionalClasses');
 
-        return !empty( $additionalClasses );
-
-    }
-
+    /**
+     * @param $data
+     * @deprecated
+     * @return array
+     */
     public function getAssetArray( $data )
     {
         if( empty( $data ) )
@@ -77,6 +83,14 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
+    /**
+     * @param string $section
+     * @param bool   $createKeyValuePairs
+     * @param bool   $addDefault
+     *
+     * @deprecated
+     * @return array
+     */
     public function getConfigArray( $section = '', $createKeyValuePairs = FALSE, $addDefault = FALSE )
     {
         if( empty( $section ) )

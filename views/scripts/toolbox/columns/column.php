@@ -15,7 +15,7 @@
 
         <div class="toolbox-column<?php echo $this->equalHeight ? ' equal-height-item' : '' ?>">
 
-            <?= $this->template('helper/areablock.php', [ 'name' => $name, 'excludeBricks' => ['columns', 'container'] ] ); ?>
+            <?= $this->template('helper/areablock.php', [ 'name' => $name, 'type' => 'columns' ] ); ?>
 
         </div>
 

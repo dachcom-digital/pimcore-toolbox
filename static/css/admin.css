@@ -57,6 +57,10 @@
     top: 0;
 }
 
+.toolbox-parallax-container .editmode-parallax-container-image .pimcore_tag_image_empty {
+    top:50px;
+}
+
 .toolbox-parallax-container .parallax-container-snippet .background,
 .toolbox-parallax-container .parallax-container-image .background {
     position:absolute;

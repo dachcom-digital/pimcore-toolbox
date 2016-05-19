@@ -57,6 +57,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     {
         $install = new Install();
         $install->installConfigFile();
+        $install->installAdminTranslations();
         $install->addUserData();
 
         return 'Toolbox has been successfully installed.';

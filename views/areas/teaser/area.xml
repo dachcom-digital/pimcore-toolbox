@@ -2,5 +2,6 @@
 <zend-config>
     <id>standard-teaser</id>
     <name>Teaser</name>
-    <version>1.0.0</version>
+    <description>Toolbox Teaser</description>
+    <version>1.1.0</version>
 </zend-config>

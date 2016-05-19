@@ -2,6 +2,7 @@
 
 namespace Toolbox\Plugin;
 
+use Pimcore\Model\Translation\Admin;
 
 class Install {
 
@@ -22,55 +23,219 @@ class Install {
 
     }
 
+    public function installAdminTranslations()
+    {
+        $csv = PIMCORE_PLUGINS_PATH . '/Toolbox/install/translations/data.csv';
+        Admin::importTranslationsFromFile($csv, true, \Pimcore\Tool\Admin::getLanguages());
+    }
+
     public function installConfigFile() {
 
         if(!is_file( $this->configFile ) ) {
 
             $settings = array(
 
-                'columnElements' => [
-                    'column_12' => '1 Spalte',
-                    'column_4_8' => '2 Spalte (33:66)',
-                    'column_8_4' => '2 Spalte (66:33)',
-                    'column_3_9' => '2 Spalte (25:75)',
-                    'column_9_3' => '2 Spalte (75:25)',
-                    'column_6_6' => '2 Spalte (50:50)',
-                    'column_4_4_4' => '3 Spalte (33:33:33)',
-                ],
-                'accordion' => [
-                    'layouts' => [
-                        'panel-default' => 'Default',
-                        'panel-danger' => 'Dangers'
+                "accordion" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "type",
+                            "title" => "Type",
+                            "values" => [
+                                "panel-default" => "Default",
+                                "panel-danger" => "Dangers"
+                            ],
+                            "default" => "panel-default"
+                        ],
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
                     ],
-                    'additionalClasses' => []
+
+                ],
+                "columns" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "type",
+                            "title" => "Columns",
+                            "values" => [
+                                "column_12" => "1 Column",
+                                "column_4_8" => "2 Columns (33:66)",
+                                "column_8_4" => "2 Columns (66:33)",
+                                "column_3_9" => "2 Columns (25:75)",
+                                "column_9_3" => "2 Columns (75:25)",
+                                "column_6_6" => "2 Columns (50:50)",
+                                "column_4_4_4" => "3 Columns (33:33:33)"
+                            ],
+                            "default" => "column_12"
+                        ],
+                        [
+                            "type" => "checkbox",
+                            "name" => "equalHeight",
+                            "title" => "Equal heights?",
+
+                        ]
+                    ],
+                ],
+                "content" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "download" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "gallery" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "headline" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "headlineType",
+                            "title" => "Headline Size",
+                            "values" => [
+                                "h1" => "Headline 1",
+                                "h2" => "Headline 2",
+                                "h3" => "Headline 3",
+                                "h4" => "Headline 4",
+                                "h5" => "Headline 5",
+                                "h6" => "Headline 6"
+                            ],
+                            "default" => "h3"
+                        ],
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+                ],
+                "image" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "linklist" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
                 ],
                 "parallaxContainer" => [
-                    "additionalClasses" => [
-                        "window-full-height" => "mind. Fensterhöhe",
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "type",
+                            "title" => "Type",
+                            "values" => [
+                                "image" => "Image",
+                                "snippet" => "Snippet"
+                            ],
+                            "default" => "image"
+                        ],
+                        [
+                            "type" => "additionalClasses",
+                            "values" => ["window-full-height" => "min. window height"],
+                        ]
+                    ],
+
+                ],
+                "separator" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "space",
+                            "title" => "Space before & after separator",
+                            "values" => [
+                                "default" => "Default",
+                                "medium" => "Medium",
+                                "large" => "Large"
+                            ],
+                            "default" => "default"
+                        ],
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "teaser" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "type",
+                            "title" => "Type",
+                            "values" => [
+                                "direct" => "Direct",
+                                "snippet" => "Snippet"
+                            ],
+                            "default" => "direct"
+                        ],
+                        [
+                            "type" => "checkbox",
+                            "name" => "useLightBox",
+                            "title" => "use Lightbox?",
+
+                        ],
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+                "video" => [
+                    "configElements" => [
+                        [
+                            "type" => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
+
+                "ckeditor" => [
+                    "styles" => [
+                        [
+                            'name' => 'test',
+                            'element' => 'p',
+                            'attributes' => ['class' => 'h5']
+                        ]
                     ]
                 ],
-                'headlines' => [
-                    'tags' => [
-                        'h1' => 'Headline 1',
-                        'h2' => 'Headline 2',
-                        'h3' => 'Headline 3',
-                        'h4' => 'Headline 4',
-                        'h5' => 'Headline 5',
-                        'h6' => 'Headline 6'
-                    ],
-                    'additionalClasses' => []
-                ],
-                'allowedPlugins' => [
-                    'accordion' => TRUE,
-                    'columns' => TRUE,
-                    'content' => TRUE,
-                    'headline' => TRUE,
-                    'gallery' => TRUE,
-                    'image' => TRUE,
-                    'teaser' => TRUE,
-                    'snippet' => TRUE,
-                    'video' => TRUE,
-                    'separator' => TRUE
+
+                "disallowedSubAreas" => [
+                    "accordion" => ["accordion","container"],
+                    "columns" => ["container"],
+                    "container" => ["container"],
+                    "image" => ["parallaxContainer"],
+                    "snippet" => ["parallaxContainer"]
                 ]
             );
 

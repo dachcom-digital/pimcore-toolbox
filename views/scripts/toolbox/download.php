@@ -1,58 +1,32 @@
-<?php if ($this->editmode) { ?>
+<?php if ( count($this->multihref('downloads')) > 0 ) { ?>
 
-    <div class="alert alert-info form-inline">
+    <div class="download-list">
 
-        <?php if( $this->toolboxHelper()->hasAdditionalClasses('downloads') ) { ?>
+        <ul class="list-unstyled">
 
-            <div class="form-group">
-                <label> Zusatz:</label>
-            </div>
-            <div class="form-group">
+        <?php foreach($this->multihref('downloads') as $download) { ?>
 
-                <?php
+            <?php if ($download instanceof \Pimcore\Model\Asset\Document) {
 
-                $acStore = $this->toolboxHelper()->getConfigArray( 'downloads/additionalClasses', TRUE, TRUE );
-                echo $this->select('downloadsAdditionalClasses', array('store' => $acStore, 'width' => 200, 'reload' => true));
+                $dPath = $download->getFullPath();
+                $dSize = $download->getFileSize('kb', 2);
+                $dType = Pimcore\File::getFileExtension($download->getFilename());
+                $dName = ($download->getMetadata('name')) ? $download->getMetadata('name') : 'Download';
+
                 ?>
 
-            </div>
+                <li>
+                    <a href="<?= $dPath; ?>" target="_blank" class="icon-<?= $dType; ?>">
+                        <?= $dName; ?>
+                    </a>
+                </li>
+
+            <?php } ?>
+
         <?php } ?>
+
+        </ul>
 
     </div>
 
 <?php } ?>
-
-<div class="toolbox-download <?= $this->select('downloadsAdditionalClasses')->getData();?>">
-
-    <?php if ( count($this->multihref("downloads")) > 0 ) { ?>
-
-        <div class="download-list">
-            <ul class="list-unstyled">
-
-            <?php foreach($this->multihref("downloads") as $download) { ?>
-
-                <?php if ($download instanceof \Pimcore\Model\Asset\Document) {
-
-                    $dPath = $download->getFullPath();
-                    $dSize = $download->getFileSize('kb', 2);
-                    $dType = Pimcore\File::getFileExtension($download->getFilename());
-                    $dName = ($download->getMetadata('name')) ? $download->getMetadata('name') : 'Download';
-
-                    ?>
-
-                    <li>
-                        <a href="<?= $dPath; ?>" target="_blank" class="icon-<?= $dType; ?>">
-                            <?= $dName; ?>
-                        </a>
-                    </li>
-
-                <?php } ?>
-
-            <?php } ?>
-
-            </ul>
-        </div>
-
-    <?php } ?>
-
-</div>

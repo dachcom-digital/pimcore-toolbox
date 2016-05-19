@@ -8,15 +8,10 @@ class Toolbox_Admin_SettingsController extends Admin {
 
         $configFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/defaultStyle.json';
 
-        $config = file_get_contents($configFile);
+        $userConfig = \Toolbox\Config::getConfig()->ckeditor->styles->toArray();
+        $defaultConfig = json_decode( file_get_contents($configFile), true );
 
-        $configEvent = \Pimcore::getEventManager()->trigger('toolbox.ckeditorStyle', null, ['config' => json_decode($config, true)]);
-
-        if ($configEvent->stopped()) {
-            $config = json_encode($configEvent->last());
-        }
-
-        $this->view->assign('config', $config);
+        $this->view->assign('config', json_encode( array_merge( $defaultConfig, $userConfig) ) );
 
         $content = $this->view->render('admin/settings/ckeditor-style.php');
 

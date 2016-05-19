@@ -22,7 +22,7 @@
     <?php } ?>
 
     <div class="content">
-        <?= $this->template('helper/areablock.php', [ 'name' => 'parallaxContainerContent', 'excludeBricks' => array('parallaxContainer') ] ); ?>
+        <?= $this->template('helper/areablock.php', [ 'name' => 'parallaxContainerContent', 'type' => 'image' ] ); ?>
     </div>
 
     <div class="background">
