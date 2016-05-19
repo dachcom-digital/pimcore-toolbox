@@ -198,6 +198,15 @@ class Install {
                             "default" => "direct"
                         ],
                         [
+                            "type" => "select",
+                            "name" => "layout",
+                            "title" => "Layout",
+                            "values" => [
+                                "default" => "Default"
+                            ],
+                            "default" => "default"
+                        ],
+                        [
                             "type" => "checkbox",
                             "name" => "useLightBox",
                             "title" => "use Lightbox?",

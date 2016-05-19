@@ -133,11 +133,17 @@
 
 .alert .form-group {
     line-height:0;
+    padding-bottom:2px;
 }
 .alert .form-group label {
     margin-bottom:0;
+    font-size: 12px;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 
+.alert .form-group .x-form-text-default {
+    padding:0 4px;
+}
 /* set list to default */
 ul li.x-boundlist-item {
     list-style: inherit;

@@ -8,7 +8,14 @@
 
         if($type == 'direct')
         {
-            $this->template('/snippets/teaser-standard.php');
+            $layout = $this->select('layout')->getData();
+
+            if( empty( $layout ) )
+            {
+                $layout = 'standard';
+            }
+
+            $this->template('/snippet/teaser-' . $layout. '.php');
         }
         else
         {
@@ -20,4 +27,3 @@
     </div>
 
 </div>
-
