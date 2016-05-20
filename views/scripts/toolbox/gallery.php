@@ -14,7 +14,10 @@ $galId = 'gallery-' . uniqid();
 
                 <?php foreach ($assets as $asset) { ?>
 
-                    <li class="slide">
+                    <li class="slide <?= $this->checkbox('useLightbox')->isChecked() ? 'light-gallery' : '' ?>">
+                        <?php if( $this->checkbox('useLightbox')->isChecked() ) { ?>
+                            <a href="<?= $asset->getThumbnail('lightBoxImage'); ?>" class="item zoom-icon icon-magnifier"></a>
+                        <?php } ?>
                         <img src="<?= $asset->getThumbnail('galleryImage') ?>"  />
                     </li>
 
@@ -24,7 +27,7 @@ $galId = 'gallery-' . uniqid();
 
             <?php if( $this->checkbox('useThumbnails')->isChecked() ) { ?>
 
-                <ul class="slick-slider slick-slider-thumbs list-unstyled <?= $galId; ?>-thumbs" data-as-nav-for=".<?= $galId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="4" data-dots="false" data-arrows="true">
+                <ul class="slick-slider slick-slider-thumbs list-unstyled <?= $galId; ?>-thumbs" data-center-mode="true" data-as-nav-for=".<?= $galId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="4" data-dots="false" data-arrows="true">
 
                     <?php foreach ($assets as $asset) { ?>
 

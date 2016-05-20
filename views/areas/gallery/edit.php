@@ -5,6 +5,10 @@
         <?= $this->multihref('images', array('width' => '524px')) ?>
     </div>
     <div class="t-row">
+        <label><?= $this->translateAdmin('Use Lightbox') ?></label>
+        <?= $this->checkbox('useLightbox') ?>
+    </div>
+    <div class="t-row">
         <label><?= $this->translateAdmin('Use Thumbnails') ?></label>
         <?= $this->checkbox('useThumbnails') ?>
     </div>
