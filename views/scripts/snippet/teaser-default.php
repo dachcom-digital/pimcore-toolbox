@@ -1,9 +1,9 @@
 <?php
-$useLightBox = $this->checkbox('useLightBox')->isChecked() && !$this->editmode;
-$hasLink = !$this->editmode && !$this->globallink('link')->isEmpty();
+$lightBoxParam = !is_null($this->getParam('useLightBox')) ? $this->getParam('useLightBox') : $this->checkbox('useLightBox')->isChecked();
+$useLightBox = $lightBoxParam && !$this->editmode;
+$hasLink = !$this->globallink('link')->isEmpty();
 ?>
-
-<div class="single-teaser <?= $useLightBox ? 'light-gallery' : ''; ?>">
+<div class="single-teaser default <?= $useLightBox ? 'light-gallery' : ''; ?>">
 
     <?= $useLightBox ? '<a href="' . $this->image('image')->getThumbnail('lightBoxImage') . '" class="item">' : ($hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
 
@@ -16,11 +16,6 @@ $hasLink = !$this->editmode && !$this->globallink('link')->isEmpty();
 
     <?= $useLightBox || $hasLink ? '</a>' : ''; ?>
 
-    <?php if($this->editmode) { ?>
-
-
-    <?php } ?>
-
     <h3><?= $this->input('headline') ?></h3>
 
     <div>
@@ -30,11 +25,5 @@ $hasLink = !$this->editmode && !$this->globallink('link')->isEmpty();
     <p>
         <?= $this->globallink('link', ['class' => 'btn btn-default']); ?>
     </p>
-
-    <?php
-    // unset the suffix otherwise it will cause problems when using in a loop
-    $this->suffix = null;
-
-    ?>
 
 </div>

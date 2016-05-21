@@ -54,6 +54,11 @@ class ElementBuilder {
             $elConf['reload']   = isset( $c['reload'] ) ? $c['reload'] : TRUE;
             $elConf['default']  = isset( $c['default'] ) ? $c['default'] : NULL;
 
+            if( isset( $c['conditions'] ))
+            {
+                $elConf['conditions'] = $c['conditions'];
+            }
+
             switch( $c['type'] )
             {
                 case 'select':
@@ -71,6 +76,9 @@ class ElementBuilder {
                     }
 
                     $elConf['store'] = $store;
+
+                    $value = $view->select($elConf['name'])->getData();
+                    $elConf['__selectedValue'] = !empty( $value ) ? $value : $elConf['default'];
                     break;
 
                 case 'additionalClasses':
@@ -99,12 +107,15 @@ class ElementBuilder {
                         $elConf['default'] = 'default';
                     }
 
+                    $value = $view->select($type . 'AdditionalClasses')->getData();
+                    $elConf['__selectedValue'] = !empty( $value ) ? $value : $elConf['default'];
+
                     break;
 
-                case 'input':
-                    break;
                 case 'checkbox':
 
+                    $value = $view->checkbox( $elConf['name'])->isChecked();
+                    $elConf['__selectedValue'] = !empty( $value ) ? $value : $elConf['default'];
                     break;
 
                 default:
@@ -115,11 +126,88 @@ class ElementBuilder {
             {
                 $parsedConfig[] = $elConf;
             }
-
-            //print_r($parsedConfig);
         }
 
+        $parsedConfig = self::checkCondition($parsedConfig);
+
         return $parsedConfig;
+
+    }
+
+    private static function checkCondition($configElements)
+    {
+        $filteredData = array();
+
+        if( empty( $configElements ) )
+        {
+            return $configElements;
+        }
+
+        foreach( $configElements as $el)
+        {
+            if( isset( $el['conditions'] ) )
+            {
+                $orConditions = $el['conditions'];
+
+                $orGroup = array();
+                $orState = FALSE;
+
+                foreach( $orConditions as $andConditions)
+                {
+                    $andGroup = array();
+                    $andState = TRUE;
+
+                    foreach( $andConditions as $andConditionKey => $andConditionValue)
+                    {
+                        $andGroup[] = self::getElementState($andConditionKey, $configElements) == $andConditionValue;
+                    }
+
+                    if( in_array(false, $andGroup, true))
+                    {
+                        $andState = FALSE;
+                    }
+
+                    $orGroup[] = $andState;
+
+                }
+
+                if( in_array(true, $orGroup, true))
+                {
+                    $orState = TRUE;
+                }
+
+                if( $orState === TRUE)
+                {
+                    $filteredData[] = $el;
+                }
+
+            }
+            else
+            {
+                $filteredData[] = $el;
+            }
+        }
+
+        return $filteredData;
+
+    }
+
+    private static function getElementState($name = '', $elements)
+    {
+        if( empty( $elements ) )
+        {
+            return NULL;
+        }
+
+        foreach( $elements as $el)
+        {
+            if( $el['name'] === $name)
+            {
+                return $el['__selectedValue'];
+            }
+        }
+
+        return NULL;
 
     }
 }

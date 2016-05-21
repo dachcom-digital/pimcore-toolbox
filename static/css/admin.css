@@ -185,9 +185,15 @@ body > .single-teaser img {
 /* Override theme tridon stuff */
 .x-panel-body-default {
     font-family:inherit;
+    background:transparent;
 }
 
 .toolbox-parallax-container .editmode-label {
     position: relative;
     z-index: 3;
+}
+
+/* Snippet */
+.pimcore_area_snippet .x-panel-body-default .x-autocontainer-outerCt {
+    overflow:hidden !important;
 }

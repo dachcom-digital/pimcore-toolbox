@@ -47,6 +47,33 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
+    public function getAvailableSnippetBricks( )
+    {
+        $areaElements = array_keys(ExtensionManager::getBrickConfigs());
+        $disallowedSubAreas = Config::getConfig()->disallowedContentSnippetAreas->toArray();
+
+        $bricks = [];
+
+        foreach( $areaElements as $a )
+        {
+            if (!in_array($a, $disallowedSubAreas))
+            {
+                $bricks[] = $a;
+            }
+        }
+
+        $params = array();
+
+        foreach ($bricks as $brick)
+        {
+            $params[$brick] = array(
+                'forceEditInView' => true
+            );
+        }
+
+        return array('allowed' => $bricks, 'additional' => $params );
+
+    }
 
     /**
      * @param $data
@@ -83,56 +110,5 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    /**
-     * @param string $section
-     * @param bool   $createKeyValuePairs
-     * @param bool   $addDefault
-     *
-     * @deprecated
-     * @return array
-     */
-    public function getConfigArray( $section = '', $createKeyValuePairs = FALSE, $addDefault = FALSE )
-    {
-        if( empty( $section ) )
-            return array();
-
-        $values = \Toolbox\Config::getConfig();
-
-        $sectionPaths = explode('/', $section );
-
-        $data = $values;
-
-        foreach( $sectionPaths as $sectionPath)
-        {
-            $data = $data->{$sectionPath};
-        }
-
-        $sectionDataArray = array();
-
-        if( !empty( $data ) )
-        {
-            $sectionDataArray = $data->toArray();
-        }
-
-        if ( $addDefault && count($sectionDataArray) > 0 ) {
-            $sectionDataArray = array('default' => 'Standard') + $sectionDataArray;
-        }
-
-        if( $createKeyValuePairs && !empty( $sectionDataArray ) )
-        {
-            $pairs = array();
-
-            foreach( $sectionDataArray as $key => $value)
-            {
-                $pairs[] = array($key, $value);
-            }
-
-            return $pairs;
-
-        }
-
-        return $sectionDataArray;
-
-    }
 
 }

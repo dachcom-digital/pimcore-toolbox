@@ -15,11 +15,11 @@
                 $layout = 'standard';
             }
 
-            $this->template('/snippet/teaser-' . $layout. '.php');
+            $this->template('/snippet/teaser-' . $layout . '.php');
         }
         else
         {
-            echo $this->snippet('teaser');
+            echo $this->snippet('teaser-standard', ['useLightBox' => $this->checkbox('useLightBox')->isChecked()]);
         }
 
         ?>

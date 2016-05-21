@@ -204,7 +204,10 @@ class Install {
                             "values" => [
                                 "default" => "Default"
                             ],
-                            "default" => "default"
+                            "default" => "default",
+                            "conditions" => [
+                                ["type" => "direct"]
+                            ]
                         ],
                         [
                             "type" => "checkbox",
@@ -245,6 +248,13 @@ class Install {
                     "container" => ["container"],
                     "image" => ["parallaxContainer"],
                     "snippet" => ["parallaxContainer"]
+                ],
+
+                "disallowedContentSnippetAreas" => [
+                    "parallaxContainer",
+                    "teaser",
+                    "container",
+                    "snippet"
                 ]
             );
 
