@@ -5,7 +5,7 @@ $hasLink = !$this->editmode && !$this->globallink('link')->isEmpty();
 
 <div class="single-teaser <?= $useLightBox ? 'light-gallery' : ''; ?>">
 
-    <?= $useLightBox ? '<a href="' . $this->image('image', array('thumbnail' => 'contentImage'))->getSrc() . '" class="item">' : ($hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
+    <?= $useLightBox ? '<a href="' . $this->image('image')->getThumbnail('contentImage') . '" class="item">' : ($hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
 
     <?= $this->image('image', [
 
