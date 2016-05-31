@@ -16,7 +16,7 @@
                 ?>
 
                 <li>
-                    <a href="<?= $dPath; ?>" target="_blank" class="icon-<?= $dType; ?>">
+                    <a href="<?= $dPath; ?>" target="_blank" class="icon-download-<?= $dType; ?>">
                         <?= $dName; ?>
                     </a>
                 </li>
