@@ -19,7 +19,7 @@ $hasLink = !$this->globallink('link')->isEmpty();
     <h3><?= $this->input('headline') ?></h3>
 
     <div>
-        <?= $this->wysiwyg('text', ['height' => 100]); ?>
+        <?= $this->wysiwyg('text', ['height' => 100, 'customConfig' => '/toolbox-ckeditor-style.js']); ?>
     </div>
 
     <p>
