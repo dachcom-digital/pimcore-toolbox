@@ -4,16 +4,9 @@ namespace Toolbox\Controller\Plugin;
 
 class Frontend extends \Zend_Controller_Plugin_Abstract {
 
-    /**
-     * @var bool
-     */
-    protected $initialized = false;
-
-    public function preDispatch() {
-
-        if ($this->initialized) {
-            return;
-        }
+    public function preDispatch(\Zend_Controller_Request_Abstract $request)
+    {
+        parent::preDispatch($request);
 
         /** @var \Pimcore\Controller\Action\Helper\ViewRenderer $renderer */
         $renderer = \Zend_Controller_Action_HelperBroker::getExistingHelper('ViewRenderer');
@@ -33,8 +26,6 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
             $assetHandler->appendScript('toolbox-frontend', '/plugins/Toolbox/static/js/frontend/toolbox.js', array(), array('showInFrontEnd' => true ));
 
         });
-
-        $this->initialized = true;
 
     }
 
