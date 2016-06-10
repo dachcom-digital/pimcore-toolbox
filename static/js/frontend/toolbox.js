@@ -15,7 +15,7 @@ var DachcomToolbox = (function () {
 
     var self = {
 
-        $doc: $(document),
+        $doc: $ !== undefined ? $(document) : null,
 
         isBusy : false,
 
@@ -188,4 +188,6 @@ var DachcomToolbox = (function () {
 
 })();
 
-$(document).ready(DachcomToolbox.init.bind({debug: false, settings : null }));
+if( $ !== undefined) {
+    $(document).ready(DachcomToolbox.init.bind({debug: false, settings : null }));
+}

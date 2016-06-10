@@ -1,7 +1,6 @@
 <?php
 
 $assets = $this->toolboxHelper()->getAssetArray( $this->multihref('images')->getElements() );
-$galId = 'gallery-' . uniqid();
 
 ?>
 <div class="row">
@@ -10,7 +9,7 @@ $galId = 'gallery-' . uniqid();
 
         <?php if( !empty( $assets ) ) { ?>
 
-            <ul class="slick-slider list-unstyled <?= $galId; ?>-gal responsive-dots" data-as-nav-for=".<?= $galId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true">
+            <ul class="slick-slider list-unstyled <?= $this->galleryId; ?>-gal responsive-dots" data-as-nav-for=".<?= $this->galleryId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true">
 
                 <?php foreach ($assets as $asset) { ?>
 
@@ -27,7 +26,7 @@ $galId = 'gallery-' . uniqid();
 
             <?php if( $this->checkbox('useThumbnails')->isChecked() ) { ?>
 
-                <ul class="slick-slider slick-slider-thumbs list-unstyled <?= $galId; ?>-thumbs" data-center-mode="true" data-as-nav-for=".<?= $galId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="4" data-dots="false" data-arrows="true">
+                <ul class="slick-slider slick-slider-thumbs list-unstyled <?= $this->galleryId; ?>-thumbs" data-center-mode="true" data-as-nav-for=".<?= $this->galleryId; ?>-gal" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="4" data-dots="false" data-arrows="true">
 
                     <?php foreach ($assets as $asset) { ?>
 

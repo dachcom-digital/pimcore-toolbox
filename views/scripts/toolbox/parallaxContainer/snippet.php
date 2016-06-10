@@ -2,7 +2,7 @@
 
     <div class="background">
 
-        <?php echo $this->snippet("parallaxContainerSnippet", array('reload' => TRUE)); ?>
+        <?php echo $this->snippet('parallaxContainerSnippet', array('reload' => TRUE)); ?>
 
     </div>
 

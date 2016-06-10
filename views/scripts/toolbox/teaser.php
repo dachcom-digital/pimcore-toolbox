@@ -19,6 +19,7 @@
         }
         else
         {
+            // "teaser-standard" is the snippet name. define your teaser layout in the specific teaser snippet!
             echo $this->snippet('teaser-standard', ['useLightBox' => $this->checkbox('useLightBox')->isChecked()]);
         }
 

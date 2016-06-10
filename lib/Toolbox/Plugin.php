@@ -8,8 +8,10 @@ use Toolbox\Plugin\Install;
 
 class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterface {
 
-    public function __construct()
+    public function __construct($jsPaths = null, $cssPaths = null, $alternateIndexDir = null)
     {
+        parent::__construct($jsPaths, $cssPaths);
+
         define('TOOLBOX_CONFIGURATION_FILE', PIMCORE_CONFIGURATION_DIRECTORY . '/toolbox_configuration.php');
     }
 
@@ -53,7 +55,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         parent::init();
     }
 
-	public static function install ()
+	public static function install()
     {
         $install = new Install();
         $install->installConfigFile();
@@ -63,12 +65,12 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         return 'Toolbox has been successfully installed.';
 	}
 
-	public static function uninstall ()
+	public static function uninstall()
     {
         return true;
 	}
 
-	public static function isInstalled ()
+	public static function isInstalled()
     {
         $install = new Install();
         return $install->isInstalled();

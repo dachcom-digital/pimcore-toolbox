@@ -1,6 +1,9 @@
+<?php $galleryId = 'gallery-' . uniqid(); ?>
+
 <?php if( $this->editmode ) { ?>
     <?= \Toolbox\Tools\ElementBuilder::buildElementConfig('gallery', $this) ?>
-<?php }?>
+<?php } ?>
+
 <div class="toolbox-gallery <?= $this->select('galleryAdditionalClasses')->getData();?>">
-    <?= $this->template("toolbox/gallery.php") ?>
+    <?= $this->template('toolbox/gallery.php', array('galleryId' => $galleryId )) ?>
 </div>
