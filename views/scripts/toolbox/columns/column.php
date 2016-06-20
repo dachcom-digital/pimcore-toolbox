@@ -7,7 +7,7 @@
         continue;
     }
 
-    $name = 'column' . $column . '_' . $i;
+    $name = 'column_' . $i;
 
     ?>
 
