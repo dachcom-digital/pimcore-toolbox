@@ -15,9 +15,7 @@
     ?>
 
     <div class="row">
-        <div class="toolbox-columns<?= $equalHeight ? ' equal-height' : '' ?>">
-            <?= $this->template('toolbox/columns/' . $partialName . '.php', $params); ?>
-        </div>
+        <?= $this->template('toolbox/columns/' . $partialName . '.php', $params); ?>
     </div>
 
 <?php } ?>
