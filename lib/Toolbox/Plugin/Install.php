@@ -227,9 +227,13 @@ class Install {
                         [
                             "type" => "additionalClasses",
                             "values" => [],
-                        ]
+                        ],
+                        [
+                            "type" => "checkbox",
+                            "name" => "autoplay",
+                            "title" => "Autoplay?",
+                        ],
                     ],
-
                 ],
 
                 "ckeditor" => [
