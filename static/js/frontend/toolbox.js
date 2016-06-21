@@ -25,6 +25,8 @@ var DachcomToolbox = (function () {
 
         parallax : {},
 
+        video: {},
+
         config: {
 
             debug: false,
@@ -46,6 +48,7 @@ var DachcomToolbox = (function () {
 
             this.setupParallaxImages();
             this.setupParallaxVideos();
+            this.setupVideoElements();
 
             $(document).on('toolbox.checkContentHeights', this.checkContentHeight.bind(this));
 
@@ -92,6 +95,204 @@ var DachcomToolbox = (function () {
 
                 _self.checkContentHeight();
             }
+
+        },
+
+        setupVideoElements: function() {
+
+            var _self = this;
+
+            this.video.autoplayVideos = [];
+            this.video.youtubeVideos = $('.toolbox-video[data-type="youtube"]');
+            this.video.vimeoVideos = $('.toolbox-video[data-type="vimeo"]');
+
+            $('.toolbox-video.autoplay[data-type="asset"]').each(function() {
+
+                _self.video.autoplayVideos.push({
+                    type: 'asset',
+                    container: $(this),
+                    player: $(this).find('video').get(0)
+                });
+
+            });
+
+            if ( this.video.youtubeVideos.length > 0 ) {
+
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                var YTdeferred = $.Deferred();
+                window.onYouTubeIframeAPIReady = function() {
+                    YTdeferred.resolve();
+                }
+
+                YTdeferred.done(function() {
+
+                    _self.video.youtubeVideos.each(function() {
+
+                        var $container = $(this),
+                            $player = $container.find('.player'),
+                            videoId = _self._getVideoId($player.data('video-uri'), 'youtube');
+
+                        var player = new window.YT.Player($player.get(0), {
+                            videoId: videoId,
+                            events: {
+                                'onReady': function() {
+                                    $container.addClass('player-ready');
+
+                                    if ( $container.hasClass('autoplay') ) {
+
+                                        _self.video.autoplayVideos.push({
+                                            type: 'youtube',
+                                            container: $container,
+                                            player: player
+                                        });
+
+                                    }
+
+                                }
+                            }
+                        });
+
+                    });
+
+                });
+
+            }
+
+
+            if ( this.video.vimeoVideos.length > 0 ) {
+
+                this.video.vimeoVideos.each(function() {
+
+                    var $container = $(this),
+                        $player = $container.find('.player'),
+                        videoId = _self._getVideoId($player.data('video-uri'), 'vimeo');
+
+                    var player = new Vimeo.Player($player.get(0), {
+                        id: videoId
+                    });
+
+                    player.on('loaded', function() {
+
+                        $container.addClass('player-ready');
+
+                        if ( $container.hasClass('autoplay') ) {
+
+                            _self.video.autoplayVideos.push({
+                                type: 'vimeo',
+                                container: $container,
+                                player: player
+                            });
+
+
+                        }
+
+                    });
+
+                });
+
+            }
+
+        },
+
+        _checkVideoAutoplay: function() {
+
+            var _self = this,
+                tolerancePixel = 40,
+                scrollTop = $(window).scrollTop() + tolerancePixel,
+                scrollBottom = $(window).scrollTop() + $(window).height() - tolerancePixel;
+
+            $.each(this.video.autoplayVideos, function(i, videoObj) {
+
+                var yTopMedia = videoObj.container.offset().top,
+                    yBottomMedia = videoObj.container.height() + yTopMedia;
+
+                if(scrollTop < yBottomMedia && scrollBottom > yTopMedia) {
+                    _self._playVideo( videoObj.player, videoObj.type );
+                } else {
+                    _self._pauseVideo( videoObj.player, videoObj.type );
+                }
+
+            });
+
+
+        },
+
+        _playVideo: function(player, type) {
+
+            if ( type == 'asset' ) {
+
+                if ( player.paused ) player.play();
+
+            } else if ( type == 'youtube' ) {
+
+                if ( player.getPlayerState() != window.YT.PlayerState.PLAYING ) player.playVideo();
+
+            } else if ( type == 'vimeo' ) {
+
+                player.getPaused().then(function(paused) {
+                    if (paused) player.play();
+                }).catch(function(error) {
+
+                });
+
+            }
+
+        },
+
+        _pauseVideo: function(player, type) {
+
+
+            if ( type == 'asset' ) {
+
+                if ( !player.paused ) player.pause();
+
+            } else if ( type == 'youtube' ) {
+
+                if ( player.getPlayerState() == window.YT.PlayerState.PLAYING ) player.pauseVideo();
+
+            } else if ( type == 'vimeo' ) {
+
+                player.getPaused().then(function(paused) {
+                    if (!paused) player.pause();
+                }).catch(function(error) {
+
+                });
+
+            }
+
+        },
+
+        _getVideoId: function(url, type) {
+
+            if ( type == 'youtube' ) {
+
+                var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\??v?=?))([^#\&\?]*).*/
+                var match = url.match(regExp);
+
+                if (match && match[7]) {
+                    return match[7];
+                } else {
+                    console.log('Unable to parse video id from url: ' + url);
+                }
+
+            } else if ( type == 'vimeo' ) {
+
+                var regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+                var match = url.match(regExp);
+
+                if (match && match[3]) {
+                    return match[3];
+                } else {
+                    console.log('Unable to parse video id from url: ' + url);
+                }
+
+
+            }
+
 
         },
 
@@ -158,6 +359,10 @@ var DachcomToolbox = (function () {
             $('.toolbox-parallax-container .parallax-container-image .canvas').parallaxScroll({
                 friction: 0.5
             });
+
+            if ( this.video.autoplayVideos.length > 0 ) {
+                this._checkVideoAutoplay();
+            }
 
         },
 
