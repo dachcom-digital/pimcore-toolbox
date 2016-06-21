@@ -18,6 +18,14 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
         $view->addScriptPath(PIMCORE_PLUGINS_PATH . '/Toolbox/views/scripts');
         $view->addHelperPath(PIMCORE_PLUGINS_PATH . '/Toolbox/lib/Toolbox/View/Helper', 'Toolbox\View\Helper');
 
+
+
+    }
+
+    public function postDispatch(\Zend_Controller_Request_Abstract $request) {
+
+        parent::postDispatch($request);
+
         $layout = \Zend_Layout::getMvcInstance();
 
         if( $layout && $layout->isEnabled() !== FALSE)
