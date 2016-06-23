@@ -5,7 +5,7 @@
 
             <?php foreach($this->downloads as $download) { ?>
 
-                <?php if ($download instanceof \Pimcore\Model\Asset\Document) {
+                <?php if ($download instanceof \Pimcore\Model\Asset) {
 
                     $dPath = $download->getFullPath();
                     $dSize = $download->getFileSize('kb', 2);
