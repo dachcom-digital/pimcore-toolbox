@@ -15,7 +15,7 @@
                     ?>
 
                     <li>
-                        <a href="<?= $dPath; ?>" target="_blank" class="icon-download-<?= $dType; ?>">
+                        <a href="<?= $dPath; ?>" <?= $this->toolboxHelper()->addTracker('download', $download); ?> target="_blank" class="icon-download-<?= $dType; ?>">
                             <?= $dName; ?>
                         </a>
                     </li>

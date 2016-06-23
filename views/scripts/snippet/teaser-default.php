@@ -5,7 +5,7 @@ $hasLink = !$this->globallink('link')->isEmpty();
 ?>
 <div class="single-teaser default <?= $useLightBox ? 'light-gallery' : ''; ?>">
 
-    <?= $useLightBox ? '<a href="' . $this->image('image')->getThumbnail('lightBoxImage') . '" class="item">' : ($hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
+    <?= !$this->editmode && ($useLightBox || $hasLink) ? '<a href="' . $this->image('image')->getThumbnail('lightBoxImage') . '" class="item">' : (!$this->editmode && $hasLink ? '<a href="' . $this->globallink('link')->getHref() . '" class="item">' : ''); ?>
 
     <?= $this->image('image', [
 
@@ -14,7 +14,7 @@ $hasLink = !$this->globallink('link')->isEmpty();
 
     ]) ?>
 
-    <?= $useLightBox || $hasLink ? '</a>' : ''; ?>
+    <?= !$this->editmode && ($useLightBox || $hasLink) ? '</a>' : ''; ?>
 
     <h3><?= $this->input('headline') ?></h3>
 
