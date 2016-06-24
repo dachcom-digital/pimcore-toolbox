@@ -46,8 +46,7 @@ var DachcomToolbox = (function () {
 
             this.parallax.containerElements = $('.toolbox-parallax-container');
 
-            this.setupParallaxImages();
-            this.setupParallaxVideos();
+            this.setupParallaxContainer();
             this.setupVideoElements();
 
             $(document).on('toolbox.checkContentHeights', this.checkContentHeight.bind(this));
@@ -57,11 +56,7 @@ var DachcomToolbox = (function () {
 
         },
 
-        setupParallaxImages: function() {
-
-        },
-
-        setupParallaxVideos : function() {
+        setupParallaxContainer : function() {
 
             var _self = this, approaches = 0;
 
@@ -103,6 +98,11 @@ var DachcomToolbox = (function () {
             var _self = this;
 
             this.video.autoplayVideos = [];
+
+            if( this.editMode) {
+                return false;
+            }
+
             this.video.youtubeVideos = $('.toolbox-video[data-type="youtube"]');
             this.video.vimeoVideos = $('.toolbox-video[data-type="vimeo"]');
 
