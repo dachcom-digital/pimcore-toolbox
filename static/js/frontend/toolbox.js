@@ -52,7 +52,6 @@ var DachcomToolbox = (function () {
             $(document).on('toolbox.checkContentHeights', this.checkContentHeight.bind(this));
 
             $(window).on('scroll.toolbox', this.onScroll.bind(this));
-            $(window).on('resize.toolbox', this.onResize.bind(this));
 
         },
 
@@ -91,6 +90,10 @@ var DachcomToolbox = (function () {
                 _self.checkContentHeight();
             }
 
+            $('.toolbox-parallax-container:not(.window-full-height) .parallax-container-image .canvas').parallax({
+                friction: 0.5
+            });
+
         },
 
         setupVideoElements: function() {
@@ -126,7 +129,7 @@ var DachcomToolbox = (function () {
                 var YTdeferred = $.Deferred();
                 window.onYouTubeIframeAPIReady = function() {
                     YTdeferred.resolve();
-                }
+                };
 
                 YTdeferred.done(function() {
 
@@ -304,12 +307,15 @@ var DachcomToolbox = (function () {
 
                 var $el = $(this);
 
-                $el.find('.background > .canvas').css({
-                    'top': $el.offset().top - $(window).scrollTop(),
-                    'position': 'fixed'
-                });
+                if( $el.hasClass('window-full-height')) {
 
-                _self.parseContainerHeight( $el,  _self.getParallaxContentElement( $el ) );
+                    $el.find('.background > .canvas').css({
+                        'top': $el.offset().top - $(window).scrollTop(),
+                        'position': 'fixed'
+                    });
+
+                    _self.parseContainerHeight( $el,  _self.getParallaxContentElement( $el ) );
+                }
 
             });
 
@@ -330,11 +336,9 @@ var DachcomToolbox = (function () {
 
         parseContainerHeight : function( $el, $content) {
 
-            var isMinHeight = $el.hasClass('window-full-height') && !this.editMode;
-
             var $contentHeight = $content.outerHeight(), $w = $(window), windowHeight = $w.outerHeight(), scrollTop = $w.scrollTop();
 
-            if( isMinHeight && $contentHeight > windowHeight ) {
+            if( !this.editMode && $contentHeight > windowHeight ) {
 
                 if ( scrollTop >= $el.offset().top && ($contentHeight + $content.offset().top > scrollTop + windowHeight) ) {
 
@@ -360,13 +364,11 @@ var DachcomToolbox = (function () {
 
             var _self = this;
 
-            if( typeof Modernizr !== 'undefined' && Modernizr.touchevents ) return;
-
-            $('.toolbox-parallax-container .parallax-container-image .canvas').parallaxScroll({
-                friction: 0.5
-            });
-
             this.checkContentHeightOnScroll();
+
+            if( typeof Modernizr !== 'undefined' && Modernizr.touchevents ) {
+                return;
+            }
 
             if ( this.video.autoplayVideos.length > 0 ) {
                 this._checkVideoAutoplay();
@@ -381,12 +383,6 @@ var DachcomToolbox = (function () {
             }
 
             return $el.find('.content').first();
-
-        },
-
-        onResize : function(){
-
-
 
         }
 
