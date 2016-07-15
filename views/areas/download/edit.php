@@ -5,4 +5,9 @@
         <?= $this->multihref('downloads'); ?>
     </div>
 
+    <div class="t-row">
+        <label><?= $this->translateAdmin('Show preview images') ?></label>
+        <?= $this->checkbox('showPreviewImages') ?>
+    </div>
+
 </div>

@@ -93,7 +93,7 @@ class Install {
                         [
                             "type" => "additionalClasses",
                             "values" => [],
-                        ]
+                        ],
                     ],
 
                 ],

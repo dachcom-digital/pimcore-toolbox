@@ -1,24 +1,13 @@
 <?php if ( is_array($this->downloads) && count($this->downloads) > 0 ) { ?>
-    <div class="download-list">
+    <div class="download-list<?=$this->checkbox('showPreviewImages')->isChecked() ? ' show-image-preview' : ''?>">
 
         <ul class="list-unstyled">
 
             <?php foreach($this->downloads as $download) { ?>
 
-                <?php if ($download instanceof \Pimcore\Model\Asset) {
+                <?php if ($download instanceof \Pimcore\Model\Asset) { ?>
 
-                    $dPath = $download->getFullPath();
-                    $dSize = $download->getFileSize('kb', 2);
-                    $dType = Pimcore\File::getFileExtension($download->getFilename());
-                    $dName = ($download->getMetadata('name')) ? $download->getMetadata('name') : 'Download';
-
-                    ?>
-
-                    <li>
-                        <a href="<?= $dPath; ?>" <?= $this->toolboxHelper()->addTracker('download', $download); ?> target="_blank" class="icon-download-<?= $dType; ?>">
-                            <?= $dName; ?>
-                        </a>
-                    </li>
+                    <?= $this->template('toolbox/download/list/item.php', array('download' => $download, 'showPreviewImages' => $this->checkbox('showPreviewImages')->isChecked())) ?>
 
                 <?php } ?>
 
