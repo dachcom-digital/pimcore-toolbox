@@ -10,4 +10,9 @@
         <?= $this->checkbox('showPreviewImages') ?>
     </div>
 
+    <div class="t-row">
+        <label><?= $this->translateAdmin('Show file info') ?></label>
+        <?= $this->checkbox('showFileInfo') ?>
+    </div>
+
 </div>

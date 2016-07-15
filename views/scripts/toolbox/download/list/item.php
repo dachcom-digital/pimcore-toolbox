@@ -25,6 +25,8 @@ if ( $this->showPreviewImages ) {
 
 <li>
     <a href="<?= $dPath; ?>" <?= $this->toolboxHelper()->addTracker('download', $this->download); ?> target="_blank" class="icon-download-<?= $dType; ?>">
-        <?php if ( $this->showPreviewImages ) {?><span class="preview-image"><img src="<?=$dPreview?>" alt="<?=$altText?>" /></span><?php } ?><span class="title"><?= $dName; ?></span>
+        <?php if ( $this->showPreviewImages ) {?><span class="preview-image"><img src="<?=$dPreview?>" alt="<?=$altText?>" /></span><?php } ?>
+        <span class="title"><?=$dName; ?></span>
+        <?php if ( $this->showFileInfo ) { ?> <span class="file-info">(<span class="file-type"><?=$dType?></span>, <?=$dSize?>)</span><?php } ?>
     </a>
 </li>
