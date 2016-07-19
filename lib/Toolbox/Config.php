@@ -16,7 +16,7 @@ class Config {
 
         if(\Zend_Registry::isRegistered('toolbox_config'))
         {
-            $config = \Zend_Registry::get("toolbox_config");
+            $config = \Zend_Registry::get('toolbox_config');
         }
         else
         {
@@ -25,7 +25,7 @@ class Config {
             try
             {
                 $config = new \Zend_Config(include($configFile));
-                self::setConfig($config);
+                self::setConfig($config, 'toolbox_config');
 
             }
             catch (\Exception $e)
@@ -43,14 +43,35 @@ class Config {
 
     }
 
+    public static function getCoreConfig() {
+
+        $config = NULL;
+
+        if(\Zend_Registry::isRegistered('toolbox_core_config'))
+        {
+            $config = \Zend_Registry::get('toolbox_core_config');
+        }
+        else
+        {
+            $configFile = TOOLBOX_CORE_CONFIGURATION_FILE;
+
+            $config = new \Zend_Config(include($configFile));
+            self::setConfig($config, 'toolbox_core_config');
+        }
+
+        return $config;
+
+    }
+
     /**
      * @static
      * @param \Zend_Config $config
+     * @param string $name
      * @return void
      */
-    public static function setConfig (\Zend_Config $config) {
+    public static function setConfig (\Zend_Config $config, $name) {
 
-        \Zend_Registry::set("toolbox_config", $config);
+        \Zend_Registry::set($name, $config);
 
     }
 }

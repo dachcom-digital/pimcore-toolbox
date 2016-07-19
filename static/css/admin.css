@@ -141,6 +141,14 @@
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
 }
 
+.alert .pimcore_tag_input {
+    background: white;
+    border: 1px solid #B7B7B7;
+    line-height: 20px;
+    padding: 5px 4px;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}
+
 .alert .form-group .x-form-text-default {
     padding:0 4px;
 }

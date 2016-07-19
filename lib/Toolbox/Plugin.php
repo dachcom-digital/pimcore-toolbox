@@ -13,6 +13,7 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
         parent::__construct($jsPaths, $cssPaths);
 
         define('TOOLBOX_CONFIGURATION_FILE', PIMCORE_CONFIGURATION_DIRECTORY . '/toolbox_configuration.php');
+        define('TOOLBOX_CORE_CONFIGURATION_FILE', PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/toolbox_configuration.php');
     }
 
     public function preDispatch($e)

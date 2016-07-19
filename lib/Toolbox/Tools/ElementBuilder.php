@@ -15,19 +15,28 @@ class ElementBuilder {
      */
     public static function buildElementConfig($type, View $view)
     {
-        $configElements = array();
+        $userConfigElements = array();
 
         $configNode = Config::getConfig()->{$type};
 
         if( !empty( $configNode) )
         {
-            $configElements = $configNode->configElements->toArray();
+            $userConfigElements = $configNode->configElements->toArray();
         }
 
-        if( empty( $configElements ) )
+        if( empty( $userConfigElements ) )
         {
             return "";
         }
+
+        $coreConfigNode = array();
+        $coreConfig = Config::getCoreConfig();
+
+        if ( isset($coreConfig->{$type}) && isset($coreConfig->{$type}->configElements) ) {
+            $coreConfigNode = $coreConfig->{$type}->configElements->toArray();
+        }
+
+        $configElements = array_merge($userConfigElements, $coreConfigNode);
 
         $config = self::parseConfig($type, $configElements, $view);
 
@@ -116,6 +125,15 @@ class ElementBuilder {
 
                     $value = $view->checkbox( $elConf['name'])->isChecked();
                     $elConf['__selectedValue'] = !empty( $value ) ? $value : $elConf['default'];
+                    break;
+
+                case 'input':
+
+                    $value = $view->input( $elConf['name'])->getData();
+                    $elConf['__selectedValue'] = !empty( $value ) ? $value : $elConf['default'];
+
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : 150;
+
                     break;
 
                 default:
