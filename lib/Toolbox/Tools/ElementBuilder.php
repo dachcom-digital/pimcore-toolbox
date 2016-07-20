@@ -26,7 +26,7 @@ class ElementBuilder {
 
         if( empty( $userConfigElements ) )
         {
-            return "";
+            $userConfigElements = array();
         }
 
         $coreConfigNode = array();
@@ -37,6 +37,10 @@ class ElementBuilder {
         }
 
         $configElements = array_merge($userConfigElements, $coreConfigNode);
+
+        if ( empty( $configElements ) ) {
+            return "";
+        }
 
         $config = self::parseConfig($type, $configElements, $view);
 
