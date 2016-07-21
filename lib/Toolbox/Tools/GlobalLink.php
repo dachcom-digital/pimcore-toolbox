@@ -3,6 +3,7 @@
 namespace Toolbox\Tools;
 
 use Pimcore\Tool;
+use Toolbox\Config;
 
 class GlobalLink {
 
@@ -26,14 +27,20 @@ class GlobalLink {
         {
             $validLanguages = Tool::getValidLanguages();
 
-            //it's global
             $currentIsoCode = strtolower( $currentCountry );
             $shiftCountry = FALSE;
 
             $pathCountry = '';
+            $globalString = 'global';
 
             $urlPath = parse_url($path, PHP_URL_PATH);
             $urlPathFragments = explode('/', ltrim($urlPath, '/'));
+
+            //it's a global page, link is correct.
+            if( $currentIsoCode === $globalString )
+            {
+                return $path;
+            }
 
             if( isset($urlPathFragments[0]) )
             {
@@ -56,10 +63,10 @@ class GlobalLink {
             {
                 $path = '/' . $currentIsoCode .'-' . ltrim($path,'/');
             }
-            //if country is set, but in wrong context, replace it!
-            else if( $pathCountry !== $currentIsoCode )
+            //it's a global page with "global-" in string. change it.
+            else if( substr($path, 0, strlen($globalString)+2) === '/' . $globalString . '-')
             {
-                $path = '/' . $currentIsoCode . '-' .str_replace($pathCountry . '-', '', ltrim($path,'/'));
+                $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen($globalString)+2);
             }
 
             return $path;
