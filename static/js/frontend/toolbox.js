@@ -199,6 +199,26 @@ var DachcomToolbox = (function () {
 
             }
 
+
+            // special treatment for videos inside accordion (bootstrap collapse)
+            $.each(this.video.autoplayVideos, function(i, videoObj) {
+
+                var $el = videoObj.container;
+
+                if ( $el.parents('.panel-collapse').length > 0 ) {
+
+                    $el.parents('.panel-group').on('shown.bs.collapse', function () {
+                        _self._playVideo( videoObj.player, videoObj.type );
+                    });
+
+                    $el.parents('.panel-group').on('hide.bs.collapse', function () {
+                        _self._pauseVideo( videoObj.player, videoObj.type );
+                    });
+
+                }
+
+            });
+
         },
 
         _checkVideoAutoplay: function() {
