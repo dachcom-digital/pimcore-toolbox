@@ -259,6 +259,22 @@ class Install {
                     "teaser",
                     "container",
                     "snippet"
+                ],
+
+                "areaBlockConfiguration" => [
+
+                    "toolbar" => [
+
+                        "title" => "Inhaltsbausteine",
+                        "width" => 200,
+                        "x" => 10,
+                        "y" => 125,
+                        "buttonWidth" => 200
+
+                    ],
+
+                    "groups" => FALSE
+
                 ]
             );
 

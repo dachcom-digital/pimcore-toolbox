@@ -13,41 +13,6 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
     }
 
     /**
-     * @param string $type
-     *
-     * @return array
-     */
-    public function getAvailableBricks( $type = '' )
-    {
-        $areaElements = array_keys(ExtensionManager::getBrickConfigs());
-        $disallowedSubAreas = Config::getConfig()->disallowedSubAreas->toArray();
-
-        $bricks = [];
-
-        $elementDisallowed = isset( $disallowedSubAreas[$type]) ? $disallowedSubAreas[$type] : array();
-
-        foreach( $areaElements as $a )
-        {
-            if (!in_array($a, $elementDisallowed))
-            {
-                $bricks[] = $a;
-            }
-        }
-
-        $params = array();
-
-        foreach ($bricks as $brick)
-        {
-            $params[$brick] = array(
-                'forceEditInView' => true
-            );
-        }
-
-        return array('allowed' => $bricks, 'additional' => $params );
-
-    }
-
-    /**
      * @param string|array $areaType toolbox element or custom config
      * @param null|object $element related element to track
      *
@@ -112,34 +77,6 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
         }, array_keys( $trackerInfo ) ) );
 
         return $str;
-    }
-
-    public function getAvailableSnippetBricks( )
-    {
-        $areaElements = array_keys(ExtensionManager::getBrickConfigs());
-        $disallowedSubAreas = Config::getConfig()->disallowedContentSnippetAreas->toArray();
-
-        $bricks = [];
-
-        foreach( $areaElements as $a )
-        {
-            if (!in_array($a, $disallowedSubAreas))
-            {
-                $bricks[] = $a;
-            }
-        }
-
-        $params = array();
-
-        foreach ($bricks as $brick)
-        {
-            $params[$brick] = array(
-                'forceEditInView' => true
-            );
-        }
-
-        return array('allowed' => $bricks, 'additional' => $params );
-
     }
 
     /**
