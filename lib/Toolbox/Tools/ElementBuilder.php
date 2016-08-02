@@ -38,13 +38,14 @@ class ElementBuilder {
 
         $configElements = array_merge($userConfigElements, $coreConfigNode);
 
-        if ( empty( $configElements ) ) {
-            return "";
+        if ( empty( $configElements ) )
+        {
+            return '';
         }
 
         $config = self::parseConfig($type, $configElements, $view);
 
-        return $view->template('toolbox/admin/fieldSet.php', array('configElements' => $config));
+        return $view->template('admin/fieldSet.php', array('configElements' => $config));
     }
 
     private static function parseConfig( $type, $config, View $view )

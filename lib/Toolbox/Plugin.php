@@ -90,10 +90,9 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
     public static function getTranslationFile($language)
     {
         if (is_file(self::getTranslationFileDirectory() . "/$language.csv")) {
-            return "/Toolbox/lang/$language.csv";
+            return '/Toolbox/lang/$language.csv';
         }
 
         return '/Toolbox/lang/en.csv';
     }
-
 }

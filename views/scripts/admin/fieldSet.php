@@ -9,7 +9,7 @@
             </div>
 
             <div class="form-group">
-                <?= $this->template('toolbox/admin/elements/' . $configElement['type'] . '.php', array('element' => $configElement)) ?>
+                <?= $this->template('admin/elements/' . $configElement['type'] . '.php', array('element' => $configElement)) ?>
             </div>
 
         <?php } ?>

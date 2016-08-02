@@ -3,5 +3,5 @@
 <?php }?>
 <div class="toolbox-headline <?= $this->select('headlineAdditionalClasses')->getData();?>">
     <?php if ( !$this->input('anchorName')->isEmpty() ) {?><a id="<?=\Pimcore\File::getValidFilename($this->input('anchorName')->getData())?>"></a><?php }?>
-    <?= $this->template("toolbox/headline.php") ?>
+    <?= $this->template('toolbox/headline.php') ?>
 </div>

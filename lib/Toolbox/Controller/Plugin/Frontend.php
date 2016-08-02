@@ -14,12 +14,8 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
 
         /** @var \Pimcore\View $view */
         $view = $renderer->view;
-
         $view->addScriptPath(PIMCORE_PLUGINS_PATH . '/Toolbox/views/scripts');
         $view->addHelperPath(PIMCORE_PLUGINS_PATH . '/Toolbox/lib/Toolbox/View/Helper', 'Toolbox\View\Helper');
-
-
-
     }
 
     public function postDispatch(\Zend_Controller_Request_Abstract $request) {
@@ -30,7 +26,7 @@ class Frontend extends \Zend_Controller_Plugin_Abstract {
 
         if( $layout && $layout->isEnabled() !== FALSE)
         {
-            \Pimcore::getEventManager()->attach("toolbox.addAsset", function (\Zend_EventManager_Event $e)
+            \Pimcore::getEventManager()->attach('toolbox.addAsset', function (\Zend_EventManager_Event $e)
             {
                 $assetHandler = $e->getTarget();
                 $assetHandler->appendScript('toolbox-wysiwyg', '/plugins/Toolbox/static/js/wysiwyg.js', array(), array('showInFrontEnd' => false ));

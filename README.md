@@ -1,6 +1,15 @@
 # Pimcore Toolbox
 
-## Usage
+### Installation
+Some installation advices. 
+
+**Override Templates**
+
+To override the Toolbox scripts, just create a toolbox folder in your scripts folder to override templates:
+ 
+ `/website/views/scripts/toolbox/gallery.php`
+
+### Usage
 
 **Bricks**
 

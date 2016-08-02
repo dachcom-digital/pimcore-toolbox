@@ -2,5 +2,5 @@
     <?= \Toolbox\Tools\ElementBuilder::buildElementConfig('image', $this) ?>
 <?php }?>
 <div class="toolbox-image <?= $this->select('imageAdditionalClasses')->getData();?>">
-    <?= $this->template("toolbox/image.php") ?>
+    <?= $this->template('toolbox/image.php') ?>
 </div>

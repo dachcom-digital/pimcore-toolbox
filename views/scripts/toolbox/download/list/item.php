@@ -5,25 +5,24 @@
     <?php } ?>
 
 <?php } ?>
-
 <?php
 
 $dPath = $this->download->getFullPath();
 $dSize = $this->download->getFileSize('kb', 2);
 $dType = Pimcore\File::getFileExtension($this->download->getFilename());
-$dName = ($this->download->getMetadata('name')) ? $this->download->getMetadata('name') : $this->translate('Download');
+$dName = ($this->download->getMetadata('title')) ? $this->download->getMetadata('title') : $this->translate('Download');
 
 if ( $this->showPreviewImages ) {
 
     $dPreview = $this->download->getMetadata('previewImage') instanceof \Pimcore\Model\Asset\Image
         ? $this->download->getMetadata('previewImage')->getThumbnail('downloadPreviewImage')
         : (
-            $this->download instanceof \Pimcore\Model\Asset\Image
-                ? $this->download->getThumbnail('downloadPreviewImage')
-                : $this->download->getImageThumbnail('downloadPreviewImage')
+        $this->download instanceof \Pimcore\Model\Asset\Image
+            ? $this->download->getThumbnail('downloadPreviewImage')
+            : $this->download->getImageThumbnail('downloadPreviewImage')
         );
 
-    $altText = $this->download->getMetadata('altText') ? $this->download->getMetadata('altText') : $dName;
+    $altText = $this->download->getMetadata('alt') ? $this->download->getMetadata('alt') : $dName;
 }
 ?>
 
