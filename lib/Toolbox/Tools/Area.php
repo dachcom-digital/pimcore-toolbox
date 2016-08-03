@@ -145,7 +145,7 @@ class Area {
             );
         }
 
-        return array('allowed' => $bricks, 'additional' => $params );
+        return array('allowed' => $bricks, 'params' => $params );
 
     }
 
