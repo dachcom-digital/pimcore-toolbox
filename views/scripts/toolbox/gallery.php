@@ -9,11 +9,11 @@ $assets = $this->toolboxHelper()->getAssetArray( $this->multihref('images')->get
 
         <?php if( !empty( $assets ) ) { ?>
 
-            <ul class="slick-slider list-unstyled <?= $this->galleryId; ?>-gal responsive-dots" data-as-nav-for=".<?= $this->galleryId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true">
+            <ul class="slick-slider list-unstyled <?= $this->galleryId; ?>-gal responsive-dots <?= $this->checkbox('useLightbox')->isChecked() ? 'light-gallery' : '' ?>" data-as-nav-for=".<?= $this->galleryId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true">
 
                 <?php foreach ($assets as $asset) { ?>
 
-                    <li class="slide <?= $this->checkbox('useLightbox')->isChecked() ? 'light-gallery' : '' ?>">
+                    <li class="slide">
                         <?php if( $this->checkbox('useLightbox')->isChecked() ) { ?>
                             <a href="<?= $asset->getThumbnail('lightBoxImage'); ?>" class="item zoom-icon icon-magnifier"></a>
                         <?php } ?>
