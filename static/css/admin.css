@@ -114,6 +114,15 @@
     box-shadow: none;
 }
 
+.toolbox-edit-overlay .t-row .description {
+    display:block;
+    margin:10px 0;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    background: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+
 /**
 
     Toolbox Defaults
