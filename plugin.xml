@@ -3,7 +3,7 @@
     <plugin>
         <pluginName>Toolbox</pluginName>
         <pluginDescription>Toolbox</pluginDescription>
-        <pluginVersion>1.3.1</pluginVersion>
+        <pluginVersion>1.4.0</pluginVersion>
         <pluginRevision>1</pluginRevision>
         <pluginBuildTimestamp>0</pluginBuildTimestamp>
         <pluginClassName>\Toolbox\Plugin</pluginClassName>
@@ -19,6 +19,7 @@
         </pluginJsPaths-extjs6>
         <pluginDocumentEditmodeJsPaths>
             <path>/Toolbox/static/js/document/tags/globallink.js</path>
+            <path>/Toolbox/static/js/document/tags/googlemap.js</path>
         </pluginDocumentEditmodeJsPaths>
         <pluginDocumentEditmodeCssPaths>
             <path>/Toolbox/static/css/admin.css</path>

@@ -48,10 +48,110 @@ var DachcomToolbox = (function () {
 
             this.setupParallaxContainer();
             this.setupVideoElements();
+            this.setupGoogleMaps();
 
             $(document).on('toolbox.checkContentHeights', this.checkContentHeight.bind(this));
 
             $(window).on('scroll.toolbox', this.onScroll.bind(this));
+
+        },
+
+        setupGoogleMaps: function() {
+
+            var $maps = $('.toolbox-googlemap');
+
+            var isValidLocation = function(location) {
+
+                return location.hasOwnProperty('lat') && location.hasOwnProperty('lng') && !isNaN(location.lat) && !isNaN(location.lng);
+
+            }
+
+            var addMarker = function(map, location) {
+
+                if ( isValidLocation(location) ) {
+
+                    var marker = new google.maps.Marker({
+                        position: {lat: location.lat, lng: location.lng},
+                        map: map,
+                        title: location.title
+                    });
+
+                    marker.addListener('click', function() {
+
+                        var infoWindow = new google.maps.InfoWindow({
+                            content: '<div class="info-window"><div class="loading"></div></div>'
+                        })
+
+                        infoWindow.open(map, marker);
+
+                        $.ajax({
+
+                            url: '/plugin/Toolbox/GoogleMap/info-window',
+                            method: 'POST',
+                            data: {
+                                mapParams : location,
+                                language: $('html').attr('lang')
+                            },
+                            complete: function(result) {
+
+                                infoWindow.setContent(result.responseText);
+
+                            }
+
+                        });
+
+
+                    });
+
+                }
+
+            }
+
+            $maps.each(function() {
+
+                var $map = $(this),
+                    locations = $map.data('locations'),
+                    mapStyleUrl = $map.data('mapstyleurl');
+
+                var mapOptions = {
+                    center: new google.maps.LatLng (0, 0),
+                    zoom: !isNaN($map.data('zoom')) ? $map.data('zoom') : 12,
+                    mapTypeId: typeof $map.data('maptype') !== 'undefined' ? $map.data('maptype') : 'roadmap',
+                    streetViewControl: typeof $map.data('streetviewcontrol') !== 'undefined' ? $map.data('streetviewcontrol') : false,
+                    mapTypeControl: typeof $map.data('maptypecontrol') !== 'undefined' ? $map.data('maptypecontrol') : false,
+                    panControl: typeof $map.data('pancontrol') !== 'undefined' ? $map.data('pancontrol') : false,
+                    scrollwheel: typeof $map.data('scrollwheel') !== 'undefined' ? $map.data('scrollwheel') : false
+                };
+
+                var map = new google.maps.Map($map.get(0), mapOptions);
+
+                if ( typeof mapStyleUrl === 'string' ) {
+
+                    $.getJSON(mapStyleUrl).done(function(data) {
+                        map.set('styles', data);
+                    });
+
+                }
+
+                if ( locations.length > 0 ) {
+
+                    $.each(locations, function(i, location) {
+                        addMarker(map, location);
+                    })
+
+                    if ( isValidLocation(locations[0]) ) {
+
+                        map.setCenter({
+                            lat: locations[0]['lat'],
+                            lng: locations[0]['lng']
+                        });
+
+                    }
+
+                }
+
+            });
+
 
         },
 

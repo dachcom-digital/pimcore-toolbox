@@ -236,6 +236,17 @@ class Install {
                     ],
                 ],
 
+                "googleMap" => [
+                    "configElements" => [],
+                    "mapOptions" => [
+                        "streetViewControl" => TRUE,
+                        "mapTypeControl" => FALSE,
+                        "panControl" => FALSE,
+                        "scrollwheel" => FALSE,
+                    ],
+                    "mapStyleUrl" => FALSE
+                ],
+
                 "ckeditor" => [
                     "styles" => [
                         [

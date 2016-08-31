@@ -51,6 +51,20 @@
 
 }
 
+/**
+
+    Toolbox Googlemap Container
+
+**/
+.toolbox-googlemap-container {
+
+}
+
+.pimcore_area_entry .pimcore_area_googleMap .pimcore_area_edit_button {
+    top: -35px !important;
+}
+
+
 .toolbox-parallax-container .editmode-parallax-container-image {
     position:absolute;
     z-index: 3;
@@ -121,6 +135,10 @@
     background: #f7f7f7;
     padding: 10px;
     border: 1px solid #eee;
+}
+
+.toolbox-edit-overlay .t-row .pimcore_tag_select {
+    display: block;
 }
 
 /**
