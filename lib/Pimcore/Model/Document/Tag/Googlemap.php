@@ -55,6 +55,7 @@ class Googlemap extends Model\Document\Tag
 
             $mapOptions = $configNode->mapOptions->toArray();
             $mapStyleUrl = $configNode->mapStyleUrl;
+            $markerIcon = $configNode->markerIcon;
 
             if ( is_array($mapOptions) && count($mapOptions) > 0 ) {
                 foreach($mapOptions as $name => $value) {
@@ -65,6 +66,10 @@ class Googlemap extends Model\Document\Tag
 
             if ( !empty($mapStyleUrl) ) {
                 $dataAttr['data-mapstyleurl'] = $mapStyleUrl;
+            }
+
+            if ( !empty($markerIcon) ) {
+                $dataAttr['data-markericon'] = $markerIcon;
             }
 
         }

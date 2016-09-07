@@ -244,7 +244,8 @@ class Install {
                         "panControl" => FALSE,
                         "scrollwheel" => FALSE,
                     ],
-                    "mapStyleUrl" => FALSE
+                    "mapStyleUrl" => FALSE,
+                    "markerIcon" => FALSE
                 ],
 
                 "ckeditor" => [

@@ -66,14 +66,15 @@ var DachcomToolbox = (function () {
 
             }
 
-            var addMarker = function(map, location) {
+            var addMarker = function(map, location, markerIcon) {
 
                 if ( isValidLocation(location) ) {
-
+                    console.log(markerIcon);
                     var marker = new google.maps.Marker({
                         position: {lat: location.lat, lng: location.lng},
                         map: map,
-                        title: location.title
+                        title: location.title,
+                        icon: markerIcon
                     });
 
                     marker.addListener('click', function() {
@@ -111,7 +112,8 @@ var DachcomToolbox = (function () {
 
                 var $map = $(this),
                     locations = $map.data('locations'),
-                    mapStyleUrl = $map.data('mapstyleurl');
+                    mapStyleUrl = $map.data('mapstyleurl'),
+                    markerIcon = $map.data('markericon');
 
                 var mapOptions = {
                     center: new google.maps.LatLng (0, 0),
@@ -136,7 +138,7 @@ var DachcomToolbox = (function () {
                 if ( locations.length > 0 ) {
 
                     $.each(locations, function(i, location) {
-                        addMarker(map, location);
+                        addMarker(map, location, markerIcon);
                     })
 
                     if ( isValidLocation(locations[0]) ) {
