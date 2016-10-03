@@ -1,14 +1,11 @@
 /*
-
-        __           __                                ___       _ __        __
-   ____/ /___ ______/ /_  _________  ____ ___     ____/ (_)___ _(_) /_____ _/ /
-  / __  / __ `/ ___/ __ \/ ___/ __ \/ __ `__ \   / __  / / __ `/ / __/ __ `/ /
+ __           __                                ___       _ __        __
+ ____/ /___ ______/ /_  _________  ____ ___     ____/ (_)___ _(_) /_____ _/ /
+ / __  / __ `/ ___/ __ \/ ___/ __ \/ __ `__ \   / __  / / __ `/ / __/ __ `/ /
  / /_/ / /_/ / /__/ / / / /__/ /_/ / / / / / /  / /_/ / / /_/ / / /_/ /_/ / /
  \__,_/\__,_/\___/_/ /_/\___/\____/_/ /_/ /_/   \__,_/_/\__, /_/\__/\__,_/_/
-                                                       /____/
-
+ /____/
  copyright @ 2016, dachcom digital
- don't be a dick. don't copy.
 
  */
 var DachcomToolbox = (function () {
@@ -21,55 +18,46 @@ var DachcomToolbox = (function () {
 
         lastWindowPosition : {},
 
-        editMode : typeof _PIMCORE_EDITMODE !== 'undefined' && _PIMCORE_EDITMODE === true,
+        editMode : false,
 
         parallax : {},
 
         video: {},
 
-        config: {
+        init: function() {
 
-            debug: false,
-            settings : {}
-
-        },
-
-        init: function (options) {
-
-            jQuery.extend(self.config, options);
+            self.parallax.containerElements = $('.toolbox-parallax-container');
+            self.editMode = typeof _PIMCORE_EDITMODE !== 'undefined' && _PIMCORE_EDITMODE === true;
 
             self.startSystem();
 
         },
 
-        startSystem: function () {
-
-            this.parallax.containerElements = $('.toolbox-parallax-container');
+        startSystem: function() {
 
             this.setupParallaxContainer();
+
             this.setupVideoElements();
+
             this.setupGoogleMaps();
 
             $(document).on('toolbox.checkContentHeights', this.checkContentHeight.bind(this));
-
             $(window).on('scroll.toolbox', this.onScroll.bind(this));
 
         },
 
         setupGoogleMaps: function() {
 
-            var $maps = $('.toolbox-googlemap');
+            var $maps = $('.toolbox-googlemap'),
 
-            var isValidLocation = function(location) {
+            //internal callback 1
+                isValidLocation = function(location) {
+                    return location.hasOwnProperty('lat') && location.hasOwnProperty('lng') && !isNaN(location.lat) && !isNaN(location.lng);
+                },
 
-                return location.hasOwnProperty('lat') && location.hasOwnProperty('lng') && !isNaN(location.lat) && !isNaN(location.lng);
+            //internal callback 2
+                addMarker = function(map, location, markerIcon) {
 
-            }
-
-            var addMarker = function(map, location, markerIcon) {
-
-                if ( isValidLocation(location) ) {
-                    console.log(markerIcon);
                     var marker = new google.maps.Marker({
                         position: {lat: location.lat, lng: location.lng},
                         map: map,
@@ -81,7 +69,7 @@ var DachcomToolbox = (function () {
 
                         var infoWindow = new google.maps.InfoWindow({
                             content: '<div class="info-window"><div class="loading"></div></div>'
-                        })
+                        });
 
                         infoWindow.open(map, marker);
 
@@ -94,38 +82,34 @@ var DachcomToolbox = (function () {
                                 language: $('html').attr('lang')
                             },
                             complete: function(result) {
-
                                 infoWindow.setContent(result.responseText);
-
+                                map.setCenter(marker.getPosition());
                             }
 
                         });
 
-
                     });
 
-                }
-
-            }
+                };
 
             $maps.each(function() {
 
                 var $map = $(this),
                     locations = $map.data('locations'),
                     mapStyleUrl = $map.data('mapstyleurl'),
-                    markerIcon = $map.data('markericon');
+                    markerIcon = $map.data('markericon'),
+                    mapOptions = {
+                        center: new google.maps.LatLng (0, 0),
+                        zoom: !isNaN($map.data('zoom')) ? $map.data('zoom') : 12,
+                        mapTypeId: typeof $map.data('maptype') !== 'undefined' ? $map.data('maptype') : 'roadmap',
+                        streetViewControl: typeof $map.data('streetviewcontrol') !== 'undefined' ? $map.data('streetviewcontrol') : false,
+                        mapTypeControl: typeof $map.data('maptypecontrol') !== 'undefined' ? $map.data('maptypecontrol') : false,
+                        panControl: typeof $map.data('pancontrol') !== 'undefined' ? $map.data('pancontrol') : false,
+                        scrollwheel: typeof $map.data('scrollwheel') !== 'undefined' ? $map.data('scrollwheel') : false
+                    };
 
-                var mapOptions = {
-                    center: new google.maps.LatLng (0, 0),
-                    zoom: !isNaN($map.data('zoom')) ? $map.data('zoom') : 12,
-                    mapTypeId: typeof $map.data('maptype') !== 'undefined' ? $map.data('maptype') : 'roadmap',
-                    streetViewControl: typeof $map.data('streetviewcontrol') !== 'undefined' ? $map.data('streetviewcontrol') : false,
-                    mapTypeControl: typeof $map.data('maptypecontrol') !== 'undefined' ? $map.data('maptypecontrol') : false,
-                    panControl: typeof $map.data('pancontrol') !== 'undefined' ? $map.data('pancontrol') : false,
-                    scrollwheel: typeof $map.data('scrollwheel') !== 'undefined' ? $map.data('scrollwheel') : false
-                };
-
-                var map = new google.maps.Map($map.get(0), mapOptions);
+                var map = new google.maps.Map($map.get(0), mapOptions),
+                    latLngBounds = new google.maps.LatLngBounds();
 
                 if ( typeof mapStyleUrl === 'string' ) {
 
@@ -138,64 +122,79 @@ var DachcomToolbox = (function () {
                 if ( locations.length > 0 ) {
 
                     $.each(locations, function(i, location) {
-                        addMarker(map, location, markerIcon);
-                    })
 
-                    if ( isValidLocation(locations[0]) ) {
+                        if ( isValidLocation(location) ) {
+                            latLngBounds.extend( new google.maps.LatLng(location.lat, location.lng) );
+                            addMarker(map, location, markerIcon);
+                        }
 
-                        map.setCenter({
-                            lat: locations[0]['lat'],
-                            lng: locations[0]['lng']
-                        });
+                    });
 
-                    }
+                    map.fitBounds( latLngBounds );
+
+                    var listener = google.maps.event.addListener(map, 'idle', function() {
+                        if (map.getZoom() > 17) map.setZoom(17);
+                        google.maps.event.removeListener(listener);
+                    });
 
                 }
 
             });
-
 
         },
 
-        setupParallaxContainer : function() {
+        setupParallaxContainer: function() {
 
-            var _self = this, approaches = 0;
+            var _self = this,
+                $parallaxContainer = $('.toolbox-parallax-container:not(.window-full-height) .parallax-container-image .canvas');
+
+            var $v = this.parallax.containerElements;
+
+            this.waitForElementInEditMode( $v, '.parallax-video > .inner > div').then(
+                function() { _self.checkContentHeight(); }
+            );
 
             if( this.editMode ) {
 
-                var $v = this.parallax.containerElements;
-
-                if( $v.length > 0 ) {
-
-                    var interval = setInterval(function() {
-
-                        if( $v.find('.parallax-video > .inner > div').length > 0 ) {
-                            clearInterval(interval);
-                            _self.checkContentHeight();
-                        } else if( approaches > 20 ) {
-                            clearInterval(interval);
-                            _self.checkContentHeight();
-                        }
-
-                        approaches++;
-
-                    }, 50);
-
-
-                } else {
-
-                    _self.checkContentHeight();
-                }
+                $parallaxContainer.each(function() {
+                    $(this).css('background-image', 'url("' + $(this).data('image-src') + '")')
+                });
 
             } else {
 
-                _self.checkContentHeight();
+                $parallaxContainer.parallax({
+                    friction: 0.5
+                });
             }
 
-            $('.toolbox-parallax-container:not(.window-full-height) .parallax-container-image .canvas').parallax({
-                friction: 0.5
-            });
+        },
 
+        waitForElementInEditMode: function( $container, $els ) {
+
+            var interval = null,
+                approaches = 0,
+                dfd = jQuery.Deferred();
+
+            if( !this.editMode || $container.length === 0) {
+                dfd.resolve(true);
+                return dfd.promise();
+            }
+
+            interval = setInterval(function() {
+
+                if( $container.find($els).length > 0 ) {
+                    clearInterval(interval);
+                    dfd.resolve($container);
+                } else if( approaches > 20 ) {
+                    clearInterval(interval);
+                    dfd.resolve($container);
+                }
+
+                approaches++;
+
+            }, 50);
+
+            return dfd.promise();
         },
 
         setupVideoElements: function() {
@@ -224,7 +223,8 @@ var DachcomToolbox = (function () {
             if ( this.video.youtubeVideos.length > 0 ) {
 
                 var tag = document.createElement('script');
-                tag.src = "https://www.youtube.com/iframe_api";
+                tag.src = 'https://www.youtube.com/iframe_api';
+
                 var firstScriptTag = document.getElementsByTagName('script')[0];
                 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -267,7 +267,6 @@ var DachcomToolbox = (function () {
 
             }
 
-
             if ( this.video.vimeoVideos.length > 0 ) {
 
                 this.video.vimeoVideos.each(function() {
@@ -292,7 +291,6 @@ var DachcomToolbox = (function () {
                                 player: player
                             });
 
-
                         }
 
                     });
@@ -300,7 +298,6 @@ var DachcomToolbox = (function () {
                 });
 
             }
-
 
             // special treatment for videos inside accordion (bootstrap collapse)
             $.each(this.video.autoplayVideos, function(i, videoObj) {
@@ -343,20 +340,19 @@ var DachcomToolbox = (function () {
 
             });
 
-
         },
 
         _playVideo: function(player, type) {
 
-            if ( type == 'asset' ) {
+            if ( type === 'asset' ) {
 
                 if ( player.paused ) player.play();
 
-            } else if ( type == 'youtube' ) {
+            } else if ( type === 'youtube' ) {
 
                 if ( player.getPlayerState() != window.YT.PlayerState.PLAYING ) player.playVideo();
 
-            } else if ( type == 'vimeo' ) {
+            } else if ( type === 'vimeo' ) {
 
                 player.getPaused().then(function(paused) {
                     if (paused) player.play();
@@ -370,19 +366,18 @@ var DachcomToolbox = (function () {
 
         _pauseVideo: function(player, type) {
 
+            if( type === 'asset' ) {
 
-            if ( type == 'asset' ) {
+                if( !player.paused ) player.pause();
 
-                if ( !player.paused ) player.pause();
+            } else if( type === 'youtube' ) {
 
-            } else if ( type == 'youtube' ) {
+                if( player.getPlayerState() == window.YT.PlayerState.PLAYING ) player.pauseVideo();
 
-                if ( player.getPlayerState() == window.YT.PlayerState.PLAYING ) player.pauseVideo();
-
-            } else if ( type == 'vimeo' ) {
+            } else if( type === 'vimeo' ) {
 
                 player.getPaused().then(function(paused) {
-                    if (!paused) player.pause();
+                    if( !paused ) player.pause();
                 }).catch(function(error) {
 
                 });
@@ -393,35 +388,35 @@ var DachcomToolbox = (function () {
 
         _getVideoId: function(url, type) {
 
-            if ( type == 'youtube' ) {
+            var regExp, match;
 
-                var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\??v?=?))([^#\&\?]*).*/
-                var match = url.match(regExp);
+            if( type === 'youtube' ) {
 
-                if (match && match[7]) {
+                regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\??v?=?))([^#\&\?]*).*/;
+                match = url.match(regExp);
+
+                if ( match && match[7] ) {
                     return match[7];
                 } else {
                     console.log('Unable to parse video id from url: ' + url);
                 }
 
-            } else if ( type == 'vimeo' ) {
+            } else if( type === 'vimeo' ) {
 
-                var regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
-                var match = url.match(regExp);
+                regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+                match = url.match(regExp);
 
-                if (match && match[3]) {
+                if( match && match[3] ) {
                     return match[3];
                 } else {
                     console.log('Unable to parse video id from url: ' + url);
                 }
 
-
             }
-
 
         },
 
-        checkContentHeight : function() {
+        checkContentHeight: function() {
 
             var _self = this;
 
@@ -429,7 +424,7 @@ var DachcomToolbox = (function () {
 
                 var $el = $(this);
 
-                if( $el.hasClass('window-full-height')) {
+                if( $el.hasClass('window-full-height') ) {
 
                     $el.find('.background > .canvas').css({
                         'top': $el.offset().top - $(window).scrollTop(),
@@ -443,7 +438,7 @@ var DachcomToolbox = (function () {
 
         },
 
-        checkContentHeightOnScroll : function() {
+        checkContentHeightOnScroll: function() {
 
             var _self = this;
 
@@ -456,13 +451,13 @@ var DachcomToolbox = (function () {
 
         },
 
-        parseContainerHeight : function( $el, $content) {
+        parseContainerHeight: function( $el, $content) {
 
             var $contentHeight = $content.outerHeight(), $w = $(window), windowHeight = $w.outerHeight(), scrollTop = $w.scrollTop();
 
             if( !this.editMode && $contentHeight > windowHeight ) {
 
-                if ( scrollTop >= $el.offset().top && ($contentHeight + $content.offset().top > scrollTop + windowHeight) ) {
+                if ( scrollTop >= $el.offset().top && ($contentHeight + $content.offset().top > scrollTop + windowHeight ) ) {
 
                     $el.find('.background > .canvas').css('top', 0);
 
@@ -482,9 +477,7 @@ var DachcomToolbox = (function () {
 
         },
 
-        onScroll : function(ev) {
-
-            var _self = this;
+        onScroll: function(ev) {
 
             this.checkContentHeightOnScroll();
 
@@ -498,8 +491,8 @@ var DachcomToolbox = (function () {
 
         },
 
-        getParallaxContentElement : function( $el )
-        {
+        getParallaxContentElement: function( $el ) {
+
             if( $el.find('.slick-slider').length > 0 ) {
                 return $el.find('.slick-slider');
             }
@@ -510,7 +503,6 @@ var DachcomToolbox = (function () {
 
     };
 
-    // API
     return {
 
         init: self.init
@@ -520,5 +512,5 @@ var DachcomToolbox = (function () {
 })();
 
 if( $ !== undefined) {
-    $(document).ready(DachcomToolbox.init.bind({debug: false, settings : null }));
+    $(function() { DachcomToolbox.init() });
 }
