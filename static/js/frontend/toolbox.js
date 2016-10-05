@@ -10,6 +10,8 @@
  */
 var DachcomToolbox = (function () {
 
+    'use strict';
+
     var self = {
 
         $doc: $ !== undefined ? $(document) : null,
@@ -512,5 +514,10 @@ var DachcomToolbox = (function () {
 })();
 
 if( $ !== undefined) {
-    $(function() { DachcomToolbox.init() });
+
+    $(function() {
+        'use strict';
+        DachcomToolbox.init();
+    });
+
 }
