@@ -46,8 +46,8 @@ class Googlemap extends Model\Document\Tag
 
         $dataAttr = array();
         $dataAttr['data-locations'] = json_encode($this->data);
-        $dataAttr['data-zoom'] = $this->options['mapZoom'];
-        $dataAttr['data-maptype'] = $this->options['mapType'];
+        $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
+        $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
         $configNode = Config::getConfig()->googleMap;
 
@@ -60,7 +60,11 @@ class Googlemap extends Model\Document\Tag
             if ( is_array($mapOptions) && count($mapOptions) > 0 ) {
                 foreach($mapOptions as $name => $value) {
                     $value = is_bool($value) ? ($value === TRUE ? 'true' : 'false') : (string) $value;
-                    $dataAttr['data-' . strtolower($name)] = $value;
+
+                    // convert camelCase to camel-case, because we will read these property with $el.data(), which converts them back to camelCase
+                    $name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '-\\1', $name));
+
+                    $dataAttr['data-mapoption-' . $name] = $value;
                 }
             }
 

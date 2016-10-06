@@ -105,14 +105,19 @@ var DachcomToolbox = (function () {
                     mapStyleUrl = $map.data('mapstyleurl'),
                     markerIcon = $map.data('markericon'),
                     mapOptions = {
-                        center: new google.maps.LatLng (0, 0),
-                        zoom: !isNaN($map.data('zoom')) ? $map.data('zoom') : 12,
-                        mapTypeId: typeof $map.data('maptype') !== 'undefined' ? $map.data('maptype') : 'roadmap',
-                        streetViewControl: typeof $map.data('streetviewcontrol') !== 'undefined' ? $map.data('streetviewcontrol') : false,
-                        mapTypeControl: typeof $map.data('maptypecontrol') !== 'undefined' ? $map.data('maptypecontrol') : false,
-                        panControl: typeof $map.data('pancontrol') !== 'undefined' ? $map.data('pancontrol') : false,
-                        scrollwheel: typeof $map.data('scrollwheel') !== 'undefined' ? $map.data('scrollwheel') : false
+                        center: new google.maps.LatLng (0, 0)
                     };
+
+                $.each($map.data(), function(name, value) {
+
+                    if ( name.substring(0,9) === 'mapoption' ) {
+                        name = name.replace('mapoption', '');
+                        name = name.charAt(0).toLowerCase() + name.slice(1);
+
+                        mapOptions[name] = value;
+                    }
+
+                });
 
                 var map = new google.maps.Map($map.get(0), mapOptions),
                     latLngBounds = new google.maps.LatLngBounds();
