@@ -108,6 +108,7 @@
 
 **/
 .toolbox-edit-overlay {
+    max-width:550px;
     width: calc( 100% - 12px );
     min-height: 300px; /* always force min height! */
 }
