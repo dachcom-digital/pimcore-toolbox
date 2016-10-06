@@ -53,6 +53,8 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
     openGooglemapEditPanel: function (data, callback) {
 
+        data = data || [];
+
         var addLocation = function(location) {
 
             if ( typeof location == 'undefined' ) {
@@ -218,7 +220,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             }]
         });
 
-        if ( data.length > 0 ) {
+        if ( data && data.length > 0 ) {
 
             data.forEach(function(location) {
 

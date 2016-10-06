@@ -69,7 +69,6 @@ var DachcomToolbox = (function () {
             var addMarker = function(map, location, markerIcon) {
 
                 if ( isValidLocation(location) ) {
-                    console.log(markerIcon);
                     var marker = new google.maps.Marker({
                         position: {lat: location.lat, lng: location.lng},
                         map: map,
@@ -111,7 +110,7 @@ var DachcomToolbox = (function () {
             $maps.each(function() {
 
                 var $map = $(this),
-                    locations = $map.data('locations'),
+                    locations = $map.data('locations') || [],
                     mapStyleUrl = $map.data('mapstyleurl'),
                     markerIcon = $map.data('markericon');
 
