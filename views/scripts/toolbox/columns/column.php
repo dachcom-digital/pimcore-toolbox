@@ -13,7 +13,7 @@
 
     <div class="col-md-<?= $column ?> col-sm-<?= $column ?><?php if ( $offset ) {?> col-md-offset-<?=$offset?> col-sm-offset-<?=$offset?><?php } ?> col-xs-12">
 
-        <div class="toolbox-column<?php echo $this->equalHeight ? ' equal-height-item' : '' ?>">
+        <div class="toolbox-column<?php echo $this->equalHeight ?>">
 
             <?= $this->template('helper/areablock.php', [ 'name' => $name, 'type' => 'columns' ] ); ?>
 

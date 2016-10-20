@@ -2,7 +2,7 @@
 
     <div class="col-xs-12 col-gallery">
 
-        <?= $this->partial('toolbox/gallery/gallery.php', [
+        <?= $this->template('toolbox/gallery/gallery.php', [
             'editmode' => $this->editmode,
             'images' => $this->toolboxHelper()->getAssetArray( $this->multihref('images')->getElements() ),
             'galleryId' => $this->galleryId,

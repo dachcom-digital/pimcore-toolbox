@@ -114,4 +114,24 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
+    public function templateExists($view, $templatePath) {
+
+        if ( empty($templatePath) ) return;
+        $found = false;
+
+        $paths = $view->getScriptPaths();
+
+        foreach ( $paths as $path ) {
+
+            $p = $path . $templatePath;
+            if (is_file($p)) {
+                $found = true;
+            }
+
+        }
+
+        return $found;
+
+    }
+
 }
