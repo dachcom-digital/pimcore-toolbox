@@ -3,5 +3,10 @@
 <?php }?>
 
 <?php if ( !$this->input('anchorName')->isEmpty() ) { ?>
-    <a id="<?=$this->input('anchorName')->getData()?>"></a>
+
+    <?php
+    $anchorName = ltrim($this->input('anchorName')->getData(), '#');
+    ?>
+
+    <a id="<?=$anchorName?>" data-anchortitle="<?=$this->input('anchorTitle')->getData()?>"></a>
 <?php } ?>
