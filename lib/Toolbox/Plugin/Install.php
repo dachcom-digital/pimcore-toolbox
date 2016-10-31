@@ -75,9 +75,35 @@ class Install {
                             "type" => "checkbox",
                             "name" => "equalHeight",
                             "title" => "Equal heights?",
+                            "reload" => FALSE
 
                         ]
                     ],
+                ],
+                "slideColumns" => [
+                    "configElements" => [
+                        [
+                            "type" => "select",
+                            "name" => "slidesPerView",
+                            "title" => "Slides per View",
+                            "values" => [
+                                "2" => "2 Columns",
+                                "3" => "3 Columns",
+                                "4" => "4 Columns",
+                                "6" => "6 Columns",
+                            ],
+                            "default" => "4"
+                        ],
+                        [
+                            "type" => "checkbox",
+                            "name" => "equalHeight",
+                            "title" => "Equal heights?",
+                            "reload" => FALSE
+                        ]
+                    ],
+                    "columnClasses" => [
+                        "2" => "col-xs-12 col-sm-6"
+                    ]
                 ],
                 "content" => [
                     "configElements" => [
@@ -259,8 +285,9 @@ class Install {
                 ],
 
                 "disallowedSubAreas" => [
-                    "accordion" => ["accordion","container"],
+                    "accordion" => ["accordion","container","slideColumns"],
                     "columns" => ["container"],
+                    "slideColumns" => [ "slideColumns","accordion","container","columns","anchor"],
                     "container" => ["container"],
                     "image" => ["parallaxContainer"],
                     "snippet" => ["parallaxContainer"]

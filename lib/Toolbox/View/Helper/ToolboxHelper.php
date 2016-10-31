@@ -114,24 +114,36 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     }
 
-    public function templateExists($view, $templatePath) {
+    /**
+     * @param $columnType
+     *
+     * @return string
+     */
+    public function calculateSlideColumnClasses( $columnType )
+    {
+        $columnType = (int) $columnType;
+        $configNode = Config::getConfig()->slideColumns;
 
-        if ( empty($templatePath) ) return;
-        $found = false;
+        $systemClasses = [
+            2 => 'col-xs-12 col-sm-6',
+            3 => 'col-xs-12 col-sm-4',
+            4 => 'col-xs-12 col-sm-3',
+            6 => 'col-xs-12 col-sm-2',
 
-        $paths = $view->getScriptPaths();
+        ];
 
-        foreach ( $paths as $path ) {
-
-            $p = $path . $templatePath;
-            if (is_file($p)) {
-                $found = true;
-            }
-
+        if(empty($configNode))
+        {
+            return isset( $systemClasses[ $columnType ] ) ? $systemClasses[ $columnType ] : 'col-xs-12';
         }
 
-        return $found;
+        $configInfo = $configNode->toArray();
 
+        if( !isset( $configInfo['columnClasses'] ) || !isset( $configInfo['columnClasses'][ $columnType ] ) )
+        {
+            return isset( $systemClasses[ $columnType ] ) ? $systemClasses[ $columnType ] : 'col-xs-12';
+        }
+
+        return $configInfo['columnClasses'][ $columnType ];
     }
-
 }

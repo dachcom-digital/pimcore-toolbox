@@ -1,7 +1,7 @@
 <?php
 
 $id = uniqid('accordion-');
-$type = $this->select("type")->getData();
+$type = $this->select('type')->getData();
 $panels = $this->block('panels', array('default' => 2 ));
 
 ?>
