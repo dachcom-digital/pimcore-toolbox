@@ -9,5 +9,5 @@ $slideElements = $this->block('slideCols', array('default' => $slidesPerView ));
 $slidesPerViewClass = $this->toolboxHelper()->calculateSlideColumnClasses( $slidesPerView );
 ?>
 <div class="toolbox-slide-columns <?= $this->select('columnsAdditionalClasses')->getData();?><?= $equalHeight ? ' equal-height' : ''?>">
-    <?= $this->template('toolbox/slideColumns.php', array('id' => $id, 'slideElements' => $slideElements, 'slidesPerView' => $slidesPerView, 'slidesPerViewClasses' => $slidesPerViewClass)) ?>
+    <?= $this->template('toolbox/slideColumns.php', array('id' => $id, 'slideElements' => $slideElements, 'slidesPerView' => $slidesPerView, 'slidesPerViewClasses' => $slidesPerViewClass, 'equalHeight' => $equalHeight)) ?>
 </div>
