@@ -147,6 +147,28 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
         return $configInfo['columnClasses'][ $columnType ];
     }
 
+    public function calculateSlideColumnBreakpoints( $columnType ) {
+
+        $columnType = (int) $columnType;
+        $configNode = Config::getConfig()->slideColumns;
+
+        $breakpoints = [];
+
+        if(!empty($configNode))
+        {
+            $configInfo = $configNode->toArray();
+
+            if ( isset( $configInfo['breakpoints'] ) && isset( $configInfo['breakpoints'][ $columnType ] ) ) {
+
+                $breakpoints = $configInfo['breakpoints'][ $columnType ];
+
+            }
+        }
+
+        return $breakpoints;
+
+    }
+
     public function templateExists($view, $templatePath) {
 
         if ( empty($templatePath) ) return;

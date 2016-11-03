@@ -7,7 +7,8 @@ $id = $this->brick->getId() . '-' . $this->brick->getIndex();
 $slidesPerView = (int) $this->select('slidesPerView')->getData();
 $slideElements = $this->block('slideCols', array('default' => $slidesPerView ));
 $slidesPerViewClass = $this->toolboxHelper()->calculateSlideColumnClasses( $slidesPerView );
+$breakpoints = $this->toolboxHelper()->calculateSlideColumnBreakpoints( $slidesPerView );
 ?>
 <div class="toolbox-slide-columns <?= $this->select('columnsAdditionalClasses')->getData();?><?= $equalHeight ? ' equal-height' : ''?>">
-    <?= $this->template('toolbox/slideColumns.php', array('id' => $id, 'slideElements' => $slideElements, 'slidesPerView' => $slidesPerView, 'slidesPerViewClasses' => $slidesPerViewClass)) ?>
+    <?= $this->template('toolbox/slideColumns.php', array('id' => $id, 'slideElements' => $slideElements, 'slidesPerView' => $slidesPerView, 'slidesPerViewClasses' => $slidesPerViewClass, 'breakpoints' => $breakpoints)) ?>
 </div>
