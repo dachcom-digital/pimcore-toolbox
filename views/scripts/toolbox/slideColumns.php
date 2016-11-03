@@ -12,7 +12,7 @@
                     <span class="count"><?= $c ?> / <?= $this->slideElements->getCount() ?></span>
                 <?php } ?>
 
-                <div class="slide-column <?= $type ?> slide-<?= $this->slideElements->getCurrentIndex() ?><?= $this->equalHeight ? ' equal-height-item' : ''?>">
+                <div class="slide-column <?= $type ?> slide-<?= $this->slideElements->getCurrentIndex() ?>">
                     <?= $this->template('helper/areablock.php', [ 'name' => 'slideCol'.  $this->slideElements->getCurrentIndex(), 'type' => 'slideColumns' ] ); ?>
                 </div>
 
