@@ -103,6 +103,9 @@ class Install {
                     ],
                     "columnClasses" => [
                         "2" => "col-xs-12 col-sm-6"
+                    ],
+                    "breakpoints" => [
+
                     ]
                 ],
                 "content" => [
