@@ -1,7 +1,7 @@
 
 <?php if( !empty( $this->images ) ) { ?>
 
-    <ul class="slick-slider list-unstyled <?= ( !$this->useThumbnails ) ?:'thumbnail-slider' ?> <?= $this->galleryId; ?>-gal responsive-dots <?= $this->useLightbox ? 'light-gallery' : '' ?>" data-as-nav-for=".<?= $this->galleryId; ?>-thumbs" data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="<?= ( $this->useThumbnails ) ? 'false':'true' ?>" data-arrows="true">
+    <ul class="slick-slider list-unstyled <?= ( !$this->useThumbnails ) ?:'thumbnail-slider' ?> <?= $this->galleryId; ?>-gal responsive-dots <?= $this->useLightbox ? 'light-gallery' : '' ?>" <?php if ($this->useThumbnails) { ?>data-as-nav-for=".<?= $this->galleryId; ?>-thumbs"<?php } ?> data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="<?= ( $this->useThumbnails ) ? 'false':'true' ?>" data-arrows="true">
 
         <?php foreach ($this->images as $image) { ?>
 
