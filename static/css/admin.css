@@ -65,7 +65,8 @@
 
 .toolbox-slide-columns > .row > .slide-columns .slick-track > .pimcore_block_entry,
 .toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block > .pimcore_block_entry {
-    display: inline-block;
+    display:block;
+    float:left;
     clear: none;
 }
 
