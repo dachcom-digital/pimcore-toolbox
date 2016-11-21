@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Tools;
+namespace Toolbox\Tool;
 
 use Toolbox\Config;
 use Pimcore\ExtensionManager;

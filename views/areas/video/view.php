@@ -1,5 +1,5 @@
 <?php if( $this->editmode ) { ?>
-    <?= \Toolbox\Tools\ElementBuilder::buildElementConfig('video', $this) ?>
+    <?= \Toolbox\Tool\ElementBuilder::buildElementConfig('video', $this) ?>
 <?php }?>
 <?php
 $autoplay = $this->checkbox('autoplay')->isChecked() === '1' && !$this->editmode;

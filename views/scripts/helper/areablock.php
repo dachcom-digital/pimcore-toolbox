@@ -5,5 +5,5 @@ $type = $this->type ? $this->type : null;
 
 echo $this->areablock(
     'c' . $name,
-    \Toolbox\Tools\Area::getAreaBlockConfiguration( $type )
+    \Toolbox\Tool\Area::getAreaBlockConfiguration( $type )
 );

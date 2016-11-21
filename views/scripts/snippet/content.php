@@ -8,7 +8,7 @@
 
 <?= $this->areablock(
     'content',
-    \Toolbox\Tools\Area::getAreaBlockConfiguration( NULL, TRUE )
+    \Toolbox\Tool\Area::getAreaBlockConfiguration( NULL, TRUE )
 ); ?>
 
 <?php if ($this->editmode) { ?>

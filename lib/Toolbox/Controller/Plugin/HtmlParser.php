@@ -46,7 +46,7 @@ class HtmlParser extends \Zend_Controller_Plugin_Abstract {
         if( !$viewRenderer)
             return FALSE;
 
-        $assetHelper = new \Toolbox\Tools\Asset();
+        $assetHelper = new \Toolbox\Tool\Asset();
         $assetHelper->setIsBackEnd( $viewRenderer->editmode )->setIsFrontEnd( !$viewRenderer->editmode )->setBaseUrl( '' );
 
         \Pimcore::getEventManager()->trigger('toolbox.addAsset', $assetHelper);

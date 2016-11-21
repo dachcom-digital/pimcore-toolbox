@@ -1,5 +1,5 @@
 <?php if( $this->editmode ) { ?>
-    <?= \Toolbox\Tools\ElementBuilder::buildElementConfig('slideColumns', $this) ?>
+    <?= \Toolbox\Tool\ElementBuilder::buildElementConfig('slideColumns', $this) ?>
 <?php }?>
 <?php
 $equalHeight = $this->checkbox('equalHeight')->isChecked() && !$this->editmode;

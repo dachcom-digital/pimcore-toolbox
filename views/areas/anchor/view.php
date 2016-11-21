@@ -1,5 +1,5 @@
 <?php if( $this->editmode ) { ?>
-    <?= \Toolbox\Tools\ElementBuilder::buildElementConfig('anchor', $this) ?>
+    <?= \Toolbox\Tool\ElementBuilder::buildElementConfig('anchor', $this) ?>
 <?php }?>
 
 <?php if ( !$this->input('anchorName')->isEmpty() ) { ?>
