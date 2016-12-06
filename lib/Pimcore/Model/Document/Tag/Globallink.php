@@ -67,9 +67,19 @@ class Globallink extends Model\Document\Tag\Link
         return $url;
     }
 
-    protected function updatePathFromInternal()
+    /**
+     * @param bool $realPath
+     */
+    protected function updatePathFromInternal($realPath = FALSE)
     {
-        if ($this->data['internal'])
+        $method = 'getFullPath';
+
+        if ($realPath)
+        {
+            $method = 'getRealFullPath';
+        }
+
+        if (isset( $this->data['internal'] ) && $this->data['internal'])
         {
             if ($this->data['internalType'] == 'document')
             {
@@ -77,8 +87,8 @@ class Globallink extends Model\Document\Tag\Link
                 {
                     if (!Document::doHideUnpublished() || $doc->isPublished())
                     {
-                        $path = $doc->getFullPath();
-                        $this->data['path'] = \Toolbox\Tool\GlobalLink::parse($path);
+                        $path = $doc->$method();
+                        $this->data['path'] = \Toolbox\Tools\GlobalLink::parse($path);
                     }
                 }
             }
@@ -87,7 +97,7 @@ class Globallink extends Model\Document\Tag\Link
             {
                 if ($asset = Asset::getById($this->data['internalId']))
                 {
-                    $this->data['path'] = $asset->getFullPath();
+                    $this->data['path'] = $asset->$method();
                 }
 
             }
@@ -112,7 +122,7 @@ class Globallink extends Model\Document\Tag\Link
         {
             if ($doc instanceof Document)
             {
-                $data['internal'] = true;
+                $data['internal'] = TRUE;
                 $data['internalId'] = $doc->getId();
                 $data['internalType'] = 'document';
             }
@@ -120,7 +130,7 @@ class Globallink extends Model\Document\Tag\Link
             //its an object?
         } else if( strpos($data['path'],'::') !== FALSE)
         {
-            $data['internal'] = true;
+            $data['internal'] = TRUE;
             $data['internalType'] = 'object';
         }
 
@@ -130,7 +140,7 @@ class Globallink extends Model\Document\Tag\Link
             {
                 if ($asset instanceof Asset)
                 {
-                    $data['internal'] = true;
+                    $data['internal'] = TRUE;
                     $data['internalId'] = $asset->getId();
                     $data['internalType'] = 'asset';
                 }
@@ -138,6 +148,7 @@ class Globallink extends Model\Document\Tag\Link
         }
 
         $this->data = $data;
+
         return $this;
     }
 }
