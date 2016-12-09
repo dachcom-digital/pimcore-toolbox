@@ -38,17 +38,27 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
             )
         );
 
-        $staticSettingsRoute = new \Zend_Controller_Router_Route(
+        $ckeditorAreaStyle = new \Zend_Controller_Router_Route(
             '/toolbox-ckeditor-style.js',
             array(
                 'module' => 'Toolbox',
                 'controller' => 'Admin_Settings',
-                'action' => 'ckeditor-style',
+                'action' => 'ck-editor-area-style',
+            )
+        );
+
+        $ckeditorObjectStyle = new \Zend_Controller_Router_Route(
+            '/toolbox-ckeditor-object-style.js',
+            array(
+                'module' => 'Toolbox',
+                'controller' => 'Admin_Settings',
+                'action' => 'ck-editor-object-style',
             )
         );
 
         $router->addRoute('toolbox_static_assets', $staticAssetRoute);
-        $router->addRoute('toolbox_static_adminsettings', $staticSettingsRoute);
+        $router->addRoute('toolbox_ckeditor_area', $ckeditorAreaStyle);
+        $router->addRoute('toolbox_ckeditor_object', $ckeditorObjectStyle);
     }
 
     public function init()

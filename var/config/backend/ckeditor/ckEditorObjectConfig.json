@@ -1,0 +1,18 @@
+{
+    "uiColor" : "#efefef",
+    "toolbar" : [
+
+        { "name": "basicstyles", "items": [ "Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat" ] },
+        { "name": "clipboard", "items": [ "Cut", "Copy", "Paste", "PasteText", "PasteFromWord", "-", "Undo", "Redo" ] },
+        { "name": "editing", "items": [ "Replace", "-", "SelectAll" ] },
+        "/",
+        { "name": "paragraph", "items": [ "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock", "-", "NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote", "-", "-", "BidiLtr", "BidiRtl" ] },
+        { "name": "links", "items": [ "Link", "Unlink", "Anchor" ] },
+        { "name": "insert", "items": [ "Table", "HorizontalRule", "SpecialChar"] },
+        { "name": "document", "items": [ "Sourcedialog" ] },
+        "/",
+        { "name": "styles", "items": [ "Styles", "Format" ] },
+        { "name": "tools", "items": [ "Maximize" ] }
+
+    ]
+}

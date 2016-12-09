@@ -4,24 +4,88 @@ use Pimcore\Controller\Action\Admin;
 
 class Toolbox_Admin_SettingsController extends Admin {
 
-    public function ckeditorStyleAction() {
+    /**
+     * @var array
+     */
+    public $globalStyleSets = [];
 
-        $configFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/defaultStyle.json';
+    /**
+     * @var array
+     */
+    public $ckEditorObjectConfig = [];
 
-        $userConfig = \Toolbox\Config::getConfig()->ckeditor->styles->toArray();
-        $defaultConfig = json_decode( file_get_contents($configFile), true );
+    /**
+     * @var array
+     */
+    public $ckEditorAreaConfig = [];
 
-        $this->view->assign('config', json_encode( array_merge( $defaultConfig, $userConfig) ) );
+    /**
+     *
+     */
+    public function init()
+    {
+        $storedConfig = \Toolbox\Config::getConfig()->ckeditor;
 
-        $content = $this->view->render('admin/settings/ckeditor-style.php');
+        $ckEditorObjectConfigFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/ckEditorObjectConfig.json';
+        $ckEditorObjectConfig = json_decode( file_get_contents( $ckEditorObjectConfigFile ), TRUE );
 
-        $response = $this->getResponse()
-            ->setHeader('Content-Type', 'application/javascript')
-            ->appendBody($content);
+        $ckEditorAreaConfigFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/ckEditorAreaConfig.json';
+        $ckEditorAreaConfig = json_decode( file_get_contents( $ckEditorAreaConfigFile ), TRUE );
 
-        $response->sendResponse();
+        //object config
+        $userCkEditorObjectConfig = [];
+        if( isset( $storedConfig->areaEditor )) {
+            $userCkEditorObjectConfig = $storedConfig->areaEditor->toArray();
+        }
 
-        exit();
+        //area config
+        $userCkEditorAreaConfig = [];
+        if( isset( $storedConfig->objectEditor )) {
+            $userCkEditorAreaConfig = $storedConfig->objectEditor->toArray();
+        }
+
+        //global Style Sets config
+        if( isset( $storedConfig->globalStyleSets )) {
+            $this->globalStyleSets = $storedConfig->globalStyleSets->toArray();
+        }
+
+        $this->ckEditorObjectConfig     = array_merge( $ckEditorObjectConfig, $userCkEditorObjectConfig );
+        $this->ckEditorAreaConfig       = array_merge( $ckEditorAreaConfig, $userCkEditorAreaConfig );
+
+        parent::init();
+
+    }
+
+    public function ckEditorAreaStyleAction()
+    {
+        $this->view->assign('config', $this->ckEditorAreaConfig );
+        $content = $this->view->render('admin/settings/ckeditor-area-style.php');
+
+        $this->getResponse()
+            ->setHeader('Content-Type', 'application/javascript', TRUE)
+            ->setBody($content)
+            ->sendResponse();
+
+        exit;
+
+    }
+
+    public function ckEditorObjectStyleAction()
+    {
+        $this->view->assign(
+            [
+                'globalStyleSets'   => $this->globalStyleSets,
+                'config'            =>  $this->ckEditorObjectConfig
+            ]
+        );
+        $content = $this->view->render('admin/settings/ckeditor-object-style.php');
+
+        $this->getResponse()
+            ->setHeader('Content-Type', 'application/javascript', TRUE)
+            ->setBody($content)
+            ->sendResponse();
+
+        exit;
 
     }
 

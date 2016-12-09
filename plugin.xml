@@ -3,7 +3,7 @@
     <plugin>
         <pluginName>Toolbox</pluginName>
         <pluginDescription>Toolbox</pluginDescription>
-        <pluginVersion>1.6.0</pluginVersion>
+        <pluginVersion>1.6.1</pluginVersion>
         <pluginRevision>1</pluginRevision>
         <pluginBuildTimestamp>0</pluginBuildTimestamp>
         <pluginClassName>\Toolbox\Plugin</pluginClassName>
@@ -16,6 +16,7 @@
         </pluginNamespaces>
         <pluginJsPaths-extjs6>
             <path>/plugins/Toolbox/static/js/startup.js</path>
+            <path>/toolbox-ckeditor-object-style.js</path>
         </pluginJsPaths-extjs6>
         <pluginDocumentEditmodeJsPaths>
             <path>/Toolbox/static/js/document/tags/globallink.js</path>
