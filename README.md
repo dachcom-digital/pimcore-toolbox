@@ -19,6 +19,66 @@ If you're using an AreaBlock Brick in your View, use this method to get grouped 
 <?= $this->areablock('content', \Toolbox\Tool\Area::getAreaBlockConfiguration() ); ?>
 ```
 
+**CKEditor Configuration**
+
+```php
+"ckeditor" => 
+[
+    /*
+        Define some custom Style Sets. You may use them in the area / object editor
+    */
+    "globalStyleSets" => [
+    
+        "default" => [
+    
+            [
+                "name" => "Button Default",
+                "element" => "a",
+                "attributes" => [
+                    "class" => "btn btn-default"
+                ]
+            ]
+        ],
+    ],
+    
+    /*
+        All toolbox area editors which have a custom customConfig
+    */
+    "areaEditor" => [
+    
+        /*
+            All the CKEDITOR.config properties.
+            @see http://docs.ckeditor.com/#!/api/CKEDITOR.config
+        */
+        "uiColor" => "#efefef",
+        
+         /*
+            Custom styleSets
+        */
+        "stylesSet" => [
+            [
+                "name" => "Link",
+                "element" => "a",
+                "attributes" => [
+                    "class" => "custom-link-class"
+                ]
+            ]
+        ],
+    ],
+    
+    /*
+        All object editors
+    */
+    "objectEditor" => [
+       
+        /*
+            Linked to globalStyleSets
+        */
+        "stylesSet" => "default"
+    ]
+];
+                
+```
 
 ## Upgrade Info
 Before updating, please [check our upgrade notes!](UPGRADE.md)
