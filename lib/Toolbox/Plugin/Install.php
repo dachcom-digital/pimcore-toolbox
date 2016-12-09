@@ -278,12 +278,30 @@ class Install {
                 ],
 
                 "ckeditor" => [
-                    "styles" => [
-                        [
-                            'name' => 'test',
-                            'element' => 'p',
-                            'attributes' => ['class' => 'h5']
-                        ]
+
+                    "globalStyleSets" => [
+                        "default" => [
+
+                            [
+                                "name" => "Button Default",
+                                "element" => "a",
+                                "attributes" => [
+                                    "class" => "btn btn-default"
+                                ]
+                            ]
+                        ],
+                    ],
+
+                    "areaEditor" => [
+                        "stylesSet" => [
+
+                        ],
+                    ],
+                    "objectEditor" => [
+                        "uiColor" => "yellow",
+                        "stylesSet" => [
+
+                        ],
                     ]
                 ],
 

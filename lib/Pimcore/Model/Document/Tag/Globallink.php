@@ -69,6 +69,7 @@ class Globallink extends Model\Document\Tag\Link
 
     protected function updatePathFromInternal()
     {
+        parent::updatePathFromInternal();
         if ($this->data['internal'])
         {
             if ($this->data['internalType'] == 'document')
