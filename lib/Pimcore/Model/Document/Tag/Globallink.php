@@ -88,7 +88,7 @@ class Globallink extends Model\Document\Tag\Link
                     if (!Document::doHideUnpublished() || $doc->isPublished())
                     {
                         $path = $doc->$method();
-                        $this->data['path'] = \Toolbox\Tools\GlobalLink::parse($path);
+                        $this->data['path'] = \Toolbox\Tool\GlobalLink::parse($path);
                     }
                 }
             }
