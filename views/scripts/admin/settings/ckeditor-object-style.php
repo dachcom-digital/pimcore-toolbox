@@ -11,7 +11,6 @@ CKEDITOR.on( 'instanceCreated', function( event ) {
     //http://ckeditor.com/latest/samples/toolbarconfigurator/index.html#advanced
     editor.on( 'configLoaded', function() {
 
-        //remove with pimcore 4.4!
         editor.config.allowedContent = undefined;
 
         <?php

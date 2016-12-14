@@ -34,14 +34,14 @@ class Toolbox_Admin_SettingsController extends Admin {
 
         //object config
         $userCkEditorObjectConfig = [];
-        if( isset( $storedConfig->areaEditor )) {
-            $userCkEditorObjectConfig = $storedConfig->areaEditor->toArray();
+        if( isset( $storedConfig->objectEditor )) {
+            $userCkEditorObjectConfig = $storedConfig->objectEditor->toArray();
         }
 
         //area config
         $userCkEditorAreaConfig = [];
-        if( isset( $storedConfig->objectEditor )) {
-            $userCkEditorAreaConfig = $storedConfig->objectEditor->toArray();
+        if( isset( $storedConfig->areaEditor )) {
+            $userCkEditorAreaConfig = $storedConfig->areaEditor->toArray();
         }
 
         //global Style Sets config
@@ -49,8 +49,8 @@ class Toolbox_Admin_SettingsController extends Admin {
             $this->globalStyleSets = $storedConfig->globalStyleSets->toArray();
         }
 
-        $this->ckEditorObjectConfig     = array_merge( $ckEditorObjectConfig, $userCkEditorObjectConfig );
-        $this->ckEditorAreaConfig       = array_merge( $ckEditorAreaConfig, $userCkEditorAreaConfig );
+        $this->ckEditorObjectConfig     = $this->parseToolbarConfig( $ckEditorObjectConfig, $userCkEditorObjectConfig );
+        $this->ckEditorAreaConfig       = $this->parseToolbarConfig( $ckEditorAreaConfig, $userCkEditorAreaConfig );
 
         parent::init();
 
@@ -58,7 +58,13 @@ class Toolbox_Admin_SettingsController extends Admin {
 
     public function ckEditorAreaStyleAction()
     {
-        $this->view->assign('config', $this->ckEditorAreaConfig );
+        $this->view->assign(
+            [
+                'globalStyleSets'   => $this->globalStyleSets,
+                'config'            =>  $this->ckEditorAreaConfig
+            ]
+        );
+
         $content = $this->view->render('admin/settings/ckeditor-area-style.php');
 
         $this->getResponse()
@@ -78,6 +84,7 @@ class Toolbox_Admin_SettingsController extends Admin {
                 'config'            =>  $this->ckEditorObjectConfig
             ]
         );
+
         $content = $this->view->render('admin/settings/ckeditor-object-style.php');
 
         $this->getResponse()
@@ -89,4 +96,37 @@ class Toolbox_Admin_SettingsController extends Admin {
 
     }
 
+    private function parseToolbarConfig( $defaultConfig, $userConfig )
+    {
+        $type = isset( $userConfig['toolbarModification'] ) && !empty( $userConfig['toolbarModification'] ) ? $userConfig['toolbarModification'] : NULL;
+
+        $config = array_merge( $defaultConfig, $userConfig );
+
+        unset( $config['toolbarModification'] );
+
+        if( $type === 'append' && is_array( $userConfig['toolbar'] ) )
+        {
+            foreach( $userConfig['toolbar'] as $array)
+            {
+                array_push($defaultConfig['toolbar'], $array);
+            }
+
+            $config['toolbar'] = $defaultConfig['toolbar'];
+        }
+        else if( $type === 'prepend' && is_array( $userConfig['toolbar'] ) )
+        {
+            foreach( $userConfig['toolbar'] as $array)
+            {
+                array_unshift($defaultConfig['toolbar'], $array);
+            }
+
+            $config['toolbar'] = $defaultConfig['toolbar'];
+        }
+        else if( $type === 'replace' && is_array( $userConfig['toolbar'] ) )
+        {
+            $config['toolbar'] = $userConfig['toolbar'];
+        }
+
+        return $config;
+    }
 }

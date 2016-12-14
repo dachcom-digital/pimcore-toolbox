@@ -52,7 +52,7 @@ If you're using an AreaBlock Brick in your View, use this method to get grouped 
         */
         "uiColor" => "#efefef",
         
-         /*
+        /*
             Custom styleSets
         */
         "stylesSet" => [
@@ -64,6 +64,21 @@ If you're using an AreaBlock Brick in your View, use this method to get grouped 
                 ]
             ]
         ],
+        
+        /*
+            The shipped toolbar is not good enough for you? change it here!
+        */
+         "toolbar" => [
+            ["name" => "insert", "items" => [ "Iframe", "Smiley" ] ]
+        ],
+        
+        /*
+            String ( append|prepend|replace)
+            If you have defined some custom toolbar elements, 
+            use this parameter to set the location of your toolbar elements. 
+            Append, prepend or replace them with the default values.
+        */
+        "toolbarModification" => "prepend",
     ],
     
     /*
