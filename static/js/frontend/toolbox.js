@@ -144,7 +144,9 @@ var DachcomToolbox = (function () {
                     map.fitBounds( latLngBounds );
 
                     var listener = google.maps.event.addListener(map, 'idle', function() {
-                        if (map.getZoom() > 17) map.setZoom(17);
+                        var zoom = (typeof mapOptions.zoom === 'number' && (mapOptions.zoom % 1) === 0) ? mapOptions.zoom : 17;
+
+                        map.setZoom(zoom);
                         google.maps.event.removeListener(listener);
                     });
 
