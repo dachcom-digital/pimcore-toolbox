@@ -9,17 +9,22 @@ class GlobalLink {
 
     /**
      * @param $path
+     * @param bool $checkRequestUri
      *
      * @return string
      * @throws \Zend_Exception
      */
-    public static function parse( $path )
+    public static function parse( $path, $checkRequestUri = FALSE )
     {
         $currentCountry = NULL;
 
-        if( \Zend_Registry::isRegistered('Website_Country'))
+        if(\Zend_Registry::isRegistered('Website_Country'))
         {
             $currentCountry = \Zend_Registry::get('Website_Country');
+        }
+        else if($checkRequestUri)
+        {
+            $currentCountry = self::checkRequestUri();
         }
 
         //only parse if country in l10n is active!
@@ -74,6 +79,29 @@ class GlobalLink {
 
         return $path;
 
+    }
+
+    private static function checkRequestUri()
+    {
+        $currentCountry = 'GLOBAL';
+
+        if( isset( $_SERVER['REQUEST_URI'] ) && !empty( $_SERVER['REQUEST_URI'] ) )
+        {
+            $urlPath = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $urlPathFragments = explode('/', ltrim($urlPath, '/'));
+
+            if( isset($urlPathFragments[0]) )
+            {
+                $slug = explode('-', $urlPathFragments[0]);
+
+                if( count($slug) === 2)
+                {
+                    $currentCountry = $slug[0];
+                }
+            }
+        }
+
+        return $currentCountry;
     }
 
 }
