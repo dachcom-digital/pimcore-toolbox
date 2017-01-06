@@ -298,7 +298,6 @@ class Install {
                         ],
                     ],
                     "objectEditor" => [
-                        "uiColor" => "yellow",
                         "stylesSet" => [
 
                         ],
