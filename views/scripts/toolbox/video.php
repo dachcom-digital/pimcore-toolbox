@@ -1,6 +1,6 @@
 <?php if($this->editmode) { ?>
 
-    <?= $this->video('video', [
+    <?= $this->vhs('video', [
         'attributes' => [
             'class' => 'video-js vjs-default-skin vjs-big-play-centered',
             'data-setup' => '{}'
@@ -12,8 +12,11 @@
 
 <?php } else { ?>
 
-    <?php echo $this->template('toolbox/video/type-' . $this->video('video')->getVideoType() . '.php', [
-        'autoplay' => $this->autoplay
+    <?= $this->template('toolbox/video/type-' . $this->videoType . '.php', [
+        'autoplay' => $this->autoplay,
+        'posterPath' => $this->posterPath,
+        'playInLightbox' => $this->playInLightbox,
+        'videoType' => $this->videoType
     ]) ?>
 
 <?php } ?>

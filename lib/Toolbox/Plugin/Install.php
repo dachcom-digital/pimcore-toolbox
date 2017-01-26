@@ -252,6 +252,11 @@ class Install {
 
                 ],
                 "video" => [
+                    "videoOptions" => [
+                        "youtube" => [
+                            "posterImageThumbnail" => NULL,
+                        ]
+                    ],
                     "configElements" => [
                         [
                             "type" => "additionalClasses",
