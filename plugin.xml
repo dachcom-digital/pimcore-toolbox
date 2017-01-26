@@ -15,12 +15,14 @@
             <namespace>Toolbox</namespace>
         </pluginNamespaces>
         <pluginJsPaths-extjs6>
+            <path>/plugins/Toolbox/static/js/document/helpers.js</path>
             <path>/plugins/Toolbox/static/js/startup.js</path>
             <path>/toolbox-ckeditor-object-style.js</path>
         </pluginJsPaths-extjs6>
         <pluginDocumentEditmodeJsPaths>
             <path>/Toolbox/static/js/document/tags/globallink.js</path>
             <path>/Toolbox/static/js/document/tags/googlemap.js</path>
+            <path>/Toolbox/static/js/document/tags/vhs.js</path>
         </pluginDocumentEditmodeJsPaths>
         <pluginDocumentEditmodeCssPaths>
             <path>/Toolbox/static/css/admin.css</path>
