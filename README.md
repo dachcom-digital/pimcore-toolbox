@@ -95,5 +95,37 @@ If you're using an AreaBlock Brick in your View, use this method to get grouped 
                 
 ```
 
+**CSS Styles for Video**
+
+The video element needs this minimal css. Copy it to your template and customize it if desired.
+
+```css
+.pimcore_area_video .toolbox-video {
+    position:relative;
+    width: 640px;
+    height: 360px;
+}
+
+.pimcore_area_video .poster-overlay {
+
+    background-repeat:no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.pimcore_area_video .poster-overlay .icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
+    color: #fff;
+}
+```
+
 ## Upgrade Info
 Before updating, please [check our upgrade notes!](UPGRADE.md)

@@ -76,3 +76,25 @@
     ]
 ]
 ```
+
+### Update from Version 1.6.x to Version 1.7.0
+
+- New video configuration in `toolbox_configuration.php`:
+ ```php
+ 
+     "video" => [
+         "videoOptions" => [
+             "youtube" => [
+                 "posterImageThumbnail" => NULL,
+             ]
+         ],
+         (...)
+     ]
+ 
+ ```
+ 
+ - Changes in DB table `document_elements`. All elements with type `video` should changed to `vhs`. Use this sql script:
+ 
+ ``` sql
+ update documents_elements set type = 'vhs' where type = 'video';
+ ```

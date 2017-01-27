@@ -26,6 +26,10 @@ var DachcomToolbox = (function () {
 
         video: {},
 
+        videoElements: 0,
+
+        videoInitialized: 0,
+
         init: function() {
 
             self.parallax.containerElements = $('.toolbox-parallax-container');
@@ -235,6 +239,8 @@ var DachcomToolbox = (function () {
 
             if ( this.video.youtubeVideos.length > 0 ) {
 
+                this.videoElements += this.video.youtubeVideos.length;
+
                 var tag = document.createElement('script');
                 tag.src = 'https://www.youtube.com/iframe_api';
 
@@ -258,6 +264,7 @@ var DachcomToolbox = (function () {
 
                         if( playInLightbox && posterPath !== '' ) {
 
+                            _self._checkVideoState(true);
                             $container.on('click', function(ev) {
                                 ev.preventDefault();
                                 $container.trigger('toolbox.video.youtube.lightbox', [{'videoId' : videoId, 'posterPath' : posterPath, 'YT' : window.YT}]);
@@ -273,23 +280,26 @@ var DachcomToolbox = (function () {
                                         'onReady': function() {
 
                                             $container.addClass('player-ready');
-                                            if ( $container.hasClass('autoplay') ) {
 
-                                                _self.video.autoplayVideos.push({
-                                                    type: 'youtube',
-                                                    container: $container,
-                                                    player: player
-                                                });
-                                            }
-
-                                            if( autostart === true )
-                                            {
+                                            if( autostart === true ) {
                                                 _self._playVideo( player, 'youtube');
                                             }
                                         }
                                     }
 
                                 });
+
+                                if ( $container.hasClass('autoplay') ) {
+
+                                    _self.video.autoplayVideos.push({
+                                        type: 'youtube',
+                                        container: $container,
+                                        player: player
+                                    });
+                                }
+
+                                _self._checkVideoState( autostart !== true );
+
                             };
 
                             if( posterPath === '') {
@@ -297,6 +307,8 @@ var DachcomToolbox = (function () {
                                 initPlayer($player.get(0));
 
                             } else {
+
+                                _self._checkVideoState(true);
 
                                 $container.one('click', function(ev) {
                                     ev.preventDefault();
@@ -311,6 +323,8 @@ var DachcomToolbox = (function () {
 
             if ( this.video.vimeoVideos.length > 0 ) {
 
+                this.videoElements += this.video.vimeoVideos.length;
+
                 this.video.vimeoVideos.each(function() {
 
                     var $container = $(this),
@@ -320,6 +334,8 @@ var DachcomToolbox = (function () {
                         posterPath = $player.data('poster-path');
 
                     if( playInLightbox && posterPath !== '' ) {
+
+                        _self._checkVideoState(true);
 
                         $container.on('click', function(ev) {
                             ev.preventDefault();
@@ -336,24 +352,24 @@ var DachcomToolbox = (function () {
 
                             player.on('loaded', function() {
 
-                                $container.addClass('player-ready');
-
-                                if ( $container.hasClass('autoplay') ) {
-
-                                    _self.video.autoplayVideos.push({
-                                        type: 'vimeo',
-                                        container: $container,
-                                        player: player
-                                    });
-
-                                }
-
-                                if( autostart === true )
-                                {
+                                if( autostart === true ) {
                                     _self._playVideo( player, 'vimeo');
                                 }
 
                             });
+
+                            $container.addClass('player-ready');
+
+                            if ( $container.hasClass('autoplay') ) {
+
+                                _self.video.autoplayVideos.push({
+                                    type: 'vimeo',
+                                    container: $container,
+                                    player: player
+                                });
+                            }
+
+                            _self._checkVideoState( autostart !== true );
 
                         };
 
@@ -363,6 +379,8 @@ var DachcomToolbox = (function () {
 
                         } else {
 
+                            _self._checkVideoState(true);
+
                             $container.one('click', function(ev) {
                                 ev.preventDefault();
                                 initPlayer($player.get(0), true);
@@ -370,9 +388,7 @@ var DachcomToolbox = (function () {
                             });
                         }
                     }
-
                 });
-
             }
 
             // special treatment for videos inside accordion (bootstrap collapse)
@@ -392,7 +408,6 @@ var DachcomToolbox = (function () {
                 }
 
             });
-
         },
 
         _checkVideoAutoplay: function() {
@@ -425,16 +440,23 @@ var DachcomToolbox = (function () {
 
             } else if ( type === 'youtube' ) {
 
-                if ( player.getPlayerState() != window.YT.PlayerState.PLAYING ) player.playVideo();
+                if(typeof player.getPlayerState === 'function') {
+                    if ( player.getPlayerState() !== window.YT.PlayerState.PLAYING ) {
+                        player.playVideo();
+                    }
+                }
 
             } else if ( type === 'vimeo' ) {
 
-                player.getPaused().then(function(paused) {
-                    if (paused) player.play();
-                }).catch(function(error) {
+                if(typeof player.getPaused === 'function') {
+                    player.getPaused().then(function(paused) {
+                        if (paused) {
+                            player.play();
+                        }
+                    }).catch(function(error) {
 
-                });
-
+                    });
+                }
             }
 
         },
@@ -447,18 +469,22 @@ var DachcomToolbox = (function () {
 
             } else if( type === 'youtube' ) {
 
-                if( player.getPlayerState() == window.YT.PlayerState.PLAYING ) player.pauseVideo();
+                if(typeof player.getPlayerState === 'function') {
+                    if( player.getPlayerState() === window.YT.PlayerState.PLAYING ) {
+                        player.pauseVideo();
+                    }
+                }
 
             } else if( type === 'vimeo' ) {
 
-                player.getPaused().then(function(paused) {
-                    if( !paused ) player.pause();
-                }).catch(function(error) {
+                if(typeof player.getPaused === 'function') {
+                    player.getPaused().then(function(paused) {
+                        if( !paused ) player.pause();
+                    }).catch(function(error) {
 
-                });
-
+                    });
+                }
             }
-
         },
 
         _getVideoId: function(url, type) {
@@ -500,6 +526,22 @@ var DachcomToolbox = (function () {
 
             }
 
+        },
+
+        _checkVideoState: function( increase ) {
+
+            if( increase === true) {
+                this.videoInitialized++;
+            }
+
+            if( this.videoElements === this.videoInitialized ) {
+                this._onAllVideosLoaded();
+            }
+        },
+
+        _onAllVideosLoaded: function() {
+
+            this._checkVideoAutoplay();
         },
 
         checkContentHeight: function() {
@@ -590,9 +632,7 @@ var DachcomToolbox = (function () {
     };
 
     return {
-
         init: self.init
-
     }
 
 })();
