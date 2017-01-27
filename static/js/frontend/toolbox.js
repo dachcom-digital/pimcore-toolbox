@@ -315,27 +315,61 @@ var DachcomToolbox = (function () {
 
                     var $container = $(this),
                         $player = $container.find('.player'),
-                        videoId = _self._getVideoId($player.data('video-uri'), 'vimeo');
+                        videoId = _self._getVideoId($player.data('video-uri'), 'vimeo'),
+                        playInLightbox = $player.data('play-in-lightbox'),
+                        posterPath = $player.data('poster-path');
 
-                    var player = new Vimeo.Player($player.get(0), {
-                        id: videoId
-                    });
+                    if( playInLightbox && posterPath !== '' ) {
 
-                    player.on('loaded', function() {
+                        $container.on('click', function(ev) {
+                            ev.preventDefault();
+                            $container.trigger('toolbox.video.vimeo.lightbox', [{'videoId' : videoId, 'posterPath' : posterPath, 'Vimeo' : Vimeo.Player}]);
+                        });
 
-                        $container.addClass('player-ready');
+                    } else {
 
-                        if ( $container.hasClass('autoplay') ) {
+                        var initPlayer = function(el, autostart) {
 
-                            _self.video.autoplayVideos.push({
-                                type: 'vimeo',
-                                container: $container,
-                                player: player
+                            var player = new Vimeo.Player(el, {
+                                id: videoId
                             });
 
-                        }
+                            player.on('loaded', function() {
 
-                    });
+                                $container.addClass('player-ready');
+
+                                if ( $container.hasClass('autoplay') ) {
+
+                                    _self.video.autoplayVideos.push({
+                                        type: 'vimeo',
+                                        container: $container,
+                                        player: player
+                                    });
+
+                                }
+
+                                if( autostart === true )
+                                {
+                                    _self._playVideo( player, 'vimeo');
+                                }
+
+                            });
+
+                        };
+
+                        if( posterPath === '') {
+
+                            initPlayer($player.get(0));
+
+                        } else {
+
+                            $container.one('click', function(ev) {
+                                ev.preventDefault();
+                                initPlayer($player.get(0), true);
+                                $container.find('.poster-overlay').remove();
+                            });
+                        }
+                    }
 
                 });
 
@@ -355,7 +389,6 @@ var DachcomToolbox = (function () {
                     $el.parents('.panel-group').on('hide.bs.collapse', function () {
                         _self._pauseVideo( videoObj.player, videoObj.type );
                     });
-
                 }
 
             });
@@ -392,7 +425,6 @@ var DachcomToolbox = (function () {
 
             } else if ( type === 'youtube' ) {
 
-                console.log('playyy')
                 if ( player.getPlayerState() != window.YT.PlayerState.PLAYING ) player.playVideo();
 
             } else if ( type === 'vimeo' ) {
@@ -433,6 +465,8 @@ var DachcomToolbox = (function () {
 
             var regExp, match;
 
+            url = url.toString();
+
             if( type === 'youtube' ) {
 
                 if( !url.match(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/) ) {
@@ -450,13 +484,18 @@ var DachcomToolbox = (function () {
 
             } else if( type === 'vimeo' ) {
 
-                regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
-                match = url.match(regExp);
-
-                if( match && match[3] ) {
-                    return match[3];
+                if( !url.match(/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/) ) {
+                    return url;
                 } else {
-                    console.log('Unable to parse video id from url: ' + url);
+                    regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+                    match = url.match(regExp);
+
+                    if (match && match[3]) {
+                        return match[3];
+                    } else {
+                        console.log('Unable to parse video id from url: ' + url);
+                    }
+
                 }
 
             }
