@@ -258,7 +258,10 @@ var DachcomToolbox = (function () {
 
                         if( playInLightbox && posterPath !== '' ) {
 
-                            $container.trigger('toolbox.video.lightbox', [{'videoId' : videoId, 'posterPath' : posterPath, 'YT' : window.YT}]);
+                            $container.on('click', function(ev) {
+                                ev.preventDefault();
+                                $container.trigger('toolbox.video.youtube.lightbox', [{'videoId' : videoId, 'posterPath' : posterPath, 'YT' : window.YT}]);
+                            });
 
                         } else {
 
@@ -299,7 +302,7 @@ var DachcomToolbox = (function () {
                                     ev.preventDefault();
                                     initPlayer($player.get(0), true);
                                     $container.find('.poster-overlay').remove();
-                                })
+                                });
                             }
                         }
                     });
