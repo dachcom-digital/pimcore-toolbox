@@ -5,8 +5,11 @@ namespace Toolbox\View\Helper;
 use Toolbox\Config;
 use Pimcore\ExtensionManager;
 
-class ToolboxHelper extends \Zend_View_Helper_Abstract {
-
+class ToolboxHelper extends \Zend_View_Helper_Abstract
+{
+    /**
+     * @return $this
+     */
     public function toolboxhelper()
     {
         return $this;
@@ -14,104 +17,88 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
     /**
      * @param string|array $areaType toolbox element or custom config
-     * @param null|object $element related element to track
+     * @param null|object  $element  related element to track
      *
      * @return string
      */
-    public function addTracker( $areaType, $element = NULL)
+    public function addTracker($areaType, $element = NULL)
     {
-        if( empty( $areaType ) )
-        {
+        if (empty($areaType)) {
             return '';
         }
 
-        if( is_array( $areaType ) )  //custom data
+        if (is_array($areaType))  //custom data
         {
             $trackerInfo = $areaType;
-        }
-        else //area data
+        } else //area data
         {
             $configNode = Config::getConfig()->{$areaType};
 
-            if(empty($configNode))
-            {
+            if (empty($configNode)) {
                 return '';
             }
 
             $configInfo = $configNode->toArray();
 
-            if( !isset($configInfo['eventTracker']))
-            {
+            if (!isset($configInfo['eventTracker'])) {
                 return '';
             }
 
             $trackerInfo = $configInfo['eventTracker'];
-
         }
 
         $str = 'data-tracking="active" ';
 
-        $str .= join(' ', array_map(function($key) use ($trackerInfo, $element)
-        {
+        $str .= join(' ', array_map(function ($key) use ($trackerInfo, $element) {
             $val = $trackerInfo[$key];
 
-            if ( is_bool($val) )
-            {
-                $val = (int) $val;
+            if (is_bool($val)) {
+                $val = (int)$val;
             }
 
-            if( $key === 'label' && is_array($val))
-            {
+            if ($key === 'label' && is_array($val)) {
                 //userfunc. 0 => (string) method, 1 = (array) arguments
                 $getter = $val;
-                $val = call_user_func_array( array($element, $getter[0]), $getter[1] );
+                $val = call_user_func_array([$element, $getter[0]], $getter[1]);
 
-                if( empty($val) )
-                {
+                if (empty($val)) {
                     $val = 'no label given';
                 }
             }
 
             return 'data-' . $key . '="' . $val . '"';
-
-        }, array_keys( $trackerInfo ) ) );
+        }, array_keys($trackerInfo)));
 
         return $str;
     }
 
     /**
      * @param $data
+     *
      * @deprecated
      * @return array
      */
-    public function getAssetArray( $data )
+    public function getAssetArray($data)
     {
-        if( empty( $data ) )
-        {
-            return array();
+        if (empty($data)) {
+            return [];
         }
 
-        $assets = array();
+        $assets = [];
 
-        foreach ( $data as $element)
-        {
-            if ($element instanceof \Pimcore\Model\Asset\Image)
-            {
+        foreach ($data as $element) {
+            if ($element instanceof \Pimcore\Model\Asset\Image) {
                 $assets[] = $element;
-            }
-            else if ($element instanceof \Pimcore\Model\Asset\Folder)
-            {
-                foreach ($element->getChilds() as $child)
-                {
-                    if ($child instanceof \Pimcore\Model\Asset\Image)
+            } else if ($element instanceof \Pimcore\Model\Asset\Folder) {
+                foreach ($element->getChilds() as $child) {
+                    if ($child instanceof \Pimcore\Model\Asset\Image) {
                         $assets[] = $child;
+                    }
                 }
             }
-
         }
 
         return $assets;
-
     }
 
     /**
@@ -119,9 +106,9 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
      *
      * @return string
      */
-    public function calculateSlideColumnClasses( $columnType )
+    public function calculateSlideColumnClasses($columnType)
     {
-        $columnType = (int) $columnType;
+        $columnType = (int)$columnType;
         $configNode = Config::getConfig()->slideColumns;
 
         $systemClasses = [
@@ -132,61 +119,67 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract {
 
         ];
 
-        if(empty($configNode))
-        {
-            return isset( $systemClasses[ $columnType ] ) ? $systemClasses[ $columnType ] : 'col-xs-12';
+        if (empty($configNode)) {
+            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
         }
 
         $configInfo = $configNode->toArray();
 
-        if( !isset( $configInfo['columnClasses'] ) || !isset( $configInfo['columnClasses'][ $columnType ] ) )
-        {
-            return isset( $systemClasses[ $columnType ] ) ? $systemClasses[ $columnType ] : 'col-xs-12';
+        if (!isset($configInfo['columnClasses']) || !isset($configInfo['columnClasses'][$columnType])) {
+            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
         }
 
-        return $configInfo['columnClasses'][ $columnType ];
+        return $configInfo['columnClasses'][$columnType];
     }
 
-    public function calculateSlideColumnBreakpoints( $columnType ) {
-
-        $columnType = (int) $columnType;
+    /**
+     * @param $columnType
+     *
+     * @return array
+     */
+    public function calculateSlideColumnBreakpoints($columnType)
+    {
+        $columnType = (int)$columnType;
         $configNode = Config::getConfig()->slideColumns;
 
         $breakpoints = [];
 
-        if(!empty($configNode))
-        {
+        if (!empty($configNode)) {
             $configInfo = $configNode->toArray();
 
-            if ( isset( $configInfo['breakpoints'] ) && isset( $configInfo['breakpoints'][ $columnType ] ) ) {
+            if (isset($configInfo['breakpoints']) && isset($configInfo['breakpoints'][$columnType])) {
 
-                $breakpoints = $configInfo['breakpoints'][ $columnType ];
-
+                $breakpoints = $configInfo['breakpoints'][$columnType];
             }
         }
 
         return $breakpoints;
-
     }
 
-    public function templateExists($view, $templatePath) {
-
-        if ( empty($templatePath) ) return;
-        $found = false;
+    /**
+     * @param $view
+     * @param $templatePath
+     *
+     * @return bool|void
+     */
+    public function templateExists($view, $templatePath)
+    {
+        if (empty($templatePath)) {
+            return;
+        }
+        $found = FALSE;
 
         $paths = $view->getScriptPaths();
 
-        foreach ( $paths as $path ) {
+        foreach ($paths as $path) {
 
             $p = $path . $templatePath;
             if (is_file($p)) {
-                $found = true;
+                $found = TRUE;
             }
-
         }
 
         return $found;
-
     }
 
 }

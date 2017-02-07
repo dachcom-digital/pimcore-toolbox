@@ -5,83 +5,71 @@ namespace Toolbox\Tool;
 use Toolbox\Config;
 use Pimcore\ExtensionManager;
 
-class Area {
-
+class Area
+{
     /**
      * @param null $type
      * @param bool $fromSnippet
      *
      * @return array
      */
-    public static function getAreaBlockConfiguration( $type = NULL, $fromSnippet = FALSE )
+    public static function getAreaBlockConfiguration($type = NULL, $fromSnippet = FALSE)
     {
-        if( $fromSnippet === TRUE)
-        {
+        if ($fromSnippet === TRUE) {
             $availableBricks = self::getAvailableBricksForSnippets();
-        }
-        else
-        {
-            $availableBricks = self::getAvailableBricks( $type );
+        } else {
+            $availableBricks = self::getAvailableBricks($type);
         }
 
         $areaBlockConfiguration = Config::getConfig()->areaBlockConfiguration;
-        $areaBlockConfigurationArray = is_null( $areaBlockConfiguration ) ? [] : $areaBlockConfiguration->toArray();
+        $areaBlockConfigurationArray = is_null($areaBlockConfiguration) ? [] : $areaBlockConfiguration->toArray();
 
         $configuration = [];
 
         $configuration['params'] = $availableBricks['params'];
         $configuration['allowed'] = $availableBricks['allowed'];
 
-        if( isset($areaBlockConfigurationArray['groups']) && $areaBlockConfigurationArray['groups'] !== FALSE)
-        {
-            $toolboxGroup = array(
-                array(
-                    'name' => 'Toolbox',
+        if (isset($areaBlockConfigurationArray['groups']) && $areaBlockConfigurationArray['groups'] !== FALSE) {
+            $toolboxGroup = [
+                [
+                    'name'     => 'Toolbox',
                     'elements' => self::getToolboxBricks()
-                )
-            );
+                ]
+            ];
 
             $groups = array_merge($toolboxGroup, $areaBlockConfigurationArray['groups']);
 
             $cleanedGroups = [];
             $cleanedGroupsSorted = [];
 
-            foreach($groups as $groupName => $groupData)
-            {
+            foreach ($groups as $groupName => $groupData) {
                 $groupName = $groupData['name'];
                 $cleanedGroup = [];
 
-                foreach($groupData['elements'] as $element )
-                {
-                    if( in_array($element, $availableBricks['allowed']))
-                    {
+                foreach ($groupData['elements'] as $element) {
+                    if (in_array($element, $availableBricks['allowed'])) {
                         $cleanedGroup[] = $element;
                     }
-
                 }
 
                 //ok, group elements found, add them
-                if( count($cleanedGroup) > 0)
-                {
-                    $cleanedGroups[ $groupName ] = $cleanedGroup;
-                    $cleanedGroupsSorted = array_merge( $cleanedGroupsSorted, $cleanedGroup);
+                if (count($cleanedGroup) > 0) {
+                    $cleanedGroups[$groupName] = $cleanedGroup;
+                    $cleanedGroupsSorted = array_merge($cleanedGroupsSorted, $cleanedGroup);
                 }
             }
 
-            if( count($cleanedGroups) > 0)
-            {
-                $configuration[ 'sorting' ] = $cleanedGroupsSorted;
-                $configuration[ 'group' ] = $cleanedGroups;
+            if (count($cleanedGroups) > 0) {
+                $configuration['sorting'] = $cleanedGroupsSorted;
+                $configuration['group'] = $cleanedGroups;
             }
         }
 
-        if( isset($areaBlockConfigurationArray['toolbar']) && is_array($areaBlockConfigurationArray['toolbar']))
-        {
+        if (isset($areaBlockConfigurationArray['toolbar']) && is_array($areaBlockConfigurationArray['toolbar'])) {
             $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
         }
 
         return $configuration;
-
     }
 
     /**
@@ -94,20 +82,17 @@ class Area {
         $areaElements = ExtensionManager::getBrickConfigs();
 
         /**
-         * @var String $areaElementName
+         * @var String           $areaElementName
          * @var \Zend_Config_Xml $areaElementData
          */
-        foreach($areaElements as $areaElementName => $areaElementData)
-        {
-            if(!ExtensionManager::isEnabled('brick', $areaElementName))
-            {
-                unset($areaElements[ $areaElementName ]);
+        foreach ($areaElements as $areaElementName => $areaElementData) {
+            if (!ExtensionManager::isEnabled('brick', $areaElementName)) {
+                unset($areaElements[$areaElementName]);
                 continue;
             }
         }
 
-        if( $arrayKeys === TRUE )
-        {
+        if ($arrayKeys === TRUE) {
             return array_keys($areaElements);
         }
 
@@ -119,34 +104,30 @@ class Area {
      *
      * @return array
      */
-    private static function getAvailableBricks( $type = NULL )
+    private static function getAvailableBricks($type = NULL)
     {
         $areaElements = self::getActiveBricks();
         $disallowedSubAreas = Config::getConfig()->disallowedSubAreas->toArray();
 
         $bricks = [];
 
-        $elementDisallowed = isset( $disallowedSubAreas[$type]) ? $disallowedSubAreas[$type] : array();
+        $elementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type] : [];
 
-        foreach( $areaElements as $a )
-        {
-            if (!in_array($a, $elementDisallowed))
-            {
+        foreach ($areaElements as $a) {
+            if (!in_array($a, $elementDisallowed)) {
                 $bricks[] = $a;
             }
         }
 
-        $params = array();
+        $params = [];
 
-        foreach ($bricks as $brick)
-        {
-            $params[$brick] = array(
+        foreach ($bricks as $brick) {
+            $params[$brick] = [
                 'forceEditInView' => TRUE
-            );
+            ];
         }
 
-        return array('allowed' => $bricks, 'params' => $params );
-
+        return ['allowed' => $bricks, 'params' => $params];
     }
 
     /**
@@ -159,25 +140,21 @@ class Area {
 
         $bricks = [];
 
-        foreach( $areaElements as $a )
-        {
-            if (!in_array($a, $disallowedSubAreas))
-            {
+        foreach ($areaElements as $a) {
+            if (!in_array($a, $disallowedSubAreas)) {
                 $bricks[] = $a;
             }
         }
 
-        $params = array();
+        $params = [];
 
-        foreach ($bricks as $brick)
-        {
-            $params[$brick] = array(
+        foreach ($bricks as $brick) {
+            $params[$brick] = [
                 'forceEditInView' => TRUE
-            );
+            ];
         }
 
-        return array('allowed' => $bricks, 'params' => $params );
-
+        return ['allowed' => $bricks, 'params' => $params];
     }
 
     /**
@@ -189,28 +166,23 @@ class Area {
         $toolboxBricks = [];
 
         /**
-         * @var String $areaElementName
+         * @var String           $areaElementName
          * @var \Zend_Config_Xml $areaElementData
          */
-        foreach($areaElements as $areaElementName => $areaElementData)
-        {
+        foreach ($areaElements as $areaElementName => $areaElementData) {
             $data = $areaElementData->toArray();
 
-            if( substr($data['description'], 0, 7) === 'Toolbox')
-            {
-                $toolboxBricks[ $areaElementName ] = $areaElementData;
+            if (substr($data['description'], 0, 7) === 'Toolbox') {
+                $toolboxBricks[$areaElementName] = $areaElementData;
             }
-
         }
 
-        if( isset( $toolboxBricks['content'] ))
-        {
-            $toolboxBricks = array('content' => $toolboxBricks['content'] ) + $toolboxBricks;
+        if (isset($toolboxBricks['content'])) {
+            $toolboxBricks = ['content' => $toolboxBricks['content']] + $toolboxBricks;
         }
 
-        if( isset( $toolboxBricks['headline'] ))
-        {
-            $toolboxBricks = array('headline' => $toolboxBricks['headline'] ) + $toolboxBricks;
+        if (isset($toolboxBricks['headline'])) {
+            $toolboxBricks = ['headline' => $toolboxBricks['headline']] + $toolboxBricks;
         }
 
         return array_keys($toolboxBricks);

@@ -4,12 +4,12 @@ namespace Pimcore\Model\Document\Tag;
 
 use Pimcore\Model;
 
-class Vhs extends Model\Document\Tag\Video {
-
+class Vhs extends Model\Document\Tag\Video
+{
     /**
      * @var string
      */
-    public $showAsLightbox = false;
+    public $showAsLightbox = FALSE;
 
     /**
      * Return the type of the element
@@ -59,6 +59,7 @@ class Vhs extends Model\Document\Tag\Video {
     {
         $data = parent::getDataForResource();
         $data["showAsLightbox"] = $this->showAsLightbox;
+
         return $data;
     }
 

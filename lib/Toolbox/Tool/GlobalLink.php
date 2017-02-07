@@ -5,34 +5,30 @@ namespace Toolbox\Tool;
 use Pimcore\Tool;
 use Toolbox\Config;
 
-class GlobalLink {
-
+class GlobalLink
+{
     /**
-     * @param $path
+     * @param      $path
      * @param bool $checkRequestUri
      *
      * @return string
      * @throws \Zend_Exception
      */
-    public static function parse( $path, $checkRequestUri = FALSE )
+    public static function parse($path, $checkRequestUri = FALSE)
     {
         $currentCountry = NULL;
 
-        if(\Zend_Registry::isRegistered('Website_Country'))
-        {
+        if (\Zend_Registry::isRegistered('Website_Country')) {
             $currentCountry = \Zend_Registry::get('Website_Country');
-        }
-        else if($checkRequestUri)
-        {
+        } else if ($checkRequestUri) {
             $currentCountry = self::checkRequestUri();
         }
 
         //only parse if country in l10n is active!
-        if( !is_null( $currentCountry ) )
-        {
+        if (!is_null($currentCountry)) {
             $validLanguages = Tool::getValidLanguages();
 
-            $currentIsoCode = strtolower( $currentCountry );
+            $currentIsoCode = strtolower($currentCountry);
             $shiftCountry = FALSE;
 
             $pathCountry = '';
@@ -42,13 +38,11 @@ class GlobalLink {
             $urlPathFragments = explode('/', ltrim($urlPath, '/'));
 
             //it's a global page, link is correct.
-            if( $currentIsoCode === $globalString )
-            {
+            if ($currentIsoCode === $globalString) {
                 return $path;
             }
 
-            if( isset($urlPathFragments[0]) )
-            {
+            if (isset($urlPathFragments[0])) {
                 $pathElements = explode('-', $urlPathFragments[0]);
 
                 //first needs to be country
@@ -64,38 +58,34 @@ class GlobalLink {
             }
 
             //country is missing. add it.
-            if( $shiftCountry )
-            {
-                $path = '/' . $currentIsoCode .'-' . ltrim($path,'/');
-            }
-            //it's a global page with "global-" in string. change it.
-            else if( substr($path, 0, strlen($globalString)+2) === '/' . $globalString . '-')
-            {
-                $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen($globalString)+2);
+            if ($shiftCountry) {
+                $path = '/' . $currentIsoCode . '-' . ltrim($path, '/');
+            } //it's a global page with "global-" in string. change it.
+            else if (substr($path, 0, strlen($globalString) + 2) === '/' . $globalString . '-') {
+                $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen($globalString) + 2);
             }
 
             return $path;
         }
 
         return $path;
-
     }
 
+    /**
+     * @return string
+     */
     private static function checkRequestUri()
     {
         $currentCountry = 'GLOBAL';
 
-        if( isset( $_SERVER['REQUEST_URI'] ) && !empty( $_SERVER['REQUEST_URI'] ) )
-        {
-            $urlPath = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if (isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI'])) {
+            $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             $urlPathFragments = explode('/', ltrim($urlPath, '/'));
 
-            if( isset($urlPathFragments[0]) )
-            {
+            if (isset($urlPathFragments[0])) {
                 $slug = explode('-', $urlPathFragments[0]);
 
-                if( count($slug) === 2)
-                {
+                if (count($slug) === 2) {
                     $currentCountry = $slug[0];
                 }
             }

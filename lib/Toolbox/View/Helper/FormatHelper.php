@@ -2,9 +2,13 @@
 
 namespace Toolbox\View\Helper;
 
-class FormatHelper extends \Zend_View_Helper_Abstract {
-
-    public function formatHelper() {
+class FormatHelper extends \Zend_View_Helper_Abstract
+{
+    /**
+     * @return $this
+     */
+    public function formatHelper()
+    {
         return $this;
     }
 
@@ -19,8 +23,8 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
      *
      * @return string
      */
-    public function truncate($text, $maxCharacters, $append = '...', $respectWordBoundaries = true, $respectHtml = true) {
-
+    public function truncate($text, $maxCharacters, $append = '...', $respectWordBoundaries = TRUE, $respectHtml = TRUE)
+    {
         if ($respectHtml) {
             $content = $this->_truncateHtml($text, $maxCharacters, $append, $respectWordBoundaries);
         } else {
@@ -30,14 +34,19 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
         return $content;
     }
 
-
-
-
-    private function _truncateText($text, $maxCharacters, $append, $respectWordBoundaries) {
-
+    /**
+     * @param $text
+     * @param $maxCharacters
+     * @param $append
+     * @param $respectWordBoundaries
+     *
+     * @return string
+     */
+    private function _truncateText($text, $maxCharacters, $append, $respectWordBoundaries)
+    {
         if ($maxCharacters) {
             if (iconv_strlen($text) > abs($maxCharacters)) {
-                $truncatePosition = false;
+                $truncatePosition = FALSE;
                 if ($maxCharacters < 0) {
                     $text = substr($text, $maxCharacters);
                     if ($respectWordBoundaries) {
@@ -57,8 +66,16 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
         return $text;
     }
 
-    private function _truncateHtml($text, $maxCharacters, $append, $respectWordBoundaries) {
-
+    /**
+     * @param $text
+     * @param $maxCharacters
+     * @param $append
+     * @param $respectWordBoundaries
+     *
+     * @return string
+     */
+    private function _truncateHtml($text, $maxCharacters, $append, $respectWordBoundaries)
+    {
         // if the plain text is shorter than the maximum length, return the whole text
         if (strlen(preg_replace('/<.*?>/', '', $text)) <= $maxCharacters) {
             return $text;
@@ -67,8 +84,8 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
         // splits all html-tags to scanable lines
         preg_match_all('/(<.+?>)?([^<>]*)/s', $text, $lines, PREG_SET_ORDER);
         $total_length = strlen($append);
-        $open_tags    = array();
-        $truncate     = '';
+        $open_tags = [];
+        $truncate = '';
 
         foreach ($lines as $line_matchings) {
             // if there is any html-tag in this line, handle it and add it (uncounted) to the output
@@ -81,7 +98,7 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
                     if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
                         // delete tag from $open_tags list
                         $pos = array_search($tag_matchings[1], $open_tags);
-                        if ($pos !== false) {
+                        if ($pos !== FALSE) {
                             unset($open_tags[$pos]);
                         }
                         // if tag is an opening tag
@@ -99,7 +116,7 @@ class FormatHelper extends \Zend_View_Helper_Abstract {
             $content_length = strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
             if ($total_length + $content_length > $maxCharacters) {
                 // the number of characters which are left
-                $left            = $maxCharacters - $total_length;
+                $left = $maxCharacters - $total_length;
                 $entities_length = 0;
                 // search for html entities
                 if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, PREG_OFFSET_CAPTURE)) {

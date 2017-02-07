@@ -10,17 +10,14 @@ use Toolbox\Config;
 
 class Googlemap extends Model\Document\Tag
 {
-
     /**
      * Contains the data
-     *
      * @var array
      */
     public $data;
 
     /**
      * Return the type of the element
-     *
      * @return string
      */
     public function getType()
@@ -39,27 +36,26 @@ class Googlemap extends Model\Document\Tag
 
     /**
      * Return the data for direct output to the frontend, can also contain HTML code!
-     *
      * @return string
      */
-    public function frontend() {
-
-        $dataAttr = array();
+    public function frontend()
+    {
+        $dataAttr = [];
         $dataAttr['data-locations'] = json_encode($this->data);
         $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
         $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
         $configNode = Config::getConfig()->googleMap;
 
-        if ( !empty($configNode) ) {
+        if (!empty($configNode)) {
 
             $mapOptions = $configNode->mapOptions->toArray();
             $mapStyleUrl = $configNode->mapStyleUrl;
             $markerIcon = $configNode->markerIcon;
 
-            if ( is_array($mapOptions) && count($mapOptions) > 0 ) {
-                foreach($mapOptions as $name => $value) {
-                    $value = is_bool($value) ? ($value === TRUE ? 'true' : 'false') : (string) $value;
+            if (is_array($mapOptions) && count($mapOptions) > 0) {
+                foreach ($mapOptions as $name => $value) {
+                    $value = is_bool($value) ? ($value === TRUE ? 'true' : 'false') : (string)$value;
 
                     // convert camelCase to camel-case, because we will read these property with $el.data(), which converts them back to camelCase
                     $name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '-\\1', $name));
@@ -68,14 +64,13 @@ class Googlemap extends Model\Document\Tag
                 }
             }
 
-            if ( !empty($mapStyleUrl) ) {
+            if (!empty($mapStyleUrl)) {
                 $dataAttr['data-mapstyleurl'] = $mapStyleUrl;
             }
 
-            if ( !empty($markerIcon) ) {
+            if (!empty($markerIcon)) {
                 $dataAttr['data-markericon'] = $markerIcon;
             }
-
         }
 
         $dataAttrString = implode(' ', array_map(
@@ -86,11 +81,9 @@ class Googlemap extends Model\Document\Tag
             array_keys($dataAttr)
         ));
 
-
-        if ( !$this->id ) {
+        if (!$this->id) {
 
             $this->id = uniqid('map-');
-
         }
 
         $html = '<div class="embed-responsive-item toolbox-googlemap" id="' . $this->id . '" ' . $dataAttrString . '></div>';
@@ -117,41 +110,40 @@ class Googlemap extends Model\Document\Tag
      * Receives the data from the resource, an convert to the internal data in the object eg. image-id to Asset\Image
      *
      * @param mixed $data
+     *
      * @return string
      */
-    public function setDataFromResource($data) {
+    public function setDataFromResource($data)
+    {
 
         $this->data = \Pimcore\Tool\Serialize::unserialize($data);
 
-        if (!is_array($this->data))
-        {
+        if (!is_array($this->data)) {
             $this->data = [];
         }
 
         return $this;
-
     }
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
+     *
      * @param mixed $data
+     *
      * @return void
      */
     public function setDataFromEditmode($data)
     {
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             $data = [];
         }
 
-        if ( count($data) > 0 ) {
+        if (count($data) > 0) {
 
-            foreach($data as $i => $location) {
+            foreach ($data as $i => $location) {
 
                 $data[$i] = $this->geocodeLocation($location);
-
             }
-
         }
 
         $this->data = $data;
@@ -159,13 +151,22 @@ class Googlemap extends Model\Document\Tag
         return $this;
     }
 
-    public function getId() {
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
 
         return $this->id;
-
     }
 
-    protected function geocodeLocation($location) {
+    /**
+     * @param $location
+     *
+     * @return mixed
+     */
+    protected function geocodeLocation($location)
+    {
 
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
         $address = urlencode($address);
@@ -184,11 +185,9 @@ class Googlemap extends Model\Document\Tag
 
             $location['lat'] = $result->results[0]->geometry->location->lat;
             $location['lng'] = $result->results[0]->geometry->location->lng;
-
         }
 
         return $location;
-
     }
 
 }

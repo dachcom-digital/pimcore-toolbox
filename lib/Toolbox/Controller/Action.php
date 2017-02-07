@@ -5,6 +5,9 @@ use Pimcore\Controller\Action\Frontend;
 
 class Action extends Frontend
 {
+    /**
+     *
+     */
     public function init()
     {
         //allow website path to override templates
@@ -12,6 +15,5 @@ class Action extends Frontend
         $this->view->addScriptPath(PIMCORE_WEBSITE_PATH . '/views/layouts');
 
         parent::init();
-
     }
 }

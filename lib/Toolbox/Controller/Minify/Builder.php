@@ -3,8 +3,16 @@ namespace Toolbox\Controller\Minify;
 
 use MatthiasMullie\Minify;
 
-class Builder {
-
+class Builder
+{
+    /**
+     * @param $assets
+     * @param $type
+     * @param $outPutFolder
+     * @param $outPutFileName
+     *
+     * @return string
+     */
     function setAssets($assets, $type, $outPutFolder, $outPutFileName)
     {
         $lastModifiedFile = $outPutFolder . '/' . basename($outPutFileName) . '-lm';
@@ -16,35 +24,26 @@ class Builder {
 
         $lastCached = FALSE;
 
-        if(!file_exists($lastModifiedFile))
-        {
+        if (!file_exists($lastModifiedFile)) {
             file_put_contents($lastModifiedFile, $latestStoredFileModified);
-        }
-        else
-        {
+        } else {
             $lastCached = file_get_contents($lastModifiedFile);
         }
 
-        if( $lastCached == FALSE || $latestStoredFileModified > $lastCached)
-        {
-            if( $type == 'js')
-            {
+        if ($lastCached == FALSE || $latestStoredFileModified > $lastCached) {
+            if ($type == 'js') {
                 $minifier = new Minify\JS();
-            }
-            else if( $type == 'css')
-            {
+            } else if ($type == 'css') {
                 $minifier = new Minify\CSS();
             }
 
-            foreach( $assets as $asset)
-            {
+            foreach ($assets as $asset) {
                 $minifier->add($asset);
             }
 
             $minifier->minify($outPutFolder . '/' . $outPutFileName);
 
             file_put_contents($lastModifiedFile, $latestStoredFileModified);
-
         }
 
         return $outPutFolder . '/' . $outPutFileName;

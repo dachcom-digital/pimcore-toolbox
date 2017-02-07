@@ -4,89 +4,102 @@ namespace Toolbox\Plugin;
 
 use Pimcore\Model\Translation\Admin;
 
-class Install {
-
+class Install
+{
+    /**
+     * @var null|string
+     */
     private $configFile = NULL;
 
-    public function __construct() {
-
+    /**
+     * Install constructor.
+     */
+    public function __construct()
+    {
         $this->configFile = TOOLBOX_CONFIGURATION_FILE;
-
     }
 
-    public function isInstalled() {
-
+    /**
+     * @return bool
+     */
+    public function isInstalled()
+    {
         $userM = new \Pimcore\Model\User();
         $user = $userM->getByName('kunde');
 
-        return $user !== FALSE && is_file( $this->configFile );
-
+        return $user !== FALSE && is_file($this->configFile);
     }
 
+    /**
+     *
+     */
     public function installAdminTranslations()
     {
         $csv = PIMCORE_PLUGINS_PATH . '/Toolbox/install/translations/data.csv';
-        Admin::importTranslationsFromFile($csv, true, \Pimcore\Tool\Admin::getLanguages());
+        Admin::importTranslationsFromFile($csv, TRUE, \Pimcore\Tool\Admin::getLanguages());
     }
 
-    public function installConfigFile() {
+    /**
+     *
+     */
+    public function installConfigFile()
+    {
+        if (!is_file($this->configFile)) {
 
-        if(!is_file( $this->configFile ) ) {
+            $settings = [
 
-            $settings = array(
-
-                "accordion" => [
+                "accordion"         => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "type",
-                            "title" => "Type",
-                            "values" => [
+                            "type"    => "select",
+                            "name"    => "type",
+                            "title"   => "Type",
+                            "values"  => [
                                 "panel-default" => "Default",
-                                "panel-danger" => "Dangers"
+                                "panel-danger"  => "Dangers"
                             ],
                             "default" => "panel-default"
                         ],
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "columns" => [
+                "columns"           => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "type",
-                            "title" => "Columns",
-                            "values" => [
-                                "column_12" => "1 Column",
-                                "column_4_8" => "2 Columns (33:66)",
-                                "column_8_4" => "2 Columns (66:33)",
-                                "column_3_9" => "2 Columns (25:75)",
-                                "column_9_3" => "2 Columns (75:25)",
-                                "column_6_6" => "2 Columns (50:50)",
+                            "type"    => "select",
+                            "name"    => "type",
+                            "title"   => "Columns",
+                            "values"  => [
+                                "column_12"    => "1 Column",
+                                "column_4_8"   => "2 Columns (33:66)",
+                                "column_8_4"   => "2 Columns (66:33)",
+                                "column_3_9"   => "2 Columns (25:75)",
+                                "column_9_3"   => "2 Columns (75:25)",
+                                "column_6_6"   => "2 Columns (50:50)",
                                 "column_4_4_4" => "3 Columns (33:33:33)"
                             ],
                             "default" => "column_12"
                         ],
                         [
-                            "type" => "checkbox",
-                            "name" => "equalHeight",
-                            "title" => "Equal heights?",
+                            "type"   => "checkbox",
+                            "name"   => "equalHeight",
+                            "title"  => "Equal heights?",
                             "reload" => FALSE
 
                         ]
                     ],
                 ],
-                "slideColumns" => [
+                "slideColumns"      => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "slidesPerView",
-                            "title" => "Slides per View",
-                            "values" => [
+                            "type"    => "select",
+                            "name"    => "slidesPerView",
+                            "title"   => "Slides per View",
+                            "values"  => [
                                 "2" => "2 Columns",
                                 "3" => "3 Columns",
                                 "4" => "4 Columns",
@@ -95,53 +108,53 @@ class Install {
                             "default" => "4"
                         ],
                         [
-                            "type" => "checkbox",
-                            "name" => "equalHeight",
-                            "title" => "Equal heights?",
+                            "type"   => "checkbox",
+                            "name"   => "equalHeight",
+                            "title"  => "Equal heights?",
                             "reload" => FALSE
                         ]
                     ],
-                    "columnClasses" => [
+                    "columnClasses"  => [
                         "2" => "col-xs-12 col-sm-6"
                     ],
-                    "breakpoints" => [
+                    "breakpoints"    => [
 
                     ]
                 ],
-                "content" => [
+                "content"           => [
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "download" => [
+                "download"          => [
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ],
                     ],
 
                 ],
-                "gallery" => [
+                "gallery"           => [
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "headline" => [
+                "headline"          => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "headlineType",
-                            "title" => "Headline Size",
-                            "values" => [
+                            "type"    => "select",
+                            "name"    => "headlineType",
+                            "title"   => "Headline Size",
+                            "values"  => [
                                 "h1" => "Headline 1",
                                 "h2" => "Headline 2",
                                 "h3" => "Headline 3",
@@ -152,24 +165,24 @@ class Install {
                             "default" => "h3"
                         ],
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
                 ],
-                "image" => [
+                "image"             => [
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "linklist" => [
+                "linklist"          => [
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
@@ -178,93 +191,93 @@ class Install {
                 "parallaxContainer" => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "type",
-                            "title" => "Type",
-                            "values" => [
-                                "image" => "Image",
+                            "type"    => "select",
+                            "name"    => "type",
+                            "title"   => "Type",
+                            "values"  => [
+                                "image"   => "Image",
                                 "snippet" => "Snippet"
                             ],
                             "default" => "image"
                         ],
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => ["window-full-height" => "min. window height"],
                         ]
                     ],
 
                 ],
-                "separator" => [
+                "separator"         => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "space",
-                            "title" => "Space before & after separator",
-                            "values" => [
+                            "type"    => "select",
+                            "name"    => "space",
+                            "title"   => "Space before & after separator",
+                            "values"  => [
                                 "default" => "Default",
-                                "medium" => "Medium",
-                                "large" => "Large"
+                                "medium"  => "Medium",
+                                "large"   => "Large"
                             ],
                             "default" => "default"
                         ],
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "teaser" => [
+                "teaser"            => [
                     "configElements" => [
                         [
-                            "type" => "select",
-                            "name" => "type",
-                            "title" => "Type",
-                            "values" => [
-                                "direct" => "Direct",
+                            "type"    => "select",
+                            "name"    => "type",
+                            "title"   => "Type",
+                            "values"  => [
+                                "direct"  => "Direct",
                                 "snippet" => "Snippet"
                             ],
                             "default" => "direct"
                         ],
                         [
-                            "type" => "select",
-                            "name" => "layout",
-                            "title" => "Layout",
-                            "values" => [
+                            "type"       => "select",
+                            "name"       => "layout",
+                            "title"      => "Layout",
+                            "values"     => [
                                 "default" => "Default"
                             ],
-                            "default" => "default",
+                            "default"    => "default",
                             "conditions" => [
                                 ["type" => "direct"]
                             ]
                         ],
                         [
-                            "type" => "checkbox",
-                            "name" => "useLightBox",
+                            "type"  => "checkbox",
+                            "name"  => "useLightBox",
                             "title" => "use Lightbox?",
 
                         ],
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ]
                     ],
 
                 ],
-                "video" => [
-                    "videoOptions" => [
+                "video"             => [
+                    "videoOptions"   => [
                         "youtube" => [
                             "posterImageThumbnail" => NULL,
                         ]
                     ],
                     "configElements" => [
                         [
-                            "type" => "additionalClasses",
+                            "type"   => "additionalClasses",
                             "values" => [],
                         ],
                         [
-                            "type" => "checkbox",
-                            "name" => "autoplay",
+                            "type"  => "checkbox",
+                            "name"  => "autoplay",
                             "title" => "Autoplay?",
                         ],
                     ],
@@ -272,14 +285,14 @@ class Install {
 
                 "googleMap" => [
                     "configElements" => [],
-                    "mapOptions" => [
+                    "mapOptions"     => [
                         "streetViewControl" => TRUE,
-                        "mapTypeControl" => FALSE,
-                        "panControl" => FALSE,
-                        "scrollwheel" => FALSE,
+                        "mapTypeControl"    => FALSE,
+                        "panControl"        => FALSE,
+                        "scrollwheel"       => FALSE,
                     ],
-                    "mapStyleUrl" => FALSE,
-                    "markerIcon" => FALSE
+                    "mapStyleUrl"    => FALSE,
+                    "markerIcon"     => FALSE
                 ],
 
                 "ckeditor" => [
@@ -288,8 +301,8 @@ class Install {
                         "default" => [
 
                             [
-                                "name" => "Button Default",
-                                "element" => "a",
+                                "name"       => "Button Default",
+                                "element"    => "a",
                                 "attributes" => [
                                     "class" => "btn btn-default"
                                 ]
@@ -297,7 +310,7 @@ class Install {
                         ],
                     ],
 
-                    "areaEditor" => [
+                    "areaEditor"   => [
                         "stylesSet" => [
 
                         ],
@@ -310,12 +323,12 @@ class Install {
                 ],
 
                 "disallowedSubAreas" => [
-                    "accordion" => ["accordion","container","slideColumns"],
-                    "columns" => ["container"],
-                    "slideColumns" => [ "slideColumns","accordion","container","columns","anchor"],
-                    "container" => ["container"],
-                    "image" => ["parallaxContainer"],
-                    "snippet" => ["parallaxContainer"]
+                    "accordion"    => ["accordion", "container", "slideColumns"],
+                    "columns"      => ["container"],
+                    "slideColumns" => ["slideColumns", "accordion", "container", "columns", "anchor"],
+                    "container"    => ["container"],
+                    "image"        => ["parallaxContainer"],
+                    "snippet"      => ["parallaxContainer"]
                 ],
 
                 "disallowedContentSnippetAreas" => [
@@ -329,10 +342,10 @@ class Install {
 
                     "toolbar" => [
 
-                        "title" => "Inhaltsbausteine",
-                        "width" => 200,
-                        "x" => 10,
-                        "y" => 125,
+                        "title"       => "Inhaltsbausteine",
+                        "width"       => 200,
+                        "x"           => 10,
+                        "y"           => 125,
                         "buttonWidth" => 200
 
                     ],
@@ -340,25 +353,26 @@ class Install {
                     "groups" => FALSE
 
                 ]
-            );
+            ];
 
             \Pimcore\File::putPhpFile($this->configFile, to_php_data_file_format($settings));
         }
-
     }
 
     /**
      * Adds an default customer user role & user itself
      */
-    public function addUserData() {
-
+    public function addUserData()
+    {
         $userRole = $this->installUserRole();
-
         $this->installUser($userRole);
     }
 
-    private function installUserRole() {
-
+    /**
+     * @return \Pimcore\Model\User\AbstractUser
+     */
+    private function installUserRole()
+    {
         $userRole = new \Pimcore\Model\User\Role();
         $customerRole = $userRole->getByName('kunde');
 
@@ -367,95 +381,95 @@ class Install {
         }
 
         $user = \Pimcore\Model\User\Role::create(
-            array(
+            [
 
                 'parentId' => 0,
-                'name' => 'kunde',
-                'active' => 1
+                'name'     => 'kunde',
+                'active'   => 1
 
-            )
+            ]
         );
 
-        $permissions = array(
+        $permissions = [
 
-            'assets' => TRUE,
-            'plugin_coreshop' => TRUE,
-            'coreshop_country' => TRUE,
+            'assets'            => TRUE,
+            'plugin_coreshop'   => TRUE,
+            'coreshop_country'  => TRUE,
             'coreshop_currency' => TRUE,
-            'coreshop_zone' => TRUE,
-            'coreshop_user' => TRUE,
-            'dashboards' => TRUE,
-            'documents' => TRUE,
-            'notes_events' => TRUE,
-            'objects' => TRUE,
-            'recyclebin' => TRUE,
-            'redirects' => TRUE,
-            'seemode' => TRUE,
-            'users' => TRUE,
-            'website_settings' => TRUE
+            'coreshop_zone'     => TRUE,
+            'coreshop_user'     => TRUE,
+            'dashboards'        => TRUE,
+            'documents'         => TRUE,
+            'notes_events'      => TRUE,
+            'objects'           => TRUE,
+            'recyclebin'        => TRUE,
+            'redirects'         => TRUE,
+            'seemode'           => TRUE,
+            'users'             => TRUE,
+            'website_settings'  => TRUE
 
-        );
+        ];
 
-        $classes = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        $classes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-        $workspaces = array(
-            'document' => array(
-                array(
-                    'path' => '/',
-                    'list' => TRUE,
-                    'save' => TRUE,
-                    'unpublish' => TRUE,
-                    'view' => TRUE,
-                    'publish' => TRUE,
-                    'delete' => TRUE,
-                    'rename' => TRUE,
-                    'create' => TRUE,
-                    'settings' => TRUE,
-                    'versions' => TRUE,
+        $workspaces = [
+            'document' => [
+                [
+                    'path'       => '/',
+                    'list'       => TRUE,
+                    'save'       => TRUE,
+                    'unpublish'  => TRUE,
+                    'view'       => TRUE,
+                    'publish'    => TRUE,
+                    'delete'     => TRUE,
+                    'rename'     => TRUE,
+                    'create'     => TRUE,
+                    'settings'   => TRUE,
+                    'versions'   => TRUE,
                     'properties' => TRUE
-                ),
-                array(
+                ],
+                [
                     'path' => '/demo'
-                )
-            ),
-            'object' => array(
-                array(
-                    'path' => '/',
-                    'list' => TRUE,
-                    'save' => TRUE,
-                    'unpublish' => TRUE,
-                    'view' => TRUE,
-                    'publish' => TRUE,
-                    'delete' => TRUE,
-                    'rename' => TRUE,
-                    'create' => TRUE,
-                    'settings' => TRUE,
-                    'versions' => TRUE,
+                ]
+            ],
+            'object'   => [
+                [
+                    'path'       => '/',
+                    'list'       => TRUE,
+                    'save'       => TRUE,
+                    'unpublish'  => TRUE,
+                    'view'       => TRUE,
+                    'publish'    => TRUE,
+                    'delete'     => TRUE,
+                    'rename'     => TRUE,
+                    'create'     => TRUE,
+                    'settings'   => TRUE,
+                    'versions'   => TRUE,
                     'properties' => TRUE
-                )
-            ),
-            'asset' => array(
-                array(
-                    'path' => '/',
-                    'list' => TRUE,
-                    'save' => TRUE,
-                    'unpublish' => TRUE,
-                    'view' => TRUE,
-                    'publish' => TRUE,
-                    'delete' => TRUE,
-                    'rename' => TRUE,
-                    'create' => TRUE,
-                    'settings' => TRUE,
-                    'versions' => TRUE,
+                ]
+            ],
+            'asset'    => [
+                [
+                    'path'       => '/',
+                    'list'       => TRUE,
+                    'save'       => TRUE,
+                    'unpublish'  => TRUE,
+                    'view'       => TRUE,
+                    'publish'    => TRUE,
+                    'delete'     => TRUE,
+                    'rename'     => TRUE,
+                    'create'     => TRUE,
+                    'settings'   => TRUE,
+                    'versions'   => TRUE,
                     'properties' => TRUE
-                )
-            )
+                ]
+            ]
 
-        );
+        ];
 
         foreach ($workspaces as $type => $spaces) {
 
-            $newWorkspaces = array();
+            $newWorkspaces = [];
 
             foreach ($spaces as $space) {
 
@@ -483,19 +497,22 @@ class Install {
             $user->setPermission($permName, $permAccess);
         }
 
-        $user->setDocTypes(implode(',', array(1)));
+        $user->setDocTypes(implode(',', [1]));
 
         $user->setClasses(implode(',', $classes));
 
         $user->save();
 
-        //var_dump($user);
-
         return $user;
     }
 
-    private function installUser(\Pimcore\Model\User\Role $userRole) {
-
+    /***
+     * @param \Pimcore\Model\User\Role $userRole
+     *
+     * @return \Pimcore\Model\User\AbstractUser
+     */
+    private function installUser(\Pimcore\Model\User\Role $userRole)
+    {
         $userM = new \Pimcore\Model\User();
         $user = $userM->getByName('kunde');
 
@@ -505,22 +522,21 @@ class Install {
 
         $user = \Pimcore\Model\User::create(
 
-            array(
+            [
 
                 'parentId' => 0,
-                'name' => 'kunde',
+                'name'     => 'kunde',
                 'password' => \Pimcore\Tool\Authentication::getPasswordHash('kunde', 'kunde'),
-                'active' => 1,
+                'active'   => 1,
                 'language' => 'de',
-                'admin' => FALSE,
-                'roles' => array(0 => $userRole->getId())
+                'admin'    => FALSE,
+                'roles'    => [0 => $userRole->getId()]
 
-            ));
+            ]);
 
         $user->save();
 
         return $user;
-
     }
 
 }

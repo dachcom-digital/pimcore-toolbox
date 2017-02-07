@@ -2,8 +2,8 @@
 
 use Pimcore\Controller\Action\Admin;
 
-class Toolbox_Admin_SettingsController extends Admin {
-
+class Toolbox_Admin_SettingsController extends Admin
+{
     /**
      * @var array
      */
@@ -27,41 +27,43 @@ class Toolbox_Admin_SettingsController extends Admin {
         $storedConfig = \Toolbox\Config::getConfig()->ckeditor;
 
         $ckEditorObjectConfigFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/ckEditorObjectConfig.json';
-        $ckEditorObjectConfig = json_decode( file_get_contents( $ckEditorObjectConfigFile ), TRUE );
+        $ckEditorObjectConfig = json_decode(file_get_contents($ckEditorObjectConfigFile), TRUE);
 
         $ckEditorAreaConfigFile = PIMCORE_PLUGINS_PATH . '/Toolbox/var/config/backend/ckeditor/ckEditorAreaConfig.json';
-        $ckEditorAreaConfig = json_decode( file_get_contents( $ckEditorAreaConfigFile ), TRUE );
+        $ckEditorAreaConfig = json_decode(file_get_contents($ckEditorAreaConfigFile), TRUE);
 
         //object config
         $userCkEditorObjectConfig = [];
-        if( isset( $storedConfig->objectEditor )) {
+        if (isset($storedConfig->objectEditor)) {
             $userCkEditorObjectConfig = $storedConfig->objectEditor->toArray();
         }
 
         //area config
         $userCkEditorAreaConfig = [];
-        if( isset( $storedConfig->areaEditor )) {
+        if (isset($storedConfig->areaEditor)) {
             $userCkEditorAreaConfig = $storedConfig->areaEditor->toArray();
         }
 
         //global Style Sets config
-        if( isset( $storedConfig->globalStyleSets )) {
+        if (isset($storedConfig->globalStyleSets)) {
             $this->globalStyleSets = $storedConfig->globalStyleSets->toArray();
         }
 
-        $this->ckEditorObjectConfig     = $this->parseToolbarConfig( $ckEditorObjectConfig, $userCkEditorObjectConfig );
-        $this->ckEditorAreaConfig       = $this->parseToolbarConfig( $ckEditorAreaConfig, $userCkEditorAreaConfig );
+        $this->ckEditorObjectConfig = $this->parseToolbarConfig($ckEditorObjectConfig, $userCkEditorObjectConfig);
+        $this->ckEditorAreaConfig = $this->parseToolbarConfig($ckEditorAreaConfig, $userCkEditorAreaConfig);
 
         parent::init();
-
     }
 
+    /**
+     *
+     */
     public function ckEditorAreaStyleAction()
     {
         $this->view->assign(
             [
-                'globalStyleSets'   => $this->globalStyleSets,
-                'config'            =>  $this->ckEditorAreaConfig
+                'globalStyleSets' => $this->globalStyleSets,
+                'config'          => $this->ckEditorAreaConfig
             ]
         );
 
@@ -73,15 +75,17 @@ class Toolbox_Admin_SettingsController extends Admin {
             ->sendResponse();
 
         exit;
-
     }
 
+    /**
+     *
+     */
     public function ckEditorObjectStyleAction()
     {
         $this->view->assign(
             [
-                'globalStyleSets'   => $this->globalStyleSets,
-                'config'            =>  $this->ckEditorObjectConfig
+                'globalStyleSets' => $this->globalStyleSets,
+                'config'          => $this->ckEditorObjectConfig
             ]
         );
 
@@ -93,37 +97,35 @@ class Toolbox_Admin_SettingsController extends Admin {
             ->sendResponse();
 
         exit;
-
     }
 
-    private function parseToolbarConfig( $defaultConfig, $userConfig )
+    /**
+     * @param $defaultConfig
+     * @param $userConfig
+     *
+     * @return array
+     */
+    private function parseToolbarConfig($defaultConfig, $userConfig)
     {
-        $type = isset( $userConfig['toolbarModification'] ) && !empty( $userConfig['toolbarModification'] ) ? $userConfig['toolbarModification'] : NULL;
+        $type = isset($userConfig['toolbarModification']) && !empty($userConfig['toolbarModification']) ? $userConfig['toolbarModification'] : NULL;
 
-        $config = array_merge( $defaultConfig, $userConfig );
+        $config = array_merge($defaultConfig, $userConfig);
 
-        unset( $config['toolbarModification'] );
+        unset($config['toolbarModification']);
 
-        if( $type === 'append' && is_array( $userConfig['toolbar'] ) )
-        {
-            foreach( $userConfig['toolbar'] as $array)
-            {
+        if ($type === 'append' && is_array($userConfig['toolbar'])) {
+            foreach ($userConfig['toolbar'] as $array) {
                 array_push($defaultConfig['toolbar'], $array);
             }
 
             $config['toolbar'] = $defaultConfig['toolbar'];
-        }
-        else if( $type === 'prepend' && is_array( $userConfig['toolbar'] ) )
-        {
-            foreach( $userConfig['toolbar'] as $array)
-            {
+        } else if ($type === 'prepend' && is_array($userConfig['toolbar'])) {
+            foreach ($userConfig['toolbar'] as $array) {
                 array_unshift($defaultConfig['toolbar'], $array);
             }
 
             $config['toolbar'] = $defaultConfig['toolbar'];
-        }
-        else if( $type === 'replace' && is_array( $userConfig['toolbar'] ) )
-        {
+        } else if ($type === 'replace' && is_array($userConfig['toolbar'])) {
             $config['toolbar'] = $userConfig['toolbar'];
         }
 
