@@ -33,9 +33,14 @@ class Frontend extends \Zend_Controller_Plugin_Abstract
         if ($layout && $layout->isEnabled() !== FALSE) {
             \Pimcore::getEventManager()->attach('toolbox.addAsset', function (\Zend_EventManager_Event $e) {
                 $assetHandler = $e->getTarget();
-                $assetHandler->appendScript('toolbox-parallax', '/plugins/Toolbox/static/js/frontend/jquery.parallax-scroll.min.js', [], ['showInFrontEnd' => TRUE]);
-                $assetHandler->appendScript('vimeo-api', '/plugins/Toolbox/static/js/frontend/vimeo-api.min.js', [], ['showInFrontEnd' => TRUE]);
-                $assetHandler->appendScript('toolbox-frontend', '/plugins/Toolbox/static/js/frontend/toolbox.js', [], ['showInFrontEnd' => TRUE]);
+
+                $assetHandler->appendScript('toolbox-vendor-parallax', '/plugins/Toolbox/static/js/frontend/vendor/jquery.parallax-scroll.min.js', [], ['showInFrontEnd' => TRUE]);
+                $assetHandler->appendScript('toolbox-vendor-vimeo-api', '/plugins/Toolbox/static/js/frontend/vendor/vimeo-api.min.js', [], ['showInFrontEnd' => TRUE]);
+
+                $assetHandler->appendScript('toolbox-frontend-main', '/plugins/Toolbox/static/js/frontend/toolbox-main.js', [], ['showInFrontEnd' => TRUE]);
+                $assetHandler->appendScript('toolbox-frontend-video', '/plugins/Toolbox/static/js/frontend/toolbox-video.js', [], ['showInFrontEnd' => TRUE]);
+                $assetHandler->appendScript('toolbox-frontend-parallax', '/plugins/Toolbox/static/js/frontend/toolbox-parallax.js', [], ['showInFrontEnd' => TRUE]);
+                $assetHandler->appendScript('toolbox-frontend-google-maps', '/plugins/Toolbox/static/js/frontend/toolbox-googleMaps.js', [], ['showInFrontEnd' => TRUE]);
             });
         }
     }

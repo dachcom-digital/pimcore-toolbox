@@ -1,5 +1,5 @@
 {
-  "name": "dachcom-digital/pimcore-toolbox",
+  "name": "dachcom-digital/toolbox",
   "type": "pimcore-plugin",
   "license": "Simple BSD",
   "description": "Kickstarter for Pimcore Projects.",
