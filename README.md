@@ -141,5 +141,9 @@ The video element needs this minimal css. Copy it to your template and customize
 }
 ```
 
+## Copyright and license
+Copyright: [DACHCOM.DIGITAL](http://dachcom-digital.ch)  
+For licensing details please visit [LICENSE.md](LICENSE.md)  
+
 ## Upgrade Info
 Before updating, please [check our upgrade notes!](UPGRADE.md)

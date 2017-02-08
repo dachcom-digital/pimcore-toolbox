@@ -1,23 +1,20 @@
 {
-  "name": "dachcom-digital/toolbox",
-  "type": "pimcore-plugin",
-  "license": "Simple BSD",
-  "description": "Kickstarter for Pimcore Projects.",
-  "keywords": [
-    "pimcore",
-    "toolbox"
-  ],
-  "homepage": "https://github.com/dachcom-digital/pimcore-toolbox",
-  "authors": [
-    {
-      "name": "DACHCOM.DIGITAL Stefan Hagspiel",
-      "email": "shagspiel@dachcom.ch",
-      "homepage": "http://www.dachcom.com/",
-      "role": "Developer"
+    "name": "dachcom-digital/toolbox",
+    "type": "pimcore-plugin",
+    "license": "GPL-3.0+",
+    "description": "Pimcore 4.x Project Kickstarter.",
+    "keywords": ["pimcore", "toolbox"],
+    "homepage": "https://github.com/dachcom-digital/pimcore-toolbox",
+    "authors": [
+        {
+            "name": "DACHCOM.DIGITAL Stefan Hagspiel",
+            "email": "shagspiel@dachcom.ch",
+            "homepage": "http://www.dachcom.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "pimcore/installer-plugin": ">=1",
+        "matthiasmullie/minify": "1.3.39"
     }
-  ],
-  "require": {
-    "pimcore/installer-plugin": ">=1",
-    "matthiasmullie/minify": "1.3.39"
-  }
 }
