@@ -98,6 +98,11 @@ class ElementBuilder
 
                     $elConf['store'] = $store;
 
+                    //force default
+                    if (!empty($elConf['default']) && $view->select($elConf['name'])->isEmpty()) {
+                        $view->select($elConf['name'])->setDataFromResource($elConf['default']);
+                    }
+
                     $value = $view->select($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
                     break;
@@ -110,9 +115,10 @@ class ElementBuilder
 
                 case 'input':
 
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : 150;
+
                     $value = $view->input($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
-                    $elConf['width'] = isset($c['width']) ? $c['width'] : 150;
                     break;
 
                 case 'numeric':
@@ -122,6 +128,14 @@ class ElementBuilder
                     $elConf['maxValue'] = isset($c['maxValue']) ? $c['maxValue'] : '';
                     $elConf['decimalPrecision'] = isset($c['decimalPrecision']) ? $c['decimalPrecision'] : FALSE;
                     $elConf['class'] = isset($c['class']) ? $c['class'] : '';
+
+                    //force default
+                    if (!empty($elConf['default']) && $view->numeric($elConf['name'])->isEmpty()) {
+                        $view->numeric($elConf['name'])->setDataFromResource($elConf['default']);
+                    }
+
+                    $value = $view->numeric($elConf['name'])->getData();
+                    $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
                     break;
 
                 case 'multihref':
