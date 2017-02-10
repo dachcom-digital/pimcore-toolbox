@@ -1,6 +1,12 @@
 # Upgrade Notes
 
 #### Update from Version 1.6.x to Version 1.7.0
+ 
+*All Area Elements*  
+- All `edit.php` files for areas has been suspended. There is only one custom edit window for each element.
+- The Image `Extra CSS-Class` property has been removed. Please use the `additional classes` functionality.
+
+*Video*  
 - New video configuration in `toolbox_configuration.php`:
      ```php
      "video" => [
@@ -13,12 +19,11 @@
      ]
      ```
  
-  - Changes in DB table `document_elements`. All elements with type `video` should changed to `vhs`. Use this sql script:
- 
+- Changes in DB table `document_elements`. All elements with type `video` should changed to `vhs`. Use this sql script:
  ``` sql
  UPDATE documents_elements SET type = 'vhs' WHERE type = 'video';
  ```
- 
+
 #### Update from Version 1.5.0 to Version 1.5.1 and Version 1.6.0 to Version 1.6.1
 - CKEditor Configuration change:
 

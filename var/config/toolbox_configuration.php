@@ -24,4 +24,92 @@ return [
             ],
         ]
     ],
+    "image" => [
+        "configElements" => [
+            [
+                "type" => "checkbox",
+                "name" => "useLightbox",
+                "title" => "Use Lightbox",
+                "reload" => FALSE
+            ],
+            [
+                "type" => "checkbox",
+                "name" => "showCaption",
+                "title" => "Display Caption",
+                "reload" => FALSE
+            ]
+        ]
+    ],
+    "download" => [
+        "configElements" => [
+            [
+                "type" => "multihref",
+                "name" => "downloads",
+                "title" => "Files",
+                "reload" => TRUE
+            ],
+            [
+                "type" => "checkbox",
+                "name" => "showPreviewImages",
+                "title" => "Show preview images",
+                "reload" => FALSE
+            ],
+            [
+                "type" => "checkbox",
+                "name" => "showFileInfo",
+                "title" => "Show file info",
+                "reload" => FALSE
+            ]
+        ]
+    ],
+    "gallery" => [
+        "configElements" => [
+            [
+                "type" => "multihref",
+                "name" => "images",
+                "title" => "Images or Folder",
+                "reload" => TRUE
+            ],
+            [
+                "type" => "checkbox",
+                "name" => "useLightbox",
+                "title" => "Use Lightbox",
+                "reload" => FALSE
+            ],
+            [
+                "type" => "checkbox",
+                "name" => "useThumbnails",
+                "title" => "Use Thumbnails",
+                "reload" => FALSE
+            ]
+        ]
+    ],
+    "googleMap" => [
+        "configElements" => [
+            [
+                "type" => "numeric",
+                "name" => "mapZoom",
+                "title" => "Map zoom",
+                "width"   => 100,
+                "minValue" => 0,
+                "maxValue" => 19,
+                "decimalPrecision" => 0,
+                "default" => 12,
+                "reload" => FALSE
+            ],
+            [
+                "type" => "select",
+                "name" => "mapType",
+                "title" => "Map type",
+                "reload" => TRUE,
+                "default" => "roadmap",
+                "values" => [
+                    "roadmap" => "ROADMAP",
+                    "satellite" => "SATELLITE",
+                    "hybrid" => "HYBRID",
+                    "terrain" => "TERRAIN"
+                ]
+            ]
+        ]
+    ],
 ];

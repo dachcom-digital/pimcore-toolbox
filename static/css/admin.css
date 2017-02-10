@@ -174,11 +174,72 @@
 
 /**
 
-    Toolbox edit.php Overlay Defaults
+    Toolbox toolbox-element-window Overlay Defaults
 
 **/
+.alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+.toolbox-element-edit-button {
+
+    display: inline-block;
+    margin: 10px 0 0 10px;
+    padding: 4px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    background: rgb(62,55,55); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(62,55,55,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(62,55,55,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(62,55,55,1) 0%,rgba(0,0,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3e3737', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+    opacity: .8;
+
+    -webkit-transition: opacity .3s ease;
+    -ms-transition: opacity .3s ease;
+    transition: opacity .3s ease;
+
+}
+
+.toolbox-element-edit-button:hover {
+    opacity:1;
+}
+
+.toolbox-element-edit-button .x-btn-default-small {
+    border-color: transparent;
+    background: transparent;
+    padding: 5px 7px 4px 7px;
+    border-radius:2px;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    color: white;
+}
+
+.toolbox-element-window {
+}
+
+/* move window element out of scope,
+ because display none won't work because of extjs rendering issues */
+.toolbox-element-window-hidden {
+    visibility: hidden;
+    position:absolute;
+    top:-50000px;
+    right:-50000px;
+}
+
+.toolbox-edit-overlay label {
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight:700;
+}
+
 .toolbox-edit-overlay {
-    max-width: 550px;
+    max-width: 560px;
     width: calc(100% - 12px);
     min-height: 300px; /* always force min height! */
 }
@@ -190,7 +251,7 @@
 }
 
 .toolbox-edit-overlay .t-row .pimcore_editable .x-panel-default {
-    width: 510px !important;
+    width: 560px !important;
 }
 
 .toolbox-edit-overlay .pimcore_tag_input {
@@ -218,7 +279,8 @@
     Toolbox Defaults
 
 **/
-.pimcore_area_entry .pimcore_area_edit_button, .pimcore_tag_area .pimcore_area_edit_button {
+.pimcore_area_entry .pimcore_area_edit_button,
+.pimcore_tag_area .pimcore_area_edit_button {
     top: -25px !important;
 }
 
@@ -226,35 +288,12 @@
     width: auto !important;
 }
 
-/* trim bootstrap in backend */
-.alert {
-    padding: 2px 10px !important;
-}
 
-.alert .form-group {
-    line-height: 0;
-    padding-bottom: 2px;
-}
+/**
 
-.alert .form-group label {
-    margin-bottom: 0;
-    font-size: 12px;
-    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-}
+    Extjs Dropdowns list to default
 
-.alert .pimcore_tag_input {
-    background: white;
-    border: 1px solid #b7b7b7;
-    line-height: 20px;
-    padding: 5px 4px;
-    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-}
-
-.alert .form-group .x-form-text-default {
-    padding: 0 4px;
-}
-
-/* set list to default */
+**/
 ul li.x-boundlist-item {
     list-style: inherit;
     background: inherit;
@@ -284,7 +323,8 @@ ul li.x-boundlist-selected.x-boundlist-item-over {
     background: #404040;
 }
 
-/* only in single edit mode*/
+/* only in single edit mode */
+
 body > .single-teaser {
     max-width: 250px;
 }

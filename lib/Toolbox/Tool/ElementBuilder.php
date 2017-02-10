@@ -34,6 +34,14 @@ class ElementBuilder
             $coreConfigNode = $coreConfig->{$type}->configElements->toArray();
         }
 
+        // remove element if user wants to override item!
+        foreach ($userConfigElements as $configElement) {
+            $coreIndex = array_search($configElement['name'], array_column($coreConfigNode, 'name'));
+            if ($coreIndex !== FALSE) {
+                unset($coreConfigNode[$coreIndex]);
+            }
+        }
+
         $configElements = array_merge($userConfigElements, $coreConfigNode);
 
         if (empty($configElements)) {
@@ -68,7 +76,8 @@ class ElementBuilder
             $elConf['type'] = $c['type'];
             $elConf['name'] = $c['name'];
             $elConf['title'] = $view->translateAdmin($c['title']);
-            $elConf['reload'] = isset($c['reload']) ? $c['reload'] : TRUE;
+            $elConf['reload'] = FALSE;
+            $elConf['edit-reload'] = isset($c['reload']) ? $c['reload'] : TRUE;
             $elConf['default'] = isset($c['default']) ? $c['default'] : NULL;
 
             if (isset($c['conditions'])) {
@@ -83,7 +92,6 @@ class ElementBuilder
                     }
 
                     $store = [];
-
                     foreach ($c['values'] as $k => $v) {
                         $store[] = [$k, $view->translateAdmin($v)];
                     }
@@ -92,34 +100,6 @@ class ElementBuilder
 
                     $value = $view->select($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
-                    break;
-
-                case 'additionalClasses':
-
-                    if (empty($c['values'])) {
-                        $elValid = FALSE;
-                    }
-
-                    $store = [];
-                    $store[] = ['default', $view->translateAdmin('Default')];
-
-                    foreach ($c['values'] as $k => $v) {
-                        $store[] = [$k, $v];
-                    }
-
-                    $elConf['type'] = 'select';
-                    $elConf['name'] = $type . 'AdditionalClasses';
-                    $elConf['title'] = $view->translateAdmin('Additional');
-                    $elConf['reload'] = TRUE;
-                    $elConf['store'] = $store;
-
-                    if (is_null($elConf['default'])) {
-                        $elConf['default'] = 'default';
-                    }
-
-                    $value = $view->select($type . 'AdditionalClasses')->getData();
-                    $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
-
                     break;
 
                 case 'checkbox':
@@ -132,9 +112,56 @@ class ElementBuilder
 
                     $value = $view->input($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
-
                     $elConf['width'] = isset($c['width']) ? $c['width'] : 150;
+                    break;
 
+                case 'numeric':
+
+                    $elConf['width'] = 560;
+                    $elConf['minValue'] = isset($c['minValue']) ? $c['minValue'] : '';
+                    $elConf['maxValue'] = isset($c['maxValue']) ? $c['maxValue'] : '';
+                    $elConf['decimalPrecision'] = isset($c['decimalPrecision']) ? $c['decimalPrecision'] : FALSE;
+                    $elConf['class'] = isset($c['class']) ? $c['class'] : '';
+                    break;
+
+                case 'multihref':
+
+                    $elConf['width'] = 560;
+                    $elConf['height'] = 200;
+                    $elConf['title'] = isset($c['title']) ? $c['title'] : 'Data';
+                    $elConf['uploadPath'] = isset($c['uploadPath']) ? $c['uploadPath'] : '';
+                    $elConf['types'] = isset($c['types']) ? $c['types'] : NULL;
+                    $elConf['subtypes'] = isset($c['subtypes']) ? $c['subtypes'] : NULL;
+                    $elConf['classes'] = isset($c['classes']) ? $c['classes'] : NULL;
+                    $elConf['class'] = isset($c['class']) ? $c['class'] : '';
+                    break;
+
+                case 'additionalClasses':
+
+                    if (empty($c['values'])) {
+                        $elValid = FALSE;
+                    }
+
+                    $store = [];
+                    $store[] = ['default', $view->translateAdmin('Default')];
+
+                    foreach ($c['values'] as $k => $v) {
+                        $store[] = [$k, $view->translateAdmin($v)];
+                    }
+
+                    $elConf['type'] = 'select';
+                    $elConf['name'] = $type . 'AdditionalClasses';
+                    $elConf['title'] = $view->translateAdmin('Additional');
+                    $elConf['reload'] = FALSE;
+                    $elConf['edit-reload'] = isset($c['reload']) ? $c['reload'] : TRUE;
+                    $elConf['store'] = $store;
+
+                    if (is_null($elConf['default'])) {
+                        $elConf['default'] = 'default';
+                    }
+
+                    $value = $view->select($type . 'AdditionalClasses')->getData();
+                    $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
                     break;
 
                 default:

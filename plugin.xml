@@ -20,6 +20,7 @@
             <path>/toolbox-ckeditor-object-style.js</path>
         </pluginJsPaths-extjs6>
         <pluginDocumentEditmodeJsPaths>
+            <path>/Toolbox/static/js/backend/toolbox.js</path>
             <path>/Toolbox/static/js/document/tags/globallink.js</path>
             <path>/Toolbox/static/js/document/tags/googlemap.js</path>
             <path>/Toolbox/static/js/document/tags/vhs.js</path>

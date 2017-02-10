@@ -1,5 +1,8 @@
+<?php if( $this->editmode ) { ?>
+    <?= \Toolbox\Tool\ElementBuilder::buildElementConfig('googleMap', $this) ?>
+<?php } ?>
 <?php
-$mapZoom = !$this->numeric('mapZoom')->isEmpty() ? $this->numeric('mapZoom')->getData() : 12;
-$mapType = !$this->select('mapType')->isEmpty() ? $this->select('mapType')->getData() : 'roadmap';
+$mapZoom = $this->numeric('mapZoom')->getData();
+$mapType = $this->select('mapType')->getData();
 ?>
 <?= $this->template('toolbox/googleMap.php', [ 'mapZoom' => $mapZoom, 'mapType' => $mapType ]) ?>

@@ -30,7 +30,8 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             display:"inline"
         });
 
-        var mapEditButton = new Ext.Button({
+        var buttonHolder = Ext.get(id).up('.toolbox-googlemap-container').prev('.toolbox-element-edit-button'),
+            mapEditButton = new Ext.Button({
             iconCls: "pimcore_icon_geopoint",
             cls: "googlemap_edit_locations_button",
             text: t('locations'),
@@ -39,7 +40,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             }
         });
 
-        mapEditButton.render(id);
+        mapEditButton.render(buttonHolder);
     },
 
     openEditor: function() {
@@ -238,17 +239,18 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             ],
             buttons: [
                 {
-                    text: t("cancel"),
-                    listeners:  {
-                        "click": callback["cancel"]
-                    }
-                },
-                {
                     text: t("save"),
                     listeners: {
                         "click": callback["save"]
                     },
                     iconCls: "pimcore_icon_save"
+                },
+                {
+                    text: t("cancel"),
+                    listeners:  {
+                        "click": callback["cancel"]
+                    },
+                    iconCls: "pimcore_icon_cancel"
                 }
             ]
         });

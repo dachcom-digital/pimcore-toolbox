@@ -23,10 +23,10 @@ class Config
                 $config = new \Zend_Config(include($configFile));
                 self::setConfig($config, 'toolbox_config');
             } catch (\Exception $e) {
-                \Logger::emergency("Cannot find system configuration, should be located at: " . $configFile);
+                \Pimcore\Logger::emergency('Cannot find system configuration, should be located at: ' . $configFile);
 
                 if (is_file($configFile)) {
-                    Tool::exitWithError("Your toolbox_configuration.php located at " . $configFile . " is invalid, please check and correct it manually!");
+                    Tool::exitWithError('Your toolbox_configuration.php located at ' . $configFile . ' is invalid, please check and correct it manually!');
                 }
             }
         }
@@ -45,7 +45,6 @@ class Config
             $config = \Zend_Registry::get('toolbox_core_config');
         } else {
             $configFile = TOOLBOX_CORE_CONFIGURATION_FILE;
-
             $config = new \Zend_Config(include($configFile));
             self::setConfig($config, 'toolbox_core_config');
         }
