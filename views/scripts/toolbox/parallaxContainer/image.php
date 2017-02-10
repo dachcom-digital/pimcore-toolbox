@@ -28,13 +28,18 @@
     <div class="background">
 
         <?php $thumbnail = $this->image('parallaxContainerImage')->getThumbnail('parallaxContainerImage'); ?>
-        <div
-            class="canvas"
-            data-natural-width="<?= $this->image('parallaxContainerImage')->getThumbnail('parallaxContainerImage')->getWidth(); ?>"
-            data-natural-height="<?= $this->image('parallaxContainerImage')->getThumbnail('parallaxContainerImage')->getHeight(); ?>"
-            data-image-src="<?= $thumbnail ?>"
-            <?= $this->select('parallaxContainerAdditionalClasses')->getData() === 'window-full-height' ? 'style="background-image:url('. $thumbnail . ');"' : '' ?>>
-        </div>
+
+        <?php if( !empty( $thumbnail ) ) { ?>
+
+            <div
+                class="canvas"
+                data-natural-width="<?= $thumbnail->getWidth(); ?>"
+                data-natural-height="<?= $thumbnail->getHeight(); ?>"
+                data-image-src="<?= $thumbnail ?>"
+                <?= $this->select('parallaxContainerAdditionalClasses')->getData() === 'window-full-height' ? 'style="background-image:url('. $thumbnail . ');"' : '' ?>>
+            </div>
+
+        <?php } ?>
 
     </div>
 

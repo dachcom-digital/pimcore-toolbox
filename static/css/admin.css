@@ -185,20 +185,11 @@
 
 .toolbox-element-edit-button {
 
-    display: inline-block;
-    margin: 10px 0 0 10px;
+    display: block;
+    margin: 10px 0 0 0;
     padding: 4px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-
-    background: rgb(62,55,55); /* Old browsers */
-    background: -moz-linear-gradient(top,  rgba(62,55,55,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  rgba(62,55,55,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  rgba(62,55,55,1) 0%,rgba(0,0,0,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3e3737', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-
+    background: #7b7b7b;
     opacity: .8;
-
     -webkit-transition: opacity .3s ease;
     -ms-transition: opacity .3s ease;
     transition: opacity .3s ease;
@@ -211,7 +202,7 @@
 
 .toolbox-element-edit-button .x-btn-default-small {
     border-color: transparent;
-    background: transparent;
+    background: #000;
     padding: 5px 7px 4px 7px;
     border-radius:2px;
 }
@@ -258,6 +249,7 @@
     border: 1px solid #b7b7b7;
     padding: 5px;
     box-shadow: none;
+    display:block !important;
 }
 
 .toolbox-edit-overlay .t-row .description {

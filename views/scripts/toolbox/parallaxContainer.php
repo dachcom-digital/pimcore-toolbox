@@ -1,12 +1,9 @@
 <?php
 
-    $type = $this->select('type')->getData();
+$type = $this->select('type')->getData();
 
-    if($type === 'image')
-    {
-        $this->template('/toolbox/parallaxContainer/image.php');
-    }
-    else
-    {
-        $this->template('/toolbox/parallaxContainer/snippet.php');
-    }
+if ($type === 'image') {
+    $this->template('/toolbox/parallaxContainer/image.php');
+} else {
+    $this->template('/toolbox/parallaxContainer/snippet.php');
+}

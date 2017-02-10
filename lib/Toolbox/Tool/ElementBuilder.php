@@ -115,7 +115,7 @@ class ElementBuilder
 
                 case 'input':
 
-                    $elConf['width'] = isset($c['width']) ? $c['width'] : 150;
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : 560;
 
                     $value = $view->input($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
