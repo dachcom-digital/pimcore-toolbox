@@ -79,6 +79,8 @@ class ElementBuilder
             $elConf['reload'] = FALSE;
             $elConf['edit-reload'] = isset($c['reload']) ? $c['reload'] : TRUE;
             $elConf['default'] = isset($c['default']) ? $c['default'] : NULL;
+            $elConf['description'] = isset($c['description']) ? $c['description'] : NULL;
+            $elConf['col-class'] = isset($c['col-class']) ? $c['col-class'] : 't-col-full';
 
             if (isset($c['conditions'])) {
                 $elConf['conditions'] = $c['conditions'];

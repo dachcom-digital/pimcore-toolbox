@@ -1,22 +1,35 @@
-<?php if( !empty( $this->configElements ) ) { ?>
+<?php if (!empty ($this->configElements)) { ?>
 
     <div class="toolbox-element-edit-button"></div>
     <div class="toolbox-element-window toolbox-element-window-hidden">
 
         <div class="toolbox-edit-overlay">
 
-            <?php foreach( $this->configElements as $configElement) { ?>
+            <div class="t-row clearfix" data-index="0">
 
-                <div class="toolbox-element" data-reload="<?= $configElement['edit-reload'] ? 'true' : 'false'; ?>">
+                <?php foreach ($this->configElements as $c => $configElement) { ?>
 
-                    <div class="t-row">
-                        <label><?= $configElement['title']; ?> <?= !in_array(substr($configElement['title'], -1),array('.',',',':','!','?')) ? ':' : '' ?></label>
-                        <?= $this->template('admin/elements/' . $configElement['type'] . '.php', array('element' => $configElement)) ?>
+                    <?= $c > 0 && $c % 2 === 0 ? '</div><div class="t-row clearfix" data-index="' . $c . '">' : ''; ?>
+
+                    <div class="toolbox-element" data-reload="<?= $configElement['edit-reload'] ? 'true' : 'false'; ?>">
+
+                        <div class="<?= $configElement['col-class']; ?>">
+
+                            <label><?= $configElement['title']; ?> <?= !in_array(substr($configElement['title'], -1), ['.', ',', ':', '!', '?']) ? ':' : '' ?></label>
+                            <?= $this->template('admin/elements/' . $configElement['type'] . '.php', ['element' => $configElement]) ?>
+                            <?php if (isset($configElement['description']) && !empty ($configElement['description'])) { ?>
+                                <div class="description">
+                                    <?= $configElement['description']; ?>
+                                </div>
+                            <?php } ?>
+
+                        </div>
+
                     </div>
 
-                </div>
+                <?php } ?>
 
-            <?php } ?>
+            </div>
 
         </div>
 

@@ -236,6 +236,35 @@
 }
 
 .toolbox-edit-overlay .t-row {
+
+}
+
+.toolbox-edit-overlay .t-row.clearfix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+
+}
+
+.toolbox-edit-overlay .t-row .t-col-full {
+    float: none;
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px dashed #d8d8d8;
+}
+
+.toolbox-edit-overlay .t-row .t-col-half {
+    float: left;
+    width: 50%;
+    position: relative;
+    min-height: 1px;
+
     margin: 0 0 10px 0;
     padding: 0 0 10px 0;
     border-bottom: 1px dashed #d8d8d8;
@@ -256,6 +285,8 @@
     display: block;
     margin: 10px 0;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font-size: 13px;
+    line-height:20px;
     background: #f7f7f7;
     padding: 10px;
     border: 1px solid #eee;

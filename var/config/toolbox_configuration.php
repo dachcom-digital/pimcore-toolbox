@@ -30,12 +30,14 @@ return [
                 "type" => "checkbox",
                 "name" => "useLightbox",
                 "title" => "Use Lightbox",
+                "col-class" => "t-col-half",
                 "reload" => FALSE
             ],
             [
                 "type" => "checkbox",
                 "name" => "showCaption",
                 "title" => "Display Caption",
+                "col-class" => "t-col-half",
                 "reload" => FALSE
             ]
         ]
