@@ -186,7 +186,7 @@
 .toolbox-element-edit-button {
 
     display: block;
-    margin: 10px 0 0 0;
+    margin: 3px 0 0 0;
     padding: 4px;
     background: #7b7b7b;
     opacity: .8;
@@ -220,7 +220,7 @@
     visibility: hidden;
     position:absolute;
     top:-50000px;
-    right:-50000px;
+    left:-50000px;
 }
 
 .toolbox-edit-overlay label {
@@ -232,7 +232,7 @@
 .toolbox-edit-overlay {
     max-width: 560px;
     width: calc(100% - 12px);
-    min-height: 300px; /* always force min height! */
+    min-height: 150px; /* always force min height! */
 }
 
 .toolbox-edit-overlay .t-row {

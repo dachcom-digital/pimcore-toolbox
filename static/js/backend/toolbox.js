@@ -1,9 +1,7 @@
 pimcore.registerNS('pimcore.plugin.toolbox.main');
 pimcore.plugin.toolbox.main = Class.create({
 
-    editWindow: null,
-
-    needReload: false,
+    editWindows: {},
 
     initialize: function() {
 
@@ -17,7 +15,7 @@ pimcore.plugin.toolbox.main = Class.create({
                     cls: 'pimcore_block_button_plus',
                     iconCls: 'pimcore_icon_edit',
                     text: t('edit'),
-                    handler: _.openElementConfig.bind(_, this, item)
+                    handler: _.openElementConfig.bind(_, this)
                 });
 
                 editButton.render(item);
@@ -30,71 +28,103 @@ pimcore.plugin.toolbox.main = Class.create({
 
     },
 
-    openElementConfig: function(element, item) {
+    openElementConfig: function(element) {
 
         var _ = this,
-            content = Ext.get(item).parent().down('.toolbox-element-window');
+            content;
 
-        if( content === null && element.getAttribute('data-editmmode-button-ref') !== null) {
-            content = Ext.getBody().down( '#' + element.getAttribute('data-editmmode-button-ref' ) );
+        if( element.getAttribute('editor-id') !== null ) {
+
+            editWindow  = this.editWindows[ element.getAttribute('editor-id' ) ]['editor'];
+            content     = this.editWindows[ element.getAttribute('editor-id' ) ]['content'];
+
+        } else {
+
+            content = Ext.get(element).parent().down('.toolbox-element-window');
+
+            var editWindow = new Ext.Window({
+                modal: true,
+                width: 600,
+                height: 400,
+                title: 'Edit Toolbox Element Configuration',
+                closeAction: 'hide',
+                bodyStyle: 'padding: 10px;',
+                closable: false,
+                autoScroll: true,
+                listeners: {
+                    afterrender: function (win) {
+
+                        var needReload = false;
+
+                        content.removeCls('toolbox-element-window-hidden');
+                        win.body.down('.x-autocontainer-innerCt').insertFirst(content);
+
+                        if( content.query( 'div.toolbox-element[data-reload=true]' ).length > 0 ) {
+                            needReload = true;
+                        }
+
+                        var id = win.id.replace('#', '');
+                        element.setAttribute('editor-id', id);
+
+                        this.editWindows[ id ] = {
+                            editor : win,
+                            element : element,
+                            needReload : needReload
+                        };
+
+                    }.bind(this)
+                },
+                buttons: [{
+                    text: t('save'),
+                    listeners: {
+                        click: {
+                            scope: _,
+                            fn: _.editmodeSave,
+                            args: [editWindow]
+                        }
+                    },
+                    iconCls: 'pimcore_icon_save'
+                },{
+                    text: t('cancel'),
+                    listeners: {
+                        click: {
+                            scope: _,
+                            fn: _.editmodeClose,
+                            args: [editWindow]
+                        }
+                    },
+                    iconCls: 'pimcore_icon_cancel'
+                }]
+            });
+
         }
 
-        this.editmodeWindow = new Ext.Window({
-            modal: true,
-            width: 600,
-            height: 400,
-            title: 'Edit Toolbox Element Configuration',
-            closeAction: 'hide',
-            bodyStyle: 'padding: 10px;',
-            closable: false,
-            autoScroll: true,
-            listeners: {
-                afterrender: function (win) {
-
-                    content.removeCls('toolbox-element-window-hidden');
-                    win.body.down('.x-autocontainer-innerCt').insertFirst(content);
-
-                    if( content.query( 'div.toolbox-element[data-reload=true]' ).length > 0 ) {
-                        _.needReload = true;
-                    }
-
-                }.bind(this)
-            },
-            buttons: [{
-                text: t('save'),
-                listeners: {
-                    'click': this.editmodeSave.bind(this, content, element)
-                },
-                iconCls: 'pimcore_icon_save'
-            },{
-                text: t('cancel'),
-                listeners: {
-                    'click': this.editmodeClose.bind(this, content, element)
-                },
-                iconCls: 'pimcore_icon_cancel'
-            }]
-        });
-
-        this.editmodeWindow.show();
+        editWindow.show();
 
     },
 
-    editmodeSave: function (content, element) {
+    editmodeSave: function (scope, button) {
 
-        if( !this.needReload ) {
-            this.editmodeClose(content, element);
+        var editWindow = button.up('window'),
+            data = this.editWindows[ editWindow.id ];
+
+        if( !data.needReload ) {
+            data.editor.close();
             return;
         }
 
-        this.editmodeWindow.close();
+        data.editor.close();
         window.editWindow.reload();
 
     },
 
-    editmodeClose: function(content, element) {
-        content.addCls('toolbox-element-window-hidden');
-        element.setAttribute('data-editmmode-button-ref', content.getAttribute('id') );
-        this.editmodeWindow.close();
+    editmodeClose: function(scope, button) {
+
+        var editWindow = button.up('window'),
+            data = this.editWindows[ editWindow.id ];
+
+        //content.addCls('toolbox-element-window-hidden');
+        data.editor.close();
     }
 
 });
