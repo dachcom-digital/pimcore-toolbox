@@ -123,7 +123,6 @@ pimcore.plugin.toolbox.main = Class.create({
         var editWindow = button.up('window'),
             data = this.editWindows[ editWindow.id ];
 
-        //content.addCls('toolbox-element-window-hidden');
         data.editor.close();
     }
 
