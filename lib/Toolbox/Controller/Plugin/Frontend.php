@@ -38,7 +38,6 @@ class Frontend extends \Zend_Controller_Plugin_Abstract
 
                 $assetHandler->appendScript('toolbox-frontend-main', '/plugins/Toolbox/static/js/frontend/toolbox-main.js', [], ['showInFrontEnd' => TRUE]);
                 $assetHandler->appendScript('toolbox-frontend-video', '/plugins/Toolbox/static/js/frontend/toolbox-video.js', [], ['showInFrontEnd' => TRUE]);
-                $assetHandler->appendScript('toolbox-frontend-parallax', '/plugins/Toolbox/static/js/frontend/toolbox-parallax.js', [], ['showInFrontEnd' => TRUE]);
                 $assetHandler->appendScript('toolbox-frontend-google-maps', '/plugins/Toolbox/static/js/frontend/toolbox-googleMaps.js', [], ['showInFrontEnd' => TRUE]);
             });
         }

@@ -1,1 +1,1 @@
-<?= $this->template('helper/areablock.php', [ 'name' => 'p-container-block', 'type' => 'parallaxContainer' ] ); ?>
+<?= $this->template('toolbox/parallaxContainer/wrapper.php', ['bgMode' => 'wrap', /* wrap|prepend */ 'backgroundImageMode' => 'data' /* style|data */ ]); ?>

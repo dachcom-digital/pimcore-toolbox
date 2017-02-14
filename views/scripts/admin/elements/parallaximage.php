@@ -5,7 +5,7 @@
         'position' => $this->element['position'],
         'types'    => ['asset'],
         'subtypes' => [
-            'asset' => ['image']
+            'asset' => ['image', 'video']
         ],
         'class'    => $this->element['class'],
     ]

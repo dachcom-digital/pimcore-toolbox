@@ -10,7 +10,7 @@ return [
                 "title"    => "Background Image",
                 "types"    => ["asset"],
                 "subtypes" => [
-                    "asset" => ["image"]
+                    "asset" => ["image", "video"]
                 ],
                 "reload"   => TRUE
             ],
