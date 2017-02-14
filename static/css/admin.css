@@ -150,6 +150,11 @@
     padding: 10px;
 
 }
+/* some default values for parallax */
+.toolbox-parallax-container.parallax-section {
+    height: auto !important;
+    overflow: visible !important;
+}
 
 /**
 
