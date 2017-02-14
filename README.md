@@ -114,13 +114,13 @@ If you're using an AreaBlock Brick in your View, use this method to get grouped 
 The video element needs this minimal css. Copy it to your template and customize it if desired.
 
 ```css
-.pimcore_area_video .toolbox-video {
+.toolbox-video {
     position:relative;
     width: 640px;
     height: 360px;
 }
 
-.pimcore_area_video .poster-overlay {
+.toolbox-video .poster-overlay {
 
     background-repeat:no-repeat;
     position: absolute;
@@ -130,7 +130,7 @@ The video element needs this minimal css. Copy it to your template and customize
     right: 0;
 }
 
-.pimcore_area_video .poster-overlay .icon {
+.toolbox-video .poster-overlay .icon {
     position: absolute;
     left: 50%;
     top: 50%;

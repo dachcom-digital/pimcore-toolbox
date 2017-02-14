@@ -3,8 +3,9 @@
 #### Update from Version 1.6.x to Version 1.7.0
  
 *All Area Elements*  
-- All `edit.php` files for areas has been suspended. There is only one custom edit window for each element.
+- All `edit.php` files for areas has been suspended ([#14](https://github.com/dachcom-digital/pimcore-toolbox/issues/14)). There is only one custom edit window for each element.
 - The Image `Extra CSS-Class` property has been removed. Please use the `additional classes` functionality.
+- The Brick Wrapper (`.pimcore_area_content`) has been removed ([#16](https://github.com/dachcom-digital/pimcore-toolbox/issues/16)). Please check your project CSS after updating!
 
 *Video*  
 - New video configuration in `toolbox_configuration.php`:
@@ -26,7 +27,7 @@
 
 *Parallax Container*  
 Because the parallax container has been changed from ground up, 
-you need to check your previous installation before upgrading.
+you need to check your previous installation before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
 - remove the `parallaxContainer` array element from `var/config/toolbox_configuration.php`, a new configuration element will be shipped via the default configuration.
 
 #### Update from Version 1.5.0 to Version 1.5.1 and Version 1.6.0 to Version 1.6.1

@@ -165,7 +165,7 @@
 
 }
 
-.pimcore_area_entry .pimcore_area_googleMap .pimcore_area_edit_button {
+.toolbox-google-map .pimcore_area_edit_button {
     top: -35px !important;
 }
 
@@ -386,6 +386,6 @@ body > .single-teaser img {
 }
 
 /* Snippet */
-.pimcore_area_snippet .x-panel-body-default .x-autocontainer-outerCt {
+.toolbox-snippet .x-panel-body-default .x-autocontainer-outerCt {
     overflow: hidden !important;
 }
