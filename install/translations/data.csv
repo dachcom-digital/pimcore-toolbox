@@ -21,7 +21,6 @@
 "Image";"Image";"Bild";1460395362;1460395362;
 "Images or Folder";"Images or Folder";"Bilder oder Ordner";1460395362;1460395362;
 "Snippet";"Snippet";"Snippet";1460395362;1460395362;
-"min. window height";"min. window height";"mind. Fensterhöhe";1460395362;1460395362;
 "Space before & after separator";"Space before & after separator";"Abstand vor & nach Trennlinie";1460395362;1460395362;
 "Direct";"Direct";"Direkt";1460395362;1460395362;
 "use Lightbox?";"use Lightbox?";"Lightbox verwenden?";1460395362;1460395362;
@@ -41,13 +40,13 @@
 "Toolbox Container";"Toolbox Container";"Toolbox Container";1460395362;1460395362;
 "Columns";"Columns";"Spalten";1460395362;1460395362;
 "Toolbox Grid Columns";"Toolbox Grid Columns";"Toolbox Grid Columns";1460395362;1460395362;
+"Toolbox Google Map";"Toolbox Google Map";"Toolbox Google Map";1460395362;1460395362;
 "Accordion";"Accordion";"Akkordeon";1460395362;1460395362;
 "Toolbox Accordion";"Toolbox Accordion";"Toolbox Akkordeon";1460395362;1460395362;
 "Teaser";"Teaser";"Teaser";1460395362;1460395362;
 "Toolbox Teaser";"Toolbox Teaser";"Toolbox Teaser";1460395362;1460395362;
 "Separator";"Separator";"Separator";1460395362;1460395362;
 "Toolbox Separator";"Toolbox Separator";"Toolbox Trennline";1460395362;1460395362;
-"Snippet";"Snippet";"Snippet";1460395362;1460395362;
 "Toolbox Snippet";"Toolbox Snippet";"Toolbox Snippet";1460395362;1460395362;
 "Parallax Container";"Parallax Container";"Parallax Container";1460395362;1460395362;
 "Toolbox Parallax Container";"Toolbox Parallax Container";"Toolbox Parallax Container";1460395362;1460395362;
@@ -77,3 +76,18 @@
 "3 Columns";"3 Columns";"3 Elemente";1460395362;1460395362;
 "4 Columns";"4 Columns";"4 Elemente";1460395362;1460395362;
 "6 Columns";"6 Columns";"6 Elemente";1460395362;1460395362;
+"Google Map";"Google Map";"Google Map";1460395362;1460395362;
+"Roadmap";"Roadmap";"Kartenansicht mit Straßen";1460395362;1460395362;
+"Satellite";"Satellite";"Satelliten-Ansicht";1460395362;1460395362;
+"Hybrid";"Hybrid";"Satelliten-Ansicht mit wichtigen Straßen";1460395362;1460395362;
+"Terrain";"Terrain";"Gelände-Karte";1460395362;1460395362;
+"Images Behind Main Container";"Images Behind Main Container";"Bilder hinter Container";1460395362;1460395362;
+"Images In Front Of Main Container";"Images In Front Of Main Container";"Bilder vor Container";1460395362;1460395362;
+"Background Image";"Background Image";"Hintergrundbild";1460395362;1460395362;
+"Default";"Default";"Standard";1460395362;1460395362;
+"Top Left";"Top Left";"Oben Links";1460395362;1460395362;
+"Top Right";"Top Right";"Oben Rechts";1460395362;1460395362;
+"Bottom Left";"Bottom Left";"Unten Links";1460395362;1460395362;
+"Bottom Right";"Bottom Right";"Unten Rechts";1460395362;1460395362;
+"Center Center";"Center Center";"Mitte Mitte";1460395362;1460395362;
+

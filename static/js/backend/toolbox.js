@@ -44,8 +44,8 @@ pimcore.plugin.toolbox.main = Class.create({
 
             var editWindow = new Ext.Window({
                 modal: true,
-                width: 600,
-                height: 400,
+                width: content.getAttribute('data-edit-window-size') === 'small' ? 600 : 800,
+                height: content.getAttribute('data-edit-window-size') === 'small' ? 400 : 600,
                 title: 'Edit Toolbox Element Configuration',
                 closeAction: 'hide',
                 bodyStyle: 'padding: 10px;',
@@ -66,11 +66,29 @@ pimcore.plugin.toolbox.main = Class.create({
                         var id = win.id.replace('#', '');
                         element.setAttribute('editor-id', id);
 
+                        var elements = win.body.query('.pimcore_editable');
+                        for (var i=0; i<elements.length; i++) {
+                            var name = elements[i].getAttribute('id').split('pimcore_editable_').join('');
+                            for (var e=0; e<editables.length; e++) {
+
+                                if(editables[e].getName() === name && typeof editables[e].updateLayout === 'function') {
+                                    editables[e].updateLayout();
+                                    break;
+                                }
+                            }
+                        }
+
                         this.editWindows[ id ] = {
                             editor : win,
                             element : element,
                             needReload : needReload
                         };
+
+                    }.bind(this),
+
+                    show: function (win) {
+
+
 
                     }.bind(this)
                 },

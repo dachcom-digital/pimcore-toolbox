@@ -117,9 +117,39 @@
 
 **/
 .toolbox-parallax-container {
+    background: rgba(242, 242, 242, 0.5);
+    border: 1px dashed #d6d6d6;
+    padding: 5px;
+}
+
+.toolbox-parallax-container .toolbox-container {
+    margin:10px;
+    background:#fff;
+}
+
+.toolbox-parallax-container .toolbox-columns {
+    margin:10px;
+}
+
+.toolbox-parallax-container .toolbox-columns .toolbox-column {
+
+    background:#fff;
+    border: 1px dashed #d6d6d6;
+    padding: 2px;
 
 }
 
+.toolbox-parallax-container .toolbox-container .toolbox-columns {
+    margin:0;
+}
+
+.toolbox-parallax-container .toolbox-container .toolbox-columns .toolbox-column {
+
+    background: rgba(242, 242, 242, 0.5);
+    border: 1px dashed #d6d6d6;
+    padding: 10px;
+
+}
 
 /**
 
@@ -134,47 +164,34 @@
     top: -35px !important;
 }
 
-.toolbox-parallax-container .editmode-parallax-container-image {
-    position: absolute;
-    z-index: 3;
-    top: 0;
+/**
+##
+##      ---------------------------------------
+##      ONLY TOOLBOX INTERNAL STUFF DOWN THERE!
+##      ---------------------------------------
+##
+**/
+
+
+
+/**
+
+    Toolbox Defaults
+
+**/
+.pimcore_area_entry .pimcore_area_edit_button,
+.pimcore_tag_area .pimcore_area_edit_button {
+    top: -25px !important;
 }
 
-.toolbox-parallax-container .editmode-parallax-container-image .pimcore_tag_image_empty {
-    top: 50px;
-}
-
-.toolbox-parallax-container .parallax-container-snippet .background,
-.toolbox-parallax-container .parallax-container-image .background {
-    position: absolute;
-}
-
-.toolbox-parallax-container .parallax-container-image > .content {
-    padding-top: 100px;
-}
-
-.toolbox-parallax-container .parallax-container-snippet > .content {
-    padding-top: 0;
-}
-
-.toolbox-parallax-container .parallax-container-snippet .parallax-video .inner video {
-    opacity: 1 !important;
-}
-
-.toolbox-parallax-container .parallax-container-snippet .background {
-
-}
-
-.toolbox-parallax-container .parallax-container-snippet > .content {
-    margin-top: 0;
-    top: 70px;
-    position: relative;
+.pimcore_tag_button .pimcore_edit_link_button {
+    width: auto !important;
 }
 
 
 /**
 
-    Toolbox toolbox-element-window Overlay Defaults
+    Toolbox .toolbox-element-window Overlay Defaults
 
 **/
 .alert-info {
@@ -214,6 +231,10 @@
 .toolbox-element-window {
 }
 
+.clsZIndexMax {
+    z-index:100000 !important;
+}
+
 /* move window element out of scope,
  because display none won't work because of extjs rendering issues */
 .toolbox-element-window-hidden {
@@ -230,9 +251,13 @@
 }
 
 .toolbox-edit-overlay {
-    max-width: 560px;
-    width: calc(100% - 12px);
     min-height: 150px; /* always force min height! */
+}
+.toolbox-edit-overlay.small {
+    max-width: 560px;
+}
+.toolbox-edit-overlay.large {
+    max-width: 760px;
 }
 
 .toolbox-edit-overlay .t-row {
@@ -270,7 +295,10 @@
     border-bottom: 1px dashed #d8d8d8;
 }
 
-.toolbox-edit-overlay .t-row .pimcore_editable .x-panel-default {
+.toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
+    width: 760px !important;
+}
+.toolbox-edit-overlay.small .t-row .pimcore_editable .x-panel-default {
     width: 560px !important;
 }
 
@@ -294,21 +322,6 @@
 
 .toolbox-edit-overlay .t-row .pimcore_tag_select {
     display: block;
-}
-
-
-/**
-
-    Toolbox Defaults
-
-**/
-.pimcore_area_entry .pimcore_area_edit_button,
-.pimcore_tag_area .pimcore_area_edit_button {
-    top: -25px !important;
-}
-
-.pimcore_tag_button .pimcore_edit_link_button {
-    width: auto !important;
 }
 
 

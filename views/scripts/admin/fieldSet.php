@@ -1,9 +1,9 @@
 <?php if (!empty ($this->configElements)) { ?>
 
     <div class="toolbox-element-edit-button"></div>
-    <div class="toolbox-element-window toolbox-element-window-hidden">
+    <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="<?= $this->windowSize; ?>">
 
-        <div class="toolbox-edit-overlay">
+        <div class="toolbox-edit-overlay <?= $this->windowSize; ?>">
 
             <div class="t-row clearfix" data-index="0">
 

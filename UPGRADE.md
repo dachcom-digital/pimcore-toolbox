@@ -24,6 +24,11 @@
  UPDATE documents_elements SET type = 'vhs' WHERE type = 'video';
  ```
 
+*Parallax Container*  
+Because the parallax container has been changed from ground up, 
+you need to check your previous installation before upgrading.
+- remove the `parallaxContainer` array element from `var/config/toolbox_configuration.php`, a new configuration element will be shipped via the default configuration.
+
 #### Update from Version 1.5.0 to Version 1.5.1 and Version 1.6.0 to Version 1.6.1
 - CKEditor Configuration change:
 

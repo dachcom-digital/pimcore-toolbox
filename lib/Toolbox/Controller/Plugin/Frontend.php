@@ -34,7 +34,6 @@ class Frontend extends \Zend_Controller_Plugin_Abstract
             \Pimcore::getEventManager()->attach('toolbox.addAsset', function (\Zend_EventManager_Event $e) {
                 $assetHandler = $e->getTarget();
 
-                $assetHandler->appendScript('toolbox-vendor-parallax', '/plugins/Toolbox/static/js/frontend/vendor/jquery.parallax-scroll.min.js', [], ['showInFrontEnd' => TRUE]);
                 $assetHandler->appendScript('toolbox-vendor-vimeo-api', '/plugins/Toolbox/static/js/frontend/vendor/vimeo-api.min.js', [], ['showInFrontEnd' => TRUE]);
 
                 $assetHandler->appendScript('toolbox-frontend-main', '/plugins/Toolbox/static/js/frontend/toolbox-main.js', [], ['showInFrontEnd' => TRUE]);

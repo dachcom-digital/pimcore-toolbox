@@ -191,18 +191,8 @@ class Install
                 "parallaxContainer" => [
                     "configElements" => [
                         [
-                            "type"    => "select",
-                            "name"    => "type",
-                            "title"   => "Type",
-                            "values"  => [
-                                "image"   => "Image",
-                                "snippet" => "Snippet"
-                            ],
-                            "default" => "image"
-                        ],
-                        [
                             "type"   => "additionalClasses",
-                            "values" => ["window-full-height" => "min. window height"],
+                            "values" => [],
                         ]
                     ],
 
@@ -323,12 +313,13 @@ class Install
                 ],
 
                 "disallowedSubAreas" => [
-                    "accordion"    => ["accordion", "container", "slideColumns"],
-                    "columns"      => ["container"],
-                    "slideColumns" => ["slideColumns", "accordion", "container", "columns", "anchor"],
-                    "container"    => ["container"],
-                    "image"        => ["parallaxContainer"],
-                    "snippet"      => ["parallaxContainer"]
+                    "accordion"         => ["accordion", "container", "slideColumns"],
+                    "columns"           => ["container", "parallaxContainer"],
+                    "slideColumns"      => ["slideColumns", "accordion", "container", "columns", "anchor"],
+                    "container"         => ["container", "parallaxContainer"],
+                    "parallaxContainer" => ["parallaxContainer"],
+                    "image"             => ["parallaxContainer"],
+                    "snippet"           => ["parallaxContainer"]
                 ],
 
                 "disallowedContentSnippetAreas" => [

@@ -18,54 +18,62 @@ class ElementBuilder
         $userConfigElements = [];
 
         $configNode = Config::getConfig()->{$type};
+        $configWindowSize = NULL;
 
         if (!empty($configNode)) {
             $userConfigElements = $configNode->configElements->toArray();
-        }
-
-        if (empty($userConfigElements)) {
-            $userConfigElements = [];
+            $configWindowSize = isset($configNode->windowSize) ? (string)$configNode->windowSize : NULL;
         }
 
         $coreConfigNode = [];
         $coreConfig = Config::getCoreConfig();
 
         if (isset($coreConfig->{$type}) && isset($coreConfig->{$type}->configElements)) {
-            $coreConfigNode = $coreConfig->{$type}->configElements->toArray();
-        }
+            $userElementNames = array_column($userConfigElements, 'name');
+            //check if user wants to override or disable core element. remove it then!
+            foreach ($coreConfig->{$type}->configElements->toArray() as $coreConfigElement) {
 
-        // remove element if user wants to override item!
-        foreach ($userConfigElements as $configElement) {
-            $coreIndex = array_search($configElement['name'], array_column($coreConfigNode, 'name'));
-            if ($coreIndex !== FALSE) {
-                unset($coreConfigNode[$coreIndex]);
+                $coreIndex = array_search($coreConfigElement['name'], $userElementNames);
+                if ($coreIndex === FALSE) {
+                    $coreConfigNode[] = $coreConfigElement;
+                }
+            }
+
+            if (is_null($configWindowSize) && isset($coreConfig->{$type}->windowSize)) {
+                $configWindowSize = (string)$coreConfig->{$type}->windowSize;
             }
         }
 
-        $configElements = array_merge($userConfigElements, $coreConfigNode);
+        //merge and remove NULL type elements
+        $configElements = array_filter(array_merge($userConfigElements, $coreConfigNode), function ($el) {
+            return !is_null($el['type']);
+        });
 
         if (empty($configElements)) {
             return '';
         }
 
-        $config = self::parseConfig($type, $configElements, $view);
+        $windowSize = !is_null($configWindowSize) ? $configWindowSize : 'small';
+        $config = self::parseConfig($type, $configElements, $windowSize, $view);
 
-        return $view->template('admin/fieldSet.php', ['configElements' => $config]);
+        return $view->template('admin/fieldSet.php', ['configElements' => $config, 'windowSize' => $windowSize]);
     }
 
     /**
      * @param      $type
      * @param      $config
      * @param View $view
+     * @param      $windowSize
      *
      * @return array
      * @throws \Exception
      */
-    private static function parseConfig($type, $config, View $view)
+    private static function parseConfig($type, $config, $windowSize = 'small', View $view)
     {
         $parsedConfig = [];
 
         foreach ($config as $c) {
+
             $elConf = [];
             $elValid = TRUE;
 
@@ -99,6 +107,7 @@ class ElementBuilder
                     }
 
                     $elConf['store'] = $store;
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
 
                     //force default
                     if (!empty($elConf['default']) && $view->select($elConf['name'])->isEmpty()) {
@@ -117,7 +126,7 @@ class ElementBuilder
 
                 case 'input':
 
-                    $elConf['width'] = isset($c['width']) ? $c['width'] : 560;
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
 
                     $value = $view->input($elConf['name'])->getData();
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
@@ -125,7 +134,7 @@ class ElementBuilder
 
                 case 'numeric':
 
-                    $elConf['width'] = 560;
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
                     $elConf['minValue'] = isset($c['minValue']) ? $c['minValue'] : '';
                     $elConf['maxValue'] = isset($c['maxValue']) ? $c['maxValue'] : '';
                     $elConf['decimalPrecision'] = isset($c['decimalPrecision']) ? $c['decimalPrecision'] : FALSE;
@@ -140,15 +149,41 @@ class ElementBuilder
                     $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
                     break;
 
-                case 'multihref':
+                case 'href':
 
-                    $elConf['width'] = 560;
-                    $elConf['height'] = 200;
-                    $elConf['title'] = isset($c['title']) ? $c['title'] : 'Data';
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
                     $elConf['uploadPath'] = isset($c['uploadPath']) ? $c['uploadPath'] : '';
                     $elConf['types'] = isset($c['types']) ? $c['types'] : NULL;
                     $elConf['subtypes'] = isset($c['subtypes']) ? $c['subtypes'] : NULL;
                     $elConf['classes'] = isset($c['classes']) ? $c['classes'] : NULL;
+                    $elConf['class'] = isset($c['class']) ? $c['class'] : '';
+                    break;
+
+                case 'multihref':
+
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
+                    $elConf['height'] = isset($c['height']) ? $c['height'] : 200;
+                    $elConf['uploadPath'] = isset($c['uploadPath']) ? $c['uploadPath'] : '';
+                    $elConf['types'] = isset($c['types']) ? $c['types'] : NULL;
+                    $elConf['subtypes'] = isset($c['subtypes']) ? $c['subtypes'] : NULL;
+                    $elConf['classes'] = isset($c['classes']) ? $c['classes'] : NULL;
+                    $elConf['class'] = isset($c['class']) ? $c['class'] : '';
+                    break;
+
+                case 'parallaximage':
+
+                    $positionStore = isset($c['position']) ? $c['position'] : [];
+
+                    $store = [];
+                    $store['default'] = $view->translateAdmin('Default');
+
+                    foreach ($positionStore as $k => $v) {
+                        $store[$k] = $view->translateAdmin($v);
+                    }
+
+                    $elConf['position'] = $store;
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
+                    $elConf['height'] = isset($c['height']) ? $c['height'] : 200;
                     $elConf['class'] = isset($c['class']) ? $c['class'] : '';
                     break;
 
