@@ -1,9 +1,9 @@
-pimcore.registerNS("pimcore.document.tags.googlemap");
+pimcore.registerNS('pimcore.document.tags.googlemap');
 
 pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
     getType: function () {
-        return "googlemap";
+        return 'googlemap';
     },
 
     getValue: function () {
@@ -18,27 +18,29 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
     initialize: function(id, name, options, data, inherited) {
 
-        this.data = data;
-
         this.id = id;
         this.name = name;
-        this.setupWrapper();
+        this.data = data;
+
         this.options = this.parseOptions(options);
         this.geocoder = new google.maps.Geocoder();
 
+        this.setupWrapper();
+
         Ext.get(id).setStyle({
-            display:"inline"
+            display:'inline'
         });
 
-        var buttonHolder = Ext.get(id).up('.toolbox-googlemap-container').prev('.toolbox-element-edit-button'),
+        var buttonHolder = Ext.get(id).up('.toolbox-google-map').prev('.toolbox-element-edit-button'),
             mapEditButton = new Ext.Button({
-            iconCls: "pimcore_icon_geopoint",
-            cls: "googlemap_edit_locations_button",
-            text: t('locations'),
-            listeners: {
-                "click": this.openEditor.bind(this)
+                iconCls: 'pimcore_icon_geopoint',
+                cls: 'googlemap_edit_locations_button',
+                text: t('locations'),
+                listeners: {
+                    'click': this.openEditor.bind(this)
+                }
             }
-        });
+            );
 
         mapEditButton.render(buttonHolder);
     },
@@ -72,11 +74,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             }
 
             var itemRow1 = [{
-                xtype: "textfield",
-                name: "location_title[]",
-                fieldLabel: t("location_title"),
+                xtype: 'textfield',
+                name: 'location_title[]',
+                fieldLabel: t('location_title'),
                 labelAlign: 'top',
-                anchor: "100%",
+                anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: false,
                 blankText: t('field_mandatory'),
@@ -86,11 +88,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             }];
 
             var itemRow2 = [{
-                xtype: "textfield",
-                name: "location_street[]",
-                fieldLabel: t("location_street"),
+                xtype: 'textfield',
+                name: 'location_street[]',
+                fieldLabel: t('location_street'),
                 labelAlign: 'top',
-                anchor: "100%",
+                anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: false,
                 blankText: t('field_mandatory'),
@@ -99,11 +101,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                 msgTarget: 'qtip'
             },
                 {
-                    xtype: "textfield",
-                    name: "location_zip[]",
-                    fieldLabel: t("location_zip"),
+                    xtype: 'textfield',
+                    name: 'location_zip[]',
+                    fieldLabel: t('location_zip'),
                     labelAlign: 'top',
-                    anchor: "100%",
+                    anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
@@ -112,11 +114,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                     msgTarget: 'qtip'
                 },
                 {
-                    xtype: "textfield",
-                    name: "location_city[]",
-                    fieldLabel: t("location_city"),
+                    xtype: 'textfield',
+                    name: 'location_city[]',
+                    fieldLabel: t('location_city'),
                     labelAlign: 'top',
-                    anchor: "100%",
+                    anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
@@ -125,11 +127,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                     msgTarget: 'qtip'
                 },
                 {
-                    xtype: "textfield",
-                    name: "location_country[]",
-                    fieldLabel: t("location_country"),
+                    xtype: 'textfield',
+                    name: 'location_country[]',
+                    fieldLabel: t('location_country'),
                     labelAlign: 'top',
-                    anchor: "100%",
+                    anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
@@ -139,11 +141,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             }];
 
             var itemRow3 = [{
-                xtype: "textarea",
-                name: "location_add[]",
-                fieldLabel: t("location_add"),
+                xtype: 'textarea',
+                name: 'location_add[]',
+                fieldLabel: t('location_add'),
                 labelAlign: 'top',
-                anchor: "100%",
+                anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: true,
                 value : location.add,
@@ -155,26 +157,26 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             var compositeField = new Ext.form.FieldContainer({
                 layout: 'anchor',
                 hideLabel: true,
-                style: "padding-bottom:5px;",
+                style: 'padding-bottom:5px;',
                 items: [
                     Ext.form.FieldContainer({
                         layout: 'hbox',
                         hideLabel: true,
-                        style: "padding-bottom:5px;",
+                        style: 'padding-bottom:5px;',
                         border: false,
                         items: itemRow1
                     }),
                     Ext.form.FieldContainer({
                         layout: 'hbox',
                         hideLabel: true,
-                        style: "padding-bottom:5px;",
+                        style: 'padding-bottom:5px;',
                         border: false,
                         items: itemRow2
                     }),
                     Ext.form.FieldContainer({
                         layout: 'hbox',
                         hideLabel: true,
-                        style: "padding-bottom:5px;",
+                        style: 'padding-bottom:5px;',
                         border: false,
                         items: itemRow3
                     })
@@ -182,16 +184,16 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             });
 
             compositeField.add([{
-                xtype: "button",
-                iconCls: "pimcore_icon_delete",
-                text: t("remove"),
+                xtype: 'button',
+                iconCls: 'pimcore_icon_delete',
+                text: t('remove'),
                 handler: function (compositeField, el) {
                     selector.remove(compositeField);
                     selector.updateLayout();
                 }.bind(this, compositeField)
             },{
-                xtype: "box",
-                style: "clear:both;"
+                xtype: 'box',
+                style: 'clear:both;'
             }]);
 
             selector.add(compositeField);
@@ -201,17 +203,17 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
         var selector = new Ext.form.FieldSet({
 
-            title: t("locations"),
+            title: t('locations'),
             collapsible: false,
             autoHeight: true,
-            style: "",
+            style: '',
             items: [{
-                xtype: "toolbar",
-                style: "margin-bottom: 10px;",
-                items: ["->", {
+                xtype: 'toolbar',
+                style: 'margin-bottom: 10px;',
+                items: ['->', {
                     xtype: 'button',
-                    text: t("add"),
-                    iconCls: "pimcore_icon_add",
+                    text: t('add'),
+                    iconCls: 'pimcore_icon_add',
                     handler: addLocation,
                     tooltip: {
                         title:'',
@@ -232,25 +234,25 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
         }
 
         var form = new Ext.FormPanel({
-            itemId: "form",
+            itemId: 'form',
             scrollable: true,
             items: [
                 selector
             ],
             buttons: [
                 {
-                    text: t("save"),
+                    text: t('save'),
                     listeners: {
-                        "click": callback["save"]
+                        'click': callback['save']
                     },
-                    iconCls: "pimcore_icon_save"
+                    iconCls: 'pimcore_icon_save'
                 },
                 {
-                    text: t("cancel"),
+                    text: t('cancel'),
                     listeners:  {
-                        "click": callback["cancel"]
+                        'click': callback['cancel']
                     },
-                    iconCls: "pimcore_icon_cancel"
+                    iconCls: 'pimcore_icon_cancel'
                 }
             ]
         });
@@ -260,9 +262,9 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             modal: false,
             width: 900,
             height: 500,
-            title: t("edit_locations"),
+            title: t('edit_locations'),
             items: [form],
-            layout: "fit"
+            layout: 'fit'
             //autoScroll: true
         });
 
@@ -280,7 +282,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
     save: function() {
 
-        var form = this.window.getComponent("form").getForm(),
+        var form = this.window.getComponent('form').getForm(),
             locations = [],
             location;
 

@@ -40,7 +40,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
 
         var positionStoreElements = [];
         Ext.Object.each(this.options.position, function(k,v) {
-            positionStoreElements.push({id: k, name: v})
+            positionStoreElements.push({id: k, name: v});
         });
 
         var positionStore = Ext.create('Ext.data.Store',{
@@ -203,13 +203,13 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
 
         var data = record.data,
             initData = {
-            id: data.id,
-            path: data.path,
-            type: data.elementType,
-            subtype: null
-        };
+                id: data.id,
+                path: data.path,
+                type: data.elementType,
+                subtype: null
+            };
 
-        if (initData.type == 'object') {
+        if (initData.type === 'object') {
             if (data.className) {
                 initData.subtype = data.className;
             }
@@ -218,7 +218,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
             }
         }
 
-        if (initData.type == 'document' || initData.type == 'asset') {
+        if (initData.type === 'document' || initData.type === 'asset') {
             initData.subtype = data.type;
         }
 
@@ -240,29 +240,29 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
 
         menu.add(new Ext.menu.Item({
             text: t('remove'),
-            iconCls: "pimcore_icon_delete",
+            iconCls: 'pimcore_icon_delete',
             handler: this.removeElement.bind(this, rowIndex)
         }));
 
         menu.add(new Ext.menu.Item({
             text: t('open'),
-            iconCls: "pimcore_icon_open",
+            iconCls: 'pimcore_icon_open',
             handler: function (record, item) {
 
                 item.parentMenu.destroy();
 
                 var subtype = record.data.subtype;
-                if (record.data.type == "object" && record.data.subtype != "folder") {
-                    subtype = "object";
+                if (record.data.type === 'object' && record.data.subtype != 'folder') {
+                    subtype = 'object';
                 }
                 pimcore.helpers.openElement(record.data.id, record.data.type, subtype);
             }.bind(this, record)
         }));
 
-        if (pimcore.elementservice.showLocateInTreeButton("document")) {
+        if (pimcore.elementservice.showLocateInTreeButton('document')) {
             menu.add(new Ext.menu.Item({
                 text: t('show_in_tree'),
-                iconCls: "pimcore_icon_show_in_tree",
+                iconCls: 'pimcore_icon_show_in_tree',
                 handler: function (item) {
                     item.parentMenu.destroy();
                     pimcore.treenodelocator.showInTree(record.data.id, record.data.type);

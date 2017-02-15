@@ -1,18 +1,36 @@
-/**
- * Pimcore
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * - Pimcore Enterprise License (PEL)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) 2009-2016 pimcore GmbH (http://www.pimcore.org)
- * @license    http://www.pimcore.org/license     GPLv3 and PEL
- */
-
-pimcore.registerNS("pimcore.document.tags.vhs");
+pimcore.registerNS('pimcore.document.tags.vhs');
 pimcore.document.tags.vhs = Class.create(pimcore.document.tags.video, {
+
+    initialize: function(id, name, options, data, inherited) {
+
+        this.id = id;
+        this.name = name;
+        this.data = {};
+
+        this.options = this.parseOptions(options);
+        this.data = data;
+
+        this.setupWrapper();
+
+        var element = Ext.get('pimcore_video_' + name),
+            emptyContainer = element.query('.pimcore_tag_video_empty')[0],
+            buttonHolder = Ext.get(id).up('.toolbox-video').prev('.toolbox-element-edit-button'),
+            videoEditbutton = new Ext.Button({
+                iconCls: 'pimcore_icon_video',
+                cls: 'pimcore_edit_link_button',
+                text: t('settings'),
+                listeners: {
+                    click : this.openEditor.bind(this)
+                }
+            });
+
+        videoEditbutton.render(buttonHolder);
+
+        if(emptyContainer) {
+            emptyContainer = Ext.get(emptyContainer);
+            emptyContainer.on('click', this.openEditor.bind(this));
+        }
+    },
 
     openEditor: function () {
 
@@ -26,6 +44,6 @@ pimcore.document.tags.vhs = Class.create(pimcore.document.tags.video, {
     },
 
     getType: function () {
-        return "vhs";
+        return 'vhs';
     }
 });

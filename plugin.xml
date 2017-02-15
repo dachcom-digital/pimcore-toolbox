@@ -15,6 +15,7 @@
             <namespace>Toolbox</namespace>
         </pluginNamespaces>
         <pluginJsPaths-extjs6>
+            <path>/plugins/Toolbox/static/js/document/edit.js</path>
             <path>/plugins/Toolbox/static/js/document/helpers.js</path>
             <path>/plugins/Toolbox/static/js/startup.js</path>
             <path>/toolbox-ckeditor-object-style.js</path>
