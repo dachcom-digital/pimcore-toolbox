@@ -23,7 +23,8 @@
                     $content .= '<div class="' . $configElement['col-class'] . '">';
 
                     $content .= '<label>' . $configElement['title'] . ( !in_array(substr($configElement['title'], -1), ['.', ',', ':', '!', '?']) ? ':' : '' ) . '</label>';
-                    $content .= $this->template('admin/elements/' . $configElement['type'] . '.php', ['element' => $configElement], FALSE, TRUE);
+                    $captureKey = $configElement['name'] . '_capture';
+                    $content .= $this->template('admin/elements/' . $configElement['type'] . '.php', ['element' => $configElement], FALSE, $captureKey);
 
                     if (isset($configElement['description']) && !empty ($configElement['description'])) {
                         $content .= '<div class="description">' . $configElement['description'] . '</div>';
