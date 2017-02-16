@@ -257,6 +257,7 @@
 
 .toolbox-edit-overlay {
     min-height: 150px; /* always force min height! */
+    margin:0;
 }
 .toolbox-edit-overlay.small {
     max-width: 560px;
@@ -267,15 +268,22 @@
 
 .toolbox-edit-overlay .t-row {
 
+    margin: 0 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px dashed #d8d8d8;
+
 }
 
-.toolbox-edit-overlay .t-row.clearfix:after {
+.toolbox-edit-overlay .t-row:empty {
+    display:none;
+}
+
+.toolbox-edit-overlay .t-row:after {
     content: ".";
     clear: both;
     display: block;
     visibility: hidden;
     height: 0;
-
 }
 
 .toolbox-edit-overlay .t-row .t-col-full {
@@ -283,10 +291,6 @@
     width: 100%;
     position: relative;
     min-height: 1px;
-
-    margin: 0 0 10px 0;
-    padding: 0 0 10px 0;
-    border-bottom: 1px dashed #d8d8d8;
 }
 
 .toolbox-edit-overlay .t-row .t-col-half {
@@ -294,10 +298,6 @@
     width: 50%;
     position: relative;
     min-height: 1px;
-
-    margin: 0 0 10px 0;
-    padding: 0 0 10px 0;
-    border-bottom: 1px dashed #d8d8d8;
 }
 
 .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {

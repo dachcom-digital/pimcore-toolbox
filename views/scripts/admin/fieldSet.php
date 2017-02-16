@@ -1,38 +1,49 @@
 <?php if (!empty ($this->configElements)) { ?>
 
     <div class="toolbox-element-edit-button"></div>
-    <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="<?= $this->windowSize; ?>">
+    <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="<?= $this->windowSize; ?>"><?php
 
-        <div class="toolbox-edit-overlay <?= $this->windowSize; ?>">
+        $content = '';
+        $content .= '<div class="toolbox-edit-overlay ' . $this->windowSize . '">';
+            $content .= '<div class="t-row clearfix" data-index="0">';
 
-            <div class="t-row clearfix" data-index="0">
+            $halfCounter = 0;
+            $rowCounter = 0;
 
-                <?php foreach ($this->configElements as $c => $configElement) { ?>
+            foreach ($this->configElements as $c => $configElement) {
 
-                    <?= $c > 0 && $c % 2 === 0 ? '</div><div class="t-row clearfix" data-index="' . $c . '">' : ''; ?>
+                if ($configElement['col-class'] === 't-col-half') {
+                    $halfCounter++;
+                } else {
+                    $halfCounter = 0;
+                    $rowCounter++;
+                }
 
-                    <div class="toolbox-element" data-reload="<?= $configElement['edit-reload'] ? 'true' : 'false'; ?>">
+                $content .= '<div class="toolbox-element" data-reload="' . ($configElement['edit-reload'] ? 'true' : 'false') . '">';
+                    $content .= '<div class="' . $configElement['col-class'] . '">';
 
-                        <div class="<?= $configElement['col-class']; ?>">
+                    $content .= '<label>' . $configElement['title'] . ( !in_array(substr($configElement['title'], -1), ['.', ',', ':', '!', '?']) ? ':' : '' ) . '</label>';
+                    $content .= $this->template('admin/elements/' . $configElement['type'] . '.php', ['element' => $configElement], FALSE, TRUE);
 
-                            <label><?= $configElement['title']; ?> <?= !in_array(substr($configElement['title'], -1), ['.', ',', ':', '!', '?']) ? ':' : '' ?></label>
-                            <?= $this->template('admin/elements/' . $configElement['type'] . '.php', ['element' => $configElement]) ?>
-                            <?php if (isset($configElement['description']) && !empty ($configElement['description'])) { ?>
-                                <div class="description">
-                                    <?= $configElement['description']; ?>
-                                </div>
-                            <?php } ?>
+                    if (isset($configElement['description']) && !empty ($configElement['description'])) {
+                        $content .= '<div class="description">' . $configElement['description'] . '</div>';
+                    }
 
-                        </div>
+                    $content .= '</div><!-- .col-class -->';
+                $content .= '</div><!-- .toolbox-element -->';
 
-                    </div>
+                if ($halfCounter === 0) {
+                    $content .= '</div><div class="t-row clearfix" data-index="' . $rowCounter . '">';
+                }
+            }
 
-                <?php } ?>
+            $content .= '</div><!-- .t-row -->';
+        $content .= '</div><!-- .toolbox-edit-overlay -->';
 
-            </div>
+        ?>
 
-        </div>
+        <?php echo $content; ?>
 
-    </div>
+    </div><!-- .toolbox-element-window -->
 
 <?php } ?>
