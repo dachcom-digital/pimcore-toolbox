@@ -212,13 +212,14 @@ class ElementBuilder
                     }
 
                     //force default
+                    $defaultVal = !empty($elConf['default']) ? $elConf['default'] : 'default';
                     if ($view->select($type . 'AdditionalClasses')->isEmpty()) {
                         $defaultVal = !empty($elConf['default']) ? $elConf['default'] : 'default';
                         $view->select($type . 'AdditionalClasses')->setDataFromResource($defaultVal);
                     }
 
                     $value = $view->select($type . 'AdditionalClasses')->getData();
-                    $elConf['__selectedValue'] = !empty($value) ? $value : $elConf['default'];
+                    $elConf['__selectedValue'] = !empty($value) ? $value : $defaultVal;
                     break;
 
                 default:
