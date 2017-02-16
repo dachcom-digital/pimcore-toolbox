@@ -30,6 +30,9 @@ Because the parallax container has been changed from ground up,
 you need to check your previous installation before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
 - remove the `parallaxContainer` array element from `var/config/toolbox_configuration.php`, a new configuration element will be shipped via the default configuration.
 
+*Columns*  
+We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied that file to your website folder, check the markup!
+
 #### Update from Version 1.5.0 to Version 1.5.1 and Version 1.6.0 to Version 1.6.1
 - CKEditor Configuration change:
 
