@@ -9,7 +9,6 @@
     padding: 10px;
 }
 
-
 /**
 
     Toolbox Container
@@ -20,7 +19,6 @@
     border: 1px dashed #d6d6d6;
     padding: 2px;
 }
-
 
 /**
 
@@ -36,9 +34,9 @@
 }
 
 .toolbox-slide-columns > .row > .slide-columns .slide-column {
-    min-height:200px;
+    min-height: 200px;
     background: #fafafa;
-    padding:10px;
+    padding: 10px;
 }
 
 .toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block:not(.slick-initialized) {
@@ -65,8 +63,8 @@
 
 .toolbox-slide-columns > .row > .slide-columns .slick-track > .pimcore_block_entry,
 .toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block > .pimcore_block_entry {
-    display:block;
-    float:left;
+    display: block;
+    float: left;
     clear: none;
 }
 
@@ -90,7 +88,6 @@
     width: 15%;
 }
 
-
 /**
 
     Toolbox Image
@@ -100,7 +97,6 @@
     min-height: 100px;
 }
 
-
 /**
 
     Toolbox Teaser
@@ -109,7 +105,6 @@
 .toolbox-teaser {
 
 }
-
 
 /**
 
@@ -123,24 +118,24 @@
 }
 
 .toolbox-parallax-container .toolbox-container {
-    margin:10px;
-    background:#fff;
+    margin: 10px;
+    background: #fff;
 }
 
 .toolbox-parallax-container .toolbox-columns {
-    margin:10px;
+    margin: 10px;
 }
 
 .toolbox-parallax-container .toolbox-columns .toolbox-column {
 
-    background:#fff;
+    background: #fff;
     border: 1px dashed #d6d6d6;
     padding: 2px;
 
 }
 
 .toolbox-parallax-container .toolbox-container .toolbox-columns {
-    margin:0;
+    margin: 0;
 }
 
 .toolbox-parallax-container .toolbox-container .toolbox-columns .toolbox-column {
@@ -150,6 +145,7 @@
     padding: 10px;
 
 }
+
 /* some default values for parallax */
 .toolbox-parallax-container.parallax-section {
     height: auto !important;
@@ -177,8 +173,6 @@
 ##
 **/
 
-
-
 /**
 
     Toolbox Defaults
@@ -193,7 +187,6 @@
     width: auto !important;
 }
 
-
 /**
 
     Toolbox .toolbox-element-window Overlay Defaults
@@ -203,6 +196,11 @@
     background-color: #d9edf7;
     border-color: #bce8f1;
     color: #31708f;
+}
+
+/** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/
+.pimcore_iframe_mask {
+    z-index:199 !important;
 }
 
 .toolbox-element-edit-button {
@@ -219,14 +217,14 @@
 }
 
 .toolbox-element-edit-button:hover {
-    opacity:1;
+    opacity: 1;
 }
 
 .toolbox-element-edit-button .x-btn-default-small {
     border-color: transparent;
     background: #000;
     padding: 5px 7px 4px 7px;
-    border-radius:2px;
+    border-radius: 2px;
 }
 
 .toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
@@ -236,32 +234,30 @@
 .toolbox-element-window {
 }
 
-.clsZIndexMax {
-    z-index:100000 !important;
-}
 
-/* move window element out of scope,
- because display none won't work because of extjs rendering issues */
+/* move window element out of scope, because display none won't work because of extjs rendering issues */
 .toolbox-element-window-hidden {
     visibility: hidden;
-    position:absolute;
-    top:-50000px;
-    left:-50000px;
+    position: absolute;
+    top: -50000px;
+    left: -50000px;
 }
 
 .toolbox-edit-overlay label {
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     font-size: 12px;
-    font-weight:700;
+    font-weight: 700;
 }
 
 .toolbox-edit-overlay {
     min-height: 150px; /* always force min height! */
-    margin:0;
+    margin: 0;
 }
+
 .toolbox-edit-overlay.small {
     max-width: 560px;
 }
+
 .toolbox-edit-overlay.large {
     max-width: 760px;
 }
@@ -275,7 +271,7 @@
 }
 
 .toolbox-edit-overlay .t-row:empty {
-    display:none;
+    display: none;
 }
 
 .toolbox-edit-overlay .t-row:after {
@@ -303,6 +299,7 @@
 .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
     width: 760px !important;
 }
+
 .toolbox-edit-overlay.small .t-row .pimcore_editable .x-panel-default {
     width: 560px !important;
 }
@@ -311,7 +308,7 @@
     border: 1px solid #b7b7b7;
     padding: 5px;
     box-shadow: none;
-    display:block !important;
+    display: block !important;
 }
 
 .toolbox-edit-overlay .t-row .description {
@@ -319,7 +316,7 @@
     margin: 10px 0;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     font-size: 13px;
-    line-height:20px;
+    line-height: 20px;
     background: #f7f7f7;
     padding: 10px;
     border: 1px solid #eee;
@@ -328,7 +325,6 @@
 .toolbox-edit-overlay .t-row .pimcore_tag_select {
     display: block;
 }
-
 
 /**
 
