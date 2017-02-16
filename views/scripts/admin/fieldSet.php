@@ -10,13 +10,18 @@
             $halfCounter = 0;
             $rowCounter = 0;
 
+            $lastColClass = NULL;
+
             foreach ($this->configElements as $c => $configElement) {
 
                 if ($configElement['col-class'] === 't-col-half') {
                     $halfCounter++;
                 } else {
                     $halfCounter = 0;
-                    $rowCounter++;
+                }
+
+                if( $configElement['col-class'] === 't-col-full' && $lastColClass === 't-col-half' ) {
+                    $content .= '</div><div class="t-row clearfix" data-index="' . $rowCounter . '">';
                 }
 
                 $content .= '<div class="toolbox-element" data-reload="' . ($configElement['edit-reload'] ? 'true' : 'false') . '">';
@@ -33,9 +38,11 @@
                     $content .= '</div><!-- .col-class -->';
                 $content .= '</div><!-- .toolbox-element -->';
 
-                if ($halfCounter === 0) {
+                if ($halfCounter === 0 || $halfCounter === 2) {
                     $content .= '</div><div class="t-row clearfix" data-index="' . $rowCounter . '">';
                 }
+
+                $lastColClass = $configElement['col-class'];
             }
 
             $content .= '</div><!-- .t-row -->';
