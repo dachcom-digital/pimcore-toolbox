@@ -22,7 +22,7 @@ class ElementBuilder
 
         if (!empty($configNode)) {
             $userConfigElements = $configNode->configElements->toArray();
-            $configWindowSize = isset($configNode->windowSize) ? (string)$configNode->windowSize : NULL;
+            $configWindowSize = isset($configNode->windowSize) ? (string) $configNode->windowSize : NULL;
         }
 
         $coreConfigNode = [];

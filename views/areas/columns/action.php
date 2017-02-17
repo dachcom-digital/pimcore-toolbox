@@ -8,8 +8,13 @@ class Columns extends Document\Tag\Area\AbstractArea
 {
     public function action()
     {
-        $equalHeight = $this->view->checkbox('equalHeight')->isChecked() && !$this->view->editmode;
-        $type = $this->view->select('type')->getData();
+        $adminData = NULL;
+        if ($this->getView()->editmode) {
+            $adminData = \Toolbox\Tool\ElementBuilder::buildElementConfig('columns', $this->getView());
+        }
+
+        $equalHeight = $this->getView()->checkbox('equalHeight')->isChecked() && !$this->getView()->editmode;
+        $type = $this->getView()->select('type')->getData();
 
         $partialName = '';
         $columns = [];
@@ -17,7 +22,7 @@ class Columns extends Document\Tag\Area\AbstractArea
         if (!empty($type)) {
 
             $t = explode('_', $type);
-            if ($this->view->toolboxHelper()->templateExists($this->view, 'toolbox/columns/' . $type . '.php')) {
+            if ($this->getView()->toolboxHelper()->templateExists($this->getView(), 'toolbox/columns/' . $type . '.php')) {
                 $partialName = $type;
             } else {
                 $partialName = $t[0];
@@ -48,7 +53,8 @@ class Columns extends Document\Tag\Area\AbstractArea
             }
         }
 
-        $this->view->assign([
+        $this->getView()->assign([
+            'adminData'   => $adminData,
             'type'        => $type,
             'columns'     => $columns,
             'partialName' => $partialName,

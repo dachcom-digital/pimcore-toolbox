@@ -30,6 +30,9 @@ Because the parallax container has been changed from ground up,
 you need to check your previous installation before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
 - remove the `parallaxContainer` array element from `var/config/toolbox_configuration.php`, a new configuration element will be shipped via the default configuration.
 
+*Container*  
+Container does now have a ```Fluid Container (Full Width)``` option which renders the default bootstrap ```.fluid-container``` class to the main element.
+
 *Columns*  
 We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied that file to your website folder, check the markup!
 

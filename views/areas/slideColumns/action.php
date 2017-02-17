@@ -8,15 +8,21 @@ class SlideColumns extends Document\Tag\Area\AbstractArea
 {
     public function action()
     {
-        $equalHeight = $this->view->checkbox('equalHeight')->isChecked() && !$this->view->editmode;
-        $id = $this->view->brick->getId() . '-' . $this->view->brick->getIndex();
-        $slidesPerView = (int)$this->view->select('slidesPerView')->getData();
-        $slideElements = $this->view->block('slideCols', ['default' => $slidesPerView]);
-        $slidesPerViewClass = $this->view->toolboxHelper()->calculateSlideColumnClasses($slidesPerView);
-        $breakpoints = $this->view->toolboxHelper()->calculateSlideColumnBreakpoints($slidesPerView);
+        $adminData = NULL;
+        if ($this->getView()->editmode) {
+            $adminData = \Toolbox\Tool\ElementBuilder::buildElementConfig('slideColumns', $this->getView());
+        }
 
-        $this->view->assign(
+        $equalHeight = $this->getView()->checkbox('equalHeight')->isChecked() && !$this->getView()->editmode;
+        $id = $this->getView()->brick->getId() . '-' . $this->getView()->brick->getIndex();
+        $slidesPerView = (int) $this->getView()->select('slidesPerView')->getData();
+        $slideElements = $this->getView()->block('slideCols', ['default' => $slidesPerView]);
+        $slidesPerViewClass = $this->getView()->toolboxHelper()->calculateSlideColumnClasses($slidesPerView);
+        $breakpoints = $this->getView()->toolboxHelper()->calculateSlideColumnBreakpoints($slidesPerView);
+
+        $this->getView()->assign(
             [
+                'adminData'            => $adminData,
                 'id'                   => $id,
                 'slideElements'        => $slideElements,
                 'slidesPerView'        => $slidesPerView,

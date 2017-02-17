@@ -1,6 +1,16 @@
 <?php
 
 return [
+    "container" => [
+        "configElements" => [
+            [
+                "type"      => "checkbox",
+                "name"      => "fullWidthContainer",
+                "title"     => "Fluid Container (Full Width)",
+                "reload"    => TRUE
+            ]
+        ]
+    ],
     "parallaxContainer" => [
         "windowSize"     => "large",
         "configElements" => [
@@ -39,10 +49,9 @@ return [
                     "center-center" => "Center Center"
                 ],
                 "reload"   => TRUE
-            ],
+            ]
         ]
     ],
-
     "headline"  => [
         "configElements" => [
             [

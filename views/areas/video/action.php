@@ -3,19 +3,25 @@
 namespace Pimcore\Model\Document\Tag\Area;
 
 use Pimcore\Model\Document;
+use Pimcore\Model\Asset;
 
 class Video extends Document\Tag\Area\AbstractArea
 {
     public function action()
     {
-        $playInLightBox = $this->view->vhs('video')->getShowAsLightbox() === TRUE ? 'true' : 'false';
-        $autoPlay = $this->view->checkbox('autoplay')->isChecked() === '1' && !$this->view->editmode;
-        $videoType = $this->view->vhs('video')->getVideoType();
+        $adminData = NULL;
+        if ($this->getView()->editmode) {
+            $adminData = \Toolbox\Tool\ElementBuilder::buildElementConfig('video', $this->getView());
+        }
+
+        $playInLightBox = $this->getView()->vhs('video')->getShowAsLightbox() === TRUE ? 'true' : 'false';
+        $autoPlay = $this->getView()->checkbox('autoplay')->isChecked() === '1' && !$this->getView()->editmode;
+        $videoType = $this->getView()->vhs('video')->getVideoType();
         $posterPath = NULL;
         $imageThumbnail = NULL;
-        $poster = $this->view->vhs('video')->getPosterAsset();
+        $poster = $this->getView()->vhs('video')->getPosterAsset();
 
-        if ($poster instanceof \Pimcore\Model\Asset\Image) {
+        if ($poster instanceof Asset\Image) {
             $configNode = \Toolbox\Config::getConfig()->video->toArray();
             if (isset($configNode['videoOptions'])) {
                 if (isset($configNode['videoOptions'][$videoType])) {
@@ -27,8 +33,9 @@ class Video extends Document\Tag\Area\AbstractArea
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $this->view->assign(
+        $this->getView()->assign(
             [
+                'adminData'      => $adminData,
                 'autoPlay'       => $autoPlay,
                 'posterPath'     => $posterPath,
                 'videoType'      => $videoType,
