@@ -89,6 +89,7 @@ class ElementBuilder
             $elConf['default'] = isset($c['default']) ? $c['default'] : NULL;
             $elConf['description'] = isset($c['description']) ? $c['description'] : NULL;
             $elConf['col-class'] = isset($c['col-class']) ? $c['col-class'] : 't-col-full';
+            $elConf['editmode-hidden'] = FALSE;
 
             if (isset($c['conditions'])) {
                 $elConf['conditions'] = $c['conditions'];
@@ -282,6 +283,8 @@ class ElementBuilder
                 } else {
                     //we need to reset value, if possible!
                     self::resetElement($el, $view);
+                    $el['editmode-hidden'] = TRUE;
+                    $filteredData[] = $el;
                 }
             } else {
                 $filteredData[] = $el;
@@ -320,22 +323,24 @@ class ElementBuilder
      */
     private static function resetElement($el, $view)
     {
+        $value = !empty($el['default']) ? $el['default'] : NULL;
+
         switch ($el['type']) {
             case 'select':
-                $view->select($el['name'])->setDataFromResource(NULL);
-                $elConf['__selectedValue'] = NULL;
+                $view->select($el['name'])->setDataFromResource($value);
+                $elConf['__selectedValue'] = $value;
                 break;
             case 'checkbox':
-                $view->checkbox($el['name'])->setDataFromResource(NULL);
-                $elConf['__selectedValue'] = NULL;
+                $view->checkbox($el['name'])->setDataFromResource($value);
+                $elConf['__selectedValue'] = $value;
                 break;
             case 'input':
-                $view->input($el['name'])->setDataFromResource(NULL);
-                $elConf['__selectedValue'] = NULL;
+                $view->input($el['name'])->setDataFromResource($value);
+                $elConf['__selectedValue'] = $value;
                 break;
             case 'numeric':
-                $view->numeric($el['name'])->setDataFromResource(NULL);
-                $elConf['__selectedValue'] = NULL;
+                $view->numeric($el['name'])->setDataFromResource($value);
+                $elConf['__selectedValue'] = $value;
                 break;
         }
 

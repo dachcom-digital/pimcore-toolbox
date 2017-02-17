@@ -274,6 +274,10 @@
     display: none;
 }
 
+.toolbox-edit-overlay .t-row.editmode-hidden {
+    display: none;
+}
+
 .toolbox-edit-overlay .t-row:after {
     content: ".";
     clear: both;

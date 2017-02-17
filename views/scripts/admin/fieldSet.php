@@ -5,7 +5,7 @@
 
         $content = '';
         $content .= '<div class="toolbox-edit-overlay ' . $this->windowSize . '">';
-            $content .= '<div class="t-row clearfix" data-index="0">';
+
 
             $halfCounter = 0;
             $rowCounter = 0;
@@ -14,6 +14,12 @@
 
             foreach ($this->configElements as $c => $configElement) {
 
+                $editModeHiddenClass = $configElement['editmode-hidden'] ? 'editmode-hidden' : '';
+
+                if ( $c === 0 ) {
+                    $content .= '<div class="t-row clearfix ' . $editModeHiddenClass . '" data-index="0">';
+                }
+
                 if ($configElement['col-class'] === 't-col-half') {
                     $halfCounter++;
                 } else {
@@ -21,7 +27,7 @@
                 }
 
                 if( $configElement['col-class'] === 't-col-full' && $lastColClass === 't-col-half' ) {
-                    $content .= '</div><div class="t-row clearfix" data-index="' . $rowCounter . '">';
+                    $content .= '</div><div class="t-row clearfix ' . $editModeHiddenClass . '" data-index="' . $rowCounter . '">';
                 }
 
                 $content .= '<div class="toolbox-element" data-reload="' . ($configElement['edit-reload'] ? 'true' : 'false') . '">';
@@ -39,13 +45,17 @@
                 $content .= '</div><!-- .toolbox-element -->';
 
                 if ($halfCounter === 0 || $halfCounter === 2) {
-                    $content .= '</div><div class="t-row clearfix" data-index="' . $rowCounter . '">';
+                    $editModeHiddenClass = isset($this->configElements[$c+1]) && $this->configElements[$c+1]['editmode-hidden'] ? 'editmode-hidden' : '';
+                    $content .= '</div><div class="t-row clearfix ' . $editModeHiddenClass . '" data-index="' . $rowCounter . '">';
                 }
 
                 $lastColClass = $configElement['col-class'];
+
+                if ( $c === count($this->configElements)-1 ) {
+                    $content .= '</div>';
+                }
             }
 
-            $content .= '</div><!-- .t-row -->';
         $content .= '</div><!-- .toolbox-edit-overlay -->';
 
         ?>
