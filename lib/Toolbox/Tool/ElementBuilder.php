@@ -22,7 +22,7 @@ class ElementBuilder
 
         if (!empty($configNode)) {
             $userConfigElements = $configNode->configElements->toArray();
-            $configWindowSize = isset($configNode->windowSize) ? (string) $configNode->windowSize : NULL;
+            $configWindowSize = isset($configNode->windowSize) ? (string)$configNode->windowSize : NULL;
         }
 
         $coreConfigNode = [];
@@ -231,17 +231,19 @@ class ElementBuilder
             }
         }
 
-        $parsedConfig = self::checkCondition($parsedConfig);
+        //condition needs to applied after all elements has been initialized!
+        $parsedConfig = self::checkCondition($parsedConfig, $view);
 
         return $parsedConfig;
     }
 
     /**
      * @param $configElements
+     * @param $view
      *
      * @return array
      */
-    private static function checkCondition($configElements)
+    private static function checkCondition($configElements, $view)
     {
         $filteredData = [];
 
@@ -277,6 +279,9 @@ class ElementBuilder
 
                 if ($orState === TRUE) {
                     $filteredData[] = $el;
+                } else {
+                    //we need to reset value, if possible!
+                    self::resetElement($el, $view);
                 }
             } else {
                 $filteredData[] = $el;
@@ -305,5 +310,35 @@ class ElementBuilder
         }
 
         return NULL;
+    }
+
+    /**
+     * @param               $el
+     * @param \Pimcore\View $view
+     *
+     * @return mixed
+     */
+    private static function resetElement($el, $view)
+    {
+        switch ($el['type']) {
+            case 'select':
+                $view->select($el['name'])->setDataFromResource(NULL);
+                $elConf['__selectedValue'] = NULL;
+                break;
+            case 'checkbox':
+                $view->checkbox($el['name'])->setDataFromResource(NULL);
+                $elConf['__selectedValue'] = NULL;
+                break;
+            case 'input':
+                $view->input($el['name'])->setDataFromResource(NULL);
+                $elConf['__selectedValue'] = NULL;
+                break;
+            case 'numeric':
+                $view->numeric($el['name'])->setDataFromResource(NULL);
+                $elConf['__selectedValue'] = NULL;
+                break;
+        }
+
+        return $el;
     }
 }
