@@ -12,11 +12,6 @@
 
 <?php } else { ?>
 
-    <?= $this->template('toolbox/video/type-' . $this->videoType . '.php', [
-        'autoplay' => $this->autoplay,
-        'posterPath' => $this->posterPath,
-        'playInLightbox' => $this->playInLightbox,
-        'videoType' => $this->videoType
-    ]) ?>
+    <?= $this->template('toolbox/video/type-' . $this->videoType . '.php') ?>
 
 <?php } ?>

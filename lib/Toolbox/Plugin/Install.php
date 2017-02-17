@@ -269,6 +269,7 @@ class Install
                             "type"  => "checkbox",
                             "name"  => "autoplay",
                             "title" => "Autoplay?",
+                            "reload" => FALSE
                         ],
                     ],
                 ],
