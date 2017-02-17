@@ -1,0 +1,1 @@
+<?= $this->template('helper/areablock.php', ['name' => $this->column['name'], 'type' => 'columns']); ?>
