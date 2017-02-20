@@ -1,5 +1,24 @@
 /**
 
+    Toolbox Headline
+
+**/
+.toolbox-headline {
+    display:block !important;
+}
+
+/**
+
+    Toolbox Anchor
+
+**/
+.toolbox-anchor {
+    display:block !important;
+}
+
+
+/**
+
     Toolbox Columns
 
 **/
@@ -229,9 +248,23 @@
 
 **/
 .alert-info {
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     background-color: #d9edf7;
-    border-color: #bce8f1;
     color: #31708f;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #bce8f1;
+    border-radius: 0;
+}
+
+.alert-danger {
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ebccd1;
+    border-radius: 0;
 }
 
 /** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/

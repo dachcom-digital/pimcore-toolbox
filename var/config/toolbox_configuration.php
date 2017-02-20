@@ -1,19 +1,32 @@
 <?php
 
 return [
-    "container" => [
+    "container"         => [
         "configElements" => [
             [
-                "type"      => "checkbox",
-                "name"      => "fullWidthContainer",
-                "title"     => "Fluid Container (Full Width)",
-                "reload"    => TRUE
+                "type"   => "checkbox",
+                "name"   => "fullWidthContainer",
+                "title"  => "Fluid Container (Full Width)",
+                "reload" => TRUE
             ]
         ]
     ],
     "parallaxContainer" => [
         "windowSize"     => "large",
         "configElements" => [
+            [
+                "type"        => "select",
+                "name"        => "containerType",
+                "title"       => "Container Wrapper Type",
+                "reload"      => TRUE,
+                "default"     => "none",
+                "description" => "If you need to add some content columns, apply a default or fluid container as wrapper.",
+                "values"      => [
+                    "none"            => "No Container Wrapper",
+                    "container"       => "Default Container Wrapper",
+                    "container-fluid" => "Fluid Container Wrapper"
+                ]
+            ],
             [
                 "type"     => "href",
                 "name"     => "background",
@@ -52,7 +65,7 @@ return [
             ]
         ]
     ],
-    "headline"  => [
+    "headline"          => [
         "configElements" => [
             [
                 "type"  => "input",
@@ -61,7 +74,7 @@ return [
             ],
         ]
     ],
-    "anchor"    => [
+    "anchor"            => [
         "configElements" => [
             [
                 "type"  => "input",
@@ -75,7 +88,7 @@ return [
             ],
         ]
     ],
-    "image"     => [
+    "image"             => [
         "configElements" => [
             [
                 "type"      => "checkbox",
@@ -93,7 +106,7 @@ return [
             ]
         ]
     ],
-    "download"  => [
+    "download"          => [
         "configElements" => [
             [
                 "type"   => "multihref",
@@ -115,7 +128,7 @@ return [
             ]
         ]
     ],
-    "gallery"   => [
+    "gallery"           => [
         "configElements" => [
             [
                 "type"   => "multihref",
@@ -137,7 +150,7 @@ return [
             ]
         ]
     ],
-    "googleMap" => [
+    "googleMap"         => [
         "configElements" => [
             [
                 "type"             => "numeric",

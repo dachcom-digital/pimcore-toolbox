@@ -334,11 +334,11 @@ class Install
                 ],
 
                 "disallowedSubAreas" => [
-                    "accordion"         => ["accordion", "container", "slideColumns"],
+                    "accordion"         => ["accordion", "container", "slideColumns", "parallaxContainer"],
                     "columns"           => ["container", "parallaxContainer"],
-                    "slideColumns"      => ["slideColumns", "accordion", "container", "columns", "anchor"],
+                    "slideColumns"      => ["slideColumns", "accordion", "container", "parallaxContainer", "columns", "anchor"],
                     "container"         => ["container", "parallaxContainer"],
-                    "parallaxContainer" => ["parallaxContainer"],
+                    "parallaxContainer" => ["container", "parallaxContainer"],
                     "image"             => ["parallaxContainer"],
                     "snippet"           => ["parallaxContainer"]
                 ],

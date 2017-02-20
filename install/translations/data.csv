@@ -51,6 +51,12 @@
 "Toolbox Separator";"Toolbox Separator";"Toolbox Trennline";1460395362;1460395362;
 "Toolbox Snippet";"Toolbox Snippet";"Toolbox Snippet";1460395362;1460395362;
 "Parallax Container";"Parallax Container";"Parallax Container";1460395362;1460395362;
+"Container Wrapper Type";"Container Wrapper Type";"Container Wrapper Typ";1460395362;1460395362;
+"No Container Wrapper";"No Container Wrapper";"Ohne Container Wrapper";1460395362;1460395362;
+"Default Container Wrapper";"Default Container Wrapper";"Standard Container Wrapper";1460395362;1460395362;
+"Fluid Container Wrapper";"Fluid Container Wrapper";"Fluid Container Wrapper";1460395362;1460395362;
+"If you need to add some content columns, apply a default or fluid container as wrapper.";"If you need to add some content columns, apply a default or fluid container as wrapper.";"Wenn Sie im Container Spaltenelemente (Columns) einfügen möchten, müssen Sie zuerst den Standard- oder Fluid-Container aktivieren.";1460395362;1460395362;
+"You're using columns without a valid container wrapper.";"You're using columns without a valid container wrapper.";"Sie verwenden Spaltenelemente (Columns) ohne Container Wrapper.";1460395362;1460395362;
 "Toolbox Parallax Container";"Toolbox Parallax Container";"Toolbox Parallax Container";1460395362;1460395362;
 "Video";"Video";"Video";1460395362;1460395362;
 "Toolbox Video";"Toolbox Video";"Toolbox Video";1460395362;1460395362;

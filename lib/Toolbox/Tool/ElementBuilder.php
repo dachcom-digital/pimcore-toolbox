@@ -87,8 +87,8 @@ class ElementBuilder
             $elConf['reload'] = FALSE;
             $elConf['edit-reload'] = isset($c['reload']) ? $c['reload'] : TRUE;
             $elConf['default'] = isset($c['default']) ? $c['default'] : NULL;
-            $elConf['description'] = isset($c['description']) ? $c['description'] : NULL;
-            $elConf['col-class'] = isset($c['col-class']) ? $c['col-class'] : 't-col-full';
+            $elConf['description'] = isset($c['description']) && !empty($c['description']) ? $view->translateAdmin($c['description']) : NULL;
+            $elConf['col-class'] = isset($c['col-class']) && !empty($c['col-class']) ? $c['col-class'] : 't-col-full';
             $elConf['editmode-hidden'] = FALSE;
 
             if (isset($c['conditions'])) {
@@ -202,6 +202,7 @@ class ElementBuilder
                     }
 
                     $elConf['type'] = 'select';
+                    $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
                     $elConf['name'] = $type . 'AdditionalClasses';
                     $elConf['title'] = $view->translateAdmin('Additional');
                     $elConf['reload'] = FALSE;
