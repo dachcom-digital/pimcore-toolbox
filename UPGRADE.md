@@ -27,8 +27,14 @@
 
 *Parallax Container*  
 Because the parallax container has been changed from ground up, 
-you need to check your previous installation before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
-- remove the `parallaxContainer` array element from `var/config/toolbox_configuration.php`, a new configuration element will be shipped via the default configuration.
+you need to check your website template before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
+- your `parallaxContainer` config array noe should look like this:
+    ```php
+    "parallaxContainer" => [
+        "backgroundMode"      => "wrap", //wrap|prepend
+        "backgroundImageMode" => "data", //style|data
+    ]
+    ```
 - update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:
     ```php
     "disallowedSubAreas"  => [

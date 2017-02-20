@@ -12,8 +12,10 @@ return [
         ]
     ],
     "parallaxContainer" => [
-        "windowSize"     => "large",
-        "configElements" => [
+        "windowSize"          => "large",
+        "backgroundMode"      => "wrap", //wrap|prepend
+        "backgroundImageMode" => "data", //style|data
+        "configElements"      => [
             [
                 "type"        => "select",
                 "name"        => "containerType",
