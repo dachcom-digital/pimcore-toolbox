@@ -28,7 +28,7 @@
 *Parallax Container*  
 Because the parallax container has been changed from ground up, 
 you need to check your website template before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
-- your `parallaxContainer` config array noe should look like this:
+- your `parallaxContainer` config array node should look like this:
     ```php
     "parallaxContainer" => [
         "backgroundMode"      => "wrap", //wrap|prepend
