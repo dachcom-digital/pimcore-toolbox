@@ -371,12 +371,21 @@
     Extjs Dropdowns list to default
 
 **/
+ul.x-list-plain {
+    display: block !important;
+}
+
 ul li.x-boundlist-item {
     list-style: inherit;
     background: inherit;
-    padding: inherit;
     margin: inherit;
     line-height: 30px;
+    padding: 0 0 0 10px !important;
+    display:block !important;
+}
+
+ul li.x-boundlist-item:before {
+    content: none;
 }
 
 ul li.x-boundlist-item:hover {
