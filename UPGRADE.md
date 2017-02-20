@@ -51,14 +51,14 @@ Add this to your `var/config/toolbox_configuration.php` array:
                 "spacer-none" => "No Space",
                 "spacer-50"   => "50 Pixel" //Example
             ],
-            "default" => "spacer-none"
+            "default" => "spacer-none",
+            "reload" => FALSE
         ],
         [
             "type"   => "additionalClasses",
             "values" => [],
         ]
-    ],
-
+    ]
 ]
 ```
 

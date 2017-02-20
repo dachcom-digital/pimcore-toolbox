@@ -227,7 +227,8 @@ class Install
                                 "spacer-none" => "No Space",
                                 "spacer-50"   => "50 Pixel"
                             ],
-                            "default" => "spacer-none"
+                            "default" => "spacer-none",
+                            "reload" => FALSE
                         ],
                         [
                             "type"   => "additionalClasses",
