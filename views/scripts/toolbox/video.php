@@ -12,6 +12,8 @@
 
 <?php } else { ?>
 
-    <?= $this->template('toolbox/video/type-' . $this->videoType . '.php') ?>
+    <div class="video-inner">
+        <?= $this->template('toolbox/video/type-' . $this->videoType . '.php') ?>
+    </div>
 
 <?php } ?>
