@@ -36,7 +36,7 @@ Container does now have a ```Fluid Container (Full Width)``` option which render
 *Columns*  
 We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied that file to your website folder, check the markup!
 
-**New Element:** *Spacer*  
+**New Element:** *Spacer* ([#19](https://github.com/dachcom-digital/pimcore-toolbox/issues/19))  
 Disable the new Brick, if you don't need it.  
 Add this to your `var/config/toolbox_configuration.php` array:
 
