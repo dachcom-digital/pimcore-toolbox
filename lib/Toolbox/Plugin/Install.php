@@ -217,6 +217,25 @@ class Install
                     ],
 
                 ],
+                "spacer"            => [
+                    "configElements" => [
+                        [
+                            "type"    => "select",
+                            "name"    => "spacerClass",
+                            "title"   => "Space Class",
+                            "values"  => [
+                                "spacer-none" => "No Space",
+                                "spacer-50"   => "50 Pixel"
+                            ],
+                            "default" => "spacer-none"
+                        ],
+                        [
+                            "type"   => "additionalClasses",
+                            "values" => [],
+                        ]
+                    ],
+
+                ],
                 "teaser"            => [
                     "configElements" => [
                         [
@@ -266,9 +285,9 @@ class Install
                             "values" => [],
                         ],
                         [
-                            "type"  => "checkbox",
-                            "name"  => "autoplay",
-                            "title" => "Autoplay?",
+                            "type"   => "checkbox",
+                            "name"   => "autoplay",
+                            "title"  => "Autoplay?",
                             "reload" => FALSE
                         ],
                     ],

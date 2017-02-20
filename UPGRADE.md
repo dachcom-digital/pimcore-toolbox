@@ -36,6 +36,32 @@ Container does now have a ```Fluid Container (Full Width)``` option which render
 *Columns*  
 We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied that file to your website folder, check the markup!
 
+**New Element:** *Spacer*  
+Disable the new Brick, if you don't need it.  
+Add this to your `var/config/toolbox_configuration.php` array:
+
+```php
+"spacer" => [
+    "configElements" => [
+        [
+            "type"    => "select",
+            "name"    => "spacerClass",
+            "title"   => "Space Class",
+            "values"  => [
+                "spacer-none" => "No Space",
+                "spacer-50"   => "50 Pixel" //Example
+            ],
+            "default" => "spacer-none"
+        ],
+        [
+            "type"   => "additionalClasses",
+            "values" => [],
+        ]
+    ],
+
+]
+```
+
 #### Update from Version 1.5.0 to Version 1.5.1 and Version 1.6.0 to Version 1.6.1
 - CKEditor Configuration change:
 
