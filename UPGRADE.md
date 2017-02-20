@@ -34,7 +34,10 @@ you need to check your previous installation before upgrading ([#15](https://git
 Container does now have a ```Fluid Container (Full Width)``` option which renders the default bootstrap ```.fluid-container``` class to the main element.
 
 *Columns*  
-We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied that file to your website folder, check the markup!
+We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied one of the files into your website folder, check the markup!
+
+*Accordion*  
+We simplified the `scripts/toolbox/accordion.php`  file. If you've copied that file into your website folder, check the markup!
 
 **New Element:** *Spacer* ([#19](https://github.com/dachcom-digital/pimcore-toolbox/issues/19))  
 Disable the new Brick, if you don't need it.  
