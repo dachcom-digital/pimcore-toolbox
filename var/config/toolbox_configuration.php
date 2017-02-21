@@ -13,8 +13,8 @@ return [
     ],
     "parallaxContainer" => [
         "windowSize"          => "large",
-        "backgroundMode"      => "wrap", //wrap|prepend
-        "backgroundImageMode" => "data", //style|data
+        "backgroundMode"      => "wrap",
+        "backgroundImageMode" => "data",
         "configElements"      => [
             [
                 "type"        => "select",
@@ -41,27 +41,45 @@ return [
             ],
             [
                 "type"     => "parallaximage",
-                "name"     => "imagesBehind",
-                "title"    => "Images Behind Main Container",
+                "name"     => "imageFront",
+                "title"    => "Images In Front Of Main Container",
                 "position" => [
                     "top-left"      => "Top Left",
+                    "top-center"    => "Top Center",
                     "top-right"     => "Top Right",
                     "bottom-left"   => "Bottom Left",
+                    "bottom-center" => "Bottom Center",
                     "bottom-right"  => "Bottom Right",
-                    "center-center" => "Center Center"
+                    "center-left"   => "Center Left",
+                    "center-center" => "Center Center",
+                    "center-right"  => "Center Right"
+                ],
+                "size"     => [
+                    "half-window-width"    => "Half Window Width",
+                    "third-window-width"   => "Third Window Width ",
+                    "quarter-window-width" => "Quarter Window Width",
                 ],
                 "reload"   => TRUE
             ],
             [
                 "type"     => "parallaximage",
-                "name"     => "imageFront",
-                "title"    => "Images In Front Of Main Container",
+                "name"     => "imagesBehind",
+                "title"    => "Images Behind Main Container",
                 "position" => [
                     "top-left"      => "Top Left",
+                    "top-center"    => "Top Center",
                     "top-right"     => "Top Right",
                     "bottom-left"   => "Bottom Left",
+                    "bottom-center" => "Bottom Center",
                     "bottom-right"  => "Bottom Right",
-                    "center-center" => "Center Center"
+                    "center-left"   => "Center Left",
+                    "center-center" => "Center Center",
+                    "center-right"  => "Center Right"
+                ],
+                "size"     => [
+                    "half-window-width"    => "Half Window Width",
+                    "third-window-width"   => "Third Window Width ",
+                    "quarter-window-width" => "Quarter Window Width",
                 ],
                 "reload"   => TRUE
             ]

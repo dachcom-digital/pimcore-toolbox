@@ -94,8 +94,15 @@
 "Background Image";"Background Image";"Hintergrundbild";1460395362;1460395362;
 "Default";"Default";"Standard";1460395362;1460395362;
 "Top Left";"Top Left";"Oben Links";1460395362;1460395362;
+"Top Center";"Top Center";"Oben Zentriert";1460395362;1460395362;
 "Top Right";"Top Right";"Oben Rechts";1460395362;1460395362;
 "Bottom Left";"Bottom Left";"Unten Links";1460395362;1460395362;
+"Bottom Center";"Bottom Center";"Unten Zentriert";1460395362;1460395362;
 "Bottom Right";"Bottom Right";"Unten Rechts";1460395362;1460395362;
+"Center Left";"Center Left";"Mitte Links";1460395362;1460395362;
 "Center Center";"Center Center";"Mitte Mitte";1460395362;1460395362;
+"Center Right";"Center Right";"Mitte Rechts";1460395362;1460395362;
+"Half Window Width";"Half Window Width";"Halbe Fensterbreite";1460395362;1460395362;
+"Third Window Width";"Third Window Width";"Drittel Fensterbreite";1460395362;1460395362;
+"Quarter Window Width";"Quarter Window Width";"Viertel Fensterbreite";1460395362;1460395362;
 "Fluid Container (Full Width)";"Fluid Container (Full Width)";"Fluid Container (Volle Breite)";1460395362;1460395362;

@@ -174,15 +174,22 @@ class ElementBuilder
                 case 'parallaximage':
 
                     $positionStore = isset($c['position']) ? $c['position'] : [];
+                    $sizeStore = isset($c['size']) ? $c['size'] : [];
 
-                    $store = [];
-                    $store['default'] = $view->translateAdmin('Default');
+                    $elConf['position'] = [];
+                    $elConf['position']['default'] = $view->translateAdmin('Default');
 
                     foreach ($positionStore as $k => $v) {
-                        $store[$k] = $view->translateAdmin($v);
+                        $elConf['position'][$k] = $view->translateAdmin($v);
                     }
 
-                    $elConf['position'] = $store;
+                    $elConf['size'] = [];
+                    $elConf['size']['default'] = $view->translateAdmin('Default');
+
+                    foreach ($sizeStore as $k => $v) {
+                        $elConf['size'][$k] = $view->translateAdmin($v);
+                    }
+
                     $elConf['width'] = isset($c['width']) ? $c['width'] : ($windowSize === 'large' ? 760 : 560);
                     $elConf['height'] = isset($c['height']) ? $c['height'] : 200;
                     $elConf['class'] = isset($c['class']) ? $c['class'] : '';

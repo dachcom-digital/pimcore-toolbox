@@ -9,9 +9,9 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
     },
 
     initialize: function(id, name, options, data, inherited) {
+
         this.id = id;
         this.name = name;
-
         this.options = this.parseOptions(options);
         this.data = data;
 
@@ -27,7 +27,8 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                     'path',
                     'type',
                     'subtype',
-                    'parallaxPosition'
+                    'parallaxPosition',
+                    'parallaxSize'
                 ]
             });
         }
@@ -37,7 +38,6 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
             model: modelName
         });
 
-
         var positionStoreElements = [];
         Ext.Object.each(this.options.position, function(k,v) {
             positionStoreElements.push({id: k, name: v});
@@ -46,6 +46,16 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
         var positionStore = Ext.create('Ext.data.Store',{
             fields: ['id', 'name'],
             data: positionStoreElements
+        });
+
+        var sizeStoreElements = [];
+        Ext.Object.each(this.options.size, function(k,v) {
+            sizeStoreElements.push({id: k, name: v});
+        });
+
+        var sizeStore = Ext.create('Ext.data.Store',{
+            fields: ['id', 'name'],
+            data: sizeStoreElements
         });
 
         var elementConfig = {
@@ -65,19 +75,16 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                 },
                 items: [
                     {header: 'ID', dataIndex: 'id', width: 50},
-                    {header: t('path'), dataIndex: 'path', flex: 200},
+                    {header: t('path'), dataIndex: 'path', flex: 100},
                     {
                         header: t('position'),
                         dataIndex: 'parallaxPosition',
                         flex: 100,
-                        renderer: function(value, metadata, record, rowIndex) {
-
-                            var assetObj = this.store.getAt(rowIndex);
-                            if( assetObj ) {
-                                assetObj.set('parallaxPosition', value);
-                            }
+                        renderer: function(value, metadata, record) {
 
                             var val = positionStore.findRecord('id', value);
+                            record.set('parallaxPosition', value);
+
                             if( val ) {
                                 return val.get('name');
                             }
@@ -87,7 +94,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                         }.bind(this),
                         editor: {
                             xtype: 'combobox',
-                            listClass : 'x-combo-list-small',
+                            name: 'parallaxPosition',
                             forceSelection: true,
                             typeAhead: false,
                             triggerAction: 'all',
@@ -103,6 +110,42 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                                 }
                             },
                             store: positionStore
+                        }
+                    },
+                    {
+                        header: t('size') + ' (' + t('template') + ')',
+                        dataIndex: 'parallaxSize',
+                        flex: 100,
+                        renderer: function(value, metadata, record) {
+
+                            var val = sizeStore.findRecord('id', value);
+                            record.set('parallaxSize', value);
+
+                            if( val ) {
+                                return val.get('name');
+                            }
+
+                            return 'Default';
+
+                        }.bind(this),
+                        editor: {
+                            xtype: 'combobox',
+                            name: 'parallaxSize',
+                            forceSelection: true,
+                            typeAhead: false,
+                            triggerAction: 'all',
+                            emptyText: 'Select action',
+                            editable: false,
+                            valueField:'id',
+                            displayField:'name',
+                            listeners: {
+                                focus: function(obj) {
+                                    obj.expand();
+                                },select:function(obj) {
+                                    obj.blur();
+                                }
+                            },
+                            store: sizeStore
                         }
                     },
                     {
@@ -148,7 +191,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                             handler: function (grid, rowIndex) {
                                 var data = grid.getStore().getAt(rowIndex);
                                 var subtype = data.data.subtype;
-                                if (data.data.type == 'object' && data.data.subtype != 'folder') {
+                                if (data.data.type === 'object' && data.data.subtype !== 'folder') {
                                     subtype = 'object';
                                 }
                                 pimcore.helpers.openElement(data.data.id, data.data.type, subtype);
@@ -172,14 +215,14 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
         };
 
         // height specifics
-        if(typeof this.options.height != 'undefined') {
+        if(typeof this.options.height !== 'undefined') {
             elementConfig.height = this.options.height;
         } else {
             elementConfig.autoHeight = true;
         }
 
         // width specifics
-        if(typeof this.options.width != 'undefined') {
+        if(typeof this.options.width !== 'undefined') {
             elementConfig.width = this.options.width;
         }
 
@@ -223,6 +266,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
         }
 
         initData.parallaxPosition = 'default';
+        initData.parallaxSize = 'default';
 
         if (!this.elementAlreadyExists(initData.id, initData.type)) {
             this.store.add(initData);
