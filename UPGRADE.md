@@ -47,7 +47,13 @@ you need to check your website template before upgrading ([#15](https://github.c
     ```
     
 *Container*  
-Container does now have a ```Fluid Container (Full Width)``` option which renders the default bootstrap ```.fluid-container``` class to the main element.
+- Container does now have a ```Fluid Container (Full Width)``` option which renders the default bootstrap ```.fluid-container``` class to the main element.
+- Container does now have a nested `.container-inner` Element:
+    ```html
+    <div class="container">
+        <div class="container-inner">[CONTENT]</div>
+    </div>
+    ```
 
 *Columns*  
 We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/column.php` file. If you've copied one of the files into your website folder, check the markup!

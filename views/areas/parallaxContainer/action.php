@@ -51,7 +51,7 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
 
         $wrapContent = '%s';
         if ($containerWrapper !== 'none') {
-            $wrapContent = '<div class="toolbox-container"><div class="' . $containerWrapper . '">%s</div></div>';
+            $wrapContent = $this->getView()->partial('toolbox/parallaxContainer/template/container-wrapper.php', ['containerWrapperClass' => $containerWrapper]);
         }
 
         $content = sprintf($wrapContent, $areaBlock);
