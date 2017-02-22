@@ -45,6 +45,7 @@ class Columns extends Document\Tag\Area\AbstractArea
                 $columns[] = [
                     'offset'      => $offset,
                     'btClass'     => $columnClass,
+                    'columnType'  => $type,
                     'columnClass' => 'toolbox-column' . ($equalHeight ? ' equal-height-item' : ''),
                     'name'        => 'column_' . $i
                 ];
