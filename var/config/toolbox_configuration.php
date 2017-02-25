@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "container"         => [
+    "container"                => [
         "configElements" => [
             [
                 "type"   => "checkbox",
@@ -11,22 +11,19 @@ return [
             ]
         ]
     ],
-    "parallaxContainer" => [
+    "parallaxContainer"        => [
         "windowSize"          => "large",
         "backgroundMode"      => "wrap",
         "backgroundImageMode" => "data",
         "configElements"      => [
             [
-                "type"        => "select",
-                "name"        => "containerType",
-                "title"       => "Container Wrapper Type",
-                "reload"      => TRUE,
-                "default"     => "none",
-                "description" => "If you need to add some content columns, apply a default or fluid container as wrapper.",
-                "values"      => [
-                    "none"            => "No Container Wrapper",
-                    "container"       => "Default Container Wrapper",
-                    "container-fluid" => "Fluid Container Wrapper"
+                "type"    => "select",
+                "name"    => "template",
+                "title"   => "Parallax Template",
+                "reload"  => TRUE,
+                "default" => "no-template",
+                "values"  => [
+                    "no-template" => "No Template"
                 ]
             ],
             [
@@ -85,7 +82,34 @@ return [
             ]
         ]
     ],
-    "headline"          => [
+    "parallaxContainerSection" => [
+        "configElements" => [
+            [
+                "type"    => "select",
+                "name"    => "template",
+                "title"   => "Section Template",
+                "reload"  => TRUE,
+                "default" => "no-template",
+                "values"  => [
+                    "no-template" => "No Template"
+                ]
+            ],
+            [
+                "type"        => "select",
+                "name"        => "containerType",
+                "title"       => "Section Wrapper Type",
+                "reload"      => TRUE,
+                "default"     => "none",
+                "description" => "If you need to add some content columns, apply a default or fluid container as wrapper.",
+                "values"      => [
+                    "none"            => "No Section Wrapper",
+                    "container"       => "Default Container Wrapper",
+                    "container-fluid" => "Fluid Container Wrapper"
+                ]
+            ]
+        ]
+    ],
+    "headline"                 => [
         "configElements" => [
             [
                 "type"  => "input",
@@ -94,7 +118,7 @@ return [
             ],
         ]
     ],
-    "anchor"            => [
+    "anchor"                   => [
         "configElements" => [
             [
                 "type"  => "input",
@@ -108,7 +132,7 @@ return [
             ],
         ]
     ],
-    "image"             => [
+    "image"                    => [
         "configElements" => [
             [
                 "type"      => "checkbox",
@@ -126,7 +150,7 @@ return [
             ]
         ]
     ],
-    "download"          => [
+    "download"                 => [
         "configElements" => [
             [
                 "type"   => "multihref",
@@ -148,7 +172,7 @@ return [
             ]
         ]
     ],
-    "gallery"           => [
+    "gallery"                  => [
         "configElements" => [
             [
                 "type"   => "multihref",
@@ -170,7 +194,7 @@ return [
             ]
         ]
     ],
-    "googleMap"         => [
+    "googleMap"                => [
         "configElements" => [
             [
                 "type"             => "numeric",

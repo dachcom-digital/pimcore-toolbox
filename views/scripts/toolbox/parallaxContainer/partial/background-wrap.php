@@ -3,7 +3,7 @@
         [
             'behindElements' => $this->behindElements,
             'frontElements'  => $this->frontElements,
-            'content'        => $this->content
+            'sectionContent' => $this->sectionContent
         ]
     ); ?>
 </div>

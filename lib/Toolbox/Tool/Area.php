@@ -7,6 +7,18 @@ use Pimcore\ExtensionManager;
 
 class Area
 {
+    public static function getAreaBlockName($type = NULL)
+    {
+        if($type === 'parallaxContainerSection') {
+            return 'Parallax Container Section';
+        }
+
+        /** @var \Zend_Config_Xml $brickInfo */
+        $brickInfo = ExtensionManager::getBrickConfig($type);
+
+        return $brickInfo->get('name');
+
+    }
     /**
      * @param null $type
      * @param bool $fromSnippet

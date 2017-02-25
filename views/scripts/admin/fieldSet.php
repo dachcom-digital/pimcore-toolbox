@@ -1,6 +1,6 @@
 <?php if (!empty ($this->configElements)) { ?>
 
-    <div class="toolbox-element-edit-button"></div>
+    <div class="toolbox-element-edit-button" data-title="<?= $this->elementTitle; ?>"></div>
     <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="<?= $this->windowSize; ?>"><?php
 
         $content = '';

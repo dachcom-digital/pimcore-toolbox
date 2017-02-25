@@ -2,6 +2,7 @@
     'backgroundImageTag' => $this->backgroundImageTag,
     'behindElements'     => $this->behindElements,
     'frontElements'      => $this->frontElements,
-    'content'            => $this->content
+    'sectionContent'     => $this->sectionContent
 ]; ?>
+
 <?= $this->partial('toolbox/parallaxContainer/partial/background-' . $this->backgroundMode . '.php', $args); ?>

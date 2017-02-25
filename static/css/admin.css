@@ -174,7 +174,11 @@
 
 .toolbox-parallax-container .toolbox-container {
     margin: 10px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.toolbox-parallax-container .parallax-content > .pimcore_tag_block {
+    margin:10px;
 }
 
 .toolbox-parallax-container .toolbox-columns {
@@ -183,7 +187,7 @@
 
 .toolbox-parallax-container .toolbox-columns .toolbox-column {
 
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     border: 1px dashed #d6d6d6;
     padding: 2px;
 
@@ -274,6 +278,7 @@
 
 .toolbox-element-edit-button {
 
+    position:relative;
     display: block;
     margin: 3px 0 0 0;
     padding: 4px;
@@ -282,6 +287,20 @@
     -webkit-transition: opacity .3s ease;
     -ms-transition: opacity .3s ease;
     transition: opacity .3s ease;
+
+}
+
+.toolbox-element-edit-button:before {
+    content: attr(data-title);
+    position: absolute;
+    right: 0;
+    padding: 4px 30px 0 0;
+    text-transform: uppercase;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    color: #bfbfbf;
 
 }
 

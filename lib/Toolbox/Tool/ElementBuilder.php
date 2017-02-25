@@ -56,7 +56,11 @@ class ElementBuilder
         $windowSize = !is_null($configWindowSize) ? $configWindowSize : 'small';
         $config = self::parseConfig($type, $configElements, $windowSize, $view);
 
-        return $view->template('admin/fieldSet.php', ['configElements' => $config, 'windowSize' => $windowSize]);
+        $name = $view->translateAdmin(Area::getAreaBlockName($type));
+
+        $fieldSetArgs = ['configElements' => $config, 'elementTitle' => $name, 'windowSize' => $windowSize];
+
+        return $view->template('admin/fieldSet.php', $fieldSetArgs, FALSE, 'toolbox_capture_fieldSet');
     }
 
     /**
