@@ -20,7 +20,7 @@
      ]
      ```
  
-- Changes in DB table `document_elements`. All elements with type `video` should changed to `vhs`. Use this sql script:
+- Changes in DB table `document_elements`. All elements with type `video` should get changed to `vhs`. Use this sql script:
  ``` sql
  UPDATE documents_elements SET type = 'vhs' WHERE type = 'video';
  ```
@@ -28,15 +28,15 @@
 *Parallax Container*  
 Because the parallax container has been changed from ground up, 
 you need to check your website template before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
-- your `parallaxContainer` config array node should look like this:
+- your `parallaxContainer` config array node should look like this:  
     ```php
     "parallaxContainer" => [
         "backgroundMode"      => "wrap", //wrap|prepend
         "backgroundImageMode" => "data", //style|data
-        "backgroundColorMode" => "data", //style|data|class
+        "backgroundColorMode" => "data", //style|data
     ]
     ```
-- update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:
+- update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:  
     ```php
     "disallowedSubAreas"  => [
        "accordion"          => ["parallaxContainer", [...]],  //add parallaxContainer
