@@ -53,6 +53,7 @@ you need to check your website template before upgrading ([#15](https://github.c
 *Container*  
 - Container does now have a ```Fluid Container (Full Width)``` option which renders the default bootstrap ```.fluid-container``` class to the main element.
 - Container does now have a nested `.container-inner` Element:
+
     ```html
     <div class="container">
         <div class="container-inner">[CONTENT]</div>
