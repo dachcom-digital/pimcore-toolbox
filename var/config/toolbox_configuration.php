@@ -14,7 +14,8 @@ return [
     "parallaxContainer"        => [
         "windowSize"          => "large",
         "backgroundMode"      => "wrap",
-        "backgroundImageMode" => "data",
+        "backgroundImageMode" => "data", //style|data
+        "backgroundColorMode" => "data", //style|data|class
         "configElements"      => [
             [
                 "type"    => "select",
@@ -28,13 +29,23 @@ return [
             ],
             [
                 "type"     => "href",
-                "name"     => "background",
+                "name"     => "backgroundImage",
                 "title"    => "Background Image",
                 "types"    => ["asset"],
                 "subtypes" => [
                     "asset" => ["image", "video"]
                 ],
                 "reload"   => TRUE
+            ],
+            [
+                "type"    => "select",
+                "name"    => "backgroundColor",
+                "title"   => "Background Color",
+                "reload"  => TRUE,
+                "default" => "no-background-color",
+                "values"  => [
+                    "no-background-color" => "No Background Color"
+                ]
             ],
             [
                 "type"     => "parallaximage",
@@ -83,6 +94,8 @@ return [
         ]
     ],
     "parallaxContainerSection" => [
+        "backgroundImageMode" => "data", //style|data
+        "backgroundColorMode" => "data", //style|data|class
         "configElements" => [
             [
                 "type"    => "select",
@@ -105,6 +118,26 @@ return [
                     "none"            => "No Section Wrapper",
                     "container"       => "Default Container Wrapper",
                     "container-fluid" => "Fluid Container Wrapper"
+                ]
+            ],
+            [
+                "type"     => "href",
+                "name"     => "backgroundImage",
+                "title"    => "Background Image",
+                "types"    => ["asset"],
+                "subtypes" => [
+                    "asset" => ["image", "video"]
+                ],
+                "reload"   => TRUE
+            ],
+            [
+                "type"    => "select",
+                "name"    => "backgroundColor",
+                "title"   => "Background Color",
+                "reload"  => TRUE,
+                "default" => "no-background-color",
+                "values"  => [
+                    "no-background-color" => "No Background Color"
                 ]
             ]
         ]

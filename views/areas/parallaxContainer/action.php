@@ -4,28 +4,31 @@ namespace Pimcore\Model\Document\Tag\Area;
 
 use Pimcore\Model\Document;
 use Toolbox\Config;
+use Toolbox\Tool;
 
 class ParallaxContainer extends Document\Tag\Area\AbstractArea
 {
     public function action()
     {
-        $config = Config::getConfig()->parallaxContainer->toArray();
+        $_config = Config::getConfig()->parallaxContainer;
+        $config = [];
+
+        if ($_config instanceof \Zend_Config) {
+            $config = $_config->toArray();
+        }
+
+        $parallaxBackground = $this->getView()->href('backgroundImage')->getELement();
+        $parallaxBackgroundColor = $this->getView()->select('backgroundColor')->getData();
 
         $parallaxTemplate = $this->getView()->select('template')->getData();
-        $parallaxBackground = $this->getView()->href('background');
         $parallaxBehind = $this->getView()->parallaximage('imagesBehind');
         $parallaxFront = $this->getView()->parallaximage('imageFront');
 
         $backgroundMode = isset($config['backgroundMode']) ? $config['backgroundMode'] : 'wrap';
         $backgroundImageMode = isset($config['backgroundImageMode']) ? $config['backgroundImageMode'] : 'data';
 
-        $imageUrl = $parallaxBackground->getElement() instanceOf \Pimcore\Model\Asset
-            ? $parallaxBackground->getElement()->getThumbnail('parallaxBackground')
-            : '';
-
-        $backgroundImageTag = $backgroundImageMode === 'style'
-            ? 'style="background-image:url(' . $imageUrl . ');"'
-            : 'data-background-image="' . $imageUrl . '"';
+        $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
+        $backgroundColorClass = $this->getBackgroundColorClass($parallaxBackgroundColor, $config, 'section');
 
         $behindElements = !empty($parallaxBehind)
             ? $this->getView()->partial(
@@ -40,12 +43,13 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
             ) : NULL;
 
         $this->getView()->assign([
-            'parallaxTemplate'   => $parallaxTemplate,
-            'backgroundMode'     => $backgroundMode,
-            'backgroundImageTag' => $backgroundImageTag,
-            'behindElements'     => $behindElements,
-            'frontElements'      => $frontElements,
-            'sectionContent'     => $this->_buildSectionContent(),
+            'parallaxTemplate'     => $parallaxTemplate,
+            'backgroundMode'       => $backgroundMode,
+            'backgroundTags'       => $backgroundTags,
+            'backgroundColorClass' => $backgroundColorClass,
+            'behindElements'       => $behindElements,
+            'frontElements'        => $frontElements,
+            'sectionContent'       => $this->_buildSectionContent(),
 
         ]);
     }
@@ -54,12 +58,25 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
     {
         ob_start();
 
+        $_config = Config::getConfig()->parallaxContainerSection;
+        $config = [];
+
+        if ($_config instanceof \Zend_Config) {
+            $config = $_config->toArray();
+        }
+
         $sectionBlock = $this->getView()->block('pcB', ['default' => 1]);
 
         $loopIndex = 1;
         while ($sectionBlock->loop()) {
 
             $sectionConfig = '';
+
+            $parallaxBackground = $this->getView()->href('backgroundImage')->getElement();
+            $parallaxBackgroundColor = $this->getView()->select('backgroundColor')->getData();
+
+            $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
+            $backgroundColorClass = $this->getBackgroundColorClass($parallaxBackgroundColor, $config, 'section');
 
             $template = $this->getView()->select('template')->getData();
             $containerWrapper = $this->getView()->select('containerType')->getData();
@@ -75,7 +92,7 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
 
             if ($this->getView()->editmode) {
 
-                $sectionConfig = \Toolbox\Tool\ElementBuilder::buildElementConfig('parallaxContainerSection', $this->getView());
+                $sectionConfig = Tool\ElementBuilder::buildElementConfig('parallaxContainerSection', $this->getView());
                 if ($containerWrapper === 'none' && strpos($areaBlock, 'toolbox-columns') !== FALSE) {
                     $message = $this->getView()->translateAdmin('You\'re using columns without a valid container wrapper.');
                     $messageWrap = $this->getView()->partial('helper/field-alert.php', ['type' => 'danger', 'message' => $message]);
@@ -84,10 +101,13 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
             }
 
             $sectionArgs = [
-                'content'      => $areaBlock,
-                'template'     => $template,
-                'loopIndex'    => $loopIndex,
-                'sectionIndex' => $sectionBlock->getCurrentIndex()
+
+                'backgroundTags'       => $backgroundTags,
+                'backgroundColorClass' => $backgroundColorClass,
+                'content'              => $areaBlock,
+                'template'             => $template,
+                'loopIndex'            => $loopIndex,
+                'sectionIndex'         => $sectionBlock->getCurrentIndex()
             ];
 
             $loopIndex++;
@@ -99,6 +119,63 @@ class ParallaxContainer extends Document\Tag\Area\AbstractArea
         $string = ob_get_clean();
 
         return $string;
+    }
+
+    private function getBackgroundTags($backgroundImage, $backgroundColor, $config = [], $type = 'parallax')
+    {
+        $backgroundImageMode = isset($config['backgroundImageMode']) ? $config['backgroundImageMode'] : 'data';
+        $backgroundColorMode = isset($config['backgroundColorMode']) ? $config['backgroundColorMode'] : 'data';
+        $thumbnail = $type === 'parallax' ? 'parallaxBackground' : 'parallaxSectionBackground';
+
+        $styles = [];
+        $data = [];
+
+        if ($backgroundImage instanceOf \Pimcore\Model\Asset) {
+            $image =  $backgroundImage->getThumbnail($thumbnail);
+            if($backgroundImageMode === 'style') {
+                $styles['background-image'] = 'url(\'' . $image . '\')';
+            } else {
+                $data['background-image'] = $image;
+            }
+        }
+
+        if ($backgroundColor !== 'no-background-color' && !empty($backgroundColor) && $backgroundColorMode !== 'class') {
+            if($backgroundColorMode === 'style') {
+                $styles['background-color'] = $backgroundColor;
+            } else {
+                $data['background-color'] = $backgroundColor;
+            }
+        }
+
+        $str = '';
+
+        if(count($styles) > 0) {
+            $str .= 'style="';
+            $str .= join(' ', array_map(function($key) use ($styles) {
+                return $key . ':' . $styles[$key] . ';';
+            }, array_keys($styles)));
+            $str .= '"';
+        }
+
+        if(count($data) > 0) {
+            $str .= join(' ', array_map(function($key) use ($data) {
+                return 'data-' . $key . '="' . $data[$key] . '"';
+            }, array_keys($data)));
+        }
+
+        return $str;
+
+    }
+
+    private function getBackgroundColorClass($backgroundColor, $config = [], $type = 'parallax')
+    {
+        $mode = isset($config['backgroundColorMode']) ? $config['backgroundColorMode'] : 'data';
+
+        if ($backgroundColor === 'no-background-color' || empty($backgroundColor) || $mode !== 'class') {
+            return '';
+        }
+
+        return $backgroundColor;
     }
 
     public function getBrickHtmlTagOpen($brick)

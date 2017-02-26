@@ -33,6 +33,7 @@ you need to check your website template before upgrading ([#15](https://github.c
     "parallaxContainer" => [
         "backgroundMode"      => "wrap", //wrap|prepend
         "backgroundImageMode" => "data", //style|data
+        "backgroundColorMode" => "data", //style|data|class
     ]
     ```
 - update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:

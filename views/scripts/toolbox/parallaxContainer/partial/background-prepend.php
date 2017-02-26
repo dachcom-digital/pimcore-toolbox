@@ -1,4 +1,4 @@
-<div class="parallax-background" <?= $this->backgroundImageTag ?>></div>
+<div class="parallax-background <?= $this->backgroundColorClass; ?>" <?= $this->backgroundTags ?>></div>
 <div class="parallax-content-wrapper">
 
     <?= $this->partial('toolbox/parallaxContainer/partial/parallax-content.php',
