@@ -9,6 +9,7 @@
 
 *Video*  
 - New video configuration in `toolbox_configuration.php`:
+
      ```php
      "video" => [
          "videoOptions" => [
@@ -28,7 +29,8 @@
 *Parallax Container*  
 Because the parallax container has been changed from ground up, 
 you need to check your website template before upgrading ([#15](https://github.com/dachcom-digital/pimcore-toolbox/issues/15)).
-- your `parallaxContainer` config array node should look like this:  
+- your `parallaxContainer` config array node should look like this:
+
      ```php
     "parallaxContainer" => [
         "backgroundMode"      => "wrap", //wrap|prepend
@@ -36,7 +38,8 @@ you need to check your website template before upgrading ([#15](https://github.c
         "backgroundColorMode" => "data", //style|data
     ]
      ```
-- update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:  
+- update your `disallowedSubAreas` in `var/config/toolbox_configuration.php`:
+
      ```php
     "disallowedSubAreas"  => [
        "accordion"          => ["parallaxContainer", [...]],  //add parallaxContainer
