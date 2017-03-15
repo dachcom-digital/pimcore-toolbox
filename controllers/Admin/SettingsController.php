@@ -1,6 +1,7 @@
 <?php
 
 use Pimcore\Controller\Action\Admin;
+use Toolbox\Config;
 
 class Toolbox_Admin_SettingsController extends Admin
 {
@@ -130,5 +131,26 @@ class Toolbox_Admin_SettingsController extends Admin
         }
 
         return $config;
+    }
+
+    /**
+     *
+     */
+    public function allowedVideoTypesAction()
+    {
+
+        $videoOptions = Config::getConfig()->video->videoOptions;
+        $allowedVideoTypes = [];
+
+        if (!empty($videoOptions)) {
+            foreach ($videoOptions as $name => $settings) {
+                if($settings->active === TRUE) {
+                    $allowedVideoTypes[] = ['name' => $name, 'value' => $name];
+                }
+            }
+        }
+        $this->_helper->json(
+            $allowedVideoTypes
+        );
     }
 }

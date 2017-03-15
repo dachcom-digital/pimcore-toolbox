@@ -275,9 +275,19 @@ class Install
 
                 ],
                 "video"             => [
-                    "videoOptions"   => [
+                    "videoOptions" => [
+                        "asset" => [
+                            "active" => TRUE,
+                        ],
                         "youtube" => [
+                            "active" => TRUE,
                             "posterImageThumbnail" => NULL,
+                        ],
+                        "vimeo" => [
+                            "active" => TRUE
+                        ],
+                        "dailymotion" => [
+                            "active" => TRUE
                         ]
                     ],
                     "configElements" => [

@@ -141,6 +141,18 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
         }
     };
 
+    var videoTypeStore = new Ext.data.JsonStore({
+        autoLoad: true,
+        fields: ['name', 'value'],
+        proxy: {
+            type: 'ajax',
+            url: '/plugin/Toolbox/admin_Settings/allowed-video-types',
+            reader: {
+                type: 'json'
+            }
+        }
+    });
+
     form = new Ext.FormPanel({
         itemId: "form",
         bodyStyle: "padding:10px;",
@@ -150,12 +162,13 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
                 xtype: "combo",
                 itemId: "type",
                 fieldLabel: t('type'),
+                displayField: 'name',
                 name: 'type',
                 triggerAction: 'all',
                 editable: false,
                 width: 270,
                 mode: "local",
-                store: ["asset","youtube","vimeo","dailymotion"],
+                store: videoTypeStore,
                 value: data.type,
                 listeners: {
                     select: function (combo) {
