@@ -8,29 +8,28 @@
 - The Brick Wrapper (`.pimcore_area_content`) has been removed ([#16](https://github.com/dachcom-digital/pimcore-toolbox/issues/16)). Please check your project CSS after updating!
 
 *Video*  
-- New video configurations in `toolbox_configuration.php`:
+- video type status configurations in `toolbox_configuration.php`:
     - All video types can be activated/deactivated
-    - Poster image thumbnail for youtube videos
+- Poster image thumbnail for youtube videos
 
 
  ```php
- "video" => [
- 
-     "videoOptions" => [
-         "asset" => [
-             "active" => TRUE,
-         ],
-         "youtube" => [
-             "active" => TRUE,
-             "posterImageThumbnail" => NULL,
-         ],
-         "vimeo" => [
-             "active" => TRUE
-         ],
-         "dailymotion" => [
-             "active" => TRUE
-         ]
-     ],
+"video" => [
+    "videoOptions" => [
+        "asset" => [
+            "active" => FALSE,
+        ],
+        "youtube" => [
+            "active" => TRUE,
+            "posterImageThumbnail" => NULL,
+        ],
+        "vimeo" => [
+            "active" => FALSE
+        ],
+        "dailymotion" => [
+            "active" => FALSE
+        ]
+    ],
      (...)
  ]
  ```

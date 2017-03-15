@@ -12,6 +12,12 @@ class Vhs extends Model\Document\Tag\Video
     public $showAsLightbox = FALSE;
 
     /**
+     * one of asset, youtube, vimeo, dailymotion
+     * @var string
+     */
+    public $type = '';
+
+    /**
      * Return the type of the element
      * @return string
      */

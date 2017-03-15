@@ -138,13 +138,12 @@ class Toolbox_Admin_SettingsController extends Admin
      */
     public function allowedVideoTypesAction()
     {
-
         $videoOptions = Config::getConfig()->video->videoOptions;
         $allowedVideoTypes = [];
 
         if (!empty($videoOptions)) {
             foreach ($videoOptions as $name => $settings) {
-                if($settings->active === TRUE) {
+                if ($settings->active === TRUE) {
                     $allowedVideoTypes[] = ['name' => $name, 'value' => $name];
                 }
             }

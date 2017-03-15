@@ -277,17 +277,17 @@ class Install
                 "video"             => [
                     "videoOptions" => [
                         "asset" => [
-                            "active" => TRUE,
+                            "active" => FALSE
                         ],
                         "youtube" => [
                             "active" => TRUE,
-                            "posterImageThumbnail" => NULL,
+                            "posterImageThumbnail" => NULL
                         ],
                         "vimeo" => [
-                            "active" => TRUE
+                            "active" => FALSE
                         ],
                         "dailymotion" => [
-                            "active" => TRUE
+                            "active" => FALSE
                         ]
                     ],
                     "configElements" => [
