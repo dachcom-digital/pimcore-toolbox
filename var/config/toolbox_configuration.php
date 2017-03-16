@@ -1,6 +1,21 @@
 <?php
 
 return [
+    "accordion"         => [
+        "configElements" => [
+            [
+                "type" => "select",
+                "name" => "component",
+                "title" => "Component",
+                "values" => [
+                    "accordion" => "Accordion",
+                    "tab" => "Tab"
+                ],
+                "default" => "accordion"
+            ]
+        ]
+
+    ],
     "container"                => [
         "configElements" => [
             [

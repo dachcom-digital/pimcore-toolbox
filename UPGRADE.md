@@ -8,7 +8,7 @@
 - The Brick Wrapper (`.pimcore_area_content`) has been removed ([#16](https://github.com/dachcom-digital/pimcore-toolbox/issues/16)). Please check your project CSS after updating!
 
 *Video*  
-- video type status configurations in `toolbox_configuration.php`:
+- Video type status configurations in `toolbox_configuration.php`:
     - All video types can be activated/deactivated
 - Poster image thumbnail for youtube videos
 
@@ -78,6 +78,9 @@ We simplified the `scripts/toolbox/columns.php` and `scripts/toolbox/columns/col
 
 *Accordion*  
 We simplified the `scripts/toolbox/accordion.php`  file. If you've copied that file into your website folder, check the markup!
+
+**New Element:** *Tabs* ([#20](https://github.com/dachcom-digital/pimcore-toolbox/issues/20))  
+As new component in accordion.
 
 **New Element:** *Spacer* ([#19](https://github.com/dachcom-digital/pimcore-toolbox/issues/19))  
 Disable the new Brick, if you don't need it.  

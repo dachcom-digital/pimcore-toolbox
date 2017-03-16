@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <zend-config>
     <id>accordion</id>
-    <name>Accordion</name>
-    <description>Toolbox Accordion</description>
-    <version>1.1.0</version>
+    <name>Accordion / Tab</name>
+    <description>Toolbox Accordion / Tabs</description>
+    <version>1.2.0</version>
 </zend-config>
