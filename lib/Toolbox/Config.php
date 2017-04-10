@@ -2,6 +2,7 @@
 
 namespace Toolbox;
 
+use Pimcore\Logger;
 use Pimcore\Tool;
 
 class Config
@@ -23,7 +24,7 @@ class Config
                 $config = new \Zend_Config(include($configFile));
                 self::setConfig($config, 'toolbox_config');
             } catch (\Exception $e) {
-                \Pimcore\Logger::emergency('Cannot find system configuration, should be located at: ' . $configFile);
+                Logger::emergency('Cannot find system configuration, should be located at: ' . $configFile);
 
                 if (is_file($configFile)) {
                     Tool::exitWithError('Your toolbox_configuration.php located at ' . $configFile . ' is invalid, please check and correct it manually!');
@@ -50,6 +51,30 @@ class Config
         }
 
         return $config;
+    }
+
+    /**
+     * @param $element
+     * @param $configElementName
+     *
+     * @return array
+     */
+    public static function getElementConfigElement($element, $configElementName)
+    {
+        $config = static::getConfig()->toArray();
+
+        if(!isset($config[$element]) || !isset($config[$element]['configElements'])) {
+            return [];
+        }
+
+        foreach($config[$element]['configElements'] as $config) {
+            if($config['name'] === $configElementName) {
+                return $config;
+            }
+        }
+
+        return [];
+
     }
 
     /**
