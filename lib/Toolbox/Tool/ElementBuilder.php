@@ -108,6 +108,11 @@ class ElementBuilder
 
                     $store = [];
                     foreach ($c['values'] as $k => $v) {
+
+                        if(is_array($v)) {
+                            $v = $v['name'];
+                        }
+
                         $store[] = [$k, $view->translateAdmin($v)];
                     }
 
