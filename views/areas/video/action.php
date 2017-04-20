@@ -20,6 +20,7 @@ class Video extends Document\Tag\Area\AbstractArea
         $posterPath = NULL;
         $imageThumbnail = NULL;
         $poster = $this->getView()->vhs('video')->getPosterAsset();
+        $videoId = $this->getView()->vhs('video')->id;
 
         if ($poster instanceof Asset\Image) {
             $configNode = \Toolbox\Config::getConfig()->video->toArray();
@@ -39,7 +40,8 @@ class Video extends Document\Tag\Area\AbstractArea
                 'autoPlay'       => $autoPlay,
                 'posterPath'     => $posterPath,
                 'videoType'      => $videoType,
-                'playInLightbox' => $playInLightBox
+                'playInLightbox' => $playInLightBox,
+                'videoId'        => $videoId
             ]
         );
     }
