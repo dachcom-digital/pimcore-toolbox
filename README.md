@@ -2,14 +2,13 @@
 
 ## Installation
 **Handcrafted Installation**   
-1. Download Plugin  
-2. Rename it to `Toolbox`  
-3. Place it in your plugin directory  
-4. Activate & install it through backend 
+Because of additional dependencies you need install this plugin via composer.
 
 **Composer Installation**  
 1. Add code below to your `composer.json`    
 2. Activate & install it through backend
+
+Use the [Pimcore Members](https://github.com/dachcom-digital/pimcore-members) Plugin to restrict your downloads (optional).
 
 ```json
 "require" : {
@@ -24,7 +23,6 @@ To override the Toolbox scripts, just create a toolbox folder in your scripts fo
  `/website/views/scripts/toolbox/gallery.php`
 
 ### Usage
-
 **Bricks**
 
 If you're using an AreaBlock Brick in your View, use this method to get grouped elements in toolbar (if configured):

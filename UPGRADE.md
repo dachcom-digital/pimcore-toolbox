@@ -1,7 +1,15 @@
 # Upgrade Notes
 
+#### Update from Version 1.7.x to Version 1.8.0
+- do not use direct download paths if you're also using the members plugin!
+- Check/compare template files if overridden:
+    - `scripts/toolbox/download.php` (remove `downloads` property)
+    - `scripts/toolbox/download/list/item.php`
+        - remove `getChild()` loop
+        - use toolboxHelper()
+- new ToolboxHelperMethod: `toolboxHelper()->getDownloadInfo();`
+
 #### Update from Version 1.6.x to Version 1.7.0
- 
 *All Area Elements*  
 - All `edit.php` files for areas has been suspended ([#14](https://github.com/dachcom-digital/pimcore-toolbox/issues/14)). There is only one custom edit window for each element.
 - The Image `Extra CSS-Class` property has been removed. Please use the `additional classes` functionality.

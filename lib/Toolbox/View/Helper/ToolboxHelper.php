@@ -10,7 +10,7 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
     /**
      * @return $this
      */
-    public function toolboxhelper()
+    public function toolboxHelper()
     {
         return $this;
     }
@@ -124,7 +124,6 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
         }
 
         $configInfo = $configNode->toArray();
-
         if (!isset($configInfo['columnClasses']) || !isset($configInfo['columnClasses'][$columnType])) {
             return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
         }
@@ -148,7 +147,6 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
             $configInfo = $configNode->toArray();
 
             if (isset($configInfo['breakpoints']) && isset($configInfo['breakpoints'][$columnType])) {
-
                 $breakpoints = $configInfo['breakpoints'][$columnType];
             }
         }
@@ -160,19 +158,18 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
      * @param $view
      * @param $templatePath
      *
-     * @return bool|void
+     * @return bool
      */
     public function templateExists($view, $templatePath)
     {
         if (empty($templatePath)) {
-            return;
+            return FALSE;
         }
-        $found = FALSE;
 
+        $found = FALSE;
         $paths = $view->getScriptPaths();
 
         foreach ($paths as $path) {
-
             $p = $path . $templatePath;
             if (is_file($p)) {
                 $found = TRUE;
@@ -180,6 +177,49 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
         }
 
         return $found;
+    }
+
+    /**
+     * @param \Pimcore\Model\Asset $download
+     * @param string               $fileSizeUnit
+     * @param bool                 $showPreviewImage
+     * @param bool                 $showFileInfo
+     *
+     * @return array
+     */
+    public function getDownloadInfo($download, $fileSizeUnit = 'mb', $showPreviewImage = FALSE, $showFileInfo = FALSE)
+    {
+        $hasMembers = ExtensionManager::isEnabled('plugin', 'Members');
+        if($hasMembers === TRUE && strpos($download->getFullPath(),\Members\Tool\UrlServant::PROTECTED_ASSET_FOLDER) !== FALSE) {
+            $dPath = \Members\Tool\UrlServant::generateAssetUrl($download);
+        } else {
+            $dPath = $download->getFullPath();
+        }
+
+        $dSize = $download->getFileSize($fileSizeUnit, 2);
+        $dType = \Pimcore\File::getFileExtension($download->getFilename());
+        $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $this->view->translate('Download');
+        $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
+        $dPreviewImage = NULL;
+
+        if ($showPreviewImage) {
+            $dPreviewImage = $download->getMetadata('previewImage') instanceof \Pimcore\Model\Asset\Image
+                ? $download->getMetadata('previewImage')->getThumbnail('downloadPreviewImage')
+                : (
+                $download instanceof \Pimcore\Model\Asset\Image
+                    ? $download->getThumbnail('downloadPreviewImage')
+                    : $download->getImageThumbnail('downloadPreviewImage')
+                );
+        }
+
+        return [
+            'path'         => $dPath,
+            'size'         => $dSize,
+            'type'         => $dType,
+            'name'         => $dName,
+            'altText'      => $dAltText,
+            'previewImage' => $dPreviewImage
+        ];
     }
 
 }
