@@ -181,16 +181,16 @@ class ToolboxHelper extends \Zend_View_Helper_Abstract
 
     /**
      * @param \Pimcore\Model\Asset $download
-     * @param string               $fileSizeUnit
      * @param bool                 $showPreviewImage
      * @param bool                 $showFileInfo
+     * @param string               $fileSizeUnit
      *
      * @return array
      */
-    public function getDownloadInfo($download, $fileSizeUnit = 'mb', $showPreviewImage = FALSE, $showFileInfo = FALSE)
+    public function getDownloadInfo($download, $showPreviewImage = FALSE, $showFileInfo = FALSE, $fileSizeUnit = 'mb')
     {
         $hasMembers = ExtensionManager::isEnabled('plugin', 'Members');
-        if($hasMembers === TRUE && strpos($download->getFullPath(),\Members\Tool\UrlServant::PROTECTED_ASSET_FOLDER) !== FALSE) {
+        if ($hasMembers === TRUE && strpos($download->getFullPath(), \Members\Tool\UrlServant::PROTECTED_ASSET_FOLDER) !== FALSE) {
             $dPath = \Members\Tool\UrlServant::generateAssetUrl($download);
         } else {
             $dPath = $download->getFullPath();

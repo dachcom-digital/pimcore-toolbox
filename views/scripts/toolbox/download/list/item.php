@@ -1,4 +1,4 @@
-<?php $fileInfo = $this->toolboxHelper()->getDownloadInfo($this->download, 'kb', $this->showPreviewImages, $this->showFileInfo); ?>
+<?php $fileInfo = $this->toolboxHelper()->getDownloadInfo($this->download, $this->showPreviewImages, $this->showFileInfo, 'kb'); ?>
 
 <li>
     <a href="<?= $fileInfo['path']; ?>" <?= $this->toolboxHelper()->addTracker('download', $this->download); ?> target="_blank" class="icon-download-<?= $fileInfo['type']; ?>">
