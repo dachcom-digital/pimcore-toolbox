@@ -8,6 +8,7 @@
         - remove `getChild()` loop
         - use toolboxHelper()
 - new ToolboxHelperMethod: `toolboxHelper()->getDownloadInfo();`
+- Google Maps: `Open Info Window by Default` option added. Default is false.
 
 #### Update from Version 1.6.x to Version 1.7.0
 *All Area Elements*  

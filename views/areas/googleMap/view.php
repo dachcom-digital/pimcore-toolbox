@@ -5,7 +5,8 @@
     <?= $this->template('toolbox/googleMap.php',
         [
             'mapZoom' => $this->numeric('mapZoom')->getData(),
-            'mapType' => $this->select('mapType')->getData()
+            'mapType' => $this->select('mapType')->getData(),
+            'iwOnInit' => $this->checkbox('iwOnInit')->isChecked()
         ]
     ) ?>
 </div>

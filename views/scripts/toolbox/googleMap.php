@@ -2,6 +2,7 @@
     <?= $this->googlemap('googlemap', [
         'reload' => true,
         'mapZoom' => $this->mapZoom,
-        'mapType' => $this->mapType
+        'mapType' => $this->mapType,
+        'iwOnInit' => $this->iwOnInit
     ]); ?>
 </div>

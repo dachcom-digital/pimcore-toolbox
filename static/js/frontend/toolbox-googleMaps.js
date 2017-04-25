@@ -44,9 +44,9 @@ var DachcomToolboxGoogleMaps = (function () {
                 },
 
                 //internal callback 2
-                addMarker = function(map, location, markerIcon) {
+                addMarker = function(map, location, markerIcon, showInfoWindowOnLoad) {
 
-                    var marker;
+                    var marker, infoWindow;
 
                     if ( isValidLocation(location) ) {
 
@@ -54,34 +54,42 @@ var DachcomToolboxGoogleMaps = (function () {
                             position: {lat: location.lat, lng: location.lng},
                             map: map,
                             title: location.title,
-                            icon: markerIcon
+                            icon: markerIcon,
+                            contentLoaded: false
+                        });
+
+                        infoWindow = new google.maps.InfoWindow({
+                            content: '<div class="info-window"><div class="loading"></div></div>'
                         });
 
                         marker.addListener('click', function() {
 
-                            var infoWindow = new google.maps.InfoWindow({
-                                content: '<div class="info-window"><div class="loading"></div></div>'
-                            });
-
                             infoWindow.open(map, marker);
 
-                            $.ajax({
+                            if(marker.contentLoaded === false) {
+                                $.ajax({
 
-                                url: '/plugin/Toolbox/GoogleMap/info-window',
-                                method: 'POST',
-                                data: {
-                                    mapParams : location,
-                                    language: $('html').attr('lang')
-                                },
-                                complete: function(result) {
-                                    infoWindow.setContent(result.responseText);
-                                    map.setCenter(marker.getPosition());
-                                }
+                                    url: '/plugin/Toolbox/GoogleMap/info-window',
+                                    method: 'POST',
+                                    data: {
+                                        mapParams : location,
+                                        language: $('html').attr('lang')
+                                    },
+                                    complete: function(result) {
+                                        marker.contentLoaded = true;
+                                        infoWindow.setContent(result.responseText);
+                                        map.setCenter(marker.getPosition());
+                                    }
 
-                            });
+                                });
+
+                            }
 
                         });
 
+                        if(showInfoWindowOnLoad === true) {
+                            google.maps.event.trigger(marker, 'click');
+                        }
                     }
 
                 };
@@ -93,6 +101,7 @@ var DachcomToolboxGoogleMaps = (function () {
                     locations = $map.data('locations') || [],
                     mapStyleUrl = $map.data('mapstyleurl'),
                     markerIcon = $map.data('markericon'),
+                    showInfoWindowOnLoad = $map.data('show-info-window-on-load') === 1,
                     mapOptions = {
                         center: new google.maps.LatLng (0, 0)
                     };
@@ -125,7 +134,7 @@ var DachcomToolboxGoogleMaps = (function () {
 
                         if ( isValidLocation(location) ) {
                             latLngBounds.extend( new google.maps.LatLng(location.lat, location.lng) );
-                            addMarker(map, location, markerIcon);
+                            addMarker(map, location, markerIcon, showInfoWindowOnLoad);
                         }
 
                     });

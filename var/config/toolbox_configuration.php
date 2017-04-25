@@ -267,7 +267,13 @@ return [
                     "hybrid"    => "HYBRID",
                     "terrain"   => "TERRAIN"
                 ]
+            ],
+            [
+                "type"   => "checkbox",
+                "name"   => "iwOnInit",
+                "title"  => "Open Info Window by Default",
+                "reload" => FALSE
             ]
         ]
-    ],
+    ]
 ];

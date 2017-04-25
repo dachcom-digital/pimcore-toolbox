@@ -42,6 +42,8 @@ class Googlemap extends Model\Document\Tag
     {
         $dataAttr = [];
         $dataAttr['data-locations'] = json_encode($this->data);
+        $dataAttr['data-show-info-window-on-load'] = $this->options['iwOnInit'];
+
         $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
         $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
