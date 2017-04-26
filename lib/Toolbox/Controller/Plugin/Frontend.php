@@ -7,9 +7,23 @@ use \Pimcore\Model\Document;
 class Frontend extends \Zend_Controller_Plugin_Abstract
 {
     /**
+     * @var bool
+     */
+    private $addAssets = TRUE;
+
+    /**
      * @var array
      */
     private $printDocTypes = ['printcontainer', 'printpage'];
+
+    /**
+     * Frontend constructor.
+     *
+     * @param bool $addAssets
+     */
+    public function __construct($addAssets = TRUE) {
+        $this->addAssets = $addAssets;
+    }
 
     /**
      * @param \Zend_Controller_Request_Abstract $request
@@ -40,6 +54,11 @@ class Frontend extends \Zend_Controller_Plugin_Abstract
     public function postDispatch(\Zend_Controller_Request_Abstract $request)
     {
         parent::postDispatch($request);
+
+        //do nothing if AssetHandler is disabled.
+        if($this->addAssets === FALSE) {
+            return FALSE;
+        }
 
         $layout = \Zend_Layout::getMvcInstance();
         $document = $request->getParam('document');

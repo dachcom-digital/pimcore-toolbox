@@ -15,24 +15,48 @@ Use the [Pimcore Members](https://github.com/dachcom-digital/pimcore-members) Pl
     "dachcom-digital/toolbox" : "~1.6.0",
 }
 ```
+## Asset Management
+The AssetHandler is disabled by default. You can either load the required javascript by your self or you're using the build-in asset handler.
 
-**Override Templates**
+**Manual Implementation**  
+Add the sources to your `gulpfile.js` or add it with plain html. For example:
+```html
+<script type="text/javascript" src="/plugins/Toolbox/static/js/frontend/vendor/vimeo-api.min.js"></script>
+<script type="text/javascript" src="/plugins/Toolbox/static/js/frontend/toolbox-main.js"></script>
+<script type="text/javascript" src="/plugins/Toolbox/static/js/frontend/toolbox-video.js"></script>
+<script type="text/javascript" src="/plugins/Toolbox/static/js/frontend/toolbox-googleMaps.js"></script>
+```
 
+**AssetHandler**  
+Use the AssetHandler to add javascript/css resources to your website. If the debug mode is disabled, it also concatenates and minifies the sources on the fly.
+Of course you can also use the AssetHandler to add your custom javascript and css files.
+
+- Enable the AssetHandler in your toolbox_configuration: `enableAssetHandler`:`true`.
+- Add this to your `Controller/Action.php`:
+```php
+\Pimcore::getEventManager()->attach('toolbox.addAsset', function (\Zend_EventManager_Event $e) {
+    $assetHandler = $e->getTarget();
+    $assetHandler->appendScript('toolbox-vendor-vimeo-api', '/plugins/Toolbox/static/js/frontend/vendor/vimeo-api.min.js', [], ['showInFrontEnd' => TRUE]);
+    $assetHandler->appendScript('toolbox-frontend-main', '/plugins/Toolbox/static/js/frontend/toolbox-main.js', [], ['showInFrontEnd' => TRUE]);
+    $assetHandler->appendScript('toolbox-frontend-video', '/plugins/Toolbox/static/js/frontend/toolbox-video.js', [], ['showInFrontEnd' => TRUE]);
+    $assetHandler->appendScript('toolbox-frontend-google-maps', '/plugins/Toolbox/static/js/frontend/toolbox-googleMaps.js', [], ['showInFrontEnd' => TRUE]);
+});
+```
+
+**Override Templates**  
 To override the Toolbox scripts, just create a toolbox folder in your scripts folder to override templates:
  
  `/website/views/scripts/toolbox/gallery.php`
 
 ### Usage
-**Bricks**
-
+**Bricks**  
 If you're using an AreaBlock Brick in your View, use this method to get grouped elements in toolbar (if configured):
 
 ```php
 <?= $this->areablock('content', \Toolbox\Tool\Area::getAreaBlockConfiguration() ); ?>
 ```
 
-**CKEditor Configuration**
-
+**CKEditor Configuration**  
 ```php
 "ckeditor" => 
 [

@@ -28,8 +28,14 @@ class Plugin extends PluginLib\AbstractPlugin implements PluginLib\PluginInterfa
      */
     public function preDispatch($e)
     {
-        $e->getTarget()->registerPlugin(new Controller\Plugin\HtmlParser());
-        $e->getTarget()->registerPlugin(new Controller\Plugin\Frontend());
+        //check if assetHandler is enabled.
+        $useAssetHandler = Config::getConfig()->enableAssetHandler === TRUE;
+
+        if($useAssetHandler) {
+            $e->getTarget()->registerPlugin(new Controller\Plugin\HtmlParser());
+        }
+
+        $e->getTarget()->registerPlugin(new Controller\Plugin\Frontend($useAssetHandler));
 
         $front = \Zend_Controller_Front::getInstance();
         $router = $front->getRouter();

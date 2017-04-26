@@ -9,6 +9,10 @@
         - use toolboxHelper()
 - new ToolboxHelperMethod: `toolboxHelper()->getDownloadInfo();`
 - Google Maps: `Open Info Window by Default` option added. Default is false.
+- AssetHandler is now disabled by default, see [#24](https://github.com/dachcom-digital/pimcore-toolbox/issues/24).Please check the readme to learn how to implement the required js files. Also add this to the bottom of your `toolbox_configuration.php`:
+```php
+"enableAssetHandler" => FALSE //or TRUE if you want to use the AssetHandler
+```
 
 #### Update from Version 1.6.x to Version 1.7.0
 *All Area Elements*  

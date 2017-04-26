@@ -374,7 +374,9 @@ class Install
 
                     "groups" => FALSE
 
-                ]
+                ],
+
+                "enableAssetHandler" => FALSE
             ];
 
             \Pimcore\File::putPhpFile($this->configFile, to_php_data_file_format($settings));
