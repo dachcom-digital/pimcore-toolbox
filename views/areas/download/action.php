@@ -26,7 +26,8 @@ class Download extends Document\Tag\Area\AbstractArea
                 if($node instanceof Asset\Folder) {
 
                     $assetListing = new Asset\Listing();
-                    $assetListing->addConditionParam('path LIKE ?', $node->getFullPath() . '%');
+                    $fullPath = rtrim($node->getFullPath(), '/') . '/';
+                    $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
 
                     if($hasMembers) {
                         $assetListing->onCreateQuery(function (\Zend_Db_Select $query) use ($assetListing) {
