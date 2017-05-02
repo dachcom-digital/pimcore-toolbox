@@ -2,7 +2,7 @@
 
 ## Installation
 **Handcrafted Installation**   
-Because of additional dependencies you need install this plugin via composer.
+Because of additional dependencies you need to install this plugin via composer.
 
 **Composer Installation**  
 1. Add code below to your `composer.json`    
@@ -12,7 +12,7 @@ Use the [Pimcore Members](https://github.com/dachcom-digital/pimcore-members) Pl
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~1.6.0",
+    "dachcom-digital/toolbox" : "~1.8.0",
 }
 ```
 ## Asset Management
