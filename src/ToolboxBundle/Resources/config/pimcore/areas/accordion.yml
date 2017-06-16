@@ -1,0 +1,24 @@
+toolbox:
+    areas:
+        accordion:
+            configElements:
+                type:
+                    type: select
+                    config:
+                        title: Type
+                        values:
+                            panel-default: Default
+                            panel-danger: Dangers
+                        default: panel-default
+                component:
+                    type: select
+                    config:
+                        title: Component
+                        values:
+                            accordion: Accordion
+                            tab: Tab
+                        default: accordion
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

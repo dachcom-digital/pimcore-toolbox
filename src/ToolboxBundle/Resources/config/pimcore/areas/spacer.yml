@@ -1,0 +1,17 @@
+toolbox:
+    areas:
+        spacer:
+            configElements:
+                spacerClass:
+                    type: select
+                    config:
+                        title: Space Class
+                        values:
+                            spacer-none: No Space
+                            spacer-50: 50 Pixel
+                        default: spacer-none
+                        reload: false
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

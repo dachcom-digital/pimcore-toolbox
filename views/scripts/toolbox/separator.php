@@ -1,1 +1,0 @@
-<hr class="<?=$this->select('space')->getData();?>">

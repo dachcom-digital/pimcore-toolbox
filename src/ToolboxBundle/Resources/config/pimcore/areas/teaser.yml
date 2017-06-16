@@ -1,0 +1,30 @@
+toolbox:
+    areas:
+        teaser:
+            configElements:
+                type:
+                    type: select
+                    config:
+                        name: type
+                        title: Type
+                        values:
+                            direct: Direct
+                            snippet: Snippet
+                        default: direct
+                layout:
+                    type: select
+                    config:
+                        title: Layout
+                        values:
+                            default: Default
+                        default: default
+                        conditions:
+                          - type: direct
+                useLightBox:
+                    type: checkbox
+                    config:
+                        title: use Lightbox?
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

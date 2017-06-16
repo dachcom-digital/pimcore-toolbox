@@ -1,0 +1,33 @@
+services:
+
+    #toolbox installer
+    toolbox.installer:
+        class: ToolboxBundle\Tool\Install
+        arguments: ['@logger']
+        tags:
+            - { name: monolog.logger }
+
+    # toolbox services
+    toolbox.configManager:
+        class: ToolboxBundle\Service\ConfigManager
+        arguments: []
+    toolbox.areaManager:
+        class: ToolboxBundle\Service\AreaManager
+        arguments: ['@toolbox.configManager', '@pimcore.area.brick_manager']
+    toolbox.elementBuilder:
+        class: ToolboxBundle\Service\ElementBuilder
+        arguments: ['@toolbox.configManager', '@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
+
+    # toolbox area bricks
+    toolbox.area.brick.accordion:
+        class: ToolboxBundle\Document\Areabrick\Accordion\Accordion
+        arguments: ['@logger']
+        tags:
+            - { name: pimcore.area.brick, id: accordion }
+
+    #twig extensions
+    toolbox.twig.extension.areablock_configuration:
+        class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
+        arguments: ['@toolbox.configManager', '@toolbox.areaManager']
+        tags:
+            - { name: twig.extension }

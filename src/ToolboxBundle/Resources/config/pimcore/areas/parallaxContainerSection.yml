@@ -1,0 +1,45 @@
+toolbox:
+    areas:
+        parallaxContainerSection:
+            configElements:
+                template:
+                    type: select
+                    config:
+                        title: Section Template
+                        reload: true
+                        default: no-template
+                        values:
+                            no-template: No Template
+                containerType:
+                    type: select
+                    config:
+                        title: Section Wrapper Type
+                        reload: true
+                        default: none
+                        description: If you need to add some content columns, apply a default or fluid container as wrapper.
+                        values:
+                            none: No Section Wrapper
+                            container: Default Container Wrapper
+                            container-fluid: Fluid Container Wrapper
+                backgroundImage:
+                    type: href
+                    config:
+                        title: Background Image
+                        types:
+                          - asset
+                        subtypes:
+                            asset:
+                              - image
+                              - video
+                        reload: true
+                backgroundColor:
+                    type: select
+                    config:
+                        title: Background Color
+                        reload: true
+                        default: no-background-color
+                        values:
+                            no-background-color: No Background Color
+            configParameter:
+                backgroundImageMode: data
+                backgroundColorMode: data

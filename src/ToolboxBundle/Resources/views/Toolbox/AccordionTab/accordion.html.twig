@@ -1,0 +1,29 @@
+<div class="panel-group" id="{{ id }}" role="tablist" aria-multiselectable="true">
+
+    {% for i in pimcore_iterate_block(panel) %}
+
+        <div class="panel {{ type }}">
+
+            <div
+                class="panel-heading collapsed"
+                data-toggle="collapse"
+                data-parent="#{{ id }}"
+                data-target="#panel-{{ id }}-{{ panel.getCurrentIndex() }}">
+
+                {% include '@Toolbox/Toolbox/AccordionTab/Elements/Accordion/title.html.twig' %}
+
+            </div>
+
+            <div id="panel-{{ id }}-{{ panel.getCurrentIndex() }}" class="panel-collapse collapse {{ editmode ? 'in' : '' }}">
+
+                <div class="panel-body">
+                    {% include '@Toolbox/Areas/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</div>

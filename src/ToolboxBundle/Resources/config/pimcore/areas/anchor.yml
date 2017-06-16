@@ -1,0 +1,12 @@
+toolbox:
+    areas:
+        anchor:
+            configElements:
+                anchorName:
+                    type: input
+                    config:
+                        title: Anchor Name
+                anchorTitle:
+                    type: input
+                    config:
+                        title: Anchor Title

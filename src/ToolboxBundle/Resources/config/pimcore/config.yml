@@ -1,0 +1,52 @@
+imports:
+    - { resource: areas/*.yml }
+    - { resource: ckeditor/config.yml }
+
+toolbox:
+
+    disallowedSubAreas:
+        accordion:
+            - accordion
+            - container
+            - slideColumns
+            - parallaxContainer
+        columns:
+            - container
+            - parallaxContainer
+        slideColumns:
+            - slideColumns
+            - accordion
+            - container
+            - parallaxContainer
+            - columns
+            - anchor
+        container:
+            - container
+            - parallaxContainer
+        parallaxContainer:
+            - container
+            - parallaxContainer
+        image:
+            - parallaxContainer
+        snippet:
+            - parallaxContainer
+
+    disallowedContentSnippetAreas:
+            - parallaxContainer
+            - teaser
+            - container
+            - snippet
+
+    areaBlockConfiguration:
+        toolbar:
+            title: Inhaltsbausteine
+            width: 200
+            x: 10
+            y: 125
+            buttonWidth: 200
+        groups:
+            - name: Plugins
+              elements:
+                - news
+
+    enableAssetHandler: false

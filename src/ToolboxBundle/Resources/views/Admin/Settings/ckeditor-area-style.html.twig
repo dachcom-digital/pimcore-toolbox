@@ -1,0 +1,13 @@
+{% if globalStyleSets is defined and globalStyleSets is iterable %}
+    {% for stylesSetName, stylesSetData in globalStyleSets %}
+        CKEDITOR.stylesSet.add('{{ stylesSetName }}', {{ stylesSetData|json_encode|raw }});
+    {% endfor %}
+{% endif %}
+
+CKEDITOR.editorConfig = function( config ) {
+{% if config is iterable %}
+    {% for configName, configData in config %}
+        config.{{ configName }} = {{ configData|json_encode|raw }};
+    {% endfor %}
+{% endif %}
+};

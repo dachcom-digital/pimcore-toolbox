@@ -1,0 +1,24 @@
+toolbox:
+    areas:
+        slideColumns:
+            configElements:
+                slidesPerView:
+                    type: select
+                    config:
+                        name: slidesPerView
+                        title: Slides per View
+                        values:
+                            '2': 2 Columns
+                            '3': 3 Columns
+                            '4': 4 Columns
+                            '6': 6 Columns
+                        default: '4'
+                equalHeight:
+                    type: checkbox
+                    config:
+                        title: Equal heights?
+                        reload: false
+            configParameter:
+                columnClasses:
+                    '2': col-xs-12 col-sm-6
+                breakpoints: []

@@ -1,0 +1,74 @@
+toolbox:
+    areas:
+        parallaxContainer:
+            configElements:
+                template:
+                    type: select
+                    config:
+                        title: Parallax Template
+                        reload: true
+                        default: no-template
+                        values:
+                            no-template: No Template
+                backgroundImage:
+                    type: href
+                    config:
+                        title: Background Image
+                        types:
+                          - asset
+                        subtypes:
+                            asset:
+                              - image
+                              - video
+                        reload: true
+                backgroundColor:
+                    type: select
+                    config:
+                        title: Background Color
+                        reload: true
+                        default: no-background-color
+                        values:
+                            no-background-color: No Background Color
+                imageFront:
+                    type: parallaximage
+                    config:
+                        title: Images In Front Of Main Container
+                        position:
+                            top-left: Top Left
+                            top-center: Top Center
+                            top-right: Top Right
+                            bottom-left: Bottom Left
+                            bottom-center: Bottom Center
+                            bottom-right: Bottom Right
+                            center-left: Center Left
+                            center-center: Center Center
+                            center-right: Center Right
+                        size:
+                            half-window-width: Half Window Width
+                            third-window-width: Third Window Width
+                            quarter-window-width: Quarter Window Width
+                        reload: true
+                imagesBehind:
+                    type: parallaximage
+                    config:
+                        title: Images Behind Main Container
+                        position:
+                            top-left: Top Left
+                            top-center: Top Center
+                            top-right: Top Right
+                            bottom-left: Bottom Left
+                            bottom-center: Bottom Center
+                            bottom-right: Bottom Right
+                            center-left: Center Left
+                            center-center: Center Center
+                            center-right: Center Right
+                        size:
+                            half-window-width: Half Window Width
+                            third-window-width: Third Window Width
+                            quarter-window-width: Quarter Window Width
+                        reload: true
+            configParameter:
+                windowSize: large
+                backgroundMode: wrap
+                backgroundImageMode: data
+                backgroundColorMode: data

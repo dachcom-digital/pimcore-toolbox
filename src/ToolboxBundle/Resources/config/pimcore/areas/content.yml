@@ -1,0 +1,8 @@
+toolbox:
+    areas:
+        content:
+            configElements:
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

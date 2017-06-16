@@ -1,0 +1,24 @@
+toolbox:
+    areas:
+        gallery:
+            configElements:
+                images:
+                    type: multihref
+                    config:
+                        name: images
+                        title: Images or Folder
+                        reload: true
+                useLightbox:
+                    type: checkbox
+                    config:
+                        title: Use Lightbox
+                        reload: false
+                useThumbnails:
+                    type: checkbox
+                    config:
+                        title: Use Thumbnails
+                        reload: false
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

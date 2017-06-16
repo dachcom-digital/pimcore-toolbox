@@ -1,1 +1,0 @@
-<?php $this->template('toolbox/accordionTab/' . ($this->select('component')->getData() === 'tab' ? 'tab' : 'accordion') . '.php'); ?>

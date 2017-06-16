@@ -1,0 +1,23 @@
+toolbox:
+    areas:
+        download:
+            configElements:
+                downloads:
+                    type: multihref
+                    config:
+                        title: Files
+                        reload: true
+                showPreviewImages:
+                    type: checkbox
+                    config:
+                        title: Show preview images
+                        reload: false
+                showFileInfo:
+                    type: checkbox
+                    config:
+                        title: Show file info
+                        reload: false
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

@@ -1,0 +1,9 @@
+toolbox:
+    areas:
+        container:
+            configElements:
+                fullWidthContainer:
+                    type: checkbox
+                    config:
+                        title: Fluid Container (Full Width)
+                        reload: true

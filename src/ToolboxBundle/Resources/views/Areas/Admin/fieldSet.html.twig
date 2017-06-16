@@ -1,0 +1,60 @@
+{% if configElements %}
+
+    <div class="toolbox-element-edit-button" data-title="{{ elementTitle }}"></div>
+    <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="{{ windowSize }}">
+
+        <div class="toolbox-edit-overlay {{ windowSize }}">
+
+            {% set halfCounter = 0 %}
+            {% set rowCounter = 0 %}
+            {% set lastColClass = null %}
+
+            {% for c, configElement in configElements %}
+
+                {% set editModeHiddenClass = configElement['editmode-hidden'] == true ? 'editmode-hidden' : '' %}
+
+                {% if c == 0 %}
+                    <div class="t-row clearfix {{ editModeHiddenClass }}" data-index="0">
+                {% endif %}
+
+                {% if configElement['col-class'] == 't-col-half' %}
+                    {% set halfCounter = halfCounter + 1 %}
+                {% else %}
+                    {% set halfCounter = 0 %}
+                {% endif %}
+
+                {% if configElement['col-class'] == 't-col-full' and lastColClass == 't-col-half' %}
+                   </div><div class="t-row clearfix {{ editModeHiddenClass }}" data-index="{{ rowCounter }}">
+                {% endif %}
+
+                <div class="toolbox-element" data-reload="{{ configElement['edit-reload'] ? 'true' : 'false' }}">
+                    <div class="{{ configElement['col-class'] }}">
+
+                    <label>{{ configElement['title'] }}</label>
+                    {% include '@Toolbox/Areas/Admin/Elements/' ~ configElement['type'] ~ '.html.twig' with {'element': configElement} %}
+
+                    {% if configElement['description'] is defined and configElement['description'] is not empty %}
+                        <div class="description">{{ configElement['description'] }}</div>
+                    {% endif %}
+
+                    </div><!-- .col-class -->
+                </div><!-- .toolbox-element -->
+
+                {% if halfCounter == 0 or halfCounter == 2 %}
+                    {% set editModeHiddenClass = configElements[ c+1 ] is defined and configElements[c+1]['editmode-hidden'] == true ? 'editmode-hidden' : '' %}
+                    </div><div class="t-row clearfix {{ editModeHiddenClass }}" data-index="{{ rowCounter }}">
+                {% endif %}
+
+                {% set lastColClass = configElement['col-class'] %}
+
+                {% if c == configElements|length - 1 %}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+
+       </div><!-- .toolbox-edit-overlay -->
+
+    </div><!-- .toolbox-element-window -->
+
+{% endif %}

@@ -1,0 +1,25 @@
+toolbox:
+    areas:
+        headline:
+            configElements:
+                headlineType:
+                    type: select
+                    config:
+                        name: headlineType
+                        title: Headline Size
+                        values:
+                            h1: Headline 1
+                            h2: Headline 2
+                            h3: Headline 3
+                            h4: Headline 4
+                            h5: Headline 5
+                            h6: Headline 6
+                        default: h3
+                anchorName:
+                    type: input
+                    config:
+                        title: Anchor Name
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

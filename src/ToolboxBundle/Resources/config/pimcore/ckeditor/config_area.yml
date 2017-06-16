@@ -1,0 +1,4 @@
+toolbox:
+    ckeditor:
+        areaEditor:
+            config: ~

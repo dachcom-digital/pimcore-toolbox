@@ -1,0 +1,24 @@
+toolbox:
+    areas:
+        video:
+            configElements:
+                autoplay:
+                    type: checkbox
+                    config:
+                        title: Autoplay?
+                        reload: false
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []
+            configParameter:
+                videoTypes:
+                    asset:
+                        active: false
+                    youtube:
+                        active: false
+                        posterImageThumbnail: null
+                    vimeo:
+                        active: false
+                    dailymotion:
+                        active: false

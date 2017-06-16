@@ -1,0 +1,13 @@
+{{ pimcore_parallaximage(element.name,
+{
+    'width'    :  element.width,
+    'height'   :  element.height,
+    'position' :  element.position,
+    'size'     :  element.size,
+    'types'    :  ['asset'],
+    'subtypes' :  {
+        'asset' :  ['image', 'video']
+    },
+    'class'    :  element.class,
+}
+) }}

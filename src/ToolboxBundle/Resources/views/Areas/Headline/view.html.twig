@@ -1,0 +1,7 @@
+{{ elementConfigBar|raw }}
+<div class="toolbox-element toolbox-headline {{ pimcore_select('columnsAdditionalClasses').getData() }}">
+    {% if anchorName is not empty %}
+        <a id="{{ anchorName }}"></a>
+    {% endif %}
+    {% include '@Toolbox/Toolbox/headline.html.twig' %}
+</div>

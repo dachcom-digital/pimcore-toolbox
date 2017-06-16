@@ -1,0 +1,38 @@
+toolbox:
+    areas:
+        googleMap:
+            configElements:
+                mapZoom:
+                    type: numeric
+                    config:
+                        title: Map zoom
+                        width: 100
+                        minValue: 0
+                        maxValue: 19
+                        decimalPrecision: 0
+                        default: 12
+                        reload: false
+                mapType:
+                    type: select
+                    config:
+                        title: Map type
+                        reload: true
+                        default: roadmap
+                        values:
+                            roadmap: ROADMAP
+                            satellite: SATELLITE
+                            hybrid: HYBRID
+                            terrain: TERRAIN
+                iwOnInit:
+                    type: checkbox
+                    config:
+                        title: Open Info Window by Default
+                        reload: false
+            configParameter:
+                mapOptions:
+                    streetViewControl: true
+                    mapTypeControl: false
+                    panControl: false
+                    scrollwheel: false
+                mapStyleUrl: false
+                markerIcon: false

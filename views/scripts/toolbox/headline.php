@@ -1,1 +1,0 @@
-<<?= $this->select('headlineType')->getData();?>><?= $this->input('headlineText'); ?></<?=$this->select('headlineType')->getData();?>>

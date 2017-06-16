@@ -1,1 +1,0 @@
-<?= $this->checkbox($this->element['name'], ['reload' => $this->element['reload']]); ?>

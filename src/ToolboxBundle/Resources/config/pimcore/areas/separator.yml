@@ -1,0 +1,17 @@
+toolbox:
+    areas:
+        separator:
+            configElements:
+                space:
+                    type: select
+                    config:
+                        title: Space before & after separator
+                        values:
+                            default: Default
+                            medium: Medium
+                            large: Large
+                        default: default
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

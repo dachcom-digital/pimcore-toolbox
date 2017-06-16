@@ -1,0 +1,20 @@
+toolbox:
+    areas:
+        image:
+            configElements:
+                useLightbox:
+                    type: checkbox
+                    config:
+                        title: Use Lightbox
+                        col-class: t-col-half
+                        reload: false
+                showCaption:
+                    type: checkbox
+                    config:
+                        title: Display Caption
+                        col-class: t-col-half
+                        reload: false
+                additionalClasses:
+                    type: additionalClasses
+                    config:
+                        values: []

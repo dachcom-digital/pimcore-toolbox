@@ -1,0 +1,6 @@
+toolbox_ckeditor_area_style:
+    path:     /admin/toolbox-ckeditor-style.js
+    defaults: { _controller: ToolboxBundle:Admin\Settings:ckEditorAreaStyle }
+toolbox_ckeditor_object_style:
+    path:     /admin/toolbox-ckeditor-object-style.js
+    defaults: { _controller: ToolboxBundle:Admin\Settings:ckEditorObjectStyle }
