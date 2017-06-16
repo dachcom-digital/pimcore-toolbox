@@ -13,6 +13,13 @@
             "role": "Developer"
         }
     ],
+
+    "autoload": {
+        "psr-4": {
+            "ToolboxBundle\\": "src/"
+        }
+    },
+
     "extra": {
         "pimcore": {
             "bundles": [
