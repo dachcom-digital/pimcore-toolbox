@@ -13,6 +13,13 @@
             "role": "Developer"
         }
     ],
+    "extra": {
+        "pimcore": {
+            "bundles": [
+                "ToolboxBundle\\ToolboxBundle"
+            ]
+        }
+    }
     "require": {
     }
 }
