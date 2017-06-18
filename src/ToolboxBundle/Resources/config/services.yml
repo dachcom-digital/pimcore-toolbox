@@ -31,3 +31,9 @@ services:
         arguments: ['@toolbox.configManager', '@toolbox.areaManager']
         tags:
             - { name: twig.extension }
+
+    toolbox.twig.extension.download:
+            class: ToolboxBundle\Twig\Extension\DownloadExtension
+            arguments: ['@toolbox.configManager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
+            tags:
+                - { name: twig.extension }

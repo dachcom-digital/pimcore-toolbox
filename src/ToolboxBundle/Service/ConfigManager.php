@@ -47,4 +47,15 @@ class ConfigManager
     {
         return $this->config['areas'][$areaName]['configElements'][$configElementName];
     }
+
+    /**
+     * @param string $areaName
+     *
+     * @return mixed
+     */
+    public function getAreaParameterConfig($areaName = '')
+    {
+        return $this->config['areas'][$areaName]['configParameter'];
+    }
+
 }

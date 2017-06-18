@@ -18,6 +18,11 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
 
     initialize: function(id, name, options, data, inherited) {
 
+        if(typeof google === 'undefined') {
+            console.warn('toolbox googleMap: google js api is not reachable.');
+            return false;
+        }
+
         this.id = id;
         this.name = name;
         this.data = data;

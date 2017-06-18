@@ -100,26 +100,4 @@ class SettingsController extends Controller\AdminController
         $config = array_merge($defaultConfig, $userConfig);
         return $config;
     }
-
-    /**
-     *
-     */
-    public function allowedVideoTypesAction()
-    {
-        $toolboxConfig = $this->container->get('toolbox.configManager');
-        $videoAreaSettings = $toolboxConfig->getConfig('areas')['video']['configParameter'];
-
-        $videoOptions = $videoAreaSettings['videoTypes'];
-        $allowedVideoTypes = [];
-
-        if (!empty($videoOptions)) {
-            foreach ($videoOptions as $name => $settings) {
-                if ($settings->active === TRUE) {
-                    $allowedVideoTypes[] = ['name' => $name, 'value' => $name];
-                }
-            }
-        }
-
-        return $this->json($allowedVideoTypes);
-    }
 }

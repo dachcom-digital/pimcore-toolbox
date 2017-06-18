@@ -1,0 +1,4 @@
+{{ elementConfigBar|raw }}
+<div class="toolbox-element toolbox-container {{ pimcore_select('containerAdditionalClasses').getData() }}">
+    {% include '@Toolbox/Toolbox/container.html.twig' with { 'containerClass' : pimcore_checkbox('fullWidthContainer').isChecked() ? 'container-fluid' : 'container' } %}
+</div>

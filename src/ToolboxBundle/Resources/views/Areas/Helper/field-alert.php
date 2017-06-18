@@ -1,1 +1,0 @@
-<div class="alert alert-<?= $this->type; ?>"><?= $this->message; ?></div>

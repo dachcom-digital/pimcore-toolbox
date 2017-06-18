@@ -1,0 +1,23 @@
+
+{% set class = 'img-responsive ' ~ pimcore_input('extraClass').getData() %}
+{% set useLightBox = pimcore_checkbox('useLightbox').isChecked() and editmode == false %}
+
+<div class="row">
+
+    <div class="col-xs-12{{ useLightBox ? ' light-gallery-' : '' }}">
+
+        {% if useLightBox == true %}
+            {% include '@Toolbox/Toolbox/Image/lightbox.html.twig' with { 'class' : class } %}
+        {% else %}
+            {% include '@Toolbox/Toolbox/Image/single.html.twig' with { 'class' : class } %}
+        {% endif %}
+
+        {% if pimcore_checkbox('showCaption').isChecked() == true %}
+            <span class="caption">
+                {{ pimcore_image('ci').getText() }}
+            </span>
+        {% endif %}
+
+    </div>
+
+</div>

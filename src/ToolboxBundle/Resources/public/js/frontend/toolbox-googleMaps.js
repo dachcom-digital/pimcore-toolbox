@@ -69,7 +69,7 @@ var DachcomToolboxGoogleMaps = (function () {
                             if(marker.contentLoaded === false) {
                                 $.ajax({
 
-                                    url: '/plugin/Toolbox/GoogleMap/info-window',
+                                    url: '/toolbox/ajax/gm-info-window',
                                     method: 'POST',
                                     data: {
                                         mapParams : location,

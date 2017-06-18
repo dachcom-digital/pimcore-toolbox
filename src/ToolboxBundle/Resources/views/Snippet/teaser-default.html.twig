@@ -1,0 +1,26 @@
+{% set lightBoxParam = useLightBox is defined and useLightBox is not empty ? useLightBox : pimcore_checkbox('useLightBox').isChecked() %}
+{# @todo: check set lightBoxParam = !is_null($this->getParam('useLightBox')) ? $this->getParam('useLightBox') : pimcore_checkbox('useLightBox').isChecked() #}
+{% set useLightBox = lightBoxParam and editmode == false %}
+{% set hasLink = pimcore_globallink('link').isEmpty() == false %}
+{% set linkTarget = hasLink ? pimcore_globallink('link').getTarget() : null %}
+
+<div class="single-teaser default {{ useLightBox ? 'light-gallery' : '' }}">
+
+    {{  editmode == false and useLightBox
+        ? '<a href="' ~ pimcore_image('image').getThumbnail('lightBoxImage') ~ '" class="item">'
+        : (editmode == false and hasLink ? '<a href="' ~ pimcore_globallink('link').getHref() ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ pimcore_globallink('link').getTarget() ~ '"' : '') ~ ' class="item">' : '')
+    }}
+
+    {{ pimcore_image('image', {'thumbnail' : 'standardTeaser', 'class' : 'img-responsive'}) }}
+
+    {{ editmode == false and (useLightBox or hasLink) ? '</a>' : '' }}
+
+    <h3 class="teaser-headline">{{ pimcore_input('headline') }}</h3>
+
+    <div class="teaser-text">
+        {{ pimcore_wysiwyg('text', {'height' : 100, 'customConfig' : '/toolbox-ckeditor-style.js'}) }}
+    </div>
+
+    {{ pimcore_globallink('link', {'class' : 'btn btn-default teaser-link'}) }}
+
+</div>

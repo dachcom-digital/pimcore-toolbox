@@ -12,7 +12,7 @@
 
                     {{ pimcore_input('name') }}
                     <div class="tab-content">
-                        {% include '@Toolbox/Areas/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                        {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     </div>
 
                 {% else %}
@@ -22,7 +22,7 @@
                     </a>
 
                     {% set content %}
-                        {% include '@Toolbox/Areas/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                        {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     {% endset %}
 
                     {% set tabContent = tabContent|merge({ 'index': panel.getCurrentIndex(), 'content': content}) %}

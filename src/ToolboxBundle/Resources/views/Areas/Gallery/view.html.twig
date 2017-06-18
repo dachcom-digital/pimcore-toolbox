@@ -1,0 +1,4 @@
+{{ elementConfigBar|raw }}
+<div class="toolbox-element toolbox-gallery {{ pimcore_select('galleryAdditionalClasses').getData() }}">
+    {% include '@Toolbox/Toolbox/gallery.html.twig' with {'galleryId' : galleryId} %}
+</div>

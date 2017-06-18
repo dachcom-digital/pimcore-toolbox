@@ -21,3 +21,9 @@ toolbox:
                     type: additionalClasses
                     config:
                         values: []
+            configParameter:
+                # eventTracker:
+                    # category: 'PDF'
+                    # action: 'download'
+                    # label: ['getMetadata', ['name']]
+                    # noninteraction: true

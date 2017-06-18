@@ -1,0 +1,23 @@
+{% for element in elements.getElements() %}
+
+    {% set imageUrl = element.obj is instanceof('\Pimcore\Model\Asset')
+        ? element.obj.getThumbnail('parallaxImage')
+        : '' %}
+
+    {% set parallaxImageTag = backgroundImageMode == 'style'
+        ? 'style="background-image:url('~imageUrl~');"'
+        : 'data-background-image="'~imageUrl~'"' %}
+
+    {% set orgWidth = element['obj'].getWidth() %}
+    {% set width = element['obj'].getThumbnail('parallaxImage').getWidth() %}
+    {% set orgHeight = element['obj'].getHeight() %}
+    {% set height = element['obj'].getThumbnail('parallaxImage').getHeight() %}
+
+    <div class="element position-{{ element.parallaxPosition }} size-{{ element.parallaxSize }}"
+        {{ parallaxImageTag }}
+        data-width="{{ width is empty ? orgWidth : width }}" data-height="{{ height is empty ? orgHeight : height }}"
+        data-element-position="{{ element.parallaxPosition }}"
+        data-element-size="{{ element.parallaxSize }}">
+    </div>
+
+{% endfor %}

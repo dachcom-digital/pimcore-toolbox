@@ -4,3 +4,9 @@ toolbox_ckeditor_area_style:
 toolbox_ckeditor_object_style:
     path:     /admin/toolbox-ckeditor-object-style.js
     defaults: { _controller: ToolboxBundle:Admin\Settings:ckEditorObjectStyle }
+toolbox_frontend_ajax_google_maps_iw:
+    path: /toolbox/ajax/gm-info-window
+    defaults: { _controller: ToolboxBundle:Ajax:gmInfoWindow }
+toolbox_frontend_ajax_video_types:
+    path: /toolbox/ajax/video-allowed-video-types
+    defaults: { _controller: ToolboxBundle:Ajax:videoGetTypes }

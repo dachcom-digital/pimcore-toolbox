@@ -1,6 +1,7 @@
 imports:
     - { resource: areas/*.yml }
     - { resource: ckeditor/config.yml }
+    - { resource: document/editables.yml }
 
 toolbox:
 

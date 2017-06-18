@@ -1,6 +1,6 @@
 toolbox:
     areas:
-        linklist:
+        linkList:
             configElements:
                 additionalClasses:
                     type: additionalClasses

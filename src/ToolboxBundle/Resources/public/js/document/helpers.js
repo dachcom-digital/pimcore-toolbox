@@ -146,7 +146,7 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
         fields: ['name', 'value'],
         proxy: {
             type: 'ajax',
-            url: '/plugin/Toolbox/admin_Settings/allowed-video-types',
+            url: '/toolbox/ajax/video-allowed-video-types',
             reader: {
                 type: 'json'
             }

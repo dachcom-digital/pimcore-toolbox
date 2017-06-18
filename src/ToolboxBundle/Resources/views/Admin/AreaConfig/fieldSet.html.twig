@@ -31,7 +31,7 @@
                     <div class="{{ configElement['col-class'] }}">
 
                     <label>{{ configElement['title'] }}</label>
-                    {% include '@Toolbox/Areas/Admin/Elements/' ~ configElement['type'] ~ '.html.twig' with {'element': configElement} %}
+                    {% include '@Toolbox/Admin/AreaConfig/Elements/' ~ configElement['type'] ~ '.html.twig' with {'element': configElement} %}
 
                     {% if configElement['description'] is defined and configElement['description'] is not empty %}
                         <div class="description">{{ configElement['description'] }}</div>

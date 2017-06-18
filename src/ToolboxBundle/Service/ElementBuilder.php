@@ -62,6 +62,9 @@ class ElementBuilder
             return FALSE;
         }
 
+        //transform dash to camelcase (like google-map => googleMap
+        $type = lcfirst(implode('', array_map('ucfirst', explode('-', $type))));;
+
         $userConfigElements = [];
 
         $configNode = $this->configManager->getConfig('areas')[$type];
@@ -109,7 +112,7 @@ class ElementBuilder
             'document' => $info->getDocument()
         ];
 
-        return $this->templating->render('@Toolbox/Areas/admin/fieldSet.html.twig', $fieldSetArgs);
+        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
     }
 
     /**
@@ -144,7 +147,7 @@ class ElementBuilder
             $elConf['reload'] = FALSE;
             $elConf['edit-reload'] = isset($c['config']['reload']) ? $c['config']['reload'] : TRUE;
             $elConf['default'] = isset($c['config']['default']) ? $c['config']['default'] : NULL;
-            $elConf['description'] = isset($c['config']['description']) && !empty($c['config']['description']) ? $this->translator->trans($c['config']['config']['description'], [], 'admin') : NULL;
+            $elConf['description'] = isset($c['config']['description']) && !empty($c['config']['description']) ? $this->translator->trans($c['config']['description'], [], 'admin') : NULL;
             $elConf['col-class'] = isset($c['config']['col-class']) && !empty($c['config']['col-class']) ? $c['config']['col-class'] : 't-col-full';
             $elConf['editmode-hidden'] = FALSE;
 

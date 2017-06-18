@@ -16,7 +16,7 @@ toolbox:
                     asset:
                         active: false
                     youtube:
-                        active: false
+                        active: true
                         posterImageThumbnail: null
                     vimeo:
                         active: false
