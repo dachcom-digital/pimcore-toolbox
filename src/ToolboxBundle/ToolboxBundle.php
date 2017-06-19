@@ -35,7 +35,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return [
             '/bundles/toolbox/js/backend/toolbox.js',
             '/bundles/toolbox/js/document/tags/areablock.js',
-            '/bundles/toolbox/js/document/tags/globallink.js',
+            '/bundles/toolbox/js/document/tags/dynamiclink.js',
             '/bundles/toolbox/js/document/tags/googlemap.js',
             '/bundles/toolbox/js/document/tags/parallaximage.js',
             '/bundles/toolbox/js/document/tags/vhs.js'

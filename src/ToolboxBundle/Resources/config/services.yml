@@ -1,6 +1,6 @@
 services:
 
-    #toolbox installer
+    # toolbox installer
     toolbox.installer:
         class: ToolboxBundle\Tool\Install
         arguments: ['@logger']
@@ -14,6 +14,9 @@ services:
     toolbox.areaManager:
         class: ToolboxBundle\Service\AreaManager
         arguments: ['@toolbox.configManager', '@pimcore.area.brick_manager']
+    toolbox.i18nManager:
+        class: ToolboxBundle\Service\I18nManager
+        arguments: ['@request_stack', '@pimcore.locale']
     toolbox.elementBuilder:
         class: ToolboxBundle\Service\ElementBuilder
         arguments: ['@toolbox.configManager', '@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
@@ -25,7 +28,7 @@ services:
         tags:
             - { name: pimcore.area.brick, id: accordion }
 
-    #twig extensions
+    # twig extensions
     toolbox.twig.extension.areablock_configuration:
         class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
         arguments: ['@toolbox.configManager', '@toolbox.areaManager']
@@ -33,7 +36,21 @@ services:
             - { name: twig.extension }
 
     toolbox.twig.extension.download:
-            class: ToolboxBundle\Twig\Extension\DownloadExtension
-            arguments: ['@toolbox.configManager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
-            tags:
-                - { name: twig.extension }
+        class: ToolboxBundle\Twig\Extension\DownloadExtension
+        arguments: ['@toolbox.configManager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
+        tags:
+            - { name: twig.extension }
+
+    # event listener
+    toolbox.event_listener.frontend.path.document:
+        class: ToolboxBundle\EventListener\FrontendPathListener
+        arguments: ['@toolbox.i18nManager']
+        tags:
+            - { name: kernel.event_listener, event: pimcore.frontend.path.document, method: checkPath }
+    toolbox.event_listener.kernel_request:
+        class: ToolboxBundle\EventListener\I18nRedirect
+        arguments: ['@pimcore.service.request.document_resolver', '@toolbox.i18nManager']
+        calls:
+            - [setPimcoreContextResolver, ['@pimcore.service.request.pimcore_context_resolver']]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelRequest }

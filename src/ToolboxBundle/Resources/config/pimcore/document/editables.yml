@@ -5,4 +5,4 @@ pimcore:
                 googlemap: \ToolboxBundle\Model\Document\Tag\GoogleMap
                 parallaximage: \ToolboxBundle\Model\Document\Tag\ParallaxImage
                 vhs: \ToolboxBundle\Model\Document\Tag\Vhs
-                globallink: \ToolboxBundle\Model\Document\Tag\GlobalLink
+                dynamiclink: \ToolboxBundle\Model\Document\Tag\DynamicLink

@@ -1,13 +1,13 @@
-pimcore.registerNS("pimcore.document.tags.globallink");
-pimcore.document.tags.globallink = Class.create(pimcore.document.tags.link, {
+pimcore.registerNS("pimcore.document.tags.dynamiclink");
+pimcore.document.tags.dynamiclink = Class.create(pimcore.document.tags.link, {
 
     getType: function () {
-        return "globallink";
+        return "dynamiclink";
     },
 
     openEditor: function () {
 
-        this.window = this.openGlobalLinkEditPanel(this.data, {
+        this.window = this.openDynamicLinkEditPanel(this.data, {
             empty: this.empty.bind(this),
             cancel: this.cancel.bind(this),
             save: this.save.bind(this)
@@ -15,7 +15,7 @@ pimcore.document.tags.globallink = Class.create(pimcore.document.tags.link, {
 
     },
 
-    openGlobalLinkEditPanel : function (data, callback) {
+    openDynamicLinkEditPanel : function (data, callback) {
 
         var fieldPath = new Ext.form.TextField({
             fieldLabel: t('path'),
