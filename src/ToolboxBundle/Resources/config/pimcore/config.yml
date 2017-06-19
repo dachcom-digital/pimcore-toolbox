@@ -7,36 +7,43 @@ toolbox:
 
     disallowedSubAreas:
         accordion:
-            - accordion
-            - container
-            - slideColumns
-            - parallaxContainer
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer
         columns:
-            - container
-            - parallaxContainer
+            disallowed:
+                - container
+                - parallaxContainer
         slideColumns:
-            - slideColumns
-            - accordion
-            - container
-            - parallaxContainer
-            - columns
-            - anchor
+            disallowed:
+                - slideColumns
+                - accordion
+                - container
+                - parallaxContainer
+                - columns
+                - anchor
         container:
-            - container
-            - parallaxContainer
+            disallowed:
+                - container
+                - parallaxContainer
         parallaxContainer:
-            - container
-            - parallaxContainer
+            disallowed:
+                - container
+                - parallaxContainer
         image:
-            - parallaxContainer
+            disallowed:
+                - parallaxContainer
         snippet:
-            - parallaxContainer
+            disallowed:
+                - parallaxContainer
 
     disallowedContentSnippetAreas:
-            - parallaxContainer
-            - teaser
-            - container
-            - snippet
+        - parallaxContainer
+        - teaser
+        - container
+        - snippet
 
     areaBlockConfiguration:
         toolbar:
@@ -45,9 +52,6 @@ toolbox:
             x: 10
             y: 125
             buttonWidth: 200
-        groups:
-            - name: Plugins
-              elements:
-                - news
+        groups: ~
 
     enableAssetHandler: false

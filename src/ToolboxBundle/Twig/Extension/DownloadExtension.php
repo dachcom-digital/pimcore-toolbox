@@ -28,7 +28,7 @@ class DownloadExtension extends \Twig_Extension
      *
      * @param ConfigManager        $configManager
      * @param PimcoreBundleManager $bundleManager
-     * @param Translator $translator
+     * @param Translator           $translator
      */
     public function __construct(ConfigManager $configManager, PimcoreBundleManager $bundleManager, Translator $translator)
     {
@@ -62,12 +62,12 @@ class DownloadExtension extends \Twig_Extension
             return '';
         }
 
-        if (is_array($areaType))  //custom data
-        {
+
+        if (is_array($areaType)) {
             $trackerInfo = $areaType;
-        } else //area data
+        } else
         {
-            $configNode = $this->configManager->getAreaParameterConfig($areaType);
+            $configNode = $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
 
             if (empty($configNode) || !isset($configNode['eventTracker'])) {
                 return '';
@@ -75,7 +75,6 @@ class DownloadExtension extends \Twig_Extension
 
             $trackerInfo = $configNode['eventTracker'];
         }
-
 
         $str = 'data-tracking="active" ';
 

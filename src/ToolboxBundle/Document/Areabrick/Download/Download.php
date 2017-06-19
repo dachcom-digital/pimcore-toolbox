@@ -18,8 +18,9 @@ class Download extends AbstractAreabrick
      */
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
-        $elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
 
         //check if member extension exist
         $hasMembers = $this->hasMembersExtension();
@@ -68,7 +69,6 @@ class Download extends AbstractAreabrick
         }
 
         $view->downloads = $assets;
-        $view->elementConfigBar = $elementConfigBar;
 
     }
 

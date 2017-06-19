@@ -1,3 +1,9 @@
+services:
+    toolbox.area.brick.content:
+        parent: toolbox.area.brick.base_brick
+        class: ToolboxBundle\Document\Areabrick\Content\Content
+        tags:
+            - { name: pimcore.area.brick, id: content }
 toolbox:
     areas:
         content:

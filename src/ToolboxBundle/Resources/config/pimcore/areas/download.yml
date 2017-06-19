@@ -1,3 +1,9 @@
+services:
+    toolbox.area.brick.download:
+        parent: toolbox.area.brick.base_brick
+        class: ToolboxBundle\Document\Areabrick\Download\Download
+        tags:
+            - { name: pimcore.area.brick, id: download }
 toolbox:
     areas:
         download:

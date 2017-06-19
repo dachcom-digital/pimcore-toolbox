@@ -9,9 +9,7 @@ class Container extends AbstractAreabrick
 {
     public function action(Info $info)
     {
-        $view = $info->getView();
-        $elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
-        $view->elementConfigBar = $elementConfigBar;
+        parent::action($info);
     }
 
     public function getName()

@@ -9,10 +9,9 @@ class Columns extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
-
-        $elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
-
         $equalHeightElement = $this->getDocumentTag($info->getDocument(),'checkbox', 'equalHeight');
         $typeElement = $this->getDocumentTag($info->getDocument(),'select', 'type');
 
@@ -99,7 +98,6 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $view->elementConfigBar = $elementConfigBar;
         $view->type = $type;
         $view->columns = $columns;
         $view->partialName = $partialName;

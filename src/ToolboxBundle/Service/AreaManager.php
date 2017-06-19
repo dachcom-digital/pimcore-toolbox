@@ -59,41 +59,44 @@ class AreaManager
         $configuration['params'] = $availableBricks['params'];
         $configuration['allowed'] = $availableBricks['allowed'];
 
+        $toolboxGroup = [
+            [
+                'name'     => 'Toolbox',
+                'elements' => $this->getToolboxBricks()
+            ]
+        ];
+
         if (isset($areaBlockConfigurationArray['groups']) && $areaBlockConfigurationArray['groups'] !== FALSE) {
-            $toolboxGroup = [
-                [
-                    'name'     => 'Toolbox',
-                    'elements' => $this->getToolboxBricks()
-                ]
-            ];
-
             $groups = array_merge($toolboxGroup, $areaBlockConfigurationArray['groups']);
+        } else {
+            $groups = $toolboxGroup;
+        }
 
-            $cleanedGroups = [];
-            $cleanedGroupsSorted = [];
+        $cleanedGroups = [];
+        $cleanedGroupsSorted = [];
 
-            foreach ($groups as $groupName => $groupData) {
-                $groupName = $groupData['name'];
-                $cleanedGroup = [];
+        foreach ($groups as $groupName => $groupData) {
+            $groupName = $groupData['name'];
+            $cleanedGroup = [];
 
-                foreach ($groupData['elements'] as $element) {
-                    if (in_array($element, $availableBricks['allowed'])) {
-                        $cleanedGroup[] = $element;
-                    }
-                }
-
-                //ok, group elements found, add them
-                if (count($cleanedGroup) > 0) {
-                    $cleanedGroups[$groupName] = $cleanedGroup;
-                    $cleanedGroupsSorted = array_merge($cleanedGroupsSorted, $cleanedGroup);
+            foreach ($groupData['elements'] as $element) {
+                if (in_array($element, $availableBricks['allowed'])) {
+                    $cleanedGroup[] = $element;
                 }
             }
 
-            if (count($cleanedGroups) > 0) {
-                $configuration['sorting'] = $cleanedGroupsSorted;
-                $configuration['group'] = $cleanedGroups;
+            //ok, group elements found, add them
+            if (count($cleanedGroup) > 0) {
+                $cleanedGroups[$groupName] = $cleanedGroup;
+                $cleanedGroupsSorted = array_merge($cleanedGroupsSorted, $cleanedGroup);
             }
         }
+
+        if (count($cleanedGroups) > 0) {
+            $configuration['sorting'] = $cleanedGroupsSorted;
+            $configuration['group'] = $cleanedGroups;
+        }
+
 
         if (isset($areaBlockConfigurationArray['toolbar']) && is_array($areaBlockConfigurationArray['toolbar'])) {
             $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
@@ -112,8 +115,7 @@ class AreaManager
         $areaElements = $this->brickManager->getBricks();
 
         /**
-         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementName
-         * @var                                                                 $areaElementData
+         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData
          */
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (!$this->brickManager->isEnabled($areaElementName)) {
@@ -141,7 +143,7 @@ class AreaManager
 
         $bricks = [];
 
-        $elementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type] : [];
+        $elementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
 
         foreach ($areaElements as $a) {
             if (!in_array($a, $elementDisallowed)) {

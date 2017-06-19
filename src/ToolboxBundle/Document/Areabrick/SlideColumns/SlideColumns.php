@@ -9,8 +9,9 @@ class SlideColumns extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
 
         $equalHeight = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equalHeight')->isChecked() && !$info->getView()->get('editmode');
         $id = $info->getView()->get('brick')->getId() . '-' . $info->getView()->get('brick')->getIndex();

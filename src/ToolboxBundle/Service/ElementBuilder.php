@@ -10,11 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 class ElementBuilder
 {
     /**
-     * @var ConfigManager
-     */
-    var $configManager;
-
-    /**
      * @var Translator
      */
     var $translator;
@@ -32,18 +27,15 @@ class ElementBuilder
     /**
      * ElementBuilder constructor.
      *
-     * @param ConfigManager   $configManager
      * @param Translator      $translator
      * @param TagRenderer     $tagRenderer
      * @param EngineInterface $templating
      */
     public function __construct(
-        ConfigManager $configManager,
         Translator $translator,
         TagRenderer $tagRenderer,
         EngineInterface $templating
     ) {
-        $this->configManager = $configManager;
         $this->translator = $translator;
         $this->tagRenderer = $tagRenderer;
         $this->templating = $templating;
@@ -53,22 +45,17 @@ class ElementBuilder
      * @param      $type
      * @param      $name
      * @param Info $info
+     * @param array $configNode
      *
      * @return string
      */
-    public function buildElementConfig($type, $name, Info $info)
+    public function buildElementConfig($type, $name, Info $info, $configNode = [])
     {
-        if($info->getView()->get('editmode') === FALSE ) {
+        if ($info->getView()->get('editmode') === FALSE) {
             return FALSE;
         }
 
-        //transform dash to camelcase (like google-map => googleMap
-        $type = lcfirst(implode('', array_map('ucfirst', explode('-', $type))));;
-
         $userConfigElements = [];
-
-        $configNode = $this->configManager->getConfig('areas')[$type];
-
         $configWindowSize = NULL;
 
         if (!empty($configNode)) {
@@ -107,9 +94,9 @@ class ElementBuilder
 
         $fieldSetArgs = [
             'configElements' => $config,
-            'elementTitle' => $name,
-            'windowSize' => $windowSize,
-            'document' => $info->getDocument()
+            'elementTitle'   => $name,
+            'windowSize'     => $windowSize,
+            'document'       => $info->getDocument()
         ];
 
         return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
@@ -134,11 +121,11 @@ class ElementBuilder
             $elValid = TRUE;
 
             if (!isset($c['type'])) {
-                throw new \Exception('toolbox config type (' . $type . ') is not set.');
+                throw new \Exception('areaBrick  type for ' . $type . ' is not defined.');
             }
 
             if (!isset($c['config'])) {
-                throw new \Exception('toolbox config not is not set.');
+                throw new \Exception('areaBrick configuration for ' . $type . ' is not defined.');
             }
 
             $elConf['type'] = $c['type'];

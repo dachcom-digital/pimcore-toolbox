@@ -9,8 +9,7 @@ class LinkList extends AbstractAreabrick
 {
     public function action(Info $info)
     {
-        $view = $info->getView();
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
+        parent::action($info);
     }
 
     public function getViewTemplate()

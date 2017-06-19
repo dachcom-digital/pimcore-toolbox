@@ -9,12 +9,13 @@ class Gallery extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
         $view->galleryId = 'gallery-' . uniqid();
         $view->images = $this->getAssetArray(
             $this->getDocumentTag($info->getDocument(),'multihref', 'images')->getElements()
         );
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
     }
 
     public function getName()

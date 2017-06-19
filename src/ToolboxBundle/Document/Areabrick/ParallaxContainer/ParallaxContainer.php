@@ -9,6 +9,8 @@ class ParallaxContainer extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
@@ -49,7 +51,6 @@ class ParallaxContainer extends AbstractAreabrick
         $view->frontElements = $frontElements;
         $view->sectionContent = $this->_buildSectionContent($info, $templating, $translator);
 
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
     }
 
     /**

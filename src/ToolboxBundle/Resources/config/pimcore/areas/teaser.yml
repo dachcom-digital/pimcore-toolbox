@@ -1,3 +1,9 @@
+services:
+    toolbox.area.brick.teaser:
+        parent: toolbox.area.brick.base_brick
+        class: ToolboxBundle\Document\Areabrick\Teaser\Teaser
+        tags:
+            - { name: pimcore.area.brick, id: teaser }
 toolbox:
     areas:
         teaser:

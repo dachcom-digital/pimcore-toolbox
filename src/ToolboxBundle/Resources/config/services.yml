@@ -19,14 +19,7 @@ services:
         arguments: ['@request_stack', '@pimcore.locale']
     toolbox.elementBuilder:
         class: ToolboxBundle\Service\ElementBuilder
-        arguments: ['@toolbox.configManager', '@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
-
-    # toolbox area bricks
-    toolbox.area.brick.accordion:
-        class: ToolboxBundle\Document\Areabrick\Accordion\Accordion
-        arguments: ['@logger']
-        tags:
-            - { name: pimcore.area.brick, id: accordion }
+        arguments: ['@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
 
     # twig extensions
     toolbox.twig.extension.areablock_configuration:
@@ -54,3 +47,10 @@ services:
             - [setPimcoreContextResolver, ['@pimcore.service.request.pimcore_context_resolver']]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelRequest }
+
+    # base brick
+    toolbox.area.brick.base_brick:
+        abstract:  true
+        calls:
+            - [setElementBuilder, ['@toolbox.elementBuilder']]
+            - [setConfigManager, ['@toolbox.configManager']]

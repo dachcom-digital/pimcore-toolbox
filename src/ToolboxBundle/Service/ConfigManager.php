@@ -2,6 +2,8 @@
 
 namespace ToolboxBundle\Service;
 
+use Symfony\Component\Finder\Finder;
+
 class ConfigManager
 {
     /**
@@ -10,11 +12,31 @@ class ConfigManager
     private $config;
 
     /**
+     * @var string
+     */
+    private $areaNamespace = NULL;
+
+    const AREABRICK_NAMESPACE_INTERNAL = 'areas';
+
+    const AREABRICK_NAMESPACE_EXTERNAL = 'custom_areas';
+
+    /**
      * @param array $config
      */
     public function setConfig($config = [])
     {
         $this->config = $config;
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return $this
+     */
+    public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL)
+    {
+        $this->areaNamespace = $namespace;
+        return $this;
     }
 
     /**
@@ -34,7 +56,8 @@ class ConfigManager
      */
     public function getAreaConfig($areaName = '')
     {
-        return $this->config['areas'][$areaName];
+        $this->checkConfigNamespace();
+        return $this->config[$this->areaNamespace][$areaName];
     }
 
     /**
@@ -45,7 +68,8 @@ class ConfigManager
      */
     public function getAreaElementConfig($areaName = '', $configElementName = '')
     {
-        return $this->config['areas'][$areaName]['configElements'][$configElementName];
+        $this->checkConfigNamespace();
+        return $this->config[$this->areaNamespace][$areaName]['configElements'][$configElementName];
     }
 
     /**
@@ -55,7 +79,35 @@ class ConfigManager
      */
     public function getAreaParameterConfig($areaName = '')
     {
-        return $this->config['areas'][$areaName]['configParameter'];
+        $this->checkConfigNamespace();
+        return $this->config[$this->areaNamespace][$areaName]['configParameter'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidCoreBricks()
+    {
+        $areaBricks = [];
+        $finder = new Finder();
+        $finder->name('*.yml');
+
+        /** @var \Symfony\Component\Finder\SplFileInfo $file */
+        foreach ($finder->in(dirname(__DIR__) . '/Resources/config/pimcore/areas') as $file) {
+            $areaBricks[] = str_replace('.' . $file->getExtension(), '', $file->getFilename());
+        }
+
+        return $areaBricks;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function checkConfigNamespace()
+    {
+        if(is_null($this->areaNamespace)) {
+            throw new \Exception('configManger has no defined namespace.');
+        }
     }
 
 }

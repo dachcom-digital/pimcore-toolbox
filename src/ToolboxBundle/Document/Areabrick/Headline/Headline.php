@@ -9,11 +9,11 @@ class Headline extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
 
         $anchorName = NULL;
-
         $anchorNameElement = $this->getDocumentTag($info->getDocument(),'input', 'anchorName');
 
         if(!$anchorNameElement->isEmpty()) {

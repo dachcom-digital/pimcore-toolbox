@@ -10,8 +10,9 @@ class Video extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
+
         $view = $info->getView();
-        $view->elementConfigBar = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info);
 
         /** @var \ToolboxBundle\Model\Document\Tag\Vhs $videoTag */
         $videoTag = $this->getDocumentTag($info->getDocument(),'vhs', 'video');
