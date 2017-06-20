@@ -242,7 +242,7 @@ class BrickConfigBuilder
         $el = $this->tagRenderer->getTag($this->info->getDocument(), $config['type'], $config['name']);
 
         //force default (only if it returns false. checkboxes may return an empty string and are impossible to track into default mode
-        if (!empty($defaultConfigValue) && ($el->isEmpty() === FALSE)) {
+        if (!empty($defaultConfigValue) && ($el->isEmpty() === TRUE)) {
             $el->setDataFromResource($defaultConfigValue);
         }
 
@@ -300,7 +300,7 @@ class BrickConfigBuilder
             return $configElements;
         }
 
-        foreach ($configElements as $el) {
+        foreach ($configElements as $configElementName => $el) {
 
             //no conditions? add it!
             if (empty($el['additional_config']['conditions'])) {
@@ -336,9 +336,7 @@ class BrickConfigBuilder
                 $filteredData[] = $el;
             } else {
                 //we need to reset value, if possible!
-                self::resetElement($el['tag_config']);
-                $el['tag_config']['editmode_hidden'] = TRUE;
-                $filteredData[] = $el;
+                $filteredData[] = self::resetElement($el);
             }
         }
 
@@ -358,8 +356,8 @@ class BrickConfigBuilder
         }
 
         foreach ($elements as $el) {
-            if ($el['name'] === $name) {
-                return $el['selected_value'];
+            if ($el['additional_config']['name'] === $name) {
+                return $el['additional_config']['selected_value'];
             }
         }
 
@@ -369,38 +367,14 @@ class BrickConfigBuilder
     /**
      * @param $el
      *
-     * @return string
+     * @return mixed
      */
     private function resetElement($el)
     {
-        print_r($this->info->getType());
-
-        $value = !empty($el['default']) ? $el['default'] : NULL;
-
-        $el = $this->tagRenderer->getTag($this->info->getDocument(), 'select', $el['name'])->setDataFromResource($value);
-        $elConf['selected_value'] = $value;
-
-        /*
-        switch ($el['type']) {
-            case 'select':
-                $el = $this->tagRenderer->getTag($info->getDocument(), 'select', $el['name'])->setDataFromResource($value);
-                $elConf['selected_value'] = $value;
-                break;
-            case 'checkbox':
-                $el = $this->tagRenderer->getTag($info->getDocument(), 'checkbox', $el['name'])->setDataFromResource($value);
-                $elConf['selected_value'] = $value;
-                break;
-            case 'input':
-                $el = $this->tagRenderer->getTag($info->getDocument(), 'input', $el['name'])->setDataFromResource($value);
-                $elConf['selected_value'] = $value;
-                break;
-            case 'numeric':
-                $el = $this->tagRenderer->getTag($info->getDocument(), 'numeric', $el['name'])->setDataFromResource($value);
-                $elConf['selected_value'] = $value;
-                break;
-        }
-
-        */
+        $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : NULL;
+        $this->tagRenderer->getTag($this->info->getDocument(), $el['additional_config']['type'], $el['additional_config']['name'])->setDataFromResource($value);
+        $el['additional_config']['selected_value'] = $value;
+        $el['additional_config']['editmode_hidden'] = TRUE;
 
         return $el;
     }

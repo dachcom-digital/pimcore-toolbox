@@ -1,3 +1,5 @@
+{% spaceless %}
+
 {% if config_elements %}
 
     <div class="toolbox-element-edit-button" data-title="{{ document_editable_name }}"></div>
@@ -28,7 +30,7 @@
                 {% endif %}
 
                 <div class="toolbox-element" data-reload="{{ config_element.additional_config.edit_reload == true ? 'true' : 'false' }}">
-                    <div class="{{ config_element.additional_config.col_class }}">
+                    <div class="{{ edit_mode_hidden_class }} {{ config_element.additional_config.col_class }}">
 
                     <label>{{ config_element.additional_config.title }}</label>
                     {% include '@Toolbox/Admin/AreaConfig/Elements/tag.html.twig' with {'type' : config_element.additional_config.type, 'tag_name' : config_element.additional_config.name, 'tag_config': config_element.tag_config} %}
@@ -41,7 +43,7 @@
                 </div><!-- .toolbox-element -->
 
                 {% if half_counter == 0 or half_counter == 2 %}
-                    {% set edit_mode_hidden_class = config_elements.tag_config[ c+1 ] is defined and config_elements.tag_config[c+1].editmode_hidden == true ? 'editmode-hidden' : '' %}
+                    {% set edit_mode_hidden_class = config_elements[c+1].additional_config is defined and config_elements[c+1].additional_config.editmode_hidden == true ? 'editmode-hidden' : '' %}
                     </div><div class="t-row clearfix {{ edit_mode_hidden_class }}" data-index="{{ row_counter }}">
 
                 {% endif %}
@@ -59,3 +61,5 @@
     </div><!-- .toolbox-element-window -->
 
 {% endif %}
+
+{% endspaceless %}
