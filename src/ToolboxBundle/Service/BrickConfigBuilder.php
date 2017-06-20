@@ -108,10 +108,10 @@ class BrickConfigBuilder
         }
 
         $fieldSetArgs = [
-            'config_elements' => $this->parseConfigElements(),
-            'document_editable_name'   => $this->documentEditableName,
-            'window_size'     => $this->configWindowSize,
-            'document'        => $info->getDocument()
+            'config_elements'        => $this->parseConfigElements(),
+            'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
+            'window_size'            => $this->configWindowSize,
+            'document'               => $info->getDocument()
         ];
 
         return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
@@ -120,6 +120,7 @@ class BrickConfigBuilder
     private function getConfigWindowSize()
     {
         $configWindowSize = isset($this->configParameter['windowSize']) ? (string)$this->configParameter['windowSize'] : NULL;
+
         return !is_null($configWindowSize) ? $configWindowSize : 'small';
     }
 
@@ -130,7 +131,8 @@ class BrickConfigBuilder
 
     private function canHaveDynamicWidth($type)
     {
-        return in_array($type, ['multihref', 'href', 'image', 'input', 'multiselect', 'numeric', 'embed', 'pdf', 'renderlet', 'select', 'snippet', 'table', 'textarea', 'video', 'wysiwyg', 'parallaximage']);
+        return in_array($type,
+            ['multihref', 'href', 'image', 'input', 'multiselect', 'numeric', 'embed', 'pdf', 'renderlet', 'select', 'snippet', 'table', 'textarea', 'video', 'wysiwyg', 'parallaximage']);
     }
 
     private function canHaveDynamicHeight($type)
@@ -168,7 +170,7 @@ class BrickConfigBuilder
         //check store
         if ($this->needStore($type) && isset($parsedConfig['store']) && !is_null($parsedConfig['store'])) {
 
-            if(empty($parsedConfig['store'])) {
+            if (empty($parsedConfig['store'])) {
                 throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
             }
 
@@ -183,7 +185,6 @@ class BrickConfigBuilder
             }
 
             $parsedConfig['store'] = $store;
-
         } else {
             unset($parsedConfig['store']);
         }
@@ -220,6 +221,16 @@ class BrickConfigBuilder
         //set editmode hidden to false on initial state
         $parsedConfig['editmode_hidden'] = FALSE;
 
+        //translate title
+        if (!empty($parsedConfig['title'])) {
+            $parsedConfig['title'] = $this->translator->trans($parsedConfig['title'], [], 'admin');
+        }
+
+        //translate description
+        if (!empty($parsedConfig['description'])) {
+            $parsedConfig['description'] = $this->translator->trans($parsedConfig['description'], [], 'admin');
+        }
+
         //set config element name
         $parsedConfig['name'] = $configElementName;
 
@@ -248,7 +259,7 @@ class BrickConfigBuilder
 
         $value = NULL;
 
-        switch($config['type']) {
+        switch ($config['type']) {
 
             case 'checkbox' :
                 $value = $el->isChecked();
@@ -260,14 +271,13 @@ class BrickConfigBuilder
         $config['selected_value'] = !empty($value) ? $value : $defaultConfigValue;
 
         return $config;
-
     }
 
     private function parseInternalTypes($elConf)
     {
-        if($elConf['type'] === 'additionalClasses') {
+        if ($elConf['type'] === 'additionalClasses') {
             $elConf['type'] = 'input';
-            $elConf['title'] = $this->translator->trans('Additional', [], 'admin');
+            $elConf['title'] = 'Additional';
             $elConf['name'] = $this->documentEditableId . 'AdditionalClasses';
         }
 
