@@ -10,23 +10,23 @@ toolbox:
             configElements:
                 downloads:
                     type: multihref
+                    title: Files
                     config:
-                        title: Files
                         reload: true
                 showPreviewImages:
                     type: checkbox
+                    title: Show preview images
                     config:
-                        title: Show preview images
                         reload: false
                 showFileInfo:
                     type: checkbox
+                    title: Show file info
                     config:
-                        title: Show file info
                         reload: false
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~
             configParameter:
                 # eventTracker:
                     # category: 'PDF'

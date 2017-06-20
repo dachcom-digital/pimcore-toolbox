@@ -10,6 +10,6 @@ toolbox:
             configElements:
                 fullWidthContainer:
                     type: checkbox
+                    title: Fluid Container (Full Width)
                     config:
-                        title: Fluid Container (Full Width)
                         reload: true

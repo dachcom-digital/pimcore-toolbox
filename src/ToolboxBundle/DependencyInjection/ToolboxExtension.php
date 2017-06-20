@@ -17,7 +17,7 @@ class ToolboxExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $configManagerDefinition = $container->getDefinition('toolbox.configManager');
+        $configManagerDefinition = $container->getDefinition('toolbox.config_manager');
         $configManagerDefinition->addMethodCall('setConfig', [ $config ]);
     }
 

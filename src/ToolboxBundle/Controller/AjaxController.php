@@ -2,8 +2,10 @@
 
 namespace ToolboxBundle\Controller;
 
-use Pimcore\Controller\FrontendController;
+use Pimcore\Config;
 use Symfony\Component\HttpFoundation\Request;
+use Pimcore\Controller\FrontendController;
+use ToolboxBundle\Service\ConfigManager;
 
 class AjaxController extends FrontendController
 {
@@ -28,8 +30,9 @@ class AjaxController extends FrontendController
      */
     public function videoGetTypesAction(Request $request)
     {
-        $toolboxConfig = $this->container->get('toolbox.configManager');
-        $videoAreaSettings = $toolboxConfig->getAreaParameterConfig('video');
+        /** @var ConfigManager $toolboxConfig */
+        $toolboxConfig = $this->container->get('toolbox.config_manager');
+        $videoAreaSettings = $toolboxConfig->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['videoTypes'];
         $allowedVideoTypes = [];

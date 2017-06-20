@@ -4,42 +4,42 @@ toolbox:
             configElements:
                 template:
                     type: select
+                    title: Section Template
                     config:
-                        title: Section Template
                         reload: true
-                        default: no-template
-                        values:
+                        store:
                             no-template: No Template
+                        default: no-template
                 containerType:
                     type: select
+                    title: Section Wrapper Type
                     config:
-                        title: Section Wrapper Type
                         reload: true
-                        default: none
                         description: If you need to add some content columns, apply a default or fluid container as wrapper.
-                        values:
+                        store:
                             none: No Section Wrapper
                             container: Default Container Wrapper
                             container-fluid: Fluid Container Wrapper
+                        default: none
                 backgroundImage:
                     type: href
+                    title: Background Image
                     config:
-                        title: Background Image
+                        reload: true
                         types:
                           - asset
                         subtypes:
                             asset:
                               - image
                               - video
-                        reload: true
                 backgroundColor:
                     type: select
+                    title: Background Color
                     config:
-                        title: Background Color
                         reload: true
-                        default: no-background-color
-                        values:
+                        store:
                             no-background-color: No Background Color
+                        default: no-background-color
             configParameter:
                 backgroundImageMode: data
                 backgroundColorMode: data

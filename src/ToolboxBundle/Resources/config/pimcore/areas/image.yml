@@ -10,17 +10,17 @@ toolbox:
             configElements:
                 useLightbox:
                     type: checkbox
+                    title: Use Lightbox
+                    col_class: t-col-half
                     config:
-                        title: Use Lightbox
-                        col-class: t-col-half
                         reload: false
                 showCaption:
                     type: checkbox
+                    title: Display Caption
+                    col_class: t-col-half
                     config:
-                        title: Display Caption
-                        col-class: t-col-half
                         reload: false
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~

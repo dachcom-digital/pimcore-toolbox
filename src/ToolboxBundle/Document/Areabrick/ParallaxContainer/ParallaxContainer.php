@@ -91,7 +91,9 @@ class ParallaxContainer extends AbstractAreabrick
 
             if ($info->getView()->get('editmode') === TRUE) {
 
-                $sectionConfig = $this->getElementBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info);
+                $configNode = $this->getConfigManager()->getAreaConfig('parallaxContainerSection');
+                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info, $configNode);
+
                 if ($containerWrapper === 'none' && strpos($areaBlock, 'toolbox-columns') !== FALSE) {
                     $message = $translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
                     $messageWrap = $templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), ['type' => 'danger', 'message' => $message, 'document' => $info->getDocument()]);

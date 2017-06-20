@@ -10,10 +10,9 @@ toolbox:
             configElements:
                 slidesPerView:
                     type: select
+                    title: Slides per View
                     config:
-                        name: slidesPerView
-                        title: Slides per View
-                        values:
+                        store:
                             '2': 2 Columns
                             '3': 3 Columns
                             '4': 4 Columns
@@ -21,8 +20,8 @@ toolbox:
                         default: '4'
                 equalHeight:
                     type: checkbox
+                    title: Equal heights?
                     config:
-                        title: Equal heights?
                         reload: false
             configParameter:
                 columnClasses:

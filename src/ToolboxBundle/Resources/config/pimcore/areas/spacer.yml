@@ -10,14 +10,15 @@ toolbox:
             configElements:
                 spacerClass:
                     type: select
+                    title: Space Class
                     config:
-                        title: Space Class
-                        values:
+                        reload: false
+                        store:
                             spacer-none: No Space
                             spacer-50: 50 Pixel
                         default: spacer-none
-                        reload: false
+
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~

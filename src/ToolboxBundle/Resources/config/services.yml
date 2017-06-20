@@ -8,41 +8,52 @@ services:
             - { name: monolog.logger }
 
     # toolbox services
-    toolbox.configManager:
+    toolbox.config_manager:
         class: ToolboxBundle\Service\ConfigManager
         arguments: []
-    toolbox.areaManager:
+        public: false
+    toolbox.area_manager:
         class: ToolboxBundle\Service\AreaManager
-        arguments: ['@toolbox.configManager', '@pimcore.area.brick_manager']
-    toolbox.i18nManager:
+        arguments: ['@toolbox.config_manager', '@pimcore.area.brick_manager']
+        public: false
+    toolbox.i18n_manager:
         class: ToolboxBundle\Service\I18nManager
         arguments: ['@request_stack', '@pimcore.locale']
-    toolbox.elementBuilder:
-        class: ToolboxBundle\Service\ElementBuilder
+        public: false
+    toolbox.brick_config_builder:
+        class: ToolboxBundle\Service\BrickConfigBuilder
+        shared: false
         arguments: ['@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
 
     # twig extensions
     toolbox.twig.extension.areablock_configuration:
         class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
-        arguments: ['@toolbox.configManager', '@toolbox.areaManager']
+        public: false
+        arguments: ['@toolbox.config_manager', '@toolbox.area_manager']
         tags:
             - { name: twig.extension }
-
     toolbox.twig.extension.download:
         class: ToolboxBundle\Twig\Extension\DownloadExtension
-        arguments: ['@toolbox.configManager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
+        public: false
+        arguments: ['@toolbox.config_manager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
+        tags:
+            - { name: twig.extension }
+    toolbox.twig.extension.document_tag_extender:
+        class: ToolboxBundle\Twig\Extension\DocumentTagExtension
+        public: false
+        parent: pimcore.twig.extension.document_tag
         tags:
             - { name: twig.extension }
 
     # event listener
     toolbox.event_listener.frontend.path.document:
         class: ToolboxBundle\EventListener\FrontendPathListener
-        arguments: ['@toolbox.i18nManager']
+        arguments: ['@toolbox.i18n_manager']
         tags:
             - { name: kernel.event_listener, event: pimcore.frontend.path.document, method: checkPath }
     toolbox.event_listener.kernel_request:
         class: ToolboxBundle\EventListener\I18nRedirect
-        arguments: ['@pimcore.service.request.document_resolver', '@toolbox.i18nManager']
+        arguments: ['@pimcore.service.request.document_resolver', '@toolbox.i18n_manager']
         calls:
             - [setPimcoreContextResolver, ['@pimcore.service.request.pimcore_context_resolver']]
         tags:
@@ -52,5 +63,4 @@ services:
     toolbox.area.brick.base_brick:
         abstract:  true
         calls:
-            - [setElementBuilder, ['@toolbox.elementBuilder']]
-            - [setConfigManager, ['@toolbox.configManager']]
+            - [setConfigManager, ['@toolbox.config_manager']]

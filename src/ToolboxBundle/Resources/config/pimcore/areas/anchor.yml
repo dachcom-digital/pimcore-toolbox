@@ -10,9 +10,9 @@ toolbox:
             configElements:
                 anchorName:
                     type: input
-                    config:
-                        title: Anchor Name
+                    title: Anchor Name
+                    config: ~
                 anchorTitle:
                     type: input
-                    config:
-                        title: Anchor Title
+                    title: Anchor Title
+                    config: ~

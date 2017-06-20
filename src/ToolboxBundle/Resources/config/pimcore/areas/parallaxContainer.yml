@@ -10,16 +10,16 @@ toolbox:
             configElements:
                 template:
                     type: select
+                    title: Parallax Template
                     config:
-                        title: Parallax Template
                         reload: true
-                        default: no-template
-                        values:
+                        store:
                             no-template: No Template
+                        default: no-template
                 backgroundImage:
                     type: href
+                    title: Background Image
                     config:
-                        title: Background Image
                         types:
                           - asset
                         subtypes:
@@ -29,16 +29,16 @@ toolbox:
                         reload: true
                 backgroundColor:
                     type: select
+                    title: Background Color
                     config:
-                        title: Background Color
                         reload: true
-                        default: no-background-color
-                        values:
+                        store:
                             no-background-color: No Background Color
+                        default: no-background-color
                 imageFront:
                     type: parallaximage
+                    title: Images In Front Of Main Container
                     config:
-                        title: Images In Front Of Main Container
                         position:
                             top-left: Top Left
                             top-center: Top Center
@@ -56,8 +56,8 @@ toolbox:
                         reload: true
                 imagesBehind:
                     type: parallaximage
+                    title: Images Behind Main Container
                     config:
-                        title: Images Behind Main Container
                         position:
                             top-left: Top Left
                             top-center: Top Center

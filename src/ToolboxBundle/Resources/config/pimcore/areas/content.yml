@@ -11,4 +11,4 @@ toolbox:
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~

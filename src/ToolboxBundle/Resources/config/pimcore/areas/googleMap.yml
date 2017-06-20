@@ -10,8 +10,8 @@ toolbox:
             configElements:
                 mapZoom:
                     type: numeric
+                    title: Map zoom
                     config:
-                        title: Map zoom
                         width: 100
                         minValue: 0
                         maxValue: 19
@@ -20,19 +20,19 @@ toolbox:
                         reload: false
                 mapType:
                     type: select
+                    title: Map type
                     config:
-                        title: Map type
                         reload: true
-                        default: roadmap
-                        values:
+                        store:
                             roadmap: ROADMAP
                             satellite: SATELLITE
                             hybrid: HYBRID
                             terrain: TERRAIN
+                        default: roadmap
                 iwOnInit:
                     type: checkbox
+                    title: Open Info Window by Default
                     config:
-                        title: Open Info Window by Default
                         reload: false
             configParameter:
                 mapOptions:

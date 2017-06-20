@@ -63,7 +63,7 @@ class SettingsController extends Controller\AdminController
      */
     private function setData()
     {
-        $toolboxConfig = $this->container->get('toolbox.configManager');
+        $toolboxConfig = $this->container->get('toolbox.config_manager');
         $ckEditorSettings = $toolboxConfig->getConfig('ckeditor');
 
         $ckEditorGlobalConfig = $ckEditorSettings['config'];

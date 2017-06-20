@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Model\Document\Tag;
 
 use Pimcore\Model\Document;
+use ToolboxBundle\Service\ConfigManager;
 
 class GoogleMap extends Document\Tag
 {
@@ -43,10 +44,9 @@ class GoogleMap extends Document\Tag
         $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
         $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
-        /** @fixme: load config like that? */
-        $configManager = \Pimcore::getContainer()->get('toolbox.configManager');
-
-        $configNode = $configManager->getAreaParameterConfig('googleMap');
+        /** @var ConfigManager $configManager */
+        $configManager = \Pimcore::getContainer()->get('toolbox.config_manager');
+        $configNode = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {
 

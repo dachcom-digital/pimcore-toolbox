@@ -6,15 +6,9 @@ use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
 use ToolboxBundle\Service\ConfigManager;
-use ToolboxBundle\Service\ElementBuilder;
 
 abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 {
-    /**
-     * @var ElementBuilder
-     */
-    var $elementBuilder;
-
     /**
      * @var ConfigManager
      */
@@ -46,22 +40,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param ElementBuilder $elementBuilder
-     */
-    public function setElementBuilder(ElementBuilder $elementBuilder)
-    {
-        $this->elementBuilder = $elementBuilder;
-    }
-
-    /**
-     * @return ElementBuilder
-     */
-    public function getElementBuilder()
-    {
-        return $this->elementBuilder;
-    }
-
-    /**
      * @param ConfigManager $configManager
      */
     public function setConfigManager(ConfigManager $configManager)
@@ -82,14 +60,22 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
+     * @return \ToolboxBundle\Service\BrickConfigBuilder
+     */
+    public function getBrickConfigBuilder()
+    {
+        return $this->container->get('toolbox.brick_config_builder');
+    }
+
+    /**
      * @param Info $info
      *
      * @throws \Exception
      */
     public function action(Info $info)
     {
-        if(!$this->getElementBuilder() instanceof ElementBuilder) {
-            throw new \Exception('please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
+        if(!$this->getConfigManager() instanceof ConfigManager) {
+            throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
         } else if($this->areaBrickType == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');
         } else if($this->areaBrickType == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
@@ -97,8 +83,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         }
 
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
+        $configWindowData = $this->getBrickConfigBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode);
 
-        $configWindowData = $this->getElementBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode);
         $view = $info->getView();
         $view->elementConfigBar = $configWindowData;
     }

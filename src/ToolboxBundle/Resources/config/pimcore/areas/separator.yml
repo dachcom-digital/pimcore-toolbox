@@ -10,9 +10,9 @@ toolbox:
             configElements:
                 space:
                     type: select
+                    title: Space before & after separator
                     config:
-                        title: Space before & after separator
-                        values:
+                        store:
                             default: Default
                             medium: Medium
                             large: Large
@@ -20,4 +20,4 @@ toolbox:
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~

@@ -10,10 +10,10 @@ toolbox:
             configElements:
                 headlineType:
                     type: select
+                    title: Headline Size
                     config:
                         name: headlineType
-                        title: Headline Size
-                        values:
+                        store:
                             h1: Headline 1
                             h2: Headline 2
                             h3: Headline 3
@@ -23,9 +23,9 @@ toolbox:
                         default: h3
                 anchorName:
                     type: input
-                    config:
-                        title: Anchor Name
+                    title: Anchor Name
+                    config: ~
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~

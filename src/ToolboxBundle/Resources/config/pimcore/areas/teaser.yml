@@ -10,27 +10,27 @@ toolbox:
             configElements:
                 type:
                     type: select
+                    title: Type
                     config:
                         name: type
-                        title: Type
-                        values:
+                        store:
                             direct: Direct
                             snippet: Snippet
                         default: direct
                 layout:
                     type: select
+                    title: Layout
+                    conditions:
+                        - type: direct
                     config:
-                        title: Layout
-                        values:
+                        store:
                             default: Default
                         default: default
-                        conditions:
-                          - type: direct
                 useLightBox:
                     type: checkbox
-                    config:
-                        title: use Lightbox?
+                    title: use Lightbox?
+                    config: ~
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: []

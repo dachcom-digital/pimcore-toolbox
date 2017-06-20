@@ -12,16 +12,41 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('toolbox');
 
-        $allowedTypes = [
-            'select',
-            'additionalClasses',
+        $coreTypes = [
+            'areablock',
+            'area',
+            'block',
             'checkbox',
-            'input',
-            'numeric',
+            'date',
             'href',
-            'multihref',
-            'parallaximage',
+            'image',
+            'input',
+            'link',
+            'multihref', // has default
+            'multiselect', // has default
+            'numeric',
+            'embed',
+            'pdf',
+            'renderlet',
+            'select',
+            'snippet',
+            'table',
+            'textarea',
+            'video',
+            'wysiwyg'
         ];
+
+        $customTypes = [
+            'additionalClasses',
+            'parallaximage',
+            'googlemap',
+            'vhs',
+            'dynamiclink',
+
+        ];
+
+        //@todo: get them dynamically!!
+        $allowedTypes = array_merge($coreTypes, $customTypes);
 
         $rootNode
             ->children()
@@ -32,12 +57,14 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('configElements')
                                 ->useAttributeAsKey('name')
                                 ->prototype('array')
-
                                     ->children()
                                         ->enumNode('type')->isRequired()->values($allowedTypes)->end()
-                                        ->variableNode('config')->end()
+                                        ->scalarNode('title')->defaultValue(NULL)->end()
+                                        ->scalarNode('description')->defaultValue(NULL)->end()
+                                        ->scalarNode('col_class')->defaultValue(NULL)->end()
+                                        ->variableNode('conditions')->defaultValue(NULL)->end()
+                                        ->variableNode('config')->defaultValue([])->end()
                                     ->end()
-                                    ->beforeNormalization()->castToArray()->end()
                                     ->validate()
                                         ->ifTrue(function($v) { return $v['enabled'] === FALSE; })
                                         ->thenUnset()
@@ -62,7 +89,11 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('array')
                                     ->children()
                                         ->enumNode('type')->isRequired()->values($allowedTypes)->end()
-                                        ->variableNode('config')->isRequired()->end()
+                                        ->scalarNode('title')->defaultValue(NULL)->end()
+                                        ->scalarNode('description')->defaultValue(NULL)->end()
+                                        ->scalarNode('col_class')->defaultValue(NULL)->end()
+                                        ->variableNode('conditions')->defaultValue(NULL)->end()
+                                        ->variableNode('config')->defaultValue([])->end()
                                     ->end()
                                     ->validate()
                                         ->ifTrue(function($v) { return $v['enabled'] === FALSE; })

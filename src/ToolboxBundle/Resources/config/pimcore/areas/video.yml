@@ -10,13 +10,13 @@ toolbox:
             configElements:
                 autoplay:
                     type: checkbox
+                    title: Autoplay?
                     config:
-                        title: Autoplay?
                         reload: false
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        values: []
+                        store: ~
             configParameter:
                 videoTypes:
                     asset:
