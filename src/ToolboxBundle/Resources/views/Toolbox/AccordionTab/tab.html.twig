@@ -17,7 +17,7 @@
 
                 {% else %}
 
-                    <a href="#tab-{{ id }}-{{ panel.getCurrentIndex() }}" aria-controls="home" role="tab" data-toggle="tab">
+                    <a href="#tab-{{ id }}-{{ panel.getCurrentIndex() }}" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}>
                         {{ pimcore_input('name').getData() }}
                     </a>
 
