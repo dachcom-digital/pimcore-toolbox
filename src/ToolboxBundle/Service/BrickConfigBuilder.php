@@ -213,26 +213,8 @@ class BrickConfigBuilder
         //remove tag area config.
         unset($config['config']);
 
-        $parsedConfig = $this->parseInternalTypes($config);
-
-        //set edit_reload to element reload setting
-        $parsedConfig['edit_reload'] = $this->hasReload;
-
-        //set editmode hidden to false on initial state
-        $parsedConfig['editmode_hidden'] = FALSE;
-
-        //translate title
-        if (!empty($parsedConfig['title'])) {
-            $parsedConfig['title'] = $this->translator->trans($parsedConfig['title'], [], 'admin');
-        }
-
-        //translate description
-        if (!empty($parsedConfig['description'])) {
-            $parsedConfig['description'] = $this->translator->trans($parsedConfig['description'], [], 'admin');
-        }
-
-        //set config element name
-        $parsedConfig['name'] = $configElementName;
+        //set element config data
+        $parsedConfig = $this->parseElementConfig($configElementName, $config);
 
         //set default
         $parsedConfig = $this->getSelectedValue($parsedConfig, $defaultConfigValue);
@@ -247,6 +229,12 @@ class BrickConfigBuilder
         return $parsedConfig;
     }
 
+    /**
+     * @param $config
+     * @param $defaultConfigValue
+     *
+     * @return mixed
+     */
     private function getSelectedValue($config, $defaultConfigValue)
     {
         /** @var \Pimcore\Model\Document\Tag\* $el */
@@ -273,12 +261,39 @@ class BrickConfigBuilder
         return $config;
     }
 
-    private function parseInternalTypes($elConf)
+    /**
+     * @param $configElementName
+     * @param $elConf
+     *
+     * @return mixed
+     */
+    private function parseElementConfig($configElementName, $elConf)
     {
         if ($elConf['type'] === 'additionalClasses') {
-            $elConf['type'] = 'input';
+            $elConf['type'] = 'select';
             $elConf['title'] = 'Additional';
-            $elConf['name'] = $this->documentEditableId . 'AdditionalClasses';
+            $elementName = $this->documentEditableId . 'AdditionalClasses';
+        } else {
+            $elementName = $configElementName;
+        }
+
+        //set config element name
+        $elConf['name'] = $elementName;
+
+        //set edit_reload to element reload setting
+        $elConf['edit_reload'] = $this->hasReload;
+
+        //set editmode hidden to false on initial state
+        $elConf['editmode_hidden'] = FALSE;
+
+        //translate title
+        if (!empty($elConf['title'])) {
+            $elConf['title'] = $this->translator->trans($elConf['title'], [], 'admin');
+        }
+
+        //translate description
+        if (!empty($elConf['description'])) {
+            $elConf['description'] = $this->translator->trans($elConf['description'], [], 'admin');
         }
 
         return $elConf;
