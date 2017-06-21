@@ -33,4 +33,4 @@ toolbox:
                 additionalClasses:
                     type: additionalClasses
                     config:
-                        store: []
+                        store: ~
