@@ -27,7 +27,7 @@ class GlobalLink
         $globalString = 'global';
 
         //is not global and is not ISO 3166-1.
-        if($currentCountry !== $globalString || strlen($currentCountry) !== 2){
+        if(strtolower($currentCountry) !== $globalString || strlen($currentCountry) !== 2){
             $currentCountry = NULL;
         }
 
