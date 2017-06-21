@@ -24,6 +24,13 @@ class GlobalLink
             $currentCountry = self::checkRequestUri('country');
         }
 
+        $globalString = 'global';
+
+        //is not global and is not ISO 3166-1.
+        if($currentCountry !== $globalString || strlen($currentCountry) !== 2){
+            $currentCountry = NULL;
+        }
+
         $currentLanguage = NULL;
 
         if (\Zend_Registry::isRegistered('Zend_Locale')) {
@@ -42,7 +49,6 @@ class GlobalLink
         $currentIsoCode = strtolower($currentCountry);
         $currentLangCode = strtolower($currentLanguage);
 
-        $globalString = 'global';
 
         $urlPath = parse_url($path, PHP_URL_PATH);
         $urlPathFragments = explode('/', ltrim($urlPath, '/'));
@@ -78,9 +84,10 @@ class GlobalLink
         //wrong country, right language
         if (!is_null($pathCountry) && $pathCountry !== $currentIsoCode && strtolower($pathLanguage) === $currentLangCode) {
             $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen('/' . $pathCountry . '-'));
-        } //right language, wrong country
+        } //right country, wrong language
         else if (!is_null($pathLanguage) && $pathLanguage !== $currentLangCode && (!empty($pathCountry) && $pathCountry === $currentIsoCode)) {
             $path = substr_replace($path, '/' . $currentIsoCode . '-' . $currentLangCode, 0, strlen('/' . $pathCountry . '-' . $pathLanguage));
+
         }
 
         return $path;
