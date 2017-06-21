@@ -1,5 +1,5 @@
 {{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-google-map {{ pimcore_select('googleMapAdditionalClasses').getData() }}">
+<div class="toolbox-element toolbox-google-map {{ pimcore_select('addlCls').getData() }}">
     {% include '@Toolbox/Toolbox/googleMap.html.twig' with {
     'mapZoom' : pimcore_numeric('mapZoom').getData(),
     'mapType' : pimcore_select('mapType').getData(),

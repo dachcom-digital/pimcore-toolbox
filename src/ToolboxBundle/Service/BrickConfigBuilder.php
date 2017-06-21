@@ -272,7 +272,7 @@ class BrickConfigBuilder
         if ($elConf['type'] === 'additionalClasses') {
             $elConf['type'] = 'select';
             $elConf['title'] = 'Additional';
-            $elementName = $this->documentEditableId . 'AdditionalClasses';
+            $elementName = 'addlCls';
         } else {
             $elementName = $configElementName;
         }

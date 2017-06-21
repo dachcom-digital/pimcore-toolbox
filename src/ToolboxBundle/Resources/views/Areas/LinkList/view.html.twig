@@ -1,5 +1,4 @@
 {{ elementConfigBar|raw }}
-{# @fixme: linklistAdditionalClasses is now linkListAdditionalClasses? add update note #}
-<div class="toolbox-element toolbox-linklist {{ pimcore_select('linklistAdditionalClasses').getData() }}">
+<div class="toolbox-element toolbox-linklist {{ pimcore_select('addlCls').getData() }}">
     {% include '@Toolbox/Toolbox/linkList.html.twig' %}
 </div>

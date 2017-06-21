@@ -1,4 +1,4 @@
 {{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-columns type-{{ type }}{{ pimcore_select('columnsAdditionalClasses').getData() }}{{ equalHeight == true ? ' equal-height' : '' }}">
+<div class="toolbox-element toolbox-columns type-{{ type }}{{ pimcore_select('addlCls').getData() }}{{ equalHeight == true ? ' equal-height' : '' }}">
     {% include '@Toolbox/Toolbox/columns.html.twig' %}
 </div>
