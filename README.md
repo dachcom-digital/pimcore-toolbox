@@ -15,6 +15,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 - add consistent and beautiful config elements
 - implement conditions to your config (for example: display a dropdown in config window if another checkbox has been checked)
 - add your custom bricks while using the toolbox config environment
+- removes the default `pimcore_area_*` element wrapper from each brick
 
 ### And what's not?
 - It's not a Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modifiy them by yourself.
@@ -144,6 +145,12 @@ class MyBrick extends AbstractAreabrick
 
 That's it. Sometimes you need to clear you cache, if the Brick won't show up.
 
+## i18n
+TBD.
+
+## Pimcore Fixes / Overrides
+- fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8)   bug (in somecases the iframe overlay field does not apply to the right position)
+- Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license
 Copyright: [DACHCOM.DIGITAL](http://dachcom-digital.ch)  
