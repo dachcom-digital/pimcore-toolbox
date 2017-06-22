@@ -39,7 +39,6 @@ class GlobalLink
         } else if ($checkRequestUri) {
             $currentLanguage = self::checkRequestUri('language');
         }
-
         //only parse if country in l10n is active!
         if (is_null($currentCountry)) {
             return $path;
@@ -57,8 +56,10 @@ class GlobalLink
             return $path;
         }
 
+        $i18nPart = $urlPathFragments[0];
+
         //explode first path fragment, assuming that the first part is language/country slug
-        $pathElements = explode('-', $urlPathFragments[0]);
+        $pathElements = explode('-', $i18nPart);
 
         //first needs to be country
         $pathCountry = isset($pathElements[0]) ? strtolower($pathElements[0]) : NULL;
@@ -66,8 +67,11 @@ class GlobalLink
         //second needs to be language.
         $pathLanguage = isset($pathElements[1]) ? strtolower($pathElements[1]) : NULL;
 
-        //wrong country, right language
-        if (!is_null($pathCountry) && $pathCountry !== $currentIsoCode && $pathLanguage === $currentLangCode && in_array($currentLangCode, $validLanguages)) {
+        //its just the global language page like /de/my-page. add country slug.
+        if(in_array($i18nPart, $validLanguages) && $currentIsoCode !== $globalString) {
+            $path = '/' . $currentIsoCode . '-' . ltrim($path, '/');
+        } //wrong country, right language
+        else if (!is_null($pathCountry) && $pathCountry !== $currentIsoCode && $pathLanguage === $currentLangCode && in_array($currentLangCode, $validLanguages)) {
             $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen('/' . $pathCountry . '-'));
         } //right country, wrong language
         else if (!is_null($pathLanguage) && $pathLanguage !== $currentLangCode && (!is_null($pathCountry) && $pathCountry === $currentIsoCode)) {
