@@ -16,6 +16,7 @@ class GlobalLink
      */
     public static function parse($path, $checkRequestUri = FALSE)
     {
+        $orgPath = $path;
         $currentCountry = NULL;
 
         if (\Zend_Registry::isRegistered('Website_Country')) {
@@ -27,7 +28,7 @@ class GlobalLink
         $globalString = 'global';
 
         //is not global and is not ISO 3166-1.
-        if(strtolower($currentCountry) !== $globalString || strlen($currentCountry) !== 2){
+        if(strtolower($currentCountry) !== $globalString && strlen($currentCountry) !== 2) {
             $currentCountry = NULL;
         }
 
@@ -49,14 +50,8 @@ class GlobalLink
         $currentIsoCode = strtolower($currentCountry);
         $currentLangCode = strtolower($currentLanguage);
 
-
         $urlPath = parse_url($path, PHP_URL_PATH);
         $urlPathFragments = explode('/', ltrim($urlPath, '/'));
-
-        //it's a global page, link is correct.
-        if ($currentIsoCode === $globalString) {
-            return $path;
-        }
 
         if (empty($urlPathFragments)) {
             return $path;
@@ -71,23 +66,16 @@ class GlobalLink
         //second needs to be language.
         $pathLanguage = isset($pathElements[1]) ? strtolower($pathElements[1]) : NULL;
 
-        //if 1. fragment is valid language and 2. fragment is invalid language, 1. fragment is missing!
-        if (!in_array($pathLanguage, $validLanguages) && in_array($pathCountry, $validLanguages)) {
-            return '/' . $currentIsoCode . '-' . ltrim($path, '/');
-        }
-
-        //it's a global page with "global-" in string. change it.
-        if (substr($path, 0, strlen($globalString) + 2) === '/' . $globalString . '-') {
-            return substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen($globalString) + 2);
-        }
-
         //wrong country, right language
-        if (!is_null($pathCountry) && $pathCountry !== $currentIsoCode && strtolower($pathLanguage) === $currentLangCode) {
+        if (!is_null($pathCountry) && $pathCountry !== $currentIsoCode && $pathLanguage === $currentLangCode && in_array($currentLangCode, $validLanguages)) {
             $path = substr_replace($path, '/' . $currentIsoCode . '-', 0, strlen('/' . $pathCountry . '-'));
         } //right country, wrong language
-        else if (!is_null($pathLanguage) && $pathLanguage !== $currentLangCode && (!empty($pathCountry) && $pathCountry === $currentIsoCode)) {
+        else if (!is_null($pathLanguage) && $pathLanguage !== $currentLangCode && (!is_null($pathCountry) && $pathCountry === $currentIsoCode)) {
             $path = substr_replace($path, '/' . $currentIsoCode . '-' . $currentLangCode, 0, strlen('/' . $pathCountry . '-' . $pathLanguage));
+        }
 
+        if($orgPath === $path) {
+            return $orgPath;
         }
 
         return $path;
