@@ -25,7 +25,7 @@
                         {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     {% endset %}
 
-                    {% set tabContent = tabContent|merge({ 'index': panel.getCurrentIndex(), 'content': content}) %}
+                    {% set tabContent = tabContent|merge([{ 'index': panel.getCurrentIndex(), 'content': content}]) %}
 
                 {% endif %}
 
