@@ -59,7 +59,6 @@
 }
 
 .toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block:not(.slick-initialized) {
-    max-height: 200px;
     overflow: hidden;
 }
 
