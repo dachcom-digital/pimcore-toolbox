@@ -15,7 +15,7 @@ class ParallaxContainer extends AbstractAreabrick
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
 
-        $parallaxBackground = $this->getDocumentTag($info->getDocument(), 'href', 'backgroundImage')->getELement();
+        $parallaxBackground = $this->getDocumentTag($info->getDocument(), 'href', 'backgroundImage')->getElement();
         $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'backgroundColor')->getData();
 
         $parallaxTemplate = $this->getDocumentTag($info->getDocument(), 'select', 'template')->getData();
