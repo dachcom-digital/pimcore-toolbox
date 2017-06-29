@@ -148,6 +148,64 @@ That's it. Sometimes you need to clear you cache, if the Brick won't show up.
 ## i18n
 TBD.
 
+## Global Link
+
+The global link extends the pimcore link element. It allows you to drag objects into the url field.
+Of course it's impossible to generate a valid url from objects, so you need to do some further work.
+
+**Configuration**  
+```yaml
+
+# /app/config/services.yml
+services:
+    app.event_listener.toolbox.dynamiclink.object.url:
+        class: AppBundle\EventListener\ObjectUrlListener
+        arguments: ['@router']
+        tags:
+            - { name: kernel.event_listener, event: toolbox.dynamiclink.object.url, method: checkUrl }
+```
+
+**Mapper**  
+This mapper will transformed your dragged object path into a valid frontend path. 
+You also need to setup a static route (in this case the `news_detail` route).
+
+```php
+<?php
+
+namespace AppBundle\EventListener;
+
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Pimcore\Model\Object;
+
+class ObjectUrlListener
+{
+    protected $generator;
+
+    public function __construct(UrlGeneratorInterface $generator)
+    {
+        $this->generator = $generator;
+    }
+
+    public function checkUrl(GenericEvent $e)
+    {
+        if ( $e->getArgument('className') === 'news') {
+            $obj = Object\News::getByPath($e->getArgument('path'));
+            if ($obj instanceof Object\News) {
+
+                $url = $this->generator->generate('news_detail', [
+                    'text'   => $obj->getTitle(),
+                    'id'     => $obj->getId(),
+                    'newsId' => $obj->getId()
+                ]);
+
+                $e->setArgument('objectFrontendUrl', $url);
+            }
+        }
+    }
+}
+```
+
 ## Pimcore Fixes / Overrides
 - fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8)   bug (in somecases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
