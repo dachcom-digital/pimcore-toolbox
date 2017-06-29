@@ -1,9 +1,1 @@
-{% set args = {
-    'backgroundTags'       : backgroundTags,
-    'backgroundColorClass' : backgroundColorClass,
-    'behindElements'       : behindElements,
-    'frontElements'        : frontElements,
-    'sectionContent'       : sectionContent
-} %}
-
-{% include '@Toolbox/Toolbox/ParallaxContainer/Partial/background-' ~ backgroundMode ~ '.html.twig' with args %}
+{% include '@Toolbox/Toolbox/ParallaxContainer/Partial/background-' ~ backgroundMode ~ '.html.twig' %}
