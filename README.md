@@ -65,7 +65,7 @@ The Toolbox provides a lot of ready-to-use Bricks:
 
 There are three simple steps to create a custom Brick with a Toolbox context.
 
-1. Add this configuration to `AppBundle/Resources/config/pimcore/config.yml`:
+1. Add this configuration to `/app/config/pimcore/config.yml`:
 
 > **Tip:** Add this to a separate config file.
 
@@ -133,7 +133,7 @@ class MyBrick extends AbstractAreabrick
 }
 ```
 
-3. Add the view to `AppBundle/Resources/views/Areas/MyBrick/view.html.twig`:
+3. Add the view to `/app/Resources/views/Areas/MyBrick/view.html.twig`:
 
 ```twig
 {{ elementConfigBar|raw }}
