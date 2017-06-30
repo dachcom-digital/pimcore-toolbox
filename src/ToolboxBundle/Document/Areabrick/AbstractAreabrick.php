@@ -90,11 +90,18 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
+     * Internal Areas: load from Bundle
+     * External Areas: defined in AppBundle with a view in /app/Resources/views/Areas/*
+     *
      * @inheritDoc
      */
     public function getTemplateLocation()
     {
-        return static::TEMPLATE_LOCATION_BUNDLE;
+        if($this->areaBrickType === self::AREABRICK_TYPE_INTERNAL) {
+            return static::TEMPLATE_LOCATION_BUNDLE;
+        }
+
+        return static::TEMPLATE_LOCATION_GLOBAL;
     }
 
     /**
