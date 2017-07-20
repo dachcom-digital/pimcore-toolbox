@@ -2,8 +2,9 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
+use MembersBundle\Security\RestrictionUri;
+use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Service\ConfigManager;
-use Pimcore\Extension\Bundle\PimcoreBundleManager;
 use Pimcore\Translation\Translator;
 
 class DownloadExtension extends \Twig_Extension
@@ -14,9 +15,9 @@ class DownloadExtension extends \Twig_Extension
     protected $configManager;
 
     /**
-     * @var PimcoreBundleManager
+     * @var BundleConnector
      */
-    protected $bundleManager;
+    protected $bundleConnector;
 
     /**
      * @var \Pimcore\Translation\Translator
@@ -26,14 +27,14 @@ class DownloadExtension extends \Twig_Extension
     /**
      * AreaBlockConfigExtension constructor.
      *
-     * @param ConfigManager        $configManager
-     * @param PimcoreBundleManager $bundleManager
-     * @param Translator           $translator
+     * @param ConfigManager   $configManager
+     * @param BundleConnector $bundleConnector
+     * @param Translator      $translator
      */
-    public function __construct(ConfigManager $configManager, PimcoreBundleManager $bundleManager, Translator $translator)
+    public function __construct(ConfigManager $configManager, BundleConnector $bundleConnector, Translator $translator)
     {
         $this->configManager = $configManager;
-        $this->bundleManager = $bundleManager;
+        $this->bundleConnector = $bundleConnector;
         $this->translator = $translator;
     }
 
@@ -62,11 +63,9 @@ class DownloadExtension extends \Twig_Extension
             return '';
         }
 
-
         if (is_array($areaType)) {
             $trackerInfo = $areaType;
-        } else
-        {
+        } else {
             $configNode = $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
 
             if (empty($configNode) || !isset($configNode['eventTracker'])) {
@@ -102,8 +101,6 @@ class DownloadExtension extends \Twig_Extension
     }
 
     /**
-     * @todo: fix members binding
-     *
      * @param \Pimcore\Model\Asset $download
      * @param bool                 $showPreviewImage
      * @param bool                 $showFileInfo
@@ -113,8 +110,9 @@ class DownloadExtension extends \Twig_Extension
      */
     public function getDownloadInfo($download, $showPreviewImage = FALSE, $showFileInfo = FALSE, $fileSizeUnit = 'mb')
     {
-        if ($this->hasMembersExtension() === TRUE && strpos($download->getFullPath(), \Members\Tool\UrlServant::PROTECTED_ASSET_FOLDER) !== FALSE) {
-            $dPath = \Members\Tool\UrlServant::generateAssetUrl($download);
+        if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
+            && strpos($download->getFullPath(), RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE) {
+            $dPath = $this->bundleConnector->getBundleService('members.security.restriction.uri')->generateAssetUrl($download);
         } else {
             $dPath = $download->getFullPath();
         }
@@ -143,17 +141,5 @@ class DownloadExtension extends \Twig_Extension
             'altText'      => $dAltText,
             'previewImage' => $dPreviewImage
         ];
-    }
-
-    private function hasMembersExtension()
-    {
-        $hasMembers = FALSE;
-
-        try {
-            $hasMembers = $this->bundleManager->isEnabled('MembersBundle\MembersBundle');
-        } catch (\Exception $e) {
-        }
-
-        return $hasMembers;
     }
 }

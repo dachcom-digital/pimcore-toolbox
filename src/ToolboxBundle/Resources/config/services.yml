@@ -14,26 +14,44 @@ services:
         public: false
     toolbox.area_manager:
         class: ToolboxBundle\Service\AreaManager
-        arguments: ['@toolbox.config_manager', '@pimcore.area.brick_manager']
+        arguments:
+            - '@toolbox.config_manager'
+            - '@pimcore.area.brick_manager'
         public: false
     toolbox.brick_config_builder:
         class: ToolboxBundle\Service\BrickConfigBuilder
         shared: false
-        arguments: ['@pimcore.translator', '@pimcore.templating.tag_renderer', '@templating']
+        arguments:
+            - '@pimcore.translator'
+            - '@pimcore.templating.tag_renderer'
+            - '@templating'
+
+    # toolbox bundle connector
+    toolbox.connector.bundle:
+        class: ToolboxBundle\Connector\BundleConnector
+        arguments:
+            - '@pimcore.extension.bundle_manager'
 
     # twig extensions
     toolbox.twig.extension.areablock_configuration:
         class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
         public: false
-        arguments: ['@toolbox.config_manager', '@toolbox.area_manager']
+        arguments:
+            - '@toolbox.config_manager'
+            - '@toolbox.area_manager'
         tags:
             - { name: twig.extension }
+
     toolbox.twig.extension.download:
         class: ToolboxBundle\Twig\Extension\DownloadExtension
         public: false
-        arguments: ['@toolbox.config_manager', '@pimcore.extension.bundle_manager', '@pimcore.translator']
+        arguments:
+            - '@toolbox.config_manager'
+            - '@toolbox.connector.bundle'
+            - '@pimcore.translator'
         tags:
             - { name: twig.extension }
+
     toolbox.twig.extension.document_tag_extender:
         class: ToolboxBundle\Twig\Extension\DocumentTagExtension
         public: false

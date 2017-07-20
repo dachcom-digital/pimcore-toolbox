@@ -2,10 +2,20 @@
 
 namespace ToolboxBundle;
 
+use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
+    /**
+     * @inheritDoc
+     */
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new MembersBundlePass());
+    }
+
     /**
      * {@inheritdoc}
      */

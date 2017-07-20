@@ -2,6 +2,8 @@
 
 namespace ToolboxBundle\Document\Areabrick\Download;
 
+use Pimcore\Db\ZendCompatibility\QueryBuilder;
+use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
@@ -10,10 +12,21 @@ use Pimcore\Model\Asset;
 class Download extends AbstractAreabrick
 {
     /**
-     * @todo:
-     *      - check asset instanceof \Pimcore\Model\Asset
-     *      - fix members binding
+     * @var BundleConnector
+     */
+    protected $bundleConnector;
+
+    /**
+     * Download constructor.
      *
+     * @param BundleConnector $bundleConnector
+     */
+    public function __construct(BundleConnector $bundleConnector)
+    {
+        $this->bundleConnector = $bundleConnector;
+    }
+
+    /**
      * @param Info $info
      */
     public function action(Info $info)
@@ -23,7 +36,7 @@ class Download extends AbstractAreabrick
         $view = $info->getView();
 
         //check if member extension exist
-        $hasMembers = $this->hasMembersExtension();
+        $hasMembers = $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
         $downloadField = $this->getDocumentTag($info->getDocument(),'multihref', 'downloads');
 
         $assets = [];
@@ -32,7 +45,7 @@ class Download extends AbstractAreabrick
             /** @var \Pimcore\Model\Asset $node */
             foreach ($downloadField->getElements() as $node) {
 
-                //it's a folder. get all sub asets!
+                //it's a folder. get all sub assets
                 if($node instanceof Asset\Folder) {
 
                     $assetListing = new Asset\Listing();
@@ -40,30 +53,30 @@ class Download extends AbstractAreabrick
                     $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
 
                     if($hasMembers) {
-                        $assetListing->onCreateQuery(function (\Zend_Db_Select $query) use ($assetListing) {
-                            \Members\Tool\Query::addRestrictionInjection($query, $assetListing, 'assets.id');
+                        $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
+                            $this->bundleConnector->getBundleService('members.security.restriction.query')
+                                ->addRestrictionInjection($query, $assetListing, 'assets.id');
                         });
                     }
 
                     /** @var Asset $entry */
-                    foreach ($assetListing->load() as $entry) {
+                    foreach ($assetListing->getAssets() as $entry) {
                         if (!$entry instanceof Asset\Folder) {
                             $assets[] = $entry;
                         }
                     }
 
-                    //default asset
+                //default asset
                 } else {
 
                     if($hasMembers) {
-                        $assetRestriction = \Members\Tool\Observer::isRestrictedAsset($node);
-                        if($assetRestriction['section'] === \Members\Tool\Observer::SECTION_ALLOWED) {
+                        $assetRestriction = $this->bundleConnector->getBundleService('members.manager.restriction')->getElementRestrictionStatus($node);
+                        if($assetRestriction['section'] === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
                             $assets[] = $node;
                         }
                     } else {
                         $assets[] = $node;
                     }
-
                 }
             }
         }
@@ -81,21 +94,4 @@ class Download extends AbstractAreabrick
     {
         return 'Toolbox Downloads';
     }
-
-    /**
-     * Check if members extension is available.
-     * @url https://github.com/dachcom-digital/pimcore-members
-     * @return bool
-     */
-    private function hasMembersExtension()
-    {
-        $hasMembers = FALSE;
-
-        try {
-            $hasMembers  = $this->container->get('pimcore.extension.bundle_manager')->isEnabled('MembersBundle\MembersBundle');
-        } catch(\Exception $e) {}
-
-        return $hasMembers;
-    }
-
 }
