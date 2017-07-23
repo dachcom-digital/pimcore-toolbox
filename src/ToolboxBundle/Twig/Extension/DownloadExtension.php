@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use MembersBundle\Security\RestrictionUri;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Service\ConfigManager;
 use Pimcore\Translation\Translator;
@@ -111,7 +110,7 @@ class DownloadExtension extends \Twig_Extension
     public function getDownloadInfo($download, $showPreviewImage = FALSE, $showFileInfo = FALSE, $fileSizeUnit = 'mb')
     {
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
-            && strpos($download->getFullPath(), RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE) {
+            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE) {
             $dPath = $this->bundleConnector->getBundleService('members.security.restriction.uri')->generateAssetUrl($download);
         } else {
             $dPath = $download->getFullPath();
