@@ -59,7 +59,7 @@ pimcore.plugin.toolbox.main = Class.create({
                         content.removeCls('toolbox-element-window-hidden');
                         win.body.down('.x-autocontainer-innerCt').insertFirst(content);
 
-                        if( content.query( 'div.toolbox-element[data-reload=true]' ).length > 0 ) {
+                        if(content.query( 'div.toolbox-element[data-reload=true]').length > 0 ) {
                             needReload = true;
                         }
 
