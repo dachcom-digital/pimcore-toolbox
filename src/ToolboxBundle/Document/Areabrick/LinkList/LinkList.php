@@ -14,7 +14,7 @@ class LinkList extends AbstractAreabrick
 
     public function getViewTemplate()
     {
-        return 'ToolboxBundle:Areas/LinkList:view.' . $this->getTemplateSuffix();
+        return 'ToolboxBundle:Areas/linkList:view.' . $this->getTemplateSuffix();
     }
 
     public function getName()

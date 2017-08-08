@@ -32,7 +32,7 @@ class SlideColumns extends AbstractAreabrick
 
     public function getViewTemplate()
     {
-        return 'ToolboxBundle:Areas/SlideColumns:view.' . $this->getTemplateSuffix();
+        return 'ToolboxBundle:Areas/slideColumns:view.' . $this->getTemplateSuffix();
     }
 
     public function getName()

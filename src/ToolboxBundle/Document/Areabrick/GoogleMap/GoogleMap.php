@@ -14,7 +14,7 @@ class GoogleMap extends AbstractAreabrick
 
     public function getViewTemplate()
     {
-        return 'ToolboxBundle:Areas/GoogleMap:view.' . $this->getTemplateSuffix();
+        return 'ToolboxBundle:Areas/googleMap:view.' . $this->getTemplateSuffix();
     }
 
     public function getName()

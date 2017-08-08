@@ -181,7 +181,7 @@ class ParallaxContainer extends AbstractAreabrick
 
     public function getViewTemplate()
     {
-        return 'ToolboxBundle:Areas/ParallaxContainer:view.' . $this->getTemplateSuffix();
+        return 'ToolboxBundle:Areas/parallaxContainer:view.' . $this->getTemplateSuffix();
     }
 
     public function getName()
