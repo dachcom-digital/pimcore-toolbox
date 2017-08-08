@@ -1,4 +1,0 @@
-{{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-spacer {{ pimcore_select('addlCls').getData() }}" {{ editmode ? 'data-type="' ~ pimcore_select('spacerClass').getData() ~ '"' : '' }}>
-    {% include '@Toolbox/Toolbox/spacer.html.twig' with {'spacerClass' : pimcore_select('spacerClass').getData()} %}
-</div>

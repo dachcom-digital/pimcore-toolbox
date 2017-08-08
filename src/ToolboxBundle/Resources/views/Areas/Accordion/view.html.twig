@@ -1,8 +1,0 @@
-{{ elementConfigBar|raw }}
-
-{% set panel = pimcore_block('panels', {'default':2}) %}
-{% set type = pimcore_select('type').getData() %}
-
-<div class="toolbox-element toolbox-accordion component-{{ pimcore_select('component').getData() }} {{ pimcore_select('addlCls').getData() }}">
-    {% include '@Toolbox/Toolbox/accordion.html.twig' with {'id': id, 'type' : type, 'panel' : panel} %}
-</div>
