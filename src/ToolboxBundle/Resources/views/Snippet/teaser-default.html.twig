@@ -6,8 +6,8 @@
 <div class="single-teaser default {{ useLightBox ? 'light-gallery' : '' }}">
 
     {{  editmode == false and useLightBox
-        ? '<a href="' ~ pimcore_image('image').getThumbnail('lightBoxImage') ~ '" class="item">'
-        : (editmode == false and hasLink ? '<a href="' ~ pimcore_dynamiclink('link').getHref() ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ pimcore_dynamiclink('link').getTarget() ~ '"' : '') ~ ' class="item">' : '')
+        ? ('<a href="' ~ pimcore_image('image').getThumbnail('lightBoxImage') ~ '" class="item">')|raw
+        : (editmode == false and hasLink ? '<a href="' ~ pimcore_dynamiclink('link').getHref() ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ pimcore_dynamiclink('link').getTarget() ~ '"' : '') ~ ' class="item">' : '')|raw
     }}
 
     {{ pimcore_image('image', {'thumbnail' : 'standardTeaser', 'class' : 'img-responsive'}) }}
