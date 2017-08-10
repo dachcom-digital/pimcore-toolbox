@@ -14,7 +14,7 @@
 
         {% for image in images %}
 
-            <li class="slide item"{{ useLightbox ? 'data-src="' ~ image.getThumbnail('contentImage') ~ '"' }}>
+            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail('contentImage') ~ '"')|raw }}>
                 <img src="{{ image.getThumbnail('galleryImage') }}"  />
             </li>
 
