@@ -332,7 +332,7 @@ class Asset
         $serveController->setAssets($absoluteCss, 'css', PIMCORE_TEMPORARY_DIRECTORY, $cssFileName);
         $cssFilePaths[] = $cssFileName;
 
-        if (!empty($cssFilePaths)) {
+        if (!empty($cssFiles)) {
             $cssFilePaths = array_reverse($cssFilePaths);
             foreach ($cssFilePaths as $cssFilePath) {
                 $html .= '<link href="' . $this->getFilePath($cssFilePath, 'css') . '" rel="stylesheet" type="text/css">' . PHP_EOL;
