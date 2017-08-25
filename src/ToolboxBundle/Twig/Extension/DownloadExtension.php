@@ -102,21 +102,22 @@ class DownloadExtension extends \Twig_Extension
     /**
      * @param \Pimcore\Model\Asset $download
      * @param bool                 $showPreviewImage
-     * @param bool                 $showFileInfo
      * @param string               $fileSizeUnit
+     * @param int                  $fileSizePrecision
      *
      * @return array
      */
-    public function getDownloadInfo($download, $showPreviewImage = FALSE, $showFileInfo = FALSE, $fileSizeUnit = 'mb')
+    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'mb', $fileSizePrecision = 0)
     {
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
-            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE) {
+            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE
+        ) {
             $dPath = $this->bundleConnector->getBundleService('members.security.restriction.uri')->generateAssetUrl($download);
         } else {
             $dPath = $download->getFullPath();
         }
 
-        $dSize = $download->getFileSize($fileSizeUnit, 2);
+        $dSize = $download->getFileSize($fileSizeUnit, $fileSizePrecision);
         $dType = \Pimcore\File::getFileExtension($download->getFilename());
         $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $this->translator->trans('Download', [], 'admin');
         $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
