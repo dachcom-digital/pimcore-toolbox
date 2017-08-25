@@ -1,14 +1,14 @@
 # Pimcore 5 Toolbox
 
-> This Toolbox Repo is for pimcore 5 only and under heavy development. 
-
 The Toolbox is a Kickstarter for your every day project. It provides some important bricks and structure basics which allows rapid and quality-orientated web development. 
 
 ![bildschirmfoto 2017-06-21 um 09 30 29](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
 
 
-### What's the meaning of Toolbox?
+## Requirements
+* Pimcore 5. Only with Build 96 or greater.
 
+### What's the meaning of Toolbox?
 - create often used bricks in a second
 - extend, override toolbox bricks 
 - add config elements via yml configuration
@@ -22,7 +22,6 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 - Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
 
 ## Asset Management
-
 ```
 /var/www bin/console assets:install --symlink
 ```

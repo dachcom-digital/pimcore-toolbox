@@ -3,9 +3,6 @@ services:
     # toolbox installer
     toolbox.installer:
         class: ToolboxBundle\Tool\Install
-        arguments: ['@logger']
-        tags:
-            - { name: monolog.logger }
 
     # toolbox services
     toolbox.config_manager:
