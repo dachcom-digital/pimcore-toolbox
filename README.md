@@ -132,7 +132,7 @@ class MyBrick extends AbstractAreabrick
 }
 ```
 
-3. Add the view to `/app/Resources/views/Areas/MyBrick/view.html.twig`:
+3. Add the view to `/app/Resources/views/Areas/myBrick/view.html.twig`:
 
 ```twig
 {{ elementConfigBar|raw }}
@@ -144,12 +144,8 @@ class MyBrick extends AbstractAreabrick
 
 That's it. Sometimes you need to clear you cache, if the Brick won't show up.
 
-## i18n
-TBD.
-
-## Global Link
-
-The global link extends the pimcore link element. It allows you to drag objects into the url field.
+## Dynamic Link
+The dynamic link extends the pimcore link element. It allows you to drag objects into the url field.
 Of course it's impossible to generate a valid url from objects, so you need to do some further work.
 
 **Configuration**  
