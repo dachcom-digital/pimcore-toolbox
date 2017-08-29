@@ -3,7 +3,7 @@
 {% set hasLink = pimcore_dynamiclink('link').isEmpty() == false %}
 {% set linkTarget = hasLink ? pimcore_dynamiclink('link').getTarget() : null %}
 
-<div class="single-teaser default {{ useLightBox ? 'light-gallery' : '' }}">
+<div class="single-teaser default {{ useLightBox ? 'light-box' : '' }}">
 
     {{  editmode == false and useLightBox
         ? ('<a href="' ~ pimcore_image('image').getThumbnail('lightBoxImage') ~ '" class="item">')|raw
