@@ -1,0 +1,19 @@
+toolbox:
+    dataAttributes:
+        gallery:
+            lazy_load: false
+            fade: false
+            variable_width: false
+            autoplay: false
+            slides_to_show: 1
+            dots: false
+            arrows: true
+        gallery_thumbs:
+            lazy_load: false
+            fade: false
+            variable_width: false
+            autoplay: false
+            slides_to_show: 5
+            dots: false
+            arrows: true
+            center_mode: true

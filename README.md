@@ -35,9 +35,7 @@ Add the sources to your `gulpfile.js` or add it with plain html. For example:
 <script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/toolbox-googleMaps.js')}}" ></script>
 ```
 
-## Bricks
-
-### Toolbox Bricks 
+## Available Toolbox Bricks 
 
 The Toolbox provides a lot of ready-to-use Bricks:
 
@@ -60,149 +58,15 @@ The Toolbox provides a lot of ready-to-use Bricks:
 - Teaser
 - Video
 
-### Custom Bricks 
-
-There are three simple steps to create a custom Brick with a Toolbox context.
-
-1. Add this configuration to `/app/config/pimcore/config.yml`:
-
-> **Tip:** Add this to a separate config file.
-
-```yaml
-
-# It's always a good idea to add your brick as a service.
-services:
-    toolbox.area.brick.myBrick:
-        parent: toolbox.area.brick.base_brick
-        class: AppBundle\Document\Areabrick\MyBrick\MyBrick
-        calls:
-            # set the brick type to external
-            - [setAreaBrickType, ['external']]
-        tags:
-            - { name: pimcore.area.brick, id: myBrick }
-
-toolbox:
-    custom_areas:
-        # that's the name of your brick. 
-        myBrick:
-            configElements:
-                title1:
-                    type: input
-                    title: That's a Title
-                    col_class: t-col-half
-                    description: Lorem Ipsum
-                    # default config for input
-                    # see: https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
-                    config: ~
-                title2:
-                    type: input
-                    title: That's also a Title
-                    col_class: t-col-half
-                    description: Lorem Ipsum
-                    config: ~
-```
-
-2. Add the Area Class to `AppBundle/Document/Areabrick/MyBrick/MyBrick.php`:
-
-```php
-<?php
-
-namespace AppBundle\Document\Areabrick\MyBrick;
-
-use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
-
-class MyBrick extends AbstractAreabrick
-{
-    public function action(Info $info)
-    {
-        //call this to activate all the toolbox magic.
-        parent::action($info);
-    }
-
-    public function getName()
-    {
-        return 'My Brick';
-    }
-
-    public function getDescription()
-    {
-        return 'My Brick';
-    }
-}
-```
-
-3. Add the view to `/app/Resources/views/Areas/myBrick/view.html.twig`:
-
-```twig
-{{ elementConfigBar|raw }}
-<div class="my-brick">
-    <h3>{{ pimcore_input('title1').getData() }}</h3>
-    <p>{{ pimcore_input('title2').getData() }}</p>
-</div>
-```
-
-That's it. Sometimes you need to clear you cache, if the Brick won't show up.
-
-## Dynamic Link
-The dynamic link extends the pimcore link element. It allows you to drag objects into the url field.
-Of course it's impossible to generate a valid url from objects, so you need to do some further work.
-
-**Configuration**  
-```yaml
-
-# /app/config/services.yml
-services:
-    app.event_listener.toolbox.dynamiclink.object.url:
-        class: AppBundle\EventListener\ObjectUrlListener
-        arguments: ['@router']
-        tags:
-            - { name: kernel.event_listener, event: toolbox.dynamiclink.object.url, method: checkUrl }
-```
-
-**Mapper**  
-This mapper will transformed your dragged object path into a valid frontend path. 
-You also need to setup a static route (in this case the `news_detail` route).
-
-```php
-<?php
-
-namespace AppBundle\EventListener;
-
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pimcore\Model\Object;
-
-class ObjectUrlListener
-{
-    protected $generator;
-
-    public function __construct(UrlGeneratorInterface $generator)
-    {
-        $this->generator = $generator;
-    }
-
-    public function checkUrl(GenericEvent $e)
-    {
-        if ( $e->getArgument('className') === 'news') {
-            $obj = Object\News::getByPath($e->getArgument('path'));
-            if ($obj instanceof Object\News) {
-
-                $url = $this->generator->generate('news_detail', [
-                    'text'   => $obj->getTitle(),
-                    'id'     => $obj->getId(),
-                    'newsId' => $obj->getId()
-                ]);
-
-                $e->setArgument('objectFrontendUrl', $url);
-            }
-        }
-    }
-}
-```
+## Further Information
+- [Create a Custom Brick](docs/10_CustomBricks.md)
+- [Dynamic Link](docs/20_DynamicLink.md)
+- [Theme / Layout](docs/30_ToolboxTheme.md)
+- [Overriding Views](docs/31_OverridingViews.md)
+- [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
 
 ## Pimcore Fixes / Overrides
-- fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8)   bug (in somecases the iframe overlay field does not apply to the right position)
+- fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license

@@ -36,9 +36,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
             ];
 
             //config is an array, use special breakpoint classes!
-            if (isset($columnConfiguration['values'][$value]) && isset($columnConfiguration['values'][$value]['breakpoints'])) {
+            if (isset($columnConfiguration[$value]['breakpoints'])) {
 
-                $customBreakPoints = $columnConfiguration['values'][$value]['breakpoints'];
+                $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                 foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
                     $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : 12;
@@ -56,9 +56,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 ];
 
                 //config is an array, use special breakpoint classes!
-                if (isset($columnConfiguration['values'][$value]) && isset($columnConfiguration['values'][$value]['breakpoints'])) {
+                if ($columnConfiguration[$value]['breakpoints']) {
 
-                    $customBreakPoints = $columnConfiguration['values'][$value]['breakpoints'];
+                    $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                     foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                         $customBreakPointDataColumns = explode('_', $customBreakPointData);
                         $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : 12;

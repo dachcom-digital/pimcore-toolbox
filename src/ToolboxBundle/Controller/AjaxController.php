@@ -22,7 +22,7 @@ class AjaxController extends FrontendController
         $mapParams = $request->get('mapParams');
         return $this->render(
             '@Toolbox/Toolbox/' . $layout . '/GoogleMap/infoWindow.html.twig',
-                ['mapParams' => $mapParams, 'googleMapsHostUrl' => $this->container->getParameter('google_maps_host_url')]
+                ['mapParams' => $mapParams, 'googleMapsHostUrl' => $this->container->getParameter('toolbox_google_maps_host_url')]
         );
     }
 

@@ -43,8 +43,8 @@ class DownloadExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('toolbox_download_info', [$this, 'getDownloadInfo']),
-            new \Twig_SimpleFunction('toolbox_download_tracker',
+            new \Twig_Function('toolbox_download_info', [$this, 'getDownloadInfo']),
+            new \Twig_Function('toolbox_download_tracker',
                 [$this, 'getDownloadTracker'], ['is_safe' => ['html']]
             )
         ];

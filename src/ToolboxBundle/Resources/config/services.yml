@@ -58,6 +58,14 @@ services:
         tags:
             - { name: twig.extension }
 
+    toolbox.twig.extension.data_attributes_generator:
+        class: ToolboxBundle\Twig\Extension\DataAttributesExtension
+        public: false
+        arguments:
+            - '@toolbox.config_manager'
+        tags:
+            - { name: twig.extension }
+
     # base brick
     toolbox.area.brick.base_brick:
         abstract:  true

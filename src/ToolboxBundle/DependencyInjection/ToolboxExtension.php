@@ -21,7 +21,7 @@ class ToolboxExtension extends Extension
         $configManagerDefinition = $container->getDefinition('toolbox.config_manager');
         $configManagerDefinition->addMethodCall('setConfig', [ $config ]);
 
-        $toolboxLayout = $config['theme']['layout'];
+        $toolboxLayout = strtolower($config['theme']['layout']);
 
         $columnCalculator = 'toolbox.calculator.' . $toolboxLayout . '.column';
         $container->setAlias('toolbox.calculator.column_calculator', new Alias($columnCalculator, false));

@@ -38,7 +38,8 @@ class Columns extends AbstractAreabrick
 
         $configNode = $this->getConfigManager()->getAreaElementConfig('columns', 'type');
 
-        $columns = $this->calculator->calculateColumns($type, $configNode);
+        $columnConfigElements = isset($configNode['config']['store']) ?  $configNode['config']['store'] : [];
+        $columns = $this->calculator->calculateColumns($type, $columnConfigElements);
 
         if (!empty($columns)) {
 

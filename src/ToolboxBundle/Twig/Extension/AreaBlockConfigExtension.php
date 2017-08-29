@@ -34,7 +34,7 @@ class AreaBlockConfigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return [new \Twig_SimpleFunction('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'])];
+        return [new \Twig_Function('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'])];
     }
 
     /**

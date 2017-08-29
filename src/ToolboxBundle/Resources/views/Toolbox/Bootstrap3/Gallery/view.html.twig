@@ -4,5 +4,7 @@
     'images': images,
     'galleryId': galleryId,
     'useThumbnails': pimcore_checkbox('useThumbnails').isChecked(),
-    'useLightbox': pimcore_checkbox('useLightbox').isChecked()
+    'useLightbox': pimcore_checkbox('useLightbox').isChecked(),
+    'galleryDataAttributes': toolbox_data_attributes_generator('gallery', {dots: pimcore_checkbox('useThumbnails').isChecked() ? 'false' : 'true'}),
+    'thumbsDataAttributes': toolbox_data_attributes_generator('gallery_thumbs')
 } %}
