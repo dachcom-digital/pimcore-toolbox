@@ -87,6 +87,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 
         $view = $info->getView();
         $view->elementConfigBar = $configWindowData;
+        $view->elementThemeConfig =$this->configManager->getAreaThemeConfig($this->getId());
+
     }
 
     /**

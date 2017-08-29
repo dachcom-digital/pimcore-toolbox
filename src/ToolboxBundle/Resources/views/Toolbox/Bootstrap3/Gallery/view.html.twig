@@ -1,0 +1,8 @@
+{% include '@Toolbox/Toolbox/Bootstrap3/Gallery/Partial/gallery.html.twig' with
+{
+    'editmode': editmode,
+    'images': images,
+    'galleryId': galleryId,
+    'useThumbnails': pimcore_checkbox('useThumbnails').isChecked(),
+    'useLightbox': pimcore_checkbox('useLightbox').isChecked()
+} %}

@@ -1,9 +1,0 @@
-{% for column in columns %}
-
-    <div class="{{ column.btClass }} {{ column.offset }}">
-        <div class="{{ column.columnClass }}">
-            {% include '@Toolbox/Toolbox/Columns/Part/areablock.html.twig' with { 'column' : column } %}
-        </div>
-    </div>
-
-{% endfor %}

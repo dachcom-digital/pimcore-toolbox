@@ -36,6 +36,7 @@ class ConfigManager
     public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL)
     {
         $this->areaNamespace = $namespace;
+
         return $this;
     }
 
@@ -57,7 +58,29 @@ class ConfigManager
     public function getAreaConfig($areaName = '')
     {
         $this->checkConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName];
+    }
+
+    /**
+     * @param string $areaName
+     *
+     * @return array|bool
+     */
+    public function getAreaThemeConfig($areaName = '')
+    {
+        $this->checkConfigNamespace();
+
+        $theme = [
+            'layout'  => $this->getConfig('theme')['layout'],
+            'wrapper' => FALSE
+        ];
+
+        if (isset($this->config['theme']['wrapper'][$areaName]['wrapperClasses'])) {
+            $theme['wrapper'] = $this->config['theme']['wrapper'][$areaName]['wrapperClasses'];
+        }
+
+        return $theme;
     }
 
     /**
@@ -69,6 +92,7 @@ class ConfigManager
     public function getAreaElementConfig($areaName = '', $configElementName = '')
     {
         $this->checkConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName]['configElements'][$configElementName];
     }
 
@@ -80,6 +104,7 @@ class ConfigManager
     public function getAreaParameterConfig($areaName = '')
     {
         $this->checkConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName]['configParameter'];
     }
 
@@ -105,7 +130,7 @@ class ConfigManager
      */
     private function checkConfigNamespace()
     {
-        if(is_null($this->areaNamespace)) {
+        if (is_null($this->areaNamespace)) {
             throw new \Exception('configManger has no defined namespace.');
         }
     }

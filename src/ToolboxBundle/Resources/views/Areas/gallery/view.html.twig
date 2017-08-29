@@ -1,4 +1,7 @@
+{% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-gallery {{ pimcore_select('addlCls').getData() }}">
-    {% include '@Toolbox/Toolbox/gallery.html.twig' with {'galleryId' : galleryId} %}
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Gallery/view.html.twig' with {'galleryId': galleryId} %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

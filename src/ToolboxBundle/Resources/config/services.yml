@@ -9,12 +9,14 @@ services:
         class: ToolboxBundle\Service\ConfigManager
         arguments: []
         public: false
+
     toolbox.area_manager:
         class: ToolboxBundle\Service\AreaManager
         arguments:
             - '@toolbox.config_manager'
             - '@pimcore.area.brick_manager'
         public: false
+
     toolbox.brick_config_builder:
         class: ToolboxBundle\Service\BrickConfigBuilder
         shared: false
@@ -61,3 +63,13 @@ services:
         abstract:  true
         calls:
             - [setConfigManager, ['@toolbox.config_manager']]
+
+    # column calculator
+    toolbox.calculator.bootstrap3.column:
+        class: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
+        public: false
+
+    # slide column calculator
+    toolbox.calculator.bootstrap3.slide_column:
+        class: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator
+        public: false

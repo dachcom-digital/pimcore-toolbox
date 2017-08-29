@@ -1,7 +1,9 @@
 services:
-    toolbox.area.brick.slideColumns:
+    toolbox.area.brick.slide_columns:
         parent: toolbox.area.brick.base_brick
         class: ToolboxBundle\Document\Areabrick\SlideColumns\SlideColumns
+        calls:
+             - [setCalculator, ['@toolbox.calculator.slide_column_calculator']]
         tags:
             - { name: pimcore.area.brick, id: slideColumns }
 toolbox:

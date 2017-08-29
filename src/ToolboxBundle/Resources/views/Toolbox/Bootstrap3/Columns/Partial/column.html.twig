@@ -1,0 +1,7 @@
+{% for column in columns %}
+    <div class="{{ column.columnClass }}">
+        <div class="{{ column.innerClass }}">
+            {% include '@Toolbox/Toolbox/Bootstrap3/Columns/Partial/areablock.html.twig' with { 'column' : column } %}
+        </div>
+    </div>
+{% endfor %}

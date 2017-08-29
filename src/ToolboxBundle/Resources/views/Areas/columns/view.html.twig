@@ -1,4 +1,7 @@
+{% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-columns type-{{ type }}{{ pimcore_select('addlCls').getData() }}{{ equalHeight == true ? ' equal-height' : '' }}">
-    {% include '@Toolbox/Toolbox/columns.html.twig' %}
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Columns/view.html.twig' %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

@@ -1,0 +1,58 @@
+{# @todo: fix markup line breaks? #}
+
+{% if images is not empty %}
+
+    <ul class="slick-slider list-unstyled {{ useThumbnails ?:'thumbnail-slider' }} {{ galleryId }}-gal responsive-dots {{ useLightbox ? 'light-box' : '' }}"
+            {{ useThumbnails ? 'data-as-nav-for=".' ~ galleryId ~ '-thumbs"' }}
+            data-lazy-load="false"
+            data-fade="false"
+            data-variable-width="false"
+            data-autoplay="false"
+            data-slides-to-show="1"
+            data-dots="{{ useThumbnails ? 'false' : 'true' }}"
+            data-arrows="true">
+
+        {% for image in images %}
+
+            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail('contentImage') ~ '"')|raw }}>
+                <img src="{{ image.getThumbnail('galleryImage') }}"  />
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+    {% if useThumbnails %}
+
+        <ul class="slick-slider slick-slider-thumbs list-unstyled {{ galleryId }}-thumbs"
+            data-center-mode="true"
+            data-as-nav-for=".{{ galleryId }}-gal"
+            data-lazy-load="false"
+            data-fade="false"
+            data-variable-width="false"
+            data-autoplay="false"
+            data-slides-to-show="5"
+            data-dots="false"
+            data-arrows="true">
+
+            {% for image in images %}
+
+                <li class="slide">
+                    <img src="{{ image.getThumbnail('galleryThumb') }}"  />
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% endif %}
+
+{% else %}
+
+    {% if editmode %}
+        <div class="alert alert-info" style="line-height:20px;">
+            Es wurden keine Bilder für die Galerie gewählt.
+        </div>
+    {% endif %}
+
+{% endif %}

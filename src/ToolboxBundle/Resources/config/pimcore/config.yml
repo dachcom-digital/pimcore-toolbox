@@ -1,5 +1,6 @@
 imports:
     - { resource: areas/*.yml }
+    - { resource: theme.yml }
     - { resource: ckeditor/config.yml }
     - { resource: document/editables.yml }
 
@@ -53,5 +54,3 @@ toolbox:
             y: 125
             buttonWidth: 200
         groups: ~
-
-    enableAssetHandler: false

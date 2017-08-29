@@ -1,4 +1,7 @@
+{% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-content wysiwyg content-container {{ pimcore_select('addlCls').getData() }}">
-    {% include '@Toolbox/Toolbox/content.html.twig' %}
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Content/view.html.twig' %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

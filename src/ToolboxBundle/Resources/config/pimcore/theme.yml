@@ -1,0 +1,17 @@
+toolbox:
+    theme:
+        layout: 'Bootstrap3'
+        wrapper:
+            image:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12'}
+            columns:
+                - {tag: 'div', class: 'row'}
+            gallery:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12 col-gallery'}
+            slideColumns:
+                - {tag: 'div', class: 'row'}
+            teaser:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12'}

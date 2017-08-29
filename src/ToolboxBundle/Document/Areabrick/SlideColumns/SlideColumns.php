@@ -2,11 +2,28 @@
 
 namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 
+use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
 class SlideColumns extends AbstractAreabrick
 {
+    /**
+     * @var  SlideColumnCalculatorInterface
+     */
+    protected $calculator;
+
+    /**
+     * @param SlideColumnCalculatorInterface $calculator
+     */
+    public function setCalculator(SlideColumnCalculatorInterface $calculator)
+    {
+        $this->calculator = $calculator;
+    }
+
+    /**
+     * @param Info $info
+     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -19,7 +36,8 @@ class SlideColumns extends AbstractAreabrick
         $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slidesPerView')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
-        $slidesPerViewClass = $this->calculateSlideColumnClasses($slidesPerView);
+        $slideColumnConfig = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
+        $slidesPerViewClass = $this->calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);
         $breakpoints = $this->calculateSlideColumnBreakpoints($slidesPerView);
 
         $view->id = $id;
@@ -43,36 +61,6 @@ class SlideColumns extends AbstractAreabrick
     public function getDescription()
     {
         return 'Toolbox Slide Columns';
-    }
-
-
-    /**
-     * @param $columnType
-     *
-     * @return string
-     */
-    private function calculateSlideColumnClasses($columnType)
-    {
-        $columnType = (int)$columnType;
-        $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
-
-        $systemClasses = [
-            2 => 'col-xs-12 col-sm-6',
-            3 => 'col-xs-12 col-sm-4',
-            4 => 'col-xs-12 col-sm-3',
-            6 => 'col-xs-12 col-sm-2',
-
-        ];
-
-        if (empty($configInfo)) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
-        }
-
-        if (!isset($configInfo['columnClasses']) || !isset($configInfo['columnClasses'][$columnType])) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
-        }
-
-        return $configInfo['columnClasses'][$columnType];
     }
 
     /**

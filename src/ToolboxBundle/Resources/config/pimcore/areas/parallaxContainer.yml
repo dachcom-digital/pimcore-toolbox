@@ -1,5 +1,5 @@
 services:
-    toolbox.area.brick.parallaxContainer:
+    toolbox.area.brick.parallax_container:
         parent: toolbox.area.brick.base_brick
         class: ToolboxBundle\Document\Areabrick\ParallaxContainer\ParallaxContainer
         tags:

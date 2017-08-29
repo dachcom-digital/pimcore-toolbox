@@ -1,0 +1,7 @@
+{% if editmode %}
+    {{ pimcore_image('ci', { 'class' : class}) }}
+{% else %}
+    {% if pimcore_image('ci').thumbnail('contentImage') is not empty %}
+        {{ pimcore_image('ci', { 'class' : class}).thumbnail('contentImage').getHtml()|raw }}
+    {% endif %}
+{% endif %}
