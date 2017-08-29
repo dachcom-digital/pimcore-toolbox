@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\Controller;
 
-use Pimcore\Config;
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
 use ToolboxBundle\Service\ConfigManager;
@@ -16,10 +15,14 @@ class AjaxController extends FrontendController
      */
     public function gmInfoWindowAction(Request $request)
     {
+        /** @var ConfigManager $configManager */
+        $configManager = $this->container->get('toolbox.config_manager');
+        $layout = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaThemeConfig()['layout'];
+
         $mapParams = $request->get('mapParams');
         return $this->render(
-            '@Toolbox/Toolbox/GoogleMap/infoWindow.html.twig',
-                ['mapParams' => $mapParams]
+            '@Toolbox/Toolbox/' . $layout . '/GoogleMap/infoWindow.html.twig',
+                ['mapParams' => $mapParams, 'googleMapsHostUrl' => $this->container->getParameter('google_maps_host_url')]
         );
     }
 
@@ -30,9 +33,9 @@ class AjaxController extends FrontendController
      */
     public function videoGetTypesAction(Request $request)
     {
-        /** @var ConfigManager $toolboxConfig */
-        $toolboxConfig = $this->container->get('toolbox.config_manager');
-        $videoAreaSettings = $toolboxConfig->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
+        /** @var ConfigManager $configManager */
+        $configManager = $this->container->get('toolbox.config_manager');
+        $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['videoTypes'];
         $allowedVideoTypes = [];

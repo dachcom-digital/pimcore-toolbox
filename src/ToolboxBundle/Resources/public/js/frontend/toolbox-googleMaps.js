@@ -121,22 +121,18 @@ var DachcomToolboxGoogleMaps = (function () {
                 latLngBounds = new google.maps.LatLngBounds();
 
                 if ( typeof mapStyleUrl === 'string' ) {
-
                     $.getJSON(mapStyleUrl).done(function(data) {
                         map.set('styles', data);
                     });
-
                 }
 
                 if ( locations.length > 0 ) {
 
                     $.each(locations, function(i, location) {
-
                         if ( isValidLocation(location) ) {
                             latLngBounds.extend( new google.maps.LatLng(location.lat, location.lng) );
                             addMarker(map, location, markerIcon, showInfoWindowOnLoad);
                         }
-
                     });
 
                     map.fitBounds( latLngBounds );
@@ -147,13 +143,9 @@ var DachcomToolboxGoogleMaps = (function () {
                         map.setZoom(zoom);
                         google.maps.event.removeListener(listener);
                     });
-
                 }
-
             });
-
         }
-
     };
 
     return {

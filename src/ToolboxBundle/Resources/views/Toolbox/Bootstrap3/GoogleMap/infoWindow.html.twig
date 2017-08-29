@@ -20,8 +20,8 @@
         <br>{{ mapParams.add }}
     {% endif %}
 
-    <div class="googlemap-routeplanner">
-        <a href="https://maps.google.ch/?daddr={{ mapParams.street }},{{ mapParams.zip }} {{ mapParams.city }},{{ mapParams.country }}" target="_blank">{{  'Route planner'|trans }}</a>
+    <div class="google-map-route-planer">
+        <a href="{{ googleMapsHostUrl }}/?daddr={{ mapParams.street }},{{ mapParams.zip }} {{ mapParams.city }},{{ mapParams.country }}" target="_blank">{{  'route planer'|trans }}</a>
     </div>
 
 </div>
