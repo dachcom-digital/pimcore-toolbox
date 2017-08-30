@@ -66,7 +66,7 @@ class DataAttributesExtension extends \Twig_Extension
             }
 
             if (is_array($value)) {
-                $parsedValue = json_encode($value);
+                $parsedValue = htmlspecialchars(json_encode($value));
             } else if (is_bool($value)) {
                 $parsedValue = $value ? 'true' : 'false';
             } else if (is_object($value)) {
@@ -75,7 +75,7 @@ class DataAttributesExtension extends \Twig_Extension
                 $parsedValue = $value;
             }
 
-            $attributes[] = 'data-' . $this->lineToDash($key) . '=' . $parsedValue;
+            $attributes[] = 'data-' . $this->lineToDash($key) . '="' . $parsedValue . '"';
         }
 
         return implode(' ', $attributes);

@@ -1,9 +1,9 @@
 {% if images is not empty %}
 
-    <ul class="slick-slider list-unstyled {{ useThumbnails ?:'thumbnail-slider' }} {{ galleryId }}-gal responsive-dots {{ useLightbox ? 'light-box' : '' }}"
-            {{ useThumbnails ? 'data-as-nav-for=".' ~ galleryId ~ '-thumbs"' }}
-            {{ galleryDataAttributes }}
-            >
+    <ul class="slick-slider list-unstyled {{ useThumbnails ? 'thumbnail-slider' : '' }} {{ galleryId }}-gal responsive-dots {{ useLightbox ? 'light-box' : '' }}"
+            {{ (useThumbnails ? 'data-as-nav-for=".' ~ galleryId ~ '-thumbs"' : '')|raw }}
+            {{ galleryDataAttributes|raw }}
+    >
 
         {% for image in images %}
             <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail('contentImage') ~ '"')|raw }}>
@@ -16,8 +16,9 @@
     {% if useThumbnails %}
 
         <ul class="slick-slider slick-slider-thumbs list-unstyled {{ galleryId }}-thumbs"
-            {{ thumbsDataAttributes }}
-            data-as-nav-for=".{{ galleryId }}-gal">
+            {{ thumbsDataAttributes|raw }}
+            data-as-nav-for=".{{ galleryId }}-gal"
+        >
 
             {% for image in images %}
                 <li class="slide">
