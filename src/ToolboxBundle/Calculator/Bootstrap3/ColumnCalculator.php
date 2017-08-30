@@ -56,7 +56,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 ];
 
                 //config is an array, use special breakpoint classes!
-                if ($columnConfiguration[$value]['breakpoints']) {
+                if (isset($columnConfiguration[$value]['breakpoints'])) {
 
                     $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                     foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
