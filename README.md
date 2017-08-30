@@ -59,7 +59,7 @@ The Toolbox provides a lot of ready-to-use Bricks:
 - Video
 
 ## Further Information
-- [Importang Usage Information](docs/0_Usage.md)
+- [Important Usage Information](docs/0_Usage.md)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
 - [Dynamic Link](docs/20_DynamicLink.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
