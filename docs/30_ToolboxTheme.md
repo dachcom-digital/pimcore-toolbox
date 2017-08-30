@@ -32,7 +32,7 @@ toolbox:
 This property defines the current layout view path.
 
 #### Wrapper
-Overriding templates are a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some elements to specific elements.
+Overriding templates are a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some wrappers to specific elements.
 
 ## Views
 All Views gets loaded from `@Toolbox/Toolbox/[LAYOUT_NAME]`.
@@ -43,7 +43,7 @@ There are two elements which needs some special calculation, depending on the cu
 - Columns
 - SlideColumns
 
-Each elements needs a calculator to provide correct grid values. 
+Each element needs a calculator to provide correct grid values. 
 
 ## Custom Layout Implementation
 So let's assume that you want to add your own custom grid framework:

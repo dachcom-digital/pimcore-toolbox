@@ -2,7 +2,7 @@
 
 The Toolbox Bundle provides a twig extension to generate data attributes for your html elements.
 
-Since we using the awesome [slick slider](http://kenwheeler.github.io/slick/) to generate the gallery element, the toolbox also relies on the data attributes generator.
+Since we're using the awesome [slick slider](http://kenwheeler.github.io/slick/) to generate the gallery element, the toolbox also relies on the data attributes generator.
 There are two predefined nodes: `gallery` and `gallery_thumbs`. You may want to override them or add your custom nodes - so let's check it out:
 
 ### Define Attributes
