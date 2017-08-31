@@ -2,6 +2,6 @@
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-linklist {{ pimcore_select('addlCls').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/LinkList/view.html.twig' %}
+    {% include toolbox_area_path(areaId) %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

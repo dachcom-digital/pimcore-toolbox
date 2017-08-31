@@ -1,5 +1,5 @@
 <div class="player" data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}"></div>
 
 {% if posterPath is not empty %}
-    {% include '@Toolbox/Toolbox/Bootstrap3/Video/Partial/overlay.html.twig' with {'posterPath' : posterPath, 'playInLightbox' : playInLightbox} %}
+    {% include toolbox_area_path(areaId, '/Partial/overlay') with {'posterPath' : posterPath, 'playInLightbox' : playInLightbox} %}
 {% endif %}

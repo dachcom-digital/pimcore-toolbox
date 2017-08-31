@@ -1,4 +1,4 @@
-{% include '@Toolbox/Toolbox/Bootstrap3/Download/Partial/list.html.twig' with {
+{% include toolbox_area_path(areaId, 'Partial/list') with {
 'editmode': editmode,
 'showPreviewImages': pimcore_checkbox('showPreviewImages').isChecked(),
 'showFileInfo': pimcore_checkbox('showFileInfo').isChecked(),

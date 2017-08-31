@@ -1,1 +1,1 @@
-{% include '@Toolbox/Toolbox/Bootstrap3/Accordion/AccordionTab/' ~ (pimcore_select('component').getData() == 'tab' ? 'tab' : 'accordion') ~ '.html.twig' %}
+{% include toolbox_area_path(areaId, '/AccordionTab/' ~ (pimcore_select('component').getData() == 'tab' ? 'tab' : 'accordion')) %}

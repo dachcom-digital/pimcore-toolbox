@@ -5,6 +5,6 @@
     {% if anchorName is not empty %}
         <a id="{{ anchorName }}"></a>
     {% endif %}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Headline/view.html.twig' %}
+    {% include toolbox_area_path(areaId) %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

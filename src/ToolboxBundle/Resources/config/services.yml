@@ -4,12 +4,18 @@ services:
     toolbox.installer:
         class: ToolboxBundle\Tool\Install
 
-    # toolbox services
+    # toolbox service configuration
     toolbox.config_manager:
         class: ToolboxBundle\Service\ConfigManager
-        arguments: []
         public: false
 
+    # toolbox service layout
+    toolbox.layout_manager:
+        class: ToolboxBundle\Service\LayoutManager
+        arguments:
+            - '@toolbox.config_manager'
+
+    # toolbox service area
     toolbox.area_manager:
         class: ToolboxBundle\Service\AreaManager
         arguments:
@@ -17,6 +23,7 @@ services:
             - '@pimcore.area.brick_manager'
         public: false
 
+    # toolbox service brick configuration builder
     toolbox.brick_config_builder:
         class: ToolboxBundle\Service\BrickConfigBuilder
         shared: false
@@ -66,11 +73,23 @@ services:
         tags:
             - { name: twig.extension }
 
+    toolbox.twig.extension.layout:
+        class: ToolboxBundle\Twig\Extension\LayoutExtension
+        public: false
+        arguments:
+            - '@toolbox.layout_manager'
+            - '@templating'
+        tags:
+            - { name: twig.extension }
+
     # base brick
     toolbox.area.brick.base_brick:
         abstract:  true
         calls:
             - [setConfigManager, ['@toolbox.config_manager']]
+            - [setBrickConfigBuilder, ['@toolbox.brick_config_builder']]
+            - [setTemplating, ['@templating']]
+            - [setLayoutManager, ['@toolbox.layout_manager']]
 
     # column calculator
     toolbox.calculator.bootstrap3.column:

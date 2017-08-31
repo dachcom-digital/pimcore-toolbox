@@ -2,7 +2,7 @@
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-google-map {{ pimcore_select('addlCls').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/GoogleMap/view.html.twig' with {
+    {% include toolbox_area_path(areaId) with {
         'mapZoom': pimcore_numeric('mapZoom').getData(),
         'mapType': pimcore_select('mapType').getData(),
         'iwOnInit': pimcore_checkbox('iwOnInit').isChecked()

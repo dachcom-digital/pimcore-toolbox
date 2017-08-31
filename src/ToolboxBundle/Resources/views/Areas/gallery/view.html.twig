@@ -2,6 +2,6 @@
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-gallery {{ pimcore_select('addlCls').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Gallery/view.html.twig' with {'galleryId': galleryId} %}
+    {% include toolbox_area_path(areaId) with {'galleryId': galleryId} %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

@@ -5,14 +5,32 @@ namespace ToolboxBundle\Document\Areabrick;
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
+use Symfony\Component\Templating\EngineInterface;
+use ToolboxBundle\Service\BrickConfigBuilder;
 use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Service\LayoutManager;
 
 abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 {
     /**
      * @var ConfigManager
      */
-    var $configManager;
+    protected $configManager;
+
+    /**
+     * @var BrickConfigBuilder
+     */
+    protected $brickConfigBuilder;
+
+    /**
+     * @var EngineInterface
+     */
+    protected $templating;
+
+    /**
+     * @var LayoutManager
+     */
+    protected $layoutManager;
 
     /**
      * @var string
@@ -60,11 +78,35 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
+     * @param BrickConfigBuilder $brickConfigBuilder
+     */
+    public function setBrickConfigBuilder(BrickConfigBuilder $brickConfigBuilder)
+    {
+        $this->brickConfigBuilder = $brickConfigBuilder;
+    }
+
+    /**
      * @return \ToolboxBundle\Service\BrickConfigBuilder
      */
     public function getBrickConfigBuilder()
     {
-        return $this->container->get('toolbox.brick_config_builder');
+        return $this->brickConfigBuilder;
+    }
+
+    /**
+     * @param EngineInterface $templating
+     */
+    public function setTemplating(EngineInterface $templating)
+    {
+        $this->templating = $templating;
+    }
+
+    /**
+     * @param LayoutManager $layoutManager
+     */
+    public function setLayoutManager(LayoutManager $layoutManager)
+    {
+        $this->layoutManager = $layoutManager;
     }
 
     /**
@@ -85,9 +127,12 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
         $configWindowData = $this->getBrickConfigBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode);
 
+        $layoutDir = NULL;
+
         $view = $info->getView();
         $view->elementConfigBar = $configWindowData;
-        $view->elementThemeConfig =$this->configManager->getAreaThemeConfig($this->getId());
+        $view->elementThemeConfig = $this->layoutManager->getAreaThemeConfig($this->getId());
+        $view->areaId = $this->getId();
 
     }
 
@@ -104,6 +149,11 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         }
 
         return static::TEMPLATE_LOCATION_GLOBAL;
+    }
+
+    public function getTemplatePath($viewName = 'view')
+    {
+        return $this->layoutManager->setTemplating($this->templating)->getAreaTemplatePath($this->getId(), $viewName);
     }
 
     /**

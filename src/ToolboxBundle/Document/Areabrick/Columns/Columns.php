@@ -43,7 +43,7 @@ class Columns extends AbstractAreabrick
 
         if (!empty($columns)) {
 
-            if ($this->container->get('templating')->exists('@Toolbox/Toolbox/Columns/' . $type . $this->getTemplateSuffix())) {
+            if ($this->container->get('templating')->exists($this->getTemplatePath($type))) {
                 $partialName = $type;
             } else {
                 $t = explode('_', $type);

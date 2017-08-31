@@ -6,7 +6,7 @@
 
             {% for download in downloads %}
 
-                {% include '@Toolbox/Toolbox/Bootstrap3/Download/Partial/item.html.twig' with {
+                {% include toolbox_area_path(areaId, '/Partial/item') with {
                     'download': download,
                     'showPreviewImages' : showPreviewImages,
                     'showFileInfo' : showFileInfo,

@@ -7,6 +7,6 @@
     {{ pimcore_image('ci') }}
 {% else %}
     <a href="{{ lightBoxLink }}" class="item">
-        {% include '@Toolbox/Toolbox/Bootstrap3/Image/Partial/single.html.twig' with { 'class' : 'img-responsive '  ~ class } %}
+        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : 'img-responsive '  ~ class } %}
     </a>
 {% endif %}

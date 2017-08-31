@@ -1,6 +1,7 @@
 toolbox:
     theme:
         layout: 'Bootstrap3'
+        default_layout: false
         wrapper:
             image:
                 - {tag: 'div', class: 'row'}

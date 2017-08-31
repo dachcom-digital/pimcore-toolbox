@@ -4,6 +4,6 @@
 {% set type = pimcore_select('type').getData() %}
 <div class="toolbox-element toolbox-accordion component-{{ pimcore_select('component').getData() }} {{ pimcore_select('addlCls').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Accordion/view.html.twig' with {'id': id, 'type' : type, 'panel' : panel} %}
+    {% include toolbox_area_path(areaId) with {'id': id, 'type' : type, 'panel' : panel} %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

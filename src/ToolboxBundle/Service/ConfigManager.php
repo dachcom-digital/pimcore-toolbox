@@ -64,27 +64,6 @@ class ConfigManager
 
     /**
      * @param string $areaName
-     *
-     * @return array|bool
-     */
-    public function getAreaThemeConfig($areaName = '')
-    {
-        $this->checkConfigNamespace();
-
-        $theme = [
-            'layout'  => $this->getConfig('theme')['layout'],
-            'wrapper' => FALSE
-        ];
-
-        if (isset($this->config['theme']['wrapper'][$areaName]['wrapperClasses'])) {
-            $theme['wrapper'] = $this->config['theme']['wrapper'][$areaName]['wrapperClasses'];
-        }
-
-        return $theme;
-    }
-
-    /**
-     * @param string $areaName
      * @param string $configElementName
      *
      * @return mixed

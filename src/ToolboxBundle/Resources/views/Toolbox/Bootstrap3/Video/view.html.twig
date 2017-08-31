@@ -14,7 +14,7 @@
 {% else %}
 
     <div class="video-inner">
-        {% include '@Toolbox/Toolbox/Bootstrap3/Video/type-' ~ videoType ~ '.html.twig' %}
+        {% include toolbox_area_path(areaId, 'type-' ~ videoType) %}
     </div>
 
 {% endif %}

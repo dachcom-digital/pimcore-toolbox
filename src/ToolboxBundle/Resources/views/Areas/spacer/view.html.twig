@@ -2,6 +2,6 @@
 {{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-spacer {{ pimcore_select('addlCls').getData() }}" {{ editmode ? 'data-type="' ~ pimcore_select('spacerClass').getData() ~ '"' : '' }}>
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Spacer/view.html.twig' with {'spacerClass' : pimcore_select('spacerClass').getData()} %}
+    {% include toolbox_area_path(areaId) with {'spacerClass' : pimcore_select('spacerClass').getData()} %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

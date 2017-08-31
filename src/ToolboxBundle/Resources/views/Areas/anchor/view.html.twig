@@ -1,5 +1,5 @@
 {% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
 {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-{% include '@Toolbox/Toolbox/' ~ elementThemeConfig.layout ~ '/Anchor/view.html.twig' %}
+{% include toolbox_area_path(areaId) %}
 {{ wrap_macro.createWrapFoot(elementThemeConfig) }}

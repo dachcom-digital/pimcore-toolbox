@@ -31,16 +31,15 @@ class ParallaxContainer extends AbstractAreabrick
         $templating = $this->container->get('templating');
         $translator = $this->container->get('pimcore.translator');
 
-
         $behindElements = !empty($parallaxBehind)
             ? $templating->render(
-                '@Toolbox/Toolbox/' . $this->getToolboxViewLayout() . '/ParallaxContainer/Partial/behind-front-elements.' . $this->getTemplateSuffix(),
+                $this->getTemplatePath('Partial/behind-front-elements'),
                 ['elements' => $parallaxBehind, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : NULL;
 
         $frontElements = !empty($parallaxFront)
             ? $templating->render(
-                '@Toolbox/Toolbox/' . $this->getToolboxViewLayout() . '/ParallaxContainer/Partial/behind-front-elements.' . $this->getTemplateSuffix(),
+                $this->getTemplatePath('Partial/behind-front-elements'),
                 ['elements' => $parallaxFront, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : NULL;
 
@@ -86,7 +85,7 @@ class ParallaxContainer extends AbstractAreabrick
 
             if ($containerWrapper !== 'none') {
                 $wrapperArgs = ['containerWrapperClass' => $containerWrapper, 'document' => $info->getDocument()];
-                $wrapContent = $templating->render('@Toolbox/Toolbox/' . $this->getToolboxViewLayout() . '/ParallaxContainer/wrapper/container-wrapper.' . $this->getTemplateSuffix(), $wrapperArgs);
+                $wrapContent = $templating->render($this->getTemplatePath('wrapper/container-wrapper'), $wrapperArgs);
                 $areaBlock = sprintf($wrapContent, $areaBlock);
             }
 
@@ -116,7 +115,7 @@ class ParallaxContainer extends AbstractAreabrick
             $loopIndex++;
 
             echo $sectionConfig;
-            echo $templating->render('@Toolbox/Toolbox/' . $this->getToolboxViewLayout() . '/ParallaxContainer/section.' . $this->getTemplateSuffix(), $sectionArgs);
+            echo $templating->render($this->getTemplatePath('section'), $sectionArgs);
         }
 
         $string = ob_get_clean();
@@ -169,16 +168,9 @@ class ParallaxContainer extends AbstractAreabrick
         return $str;
     }
 
-    private function getToolboxViewLayout()
-    {
-        $themeConfig = $this->configManager->getAreaThemeConfig();
-        return $themeConfig['layout'];
-    }
-
     private function getBackgroundColorClass($backgroundColor, $config = [], $type = 'parallax')
     {
         $mode = isset($config['backgroundColorMode']) ? $config['backgroundColorMode'] : 'data';
-
         if ($backgroundColor === 'no-background-color' || empty($backgroundColor) || $mode !== 'class') {
             return '';
         }
