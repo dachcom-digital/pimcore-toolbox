@@ -5,7 +5,6 @@ namespace ToolboxBundle\Document\Areabrick;
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
-use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Service\BrickConfigBuilder;
 use ToolboxBundle\Service\ConfigManager;
 use ToolboxBundle\Service\LayoutManager;
@@ -21,11 +20,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      * @var BrickConfigBuilder
      */
     protected $brickConfigBuilder;
-
-    /**
-     * @var EngineInterface
-     */
-    protected $templating;
 
     /**
      * @var LayoutManager
@@ -94,14 +88,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param EngineInterface $templating
-     */
-    public function setTemplating(EngineInterface $templating)
-    {
-        $this->templating = $templating;
-    }
-
-    /**
      * @param LayoutManager $layoutManager
      */
     public function setLayoutManager(LayoutManager $layoutManager)
@@ -151,9 +137,14 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         return static::TEMPLATE_LOCATION_GLOBAL;
     }
 
+    /**
+     * @param string $viewName
+     *
+     * @return string
+     */
     public function getTemplatePath($viewName = 'view')
     {
-        return $this->layoutManager->setTemplating($this->templating)->getAreaTemplatePath($this->getId(), $viewName);
+        return $this->layoutManager->getAreaTemplatePath($this->getId(), $viewName);
     }
 
     /**

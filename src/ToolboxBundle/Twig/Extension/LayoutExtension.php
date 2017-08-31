@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Service\LayoutManager;
 
 class LayoutExtension extends \Twig_Extension
@@ -13,20 +12,13 @@ class LayoutExtension extends \Twig_Extension
     protected $layoutManager;
 
     /**
-     * @var EngineInterface
-     */
-    protected $templating;
-
-    /**
      * LayoutExtension constructor.
      *
      * @param LayoutManager $layoutManager
-     * @param EngineInterface $templating
      */
-    public function __construct(LayoutManager $layoutManager, EngineInterface $templating)
+    public function __construct(LayoutManager $layoutManager)
     {
         $this->layoutManager = $layoutManager;
-        $this->templating = $templating;
     }
 
     /**
@@ -41,6 +33,6 @@ class LayoutExtension extends \Twig_Extension
 
     public function getAreaPath($areaId, $viewName = 'view')
     {
-        return $this->layoutManager->setTemplating($this->templating)->getAreaTemplatePath($areaId, $viewName);
+        return $this->layoutManager->getAreaTemplatePath($areaId, $viewName);
     }
 }

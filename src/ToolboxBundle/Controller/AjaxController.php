@@ -4,7 +4,6 @@ namespace ToolboxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Service\ConfigManager;
 use ToolboxBundle\Service\LayoutManager;
 
@@ -17,18 +16,13 @@ class AjaxController extends FrontendController
      */
     public function gmInfoWindowAction(Request $request)
     {
-        /** @var EngineInterface $templateEngine */
-        $templateEngine = $this->container->get('templating');
-
         /** @var LayoutManager $layoutManager */
-        $layoutManager = $this->container->get('toolbox.layout_manager')->setTemplating($templateEngine);
-
-        $mapParams = $request->get('mapParams');
+        $layoutManager = $this->container->get('toolbox.layout_manager');
 
         return $this->render(
             $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
             [
-                'mapParams'         => $mapParams,
+                'mapParams'         => $request->get('mapParams'),
                 'googleMapsHostUrl' => $this->container->getParameter('toolbox_google_maps_host_url')
             ]
         );

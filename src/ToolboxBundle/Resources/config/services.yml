@@ -14,6 +14,8 @@ services:
         class: ToolboxBundle\Service\LayoutManager
         arguments:
             - '@toolbox.config_manager'
+        calls:
+            - [setTemplating, ['@templating']]
 
     # toolbox service area
     toolbox.area_manager:
@@ -78,7 +80,6 @@ services:
         public: false
         arguments:
             - '@toolbox.layout_manager'
-            - '@templating'
         tags:
             - { name: twig.extension }
 
@@ -88,7 +89,6 @@ services:
         calls:
             - [setConfigManager, ['@toolbox.config_manager']]
             - [setBrickConfigBuilder, ['@toolbox.brick_config_builder']]
-            - [setTemplating, ['@templating']]
             - [setLayoutManager, ['@toolbox.layout_manager']]
 
     # column calculator
