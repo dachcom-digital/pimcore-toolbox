@@ -12,6 +12,7 @@ toolbox:
     
         # defines the view namespace [LAYOUT_NAME]
         layout: 'Bootstrap3'
+        default_layout: false
         wrapper:
             image:
                 - {tag: 'div', class: 'row'}
@@ -30,6 +31,26 @@ toolbox:
 ```
 #### Layout
 This property defines the current layout view path.
+
+#### Default Layout
+Define a fallback layout. If you're using a custom layout and you have defined a default layout, the template routing will work like this:
+
+```yaml
+toolbox:
+    theme:
+        layout: 'Special'
+        default_layout: 'Bootstrap3'
+```
+
+```twig
+
+{# example: Image. #}
+
+1. search layout: @Toolbox/Toolbox/Special/Image/view.html.twig
+2. fallback layout: @Toolbox/Toolbox/Bootstrap3/Image/view.html.twig
+```
+
+> Note: `default_layout` is set to `false` by default, so no fallback layout gets loaded if the layout template is not available.
 
 #### Wrapper
 Overriding templates are a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some wrappers to specific elements.
