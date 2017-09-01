@@ -1,9 +1,9 @@
 {{ pimcore_vhs('video', {
-    'attributes' : {
-        'class' : 'video-js vjs-default-skin vjs-big-play-centered',
-        'data-setup' : '{}'
+    'attributes': {
+        'class': 'video-js vjs-default-skin vjs-big-play-centered',
+        'data-setup': '{}'
     },
-    'thumbnail' : 'content',
+    'thumbnail': toolbox_get_image_thumbnail('video_thumbnail'),
     'disableProgressReload' : true,
-    'height' : 250
+    'height': 250
 }) }}

@@ -26,16 +26,7 @@ class Video extends AbstractAreabrick
         $videoId = $videoTag->id;
 
         if ($poster instanceof Asset\Image) {
-
-            $configNode = $this->getConfigManager()->getAreaParameterConfig('video');
-
-            if (isset($configNode['videoTypes'])) {
-                if (isset($configNode['videoTypes'][$videoType])) {
-                    $options = $configNode['videoTypes'][$videoType];
-                    $imageThumbnail = isset($options['posterImageThumbnail']) ? $options['posterImageThumbnail'] : NULL;
-                }
-            }
-
+            $imageThumbnail = $this->getConfigManager()->getImageThumbnailFromConfig('video_poster');
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 

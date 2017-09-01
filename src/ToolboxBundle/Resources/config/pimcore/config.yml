@@ -6,6 +6,20 @@ imports:
     - { resource: document/editables.yml }
 
 toolbox:
+    imageThumbnails:
+        gallery_element: 'galleryImage'
+        gallery_lightbox: 'contentImage'
+        gallery_thumbnail: 'galleryThumb'
+        image_element: 'contentImage'
+        image_lightbox: 'lightBoxImage'
+        video_poster: 'videoPoster'
+        video_thumbnail: 'content'
+        teaser_element: 'standardTeaser'
+        teaser_lightbox: 'lightBoxImage'
+        parallax_background: 'parallaxBackground'
+        parallax_section_background: 'parallaxSectionBackground'
+        parallax_container_element: 'parallaxImage'
+        download_preview_thumbnail: 'downloadPreviewImage'
 
     disallowedSubAreas:
         accordion:

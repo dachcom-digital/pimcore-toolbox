@@ -129,6 +129,12 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+
+                ->arrayNode('imageThumbnails')
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                ->end()
+
                 ->arrayNode('disallowedSubAreas')
                     ->useAttributeAsKey('name')
                     ->prototype('array')

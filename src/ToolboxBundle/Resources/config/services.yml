@@ -83,6 +83,14 @@ services:
         tags:
             - { name: twig.extension }
 
+    toolbox.twig.extension.image_thumbnail:
+        class: ToolboxBundle\Twig\Extension\ImageThumbnailExtension
+        public: false
+        arguments:
+            - '@toolbox.config_manager'
+        tags:
+            - { name: twig.extension }
+
     # base brick
     toolbox.area.brick.base_brick:
         abstract:  true

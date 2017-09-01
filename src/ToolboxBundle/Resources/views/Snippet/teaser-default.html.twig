@@ -6,11 +6,11 @@
 <div class="single-teaser default {{ useLightBox ? 'light-box' : '' }}">
 
     {{  editmode == false and useLightBox
-        ? ('<a href="' ~ pimcore_image('image').getThumbnail('lightBoxImage') ~ '" class="item">')|raw
+        ? ('<a href="' ~ pimcore_image('image').getThumbnail(toolbox_get_image_thumbnail('teaser_lightbox')) ~ '" class="item">')|raw
         : (editmode == false and hasLink ? '<a href="' ~ pimcore_dynamiclink('link').getHref() ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ pimcore_dynamiclink('link').getTarget() ~ '"' : '') ~ ' class="item">' : '')|raw
     }}
 
-    {{ pimcore_image('image', {'thumbnail' : 'standardTeaser', 'class' : 'img-responsive'}) }}
+    {{ pimcore_image('image', {'thumbnail' : toolbox_get_image_thumbnail('teaser_element'), 'class' : 'img-responsive'}) }}
 
     {{ editmode == false and (useLightBox or hasLink) ? '</a>' : '' }}
 

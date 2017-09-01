@@ -123,13 +123,15 @@ class DownloadExtension extends \Twig_Extension
         $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
         $dPreviewImage = NULL;
 
+        $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
+
         if ($showPreviewImage) {
             $dPreviewImage = $download->getMetadata('previewImage') instanceof \Pimcore\Model\Asset\Image
-                ? $download->getMetadata('previewImage')->getThumbnail('downloadPreviewImage')
+                ? $download->getMetadata('previewImage')->getThumbnail($previewThumbName)
                 : (
                 $download instanceof \Pimcore\Model\Asset\Image
-                    ? $download->getThumbnail('downloadPreviewImage')
-                    : $download->getImageThumbnail('downloadPreviewImage')
+                    ? $download->getThumbnail($previewThumbName)
+                    : $download->getImageThumbnail($previewThumbName)
                 );
         }
 

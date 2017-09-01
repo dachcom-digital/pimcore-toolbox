@@ -1,7 +1,7 @@
 {% for element in elements.getElements() %}
 
     {% set imageUrl = element.obj is instanceof('\Pimcore\Model\Asset')
-        ? element.obj.getThumbnail('parallaxImage')
+        ? element.obj.getThumbnail(toolbox_get_image_thumbnail('parallax_container_element'))
         : '' %}
 
     {% set parallaxImageTag = backgroundImageMode == 'style'
@@ -9,9 +9,9 @@
         : 'data-background-image="'~imageUrl~'"' %}
 
     {% set orgWidth = element['obj'].getWidth() %}
-    {% set width = element['obj'].getThumbnail('parallaxImage').getWidth() %}
+    {% set width = element['obj'].getThumbnail(toolbox_get_image_thumbnail('parallax_container_element')).getWidth() %}
     {% set orgHeight = element['obj'].getHeight() %}
-    {% set height = element['obj'].getThumbnail('parallaxImage').getHeight() %}
+    {% set height = element['obj'].getThumbnail(toolbox_get_image_thumbnail('parallax_container_element')).getHeight() %}
 
     <div class="element position-{{ element.parallaxPosition }} size-{{ element.parallaxSize }}"
         {{ parallaxImageTag }}

@@ -23,7 +23,6 @@ toolbox:
                         active: false
                     youtube:
                         active: true
-                        posterImageThumbnail: null
                     vimeo:
                         active: false
                     dailymotion:

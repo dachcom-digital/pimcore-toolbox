@@ -6,8 +6,8 @@
     >
 
         {% for image in images %}
-            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail('contentImage') ~ '"')|raw }}>
-                <img src="{{ image.getThumbnail('galleryImage') }}"  />
+            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail(toolbox_get_image_thumbnail('gallery_lightbox')) ~ '"')|raw }}>
+                <img src="{{ image.getThumbnail(toolbox_get_image_thumbnail('gallery_element')) }}"  />
             </li>
         {% endfor %}
 
@@ -22,7 +22,7 @@
 
             {% for image in images %}
                 <li class="slide">
-                    <img src="{{ image.getThumbnail('galleryThumb') }}"  />
+                    <img src="{{ image.getThumbnail(toolbox_get_image_thumbnail('gallery_thumbnail')) }}"  />
                 </li>
             {% endfor %}
 

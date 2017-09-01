@@ -36,7 +36,6 @@ class ConfigManager
     public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL)
     {
         $this->areaNamespace = $namespace;
-
         return $this;
     }
 
@@ -58,7 +57,6 @@ class ConfigManager
     public function getAreaConfig($areaName = '')
     {
         $this->checkConfigNamespace();
-
         return $this->config[$this->areaNamespace][$areaName];
     }
 
@@ -71,7 +69,6 @@ class ConfigManager
     public function getAreaElementConfig($areaName = '', $configElementName = '')
     {
         $this->checkConfigNamespace();
-
         return $this->config[$this->areaNamespace][$areaName]['configElements'][$configElementName];
     }
 
@@ -83,8 +80,17 @@ class ConfigManager
     public function getAreaParameterConfig($areaName = '')
     {
         $this->checkConfigNamespace();
-
         return $this->config[$this->areaNamespace][$areaName]['configParameter'];
+    }
+
+    /**
+     * @param string $thumbnailName
+     *
+     * @return mixed
+     */
+    public function getImageThumbnailFromConfig($thumbnailName = '')
+    {
+        return $this->config['imageThumbnails'][$thumbnailName];
     }
 
     /**

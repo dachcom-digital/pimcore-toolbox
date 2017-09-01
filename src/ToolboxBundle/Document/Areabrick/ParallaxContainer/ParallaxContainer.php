@@ -127,7 +127,9 @@ class ParallaxContainer extends AbstractAreabrick
     {
         $backgroundImageMode = isset($config['backgroundImageMode']) ? $config['backgroundImageMode'] : 'data';
         $backgroundColorMode = isset($config['backgroundColorMode']) ? $config['backgroundColorMode'] : 'data';
-        $thumbnail = $type === 'parallax' ? 'parallaxBackground' : 'parallaxSectionBackground';
+        $thumbnail = $type === 'parallax'
+            ? $this->configManager->getImageThumbnailFromConfig('parallax_background')
+            : $this->configManager->getImageThumbnailFromConfig('parallax_section_background');
 
         $styles = [];
         $data = [];
