@@ -9,7 +9,7 @@ pimcore.plugin.toolbox.main = Class.create({
 
         try {
 
-            Ext.each(Ext.query('div[class="toolbox-element-edit-button"]'), function (item) {
+            Ext.each(Ext.query('div[class="toolbox-element-edit-button"]:not([class="no-interaction"])'), function (item) {
 
                 var editButton = new Ext.Button({
                     cls: 'pimcore_block_button_plus',

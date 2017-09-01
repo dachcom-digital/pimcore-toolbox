@@ -24,6 +24,7 @@ pimcore.document.tags.areablock = Class.create(pimcore.document.tags.areablock, 
                 try {
 
                     $editDiv = Ext.get(this.elements[i]).query('.pimcore_area_edit_button[data-name="' + this.name + '"]')[0];
+
                     if($editDiv) {
 
                         $el = Ext.DomHelper.insertAfter($editDiv, {

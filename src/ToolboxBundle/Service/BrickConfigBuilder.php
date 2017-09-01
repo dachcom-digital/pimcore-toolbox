@@ -103,10 +103,6 @@ class BrickConfigBuilder
 
         $this->configWindowSize = $this->getConfigWindowSize();
 
-        if (empty($this->configElements)) {
-            return '';
-        }
-
         $fieldSetArgs = [
             'config_elements'        => $this->parseConfigElements(),
             'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
@@ -302,6 +298,10 @@ class BrickConfigBuilder
     private function parseConfigElements()
     {
         $parsedConfig = [];
+
+        if (empty($this->configElements)) {
+            return $parsedConfig;
+        }
 
         foreach ($this->configElements as $configElementName => $c) {
 

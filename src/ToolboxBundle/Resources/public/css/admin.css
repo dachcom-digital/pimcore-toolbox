@@ -276,7 +276,6 @@
 }
 
 .toolbox-element-edit-button {
-
     position:relative;
     display: block;
     margin: 3px 0 0 0;
@@ -286,7 +285,10 @@
     -webkit-transition: opacity .3s ease;
     -ms-transition: opacity .3s ease;
     transition: opacity .3s ease;
+}
 
+.toolbox-element-edit-button.no-interaction {
+    height:35px;
 }
 
 .toolbox-element-edit-button:before {

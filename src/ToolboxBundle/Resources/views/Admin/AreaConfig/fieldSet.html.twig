@@ -1,6 +1,6 @@
 {% spaceless %}
 
-{% if config_elements %}
+{% if config_elements|length > 0 %}
 
     <div class="toolbox-element-edit-button" data-title="{{ document_editable_name }}"></div>
     <div class="toolbox-element-window toolbox-element-window-hidden" data-edit-window-size="{{ window_size }}">
@@ -60,6 +60,8 @@
 
     </div><!-- .toolbox-element-window -->
 
+{% else %}
+    <div class="toolbox-element-edit-button no-interaction" data-title="{{ document_editable_name }}"></div>
 {% endif %}
 
 {% endspaceless %}
