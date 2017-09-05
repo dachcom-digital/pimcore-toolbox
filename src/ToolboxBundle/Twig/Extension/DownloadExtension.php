@@ -108,7 +108,7 @@ class DownloadExtension extends \Twig_Extension
      *
      * @return array
      */
-    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'mb', $fileSizePrecision = 0)
+    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'optimized', $fileSizePrecision = 0)
     {
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
             && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE
@@ -118,7 +118,13 @@ class DownloadExtension extends \Twig_Extension
             $dPath = $download->getFullPath();
         }
 
-        $dSize = $download->getFileSize($fileSizeUnit, $fileSizePrecision);
+        if ($fileSizeUnit === 'optimized') {
+            $realSize = $download->getFileSize();
+            $dSize = $this->getOptimizedFileSize($realSize, $fileSizePrecision);
+        } else {
+            $dSize = $download->getFileSize($fileSizeUnit, $fileSizePrecision);
+        }
+
         $dType = \Pimcore\File::getFileExtension($download->getFilename());
         $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $this->translator->trans('Download', [], 'admin');
         $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
@@ -160,5 +166,37 @@ class DownloadExtension extends \Twig_Extension
             'hasPreviewImage'  => $hasPreviewImage,
             'previewImagePath' => $dPreviewImagePath
         ];
+    }
+
+    /**
+     * Get optimized file size
+     *
+     * @param int    $bytes
+     * @param int    $precision
+     *
+     * @return string
+     */
+    public function getOptimizedFileSize($bytes, $precision)
+    {
+        $format = '';
+
+        if ($bytes >= 1073741824) {
+            $bytes = number_format($bytes / 1073741824, 2);
+            $format = 'gb';
+        } elseif ($bytes >= 1048576) {
+            $bytes = number_format($bytes / 1048576, 2);
+            $format = 'mb';
+        } elseif ($bytes >= 1024) {
+            $bytes = number_format($bytes / 1024, 2);
+            $format = 'kb';
+        } elseif ($bytes > 1) {
+            $format = 'bytes';
+        } elseif ($bytes == 1) {
+            $format = 'byte';
+        } else {
+            $bytes = '0 bytes';
+        }
+
+        return round($bytes, $precision) . ' ' . $format;
     }
 }

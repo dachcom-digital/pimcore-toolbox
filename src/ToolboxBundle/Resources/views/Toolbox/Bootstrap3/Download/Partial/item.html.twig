@@ -1,4 +1,4 @@
-{% set downloadInfo = toolbox_download_info(download, showPreviewImages, 'kb') %}
+{% set downloadInfo = toolbox_download_info(download, showPreviewImages, 'optimized') %}
 <li>
     <a href="{{ downloadInfo.path }}" {{ toolbox_download_tracker('download', download) }} target="_blank" class="icon-download-{{ downloadInfo.type }}">
         {% if showPreviewImages and downloadInfo.hasPreviewImage %}
