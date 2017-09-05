@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
+use Pimcore\Model\Asset;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Service\ConfigManager;
 use Pimcore\Translation\Translator;
@@ -121,27 +122,41 @@ class DownloadExtension extends \Twig_Extension
         $dType = \Pimcore\File::getFileExtension($download->getFilename());
         $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $this->translator->trans('Download', [], 'admin');
         $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
+
         $dPreviewImage = NULL;
 
         $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
 
         if ($showPreviewImage) {
-            $dPreviewImage = $download->getMetadata('previewImage') instanceof \Pimcore\Model\Asset\Image
+            $dPreviewImage = $download->getMetadata('previewImage') instanceof Asset\Image
                 ? $download->getMetadata('previewImage')->getThumbnail($previewThumbName)
                 : (
-                $download instanceof \Pimcore\Model\Asset\Image
+                $download instanceof Asset\Image
                     ? $download->getThumbnail($previewThumbName)
                     : $download->getImageThumbnail($previewThumbName)
                 );
         }
 
+        $dPreviewImagePath = NULL;
+        $hasPreviewImage = FALSE;
+
+        if ($dPreviewImage instanceof Asset\Image\Thumbnail) {
+            $dPreviewImagePath = $dPreviewImage->getPath();
+            $hasPreviewImage = TRUE;
+        } else if ($dPreviewImage instanceof Asset\Document\ImageThumbnail && !empty($dPreviewImage->getConfig())) {
+            $dPreviewImagePath = $dPreviewImage->getPath();
+            $hasPreviewImage = TRUE;
+        }
+
         return [
-            'path'         => $dPath,
-            'size'         => $dSize,
-            'type'         => $dType,
-            'name'         => $dName,
-            'altText'      => $dAltText,
-            'previewImage' => $dPreviewImage
+            'path'             => $dPath,
+            'size'             => $dSize,
+            'type'             => $dType,
+            'name'             => $dName,
+            'altText'          => $dAltText,
+            'previewImage'     => $dPreviewImage,
+            'hasPreviewImage'  => $hasPreviewImage,
+            'previewImagePath' => $dPreviewImagePath
         ];
     }
 }

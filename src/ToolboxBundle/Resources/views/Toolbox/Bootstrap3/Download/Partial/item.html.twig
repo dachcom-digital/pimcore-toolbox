@@ -1,9 +1,11 @@
 {% set downloadInfo = toolbox_download_info(download, showPreviewImages, 'kb') %}
 <li>
     <a href="{{ downloadInfo.path }}" {{ toolbox_download_tracker('download', download) }} target="_blank" class="icon-download-{{ downloadInfo.type }}">
-    {% if showPreviewImages %}
-        <span class="preview-image"><img src="{{ downloadInfo.previewImage }}" alt="{{ downloadInfo.altText }}"/></span>
-    {% endif %}
+        {% if showPreviewImages and downloadInfo.hasPreviewImage %}
+            <span class="preview-image">
+                <img src="{{ downloadInfo.previewImagePath }}" alt="{{ downloadInfo.altText }}"/>
+            </span>
+        {% endif %}
         <span class="title">{{ downloadInfo.name }}</span>
     {% if showFileInfo %}
         <span class="file-info">(<span class="file-type">{{ downloadInfo.type }}</span>, {{ downloadInfo.size }})</span>
