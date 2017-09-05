@@ -131,9 +131,11 @@ class DownloadExtension extends \Twig_Extension
             $dPreviewImage = $download->getMetadata('previewImage') instanceof Asset\Image
                 ? $download->getMetadata('previewImage')->getThumbnail($previewThumbName)
                 : (
-                $download instanceof Asset\Image
+                    $download instanceof Asset\Image
                     ? $download->getThumbnail($previewThumbName)
-                    : $download->getImageThumbnail($previewThumbName)
+                    : ($download instanceof Asset\Document
+                        ? $download->getImageThumbnail($previewThumbName)
+                        : NULL)
                 );
         }
 
