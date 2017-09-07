@@ -1,6 +1,10 @@
 {% if globalStyleSets is defined and globalStyleSets is iterable %}
     {% for stylesSetName, stylesSetData in globalStyleSets %}
-        CKEDITOR.stylesSet.add('{{ stylesSetName }}', {{ stylesSetData|json_encode|raw }});
+        if(CKEDITOR.stylesSet.get('{{ stylesSetName }}') === null) {
+            CKEDITOR.stylesSet.add('{{ stylesSetName }}', {{ stylesSetData|json_encode|raw }});
+        } else {
+            console.warn('toolbox: ckeditor style set "{{ stylesSetName }}" already has been set. did you forget to add the config? usage: pimcore_wysiwyg("text", {"customConfig":"/admin/toolbox-ckeditor-style.js"})');
+        }
     {% endfor %}
 {% endif %}
 
