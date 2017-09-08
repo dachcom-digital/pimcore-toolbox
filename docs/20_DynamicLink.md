@@ -26,7 +26,7 @@ namespace AppBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Pimcore\Model\Object;
+use Pimcore\Model\DataObject;
 
 class ObjectUrlListener
 {
@@ -40,8 +40,8 @@ class ObjectUrlListener
     public function checkUrl(GenericEvent $e)
     {
         if ( $e->getArgument('className') === 'news') {
-            $obj = Object\News::getByPath($e->getArgument('path'));
-            if ($obj instanceof Object\News) {
+            $obj = DataObject\News::getByPath($e->getArgument('path'));
+            if ($obj instanceof DataObject\News) {
 
                 $url = $this->generator->generate('news_detail', [
                     'text'   => $obj->getTitle(),

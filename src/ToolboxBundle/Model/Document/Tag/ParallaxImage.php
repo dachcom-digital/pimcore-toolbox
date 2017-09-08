@@ -6,7 +6,7 @@ use Pimcore\Model;
 use Pimcore\Model\Element;
 use Pimcore\Model\Document;
 use Pimcore\Model\Asset;
-use Pimcore\Model\Object;
+use Pimcore\Model\DataObject;
 
 class ParallaxImage extends Model\Document\Tag\Multihref
 {
@@ -53,9 +53,9 @@ class ParallaxImage extends Model\Document\Tag\Multihref
         if (is_array($this->elements) && count($this->elements) > 0) {
             foreach ($this->elements as $element) {
                 $obj = $element['obj'];
-                if ($obj instanceof Object\Concrete) {
+                if ($obj instanceof DataObject\Concrete) {
                     $return[] = [$obj->getId(), $obj->getRealFullPath(), 'object', $obj->getClassName(), $element['parallaxPosition'], $element['parallaxSize']];
-                } elseif ($obj instanceof Object\AbstractObject) {
+                } elseif ($obj instanceof DataObject\AbstractObject) {
                     $return[] = [$obj->getId(), $obj->getRealFullPath(), 'object', 'folder', $element['parallaxPosition'], $element['parallaxSize']];
                 } elseif ($obj instanceof Asset) {
                     $return[] = [$obj->getId(), $obj->getRealFullPath(), 'asset', $obj->getType(), $element['parallaxPosition'], $element['parallaxSize']];
