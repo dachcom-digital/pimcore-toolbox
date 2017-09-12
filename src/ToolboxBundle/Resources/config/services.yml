@@ -1,3 +1,6 @@
+imports:
+    - { resource: services/*.yml }
+
 services:
 
     # toolbox installer
@@ -39,57 +42,6 @@ services:
         class: ToolboxBundle\Connector\BundleConnector
         arguments:
             - '@pimcore.extension.bundle_manager'
-
-    # twig extensions
-    toolbox.twig.extension.areablock_configuration:
-        class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-            - '@toolbox.area_manager'
-        tags:
-            - { name: twig.extension }
-
-    toolbox.twig.extension.download:
-        class: ToolboxBundle\Twig\Extension\DownloadExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-            - '@toolbox.connector.bundle'
-            - '@pimcore.translator'
-        tags:
-            - { name: twig.extension }
-
-    toolbox.twig.extension.document_tag_extender:
-        class: ToolboxBundle\Twig\Extension\DocumentTagExtension
-        public: false
-        parent: pimcore.twig.extension.document_tag
-        tags:
-            - { name: twig.extension }
-
-    toolbox.twig.extension.data_attributes_generator:
-        class: ToolboxBundle\Twig\Extension\DataAttributesExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-        tags:
-            - { name: twig.extension }
-
-    toolbox.twig.extension.layout:
-        class: ToolboxBundle\Twig\Extension\LayoutExtension
-        public: false
-        arguments:
-            - '@toolbox.layout_manager'
-        tags:
-            - { name: twig.extension }
-
-    toolbox.twig.extension.image_thumbnail:
-        class: ToolboxBundle\Twig\Extension\ImageThumbnailExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-        tags:
-            - { name: twig.extension }
 
     # base brick
     toolbox.area.brick.base_brick:
