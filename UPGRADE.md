@@ -41,6 +41,7 @@ UPDATE documents_elements SET `name` = REPLACE(`name`, 'mapZoom', 'map_zoom');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'mapType', 'map_type');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'iwOnInit', 'iw_on_init');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'headlineType', 'headline_type');
+UPDATE documents_elements SET `name` = REPLACE(`name`, 'headlineText', 'headline_text');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'showCaption', 'show_caption');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'backgroundImage', 'background_image'); #parallax
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'backgroundColor', 'background_color'); #parallax
@@ -49,6 +50,9 @@ UPDATE documents_elements SET `name` = REPLACE(`name`, 'imagesBehind', 'image_be
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'containerType', 'container_type');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'slidesPerView', 'slides_per_view');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'spacerClass', 'spacer_class');
+
+
+
 
 ```
 
