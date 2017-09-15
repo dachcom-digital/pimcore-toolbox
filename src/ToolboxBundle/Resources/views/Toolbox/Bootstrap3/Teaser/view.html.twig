@@ -8,5 +8,5 @@
     {% include '@Toolbox/Snippet/teaser-' ~ layout ~ '.html.twig' %}
 {% else %}
     {# "teaser-standard" is the snippet name. define your teaser layout in the specific teaser snippet! #}
-    {{ pimcore_snippet('teaser-standard', {'useLightBox' : pimcore_checkbox('useLightBox').isChecked()}) }}
+    {{ pimcore_snippet('teaser-standard', {'useLightBox' : pimcore_checkbox('use_light_box').isChecked()}) }}
 {% endif %}

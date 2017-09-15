@@ -14,7 +14,7 @@ class Headline extends AbstractAreabrick
         $view = $info->getView();
 
         $anchorName = NULL;
-        $anchorNameElement = $this->getDocumentTag($info->getDocument(),'input', 'anchorName');
+        $anchorNameElement = $this->getDocumentTag($info->getDocument(),'input', 'anchor_name');
 
         if(!$anchorNameElement->isEmpty()) {
             $anchorName = \Pimcore\File::getValidFilename($anchorNameElement->getData());

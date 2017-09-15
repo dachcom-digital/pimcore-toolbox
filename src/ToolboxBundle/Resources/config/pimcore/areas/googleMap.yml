@@ -12,8 +12,8 @@ services:
 toolbox:
     areas:
         googleMap:
-            configElements:
-                mapZoom:
+            config_elements:
+                map_zoom:
                     type: numeric
                     title: Map zoom
                     config:
@@ -23,7 +23,7 @@ toolbox:
                         decimalPrecision: 0
                         default: 12
                         reload: false
-                mapType:
+                map_type:
                     type: select
                     title: Map type
                     config:
@@ -34,16 +34,16 @@ toolbox:
                             hybrid: HYBRID
                             terrain: TERRAIN
                         default: roadmap
-                iwOnInit:
+                iw_on_init:
                     type: checkbox
                     title: Open Info Window by Default
                     config:
                         reload: false
-            configParameter:
-                mapOptions:
+            config_parameter:
+                map_options:
                     streetViewControl: true
                     mapTypeControl: false
                     panControl: false
                     scrollwheel: false
-                mapStyleUrl: false
-                markerIcon: false
+                map_style_url: false
+                marker_icon: false

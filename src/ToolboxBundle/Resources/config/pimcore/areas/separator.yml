@@ -7,7 +7,7 @@ services:
 toolbox:
     areas:
         separator:
-            configElements:
+            config_elements:
                 space:
                     type: select
                     title: Space before & after separator
@@ -17,7 +17,7 @@ toolbox:
                             medium: Medium
                             large: Large
                         default: default
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

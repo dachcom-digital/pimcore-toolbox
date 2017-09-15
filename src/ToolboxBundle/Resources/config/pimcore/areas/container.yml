@@ -7,8 +7,8 @@ services:
 toolbox:
     areas:
         container:
-            configElements:
-                fullWidthContainer:
+            config_elements:
+                full_width_container:
                     type: checkbox
                     title: Fluid Container (Full Width)
                     config:

@@ -9,7 +9,7 @@ There are three simple steps to create a custom Brick with a Toolbox context.
 ```yaml
 # It's always a good idea to add your brick as a service.
 services:
-    toolbox.area.brick.myBrick:
+    toolbox.area.brick.my_brick:
         parent: toolbox.area.brick.base_brick
         class: AppBundle\Document\Areabrick\MyBrick\MyBrick
         calls:
@@ -22,7 +22,7 @@ toolbox:
     custom_areas:
         # that's the name of your brick. 
         myBrick:
-            configElements:
+            config_elements:
                 title1:
                     type: input
                     title: That's a Title

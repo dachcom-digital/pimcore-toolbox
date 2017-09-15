@@ -7,23 +7,23 @@ services:
 toolbox:
     areas:
         gallery:
-            configElements:
+            config_elements:
                 images:
                     type: multihref
                     title: Images or Folder
                     config:
                         reload: true
-                useLightbox:
+                use_light_box:
                     type: checkbox
                     title: Use Lightbox
                     config:
                         reload: false
-                useThumbnails:
+                use_thumbnails:
                     type: checkbox
                     title: Use Thumbnails
                     config:
                         reload: false
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

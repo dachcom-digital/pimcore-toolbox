@@ -70,19 +70,19 @@ class SettingsController extends Controller\AdminController
 
         //object config
         $userCkEditorObjectConfig = [];
-        if (isset($ckEditorSettings['objectEditor']['config'])) {
-            $userCkEditorObjectConfig = $ckEditorSettings['objectEditor']['config'];
+        if (isset($ckEditorSettings['object_editor']['config'])) {
+            $userCkEditorObjectConfig = $ckEditorSettings['object_editor']['config'];
         }
 
         //area config
         $userCkEditorAreaConfig = [];
-        if (isset($ckEditorSettings['areaEditor']['config'])) {
-            $userCkEditorAreaConfig = $ckEditorSettings['areaEditor']['config'];
+        if (isset($ckEditorSettings['area_editor']['config'])) {
+            $userCkEditorAreaConfig = $ckEditorSettings['area_editor']['config'];
         }
 
         //global Style Sets config
-        if (isset($ckEditorSettings['globalStyleSets'])) {
-            $this->globalStyleSets = $ckEditorSettings['globalStyleSets'];
+        if (isset($ckEditorSettings['global_style_sets'])) {
+            $this->globalStyleSets = $ckEditorSettings['global_style_sets'];
         }
 
         $this->ckEditorObjectConfig = $this->parseToolbarConfig($ckEditorGlobalConfig, $userCkEditorObjectConfig);

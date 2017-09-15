@@ -68,11 +68,11 @@ class DownloadExtension extends \Twig_Extension
         } else {
             $configNode = $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
 
-            if (empty($configNode) || !isset($configNode['eventTracker'])) {
+            if (empty($configNode) || !isset($configNode['event_tracker'])) {
                 return '';
             }
 
-            $trackerInfo = $configNode['eventTracker'];
+            $trackerInfo = $configNode['event_tracker'];
         }
 
         $str = 'data-tracking="active" ';

@@ -26,7 +26,7 @@ class Columns extends AbstractAreabrick
         parent::action($info);
 
         $view = $info->getView();
-        $equalHeightElement = $this->getDocumentTag($info->getDocument(),'checkbox', 'equalHeight');
+        $equalHeightElement = $this->getDocumentTag($info->getDocument(),'checkbox', 'equal_height');
         $typeElement = $this->getDocumentTag($info->getDocument(),'select', 'type');
 
         $editMode = $view->get('editmode');

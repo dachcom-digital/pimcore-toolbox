@@ -7,12 +7,12 @@ services:
 toolbox:
     areas:
         anchor:
-            configElements:
-                anchorName:
+            config_elements:
+                anchor_name:
                     type: input
                     title: Anchor Name
                     config: ~
-                anchorTitle:
+                anchor_title:
                     type: input
                     title: Anchor Title
                     config: ~

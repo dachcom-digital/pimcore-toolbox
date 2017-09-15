@@ -97,9 +97,9 @@ class BrickConfigBuilder
 
         $this->info = $info;
 
-        $this->configElements = isset($configNode['configElements']) ? $configNode['configElements'] : [];
+        $this->configElements = isset($configNode['config_elements']) ? $configNode['config_elements'] : [];
 
-        $this->configParameter = isset($configNode['configParameter']) ? $configNode['configParameter'] : [];
+        $this->configParameter = isset($configNode['config_parameter']) ? $configNode['config_parameter'] : [];
 
         $this->configWindowSize = $this->getConfigWindowSize();
 
@@ -115,7 +115,7 @@ class BrickConfigBuilder
 
     private function getConfigWindowSize()
     {
-        $configWindowSize = isset($this->configParameter['windowSize']) ? (string)$this->configParameter['windowSize'] : NULL;
+        $configWindowSize = isset($this->configParameter['window_size']) ? (string)$this->configParameter['window_size'] : NULL;
 
         return !is_null($configWindowSize) ? $configWindowSize : 'small';
     }
@@ -268,7 +268,7 @@ class BrickConfigBuilder
         if ($elConf['type'] === 'additionalClasses') {
             $elConf['type'] = 'select';
             $elConf['title'] = 'Additional';
-            $elementName = 'addlCls';
+            $elementName = 'add_classes';
         } else {
             $elementName = $configElementName;
         }

@@ -1,4 +1,4 @@
 toolbox:
     ckeditor:
-        objectEditor:
+        object_editor:
             config: ~

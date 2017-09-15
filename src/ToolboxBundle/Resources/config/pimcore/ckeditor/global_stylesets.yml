@@ -1,6 +1,6 @@
 toolbox:
     ckeditor:
-        globalStyleSets:
+        global_style_sets:
             default:
               - name: Button Default
                 element: a

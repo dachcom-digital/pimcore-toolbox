@@ -39,7 +39,7 @@ class AjaxController extends FrontendController
         $configManager = $this->container->get('toolbox.config_manager');
         $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
-        $videoOptions = $videoAreaSettings['videoTypes'];
+        $videoOptions = $videoAreaSettings['video_types'];
         $allowedVideoTypes = [];
 
         if (!empty($videoOptions)) {

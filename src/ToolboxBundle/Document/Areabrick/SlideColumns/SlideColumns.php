@@ -30,10 +30,10 @@ class SlideColumns extends AbstractAreabrick
 
         $view = $info->getView();
 
-        $equalHeight = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equalHeight')->isChecked() && !$info->getView()->get('editmode');
+        $equalHeight = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height')->isChecked() && !$info->getView()->get('editmode');
         $id = $info->getView()->get('brick')->getId() . '-' . $info->getView()->get('brick')->getIndex();
 
-        $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slidesPerView')->getData();
+        $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
         $slideColumnConfig = $this->getConfigManager()->getAreaParameterConfig('slideColumns');

@@ -7,8 +7,8 @@ services:
 toolbox:
     areas:
         spacer:
-            configElements:
-                spacerClass:
+            config_elements:
+                spacer_class:
                     type: select
                     title: Space Class
                     config:
@@ -18,7 +18,7 @@ toolbox:
                             spacer-50: 50 Pixel
                         default: spacer-none
 
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

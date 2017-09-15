@@ -1,4 +1,4 @@
-{% set lightBoxParam = useLightBox is defined and useLightBox is not empty ? useLightBox : pimcore_checkbox('useLightBox').isChecked() %}
+{% set lightBoxParam = useLightBox is defined and useLightBox is not empty ? useLightBox : pimcore_checkbox('use_light_box').isChecked() %}
 {% set useLightBox = lightBoxParam and editmode == false %}
 {% set hasLink = pimcore_dynamiclink('link').isEmpty() == false %}
 {% set linkTarget = hasLink ? pimcore_dynamiclink('link').getTarget() : null %}

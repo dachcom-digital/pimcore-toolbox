@@ -6,7 +6,7 @@ imports:
     - { resource: document/editables.yml }
 
 toolbox:
-    imageThumbnails:
+    image_thumbnails:
         gallery_element: 'galleryImage'
         gallery_lightbox: 'contentImage'
         gallery_thumbnail: 'galleryThumb'
@@ -21,7 +21,7 @@ toolbox:
         parallax_container_element: 'parallaxImage'
         download_preview_thumbnail: 'downloadPreviewImage'
 
-    disallowedSubAreas:
+    disallowed_subareas:
         accordion:
             disallowed:
                 - accordion
@@ -55,13 +55,13 @@ toolbox:
             disallowed:
                 - parallaxContainer
 
-    disallowedContentSnippetAreas:
+    disallowed_content_snippet_areas:
         - parallaxContainer
         - teaser
         - container
         - snippet
 
-    areaBlockConfiguration:
+    area_block_configuration:
         toolbar:
             title: Inhaltsbausteine
             width: 200

@@ -7,7 +7,7 @@ services:
 toolbox:
     areas:
         accordion:
-            configElements:
+            config_elements:
                 type:
                     type: select
                     title: Type
@@ -27,7 +27,7 @@ toolbox:
                             accordion: Accordion
                             tab: Tab
                         default: accordion
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

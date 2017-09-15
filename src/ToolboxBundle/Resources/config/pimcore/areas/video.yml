@@ -7,18 +7,18 @@ services:
 toolbox:
     areas:
         video:
-            configElements:
+            config_elements:
                 autoplay:
                     type: checkbox
                     title: Autoplay?
                     config:
                         reload: false
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~
-            configParameter:
-                videoTypes:
+            config_parameter:
+                video_types:
                     asset:
                         active: false
                     youtube:

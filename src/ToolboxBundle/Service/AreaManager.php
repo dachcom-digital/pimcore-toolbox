@@ -51,7 +51,7 @@ class AreaManager
             $availableBricks = $this->getAvailableBricks($type);
         }
 
-        $areaBlockConfiguration = $this->configManager->getConfig('areaBlockConfiguration');
+        $areaBlockConfiguration = $this->configManager->getConfig('area_block_configuration');
         $areaBlockConfigurationArray = is_null($areaBlockConfiguration) ? [] : $areaBlockConfiguration;
 
         $configuration = [];
@@ -139,7 +139,7 @@ class AreaManager
     private function getAvailableBricks($type = NULL)
     {
         $areaElements = $this->getActiveBricks();
-        $disallowedSubAreas = $this->configManager->getConfig('disallowedSubAreas');
+        $disallowedSubAreas = $this->configManager->getConfig('disallowed_subareas');
 
         $bricks = [];
 
@@ -168,7 +168,7 @@ class AreaManager
     private function getAvailableBricksForSnippets()
     {
         $areaElements = $this->getActiveBricks();
-        $disallowedSubAreas = $this->configManager->getConfig('disallowedContentSnippetAreas');
+        $disallowedSubAreas = $this->configManager->getConfig('disallowed_content_snippet_areas');
 
         $bricks = [];
 

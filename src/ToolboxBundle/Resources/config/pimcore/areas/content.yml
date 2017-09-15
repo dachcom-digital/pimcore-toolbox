@@ -7,8 +7,8 @@ services:
 toolbox:
     areas:
         content:
-            configElements:
-                additionalClasses:
+            config_elements:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

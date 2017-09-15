@@ -2,7 +2,7 @@
 {{ elementConfigBar|raw }}
 {% set panel = pimcore_block('panels', {'default': 2}) %}
 {% set type = pimcore_select('type').getData() %}
-<div class="toolbox-element toolbox-accordion component-{{ pimcore_select('component').getData() }} {{ pimcore_select('addlCls').getData() }}">
+<div class="toolbox-element toolbox-accordion component-{{ pimcore_select('component').getData() }} {{ pimcore_select('add_classes').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
     {% include toolbox_area_path(areaId) with {'id': id, 'type' : type, 'panel' : panel} %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}

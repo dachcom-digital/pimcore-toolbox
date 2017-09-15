@@ -50,9 +50,9 @@ class GoogleMap extends Document\Tag
 
         if (!empty($configNode)) {
 
-            $mapOptions = $configNode['mapOptions'];
-            $mapStyleUrl = $configNode['mapStyleUrl'];
-            $markerIcon = $configNode['markerIcon'];
+            $mapOptions = $configNode['map_options'];
+            $mapStyleUrl = $configNode['map_style_url'];
+            $markerIcon = $configNode['marker_icon'];
 
             if (is_array($mapOptions) && count($mapOptions) > 0) {
                 foreach ($mapOptions as $name => $value) {

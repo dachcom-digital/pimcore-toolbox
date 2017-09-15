@@ -91,8 +91,8 @@ class LayoutManager
             'wrapper'        => FALSE
         ];
 
-        if (isset($layoutConfiguration['wrapper'][$areaName]['wrapperClasses'])) {
-            $theme['wrapper'] = $layoutConfiguration['wrapper'][$areaName]['wrapperClasses'];
+        if (isset($layoutConfiguration['wrapper'][$areaName]['wrapper_classes'])) {
+            $theme['wrapper'] = $layoutConfiguration['wrapper'][$areaName]['wrapper_classes'];
         }
 
         return $theme;

@@ -7,7 +7,7 @@ services:
 toolbox:
     areas:
         parallaxContainer:
-            configElements:
+            config_elements:
                 template:
                     type: select
                     title: Parallax Template
@@ -16,7 +16,7 @@ toolbox:
                         store:
                             no-template: No Template
                         default: no-template
-                backgroundImage:
+                background_image:
                     type: href
                     title: Background Image
                     config:
@@ -27,7 +27,7 @@ toolbox:
                               - image
                               - video
                         reload: true
-                backgroundColor:
+                background_color:
                     type: select
                     title: Background Color
                     config:
@@ -35,7 +35,7 @@ toolbox:
                         store:
                             no-background-color: No Background Color
                         default: no-background-color
-                imageFront:
+                image_front:
                     type: parallaximage
                     title: Images In Front Of Main Container
                     config:
@@ -54,7 +54,7 @@ toolbox:
                             third-window-width: Third Window Width
                             quarter-window-width: Quarter Window Width
                         reload: true
-                imagesBehind:
+                image_behind:
                     type: parallaximage
                     title: Images Behind Main Container
                     config:
@@ -73,8 +73,8 @@ toolbox:
                             third-window-width: Third Window Width
                             quarter-window-width: Quarter Window Width
                         reload: true
-            configParameter:
-                windowSize: large
-                backgroundMode: wrap
-                backgroundImageMode: data
-                backgroundColorMode: data
+            config_parameter:
+                window_size: large
+                background_mode: wrap
+                background_image_mode: data
+                background_color_mode: data

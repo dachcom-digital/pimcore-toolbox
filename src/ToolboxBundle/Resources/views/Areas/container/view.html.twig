@@ -1,7 +1,7 @@
 {% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-container {{ pimcore_select('addlCls').getData() }}">
+<div class="toolbox-element toolbox-container {{ pimcore_select('add_classes').getData() }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include toolbox_area_path(areaId) with { 'containerClass' : pimcore_checkbox('fullWidthContainer').isChecked() ? 'container-fluid' : 'container' } %}
+    {% include toolbox_area_path(areaId) with { 'containerClass' : pimcore_checkbox('full_width_container').isChecked() ? 'container-fluid' : 'container' } %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

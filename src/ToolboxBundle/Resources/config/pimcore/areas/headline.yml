@@ -7,8 +7,8 @@ services:
 toolbox:
     areas:
         headline:
-            configElements:
-                headlineType:
+            config_elements:
+                headline_type:
                     type: select
                     title: Headline Size
                     config:
@@ -21,11 +21,11 @@ toolbox:
                             h5: Headline 5
                             h6: Headline 6
                         default: h3
-                anchorName:
+                anchor_name:
                     type: input
                     title: Anchor Name
                     config: ~
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

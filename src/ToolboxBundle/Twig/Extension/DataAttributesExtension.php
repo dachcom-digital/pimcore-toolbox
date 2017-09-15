@@ -39,7 +39,7 @@ class DataAttributesExtension extends \Twig_Extension
      */
     public function generateDataAttributes($node, $overrides = [])
     {
-        $attributesNode = $this->configManager->getConfig('dataAttributes');
+        $attributesNode = $this->configManager->getConfig('data_attributes');
 
         if (!isset($attributesNode[$node]['values']) || empty($attributesNode[$node]['values'])) {
             return '';

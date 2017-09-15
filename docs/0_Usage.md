@@ -22,7 +22,7 @@ If you miss this, the toolbar will get messy.
 Of course, you're able to extend the toolbar configuration:
 
 ```yaml
-areaBlockConfiguration:
+area_block_configuration:
     toolbar:
         title: 'Your Toolbar Title'
         width: 200
@@ -38,7 +38,7 @@ areaBlockConfiguration:
                 - your_custom_area_brick
 
 # define which elements should not appear in snippet documents
-disallowedContentSnippetAreas:
+disallowed_content_snippet_areas:
     - parallaxContainer
     - teaser
     - container

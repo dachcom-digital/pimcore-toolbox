@@ -80,7 +80,7 @@ class ConfigManager
     public function getAreaParameterConfig($areaName = '')
     {
         $this->checkConfigNamespace();
-        return $this->config[$this->areaNamespace][$areaName]['configParameter'];
+        return $this->config[$this->areaNamespace][$areaName]['config_parameter'];
     }
 
     /**
@@ -90,7 +90,7 @@ class ConfigManager
      */
     public function getImageThumbnailFromConfig($thumbnailName = '')
     {
-        return $this->config['imageThumbnails'][$thumbnailName];
+        return $this->config['image_thumbnails'][$thumbnailName];
     }
 
     /**

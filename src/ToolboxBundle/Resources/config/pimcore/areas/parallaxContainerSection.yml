@@ -1,7 +1,7 @@
 toolbox:
     areas:
         parallaxContainerSection:
-            configElements:
+            config_elements:
                 template:
                     type: select
                     title: Section Template
@@ -10,7 +10,7 @@ toolbox:
                         store:
                             no-template: No Template
                         default: no-template
-                containerType:
+                container_type:
                     type: select
                     title: Section Wrapper Type
                     config:
@@ -21,7 +21,7 @@ toolbox:
                             container: Default Container Wrapper
                             container-fluid: Fluid Container Wrapper
                         default: none
-                backgroundImage:
+                background_image:
                     type: href
                     title: Background Image
                     config:
@@ -32,7 +32,7 @@ toolbox:
                             asset:
                               - image
                               - video
-                backgroundColor:
+                background_color:
                     type: select
                     title: Background Color
                     config:
@@ -40,6 +40,6 @@ toolbox:
                         store:
                             no-background-color: No Background Color
                         default: no-background-color
-            configParameter:
-                backgroundImageMode: data
-                backgroundColorMode: data
+            config_parameter:
+                background_image_mode: data
+                background_color_mode: data

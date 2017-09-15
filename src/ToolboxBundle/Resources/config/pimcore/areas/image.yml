@@ -7,20 +7,20 @@ services:
 toolbox:
     areas:
         image:
-            configElements:
-                useLightbox:
+            config_elements:
+                use_light_box:
                     type: checkbox
                     title: Use Lightbox
                     col_class: t-col-half
                     config:
                         reload: false
-                showCaption:
+                show_caption:
                     type: checkbox
                     title: Display Caption
                     col_class: t-col-half
                     config:
                         reload: false
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~

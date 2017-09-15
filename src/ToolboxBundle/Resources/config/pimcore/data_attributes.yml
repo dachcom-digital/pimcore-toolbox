@@ -1,5 +1,5 @@
 toolbox:
-    dataAttributes:
+    data_attributes:
         gallery:
             lazy_load: false
             fade: false

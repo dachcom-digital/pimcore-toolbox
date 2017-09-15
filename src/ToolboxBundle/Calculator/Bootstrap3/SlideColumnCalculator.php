@@ -27,10 +27,10 @@ class SlideColumnCalculator implements SlideColumnCalculatorInterface
             return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
         }
 
-        if (!isset($columnConfiguration['columnClasses']) || !isset($columnConfiguration['columnClasses'][$columnType])) {
+        if (!isset($columnConfiguration['column_classes']) || !isset($columnConfiguration['column_classes'][$columnType])) {
             return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
         }
 
-        return $columnConfiguration['columnClasses'][$columnType];
+        return $columnConfiguration['column_classes'][$columnType];
     }
 }

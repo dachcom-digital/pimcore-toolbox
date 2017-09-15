@@ -1,7 +1,7 @@
 {% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
 {{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-spacer {{ pimcore_select('addlCls').getData() }}" {{ editmode ? 'data-type="' ~ pimcore_select('spacerClass').getData() ~ '"' : '' }}>
+<div class="toolbox-element toolbox-spacer {{ pimcore_select('add_classes').getData() }}" {{ editmode ? 'data-type="' ~ pimcore_select('spacer_class').getData() ~ '"' : '' }}>
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include toolbox_area_path(areaId) with {'spacerClass' : pimcore_select('spacerClass').getData()} %}
+    {% include toolbox_area_path(areaId) with {'spacerClass' : pimcore_select('spacer_class').getData()} %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
 </div>

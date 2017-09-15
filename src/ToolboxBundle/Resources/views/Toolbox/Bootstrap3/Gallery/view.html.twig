@@ -3,8 +3,8 @@
     'editmode': editmode,
     'images': images,
     'galleryId': galleryId,
-    'useThumbnails': pimcore_checkbox('useThumbnails').isChecked(),
-    'useLightbox': pimcore_checkbox('useLightbox').isChecked(),
-    'galleryDataAttributes': toolbox_data_attributes_generator('gallery', {dots: pimcore_checkbox('useThumbnails').isChecked() ? 'false' : 'true'}),
+    'useThumbnails': pimcore_checkbox('use_thumbnails').isChecked(),
+    'useLightbox': pimcore_checkbox('use_light_box').isChecked(),
+    'galleryDataAttributes': toolbox_data_attributes_generator('gallery', {dots: pimcore_checkbox('use_thumbnails').isChecked() ? 'false' : 'true'}),
     'thumbsDataAttributes': toolbox_data_attributes_generator('gallery_thumbs')
 } %}

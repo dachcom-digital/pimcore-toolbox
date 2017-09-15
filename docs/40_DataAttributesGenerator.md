@@ -10,7 +10,7 @@ There are two predefined nodes: `gallery` and `gallery_thumbs`. You may want to 
 ```yaml
 # add this to your app/config/config.yml
 toolbox:
-    dataAttributes:
+    data_attributes:
     
         #override the gallery data attributes 
         gallery:

@@ -7,7 +7,7 @@ services:
 toolbox:
     areas:
         teaser:
-            configElements:
+            config_elements:
                 type:
                     type: select
                     title: Type
@@ -26,11 +26,11 @@ toolbox:
                         store:
                             default: Default
                         default: default
-                useLightBox:
+                use_light_box:
                     type: checkbox
                     title: use Lightbox?
                     config: ~
-                additionalClasses:
+                additional_classes:
                     type: additionalClasses
                     config:
                         store: ~
