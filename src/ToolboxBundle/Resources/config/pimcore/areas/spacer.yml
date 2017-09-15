@@ -10,12 +10,12 @@ toolbox:
             config_elements:
                 spacer_class:
                     type: select
-                    title: Space Class
+                    title: 'Space Class'
                     config:
                         reload: false
                         store:
-                            spacer-none: No Space
-                            spacer-50: 50 Pixel
+                            spacer-none: 'No Space'
+                            spacer-50: '50 Pixel'
                         default: spacer-none
 
                 additional_classes:

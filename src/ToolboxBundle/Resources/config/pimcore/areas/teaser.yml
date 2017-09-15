@@ -10,25 +10,25 @@ toolbox:
             config_elements:
                 type:
                     type: select
-                    title: Type
+                    title: 'Type'
                     config:
                         name: type
                         store:
-                            direct: Direct
-                            snippet: Snippet
+                            direct: 'Direct'
+                            snippet: 'Snippet'
                         default: direct
                 layout:
                     type: select
-                    title: Layout
+                    title: 'Layout'
                     conditions:
                         - type: direct
                     config:
                         store:
-                            default: Default
+                            default: 'Default'
                         default: default
                 use_light_box:
                     type: checkbox
-                    title: use Lightbox?
+                    title: 'use Lightbox?'
                     config: ~
                 additional_classes:
                     type: additionalClasses

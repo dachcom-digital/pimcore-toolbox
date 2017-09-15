@@ -10,12 +10,12 @@ toolbox:
             config_elements:
                 space:
                     type: select
-                    title: Space before & after separator
+                    title: 'Space before & after separator'
                     config:
                         store:
-                            default: Default
-                            medium: Medium
-                            large: Large
+                            default: 'Default'
+                            medium: 'Medium'
+                            large: 'Large'
                         default: default
                 additional_classes:
                     type: additionalClasses

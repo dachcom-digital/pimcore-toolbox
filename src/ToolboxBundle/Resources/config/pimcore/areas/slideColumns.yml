@@ -12,17 +12,17 @@ toolbox:
             config_elements:
                 slides_per_view:
                     type: select
-                    title: Slides per View
+                    title: 'Slides per View'
                     config:
                         store:
-                            '2': 2 Columns
-                            '3': 3 Columns
-                            '4': 4 Columns
-                            '6': 6 Columns
+                            '2': '2 Columns'
+                            '3': '3 Columns'
+                            '4': '4 Columns'
+                            '6': '6 Columns'
                         default: '4'
                 equal_height:
                     type: checkbox
-                    title: Equal heights?
+                    title: 'Equal heights?'
                     config:
                         reload: false
             config_parameter:

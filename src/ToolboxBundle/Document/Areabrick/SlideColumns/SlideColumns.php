@@ -48,11 +48,6 @@ class SlideColumns extends AbstractAreabrick
         $view->equalHeight = $equalHeight;
     }
 
-    public function getViewTemplate()
-    {
-        return 'ToolboxBundle:Areas/slideColumns:view.' . $this->getTemplateSuffix();
-    }
-
     public function getName()
     {
         return 'Slide Columns';

@@ -4,26 +4,26 @@ toolbox:
             config_elements:
                 template:
                     type: select
-                    title: Section Template
+                    title: 'Section Template'
                     config:
                         reload: true
                         store:
-                            no-template: No Template
+                            no-template: 'No Template'
                         default: no-template
                 container_type:
                     type: select
-                    title: Section Wrapper Type
+                    title: 'Section Wrapper Type'
                     config:
                         reload: true
-                        description: If you need to add some content columns, apply a default or fluid container as wrapper.
+                        description: 'If you need to add some content columns, apply a default or fluid container as wrapper.'
                         store:
-                            none: No Section Wrapper
-                            container: Default Container Wrapper
-                            container-fluid: Fluid Container Wrapper
+                            none: 'No Section Wrapper'
+                            container: 'Default Container Wrapper'
+                            container-fluid: 'Fluid Container Wrapper'
                         default: none
                 background_image:
                     type: href
-                    title: Background Image
+                    title: 'Background Image'
                     config:
                         reload: true
                         types:
@@ -34,11 +34,11 @@ toolbox:
                               - video
                 background_color:
                     type: select
-                    title: Background Color
+                    title: 'Background Color'
                     config:
                         reload: true
                         store:
-                            no-background-color: No Background Color
+                            no-background-color: 'No Background Color'
                         default: no-background-color
             config_parameter:
                 background_image_mode: data

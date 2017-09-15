@@ -10,9 +10,9 @@ toolbox:
             config_elements:
                 anchor_name:
                     type: input
-                    title: Anchor Name
+                    title: 'Anchor Name'
                     config: ~
                 anchor_title:
                     type: input
-                    title: Anchor Title
+                    title: 'Anchor Title'
                     config: ~

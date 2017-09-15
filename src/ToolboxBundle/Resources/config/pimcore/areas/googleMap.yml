@@ -15,7 +15,7 @@ toolbox:
             config_elements:
                 map_zoom:
                     type: numeric
-                    title: Map zoom
+                    title: 'Map zoom'
                     config:
                         width: 100
                         minValue: 0
@@ -25,7 +25,7 @@ toolbox:
                         reload: false
                 map_type:
                     type: select
-                    title: Map type
+                    title: 'Map type'
                     config:
                         reload: true
                         store:
@@ -36,7 +36,7 @@ toolbox:
                         default: roadmap
                 iw_on_init:
                     type: checkbox
-                    title: Open Info Window by Default
+                    title: 'Open Info Window by Default'
                     config:
                         reload: false
             config_parameter:

@@ -10,7 +10,7 @@ toolbox:
             config_elements:
                 autoplay:
                     type: checkbox
-                    title: Autoplay?
+                    title: 'Autoplay?'
                     config:
                         reload: false
                 additional_classes:

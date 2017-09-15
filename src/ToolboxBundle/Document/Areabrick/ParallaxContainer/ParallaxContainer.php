@@ -180,11 +180,6 @@ class ParallaxContainer extends AbstractAreabrick
         return $backgroundColor;
     }
 
-    public function getViewTemplate()
-    {
-        return 'ToolboxBundle:Areas/parallaxContainer:view.' . $this->getTemplateSuffix();
-    }
-
     public function getName()
     {
         return 'Parallax Container';

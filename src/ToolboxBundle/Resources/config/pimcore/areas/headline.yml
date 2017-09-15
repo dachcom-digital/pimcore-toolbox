@@ -10,7 +10,7 @@ toolbox:
             config_elements:
                 headline_type:
                     type: select
-                    title: Headline Size
+                    title: 'Headline Size'
                     config:
                         name: headlineType
                         store:
@@ -23,7 +23,7 @@ toolbox:
                         default: h3
                 anchor_name:
                     type: input
-                    title: Anchor Name
+                    title: 'Anchor Name'
                     config: ~
                 additional_classes:
                     type: additionalClasses

@@ -10,22 +10,22 @@ toolbox:
             config_elements:
                 type:
                     type: select
-                    title: Type
+                    title: 'Type'
                     config:
                         store:
-                            panel-default: Default
-                            panel-danger: Dangers
+                            panel-default: 'Default'
+                            panel-danger: 'Dangers'
                         default: panel-default
                 component:
                     type: select
-                    title: Component
+                    title: 'Component'
                     description: ~
                     col_class: ~
                     conditions: ~
                     config:
                         store:
-                            accordion: Accordion
-                            tab: Tab
+                            accordion: 'Accordion'
+                            tab: 'Tab'
                         default: accordion
                 additional_classes:
                     type: additionalClasses

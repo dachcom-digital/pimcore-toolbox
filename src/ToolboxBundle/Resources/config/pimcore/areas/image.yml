@@ -10,13 +10,13 @@ toolbox:
             config_elements:
                 use_light_box:
                     type: checkbox
-                    title: Use Lightbox
+                    title: 'Use Lightbox'
                     col_class: t-col-half
                     config:
                         reload: false
                 show_caption:
                     type: checkbox
-                    title: Display Caption
+                    title: 'Display Caption'
                     col_class: t-col-half
                     config:
                         reload: false

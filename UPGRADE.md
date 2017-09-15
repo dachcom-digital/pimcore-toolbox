@@ -50,10 +50,6 @@ UPDATE documents_elements SET `name` = REPLACE(`name`, 'imagesBehind', 'image_be
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'containerType', 'container_type');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'slidesPerView', 'slides_per_view');
 UPDATE documents_elements SET `name` = REPLACE(`name`, 'spacerClass', 'spacer_class');
-
-
-
-
 ```
 
 - clear `cache` and `cache_tags` tables.

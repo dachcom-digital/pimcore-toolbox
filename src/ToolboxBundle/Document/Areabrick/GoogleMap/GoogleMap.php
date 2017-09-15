@@ -32,16 +32,17 @@ class GoogleMap extends AbstractAreabrick
         $info->getView()->googleMapsHostUrl = $this->googleMapsHostUrl;
     }
 
-    public function getViewTemplate()
-    {
-        return 'ToolboxBundle:Areas/googleMap:view.' . $this->getTemplateSuffix();
-    }
-
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Google Map';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Google Map';

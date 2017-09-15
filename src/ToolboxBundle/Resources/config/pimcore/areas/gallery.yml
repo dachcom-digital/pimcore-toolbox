@@ -10,17 +10,17 @@ toolbox:
             config_elements:
                 images:
                     type: multihref
-                    title: Images or Folder
+                    title: 'Images or Folder'
                     config:
                         reload: true
                 use_light_box:
                     type: checkbox
-                    title: Use Lightbox
+                    title: 'Use Lightbox'
                     config:
                         reload: false
                 use_thumbnails:
                     type: checkbox
-                    title: Use Thumbnails
+                    title: 'Use Thumbnails'
                     config:
                         reload: false
                 additional_classes:
