@@ -7,17 +7,22 @@ Some important advices if you're going to use this Bundle in your Projekt.
 
 The Toolbox Bundle will help you to display area bricks with some nice additions.
 
-### Area Brick Configuration
-Be sure, that every `pimcore_areablock` implements the `toolbox_areablock_config()` element. 
+#### Area Brick Configuration
+**Important!** Be sure, that every `pimcore_areablock` in your project implements the `toolbox_areablock_config()` element. 
 If you miss this, the toolbar will get messy.
 
 ```twig
  <main>
-    {{ pimcore_areablock('mainContentBlock', toolbox_areablock_config()) }}
+    {#  
+        choose a project wide unique name to dis-/allow elements in your areablock 
+        through the toolbox configuration (see section "allow/disallow elements" below
+     #}
+    {{ pimcore_areablock('mainContentBlock', toolbox_areablock_config('mainContentBlock')) }}
 </main>
 ```
 
-Of course, you're able to extend the toolbar configuration:
+## Toolbar Configuration
+Of course, you're able to extend/modify the toolbar configuration:
 
 ```yaml
 area_block_configuration:
@@ -35,6 +40,11 @@ area_block_configuration:
             elements:
                 - your_custom_area_brick
 
+```
+## Allow/Disallow Elements
+
+#### In Snippets
+```yaml
 # define which elements should not appear in snippet documents
 disallowed_content_snippet_areas:
     - parallaxContainer
@@ -45,4 +55,26 @@ disallowed_content_snippet_areas:
     - anchor
     - container
     - teaser        
+```
+
+#### In Area-Blocks
+
+Use the `disallowed_subareas` config node to disable Bricks in specific Areas.
+
+**Example**  
+```yaml
+toolbox:
+    disallowed_subareas:
+        container:
+            disallowed:
+                - container
+                - parallaxContainer
+        columns:
+            disallowed:
+                - container
+                - parallaxContainer
+        mainContentBlock: #this is a project related areablock example, see section "Area Brick Configuration" above.
+            disallowed:
+                - container
+                - yourCustomBrick
 ```

@@ -1,0 +1,9 @@
+toolbox:
+    area_block_configuration:
+        toolbar:
+            title: Inhaltsbausteine
+            width: 200
+            x: 10
+            y: 125
+            buttonWidth: 200
+        groups: ~

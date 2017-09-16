@@ -1,8 +1,3 @@
-imports:
-    - { resource: global_stylesets.yml }
-    - { resource: config_area.yml }
-    - { resource: config_object.yml }
-
 toolbox:
     ckeditor:
         config:

@@ -30,7 +30,7 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 - removes the default `pimcore_area_*` element wrapper from each brick
 
 ### And what's not?
-- It's not a Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modifiy them by yourself.
+- It's not a Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
 - Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
 
 ## Asset Management
@@ -80,6 +80,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Code Style](docs/1_CodeStyle.md)
 - [Toolbox Elements Overview](docs/11_ElementsOverview.md)
 - [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
+- [CK-Editor Configuration](docs/13_CkEditor.md)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)

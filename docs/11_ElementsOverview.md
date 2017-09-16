@@ -148,7 +148,7 @@ toolbox:
 ```
 ### View Helper
 In `Download/Partial/item.html.twig`, you'll find a `toolbox_download_info()` helper. 
-This Twig Extension will generate some downloads info.
+This Twig Extension will generate some download info.
 
 **Usage**:   
 ```twig
@@ -417,6 +417,9 @@ toolbox:
             config_elements:
                 awesome_fields:
                     type: input # all the pimcore editables
+                    config:
+                        # all available configuration attributes from
+                        # https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
 ```
 
 There is also the `additionalClasses` field. This Element will help you to generate some additional classes for every toolbox element.

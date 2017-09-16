@@ -97,7 +97,7 @@ class SettingsController extends Controller\AdminController
      */
     private function parseToolbarConfig($defaultConfig, $userConfig)
     {
-        $config = array_merge($defaultConfig, $userConfig);
+        $config = array_replace_recursive($defaultConfig, $userConfig);
         return $config;
     }
 }
