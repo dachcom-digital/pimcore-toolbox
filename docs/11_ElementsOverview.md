@@ -10,7 +10,7 @@ It's possible to change the layout from accordion to tabs without loosing the co
 |------|------|-----------------------------|---------------|-------------------------------|
 | `type` | select | Choose a accordion type | panel-default | `pimcore_select('type')` |
 | `component` | select | Choose the component type | accordion | `pimcore_select('component')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Anchor
 Create a anchor element.
@@ -21,7 +21,7 @@ Create a anchor element.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `anchor_name` | input | Set the anchor name | - | `pimcore_input('anchor_name')` |
 | `anchor_title` | input | Set the anchor title | - | `pimcore_input('anchor_title')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Columns
 
@@ -43,7 +43,7 @@ If you're using a different grid system, you probably need to change the [grid c
 |------|------|-----------------------------|---------------|-------------------------------|
 | `type` | select | Set the column type. see example below. | column_6_6 | `pimcore_input('type')` |
 | `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Column Calculation Example
 
@@ -105,7 +105,7 @@ Create a container element. Useful if you're using a full width layout.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `full_width_container` | checkbox | Adds the `container-fluid` class | false | `pimcore_checkbox('full_width_container')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Content
 Create a wysiwyg editor.
@@ -114,11 +114,13 @@ Create a wysiwyg editor.
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 
 ## Download
 Create download elements.
+
+> Note: If you're using the [MembersBundle](https://github.com/dachcom-digital/pimcore-members), the download element will automatically check for a restriction.
 
 ### Available Options
 
@@ -127,10 +129,9 @@ Create download elements.
 | `downloads` | multihref | Add download files / folders | - | `pimcore_multihref('downloads')` |
 | `show_preview_images` | checkbox | Display Preview Images | false | `pimcore_checkbox('show_preview_images')` |
 | `show_file_info` | checkbox | Display File Info | false | `pimcore_checkbox('show_file_info')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
-
 Use the `event_tracker` Parameter to build a helper markup for google events:
 
 **Example**  
@@ -145,6 +146,19 @@ toolbox:
                     label: ['getMetadata', ['name']]
                     noninteraction: true
 ```
+### View Helper
+In `Download/Partial/item.html.twig`, you'll find a `toolbox_download_info()` helper. 
+This Twig Extension will generate some downloads info.
+
+**Usage**:   
+```twig
+{% set downloadInfo = toolbox_download_info(download, true, 'optimized', 0) %}
+```
+**Arguments:**  
+1. Asset, Download File
+1. Bool, Show Preview Image 
+1. String, File Size Unit (mb, kb, optimized). Optimized means: get the best matching unit.
+4. File Size Precision: Round Precision
 
 ## Gallery
 Create image galleries.
@@ -156,7 +170,7 @@ Create image galleries.
 | `images` | multihref | Add images / folders | - | `pimcore_multihref('images')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `use_thumbnails` | checkbox | Add a thumbnail slider | false | `pimcore_checkbox('use_thumbnails')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 
 ## Google Map
@@ -173,7 +187,7 @@ Please be sure that you've included a valid google maps api.
 | `map_zoom` | numeric | Map Zoom | 12 | `pimcore_numeric('map_zoom')` |
 | `map_type` | select | Map Type (ROADMAP, HYBRID ..) | roadmap | `pimcore_select('map_type')` |
 | `iw_on_init` | checkbox | Open Info Window by Default | false | `pimcore_checkbox('iw_on_init')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
 
@@ -206,7 +220,7 @@ Create a headline.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `headline_type` | select | Define the headline size | h3 | `pimcore_select('headline_type')` |
 | `anchor_name` | input | Define a anchor name | - | `pimcore_input('anchor_name')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 
 ## Image
@@ -218,7 +232,7 @@ Create a image field.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `show_caption` | checkbox | Render image caption | false | `pimcore_checkbox('show_caption')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 
 ## Link List
@@ -228,7 +242,7 @@ Create a link list (via pimcore block element).
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Parallax Container
 Build a Parallax Container.
@@ -242,7 +256,7 @@ Build a Parallax Container.
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
 | `image_front` | parallaximage | Parallax Images behind content | - | *not available* |
 | `image_behind` | parallaximage | Parallax Images in front of content | - | *not available* |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
 
@@ -277,7 +291,7 @@ Build a Parallax Container Section.
 | `container_type` | select | Define a Container Type | none | `pimcore_select('container_type')` |
 | `background_image` | href | Define a background image | - | `pimcore_href('background_image')` |
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
 
@@ -302,7 +316,7 @@ Create a Separator Element (hr)
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `space` | select | Add some seperator spacer classes | default | `pimcore_select('space')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 
 ## Slide Columns
@@ -316,7 +330,7 @@ Create a sliding column element.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `slides_per_view` | select | Slides per View | 4 | `pimcore_select('slides_per_view')` |
 | `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
 
@@ -342,7 +356,7 @@ Create a spacer element.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `spacer_class` | select | Spacer classes | spacer-none | `pimcore_select('spacer_class')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Teaser
 Create teaser elements.
@@ -356,7 +370,7 @@ Create teaser elements.
 | `type` | select | Define Teaser Type: direct or as snippet | direct | `pimcore_select('type')` |
 | `layout` | select | Define Teaser Layout | default | `pimcore_select('layout')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link for teaser image | false | `pimcore_checkbox('use_light_box')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Video
 Create a Video Element.
@@ -368,7 +382,7 @@ Create a Video Element.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `autoplay` | checkbox | Start/Stop Video if it's in a visible viewport | false | `pimcore_checkbox('autoplay')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('additional_classes')` |
+| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ### Configuration Parameter
 
@@ -392,6 +406,7 @@ toolbox:
 ```
 
 # Element Config Field Overview
+
 In short, you're able to use all the [pimcore editables](https://www.pimcore.org/docs/5.0.0/Documents/Editables/index.html).
 
 **Example** 
