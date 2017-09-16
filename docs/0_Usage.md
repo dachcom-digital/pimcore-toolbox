@@ -3,13 +3,11 @@
 Some important advices if you're going to use this Bundle in your Projekt.
 
 ## Area Brick
-
 ![bildschirmfoto 2017-08-30 um 08 43 46](https://user-images.githubusercontent.com/700119/29858787-6198a2c4-8d5f-11e7-8376-8c3acd9d267f.png)
 
 The Toolbox Bundle will help you to display area bricks with some nice additions.
 
 ### Area Brick Configuration
-
 Be sure, that every `pimcore_areablock` implements the `toolbox_areablock_config()` element. 
 If you miss this, the toolbar will get messy.
 

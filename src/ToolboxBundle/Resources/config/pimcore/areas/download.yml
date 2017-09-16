@@ -29,9 +29,4 @@ toolbox:
                     type: additionalClasses
                     config:
                         store: ~
-            config_parameter:
-                # event_tracker:
-                    # category: 'PDF'
-                    # action: 'download'
-                    # label: ['getMetadata', ['name']]
-                    # noninteraction: true
+            config_parameter: ~

@@ -70,12 +70,17 @@ The Toolbox provides a lot of ready-to-use Bricks:
 - Teaser
 - Video
 
+## Additional Editables
+- [Dynamic Link](docs/20_DynamicLinkElement.md)
+- [VHS Video](docs/21_VhsElement.md)
+- [Google Maps Element](docs/22_GoogleMapsElement.md)
+
 ## Further Information
 - [Important Usage Information](docs/0_Usage.md)
 - [Code Style](docs/1_CodeStyle.md)
 - [Toolbox Elements Overview](docs/11_ElementsOverview.md)
+- [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
-- [Dynamic Link](docs/20_DynamicLink.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)
 - [Data Attributes Generator](docs/40_DataAttributesGenerator.md)

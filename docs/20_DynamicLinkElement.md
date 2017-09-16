@@ -1,9 +1,16 @@
-# Dynamic Link
+# Dynamic Link Element
 
 The dynamic link extends the pimcore link element. It allows you to drag objects into the url field.
 Of course it's impossible to generate a valid url from objects, so you need to do some further work.
 
-**Configuration**  
+### Usage
+
+```twig
+{{ pimcore_dynamiclink('link', {'class' : 'btn btn-default teaser-link'}) }}
+```
+### Configuration 
+
+#### Service
 ```yaml
 
 # /app/config/services.yml
@@ -15,7 +22,8 @@ services:
             - { name: kernel.event_listener, event: toolbox.dynamiclink.object.url, method: checkUrl }
 ```
 
-**Mapper**  
+#### Mapping
+
 This mapper will transformed your dragged object path into a valid frontend path. 
 You also need to setup a static route (in this case the `news_detail` route).
 
