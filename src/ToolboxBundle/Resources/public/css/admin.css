@@ -336,6 +336,7 @@
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     font-size: 12px;
     font-weight: 700;
+    padding-right: 10px;
 }
 
 .toolbox-edit-overlay {
