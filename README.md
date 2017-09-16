@@ -49,7 +49,7 @@ Add the sources to your `gulpfile.js` or add it with plain html. For example:
 
 ## Available Toolbox Bricks 
 
-The Toolbox provides a lot of ready-to-use Bricks:
+The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md):
 
 - Accordion
 - Anchor
