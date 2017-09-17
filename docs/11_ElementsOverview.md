@@ -238,6 +238,8 @@ Create a image field.
 ## Link List
 Create a link list (via pimcore block element).
 
+> Note: This element uses a custom toolbox element: "[dynamic link](20_DynamicLinkElement.md)".
+
 ### Available Options
 
 | Name | Type | Description | Default Value | Frontend
