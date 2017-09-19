@@ -70,8 +70,9 @@ class Download extends AbstractAreabrick
                 } else {
 
                     if($hasMembers) {
-                        $assetRestriction = $this->bundleConnector->getBundleService('members.manager.restriction')->getElementRestrictionStatus($node);
-                        if($assetRestriction['section'] === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
+                        /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
+                        $elementRestriction = $this->bundleConnector->getBundleService('members.manager.restriction')->getElementRestrictionStatus($node);
+                        if($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
                             $assets[] = $node;
                         }
                     } else {
