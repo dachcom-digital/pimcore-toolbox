@@ -23,7 +23,7 @@ services:
     toolbox.twig.extension.document_tag_extender:
         class: ToolboxBundle\Twig\Extension\DocumentTagExtension
         public: false
-        parent: 'Pimcore\Twig\Extension\DocumentTagExtension'
+        parent: Pimcore\Twig\Extension\DocumentTagExtension
         tags:
             - { name: twig.extension }
 
