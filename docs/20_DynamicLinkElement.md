@@ -1,5 +1,4 @@
 # Dynamic Link Element
-
 The dynamic link extends the pimcore link element. It allows you to drag objects into the url field.
 Of course it's impossible to generate a valid url from objects, so you need to do some further work.
 
@@ -12,12 +11,14 @@ Of course it's impossible to generate a valid url from objects, so you need to d
 
 #### Service
 ```yaml
-
 # /app/config/services.yml
 services:
-    app.event_listener.toolbox.dynamiclink.object.url:
-        class: AppBundle\EventListener\ObjectUrlListener
-        arguments: ['@router']
+
+    _defaults:
+        autowire: true
+        public: false
+
+    AppBundle\EventListener\ObjectUrlListener:
         tags:
             - { name: kernel.event_listener, event: toolbox.dynamiclink.object.url, method: checkUrl }
 ```
