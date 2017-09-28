@@ -45,7 +45,7 @@ class GoogleMap extends Document\Tag
         $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
         /** @var ConfigManager $configManager */
-        $configManager = \Pimcore::getContainer()->get('toolbox.config_manager');
+        $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
         $configNode = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {

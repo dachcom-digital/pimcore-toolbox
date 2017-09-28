@@ -9,9 +9,8 @@ There are three simple steps to create a custom Brick with a Toolbox context.
 ```yaml
 # It's always a good idea to add your brick as a service.
 services:
-    toolbox.area.brick.my_brick:
-        parent: toolbox.area.brick.base_brick
-        class: AppBundle\Document\Areabrick\MyBrick\MyBrick
+    AppBundle\Document\Areabrick\MyBrick\MyBrick:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         calls:
             # set the brick type to external
             - [setAreaBrickType, ['external']]

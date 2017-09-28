@@ -87,16 +87,25 @@ Now implement the calculators:
 ```yaml
 # /app/config/services.yml
 
- # column calculator
-toolbox.calculator.yourgridsystem.column:
-    class: AppBundle\Calculator\ColumnCalculator
-    public: false
+services:
+    _defaults:
+        autowire: true
+        public: false
 
-# slide column calculator
-toolbox.calculator.yourgridsystem.slide_column:
-    class: AppBundle\Calculator\SlideColumnCalculator
-    public: false
+     # column calculator
+    AppBundle\Calculator\ColumnCalculator: ~
+    
+    # slide column calculator
+    AppBundle\Calculator\SlideColumnCalculator: 
+```
 
+```yaml
+# /app/config/config.yml
+toolbox:
+    theme:
+        calculators:
+            ToolboxBundle\Calculator\ColumnCalculator: AppBundle\Calculator\ColumnCalculator
+            ToolboxBundle\Calculator\SlideColumnCalculator: AppBundle\Calculator\SlideColumnCalculator
 ```
 
 ### Column Calculator

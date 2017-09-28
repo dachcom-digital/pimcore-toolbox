@@ -2,11 +2,10 @@ parameters:
     toolbox_google_maps_host_url: 'https://maps.google.ch'
 
 services:
-    toolbox.area.brick.google_map:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\GoogleMap\GoogleMap
+    ToolboxBundle\Document\Areabrick\GoogleMap\GoogleMap:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         arguments:
-            - '%toolbox_google_maps_host_url%'
+            $googleMapsHostUrl: '%toolbox_google_maps_host_url%'
         tags:
             - { name: pimcore.area.brick, id: googleMap }
 toolbox:

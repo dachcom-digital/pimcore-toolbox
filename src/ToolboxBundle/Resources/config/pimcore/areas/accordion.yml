@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.accordion:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Accordion\Accordion
+    ToolboxBundle\Document\Areabrick\Accordion\Accordion:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: accordion }
 toolbox:

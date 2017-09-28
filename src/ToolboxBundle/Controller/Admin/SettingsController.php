@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
+use ToolboxBundle\Service\ConfigManager;
 
 class SettingsController extends Controller\AdminController
 {
@@ -63,7 +64,7 @@ class SettingsController extends Controller\AdminController
      */
     private function setData()
     {
-        $toolboxConfig = $this->container->get('toolbox.config_manager');
+        $toolboxConfig = $this->container->get(ConfigManager::class);
         $ckEditorSettings = $toolboxConfig->getConfig('ckeditor');
 
         $ckEditorGlobalConfig = $ckEditorSettings['config'];

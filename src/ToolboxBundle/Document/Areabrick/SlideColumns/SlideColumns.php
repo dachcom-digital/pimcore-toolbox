@@ -16,7 +16,7 @@ class SlideColumns extends AbstractAreabrick
     /**
      * @param SlideColumnCalculatorInterface $calculator
      */
-    public function setCalculator(SlideColumnCalculatorInterface $calculator)
+    public function __construct(SlideColumnCalculatorInterface $calculator)
     {
         $this->calculator = $calculator;
     }

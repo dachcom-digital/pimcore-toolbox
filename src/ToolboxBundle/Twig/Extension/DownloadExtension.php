@@ -113,7 +113,7 @@ class DownloadExtension extends \Twig_Extension
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
             && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE
         ) {
-            $dPath = $this->bundleConnector->getBundleService('members.security.restriction.uri')->generateAssetUrl($download);
+            $dPath = $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionUri::class)->generateAssetUrl($download);
         } else {
             $dPath = $download->getFullPath();
         }

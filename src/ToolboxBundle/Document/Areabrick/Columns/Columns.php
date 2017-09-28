@@ -16,7 +16,7 @@ class Columns extends AbstractAreabrick
     /**
      * @param ColumnCalculatorInterface $calculator
      */
-    public function setCalculator(ColumnCalculatorInterface $calculator)
+    public function __construct(ColumnCalculatorInterface $calculator)
     {
         $this->calculator = $calculator;
     }

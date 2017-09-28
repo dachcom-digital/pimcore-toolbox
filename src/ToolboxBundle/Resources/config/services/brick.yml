@@ -1,0 +1,21 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    # toolbox service brick configuration builder
+    ToolboxBundle\Service\BrickConfigBuilder:
+        shared: false
+
+    # base brick
+    ToolboxBundle\Document\Areabrick\AbstractAreabrick:
+        abstract:  true
+        calls:
+            - [setConfigManager, ['@ToolboxBundle\Service\ConfigManager']]
+            - [setBrickConfigBuilder, ['@ToolboxBundle\Service\BrickConfigBuilder']]
+            - [setLayoutManager, ['@ToolboxBundle\Service\LayoutManager']]
+
+    # legacy alias
+    toolbox.area.brick.base_brick: '@ToolboxBundle\Document\Areabrick\AbstractAreabrick'

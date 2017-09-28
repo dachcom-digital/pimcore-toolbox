@@ -1,0 +1,14 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # column calculator
+    ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\ColumnCalculator'
+    ToolboxBundle\Calculator\ColumnCalculator: ~
+
+    # slide column calculator
+    ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\SlideColumnCalculator'
+    ToolboxBundle\Calculator\SlideColumnCalculator: ~

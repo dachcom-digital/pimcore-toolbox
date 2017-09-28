@@ -17,7 +17,7 @@ class AjaxController extends FrontendController
     public function gmInfoWindowAction(Request $request)
     {
         /** @var LayoutManager $layoutManager */
-        $layoutManager = $this->container->get('toolbox.layout_manager');
+        $layoutManager = $this->container->get(LayoutManager::class);
 
         return $this->render(
             $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
@@ -36,7 +36,7 @@ class AjaxController extends FrontendController
     public function videoGetTypesAction(Request $request)
     {
         /** @var ConfigManager $configManager */
-        $configManager = $this->container->get('toolbox.config_manager');
+        $configManager = $this->container->get(ConfigManager::class);
         $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['video_types'];

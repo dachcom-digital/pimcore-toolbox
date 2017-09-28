@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.headline:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Headline\Headline
+    ToolboxBundle\Document\Areabrick\Headline\Headline:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: headline }
 toolbox:

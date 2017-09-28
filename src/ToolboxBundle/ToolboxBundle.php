@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle;
 
+use ToolboxBundle\Tool\Install;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,7 +22,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
      */
     public function getInstaller()
     {
-        return $this->container->get('toolbox.installer');
+        return $this->container->get(Install::class);
     }
 
     /**

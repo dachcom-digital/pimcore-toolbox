@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.spacer:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Spacer\Spacer
+    ToolboxBundle\Document\Areabrick\Spacer\Spacer:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: spacer }
 toolbox:

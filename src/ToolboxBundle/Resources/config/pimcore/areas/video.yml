@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.video:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Video\Video
+    ToolboxBundle\Document\Areabrick\Video\Video:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: video }
 toolbox:

@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.image:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Image\Image
+    ToolboxBundle\Document\Areabrick\Image\Image:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: image }
 toolbox:

@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.link_list:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\LinkList\LinkList
+    ToolboxBundle\Document\Areabrick\LinkList\LinkList:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: linkList }
 toolbox:

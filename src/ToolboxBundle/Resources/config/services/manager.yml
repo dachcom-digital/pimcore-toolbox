@@ -1,0 +1,14 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # toolbox service layout
+    ToolboxBundle\Service\LayoutManager:
+        calls:
+            - [setTemplating, ['@templating']]
+
+    # toolbox service area
+    ToolboxBundle\Service\AreaManager: ~

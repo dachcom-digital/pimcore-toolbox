@@ -1,52 +1,36 @@
 services:
 
     # twig extensions
-    toolbox.twig.extension.areablock_configuration:
-        class: ToolboxBundle\Twig\Extension\AreaBlockConfigExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-            - '@toolbox.area_manager'
+    ToolboxBundle\Twig\Extension\AreaBlockConfigExtension:
+        autowire: true
         tags:
             - { name: twig.extension }
 
-    toolbox.twig.extension.download:
-        class: ToolboxBundle\Twig\Extension\DownloadExtension
-        public: false
-        arguments:
-            - '@toolbox.config_manager'
-            - '@toolbox.connector.bundle'
-            - '@pimcore.translator'
+    ToolboxBundle\Twig\Extension\DownloadExtension:
+        autowire: true
         tags:
             - { name: twig.extension }
 
-    toolbox.twig.extension.document_tag_extender:
-        class: ToolboxBundle\Twig\Extension\DocumentTagExtension
-        public: false
+    ToolboxBundle\Twig\Extension\DocumentTagExtension:
         parent: Pimcore\Twig\Extension\DocumentTagExtension
+        autowire: true
         tags:
             - { name: twig.extension }
 
-    toolbox.twig.extension.data_attributes_generator:
-        class: ToolboxBundle\Twig\Extension\DataAttributesExtension
+    ToolboxBundle\Twig\Extension\DataAttributesExtension:
+        autowire: true
         public: false
-        arguments:
-            - '@toolbox.config_manager'
         tags:
             - { name: twig.extension }
 
-    toolbox.twig.extension.layout:
-        class: ToolboxBundle\Twig\Extension\LayoutExtension
+    ToolboxBundle\Twig\Extension\LayoutExtension:
+        autowire: true
         public: false
-        arguments:
-            - '@toolbox.layout_manager'
         tags:
             - { name: twig.extension }
 
-    toolbox.twig.extension.image_thumbnail:
-        class: ToolboxBundle\Twig\Extension\ImageThumbnailExtension
+    ToolboxBundle\Twig\Extension\ImageThumbnailExtension:
+        autowire: true
         public: false
-        arguments:
-            - '@toolbox.config_manager'
         tags:
             - { name: twig.extension }

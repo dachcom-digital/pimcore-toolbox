@@ -54,7 +54,7 @@ class Download extends AbstractAreabrick
 
                     if($hasMembers) {
                         $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
-                            $this->bundleConnector->getBundleService('members.security.restriction.query')
+                            $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
                                 ->addRestrictionInjection($query, $assetListing, 'assets.id');
                         });
                     }
@@ -71,7 +71,7 @@ class Download extends AbstractAreabrick
 
                     if($hasMembers) {
                         /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
-                        $elementRestriction = $this->bundleConnector->getBundleService('members.manager.restriction')->getElementRestrictionStatus($node);
+                        $elementRestriction = $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->getElementRestrictionStatus($node);
                         if($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
                             $assets[] = $node;
                         }

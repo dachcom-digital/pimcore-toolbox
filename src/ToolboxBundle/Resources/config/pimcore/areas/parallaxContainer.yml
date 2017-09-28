@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.parallax_container:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\ParallaxContainer\ParallaxContainer
+    ToolboxBundle\Document\Areabrick\ParallaxContainer\ParallaxContainer:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: parallaxContainer }
 toolbox:

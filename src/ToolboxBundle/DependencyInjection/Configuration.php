@@ -4,6 +4,8 @@ namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator;
+use ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator;
 
 class Configuration implements ConfigurationInterface
 {
@@ -172,6 +174,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('default_layout')
                             ->defaultValue(false)
+                        ->end()
+                        ->arrayNode('calculators')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('ToolboxBundle\Calculator\ColumnCalculator')->defaultValue(ColumnCalculator::class)->end()
+                                ->scalarNode('ToolboxBundle\Calculator\SlideColumnCalculator')->defaultValue(SlideColumnCalculator::class)->end()
+                            ->end()
                         ->end()
                         ->arrayNode('wrapper')
                             ->useAttributeAsKey('name')

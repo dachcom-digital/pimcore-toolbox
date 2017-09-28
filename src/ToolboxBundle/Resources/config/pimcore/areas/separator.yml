@@ -1,7 +1,6 @@
 services:
-    toolbox.area.brick.separator:
-        parent: toolbox.area.brick.base_brick
-        class: ToolboxBundle\Document\Areabrick\Separator\Separator
+    ToolboxBundle\Document\Areabrick\Separator\Separator:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
             - { name: pimcore.area.brick, id: separator }
 toolbox:

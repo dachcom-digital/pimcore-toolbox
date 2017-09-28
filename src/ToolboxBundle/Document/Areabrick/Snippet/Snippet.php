@@ -9,6 +9,7 @@ class Snippet extends AbstractAreabrick
 {
     public function action(Info $info)
     {
+        parent::action($info);
     }
 
     public function getName()

@@ -1,0 +1,5 @@
+services:
+    ToolboxBundle\Document\Areabrick\Snippet\Snippet:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: pimcore.area.brick, id: snippet }
