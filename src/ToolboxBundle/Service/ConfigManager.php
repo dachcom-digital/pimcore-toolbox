@@ -69,7 +69,7 @@ class ConfigManager
     public function getAreaElementConfig($areaName = '', $configElementName = '')
     {
         $this->checkConfigNamespace();
-        return $this->config[$this->areaNamespace][$areaName]['configElements'][$configElementName];
+        return $this->config[$this->areaNamespace][$areaName]['config_elements'][$configElementName];
     }
 
     /**
