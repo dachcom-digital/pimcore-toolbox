@@ -96,7 +96,7 @@ services:
     AppBundle\Calculator\ColumnCalculator: ~
     
     # slide column calculator
-    AppBundle\Calculator\SlideColumnCalculator: 
+    AppBundle\Calculator\SlideColumnCalculator: ~
 ```
 
 ```yaml
