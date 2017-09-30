@@ -55,7 +55,7 @@ toolbox:
                 type:
                     config:
                         store:
-                            column_8_4: '2 Columns (50:50)'
+                            column_8_4: '2 Columns'
 ```
 
 `column_8_4` will generates two columns:
