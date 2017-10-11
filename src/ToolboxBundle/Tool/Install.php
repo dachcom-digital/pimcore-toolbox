@@ -11,6 +11,10 @@ use ToolboxBundle\ToolboxBundle;
 
 class Install extends AbstractInstaller
 {
+    const SYSTEM_CONFIG_DIR_PATH = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle';
+
+    const SYSTEM_CONFIG_FILE_PATH = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
+
     /**
      * @var string
      */
@@ -21,6 +25,9 @@ class Install extends AbstractInstaller
      */
     private $fileSystem;
 
+    /**
+     * Install constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -34,10 +41,19 @@ class Install extends AbstractInstaller
      */
     public function install()
     {
-        $this->copyConfigFile();
+        $this->installOrUpdateConfigFile();
         $this->importTranslations();
 
         return TRUE;
+    }
+
+    /**
+     * For now, just update the config file to the current version.
+     * {@inheritdoc}
+     */
+    public function update()
+    {
+        $this->installOrUpdateConfigFile();
     }
 
     /**
@@ -45,8 +61,7 @@ class Install extends AbstractInstaller
      */
     public function uninstall()
     {
-        $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-
+        $target = self::SYSTEM_CONFIG_FILE_PATH;
         if ($this->fileSystem->exists($target)) {
             $this->fileSystem->rename(
                 $target,
@@ -60,9 +75,7 @@ class Install extends AbstractInstaller
      */
     public function isInstalled()
     {
-        $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-
-        return $this->fileSystem->exists($target);
+        return $this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH);
     }
 
     /**
@@ -70,9 +83,7 @@ class Install extends AbstractInstaller
      */
     public function canBeInstalled()
     {
-        $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-
-        return !$this->fileSystem->exists($target);
+        return !$this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH);
     }
 
     /**
@@ -80,9 +91,7 @@ class Install extends AbstractInstaller
      */
     public function canBeUninstalled()
     {
-        $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-
-        return $this->fileSystem->exists($target);
+        return $this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH);
     }
 
     /**
@@ -98,7 +107,15 @@ class Install extends AbstractInstaller
      */
     public function canBeUpdated()
     {
-        return FALSE;
+        $needUpdate = FALSE;
+        if ($this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH)) {
+            $config = Yaml::parse(file_get_contents(self::SYSTEM_CONFIG_FILE_PATH));
+            if($config['version'] !== ToolboxBundle::BUNDLE_VERSION) {
+                $needUpdate = TRUE;
+            }
+        }
+
+        return $needUpdate;
     }
 
     /**
@@ -113,13 +130,14 @@ class Install extends AbstractInstaller
     /**
      * copy sample config file - if not exists.
      */
-    private function copyConfigFile()
+    private function installOrUpdateConfigFile()
     {
-        $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-        if (!$this->fileSystem->exists($target)) {
-            $config = ['version' => ToolboxBundle::BUNDLE_VERSION];
-            $yml = Yaml::dump($config);
-            file_put_contents($target, $yml);
+        if(!$this->fileSystem->exists(self::SYSTEM_CONFIG_DIR_PATH)) {
+            $this->fileSystem->mkdir(self::SYSTEM_CONFIG_DIR_PATH);
         }
+
+        $config = ['version' => ToolboxBundle::BUNDLE_VERSION];
+        $yml = Yaml::dump($config);
+        file_put_contents(self::SYSTEM_CONFIG_FILE_PATH, $yml);
     }
 }
