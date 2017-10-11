@@ -78,4 +78,24 @@ class MyBrick extends AbstractAreabrick
 </div>
 ```
 
+### Adding Bricks from Bundles
+
+If you're want to add bricks from other bundles, eg. `src/DemoBundle` and you want to load the view from the bundle directory itself, then you have to override the template location:
+
+```php
+<?php
+
+namespace DemoBundle\Document\Areabrick\MyBrick;
+
+use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+
+class MyBrick extends AbstractAreabrick
+{
+    public function getTemplateLocation()
+    {
+        return static::TEMPLATE_LOCATION_BUNDLE;
+    }
+}
+```
+
 That's it. Sometimes you need to clear you cache, if the Brick won't show up.
