@@ -6,6 +6,8 @@ use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Pimcore\Model\Translation\Admin;
+use Symfony\Component\Yaml\Yaml;
+use ToolboxBundle\ToolboxBundle;
 
 class Install extends AbstractInstaller
 {
@@ -114,13 +116,10 @@ class Install extends AbstractInstaller
     private function copyConfigFile()
     {
         $target = PIMCORE_PRIVATE_VAR . '/bundles/ToolboxBundle/config.yml';
-
         if (!$this->fileSystem->exists($target)) {
-            $this->fileSystem->copy(
-                $this->installSourcesPath . '/config.yml',
-                $target
-            );
+            $config = ['version' => ToolboxBundle::BUNDLE_VERSION];
+            $yml = Yaml::dump($config);
+            file_put_contents($target, $yml);
         }
     }
-
 }
