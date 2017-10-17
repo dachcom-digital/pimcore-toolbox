@@ -64,7 +64,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function getConfigManager()
     {
-        $space = $this->areaBrickType === self::AREABRICK_TYPE_INTERNAL
+        $space = $this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL
             ? ConfigManager::AREABRICK_NAMESPACE_INTERNAL
             : ConfigManager::AREABRICK_NAMESPACE_EXTERNAL;
 
@@ -104,9 +104,9 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     {
         if(!$this->getConfigManager() instanceof ConfigManager) {
             throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
-        } else if($this->areaBrickType == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
+        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');
-        } else if($this->areaBrickType == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
+        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick is using a reserved id. Please change the id of your custom AreaBrick.');
         }
 
@@ -130,7 +130,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function getTemplateLocation()
     {
-        if($this->areaBrickType === self::AREABRICK_TYPE_INTERNAL) {
+        if($this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL) {
             return static::TEMPLATE_LOCATION_BUNDLE;
         }
 
