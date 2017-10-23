@@ -1,0 +1,7 @@
+<p class="panel-title mb-0">
+    {% if editmode %}
+        {{ pimcore_input('name') }}
+    {% else %}
+        <a class="accordion-toggle" role="button">{{ pimcore_input('name') }}</a>
+    {% endif %}
+</p>
