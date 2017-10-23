@@ -46,3 +46,4 @@ toolbox:
                     scrollwheel: false
                 map_style_url: false
                 marker_icon: false
+                map_api_key: false

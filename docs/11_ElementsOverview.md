@@ -192,9 +192,9 @@ Please be sure that you've included a valid google maps api.
 ### Configuration Parameter
 
 - Use the `map_options` Parameter to define all the google maps parameter in yaml
-- Use the `map_style_url` Parameter to define a custom map style
-- Use the `marker_icon` Parameter to define a custom marker_icon
-
+- Use the `map_style_url` Parameter to define a custom map style (optional)
+- Use the `marker_icon` Parameter to define a custom marker_icon (optional)
+- Use the `map_api_key` Parameter to set a map api key (optional). To extend the daily request to 2.500 per day.
 **Example**  
 ```yaml
 toolbox:
@@ -208,8 +208,8 @@ toolbox:
                     scrollwheel: false
                 map_style_url: false
                 marker_icon: false
+                map_api_key: false
 ```
-
 
 ## Headline
 Create a headline.
