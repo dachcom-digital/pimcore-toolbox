@@ -1,6 +1,6 @@
 # Upgrade Notes
 #### Update from Version 2.x to Version 2.1.0
-The Bootstrap4 Layout is now enabled by default. If you still need B3 you need to add some params to your config:
+The Bootstrap4 (>= beta.2) Layout is now enabled by default. If you still need B3 you need to add some params to your config:
 
 ```yaml
 # set b3 column calculators

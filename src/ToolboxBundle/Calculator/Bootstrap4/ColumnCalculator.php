@@ -42,7 +42,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
                     $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : 12;
-                    $bootstrapClassConfig[$customBreakPointName] = 'col-' . $customBreakPointName . '-' . $customColAmount;
+                    $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
+                    $bootstrapClassConfig[$customBreakPointName] = 'col-' . $bpPrefix . $customColAmount;
                 }
             }
 
@@ -65,7 +66,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
                         if (substr($customColAmount, 0, 1) === 'o') {
                             $customOffset = (int)substr($customColAmount, 1);
-                            $bootstrapOffsetConfig[$customBreakPointName] = 'col-' . $customBreakPointName . '-offset-' . $customOffset;
+                            $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
+                            $bootstrapOffsetConfig[$customBreakPointName] = $bpPrefix . 'offset-' . $customOffset;
                         }
                     }
                 }
