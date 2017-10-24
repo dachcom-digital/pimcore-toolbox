@@ -60,8 +60,8 @@ toolbox:
 
 `column_8_4` will generates two columns:
  
-1. column with `col-xs-12 col-sm-8 col-md-8` 
-2. column with `col-xs-12 col-sm-4 col-md-4`
+1. column with `col-12 col-sm-8 col-md-8` 
+2. column with `col-12 col-sm-4 col-md-4`
  
 It's possible, however, to define custom breakpoint classes and also offset elements:
 
@@ -346,7 +346,7 @@ toolbox:
         slideColumns:
             config_parameter:
                 column_classes:
-                    '2': col-xs-12 col-sm-6
+                    '2': 'col-12 col-sm-6'
                 breakpoints: []
 ```
 

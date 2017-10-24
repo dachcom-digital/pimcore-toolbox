@@ -1,6 +1,6 @@
 # Toolbox Theme / Layout
 
-The Toolbox Bundle is currently using Bootstrap 3 as a supporting framework. It's, however, possible to create your custom layout / theme.
+The Toolbox Bundle is currently using Bootstrap 4 as a supporting framework. It's, however, possible to create your custom layout / theme.
 
 ## Theme Configuration
 
@@ -11,22 +11,22 @@ toolbox:
     theme:
     
         # defines the view namespace [LAYOUT_NAME]
-        layout: 'Bootstrap3'
+        layout: 'Bootstrap4'
         default_layout: false
         wrapper:
             image:
                 - {tag: 'div', class: 'row'}
-                - {tag: 'div', class: 'col-xs-12'}
+                - {tag: 'div', class: 'col-12'}
             columns:
                 - {tag: 'div', class: 'row'}
             gallery:
                 - {tag: 'div', class: 'row'}
-                - {tag: 'div', class: 'col-xs-12 col-gallery'}
+                - {tag: 'div', class: 'col-12 col-gallery'}
             slideColumns:
                 - {tag: 'div', class: 'row'}
             teaser:
                 - {tag: 'div', class: 'row'}
-                - {tag: 'div', class: 'col-xs-12'}
+                - {tag: 'div', class: 'col-12'}
                 
 ```
 #### Layout
