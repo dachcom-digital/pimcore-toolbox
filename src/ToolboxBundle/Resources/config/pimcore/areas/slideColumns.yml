@@ -25,5 +25,5 @@ toolbox:
                         reload: false
             config_parameter:
                 column_classes:
-                    '2': col-xs-12 col-sm-6
+                    '2': 'col-12 col-sm-6'
                 breakpoints: []

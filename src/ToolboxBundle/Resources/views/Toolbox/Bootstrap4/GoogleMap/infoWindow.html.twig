@@ -1,0 +1,27 @@
+{#
+
+  Available Params:
+ 
+  mapParams['title']
+  mapParams['street']
+  mapParams['zip']
+  mapParams['city']
+  mapParams['country']
+  mapParams['add']
+ 
+#}
+<div class="info-window">
+
+    <strong>{{ mapParams.title }}</strong><br>
+    {{ mapParams.street }}<br>
+    {{ mapParams.zip }} {{ mapParams.city }}
+
+    {% if mapParams.add is defined %}
+        <br>{{ mapParams.add }}
+    {% endif %}
+
+    <div class="google-map-route-planer">
+        <a href="{{ googleMapsHostUrl }}/?daddr={{ mapParams.street }},{{ mapParams.zip }} {{ mapParams.city }},{{ mapParams.country }}" target="_blank">{{  'route planer'|trans }}</a>
+    </div>
+
+</div>

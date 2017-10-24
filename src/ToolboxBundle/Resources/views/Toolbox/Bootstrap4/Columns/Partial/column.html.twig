@@ -1,0 +1,7 @@
+{% for column in columns %}
+    <div class="{{ column.columnClass }}">
+        <div class="{{ column.innerClass }}">
+            {% include toolbox_area_path(areaId, 'Partial/areablock') with { 'column' : column } %}
+        </div>
+    </div>
+{% endfor %}

@@ -45,11 +45,11 @@
 
 **/
 .toolbox-slide-columns {
-
+    width: 100%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns {
-
+    width: 100%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns .slide-column {
@@ -67,11 +67,12 @@
 }
 
 /** override bootstrap columns */
-.toolbox-slide-columns > .row > .slide-columns .col {
+.toolbox-slide-columns > .row > .slide-columns .column {
     width: 100% !important;
+    max-width: 100% !important;
 }
 
-.toolbox-slide-columns > .row > .slide-columns .col .count {
+.toolbox-slide-columns > .row > .slide-columns .column .count {
     position: absolute;
     top: -30px;
     right: 20px;

@@ -1,0 +1,5 @@
+<ul>
+    {% for i in pimcore_iterate_block(pimcore_block('linklistblock')) %}
+        <li>{{ pimcore_dynamiclink('linklist', {'class' : 'list-link'}) }}</li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,4 @@
+<div class="player" data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}"></div>
+{% if posterPath is not empty %}
+    {% include toolbox_area_path(areaId, '/Partial/overlay') with {'posterPath' : posterPath, 'playInLightbox' : playInLightbox} %}
+{% endif %}

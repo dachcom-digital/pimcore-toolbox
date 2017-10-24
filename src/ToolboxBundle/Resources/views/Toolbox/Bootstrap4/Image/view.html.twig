@@ -1,0 +1,16 @@
+{% set class = 'img-fluid' %}
+{% set useLightBox = pimcore_checkbox('use_light_box').isChecked() and editmode == false %}
+
+<div {{ useLightBox ? 'class="light-box"' : '' }}>
+    {% if useLightBox == true %}
+        {% include toolbox_area_path(areaId, 'Partial/lightbox') with { 'class' : class } %}
+    {% else %}
+        {% include toolbox_area_path(areaId, 'Partial/single') with { 'class' : class } %}
+    {% endif %}
+
+    {% if pimcore_checkbox('show_caption').isChecked() == true %}
+        <span class="caption">
+            {{ pimcore_image('ci').getText() }}
+        </span>
+    {% endif %}
+</div>

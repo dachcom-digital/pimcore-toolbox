@@ -1,4 +1,41 @@
 # Upgrade Notes
+#### Update from Version 2.x to Version 2.1.0
+The Bootstrap4 Layout is now enabled by default. If you still need B3 you need to add some params to your config:
+
+```yaml
+# set b3 column calculators
+toolbox:
+    calculators:
+        ToolboxBundle\Calculator\ColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
+        ToolboxBundle\Calculator\SlideColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator
+
+# set theme to bootstrap 3 and add all the default wrapper elements.
+toolbox:
+    theme:
+        layout: 'Bootstrap3'
+        wrapper:
+            image:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12'}
+            columns:
+                - {tag: 'div', class: 'row'}
+            gallery:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12 col-gallery'}
+            slideColumns:
+                - {tag: 'div', class: 'row'}
+            teaser:
+                - {tag: 'div', class: 'row'}
+                - {tag: 'div', class: 'col-xs-12'}
+                
+# if you're using the slideColumns: set column classes based on b3 classes.
+toolbox:
+    areas:
+        slideColumns:
+            config_parameter:
+                column_classes:
+                    '2': 'col-xs-12 col-sm-6'
+```
 
 #### Update from Version 1.x to Version 2.0.0
 - rename globallink to dynamiclink:

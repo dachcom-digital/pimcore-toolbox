@@ -4,8 +4,8 @@ namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator;
-use ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator;
+use ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator;
+use ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator;
 
 class Configuration implements ConfigurationInterface
 {
