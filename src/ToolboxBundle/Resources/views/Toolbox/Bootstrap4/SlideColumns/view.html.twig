@@ -3,7 +3,7 @@
     {% for i in pimcore_iterate_block(slideElements) %}
         <div class="column {{ slidesPerViewClasses }}">
             {% if editmode == true %}
-                <span class="count">{{ c }} / {{ slideElements.getCount()  }}</span>
+                <span class="count">{{ c }} / {{ slideElements.getCount() }}</span>
             {% endif %}
             <div class="slide-column slide-{{ slideElements.getCurrentIndex() }}">
                 {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'slideCol', 'type' : 'slideColumns'} %}
