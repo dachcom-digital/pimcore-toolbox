@@ -52,8 +52,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 $offset = (int)substr($columnClass, 1);
 
                 $bootstrapOffsetConfig = [
-                    'sm' => 'col-sm-offset-' . $offset,
-                    'md' => 'col-md-offset-' . $offset
+                    'sm' => 'offset-sm-' . $offset,
+                    'md' => 'offset-md-' . $offset
                 ];
 
                 //config is an array, use special breakpoint classes!
@@ -67,7 +67,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                         if (substr($customColAmount, 0, 1) === 'o') {
                             $customOffset = (int)substr($customColAmount, 1);
                             $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
-                            $bootstrapOffsetConfig[$customBreakPointName] = $bpPrefix . 'offset-' . $customOffset;
+                            $bootstrapOffsetConfig[$customBreakPointName] = 'offset-' . $bpPrefix . $customOffset;
                         }
                     }
                 }
