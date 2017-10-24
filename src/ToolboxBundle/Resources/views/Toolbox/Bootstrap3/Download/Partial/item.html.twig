@@ -3,7 +3,7 @@
     <a href="{{ downloadInfo.path }}" {{ toolbox_download_tracker('download', download) }} target="_blank" class="icon-download-{{ downloadInfo.type }}">
         {% if showPreviewImages and downloadInfo.hasPreviewImage %}
             <span class="preview-image">
-                <img src="{{ downloadInfo.previewImagePath }}" alt="{{ downloadInfo.altText }}"/>
+                <img src="{{ downloadInfo.previewImagePath }}" alt="{{ downloadInfo.imageAltText }}"/>
             </span>
         {% endif %}
         <span class="title">{{ downloadInfo.name }}</span>

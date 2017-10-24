@@ -53,7 +53,7 @@ class DownloadExtension extends \Twig_Extension
 
     /**
      * @param string|array $areaType toolbox element or custom config
-     * @param null|object  $element  related element to track
+     * @param null|object  $element related element to track
      *
      * @return string
      */
@@ -105,10 +105,11 @@ class DownloadExtension extends \Twig_Extension
      * @param bool                 $showPreviewImage
      * @param string               $fileSizeUnit
      * @param int                  $fileSizePrecision
+     * @param bool                 $showFileNameIfTitleEmpty
      *
      * @return array
      */
-    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'optimized', $fileSizePrecision = 0)
+    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = FALSE)
     {
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
             && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE
@@ -126,22 +127,23 @@ class DownloadExtension extends \Twig_Extension
         }
 
         $dType = \Pimcore\File::getFileExtension($download->getFilename());
-        $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $this->translator->trans('Download', [], 'admin');
-        $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : $dName;
+        $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download', [], 'admin');
+        $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $downloadTitle;
+        $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : '';
+        $dImageAltText = !empty($dAltText) ? $dAltText : $dName;
 
         $dPreviewImage = NULL;
-
         $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
 
         if ($showPreviewImage) {
             $dPreviewImage = $download->getMetadata('previewImage') instanceof Asset\Image
                 ? $download->getMetadata('previewImage')->getThumbnail($previewThumbName)
                 : (
-                    $download instanceof Asset\Image
+                $download instanceof Asset\Image
                     ? $download->getThumbnail($previewThumbName)
                     : ($download instanceof Asset\Document
-                        ? $download->getImageThumbnail($previewThumbName)
-                        : NULL)
+                    ? $download->getImageThumbnail($previewThumbName)
+                    : NULL)
                 );
         }
 
@@ -151,7 +153,7 @@ class DownloadExtension extends \Twig_Extension
         if ($dPreviewImage instanceof Asset\Image\Thumbnail) {
             $dPreviewImagePath = $dPreviewImage->getPath();
             $hasPreviewImage = TRUE;
-        } else if ($dPreviewImage instanceof Asset\Document\ImageThumbnail && !empty($dPreviewImage->getConfig())) {
+        } elseif ($dPreviewImage instanceof Asset\Document\ImageThumbnail && !empty($dPreviewImage->getConfig())) {
             $dPreviewImagePath = $dPreviewImage->getPath();
             $hasPreviewImage = TRUE;
         }
@@ -162,6 +164,7 @@ class DownloadExtension extends \Twig_Extension
             'type'             => $dType,
             'name'             => $dName,
             'altText'          => $dAltText,
+            'imageAltText'     => $dImageAltText,
             'previewImage'     => $dPreviewImage,
             'hasPreviewImage'  => $hasPreviewImage,
             'previewImagePath' => $dPreviewImagePath
@@ -171,8 +174,8 @@ class DownloadExtension extends \Twig_Extension
     /**
      * Get optimized file size
      *
-     * @param int    $bytes
-     * @param int    $precision
+     * @param int $bytes
+     * @param int $precision
      *
      * @return string
      */
