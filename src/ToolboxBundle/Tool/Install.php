@@ -4,6 +4,7 @@ namespace ToolboxBundle\Tool;
 
 use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
 
+use Pimcore\Model\Document\DocType;
 use Symfony\Component\Filesystem\Filesystem;
 use Pimcore\Model\Translation\Admin;
 use Symfony\Component\Yaml\Yaml;
@@ -43,17 +44,18 @@ class Install extends AbstractInstaller
     {
         $this->installOrUpdateConfigFile();
         $this->importTranslations();
-
+        $this->installDocumentTypes();
         return TRUE;
     }
 
     /**
-     * For now, just update the config file to the current version.
      * {@inheritdoc}
      */
     public function update()
     {
         $this->installOrUpdateConfigFile();
+        $this->importTranslations();
+        $this->installDocumentTypes();
     }
 
     /**
@@ -125,6 +127,45 @@ class Install extends AbstractInstaller
     private function importTranslations()
     {
         Admin::importTranslationsFromFile($this->installSourcesPath . '/admin-translations/data.csv', TRUE);
+    }
+
+    /**
+     * @return bool
+     */
+    private function installDocumentTypes()
+    {
+        // get list of types
+        $list = new DocType\Listing();
+        $list->load();
+
+        $skipInstall = FALSE;
+        $elementName = 'Teaser Snippet';
+
+        foreach ($list->getDocTypes() as $type) {
+            if ($type->getName() === $elementName) {
+                $skipInstall = TRUE;
+                break;
+            }
+        }
+
+        if ($skipInstall) {
+            return FALSE;
+        }
+
+        $type = DocType::create();
+
+        $data = [
+            'name'       => $elementName,
+            'module'     => 'ToolboxBundle',
+            'controller' => 'Snippet',
+            'action'     => 'teaser',
+            'template'   => '',
+            'type'       => 'snippet',
+            'priority'   => 0
+        ];
+
+        $type->setValues($data);
+        $type->save();
     }
 
     /**

@@ -1,5 +1,4 @@
 {% set type = pimcore_select('type').getData() %}
-
 {% if type == 'direct' or (type is null and pimcore_select('layout').isEmpty == false) %}
     {% set layout = pimcore_select('layout').getData() %}
     {% if layout is empty %}

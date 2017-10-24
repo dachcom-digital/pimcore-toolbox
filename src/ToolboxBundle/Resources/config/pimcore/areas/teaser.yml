@@ -28,8 +28,12 @@ toolbox:
                 use_light_box:
                     type: checkbox
                     title: 'use Lightbox?'
+                    conditions:
+                        - type: direct
                     config: ~
                 additional_classes:
                     type: additionalClasses
+                    conditions:
+                        - type: direct
                     config:
                         store: ~

@@ -369,10 +369,23 @@ Create teaser elements.
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `type` | select | Define Teaser Type: direct or as snippet | direct | `pimcore_select('type')` |
+| `type` | select | Define Teaser Type: direct or as snippet | direct | `pimcore_select('type')`. Read more about below in "Teaser Type" Section. |
 | `layout` | select | Define Teaser Layout | default | `pimcore_select('layout')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link for teaser image | false | `pimcore_checkbox('use_light_box')` |
 | `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+
+### Teaser Types
+Like explained above, it's possible to switch between two Types of Teasers:
+
+#### Direct
+The `direct` teaser type allows you to place a teaser structure at any place in your document. Just change the options through the edit window.
+
+#### Snippet
+Sometimes you want do add teasers in a more reusable way. For that you should use the `snippet` type.
+The ToolboxBundle will add a `Teaser Snippet` document type during installation, use it to create teaser elements in snippet context. 
+This document type will also add a all custom elements (`layout`, `use_light_box`, `additional_classes`) with all given teaser layouts.
+
+> Note: If you're using the `snippet` type, all option fields (`layout`, `use_light_box`, `additional_classes`) will be unavailable in your document anymore.
 
 ## Video
 Create a Video Element.
