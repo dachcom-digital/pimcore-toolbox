@@ -45,7 +45,9 @@ class AjaxController extends FrontendController
         if (!empty($videoOptions)) {
             foreach ($videoOptions as $name => $settings) {
                 if ($settings['active'] === TRUE) {
-                    $allowedVideoTypes[] = ['name' => $name, 'value' => $name];
+                    $allowedVideoTypes[] = ['name' => $name, 'value' => $name, 'config' => [
+                        'allow_lightbox' => $settings['allow_lightbox']
+                    ]];
                 }
             }
         }

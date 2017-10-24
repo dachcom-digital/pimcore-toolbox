@@ -118,10 +118,15 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
         }
     });
 
-    var updateType = function (type) {
+    var updateType = function (type, typeInfo) {
+
+        var typeConfig = typeInfo.get('config');
+
         searchButton.enable();
 
-        var labelEl = form.getComponent("pathContainer").getComponent("path").labelEl;
+        var labelEl = form.getComponent("pathContainer").getComponent("path").labelEl,
+            lightboxEl = form.getComponent("showAsLightbox");
+
         labelEl.update(t("path"));
 
         if(type != "asset") {
@@ -139,11 +144,18 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
         if(type == "dailymotion") {
             labelEl.update("ID");
         }
+
+        if ( !typeConfig.allow_lightbox ) {
+            lightboxEl.hide();
+        } else {
+            lightboxEl.show();
+        }
+
     };
 
     var videoTypeStore = new Ext.data.JsonStore({
         autoLoad: true,
-        fields: ['name', 'value'],
+        fields: ['name', 'value', 'config'],
         proxy: {
             type: 'ajax',
             url: '/toolbox/ajax/video-allowed-video-types',
@@ -173,7 +185,7 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
                 listeners: {
                     select: function (combo) {
                         var type = combo.getValue();
-                        updateType(type);
+                        updateType(type, videoTypeStore.findRecord('name', type));
                     }.bind(this)
                 }
             },
@@ -238,7 +250,13 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
         layout: "fit",
         listeners: {
             afterrender: function () {
-                updateType(data.type);
+                videoTypeStore.load({
+                    scope: this,
+                    callback: function(records, operation, success) {
+                        updateType(data.type, videoTypeStore.findRecord('name', data.type));
+                    }
+                });
+
             }.bind(this)
         }
     });

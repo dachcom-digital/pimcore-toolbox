@@ -412,12 +412,16 @@ toolbox:
                 video_types:
                     asset:
                         active: false
+                        allow_lightbox: true
                     youtube:
                         active: true
+                        allow_lightbox: true
                     vimeo:
                         active: false
+                        allow_lightbox: true
                     dailymotion:
                         active: false
+                        allow_lightbox: true
 ```
 
 # Element Config Field Overview
