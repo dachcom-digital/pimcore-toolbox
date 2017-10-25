@@ -6,11 +6,11 @@
                         class="collapse-header collapsed"
                         {{ editmode == false ? 'data-toggle="collapse"' }}
                         data-parent="#{{ id }}"
-                        data-target="#collapse-{{ id }}-{{ panel.getCurrentIndex() }}">
+                        data-target="#collapse-{{ id }}-{{ panel.currentIndex }}">
                     {% include toolbox_area_path(areaId, 'Partial/Accordion/title') %}
                 </div>
             </div>
-            <div id="collapse-{{ id }}-{{ panel.getCurrentIndex() }}" class="collapse multi-collapse {{ editmode ? 'show' : '' }}">
+            <div id="collapse-{{ id }}-{{ panel.currentIndex }}" class="collapse multi-collapse {{ editmode ? 'show' : '' }}">
                 <div class="card-body">
                     {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                 </div>

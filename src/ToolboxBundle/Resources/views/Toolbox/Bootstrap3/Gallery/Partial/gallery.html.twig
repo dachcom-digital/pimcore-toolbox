@@ -4,7 +4,7 @@
             {{ galleryDataAttributes|raw }}
     >
         {% for image in images %}
-            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail(toolbox_get_image_thumbnail('gallery_lightbox')) ~ '"')|raw }}>
+            <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.thumbnail(toolbox_get_image_thumbnail('gallery_lightbox')) ~ '"')|raw }}>
                 {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_element')).html|raw }}
             </li>
         {% endfor %}

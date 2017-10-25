@@ -8,13 +8,13 @@
                     class="panel-heading collapsed"
                     data-toggle="collapse"
                     data-parent="#{{ id }}"
-                    data-target="#panel-{{ id }}-{{ panel.getCurrentIndex() }}">
+                    data-target="#panel-{{ id }}-{{ panel.currentIndex }}">
 
                 {% include toolbox_area_path(areaId, 'Partial/Accordion/title') %}
 
             </div>
 
-            <div id="panel-{{ id }}-{{ panel.getCurrentIndex() }}" class="panel-collapse collapse {{ editmode ? 'in' : '' }}">
+            <div id="panel-{{ id }}-{{ panel.currentIndex }}" class="panel-collapse collapse {{ editmode ? 'in' : '' }}">
 
                 <div class="panel-body">
                     {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}

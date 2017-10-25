@@ -9,13 +9,13 @@
                         {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     </div>
                 {% else %}
-                    <a href="#tab-{{ id }}-{{ panel.getCurrentIndex() }}" class="nav-item nav-link {{ panel.getCurrentIndex() == '1' ? 'active' : '' }}" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
-                        {{ pimcore_input('name').getData() }}
+                    <a href="#tab-{{ id }}-{{ panel.currentIndex }}" class="nav-item nav-link {{ panel.currentIndex == '1' ? 'active' : '' }}" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
+                        {{ pimcore_input('name').data }}
                     </a>
                     {% set content %}
                         {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     {% endset %}
-                    {% set tabContent = tabContent|merge([{ 'index': panel.getCurrentIndex(), 'content': content}]) %}
+                    {% set tabContent = tabContent|merge([{ 'index': panel.currentIndex, 'content': content}]) %}
                 {% endif %}
             </li>
         {% endfor %}

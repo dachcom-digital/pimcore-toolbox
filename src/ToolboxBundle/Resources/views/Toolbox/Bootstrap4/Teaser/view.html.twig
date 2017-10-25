@@ -1,6 +1,6 @@
-{% set type = pimcore_select('type').getData() %}
+{% set type = pimcore_select('type').data %}
 {% if type == 'direct' or (type is null and pimcore_select('layout').isEmpty == false) %}
-    {% set layout = pimcore_select('layout').getData() %}
+    {% set layout = pimcore_select('layout').data %}
     {% if layout is empty %}
         {% set layout = 'standard' %}
     {% endif %}
