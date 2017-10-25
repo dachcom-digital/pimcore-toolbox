@@ -1,41 +1,30 @@
 {% if images is not empty %}
-
     <ul class="slick-slider list-unstyled {{ useThumbnails ? 'thumbnail-slider' : '' }} {{ galleryId }}-gal responsive-dots {{ useLightbox ? 'light-box' : '' }}"
             {{ (useThumbnails ? 'data-as-nav-for=".' ~ galleryId ~ '-thumbs"' : '')|raw }}
             {{ galleryDataAttributes|raw }}
     >
-
         {% for image in images %}
             <li class="slide item"{{ useLightbox ? ('data-src="' ~ image.getThumbnail(toolbox_get_image_thumbnail('gallery_lightbox')) ~ '"')|raw }}>
-                <img src="{{ image.getThumbnail(toolbox_get_image_thumbnail('gallery_element')) }}"  />
+                {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_element')).html|raw }}
             </li>
         {% endfor %}
-
     </ul>
-
     {% if useThumbnails %}
-
         <ul class="slick-slider slick-slider-thumbs list-unstyled {{ galleryId }}-thumbs"
             {{ thumbsDataAttributes|raw }}
             data-as-nav-for=".{{ galleryId }}-gal"
         >
-
             {% for image in images %}
                 <li class="slide">
-                    <img src="{{ image.getThumbnail(toolbox_get_image_thumbnail('gallery_thumbnail')) }}"  />
+                    {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_thumbnail')).html|raw }}
                 </li>
             {% endfor %}
-
         </ul>
-
     {% endif %}
-
 {% else %}
-
     {% if editmode %}
         <div class="alert alert-info" style="line-height:20px;">
             {{ 'No Images for this gallery found.'|trans({}, 'admin') }}
         </div>
     {% endif %}
-
 {% endif %}
