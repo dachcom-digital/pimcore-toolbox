@@ -2,14 +2,14 @@
 <div class="tabs" id="{{ id }}">
     <ul class="nav nav-tabs" role="tablist">
         {% for i in pimcore_iterate_block(panel) %}
-            <li role="tab" class="{{ type }}">
+            <li class="{{ type }} nav-item">
                 {% if editmode %}
                     {{ pimcore_input('name') }}
                     <div class="tab-content">
                         {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     </div>
                 {% else %}
-                    <a href="#tab-{{ id }}-{{ panel.currentIndex }}" class="nav-item nav-link {{ panel.currentIndex == '1' ? 'active' : '' }}" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
+                    <a href="#panel-{{ id }}-{{ panel.currentIndex }}" id="tab-{{ id }}-{{ panel.currentIndex }}" class="nav-link {{ panel.currentIndex == '1' ? 'active' : '' }}" aria-controls="panel-{{ id }}-{{ panel.currentIndex }}" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
                         {{ pimcore_input('name').data }}
                     </a>
                     {% set content %}
@@ -23,7 +23,7 @@
     {% if editmode == false %}
         <div class="tab-content">
             {% for tab in tabContent %}
-                <div role="tabpanel" class="tab-pane fade {{ tab.index == '1' ? 'show active' : '' }}" id="tab-{{ id }}-{{ tab.index }}">
+                <div role="tabpanel" class="tab-pane fade {{ tab.index == '1' ? 'show active' : '' }}" id="panel-{{ id }}-{{ tab.index }}" aria-labelledby="tab-{{ id }}-{{ tab.index }}">
                     {{ tab.content }}
                 </div>
             {% endfor %}

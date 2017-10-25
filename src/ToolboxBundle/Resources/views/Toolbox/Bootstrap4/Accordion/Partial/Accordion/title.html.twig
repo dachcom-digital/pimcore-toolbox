@@ -1,7 +1,7 @@
-<p class="panel-title mb-0">
+<span class="mb-0">
     {% if editmode %}
         {{ pimcore_input('name') }}
     {% else %}
-        <a class="accordion-toggle" role="button">{{ pimcore_input('name') }}</a>
+        <a href="#collapse-{{ id }}-{{ panel.currentIndex }}" class="accordion-toggle {{ editmode == false ? 'collapsed' }}" {{ editmode == false ? 'data-toggle="collapse"' }}>{{ pimcore_input('name').data }}</a>
     {% endif %}
-</p>
+</span>

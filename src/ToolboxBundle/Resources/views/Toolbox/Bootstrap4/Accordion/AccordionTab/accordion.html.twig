@@ -1,16 +1,10 @@
 <div class="accordion" id="{{ id }}" role="tablist" aria-multiselectable="true">
     {% for i in pimcore_iterate_block(panel) %}
         <div class="card {{ type }}">
-            <div class="card-header" role="tab">
-                <div
-                        class="collapse-header collapsed"
-                        {{ editmode == false ? 'data-toggle="collapse"' }}
-                        data-parent="#{{ id }}"
-                        data-target="#collapse-{{ id }}-{{ panel.currentIndex }}">
-                    {% include toolbox_area_path(areaId, 'Partial/Accordion/title') %}
-                </div>
+            <div class="card-header" role="tab" id="{{ id }}-{{ panel.currentIndex }}">
+                {% include toolbox_area_path(areaId, 'Partial/Accordion/title') %}
             </div>
-            <div id="collapse-{{ id }}-{{ panel.currentIndex }}" class="collapse multi-collapse {{ editmode ? 'show' : '' }}">
+            <div id="collapse-{{ id }}-{{ panel.currentIndex }}" role="tabpanel" aria-labelledby="{{ id }}-{{ panel.currentIndex }}" class="collapse {{ editmode ? 'show' : '' }}" data-parent="#{{ id }}">
                 <div class="card-body">
                     {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                 </div>
