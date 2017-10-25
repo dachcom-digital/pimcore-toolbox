@@ -3,16 +3,14 @@
 The Bootstrap4 (>= beta.2) Layout is now enabled by default. If you still need B3 you need to add some params to your config:
 
 ```yaml
-# set b3 column calculators
-toolbox:
-    calculators:
-        ToolboxBundle\Calculator\ColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
-        ToolboxBundle\Calculator\SlideColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator
-
 # set theme to bootstrap 3 and add all the default wrapper elements.
 toolbox:
     theme:
         layout: 'Bootstrap3'
+        # set b3 column calculators
+        calculators:
+            ToolboxBundle\Calculator\ColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
+            ToolboxBundle\Calculator\SlideColumnCalculator: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator
         wrapper:
             image:
                 - {tag: 'div', class: 'row'}
