@@ -154,6 +154,7 @@ This Twig Extension will generate some download info.
 ```twig
 {% set downloadInfo = toolbox_download_info(download, true, 'optimized', 0) %}
 ```
+
 **Arguments:**  
 1. Asset, Download File
 1. Bool, Show Preview Image 
@@ -163,6 +164,10 @@ This Twig Extension will generate some download info.
 ## Gallery
 Create image galleries.
 
+### Dependency
+The base markup of this gallery element includes some [slick slider](http://kenwheeler.github.io/slick/) standards. 
+If you want to use a different extension to generate your galleries, just override the templates or use the change the selector in your javascript call.
+
 ### Available Options
 
 | Name | Type | Description | Default Value | Frontend
@@ -171,7 +176,6 @@ Create image galleries.
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `use_thumbnails` | checkbox | Add a thumbnail slider | false | `pimcore_checkbox('use_thumbnails')` |
 | `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
-
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. 
@@ -324,7 +328,12 @@ Create a Separator Element (hr)
 ## Slide Columns
 Create a sliding column element.
 
-> Note: You need to implement your own javascript logic
+### Dependency
+We basically designed this element in combination with the [slick slider](http://kenwheeler.github.io/slick/) plugin.
+Since we want to avoid specific markup in a most possible way, there are still some references if your looking at the toolbox [backend style](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Resources/public/css/admin.css#L47).
+This is just a hint if you're going to use a different javascript extension: Be sure this element works in your backend too. :)
+
+> Note: You need to implement your own javascript logic. Get some hints [here](50_FrontendTips.md).
 
 ### Available Options
 
