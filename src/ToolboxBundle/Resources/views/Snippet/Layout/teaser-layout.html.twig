@@ -3,8 +3,8 @@
 {% if editmode %}
     <div class="snippet-selector alert-info">
         {% if layoutStore|length > 0 %}
-        <label>{{ 'Layout'|trans({}, 'admin') }}: </label>
-        {{ pimcore_select('ts_type', {'store' : layoutStore, reload: true, width: 300}) }}<br>
+            <label>{{ 'Layout'|trans({}, 'admin') }}: </label>
+            {{ pimcore_select('ts_type', {'store' : layoutStore, reload: true, width: 300}) }}<br>
         {% endif %}
         {% if additionalClassesStore|length > 0 %}
             <label>{{ 'Additional'|trans({}, 'admin') }}: </label>
@@ -14,9 +14,13 @@
         {{ pimcore_checkbox('use_light_box') }}
     </div>
 {% endif %}
-{% if pimcore_select('ts_type').isEmpty() == false %}
+{% if editmode %}
     <div class="toolbox-element toolbox-teaser {{ pimcore_select('ts_add_classes').getData() }}">
-        {% include '@Toolbox/Snippet/teaser-' ~ pimcore_select('ts_type').getData() ~ '.html.twig' %}
+{% endif %}
+{% if pimcore_select('ts_type').isEmpty() == false %}
+    {% include '@Toolbox/Snippet/teaser-' ~ pimcore_select('ts_type').getData() ~ '.html.twig' %}
+{% endif %}
+{% if editmode %}
     </div>
 {% endif %}
 {% endblock snippet_content %}
