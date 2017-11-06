@@ -179,9 +179,10 @@ If you want to use a different extension to generate your galleries, just overri
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. 
-Toolbox will automatically generates the long/lat information after saving the document.
-Please be sure that you've included a valid google maps api.
-
+Toolbox will automatically generate the long/lat information after saving the document.
+Please be sure that you've included a valid google maps api key.
+Include the script tag in your footer:
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=API_KEY"></script>
 > Note: This is a [custom toolbox element](22_GoogleMapsElement.md).
 
 ### Available Options
