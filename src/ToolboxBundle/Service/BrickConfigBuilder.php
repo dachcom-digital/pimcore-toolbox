@@ -47,6 +47,11 @@ class BrickConfigBuilder
     /**
      * @var array
      */
+    var $themeOptions = [];
+
+    /**
+     * @var array
+     */
     var $configElements = [];
 
     /**
@@ -82,25 +87,22 @@ class BrickConfigBuilder
      * @param       $documentEditableName
      * @param Info  $info
      * @param array $configNode
+     * @param array $themeOptions
      *
      * @return string
      */
-    public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [])
+    public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
     {
         if ($info->getView()->get('editmode') === FALSE) {
             return FALSE;
         }
 
         $this->documentEditableId = $documentEditableId;
-
         $this->documentEditableName = $documentEditableName;
-
         $this->info = $info;
-
+        $this->themeOptions = $themeOptions;
         $this->configElements = isset($configNode['config_elements']) ? $configNode['config_elements'] : [];
-
         $this->configParameter = isset($configNode['config_parameter']) ? $configNode['config_parameter'] : [];
-
         $this->configWindowSize = $this->getConfigWindowSize();
 
         $fieldSetArgs = [
@@ -113,29 +115,79 @@ class BrickConfigBuilder
         return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
     }
 
+    /**
+     * @return null|string
+     */
     private function getConfigWindowSize()
     {
         $configWindowSize = isset($this->configParameter['window_size']) ? (string)$this->configParameter['window_size'] : NULL;
-
         return !is_null($configWindowSize) ? $configWindowSize : 'small';
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     private function needStore($type)
     {
         return in_array($type, ['select', 'multiselect', 'additionalClasses']);
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     private function canHaveDynamicWidth($type)
     {
         return in_array($type,
-            ['multihref', 'href', 'image', 'input', 'multiselect', 'numeric', 'embed', 'pdf', 'renderlet', 'select', 'snippet', 'table', 'textarea', 'video', 'wysiwyg', 'parallaximage']);
+            [
+                'multihref',
+                'href',
+                'image',
+                'input',
+                'multiselect',
+                'numeric',
+                'embed',
+                'pdf',
+                'renderlet',
+                'select',
+                'snippet',
+                'table',
+                'textarea',
+                'video',
+                'wysiwyg',
+                'parallaximage'
+            ]);
     }
 
+    /**
+     * @param $type
+     * @return bool
+     */
     private function canHaveDynamicHeight($type)
     {
-        return in_array($type, ['multihref', 'width', 'image', 'multiselect', 'embed', 'pdf', 'renderlet', 'snippet', 'textarea', 'video', 'wysiwyg', 'parallaximage']);
+        return in_array($type, [
+            'multihref',
+            'width',
+            'image',
+            'multiselect',
+            'embed',
+            'pdf',
+            'renderlet',
+            'snippet',
+            'textarea',
+            'video',
+            'wysiwyg',
+            'parallaximage'
+        ]);
     }
 
+    /**
+     * @param $type
+     * @param $config
+     * @return array
+     * @throws \Exception
+     */
     private function getTagConfig($type, $config)
     {
         if (is_null($config)) {
@@ -218,7 +270,7 @@ class BrickConfigBuilder
         //set conditions to empty array.
         if (!isset($parsedConfig['conditions'])) {
             $parsedConfig['conditions'] = [];
-        } else if (!is_array($parsedConfig['conditions'])) {
+        } elseif (!is_array($parsedConfig['conditions'])) {
             throw new \Exception('conditions configuration needs to be an array');
         }
 
@@ -295,28 +347,63 @@ class BrickConfigBuilder
         return $elConf;
     }
 
+    /**
+     * @return array
+     */
     private function parseConfigElements()
     {
         $parsedConfig = [];
-
         if (empty($this->configElements)) {
             return $parsedConfig;
         }
 
         foreach ($this->configElements as $configElementName => $c) {
-
             $tagConfig = $c['config'];
-
             $parsedTagConfig = $this->getTagConfig($c['type'], $tagConfig);
             $parsedAdditionalConfig = $this->getAdditionalConfig($configElementName, $c);
 
             $parsedConfig[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $parsedAdditionalConfig];
+            $parsedConfig = $this->checkDependingSystemField($configElementName, $parsedConfig);
+
         }
 
         //condition needs to applied after all elements has been initialized!
         return self::checkCondition($parsedConfig);
     }
 
+    /**
+     * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns"
+     * @param $configElementName
+     * @param $configFields
+     * @return array
+     */
+    private function checkDependingSystemField($configElementName, $configFields)
+    {
+        // add column adjuster (only if breakpoints are defined!
+        if ($this->documentEditableId === 'columns' && $configElementName === 'type') {
+            if(empty($this->themeOptions['grid']['breakpoints'])) {
+                return $configFields;
+            }
+
+            $parsedTagConfig = ['reload' => FALSE];
+            $additionalConfig = [
+                'type'            => 'columnadjuster',
+                'editmode_hidden' => FALSE,
+                'col_class'       => '',
+                'name'            => 'columnadjuster',
+                'title'           => NULL,
+                'edit_reload'     => FALSE,
+            ];
+            $configFields[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $additionalConfig];
+        }
+
+        return $configFields;
+    }
+
+    /**
+     * @param $configElements
+     * @return array
+     */
     private function checkCondition($configElements)
     {
         $filteredData = [];

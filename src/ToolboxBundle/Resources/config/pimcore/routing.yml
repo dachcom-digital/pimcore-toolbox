@@ -10,3 +10,6 @@ toolbox_frontend_ajax_google_maps_iw:
 toolbox_frontend_ajax_video_types:
     path: /toolbox/ajax/video-allowed-video-types
     defaults: { _controller: ToolboxBundle:Ajax:videoGetTypes }
+toolbox_column_adjuster:
+    path: /admin/toolbox-get-column-info
+    defaults: { _controller: ToolboxBundle:Admin\ColumnAdjuster:getColumnInfo }

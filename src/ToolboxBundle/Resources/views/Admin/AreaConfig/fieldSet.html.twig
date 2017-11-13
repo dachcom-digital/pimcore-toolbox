@@ -32,7 +32,9 @@
                 <div class="toolbox-element" data-reload="{{ config_element.additional_config.edit_reload == true ? 'true' : 'false' }}">
                     <div class="{{ edit_mode_hidden_class }} {{ config_element.additional_config.col_class }}">
 
-                    <label>{{ config_element.additional_config.title }}</label>
+                    {% if config_element.additional_config.title is not null %}
+                        <label>{{ config_element.additional_config.title }}</label>
+                    {% endif %}
                     {% include '@Toolbox/Admin/AreaConfig/Elements/tag.html.twig' with {'type' : config_element.additional_config.type, 'tag_name' : config_element.additional_config.name, 'tag_config': config_element.tag_config} %}
 
                     {% if config_element.additional_config.description is defined and config_element.additional_config.description is not empty %}

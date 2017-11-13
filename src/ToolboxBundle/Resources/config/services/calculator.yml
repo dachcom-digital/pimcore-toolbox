@@ -3,7 +3,7 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: false
+        public: true
 
     # column calculator
     ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\ColumnCalculator'

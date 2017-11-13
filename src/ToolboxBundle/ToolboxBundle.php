@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
-    const BUNDLE_VERSION = '2.1.2';
+    const BUNDLE_VERSION = '2.2.0';
 
     /**
      * @inheritDoc
@@ -59,7 +59,8 @@ class ToolboxBundle extends AbstractPimcoreBundle
             '/bundles/toolbox/js/document/tags/dynamiclink.js',
             '/bundles/toolbox/js/document/tags/googlemap.js',
             '/bundles/toolbox/js/document/tags/parallaximage.js',
-            '/bundles/toolbox/js/document/tags/vhs.js'
+            '/bundles/toolbox/js/document/tags/vhs.js',
+            '/bundles/toolbox/js/document/tags/columnadjuster.js'
         ];
     }
 

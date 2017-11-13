@@ -116,7 +116,7 @@ class ConfigManager
     private function checkConfigNamespace()
     {
         if (is_null($this->areaNamespace)) {
-            throw new \Exception('configManger has no defined namespace.');
+            throw new \Exception('ConfigManager has no defined namespace.');
         }
     }
 

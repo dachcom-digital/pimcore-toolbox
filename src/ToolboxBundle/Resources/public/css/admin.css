@@ -4,7 +4,7 @@
 
 **/
 .toolbox-headline {
-    display:block !important;
+    display: block !important;
 }
 
 /**
@@ -13,9 +13,8 @@
 
 **/
 .toolbox-anchor {
-    display:block !important;
+    display: block !important;
 }
-
 
 /**
 
@@ -26,6 +25,119 @@
     background: rgba(242, 242, 242, 0.5);
     border: 1px dashed #d6d6d6;
     padding: 10px;
+}
+
+/**
+
+    Toolbox Columns Adjuster
+
+**/
+.toolbox_column_adjuster {
+    background: url(/pimcore/static6/img/flat-color-icons/grid.svg) left center no-repeat !important;
+}
+
+.grid-preview {
+    width: 100%;
+    background: #bfd7d8;
+    padding: 5px 5px 0 5px;
+    overflow: hidden;
+}
+
+.grid-preview:before {
+    content: "preview";
+    position: absolute;
+    left: 10px;
+    color: white;
+    opacity: .5;
+    text-transform: uppercase;
+    font-size: 14px;
+    top: 5px;
+}
+
+.grid-preview .grid-pre-row {
+    width: 100%;
+    margin: 0 -10px;
+    overflow: hidden;
+}
+
+.grid-preview .grid-pre-row .grid-pre-element {
+    float: left;
+    padding: 0 10px;
+    height: 20px;
+    margin-bottom:5px;
+    position: relative;
+}
+
+.grid-preview .grid-pre-row .grid-pre-element:before {
+    position: absolute;
+    content: "";
+    border: 1px dashed #707a82;
+    background: rgba(255,255,255, .3);
+    left: 10px;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+}
+
+.grid-preview .grid-pre-row .grid-pre-element.inherited:before {
+    border: 1px dashed white;
+}
+
+.grid-preview .grid-pre-row .grid-pre-element.is-offset:before {
+    border: none;
+    background: rgba(158, 182, 183, 0.6);
+}
+
+.grid-preview .grid-pre-row .grid-pre-element.is-offset.pre-col-0 {
+    display: none;
+}
+
+.grid-preview .grid-pre-row .pre-col-1 {
+    width: 8.333333333333333%;
+}
+
+.grid-preview .grid-pre-row .pre-col-2 {
+    width: 16.6666666667%;
+}
+
+.grid-preview .grid-pre-row .pre-col-3 {
+    width: 25%;
+}
+
+.grid-preview .grid-pre-row .pre-col-4 {
+    width: 33.3333333333%;
+}
+
+.grid-preview .grid-pre-row .pre-col-5 {
+    width: 41.6666666667%;
+}
+
+.grid-preview .grid-pre-row .pre-col-6 {
+    width: 50%;
+}
+
+.grid-preview .grid-pre-row .pre-col-7 {
+    width: 58.3333333333%;
+}
+
+.grid-preview .grid-pre-row .pre-col-8 {
+    width: 66.6666666667%;
+}
+
+.grid-preview .grid-pre-row .pre-col-9 {
+    width: 75%;
+}
+
+.grid-preview .grid-pre-row .pre-col-10 {
+    width: 83.3333333333%;
+}
+
+.grid-preview .grid-pre-row .pre-col-12 {
+    width: 91.6666666667%;
+}
+
+.grid-preview .grid-pre-row .pre-col-12 {
+    width: 100%;
 }
 
 /**
@@ -135,12 +247,12 @@
 }
 
 .snippet-selector label {
-    float:left;
-    padding:7px 10px 0 0;
+    float: left;
+    padding: 7px 10px 0 0;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     font-size: 12px;
-    font-weight:bold;
-    width:200px;
+    font-weight: bold;
+    width: 200px;
 }
 
 /**
@@ -149,21 +261,21 @@
 
 **/
 .toolbox-spacer {
-    position:relative;
-    height:50px;
-    width:100%;
-    border:1px solid #e6e6e6;
+    position: relative;
+    height: 50px;
+    width: 100%;
+    border: 1px solid #e6e6e6;
     background-color: #dcdcdc;
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.5) 35px, rgba(255,255,255,.5) 70px);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, .5) 35px, rgba(255, 255, 255, .5) 70px);
 }
 
 .toolbox-spacer:before {
 
     content: attr(data-type);
-    position:absolute;
-    top:10px;
+    position: absolute;
+    top: 10px;
     width: 100%;
-    text-align:center;
+    text-align: center;
 
     text-transform: uppercase;
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
@@ -176,7 +288,7 @@
 }
 
 .toolbox-spacer span {
-   display:none !important;
+    display: none !important;
 }
 
 /**
@@ -196,7 +308,7 @@
 }
 
 .toolbox-parallax-container .parallax-content > .pimcore_tag_block {
-    margin:10px;
+    margin: 10px;
 }
 
 .toolbox-parallax-container .toolbox-columns {
@@ -291,11 +403,11 @@
 
 /** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/
 .pimcore_iframe_mask {
-    z-index:199 !important;
+    z-index: 199 !important;
 }
 
 .toolbox-element-edit-button {
-    position:relative;
+    position: relative;
     display: block;
     margin: 3px 0 0 0;
     padding: 4px;
@@ -307,7 +419,7 @@
 }
 
 .toolbox-element-edit-button.no-interaction {
-    height:35px;
+    height: 35px;
 }
 
 .toolbox-element-edit-button:before {
@@ -342,7 +454,6 @@
 .toolbox-element-window {
 }
 
-
 /* move window element out of scope, because display none won't work because of extjs rendering issues */
 .toolbox-element-window-hidden {
     visibility: hidden;
@@ -363,11 +474,11 @@
     margin: 0;
 }
 
-.toolbox-edit-overlay.small {
+.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.small {
     max-width: 560px;
 }
 
-.toolbox-edit-overlay.large {
+.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large {
     max-width: 760px;
 }
 
@@ -384,7 +495,7 @@
 }
 
 .toolbox-edit-overlay .t-row.editmode-hidden,
-.toolbox-edit-overlay .t-row .toolbox-element > .editmode-hidden{
+.toolbox-edit-overlay .t-row .toolbox-element > .editmode-hidden {
     display: none;
 }
 
@@ -416,12 +527,12 @@
     min-height: 1px;
 }
 
-.toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
-    width: 760px !important;
+.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
+    width: 760px;
 }
 
-.toolbox-edit-overlay.small .t-row .pimcore_editable .x-panel-default {
-    width: 560px !important;
+.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.small .t-row .pimcore_editable .x-panel-default {
+    width: 560px;
 }
 
 .toolbox-edit-overlay .pimcore_tag_input {
@@ -461,7 +572,7 @@ ul li.x-boundlist-item {
     margin: inherit;
     line-height: 30px;
     padding: 0 0 0 10px !important;
-    display:block !important;
+    display: block !important;
 }
 
 ul li.x-boundlist-item:before {
@@ -513,4 +624,9 @@ body > .single-teaser img {
 /* Snippet */
 .toolbox-snippet .x-panel-body-default .x-autocontainer-outerCt {
     overflow: hidden !important;
+}
+
+/* Modal Fix */
+.toolbox-modal-open {
+    overflow: hidden;
 }

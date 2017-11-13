@@ -4,28 +4,21 @@ pimcore.plugin.toolbox.main = Class.create({
     editWindows: {},
 
     initialize: function() {
-
         var _ = this;
-
         try {
-
             Ext.each(Ext.query('div[class="toolbox-element-edit-button"]:not([class="no-interaction"])'), function (item) {
-
                 var editButton = new Ext.Button({
                     cls: 'pimcore_block_button_plus',
                     iconCls: 'pimcore_icon_edit',
                     text: t('edit'),
                     handler: _.openElementConfig.bind(_, this)
                 });
-
                 editButton.render(item);
-
             });
 
         } catch (e) {
             console.log(e);
         }
-
     },
 
     openElementConfig: function(element) {
@@ -34,28 +27,21 @@ pimcore.plugin.toolbox.main = Class.create({
             content;
 
         if( element.getAttribute('editor-id') !== null ) {
-
             editWindow  = this.editWindows[ element.getAttribute('editor-id' ) ]['editor'];
             content     = this.editWindows[ element.getAttribute('editor-id' ) ]['content'];
-
         } else {
-
             content = Ext.get(element).parent().down('.toolbox-element-window');
-
             var editWindow = new Ext.Window({
-                modal: true,
                 width: content.getAttribute('data-edit-window-size') === 'small' ? 600 : 800,
                 height: content.getAttribute('data-edit-window-size') === 'small' ? 400 : 600,
-                title: 'Edit Toolbox Element Configuration',
+                title: t('edit_toolbox_element_configuration'),
                 closeAction: 'hide',
                 bodyStyle: 'padding: 10px;',
                 closable: false,
                 autoScroll: true,
                 listeners: {
                     afterrender: function (win) {
-
                         var needReload = false;
-
                         content.removeCls('toolbox-element-window-hidden');
                         win.body.down('.x-autocontainer-innerCt').insertFirst(content);
 
@@ -84,12 +70,6 @@ pimcore.plugin.toolbox.main = Class.create({
                             needReload : needReload
                         };
 
-                    }.bind(this),
-
-                    show: function (win) {
-
-
-
                     }.bind(this)
                 },
                 buttons: [{
@@ -114,33 +94,31 @@ pimcore.plugin.toolbox.main = Class.create({
                     iconCls: 'pimcore_icon_cancel'
                 }]
             });
-
         }
 
+        document.body.classList.add('toolbox-modal-open');
         editWindow.show();
 
     },
 
     editmodeSave: function (scope, button) {
-
         var editWindow = button.up('window'),
             data = this.editWindows[ editWindow.id ];
-
         if( !data.needReload ) {
             data.editor.close();
             return;
         }
 
         data.editor.close();
+        document.body.className = document.body.classList.remove('toolbox-modal-open');
         window.editWindow.reload();
 
     },
 
     editmodeClose: function(scope, button) {
-
         var editWindow = button.up('window'),
             data = this.editWindows[ editWindow.id ];
-
+        document.body.className = document.body.classList.remove('toolbox-modal-open');
         data.editor.close();
     }
 

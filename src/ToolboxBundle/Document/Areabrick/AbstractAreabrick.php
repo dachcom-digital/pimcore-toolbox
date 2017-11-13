@@ -111,7 +111,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         }
 
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
-        $configWindowData = $this->getBrickConfigBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode);
+        $themeOptions = $this->getConfigManager()->getConfig('theme');
+        $configWindowData = $this->getBrickConfigBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode, $themeOptions);
 
         $layoutDir = NULL;
 

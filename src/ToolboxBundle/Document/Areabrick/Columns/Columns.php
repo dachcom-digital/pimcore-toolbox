@@ -26,8 +26,10 @@ class Columns extends AbstractAreabrick
         parent::action($info);
 
         $view = $info->getView();
-        $equalHeightElement = $this->getDocumentTag($info->getDocument(),'checkbox', 'equal_height');
-        $typeElement = $this->getDocumentTag($info->getDocument(),'select', 'type');
+        $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
+        $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
+        $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();
+        $gridSize = $this->getConfigManager()->getConfig('theme')['grid']['grid_size'];
 
         $editMode = $view->get('editmode');
 
@@ -36,10 +38,14 @@ class Columns extends AbstractAreabrick
 
         $partialName = '';
 
-        $configNode = $this->getConfigManager()->getAreaElementConfig('columns', 'type');
+        if ($gridAdjustment !== FALSE) {
+            $columnConfigElements = [$type => $gridAdjustment];
+        } else {
+            $configNode = $this->getConfigManager()->getAreaElementConfig('columns', 'type');
+            $columnConfigElements = isset($configNode['config']['store']) ? $configNode['config']['store'] : [];
+        }
 
-        $columnConfigElements = isset($configNode['config']['store']) ?  $configNode['config']['store'] : [];
-        $columns = $this->calculator->calculateColumns($type, $columnConfigElements);
+        $columns = $this->calculator->calculateColumns($type, $columnConfigElements, $gridSize);
 
         if (!empty($columns)) {
 
@@ -55,7 +61,7 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $view->type = $type;
+        $view->type = $type . ($gridAdjustment !== FALSE ? '-grid-adjuster' : '');
         $view->columns = $columns;
         $view->partialName = $partialName;
         $view->equalHeight = $equalHeight;
