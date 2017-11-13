@@ -42,6 +42,7 @@ If you're using a different grid system, you probably need to change the [grid c
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `type` | select | Set the column type. see example below. | column_6_6 | `pimcore_input('type')` |
+| `columnadjuster` | section | This element comes by default after the `type` field. Read more about this feature [here](60_ColumnAdjuster.md) | - | - |
 | `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
 | `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 

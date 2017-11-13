@@ -1,15 +1,13 @@
 # Toolbox Theme / Layout
-
 The Toolbox Bundle is currently using Bootstrap 4 as a supporting framework. It's, however, possible to create your custom layout / theme.
 
 ## Theme Configuration
-
 This is the default theme configuration.
 
 ```yaml
 toolbox:
     theme:
-    
+        grid: ~
         # defines the view namespace [LAYOUT_NAME]
         layout: 'Bootstrap4'
         default_layout: false
@@ -29,6 +27,9 @@ toolbox:
                 - {tag: 'div', class: 'col-12'}
                 
 ```
+#### Grid
+Please [read this](60_ColumnAdjuster.md) to learn more about the fancy column adjuster - where this setting is important!
+
 #### Layout
 This property defines the current layout view path.
 
@@ -118,7 +119,7 @@ use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
-    public function calculateColumns($value, $columnConfiguration = [])
+    public function calculateColumns($value, $columnConfiguration = [], $gridSize = 12)
     {
         $columns = [];
 
@@ -139,8 +140,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
             ];
         }
 
-        //generate  column classes. please check out the bootstrap3 calculator if you need more information.
+        // generate column classes.
+        // please check out the bootstrap4 calculator if you need more information.
         return $columns;
+    }
+    
+    public function getColumnInfoForAdjuster($currentColumn = '', $columnConfiguration = [], $gridSettings = []) {
+         // generate column info for the column adjuster.
+         // please check out the bootstrap4 calculator if you need more information.
     }
 }
 ```

@@ -1,4 +1,11 @@
 # Upgrade Notes
+
+#### Update from Version 2.1.x to Version 2.2.0
+- [Column Adjuster](docs/60_ColumnAdjuster.md) added
+- In case you're using a custom column calculator: Please check the new additions before upgrading to toolbox 2.2.0:
+  - Add `$gridSize` Parameter to [caculateColumns()](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/ColumnCalculator.php#L7)
+  - Add `getColumnInfoForAdjuster` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L110)
+
 #### Update from Version 2.x to Version 2.1.0
 The Bootstrap4 (>= beta.2) Layout is now enabled by default. If you still need B3 you need to add some params to your config:
 
