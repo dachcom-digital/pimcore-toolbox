@@ -3,7 +3,7 @@ pimcore.plugin.toolbox.main = Class.create({
 
     editWindows: {},
 
-    initialize: function() {
+    initialize: function () {
         var _ = this;
         try {
             Ext.each(Ext.query('div[class="toolbox-element-edit-button"]:not([class="no-interaction"])'), function (item) {
@@ -21,14 +21,14 @@ pimcore.plugin.toolbox.main = Class.create({
         }
     },
 
-    openElementConfig: function(element) {
+    openElementConfig: function (element) {
 
         var _ = this,
             content;
 
-        if( element.getAttribute('editor-id') !== null ) {
-            editWindow  = this.editWindows[ element.getAttribute('editor-id' ) ]['editor'];
-            content     = this.editWindows[ element.getAttribute('editor-id' ) ]['content'];
+        if (element.getAttribute('editor-id') !== null) {
+            editWindow = this.editWindows[element.getAttribute('editor-id')]['editor'];
+            content = this.editWindows[element.getAttribute('editor-id')]['content'];
         } else {
             content = Ext.get(element).parent().down('.toolbox-element-window');
             var editWindow = new Ext.Window({
@@ -45,7 +45,7 @@ pimcore.plugin.toolbox.main = Class.create({
                         content.removeCls('toolbox-element-window-hidden');
                         win.body.down('.x-autocontainer-innerCt').insertFirst(content);
 
-                        if(content.query( 'div.toolbox-element[data-reload=true]').length > 0 ) {
+                        if (content.query('div.toolbox-element[data-reload=true]').length > 0) {
                             needReload = true;
                         }
 
@@ -53,21 +53,21 @@ pimcore.plugin.toolbox.main = Class.create({
                         element.setAttribute('editor-id', id);
 
                         var elements = win.body.query('.pimcore_editable');
-                        for (var i=0; i<elements.length; i++) {
+                        for (var i = 0; i < elements.length; i++) {
                             var name = elements[i].getAttribute('id').split('pimcore_editable_').join('');
-                            for (var e=0; e<editables.length; e++) {
+                            for (var e = 0; e < editables.length; e++) {
 
-                                if(editables[e].getName() === name && typeof editables[e].updateLayout === 'function') {
+                                if (editables[e].getName() === name && typeof editables[e].updateLayout === 'function') {
                                     editables[e].updateLayout();
                                     break;
                                 }
                             }
                         }
 
-                        this.editWindows[ id ] = {
-                            editor : win,
-                            element : element,
-                            needReload : needReload
+                        this.editWindows[id] = {
+                            editor: win,
+                            element: element,
+                            needReload: needReload
                         };
 
                     }.bind(this)
@@ -82,7 +82,7 @@ pimcore.plugin.toolbox.main = Class.create({
                         }
                     },
                     iconCls: 'pimcore_icon_save'
-                },{
+                }, {
                     text: t('cancel'),
                     listeners: {
                         click: {
@@ -103,8 +103,8 @@ pimcore.plugin.toolbox.main = Class.create({
 
     editmodeSave: function (scope, button) {
         var editWindow = button.up('window'),
-            data = this.editWindows[ editWindow.id ];
-        if( !data.needReload ) {
+            data = this.editWindows[editWindow.id];
+        if (!data.needReload) {
             data.editor.close();
             return;
         }
@@ -115,9 +115,9 @@ pimcore.plugin.toolbox.main = Class.create({
 
     },
 
-    editmodeClose: function(scope, button) {
+    editmodeClose: function (scope, button) {
         var editWindow = button.up('window'),
-            data = this.editWindows[ editWindow.id ];
+            data = this.editWindows[editWindow.id];
         document.body.className = document.body.classList.remove('toolbox-modal-open');
         data.editor.close();
     }
