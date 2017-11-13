@@ -70,7 +70,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                     $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                     foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                         $customBreakPointDataColumns = explode('_', $customBreakPointData);
-                        $customColAmount = isset($customBreakPointDataColumns[$i]) ? (int)$customBreakPointDataColumns[$i] : $gridSize;
+                        $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : $gridSize;
                         if (substr($customColAmount, 0, 1) === 'o') {
                             $customOffset = (int)substr($customColAmount, 1);
                             $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
