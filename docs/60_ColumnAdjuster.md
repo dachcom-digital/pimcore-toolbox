@@ -1,8 +1,7 @@
 # Column Adjuster
+This Feature is so damn hot, it even has its own documentation page!
 
 ![](http://g.recordit.co/SQySgZ1Cd9.gif)
-
-This Feature is so damn hot, it even has its own documentation page!
 
 ```yaml
 toolbox:
