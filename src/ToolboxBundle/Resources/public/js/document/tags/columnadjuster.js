@@ -53,7 +53,6 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         var statusButton = new Ext.form.Checkbox({
                 fieldLabel: t('enable_column_adjuster'),
                 checked: this.data !== false,
-                flex: 1,
                 labelWidth: 170,
                 labelStyle: 'padding-top:0; font-weight: 300;',
                 listeners: {
@@ -70,7 +69,6 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 iconCls: 'toolbox_column_adjuster',
                 text: t('edit_column_configuration'),
                 hidden: this.data === false,
-                flex: 1,
                 style: 'background-color: white;',
                 listeners: {
                     'click': function () {
@@ -114,19 +112,16 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
         checkInitState();
 
-        this.toolbar = new Ext.toolbar.Toolbar({
-            flex: 1,
+        this.toolbar = new Ext.form.FormPanel({
+            layout: 'fit',
+            tbar : [statusButton, '->', gridEditButton]
         });
-
-        this.toolbar.add([statusButton, gridEditButton]);
 
         this.gridForm = new Ext.FormPanel({
             itemId: 'form',
             scrollable: true,
             hidden: true,
             layout: 'fit',
-            anchor: '100%',
-            flex: 1,
             style: 'margin: 10px 0;',
         });
 
@@ -160,7 +155,6 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         editWindow.setHeight(600).center();
 
         this.populateGridForm();
-        this.gridForm.updateLayout();
         this.toolbar.updateLayout();
         this.gridForm.setHidden(false);
 
@@ -202,13 +196,9 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         var tabPanel = new Ext.TabPanel({
             title: t('grid_configuration_for') + ' "' + this.currentColumnSelectionName + '"',
             closable: false,
-            deferredRender: false,
-            forceLayout: true,
+            layout: 'fit',
             activeTab: 0,
-            border: false,
-            anchor: '100%',
-            width: '100%',
-            flex: 1
+            border: false
         });
 
         this.gridForm.add(tabPanel);
@@ -398,10 +388,9 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
                     _.gridPreview[breakpoint.identifier] = new Ext.form.Panel({
                         html: generatePreview(breakpoint.identifier, gridLayoutForPreview),
-                        style: 'display:block; margin: 0 10px 10px 10px; font-weight: 300;',
+                        style: 'padding: 0 10px 10px 10px; font-weight: 300;',
                         border: false,
                         layout: 'fit',
-                        flex: 1,
                         listeners: {
                             'updateGridLayout': function (identifier, grid) {
                                 this.update(generatePreview(identifier, grid));
@@ -414,6 +403,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 });
 
                 tabPanel.setActiveTab(0);
+                _.toolbar.updateLayout();
                 _.gridForm.updateLayout();
 
             }.bind(this)

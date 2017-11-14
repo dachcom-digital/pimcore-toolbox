@@ -55,14 +55,20 @@
 }
 
 .grid-preview .grid-pre-row {
-    width: 100%;
-    margin: 0 -10px;
+    margin-left: -10px;
+    margin-right: -10px;
     overflow: hidden;
+}
+
+.grid-preview .grid-pre-row:before {
+    content: " ";
+    display: table;
 }
 
 .grid-preview .grid-pre-row .grid-pre-element {
     float: left;
-    padding: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 20px;
     margin-bottom:5px;
     position: relative;
@@ -132,7 +138,7 @@
     width: 83.3333333333%;
 }
 
-.grid-preview .grid-pre-row .pre-col-12 {
+.grid-preview .grid-pre-row .pre-col-11 {
     width: 91.6666666667%;
 }
 

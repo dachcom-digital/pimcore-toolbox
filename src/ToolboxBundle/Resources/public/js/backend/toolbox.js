@@ -38,7 +38,7 @@ pimcore.plugin.toolbox.main = Class.create({
                 closeAction: 'hide',
                 bodyStyle: 'padding: 10px;',
                 closable: false,
-                autoScroll: true,
+                scrollable: 'y',
                 listeners: {
                     afterrender: function (win) {
                         var needReload = false;
@@ -98,7 +98,6 @@ pimcore.plugin.toolbox.main = Class.create({
 
         document.body.classList.add('toolbox-modal-open');
         editWindow.show();
-
     },
 
     editmodeSave: function (scope, button) {
