@@ -91,12 +91,28 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 }
             });
 
+        var checkInitState = function() {
+            //there is only 1 column: we don't need a column adjuster...
+            if(this.currentColumnSelection.split('_').length === 2) {
+                this.data = false;
+                gridEditButton.setDisabled(true);
+                statusButton.setValue(false);
+                statusButton.setDisabled(true);
+            } else {
+                gridEditButton.setDisabled(false);
+                statusButton.setDisabled(false);
+            }
+        }.bind(this);
+
         this.statusButton = statusButton;
         comboBox.addListener('change', function () {
             statusButton.setValue(false);
             this.currentColumnSelection = comboBox.getValue();
             this.currentColumnSelectionName = comboBox.getRawValue();
+            checkInitState();
         }.bind(this));
+
+        checkInitState();
 
         this.toolbar = new Ext.toolbar.Toolbar({
             flex: 1,
