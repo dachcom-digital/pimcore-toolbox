@@ -5,6 +5,7 @@ After every update you should check the pimcore extension manager. Just click th
 
 #### Update from Version 2.1.x to Version 2.2.0
 - [Column Adjuster](docs/60_ColumnAdjuster.md) added
+- Google Maps: Allow deactivation of InfoWindow per location
 - In case you're using a custom column calculator: Please check the new additions before upgrading to toolbox 2.2.0:
   - Update `calculateColumns` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L16)
   - Add `getColumnInfoForAdjuster` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L110)
