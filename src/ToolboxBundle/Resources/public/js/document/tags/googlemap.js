@@ -10,15 +10,15 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
         return this.data;
     },
 
-    reload : function () {
+    reload: function () {
         if (this.options.reload) {
             this.reloadDocument();
         }
     },
 
-    initialize: function(id, name, options, data, inherited) {
+    initialize: function (id, name, options, data) {
 
-        if(typeof google === 'undefined') {
+        if (typeof google === 'undefined') {
             console.warn('toolbox googleMap: google js api is not reachable.');
             return false;
         }
@@ -33,7 +33,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
         this.setupWrapper();
 
         Ext.get(id).setStyle({
-            display:'inline'
+            display: 'inline'
         });
 
         var buttonHolder = Ext.get(id).up('.toolbox-google-map').prev('.toolbox-element-edit-button'),
@@ -44,125 +44,133 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                 listeners: {
                     'click': this.openEditor.bind(this)
                 }
-            }
-            );
+            });
 
         mapEditButton.render(buttonHolder);
     },
 
-    openEditor: function() {
-
-        this.window = this.openGooglemapEditPanel(this.data, {
+    openEditor: function () {
+        this.window = this.openGoogleMapEditPanel(this.data, {
             cancel: this.cancel.bind(this),
             save: this.save.bind(this)
         });
-
     },
 
-    openGooglemapEditPanel: function (data, callback) {
+    openGoogleMapEditPanel: function (data, callback) {
 
         data = data || [];
+        var addLocation = function (ev, buttonEv, location) {
 
-        var addLocation = function(location) {
-
-            if ( typeof location == 'undefined' ) {
-
+            if (typeof location === 'undefined') {
                 location = {
                     title: '',
                     street: '',
                     zip: '',
                     city: '',
                     country: '',
+                    hideInfoWindow: 0,
                     add: ''
                 }
-
             }
 
             var itemRow1 = [{
                 xtype: 'textfield',
-                name: 'location_title[]',
-                fieldLabel: t('location_title'),
-                labelAlign: 'top',
+                name: 'location_title',
+                emptyText: t('location_title'),
                 anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: false,
                 blankText: t('field_mandatory'),
-                value : location.title,
+                value: location.title,
                 flex: 1,
                 msgTarget: 'qtip'
             }];
 
             var itemRow2 = [{
                 xtype: 'textfield',
-                name: 'location_street[]',
+                name: 'location_street',
                 fieldLabel: t('location_street'),
                 labelAlign: 'top',
+                style: 'margin: 0 5px 0 0',
                 anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: false,
                 blankText: t('field_mandatory'),
-                value : location.street,
+                value: location.street,
                 flex: 1,
                 msgTarget: 'qtip'
             },
                 {
                     xtype: 'textfield',
-                    name: 'location_zip[]',
+                    name: 'location_zip',
                     fieldLabel: t('location_zip'),
                     labelAlign: 'top',
+                    style: 'margin: 0 5px 0 0',
                     anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
-                    value : location.zip,
+                    value: location.zip,
                     flex: 1,
                     msgTarget: 'qtip'
                 },
                 {
                     xtype: 'textfield',
-                    name: 'location_city[]',
+                    name: 'location_city',
                     fieldLabel: t('location_city'),
                     labelAlign: 'top',
+                    style: 'margin: 0 5px 0 0',
                     anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
-                    value : location.city,
+                    value: location.city,
                     flex: 1,
                     msgTarget: 'qtip'
                 },
                 {
                     xtype: 'textfield',
-                    name: 'location_country[]',
+                    name: 'location_country',
                     fieldLabel: t('location_country'),
                     labelAlign: 'top',
                     anchor: '100%',
                     summaryDisplay: true,
                     allowBlank: false,
                     blankText: t('field_mandatory'),
-                    value : location.country,
+                    value: location.country,
                     flex: 1,
                     msgTarget: 'qtip'
-            }];
+                }];
 
             var itemRow3 = [{
+                xtype: 'checkbox',
+                name: 'location_hide_info_window',
+                labelAlign: 'left',
+                fieldLabel: t('location_hide_info_window'),
+                value: location.hideInfoWindow,
+                anchor: '100%',
+                labelWidth: false,
+                style: 'width: 190px;',
+                labelStyle: 'width: 190px;'
+            }];
+
+            var itemRow4 = [{
                 xtype: 'textarea',
-                name: 'location_add[]',
+                name: 'location_add',
                 fieldLabel: t('location_add'),
                 labelAlign: 'top',
                 anchor: '100%',
                 summaryDisplay: true,
                 allowBlank: true,
-                value : location.add,
+                value: location.add,
                 flex: 1,
                 grow: false
             }];
 
-
             var compositeField = new Ext.form.FieldContainer({
-                layout: 'anchor',
+                //layout: 'anchor',
                 hideLabel: true,
-                style: 'padding-bottom:5px;',
+                style: 'margin-bottom: 15px; padding: 10px; background: rgba(214, 221, 230, 0.45);',
                 items: [
                     Ext.form.FieldContainer({
                         layout: 'hbox',
@@ -184,6 +192,13 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                         style: 'padding-bottom:5px;',
                         border: false,
                         items: itemRow3
+                    }),
+                    Ext.form.FieldContainer({
+                        layout: 'hbox',
+                        hideLabel: true,
+                        style: 'padding-bottom:5px;',
+                        border: false,
+                        items: itemRow4
                     })
                 ]
             });
@@ -196,7 +211,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                     selector.remove(compositeField);
                     selector.updateLayout();
                 }.bind(this, compositeField)
-            },{
+            }, {
                 xtype: 'box',
                 style: 'clear:both;'
             }]);
@@ -204,38 +219,28 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             selector.add(compositeField);
             selector.updateLayout();
 
-        }
+        };
 
         var selector = new Ext.form.FieldSet({
-
             title: t('locations'),
             collapsible: false,
             autoHeight: true,
-            style: '',
             items: [{
                 xtype: 'toolbar',
-                style: 'margin-bottom: 10px;',
+                style: 'margin-bottom:10px;',
                 items: ['->', {
                     xtype: 'button',
-                    text: t('add'),
+                    text: t('location_add_location'),
                     iconCls: 'pimcore_icon_add',
-                    handler: addLocation,
-                    tooltip: {
-                        title:'',
-                        text: t('add_metadata')
-                    }
+                    handler: addLocation
                 }]
             }]
         });
 
-        if ( data && data.length > 0 ) {
-
-            data.forEach(function(location) {
-
-                addLocation(location);
-
+        if (data && data.length > 0) {
+            data.forEach(function (location) {
+                addLocation(null, null, location);
             });
-
         }
 
         var form = new Ext.FormPanel({
@@ -254,7 +259,7 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
                 },
                 {
                     text: t('cancel'),
-                    listeners:  {
+                    listeners: {
                         'click': callback['cancel']
                     },
                     iconCls: 'pimcore_icon_cancel'
@@ -270,9 +275,9 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
             title: t('edit_locations'),
             items: [form],
             layout: 'fit'
-            //autoScroll: true
         });
 
+        document.body.classList.add('toolbox-modal-open');
         window.show();
 
         return window;
@@ -280,65 +285,52 @@ pimcore.document.tags.googlemap = Class.create(pimcore.document.tag, {
     },
 
     cancel: function () {
-
+        document.body.classList.remove('toolbox-modal-open');
         this.window.close();
-
     },
 
-    save: function() {
+    save: function () {
 
         var form = this.window.getComponent('form').getForm(),
             locations = [],
             location;
 
-        if ( form.isValid() ) {
-
+        if (form.isValid()) {
             var values = form.getFieldValues();
-
-            if (typeof values['location_street[]'] === 'string') {
-
+            if (typeof values['location_street'] === 'string') {
                 location = {
-                    title: values['location_title[]'],
-                    street: values['location_street[]'],
-                    zip: values['location_zip[]'],
-                    city: values['location_city[]'],
-                    country: values['location_country[]'],
-                    add: values['location_add[]']
+                    title: values['location_title'],
+                    street: values['location_street'],
+                    zip: values['location_zip'],
+                    city: values['location_city'],
+                    country: values['location_country'],
+                    hideInfoWindow: values['location_hide_info_window'],
+                    add: values['location_add']
                 };
-
                 locations.push(location);
-
             } else {
-
-                if ( values.hasOwnProperty('location_title[]') && values['location_title[]'].length > 0 ) {
-
-                    values['location_title[]'].forEach(function(value, index) {
-
+                if (values.hasOwnProperty('location_title') && values['location_title'].length > 0) {
+                    values['location_title'].forEach(function (value, index) {
                         location = {
                             title: value,
-                            street: values['location_street[]'][index],
-                            zip: values['location_zip[]'][index],
-                            city: values['location_city[]'][index],
-                            country: values['location_country[]'][index],
-                            add: values['location_add[]'][index]
+                            street: values['location_street'][index],
+                            zip: values['location_zip'][index],
+                            city: values['location_city'][index],
+                            country: values['location_country'][index],
+                            hideInfoWindow: values['location_hide_info_window'][index],
+                            add: values['location_add'][index]
                         };
-
                         locations.push(location);
-
                     });
-
                 }
-
             }
 
             this.data = locations;
 
             // close window
+            document.body.classList.remove('toolbox-modal-open');
             this.window.close();
             this.reload();
-
         }
-
     }
-
 });

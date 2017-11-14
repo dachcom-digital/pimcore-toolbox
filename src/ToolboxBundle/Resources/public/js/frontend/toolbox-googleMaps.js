@@ -49,31 +49,34 @@ var DachcomToolboxGoogleMaps = (function () {
                             contentLoaded: false
                         });
 
-                        infoWindow = new google.maps.InfoWindow({
-                            content: '<div class="info-window"><div class="loading"></div></div>'
-                        });
+                        if(location.hideInfoWindow !== true) {
 
-                        marker.addListener('click', function() {
-                            infoWindow.open(map, marker);
-                            if(marker.contentLoaded === false) {
-                                $.ajax({
-                                    url: '/toolbox/ajax/gm-info-window',
-                                    method: 'POST',
-                                    data: {
-                                        mapParams : location,
-                                        language: $('html').attr('lang')
-                                    },
-                                    complete: function(result) {
-                                        marker.contentLoaded = true;
-                                        infoWindow.setContent(result.responseText);
-                                        map.setCenter(marker.getPosition());
-                                    }
-                                });
+                            infoWindow = new google.maps.InfoWindow({
+                                content: '<div class="info-window"><div class="loading"></div></div>'
+                            });
+
+                            marker.addListener('click', function() {
+                                infoWindow.open(map, marker);
+                                if(marker.contentLoaded === false) {
+                                    $.ajax({
+                                        url: '/toolbox/ajax/gm-info-window',
+                                        method: 'POST',
+                                        data: {
+                                            mapParams : location,
+                                            language: $('html').attr('lang')
+                                        },
+                                        complete: function(result) {
+                                            marker.contentLoaded = true;
+                                            infoWindow.setContent(result.responseText);
+                                            map.setCenter(marker.getPosition());
+                                        }
+                                    });
+                                }
+                            });
+
+                            if(showInfoWindowOnLoad === true) {
+                                google.maps.event.trigger(marker, 'click');
                             }
-                        });
-
-                        if(showInfoWindowOnLoad === true) {
-                            google.maps.event.trigger(marker, 'click');
                         }
                     }
                 };
