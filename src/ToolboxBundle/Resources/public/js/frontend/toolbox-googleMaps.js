@@ -9,29 +9,20 @@
 
  */
 var DachcomToolboxGoogleMaps = (function () {
-
     'use strict';
-
     var self = {
 
         $doc: $ !== undefined ? $(document) : null,
-
         isBusy : false,
-
         editMode : false,
 
         init: function() {
-
             self.editMode = typeof _PIMCORE_EDITMODE !== 'undefined' && _PIMCORE_EDITMODE === true;
-
             self.startSystem();
-
         },
 
         startSystem: function() {
-
             this.setupGoogleMaps();
-
         },
 
         setupGoogleMaps: function() {
@@ -63,12 +54,9 @@ var DachcomToolboxGoogleMaps = (function () {
                         });
 
                         marker.addListener('click', function() {
-
                             infoWindow.open(map, marker);
-
                             if(marker.contentLoaded === false) {
                                 $.ajax({
-
                                     url: '/toolbox/ajax/gm-info-window',
                                     method: 'POST',
                                     data: {
@@ -80,18 +68,14 @@ var DachcomToolboxGoogleMaps = (function () {
                                         infoWindow.setContent(result.responseText);
                                         map.setCenter(marker.getPosition());
                                     }
-
                                 });
-
                             }
-
                         });
 
                         if(showInfoWindowOnLoad === true) {
                             google.maps.event.trigger(marker, 'click');
                         }
                     }
-
                 };
 
             $maps.each(function() {
@@ -107,14 +91,11 @@ var DachcomToolboxGoogleMaps = (function () {
                     };
 
                 $.each($map.data(), function(name, value) {
-
                     if ( name.substring(0,9) === 'mapoption' ) {
                         name = name.replace('mapoption', '');
                         name = name.charAt(0).toLowerCase() + name.slice(1);
-
                         mapOptions[name] = value;
                     }
-
                 });
 
                 map = new google.maps.Map($map.get(0), mapOptions);
@@ -127,7 +108,6 @@ var DachcomToolboxGoogleMaps = (function () {
                 }
 
                 if ( locations.length > 0 ) {
-
                     $.each(locations, function(i, location) {
                         if ( isValidLocation(location) ) {
                             latLngBounds.extend( new google.maps.LatLng(location.lat, location.lng) );
@@ -139,11 +119,12 @@ var DachcomToolboxGoogleMaps = (function () {
 
                     listener = google.maps.event.addListener(map, 'idle', function() {
                         var zoom = (typeof mapOptions.zoom === 'number' && (mapOptions.zoom % 1) === 0) ? mapOptions.zoom : 17;
-
                         map.setZoom(zoom);
                         google.maps.event.removeListener(listener);
                     });
                 }
+                //store map as data attribute
+                $map.data('toolbox-google-map', map);
             });
         }
     };
@@ -155,10 +136,8 @@ var DachcomToolboxGoogleMaps = (function () {
 })();
 
 if( $ !== undefined) {
-
     $(function() {
         'use strict';
         DachcomToolboxGoogleMaps.init();
     });
-
 }
