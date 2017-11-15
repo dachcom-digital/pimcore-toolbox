@@ -61,7 +61,8 @@ class DataAttributesExtension extends \Twig_Extension
 
         foreach ($values as $key => $value) {
 
-            if (!is_bool($value) && empty($value)) {
+            //continue if real empty
+            if (!is_bool($value) && (($value === 0 || $value) === FALSE) ) {
                 continue;
             }
 
