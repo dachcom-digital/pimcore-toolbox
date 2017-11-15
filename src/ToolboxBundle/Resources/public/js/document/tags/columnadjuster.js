@@ -22,6 +22,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         this.currentColumnSelection = null;
         this.currentColumnSelectionName = null;
 
+        this.adjustmentFailed = false;
         this.gridEditorActive = false;
         this.gridForm = null;
         this.toolbar = null;
@@ -33,6 +34,8 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         this.inheritWatcher = {};
         this.breakPoints = [];
 
+        this.gridAmount = 0;
+
         this.setupWrapper();
 
         var columnSelector = Ext.get(this.id).up('.t-row').prev('.t-row').query('.pimcore_tag_select');
@@ -40,73 +43,65 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
             return;
         }
 
-        var comboBox = Ext.getCmp(columnSelector[0].firstChild.id)
-        if (!comboBox) {
+        this.gridSelector = Ext.getCmp(columnSelector[0].firstChild.id);
+        if (!this.gridSelector) {
             return;
         }
 
         //set current column selection
-        this.currentColumnSelection = comboBox.getValue();
-        this.currentColumnSelectionName = comboBox.getRawValue();
+        this.currentColumnSelection = this.gridSelector.getValue();
+        this.currentColumnSelectionName = this.gridSelector.getRawValue();
         this.buttonHolder = Ext.get(id);
 
-        var statusButton = new Ext.form.Checkbox({
-                fieldLabel: t('enable_column_adjuster'),
-                checked: this.data !== false,
-                labelWidth: 170,
-                labelStyle: 'padding-top:0; font-weight: 300;',
-                listeners: {
-                    'change': function (b) {
-                        //reset data if adjuster is disabled!
-                        if (b.checked === false) {
-                            this.data = false;
-                        }
-                        gridEditButton.setHidden(!b.checked)
-                    }.bind(this)
-                }
-            }),
-            gridEditButton = new Ext.Button({
-                iconCls: 'toolbox_column_adjuster',
-                text: t('edit_column_configuration'),
-                hidden: this.data === false,
-                style: 'background-color: white;',
-                listeners: {
-                    'click': function () {
-                        if (this.gridEditorActive === true) {
-                            this.gridEditorActive = false;
-                            gridEditButton.setText(t('edit_column_configuration'));
-                            statusButton.setDisabled(false);
-                            comboBox.setDisabled(false);
-                            this.closeEditor()
-                        } else {
-                            this.gridEditorActive = true;
-                            gridEditButton.setText(t('close_column_configuration'));
-                            statusButton.setDisabled(true);
-                            comboBox.setDisabled(true);
-                            this.expandEditor()
-                        }
-                    }.bind(this)
-                }
-            });
+        this.statusButton = new Ext.form.Checkbox({
+            fieldLabel: t('enable_column_adjuster'),
+            checked: this.data !== false,
+            labelWidth: 170,
+            labelStyle: 'padding-top:0; font-weight: 300;',
+            listeners: {
+                'change': function (b) {
+                    //reset data if adjuster is disabled!
+                    if (b.checked === false) {
+                        this.data = false;
+                    }
+                    this.gridEditButton.setHidden(!b.checked)
+                }.bind(this)
+            }
+        });
+
+        this.gridEditButton = new Ext.Button({
+            iconCls: 'toolbox_column_adjuster',
+            text: t('edit_column_configuration'),
+            hidden: this.data === false,
+            style: 'background-color: white;',
+            listeners: {
+                'click': function () {
+                    if (this.gridEditorActive === true) {
+                        this.closeEditor()
+                    } else {
+                        this.expandEditor()
+                    }
+                }.bind(this)
+            }
+        });
 
         var checkInitState = function() {
             //there is only 1 column: we don't need a column adjuster...
             if(this.currentColumnSelection.split('_').length === 2) {
                 this.data = false;
-                gridEditButton.setDisabled(true);
-                statusButton.setValue(false);
-                statusButton.setDisabled(true);
+                this.gridEditButton.setDisabled(true);
+                this.statusButton.setValue(false);
+                this.statusButton.setDisabled(true);
             } else {
-                gridEditButton.setDisabled(false);
-                statusButton.setDisabled(false);
+                this.gridEditButton.setDisabled(false);
+                this.statusButton.setDisabled(false);
             }
         }.bind(this);
 
-        this.statusButton = statusButton;
-        comboBox.addListener('change', function () {
-            statusButton.setValue(false);
-            this.currentColumnSelection = comboBox.getValue();
-            this.currentColumnSelectionName = comboBox.getRawValue();
+        this.gridSelector.addListener('change', function () {
+            this.statusButton.setValue(false);
+            this.currentColumnSelection = this.gridSelector.getValue();
+            this.currentColumnSelectionName = this.gridSelector.getRawValue();
             checkInitState();
         }.bind(this));
 
@@ -114,7 +109,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
         this.toolbar = new Ext.form.FormPanel({
             layout: 'fit',
-            tbar : [statusButton, '->', gridEditButton]
+            tbar : [this.statusButton, '->', this.gridEditButton]
         });
 
         this.gridForm = new Ext.FormPanel({
@@ -122,7 +117,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
             scrollable: true,
             hidden: true,
             layout: 'fit',
-            style: 'margin: 10px 0;',
+            style: 'margin: 10px 0;'
         });
 
         this.toolbar.render(this.buttonHolder);
@@ -132,15 +127,24 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
     expandEditor: function () {
 
+        if(this.gridEditorActive === true) {
+            return;
+        }
+
         var windowSelector = Ext.get(this.id).up('.x-window');
         if (windowSelector.length === 0) {
             return;
         }
 
-        var editWindow = Ext.getCmp(windowSelector.id)
+        var editWindow = Ext.getCmp(windowSelector.id);
         if (!editWindow) {
             return;
         }
+
+        this.gridEditorActive = true;
+        this.gridEditButton.setText(t('close_column_configuration'));
+        this.statusButton.setDisabled(true);
+        this.gridSelector.setDisabled(true);
 
         this.editWindowState.w = editWindow.getWidth();
         this.editWindowState.h = editWindow.getHeight();
@@ -150,7 +154,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
             cancelButton[0].setDisabled(true);
         }
 
-        editWindow.addCls('grid-adjuster-active')
+        editWindow.addCls('grid-adjuster-active');
         editWindow.setWidth(900);
         editWindow.setHeight(600).center();
 
@@ -162,22 +166,31 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
     closeEditor: function () {
 
+        if(this.gridEditorActive === false) {
+            return;
+        }
+
         var windowSelector = Ext.get(this.id).up('.x-window');
         if (windowSelector.length === 0) {
             return;
         }
 
-        var editWindow = Ext.getCmp(windowSelector.id)
+        var editWindow = Ext.getCmp(windowSelector.id);
         if (!editWindow) {
             return;
         }
+
+        this.gridEditorActive = false;
+        this.gridEditButton.setText(t('edit_column_configuration'));
+        this.statusButton.setDisabled(false);
+        this.gridSelector.setDisabled(false);
 
         var cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
         if (cancelButton.length === 1) {
             cancelButton[0].setDisabled(false);
         }
 
-        editWindow.removeCls('grid-adjuster-active')
+        editWindow.removeCls('grid-adjuster-active');
         editWindow.setWidth(this.editWindowState.w);
         editWindow.setHeight(this.editWindowState.h).center();
 
@@ -209,12 +222,13 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 currentColumn: this.currentColumnSelection
             },
             success: function (response) {
-                var res = Ext.decode(response.responseText);
+
+                var res = Ext.decode(response.responseText),
+                    validResponse = true;
 
                 //invalid column configuration
                 if (res.breakPoints === false) {
-                    _.data = false;
-                    Ext.MessageBox.alert(t('error'), t('invalid_column_configuration'));
+                    _.cancelAdjustment('no breakpoints for current selection found.');
                     return;
                 }
 
@@ -225,6 +239,23 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 _.mergeCustomGridValue();
 
                 Ext.Array.each(_.breakPoints, function (breakpoint, breakpointIndex) {
+
+                    //invalid grid configuration
+                    if (!breakpoint.grid || breakpoint.grid.length === 0) {
+                        validResponse = false;
+                        _.cancelAdjustment('no valid grid amount for breakpoint found.');
+                        return false;
+                    }
+
+                    if(breakpointIndex === 0) {
+                        _.gridAmount = breakpoint.grid.length;
+                    }
+
+                    if (_.gridAmount !== breakpoint.grid.length) {
+                        validResponse = false;
+                        _.cancelAdjustment('grid amount mismatch.');
+                        return false;
+                    }
 
                     var title = breakpoint.name ? breakpoint.name : 'Breakpoint: ' + breakpoint.identifier,
                         tab = new Ext.Panel({
@@ -268,8 +299,8 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                         if (hasOffset) {
 
                             var offsetStoreData = [];
-                            for (var i = 0; i < grid.amount; i++) {
-                                offsetStoreData.push([i, ((100 / grid.amount) * i).toFixed(2) + '% (' + i + ')'])
+                            for (var oi = 0; oi < grid.amount; oi++) {
+                                offsetStoreData.push([oi, ((100 / grid.amount) * oi).toFixed(2) + '% (' + i + ')'])
                             }
 
                             var offsetCombo = new Ext.form.ComboBox({
@@ -382,9 +413,8 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                             })
                         });
 
-                        var html = new Ext.XTemplate("<div class='grid-preview'><div class='grid-pre-row'>{value}</div></div>").apply({value: gridHtml});
-                        return html;
-                    }
+                        return new Ext.XTemplate("<div class='grid-preview'><div class='grid-pre-row'>{value}</div></div>").apply({value: gridHtml});
+                    };
 
                     _.gridPreview[breakpoint.identifier] = new Ext.form.Panel({
                         html: generatePreview(breakpoint.identifier, gridLayoutForPreview),
@@ -402,9 +432,12 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                     tabPanel.add(tab);
                 });
 
-                tabPanel.setActiveTab(0);
-                _.toolbar.updateLayout();
-                _.gridForm.updateLayout();
+                if(validResponse === true) {
+                    tabPanel.setActiveTab(0);
+                    _.toolbar.updateLayout();
+                    _.gridForm.updateLayout();
+                }
+
 
             }.bind(this)
         });
@@ -421,12 +454,11 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         var form = this.gridForm.getForm(),
             _ = this;
 
-        if (!form.isValid()) {
+        if (!form.isValid() || this.adjustmentFailed === true) {
             return;
         }
 
-        var values = form.getFieldValues(),
-            data = {};
+        var values = form.getFieldValues();
 
         // update values
         Ext.Object.each(values, function (val, columnAmount) {
@@ -459,7 +491,11 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
         //start with highest breakpoint - check all inheritances
         function cycleBreakpoints(breakpointIndex) {
-            if (breakpointIndex < 0) return;
+
+            if (_.adjustmentFailed === true || breakpointIndex < 0) {
+                return;
+            }
+
             setTimeout(function () {
                 var gridLayoutForPreview = [],
                     breakpoint = _.breakPoints[breakpointIndex];
@@ -497,15 +533,29 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
         cycleBreakpoints(_.breakPoints.length - 1);
 
-        var breakpointData = {'breakpoints': {}};
+        var breakpointData = {'breakpoints': {}},
+            validData = true;
         Ext.Array.each(_.breakPoints, function (breakpoint, breakPointIndex) {
             if (breakpoint.inherit === false) {
-                breakpointData['breakpoints'][breakpoint.identifier] = breakpoint.grid.map(function (a) {
+                var elements = breakpoint.grid.map(function (a) {
                     var offset = a.offset !== undefined && a.offset !== null ? 'o' + a.offset + '_' : '';
                     return offset + a.value;
-                }).join('_');
+                });
+
+                if(elements.length !== _.gridAmount) {
+                    validData = false;
+                    return false;
+                }
+
+                breakpointData['breakpoints'][breakpoint.identifier] = elements.join('_');
             }
         });
+
+        if(validData === false) {
+            _.adjustmentFailed = true;
+            _.cancelAdjustment('there was a error while recalculating the custom grid configuration.', 250);
+            return;
+        }
 
         ///console.log(_.breakPoints, breakpointData);
 
@@ -517,10 +567,9 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
      * @returns {string}
      */
     mergeCustomGridValue: function () {
-        var fallback = fallback === null ? 'inherit' : fallback;
 
         if (!this.data.breakpoints) {
-            return fallback;
+            return null;
         }
 
         Ext.Array.each(this.breakPoints, function (breakpoint, breakpointIndex) {
@@ -560,7 +609,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         while (val === null && currentIndex >= 0) {
             if (typeof this.breakPoints[currentIndex] !== 'undefined' && this.breakPoints[currentIndex].inherit === false) {
                 if (this.breakPoints[currentIndex]['grid'][gridIndex][returnProperty] !== null) {
-                    val = this.breakPoints[currentIndex]['grid'][gridIndex][returnProperty]
+                    val = this.breakPoints[currentIndex]['grid'][gridIndex][returnProperty];
                     break;
                 }
             }
@@ -604,6 +653,21 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         });
 
         return hasOffset;
+    },
+
+    /**
+     *
+     * @param message
+     * @param startDelayed
+     */
+    cancelAdjustment: function(message, startDelayed) {
+        this.statusButton.setValue(false);
+        this.adjustmentFailed = false;
+        this.data = false;
+        setTimeout(function() {
+            this.closeEditor();
+            Ext.MessageBox.alert(t('error'), t('invalid_column_configuration') + ' "' + message + '"');
+        }.bind(this), startDelayed ? startDelayed : 0);
     },
 
     /**
