@@ -300,7 +300,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
                             var offsetStoreData = [];
                             for (var oi = 0; oi < grid.amount; oi++) {
-                                offsetStoreData.push([oi, ((100 / grid.amount) * oi).toFixed(2) + '% (' + i + ')'])
+                                offsetStoreData.push([oi, ((100 / grid.amount) * oi).toFixed(2) + '% (' + oi + ')'])
                             }
 
                             var offsetCombo = new Ext.form.ComboBox({
