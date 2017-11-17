@@ -18,7 +18,7 @@ toolbox:
 
 ### Explanation
 In Toolbox <= `2.1.2` the column calculator counts every element from the config. For example: `column_6_6` creates two column items: `column_0` and `column_1`.
-If you're switch the column config to `column_o1_6_o1_6` the calculator will also create two columns but with different index: `column_1` and `column_3`.
+If you're going to switch the column config to `column_o1_6_o1_6` the calculator will also create two columns but with different indexes: `column_1` and `column_3`.
 As you can see, this isn't quite right. After switching the column config, the existing data from `column_0` and `column_1` is gone. 
 
 ### Solution
