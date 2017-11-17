@@ -1,6 +1,6 @@
 <?php
 
-namespace ToolboxBundle\Service;
+namespace ToolboxBundle\Manager;
 
 use Symfony\Component\Finder\Finder;
 

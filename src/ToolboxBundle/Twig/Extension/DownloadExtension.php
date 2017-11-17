@@ -4,7 +4,7 @@ namespace ToolboxBundle\Twig\Extension;
 
 use Pimcore\Model\Asset;
 use ToolboxBundle\Connector\BundleConnector;
-use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Manager\ConfigManager;
 use Pimcore\Translation\Translator;
 
 class DownloadExtension extends \Twig_Extension

@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
-use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Manager\ConfigManager;
 
 class SettingsController extends Controller\AdminController
 {

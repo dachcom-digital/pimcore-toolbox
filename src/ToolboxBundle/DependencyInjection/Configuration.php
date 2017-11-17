@@ -52,6 +52,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('flags')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('strict_column_counter')->defaultValue(FALSE)->end()
+                    ->end()
+                ->end()
                 ->arrayNode('areas')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
@@ -81,7 +87,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('custom_areas')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
@@ -110,7 +115,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('ckeditor')
                     ->children()
                         ->variableNode('config')->isRequired()->end()
@@ -131,12 +135,10 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('image_thumbnails')
                     ->useAttributeAsKey('name')
                     ->prototype('scalar')->end()
                 ->end()
-
                 ->arrayNode('disallowed_subareas')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
@@ -166,7 +168,6 @@ class Configuration implements ConfigurationInterface
                         ->variableNode('groups')->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('theme')
                     ->children()
                         ->scalarNode('layout')
@@ -219,7 +220,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
                 ->arrayNode('data_attributes')
                     ->useAttributeAsKey('name')
                         ->prototype('array')
@@ -232,7 +232,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-
             ->end()
         ;
 

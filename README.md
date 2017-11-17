@@ -88,6 +88,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
 - [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
 - [Column Adjuster](docs/60_ColumnAdjuster.md)
+- [Configuration Flags](docs/70_ConfgurationFlags.md)
 
 ## Pimcore Fixes / Overrides
 - fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)

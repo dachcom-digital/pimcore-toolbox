@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Model\Document\Tag;
 
 use Pimcore\Model\Document;
-use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Manager\ConfigManager;
 
 class GoogleMap extends Document\Tag
 {

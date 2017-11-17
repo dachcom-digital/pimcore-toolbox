@@ -2,22 +2,28 @@
 
 namespace ToolboxBundle\Calculator;
 
-interface ColumnCalculatorInterface {
+use ToolboxBundle\Manager\ConfigManager;
+
+interface ColumnCalculatorInterface
+{
+    /**
+     * @param ConfigManager $configManager
+     * @return mixed
+     */
+    public function setConfigManager(ConfigManager $configManager);
 
     /**
-     * @param       $value
-     * @param array $columnConfiguration
-     * @param int $gridSize
+     * @param string     $value
+     * @param null|array $customColumnConfiguration
      *
      * @return array
      */
-    public function calculateColumns($value, $columnConfiguration = [], $gridSize = 12);
+    public function calculateColumns($value, $customColumnConfiguration = NULL);
 
     /**
-     * @param string $currentColumn
-     * @param array  $columnConfiguration
-     * @param array  $gridSettings
+     * @param string     $value
+     * @param null|array $customColumnConfiguration
      * @return mixed
      */
-    public function getColumnInfoForAdjuster($currentColumn = '', $columnConfiguration = [], $gridSettings = []);
+    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = NULL);
 }

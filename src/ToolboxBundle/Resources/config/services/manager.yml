@@ -6,9 +6,12 @@ services:
         public: false
 
     # toolbox service layout
-    ToolboxBundle\Service\LayoutManager:
+    ToolboxBundle\Manager\LayoutManager:
         calls:
             - [setTemplating, ['@templating']]
 
     # toolbox service area
-    ToolboxBundle\Service\AreaManager: ~
+    ToolboxBundle\Manager\AreaManager: ~
+
+    # toolbox service configuration
+    ToolboxBundle\Manager\ConfigManager: ~

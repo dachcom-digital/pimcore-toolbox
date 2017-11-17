@@ -5,9 +5,9 @@ namespace ToolboxBundle\Document\Areabrick;
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
-use ToolboxBundle\Service\BrickConfigBuilder;
-use ToolboxBundle\Service\ConfigManager;
-use ToolboxBundle\Service\LayoutManager;
+use ToolboxBundle\Builder\BrickConfigBuilder;
+use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\LayoutManager;
 
 abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 {
@@ -60,7 +60,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @return \ToolboxBundle\Service\ConfigManager object
+     * @return \ToolboxBundle\Manager\ConfigManager object
      */
     public function getConfigManager()
     {
@@ -80,7 +80,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @return \ToolboxBundle\Service\BrickConfigBuilder
+     * @return \ToolboxBundle\Manager\BrickConfigBuilder
      */
     public function getBrickConfigBuilder()
     {

@@ -26,26 +26,23 @@ class Columns extends AbstractAreabrick
         parent::action($info);
 
         $view = $info->getView();
+        $editMode = $view->get('editmode');
+
         $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
         $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
         $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();
-        $gridSize = $this->getConfigManager()->getConfig('theme')['grid']['grid_size'];
-
-        $editMode = $view->get('editmode');
 
         $equalHeight = $equalHeightElement->isChecked() && $editMode === FALSE;
         $type = $typeElement->getData();
 
         $partialName = '';
 
+        $customColumnConfiguration = NULL;
         if ($gridAdjustment !== FALSE) {
-            $columnConfigElements = [$type => $gridAdjustment];
-        } else {
-            $configNode = $this->getConfigManager()->getAreaElementConfig('columns', 'type');
-            $columnConfigElements = isset($configNode['config']['store']) ? $configNode['config']['store'] : [];
+            $customColumnConfiguration = [$type => $gridAdjustment];
         }
 
-        $columns = $this->calculator->calculateColumns($type, $columnConfigElements, $gridSize);
+        $columns = $this->calculator->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
 

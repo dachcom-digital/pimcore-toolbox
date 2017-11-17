@@ -3,8 +3,8 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use Pimcore\Model\Document\Snippet;
-use ToolboxBundle\Service\ConfigManager;
-use ToolboxBundle\Service\AreaManager;
+use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\AreaManager;
 
 class AreaBlockConfigExtension extends \Twig_Extension
 {

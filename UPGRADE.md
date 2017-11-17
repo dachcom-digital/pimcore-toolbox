@@ -4,11 +4,14 @@
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
 #### Update from Version 2.1.x to Version 2.2.0
+**(!) BC BREAK**: Use the `strict_column_counter` Flag! Read more about it [here](docs/70_ConfgurationFlags.md#strict_column_counter-flag)
+
 - [Column Adjuster](docs/60_ColumnAdjuster.md) added
 - Google Maps: Allow deactivation of InfoWindow per location
 - In case you're using a custom column calculator: Please check the new additions before upgrading to toolbox 2.2.0:
-  - Update `calculateColumns` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L16)
-  - Add `getColumnInfoForAdjuster` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L110)
+  - The ColumnCalculator now needs the [ConfigManager](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L18)!
+  - Update `calculateColumns` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L24)
+  - Add `getColumnInfoForAdjuster` [Method](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Calculator/Bootstrap4/ColumnCalculator.php#L139)
 
 #### Update from Version 2.x to Version 2.1.0
 The Bootstrap4 (>= beta.2) Layout is now enabled by default. If you still need B3 you need to add some params to your config:

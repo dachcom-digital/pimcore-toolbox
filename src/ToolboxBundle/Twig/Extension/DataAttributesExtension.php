@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Manager\ConfigManager;
 
 class DataAttributesExtension extends \Twig_Extension
 {

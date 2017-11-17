@@ -7,6 +7,3 @@ services:
 
     # toolbox installer
     ToolboxBundle\Tool\Install: ~
-
-    # toolbox service configuration
-    ToolboxBundle\Service\ConfigManager: ~

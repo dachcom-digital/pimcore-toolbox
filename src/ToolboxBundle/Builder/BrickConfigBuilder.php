@@ -1,6 +1,6 @@
 <?php
 
-namespace ToolboxBundle\Service;
+namespace ToolboxBundle\Builder;
 
 use Pimcore\Model\Document\Tag\Area\Info;
 use Pimcore\Translation\Translator;

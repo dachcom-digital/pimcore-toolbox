@@ -5,7 +5,6 @@ namespace ToolboxBundle\Controller\Admin;
 use Pimcore\Bundle\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
-use ToolboxBundle\Service\ConfigManager;
 
 class ColumnAdjusterController extends Controller\AdminController
 {
@@ -15,17 +14,17 @@ class ColumnAdjusterController extends Controller\AdminController
      */
     public function getColumnInfoAction(Request $request)
     {
-        $columnCalculator = $this->get(ColumnCalculatorInterface::class);
-        $configManager = $this->get(ConfigManager::class);
-
         $currentColumn = $request->request->get('currentColumn');
+        $customColumnConfigurationData = $request->request->get('customColumnConfiguration');
 
-        $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
-        $configNode = $configManager->getAreaElementConfig('columns', 'type');
-        $themeSettings = $configManager->getConfig('theme');
+        $response = json_decode($customColumnConfigurationData, TRUE);
+        $customColumnConfiguration = NULL;
+        if(is_array($response)) {
+            $customColumnConfiguration = [$currentColumn => $response];
+        }
 
-        $columnConfigElements = isset($configNode['config']['store']) ? $configNode['config']['store'] : [];
-        $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $columnConfigElements, $themeSettings['grid']);
+        $columnCalculator = $this->get(ColumnCalculatorInterface::class);
+        $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $customColumnConfiguration);
 
         return $this->json(['breakPoints' => $breakPointConfiguration]);
     }

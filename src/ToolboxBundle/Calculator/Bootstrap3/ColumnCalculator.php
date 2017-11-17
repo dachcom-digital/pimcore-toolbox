@@ -3,20 +3,48 @@
 namespace ToolboxBundle\Calculator\Bootstrap3;
 
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
+use ToolboxBundle\Manager\ConfigManager;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
     /**
-     * @param              $value
-     * @param string|array $columnConfiguration
-     * @param int          $gridSize
-     *
+     * @var ConfigManager
+     */
+    protected $configManager;
+
+    /**
+     * @param ConfigManager $configManager
+     * @return $this
+     */
+    public function setConfigManager(ConfigManager $configManager)
+    {
+        $this->configManager = $configManager;
+        $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
+        return $this;
+    }
+
+    /**
+     * @param string     $value
+     * @param array|null $customColumnConfiguration
      * @return array
      */
-    public function calculateColumns($value, $columnConfiguration = [], $gridSize = 12)
+    public function calculateColumns($value, $customColumnConfiguration = NULL)
     {
-        $columns = [];
+        $themeSettings = $this->configManager->getConfig('theme');
+        $gridSettings = $themeSettings['grid'];
+        $gridSize = $gridSettings['grid_size'];
 
+        $flags = $this->configManager->getConfig('flags');
+        $strictColumnCounter = $flags['strict_column_counter'];
+
+        if ($customColumnConfiguration !== NULL) {
+            $columnConfiguration = $customColumnConfiguration;
+        } else {
+            $columnConfigNode = $this->configManager->getAreaElementConfig('columns', 'type');
+            $columnConfiguration = isset($columnConfigNode['config']['store']) ? $columnConfigNode['config']['store'] : [];
+        }
+
+        $columns = [];
         if (empty($value)) {
             return $columns;
         }
@@ -29,14 +57,15 @@ class ColumnCalculator implements ColumnCalculatorInterface
         $bootstrapOffsetConfig = [];
         $gridOffsetConfig = [];
 
+        $columnCounter = 0;
         foreach ($_columns as $i => $columnClass) {
 
-            $gridConfig = [
+            $gridConfig = $customColumnConfiguration ? [] : [
                 'xs' => $gridSize,
                 'sm' => (int)$columnClass
             ];
 
-            $bootstrapClassConfig = [
+            $bootstrapClassConfig = $customColumnConfiguration ? [] : [
                 'xs' => 'col-xs-' . $gridSize,
                 'sm' => 'col-sm-' . $columnClass
             ];
@@ -56,11 +85,11 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
                 $offset = (int)substr($columnClass, 1);
 
-                $gridOffsetConfig = [
+                $gridOffsetConfig = $customColumnConfiguration ? [] : [
                     'sm' => $offset
                 ];
 
-                $bootstrapOffsetConfig = [
+                $bootstrapOffsetConfig = $customColumnConfiguration ? [] : [
                     'sm' => 'col-sm-offset-' . $offset
                 ];
 
@@ -82,6 +111,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 continue;
             }
 
+            $columnName = $strictColumnCounter ? 'column_' . $i : 'column_' . $columnCounter;
             $columns[] = [
                 'columnClass' => join(' ', $bootstrapClassConfig) . ' ' . join(' ', $bootstrapOffsetConfig),
                 'columnData'  => [
@@ -89,9 +119,10 @@ class ColumnCalculator implements ColumnCalculatorInterface
                     'gridOffset' => $gridOffsetConfig
                 ],
                 'columnType'  => $value,
-                'name'        => 'column_' . $i
+                'name'        => $columnName
             ];
 
+            $columnCounter++;
             $bootstrapOffsetConfig = [];
             $gridOffsetConfig = [];
         }
@@ -100,16 +131,18 @@ class ColumnCalculator implements ColumnCalculatorInterface
     }
 
     /**
-     * @param string       $currentColumn
-     * @param string|array $columnConfiguration
-     * @param array        $gridSettings
+     * @param string $value
+     * @param null|array $customColumnConfiguration
      * @return mixed
      */
-    public function getColumnInfoForAdjuster($currentColumn = '', $columnConfiguration = [], $gridSettings = [])
+    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = NULL)
     {
-        $columnData = $this->calculateColumns($currentColumn, $columnConfiguration, $gridSettings['grid_size']);
+        $columnData = $this->calculateColumns($value, $customColumnConfiguration);
 
-        //no data found o calculateColumns does not return columnData!
+        $themeSettings = $this->configManager->getConfig('theme');
+        $gridSettings = $themeSettings['grid'];
+
+        //no data found, calculateColumns does not return columnData!
         if (count($columnData) === 0 || !isset($columnData[0]['columnData'])) {
             return FALSE;
         }

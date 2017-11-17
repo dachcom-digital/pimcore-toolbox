@@ -4,8 +4,8 @@ namespace ToolboxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use ToolboxBundle\Service\ConfigManager;
-use ToolboxBundle\Service\LayoutManager;
+use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\LayoutManager;
 
 class AjaxController extends FrontendController
 {

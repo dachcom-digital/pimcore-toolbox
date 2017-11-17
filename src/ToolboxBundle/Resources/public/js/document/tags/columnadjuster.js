@@ -219,7 +219,8 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         Ext.Ajax.request({
             url: '/admin/toolbox-get-column-info',
             params: {
-                currentColumn: this.currentColumnSelection
+                currentColumn: this.currentColumnSelection,
+                customColumnConfiguration: Ext.encode(this.data)
             },
             success: function (response) {
 

@@ -4,7 +4,7 @@ namespace ToolboxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use ToolboxBundle\Service\ConfigManager;
+use ToolboxBundle\Manager\ConfigManager;
 
 class SnippetController extends FrontendController
 {

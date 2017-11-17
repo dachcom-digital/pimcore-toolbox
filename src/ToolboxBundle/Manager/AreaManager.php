@@ -1,6 +1,6 @@
 <?php
 
-namespace ToolboxBundle\Service;
+namespace ToolboxBundle\Manager;
 
 use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 

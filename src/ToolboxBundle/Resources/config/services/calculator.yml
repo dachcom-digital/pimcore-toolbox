@@ -7,7 +7,9 @@ services:
 
     # column calculator
     ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\ColumnCalculator'
-    ToolboxBundle\Calculator\ColumnCalculator: ~
+    ToolboxBundle\Calculator\ColumnCalculator:
+        calls:
+            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
 
     # slide column calculator
     ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\SlideColumnCalculator'

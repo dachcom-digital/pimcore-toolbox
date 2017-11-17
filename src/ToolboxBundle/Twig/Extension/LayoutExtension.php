@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use ToolboxBundle\Service\LayoutManager;
+use ToolboxBundle\Manager\LayoutManager;
 
 class LayoutExtension extends \Twig_Extension
 {
