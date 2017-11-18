@@ -299,7 +299,9 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                         //if offset available in index, add element!
                         if (hasOffset) {
 
-                            var offsetStoreData = [];
+                            var offsetStoreData = [],
+                                realOffset = grid.offset === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'offset') : grid.offset;
+
                             for (var oi = 0; oi < grid.amount; oi++) {
                                 offsetStoreData.push([oi, ((100 / grid.amount) * oi).toFixed(2) + '% (' + oi + ')'])
                             }
@@ -317,7 +319,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                                 triggerAction: 'all',
                                 labelAlign: 'top',
                                 style: 'margin-right:2px;',
-                                value: grid.offset === null ? 0 : grid.offset,
+                                value: realOffset,
                                 displayField: 'name',
                                 valueField: 'index',
                                 store: offsetStoreData,
@@ -328,7 +330,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                             });
 
                             gridLayoutForPreview.push({
-                                'value': grid.offset === null ? 0 : grid.offset,
+                                'value': realOffset,
                                 'inherit': inherited,
                                 'offset': true
                             });
