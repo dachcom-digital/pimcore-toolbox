@@ -109,7 +109,8 @@ class BrickConfigBuilder
             'config_elements'        => $this->parseConfigElements(),
             'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
             'window_size'            => $this->configWindowSize,
-            'document'               => $info->getDocument()
+            'document'               => $info->getDocument(),
+            'brick_id'               => $info->id
         ];
 
         return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
