@@ -100,6 +100,10 @@ $(function () {
               console.log(videoId);
               return videoId;
           }
+      },
+      resources: {
+          youtube: 'https://www.youtube.com/iframe_api',
+          vimeo: 'https://player.vimeo.com/api/player.js',
       }
     });
 });

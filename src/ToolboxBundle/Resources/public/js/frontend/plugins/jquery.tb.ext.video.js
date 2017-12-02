@@ -224,7 +224,7 @@
 
             if ($('body').find('script.tb-video-youtube-api').length === 0) {
                 tag = document.createElement('script');
-                tag.src = 'https://www.youtube.com/iframe_api';
+                tag.src = this.options.resources.youtube;
                 tag.className = 'tb-video-youtube-api';
                 $('body').append(tag);
 
@@ -319,7 +319,7 @@
 
             if (window.toolboxVideoVimeoStatus === 'init') {
                 window.toolboxVideoVimeoStatus = 'loading';
-                $.getScript('https://player.vimeo.com/api/player.js', function (data, textStatus, jqxhr) {
+                $.getScript(this.options.resources.vimeo, function (data, textStatus, jqxhr) {
                     window.toolboxVideoVimeoStatus = 'loaded';
                     $('body').data('toolbox-vimeo-api-ready', true);
                     if (window.toolboxVideoVimeoDeferer) {
@@ -508,7 +508,11 @@
     $.fn.toolboxVideo.defaults = {
         editmode: false,
         videoIdExtractor: {},
-        theme: 'bootstrap4'
+        theme: 'bootstrap4',
+        resources: {
+            youtube: 'https://www.youtube.com/iframe_api',
+            vimeo: 'https://player.vimeo.com/api/player.js',
+        }
     };
 
 })
