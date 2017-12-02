@@ -1,8 +1,8 @@
 # Javascript Plugins
-We're providing some helpful Javascript Plugins to simplify your daily work with FormBuilder.
+We're providing some helpful Javascript Plugins to simplify your daily work with the ToolboxBundle.
 Of course it's up to you to copy those files into your project and modify them as required.
 
-> Note: Be sure that jQuery has been initialized, before you load formbuilder.js.
+> Note: Be sure that jQuery has been initialized, before you load one of those toolbox extensions.
 
 ## Core Plugin
 This Plugin will automatically register all toolbox extensions:
