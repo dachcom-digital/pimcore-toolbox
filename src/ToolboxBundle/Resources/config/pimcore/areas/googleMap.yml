@@ -46,4 +46,4 @@ toolbox:
                     scrollwheel: false
                 map_style_url: false
                 marker_icon: false
-                map_api_key: false
+                map_api_key: '%pimcore_system_config.services.google.browserapikey%'

@@ -199,10 +199,14 @@ Please be sure that you've included a valid google maps api key. Include the scr
 
 ### Configuration Parameter
 
-- Use the `map_options` Parameter to define all the google maps parameter in yaml
-- Use the `map_style_url` Parameter to define a custom map style (optional)
-- Use the `marker_icon` Parameter to define a custom marker_icon (optional)
-- Use the `map_api_key` Parameter to set a map api key (optional). To extend the daily request to 2.500 per day.
+
+| Name | Type | Description | Default Value | 
+|------|------|-------------|---------------|
+| `map_options` | array | Map Zoom | [] |
+| `map_style_url` | string | Define a custom map style (path to json) | false |
+| `marker_icon` | string | Define a custom marker_icon (path to icon) | false |
+| `map_api_key` | string | Set a map custom api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! | `'%pimcore_system_config.services.google.browserapikey%'` |
+
 **Example**  
 ```yaml
 toolbox:
@@ -218,6 +222,8 @@ toolbox:
                 marker_icon: false
                 map_api_key: false
 ```
+### Jquery Plugin
+There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
 
 ## Headline
 Create a headline.
@@ -436,6 +442,9 @@ toolbox:
                         active: false
                         allow_lightbox: true
 ```
+
+### Jquery Plugin
+There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#video-extension)
 
 # Element Config Field Overview
 

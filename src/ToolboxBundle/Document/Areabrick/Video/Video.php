@@ -18,7 +18,7 @@ class Video extends AbstractAreabrick
         $videoTag = $this->getDocumentTag($info->getDocument(),'vhs', 'video');
 
         $playInLightBox = $videoTag->getShowAsLightbox() === TRUE ? 'true' : 'false';
-        $autoPlay = $this->getDocumentTag($info->getDocument(),'checkbox', 'autoplay')->isChecked() === '1' && !$view->get('editmode');
+        $autoPlay = $this->getDocumentTag($info->getDocument(),'checkbox', 'autoplay')->isChecked() === TRUE && !$view->get('editmode');
         $videoType = $videoTag->getVideoType();
         $posterPath = NULL;
         $imageThumbnail = NULL;

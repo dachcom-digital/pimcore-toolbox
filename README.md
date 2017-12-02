@@ -33,19 +33,9 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 - It's not a Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
 - Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
 
-## Asset Management
-```
-/var/www bin/console assets:install --symlink
-```
-
 **Frontend JS Implementation**  
-Add the sources to your `gulpfile.js` or add it with plain html. For example:
-```html
-<script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/vendor/vimeo-api.min.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/toolbox-main.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/toolbox-video.js')}}" ></script>
-<script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/toolbox-googleMaps.js')}}" ></script>
-```
+We're providing some helpful Javascript Plugins to simplify your daily work with the ToolboxBundle. 
+Read more about the javascript implementation [here](docs/80_Javascript.md).
 
 ## Available Toolbox Bricks 
 
@@ -86,9 +76,9 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)
 - [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
-- [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
 - [Column Adjuster](docs/60_ColumnAdjuster.md)
 - [Configuration Flags](docs/70_ConfgurationFlags.md)
+- [Javascript Plugins](docs/80_Javascript.md)
 
 ## Pimcore Fixes / Overrides
 - fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
