@@ -68,7 +68,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 ## Further Information
 - [Important Usage Information](docs/0_Usage.md)
 - [Code Style](docs/1_CodeStyle.md)
-- [Helper Commands](docs/1_Commands.md)
+- [Helper Commands](docs/2_Commands.md)
 - [Toolbox Elements Overview](docs/11_ElementsOverview.md)
 - [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
 - [CK-Editor Configuration](docs/13_CkEditor.md)
