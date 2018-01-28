@@ -4,7 +4,9 @@ namespace ToolboxBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
+use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -86,6 +88,7 @@ class AreaConfigurationCommand extends ContainerAwareCommand
         }
 
         $configElements = $brickConfig['config_elements'];
+        $configParameter = $brickConfig['config_parameter'];
 
         if (empty($configElements)) {
             $output->writeln('');
@@ -109,7 +112,6 @@ class AreaConfigurationCommand extends ContainerAwareCommand
         foreach ($configElements as $configName => $configData) {
 
             $elementConfigData = empty($configData['config']) ? '--' : $this->parseArrayForOutput($configData['config']);
-            $configParameter = empty($configData['config_parameter']) ? '--' : $this->parseArrayForOutput($configData['config_parameter']);
             $conditionParameter = empty($configData['conditions']) ? '--' : $this->parseArrayForOutput($configData['conditions']);
 
             $rows[] = [
@@ -119,22 +121,27 @@ class AreaConfigurationCommand extends ContainerAwareCommand
                 $configData['description'],
                 $conditionParameter,
                 $elementConfigData,
-                $configParameter
             ];
 
-            if ($c < count($configElements) - 1) {
+            if (!empty($configParameter) || $c < count($configElements) - 1) {
                 $rows[] = new TableSeparator();
-
             }
 
             $c++;
         }
 
+        if (!empty($configParameter)) {
+            $configParameterData = $this->parseArrayForOutput($configParameter);
+            $configRow = [new TableCell("\n" . '<fg=magenta>config parameter for element:</>' . "\n\n" . $configParameterData, ['colspan' => 6])];
+            $rows[] = $configRow;
+        }
+
         $table = new Table($output);
         $table
-            ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements', 'config_parameter'])
+            ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements'])
             ->setRows($rows);
         $table->render();
+
 
     }
 
