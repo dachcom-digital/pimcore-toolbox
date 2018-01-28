@@ -65,6 +65,11 @@ class MyBrick extends AbstractAreabrick
     {
         return 'My Brick';
     }
+
+    public function getIcon()
+    {
+        return '/static/areas/myBrick/icon.svg';
+    }
 }
 ```
 
