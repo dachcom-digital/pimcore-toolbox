@@ -3,7 +3,7 @@
  *  Extension: Google Maps
  *  Version: 2.3
  *  Author: DACHCOM.DIGITAL
- *  License: GPLv3
+ *  License: GPL-3.0+
 */
 ;(function ($, window, document) {
     'use strict';
@@ -72,6 +72,7 @@
                     google.maps.event.removeListener(listener);
                 });
             }
+
             //store map as data attribute
             $map.data('toolbox-google-map', this.mapInstance);
 

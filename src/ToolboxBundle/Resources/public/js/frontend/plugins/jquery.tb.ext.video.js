@@ -3,7 +3,7 @@
  *  Extension: Video
  *  Version: 2.3
  *  Author: DACHCOM.DIGITAL
- *  License: GPLv3
+ *  License: GPL-3.0+
 */
 ;(function ($, window, document) {
     'use strict';
@@ -258,7 +258,7 @@
 
                     var initPlayer = function ($el, autostart) {
 
-                        var player = new window.YT.Player($el, {
+                        var options = {
                             videoId: _.videoId,
                             events: {
                                 'onReady': function () {
@@ -270,7 +270,11 @@
                                     }
                                 }
                             }
-                        });
+                        };
+
+                        var player = new window.YT.Player(
+                            $el, $.extend({}, {playerVars: _.options.apiParameter.youtube}, options)
+                        );
                     };
 
                     if (!_.hasPoster) {
@@ -350,9 +354,13 @@
 
                     var initPlayer = function (el, autostart) {
 
-                        var player = new Vimeo.Player(el, {
+                        var options = {
                             id: _.videoId
-                        });
+                        };
+
+                        var player = new Vimeo.Player(
+                            el, $.extend({}, _.options.apiParameter.vimeo, options)
+                        );
 
                         player.on('loaded', function () {
                             _.isReady = true;
@@ -512,6 +520,10 @@
         resources: {
             youtube: 'https://www.youtube.com/iframe_api',
             vimeo: 'https://player.vimeo.com/api/player.js',
+        },
+        apiParameter: {
+            youtube: {},
+            vimeo: {}
         }
     };
 

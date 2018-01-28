@@ -3,7 +3,7 @@
  *  Extension: Core
  *  Version: 2.3
  *  Author: DACHCOM.DIGITAL
- *  License: GPLv3
+ *  License: GPL-3.0+
 */
 ;(function ($) {
     'use strict';
