@@ -17,13 +17,15 @@ If your client opens the document in backend in a specific site tree for example
 | `enabled_areas` | array | Enable specific Areas |
 | `disabled_areas` | array | Disable specific Areas. **Note:** If you have configured `enabled_areas` this option will be ignored. |
 
+> **Note**: If you have enabled `merge_with_root` you cannot use a different theme in sub context since there would be a layout mismatch.
+
 ## Configuration Example
 
 ```yml
 
 toolbox:
     context:
-        portal:
+        portal: # context identifier
             settings:
                 merge_with_root: true
                 enabled_areas:
@@ -43,7 +45,7 @@ toolbox:
                                 default: h2
                         anchor_name: ~
 
-        app:
+        app: # context identifier
             settings:
                 merge_with_root: true
                 disabled_areas:
@@ -54,6 +56,17 @@ toolbox:
 ## Context Resolver
 You need a Context Resolver to inform Toolbox which context is the current active one.
 If the resolver returns `null` the main configuration will be used.
+
+### Add Context Resolver to the Toolbox configuration.
+
+> **Note:** A Context Resolver is a global setting and cannot be added to a sub context.
+
+```yml
+toolbox:
+    context_resolver: 'AppBundle\Services\ToolboxBundle\ContextResolver'
+```
+
+### Create Context Resolver Class
 
 ```php
 <?php

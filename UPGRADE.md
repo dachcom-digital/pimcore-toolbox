@@ -10,10 +10,10 @@ After every update you should check the pimcore extension manager. Just click th
 - **[BUGFIX]**: check auto play option in video element against boolean not integer
 - **[IMPROVEMENT]**: Load backend google maps key for google map element if available
 - **[IMPROVEMENT]**: Better area availability configuration:
- - `disallowed_subareas` is deprecated and will be removed in TB 3.0, use `areas_appearance` instead
- - `disallowed_content_snippet_areas` is deprecated and will be removed in TB 3.0, use `snippet_areas_appearance` instead
+  - `disallowed_subareas` is deprecated and will be removed in TB 3.0, use `areas_appearance` instead
+  - `disallowed_content_snippet_areas` is deprecated and will be removed in TB 3.0, use `snippet_areas_appearance` instead
 - **[IMPROVEMENT]**: Calculators needs to be a [tagged service](docs/30_ToolboxTheme.md) now.
- - The config node `theme.calculators.ToolboxBundle\Calculator\*Calculator` is deprecated and will be removed in TB 3.0. Use `theme.calculators.column_calculator` or `theme.calculators.slide_calculator` instead.
+  - The config node `theme.calculators.ToolboxBundle\Calculator\*Calculator` is deprecated and will be removed in TB 3.0. Use `theme.calculators.column_calculator` or `theme.calculators.slide_calculator` instead.
 - **[NEW FEATURE]**: [jQuery Plugins](docs/80_Javascript.md) available!
 - **[NEW FEATURE]**: [Context Configuration](docs/15_Context.md) is available!
 - **[BC BREAK]**: `toolbox-googleMaps.js` has been moved to `bundles/toolbox/js/frontend/legacy`. This file is now deprecated and will be removed in Version 3.0.0!
@@ -22,7 +22,7 @@ After every update you should check the pimcore extension manager. Just click th
 - **[BC BREAK]**: `vimeo-api.min.js` has been marked as deprecated and will be removed in Version 3.0.0! The toolbox-video extension will include the recent api by itself.
 
 #### Update from Version 2.1.x to Version 2.2.0
-**(!) BC BREAK**: Use the `strict_column_counter` Flag if you're using offset columns! Read more about it [here](docs/70_ConfgurationFlags.md#strict_column_counter-flag)
+**[BC BREAK]**: Use the `strict_column_counter` Flag if you're using offset columns! Read more about it [here](docs/70_ConfgurationFlags.md#strict_column_counter-flag)
 
 - [Column Adjuster](docs/60_ColumnAdjuster.md) added
 - Google Maps: Allow deactivation of InfoWindow per location

@@ -31,38 +31,39 @@ class Configuration implements ConfigurationInterface
         $node = $rootNode
             ->children()
                 ->arrayNode('context')
-                ->useAttributeAsKey('name')
-                ->prototype('array')
-                    ->children()
-                        ->arrayNode('settings')
-                            ->beforeNormalization()
-                                ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['disabled_areas'])); })
-                                ->then(function ($v) {
-                                    @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "disabled_areas"', E_USER_ERROR);
-                                    return $v;
-                                })
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->arrayNode('settings')
+                                ->beforeNormalization()
+                                    ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['disabled_areas'])); })
+                                    ->then(function ($v) {
+                                        @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "disabled_areas"', E_USER_ERROR);
+                                        return $v;
+                                    })
+                                ->end()
+                                ->beforeNormalization()
+                                    ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['enabled_areas'])); })
+                                    ->then(function ($v) {
+                                        @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "enabled_areas"', E_USER_ERROR);
+                                        return $v;
+                                    })
+                                ->end()
+                                ->isRequired()
+                                ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->booleanNode('merge_with_root')->defaultValue(true)->end()
+                                    ->variableNode('disabled_areas')->defaultValue([])->end()
+                                    ->variableNode('enabled_areas')->defaultValue([])->end()
+                                ->end()
                             ->end()
-                            ->beforeNormalization()
-                                ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['enabled_areas'])); })
-                                ->then(function ($v) {
-                                    @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "enabled_areas"', E_USER_ERROR);
-                                    return $v;
-                                })
-                            ->end()
-                            ->isRequired()
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->booleanNode('merge_with_root')->defaultValue(true)->end()
-                                ->variableNode('disabled_areas')->defaultValue([])->end()
-                                ->variableNode('enabled_areas')->defaultValue([])->end()
-                            ->end()
-                        ->end()
-                    ->end();
+                        ->end();
 
         $this->getConfigNode($node, false);
 
         $node->end()
-            ->end();
+            ->end()
+        ->end();
 
     }
 

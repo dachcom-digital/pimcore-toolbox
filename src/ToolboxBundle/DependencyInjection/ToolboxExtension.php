@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -13,6 +12,16 @@ use ToolboxBundle\Resolver\ContextResolver;
 
 class ToolboxExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * @var array
+     */
+    protected $contextMergeData = [];
+
+    /**
+     * @var array
+     */
+    protected $contextConfigData = [];
+
     /**
      * @param ContainerBuilder $container
      */
@@ -38,20 +47,40 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         $data = [];
+
+        //get context data
+        foreach ($selfConfigs as $config) {
+            if (isset($config['context'])) {
+                foreach ($config['context'] as $contextName => $contextConfig) {
+
+                    if (!isset($contextMerge[$contextName]) || $contextMerge[$contextName] !== true) {
+                        continue;
+                    }
+
+                    $cleanContextConfig = $contextConfig;
+                    unset($cleanContextConfig['settings']);
+                    $this->contextConfigData[$contextName][] = $cleanContextConfig;
+                }
+            }
+        }
+
+        //get context merge data
         foreach ($contextMerge as $contextName => $merge) {
             if ($merge === false) {
                 continue;
             }
+
             foreach ($rootConfigs as $rootConfig) {
-                $data[] = ['context' => [$contextName => $rootConfig]];
+                $data[] = [
+                    'context' => [
+                        $contextName => $rootConfig
+                    ]
+                ];
             }
         }
 
-        $config = array_merge($data, $selfConfigs);
+        $this->contextMergeData = $data;
 
-        foreach ($config as $c) {
-            $container->prependExtensionConfig($this->getAlias(), $c);
-        }
     }
 
     /**
@@ -60,10 +89,24 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        //append merge data
+        foreach ($this->contextMergeData as $append) {
+            $configs[] = $append;
+        }
+
+        //append custom context data
+        foreach ($this->contextConfigData as $contextName => $contextConfigs) {
+            foreach ($contextConfigs as $el) {
+                $configs[] = [
+                    'context' => [
+                        $contextName => $el
+                    ]
+                ];
+            }
+        }
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('toolbox_context', []);
 
         $this->validateToolboxContextConfig($config);
 
