@@ -1,6 +1,7 @@
 imports:
     - { resource: areas/*.yml }
     - { resource: ckeditor/*.yml }
+    - { resource: registry.yml }
     - { resource: theme.yml }
     - { resource: area_restrictions.yml }
     - { resource: data_attributes.yml }

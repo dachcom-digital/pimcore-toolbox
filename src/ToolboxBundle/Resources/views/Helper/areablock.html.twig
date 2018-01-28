@@ -1,4 +1,7 @@
-{% set blockName = name ? name : 'default' %}
-{% set blocType = type ? type : null %}
+{% set block_name = name ? name : 'default' %}
+{% set block_type = type ? type : null %}
+{% set block_config = toolbox_areablock_config(block_type) %}
 
-{{ pimcore_areablock('c' ~ blockName, toolbox_areablock_config(blocType)) }}
+{% if block_config.allowed|length > 0 %}
+    {{ pimcore_areablock('c' ~ block_name, block_config) }}
+{% endif %}

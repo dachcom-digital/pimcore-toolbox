@@ -3,14 +3,29 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        public: true
+        public: false
+
+    ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator'
+    ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator'
 
     # column calculator
-    ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\ColumnCalculator'
-    ToolboxBundle\Calculator\ColumnCalculator:
+    ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator:
         calls:
             - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
+        tags:
+            - { name: toolbox.calculator, type: column }
+
+    ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator:
+        calls:
+            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
+        tags:
+            - { name: toolbox.calculator, type: column }
 
     # slide column calculator
-    ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\SlideColumnCalculator'
-    ToolboxBundle\Calculator\SlideColumnCalculator: ~
+    ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator:
+        tags:
+            - { name: toolbox.calculator, type: slide_column }
+
+    ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator:
+        tags:
+            - { name: toolbox.calculator, type: slide_column }

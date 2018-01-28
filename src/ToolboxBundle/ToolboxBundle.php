@@ -3,6 +3,7 @@
 namespace ToolboxBundle;
 
 use ToolboxBundle\Tool\Install;
+use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,6 +18,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new MembersBundlePass());
+        $container->addCompilerPass(new CalculatorRegistryPass());
     }
 
     /**

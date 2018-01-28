@@ -2,25 +2,30 @@
 
 namespace ToolboxBundle\Document\Areabrick\Columns;
 
-use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
+use ToolboxBundle\Registry\CalculatorRegistry;
 
 class Columns extends AbstractAreabrick
 {
     /**
-     * @var ColumnCalculatorInterface
+     * @var CalculatorRegistry
      */
-    protected $calculator;
+    private $calculatorRegistry;
 
     /**
-     * @param ColumnCalculatorInterface $calculator
+     * @param CalculatorRegistry $calculatorRegistry
      */
-    public function __construct(ColumnCalculatorInterface $calculator)
+    public function __construct(CalculatorRegistry $calculatorRegistry)
     {
-        $this->calculator = $calculator;
+        $this->calculatorRegistry = $calculatorRegistry;
     }
 
+    /**
+     * @param Info $info
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
+     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -42,7 +47,8 @@ class Columns extends AbstractAreabrick
             $customColumnConfiguration = [$type => $gridAdjustment];
         }
 
-        $columns = $this->calculator->calculateColumns($type, $customColumnConfiguration);
+        $theme = $this->configManager->getConfig('theme');
+        $columns = $this->calculatorRegistry->get($theme['calculators']['column_calculator'], 'column')->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
 

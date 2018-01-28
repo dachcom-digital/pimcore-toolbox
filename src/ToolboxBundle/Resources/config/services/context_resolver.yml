@@ -1,0 +1,9 @@
+services:
+
+    _defaults:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    ToolboxBundle\Resolver\ContextResolverInterface: '@ToolboxBundle\Resolver\ContextResolver'
+    ToolboxBundle\Resolver\ContextResolver: ~

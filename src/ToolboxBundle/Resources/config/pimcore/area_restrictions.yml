@@ -1,5 +1,5 @@
 toolbox:
-    disallowed_subareas:
+    areas_appearance:
         accordion:
             disallowed:
                 - accordion
@@ -26,15 +26,31 @@ toolbox:
             disallowed:
                 - container
                 - parallaxContainer
-        image:
-            disallowed:
-                - parallaxContainer
-        snippet:
-            disallowed:
-                - parallaxContainer
 
-    disallowed_content_snippet_areas:
-        - parallaxContainer
-        - teaser
-        - container
-        - snippet
+    snippet_areas_appearance:
+        accordion:
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer
+        columns:
+            disallowed:
+                - container
+                - parallaxContainer
+        slideColumns:
+            disallowed:
+                - slideColumns
+                - accordion
+                - container
+                - parallaxContainer
+                - columns
+                - anchor
+        container:
+            disallowed:
+                - container
+                - parallaxContainer
+        parallaxContainer:
+            disallowed:
+                - container
+                - parallaxContainer

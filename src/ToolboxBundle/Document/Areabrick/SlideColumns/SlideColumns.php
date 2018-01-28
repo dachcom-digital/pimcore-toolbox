@@ -5,24 +5,27 @@ namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
+use ToolboxBundle\Registry\CalculatorRegistry;
 
 class SlideColumns extends AbstractAreabrick
 {
     /**
-     * @var  SlideColumnCalculatorInterface
+     * @var CalculatorRegistry
      */
-    protected $calculator;
+    private $calculatorRegistry;
 
     /**
-     * @param SlideColumnCalculatorInterface $calculator
+     * @param CalculatorRegistry $calculatorRegistry
      */
-    public function __construct(SlideColumnCalculatorInterface $calculator)
+    public function __construct(CalculatorRegistry $calculatorRegistry)
     {
-        $this->calculator = $calculator;
+        $this->calculatorRegistry = $calculatorRegistry;
     }
 
     /**
      * @param Info $info
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
      */
     public function action(Info $info)
     {
@@ -36,8 +39,11 @@ class SlideColumns extends AbstractAreabrick
         $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
+        $theme = $this->configManager->getConfig('theme');
+        $calculator = $this->calculatorRegistry->get($theme['calculators']['slide_calculator'], 'slide_column');
+
         $slideColumnConfig = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
-        $slidesPerViewClass = $this->calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);
+        $slidesPerViewClass = $calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);
         $breakpoints = $this->calculateSlideColumnBreakpoints($slidesPerView);
 
         $view->id = $id;
@@ -60,8 +66,8 @@ class SlideColumns extends AbstractAreabrick
 
     /**
      * @param $columnType
-     *
      * @return array
+     * @throws \Exception
      */
     private function calculateSlideColumnBreakpoints($columnType)
     {

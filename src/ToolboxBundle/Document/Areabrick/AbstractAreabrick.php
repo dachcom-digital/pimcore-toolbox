@@ -80,7 +80,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @return \ToolboxBundle\Manager\BrickConfigBuilder
+     * @return BrickConfigBuilder
      */
     public function getBrickConfigBuilder()
     {

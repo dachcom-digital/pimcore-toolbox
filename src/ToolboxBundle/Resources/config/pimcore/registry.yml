@@ -1,0 +1,12 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # registry: language
+    ToolboxBundle\Registry\CalculatorRegistry:
+        arguments:
+            $columnInterface: 'ToolboxBundle\Calculator\ColumnCalculatorInterface'
+            $slideColumnInterface: 'ToolboxBundle\Calculator\SlideColumnCalculatorInterface'

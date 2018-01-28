@@ -28,7 +28,7 @@ class AreaManager
         $this->brickManager = $brickManager;
     }
 
-    public function getAreaBlockName($type = NULL)
+    public function getAreaBlockName($type = null)
     {
         if ($type === 'parallaxContainerSection') {
             return 'Parallax Container Section';
@@ -40,13 +40,13 @@ class AreaManager
     /**
      * @param null $type
      * @param bool $fromSnippet
-     *
      * @return array
+     * @throws \Exception
      */
-    public function getAreaBlockConfiguration($type = NULL, $fromSnippet = FALSE)
+    public function getAreaBlockConfiguration($type = null, $fromSnippet = false)
     {
-        if ($fromSnippet === TRUE) {
-            $availableBricks = $this->getAvailableBricksForSnippets();
+        if ($fromSnippet === true) {
+            $availableBricks = $this->getAvailableBricksForSnippets($type);
         } else {
             $availableBricks = $this->getAvailableBricks($type);
         }
@@ -66,7 +66,7 @@ class AreaManager
             ]
         ];
 
-        if (isset($areaBlockConfigurationArray['groups']) && $areaBlockConfigurationArray['groups'] !== FALSE) {
+        if (isset($areaBlockConfigurationArray['groups']) && $areaBlockConfigurationArray['groups'] !== false) {
             $groups = array_merge($toolboxGroup, $areaBlockConfigurationArray['groups']);
         } else {
             $groups = $toolboxGroup;
@@ -97,7 +97,6 @@ class AreaManager
             $configuration['group'] = $cleanedGroups;
         }
 
-
         if (isset($areaBlockConfigurationArray['toolbar']) && is_array($areaBlockConfigurationArray['toolbar'])) {
             $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
         }
@@ -107,24 +106,54 @@ class AreaManager
 
     /**
      * @param bool $arrayKeys
-     *
-     * @return array|mixed
+     * @return array
+     * @throws \Exception
      */
-    private function getActiveBricks($arrayKeys = TRUE)
+    private function getActiveBricks($arrayKeys = true)
     {
         $areaElements = $this->brickManager->getBricks();
 
-        /**
+        /** get system bricks first
+         *
          * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData
-         */
+         **/
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (!$this->brickManager->isEnabled($areaElementName)) {
                 unset($areaElements[$areaElementName]);
-                continue;
             }
         }
 
-        if ($arrayKeys === TRUE) {
+        //if in context, check if areas are available in given context
+        if ($this->configManager->isContextConfig()) {
+            $contextConfiguration = $this->configManager->getCurrentContextSettings();
+
+            if ($contextConfiguration['merge_with_root'] === true) {
+                if (!empty($contextConfiguration['enabled_areas'])) {
+                    foreach ($areaElements as $areaElementName => $areaElementData) {
+                        if (!in_array($areaElementName, $contextConfiguration['enabled_areas'])) {
+                            unset($areaElements[$areaElementName]);
+                        }
+                    }
+                } elseif (!empty($contextConfiguration['disabled_areas'])) {
+                    foreach ($areaElements as $areaElementName => $areaElementData) {
+                        if (in_array($areaElementName, $contextConfiguration['disabled_areas'])) {
+                            unset($areaElements[$areaElementName]);
+                        }
+                    }
+                }
+            } else {
+                foreach ($areaElements as $areaElementName => $areaElementData) {
+                    $coreAreas = $this->configManager->getConfig('areas');
+                    $customAreas = $this->configManager->getConfig('custom_areas');
+                    if (!in_array($areaElementName, array_keys($coreAreas)) &&
+                        !in_array($areaElementName, array_keys($customAreas))) {
+                        unset($areaElements[$areaElementName]);
+                    }
+                }
+            }
+        }
+
+        if ($arrayKeys === true) {
             return array_keys($areaElements);
         }
 
@@ -135,27 +164,44 @@ class AreaManager
      * @param string $type
      *
      * @return array
+     * @throws \Exception
      */
-    private function getAvailableBricks($type = NULL)
+    private function getAvailableBricks($type = null)
     {
         $areaElements = $this->getActiveBricks();
+
+        // @deprecated: remove in 3.0
         $disallowedSubAreas = $this->configManager->getConfig('disallowed_subareas');
+        $depElementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
+
+        $areaAppearance = $this->configManager->getConfig('areas_appearance');
+        $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
+        $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
+
+        // strict fill means: only add defined elements.
+        $strictFill = !empty($elementAllowed);
+
+        // merge disallowed with deprecated disallowed
+        $elementDisallowed = array_merge($elementDisallowed, $depElementDisallowed);
 
         $bricks = [];
-
-        $elementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
-
         foreach ($areaElements as $a) {
-            if (!in_array($a, $elementDisallowed)) {
-                $bricks[] = $a;
+            // allowed rule comes first!
+            if ($strictFill === true) {
+                if (in_array($a, $elementAllowed)) {
+                    $bricks[] = $a;
+                }
+            } else {
+                if (!in_array($a, $elementDisallowed)) {
+                    $bricks[] = $a;
+                }
             }
         }
 
         $params = [];
-
         foreach ($bricks as $brick) {
             $params[$brick] = [
-                'forceEditInView' => TRUE
+                'forceEditInView' => true
             ];
         }
 
@@ -163,38 +209,56 @@ class AreaManager
     }
 
     /**
+     * @param $type
      * @return array
+     * @throws \Exception
      */
-    private function getAvailableBricksForSnippets()
+    private function getAvailableBricksForSnippets($type)
     {
         $areaElements = $this->getActiveBricks();
+
+        // @deprecated: remove in 3.0
         $disallowedSubAreas = $this->configManager->getConfig('disallowed_content_snippet_areas');
 
-        $bricks = [];
+        $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');
+        $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
+        $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 
+        // merge disallowed with deprecated disallowed
+        $elementDisallowed = array_merge($elementDisallowed, is_array($disallowedSubAreas) ? $disallowedSubAreas : []);
+
+        $bricks = [];
         foreach ($areaElements as $a) {
-            if (!in_array($a, $disallowedSubAreas)) {
-                $bricks[] = $a;
+            // allowed rule comes first!
+            if (!empty($elementAllowed)) {
+                if (in_array($a, $elementAllowed)) {
+                    $bricks[] = $a;
+                }
+            } else {
+                if (!in_array($a, $elementDisallowed)) {
+                    $bricks[] = $a;
+                }
             }
         }
 
         $params = [];
-
         foreach ($bricks as $brick) {
             $params[$brick] = [
-                'forceEditInView' => TRUE
+                'forceEditInView' => true
             ];
         }
 
         return ['allowed' => $bricks, 'params' => $params];
+
     }
 
     /**
      * @return array
+     * @throws \Exception
      */
     private function getToolboxBricks()
     {
-        $areaElements = $this->getActiveBricks(FALSE);
+        $areaElements = $this->getActiveBricks(false);
         $toolboxBricks = [];
 
         /**
