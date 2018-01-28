@@ -1,7 +1,7 @@
 {
     "name": "dachcom-digital/toolbox",
     "type": "pimcore-bundle",
-    "license": "GPL-3.0+",
+    "license": "GPL-3.0-or-later",
     "description": "Pimcore 5.x Project Kickstarter.",
     "keywords": ["pimcore", "toolbox"],
     "homepage": "https://github.com/dachcom-digital/pimcore-toolbox",

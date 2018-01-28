@@ -9,6 +9,7 @@ use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator;
 use ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator;
 use ToolboxBundle\Resolver\ContextResolver;
+use ToolboxBundle\ToolboxConfig;
 
 class Configuration implements ConfigurationInterface
 {
@@ -73,62 +74,8 @@ class Configuration implements ConfigurationInterface
      */
     function getConfigNode(ArrayNodeDefinition $rootNode, $addContextSettings = true)
     {
-        $toolboxTypes = [
-            'accordion',
-            'anchor',
-            'columns',
-            'container',
-            'content',
-            'download',
-            'gallery',
-            'googleMap',
-            'headline',
-            'image',
-            'linkList',
-            'parallaxContainer',
-            'parallaxContainerSection',
-            'separator',
-            'slideColumns',
-            'snippet',
-            'spacer',
-            'teaser',
-            'video'
-        ];
-
-        $coreTypes = [
-            'areablock',
-            'area',
-            'block',
-            'checkbox',
-            'date',
-            'href',
-            'image',
-            'input',
-            'link',
-            'multihref',
-            'multiselect',
-            'numeric',
-            'embed',
-            'pdf',
-            'renderlet',
-            'select',
-            'snippet',
-            'table',
-            'textarea',
-            'video',
-            'wysiwyg'
-        ];
-
-        $customTypes = [
-            'additionalClasses',
-            'parallaximage',
-            'googlemap',
-            'vhs',
-            'dynamiclink',
-        ];
-
         //@todo: get them dynamically!!
-        $allowedTypes = array_merge($coreTypes, $customTypes);
+        $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
 
         $rootNode
             ->children()
@@ -140,13 +87,13 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('areas')
                     ->validate()
-                        ->ifTrue(function ($v) use ($toolboxTypes) { return count(array_diff(array_keys($v), $toolboxTypes)) > 0; })
-                        ->then(function($v) use ($toolboxTypes)  {
-                            $invalidTags = array_diff(array_keys($v), $toolboxTypes);
+                        ->ifTrue(function ($v) { return count(array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES)) > 0; })
+                        ->then(function($v)  {
+                            $invalidTags = array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES);
                             throw new InvalidConfigurationException(sprintf(
                                 'Invalid elements in toolbox "area" configuration: %s. to add custom areas, use the "custom_area" node. allowed tags for "area" are: %s',
                                 implode(', ', $invalidTags),
-                                implode(', ', $toolboxTypes)
+                                implode(', ', ToolboxConfig::TOOLBOX_TYPES)
                                 ));
                             })
                     ->end()

@@ -3,7 +3,7 @@
  *  Extension: Google Maps
  *  Version: 2.3
  *  Author: DACHCOM.DIGITAL
- *  License: GPL-3.0+
+ *  License: GPL-3.0-or-later
 */
 ;(function ($, window, document) {
     'use strict';

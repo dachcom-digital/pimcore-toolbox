@@ -77,6 +77,15 @@ class ConfigManager
     }
 
     /**
+     * @param null $contextId
+     * @throws \Exception
+     */
+    public function setContextNameSpace($contextId = null)
+    {
+        $this->ensureCoreConfig($contextId);
+    }
+
+    /**
      * @param $section
      * @return mixed
      * @throws \Exception
@@ -178,13 +187,19 @@ class ConfigManager
     }
 
     /**
+     * @param null|bool|string $contextId
      * @return void
      * @throws \Exception
      */
-    private function ensureCoreConfig()
+    private function ensureCoreConfig($contextId = null)
     {
+        if ($contextId === false) {
+            $this->contextResolved = true;
+            return;
+        }
+
         if ($this->contextResolved === false) {
-            $currentContextId = $this->contextResolver->getCurrentContextIdentifier();
+            $currentContextId = $contextId !== null ? $contextId : $this->contextResolver->getCurrentContextIdentifier();
             if ($currentContextId !== null) {
                 $contextData = $this->parseContextConfig($currentContextId);
                 $this->config = $contextData['config'];
