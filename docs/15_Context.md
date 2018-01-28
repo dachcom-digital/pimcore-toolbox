@@ -1,11 +1,11 @@
 # Context
 
 The Toolbox context allows you to use different configuration namespaces.
-If you have multiple pimcore sites for example, it's possible to use different elements and configuration
+If you have multiple pimcore sites for example, it's possible to use different elements and configuration.
 You're also able to merge different context configuration with the main one.
 
 ## Real Life Example
-You have one main toolbox configuration. Now you to implement a second page for your client, with a different layout and areas.
+You have one main toolbox configuration. Now you need to implement a second page for your client, with a different layout and areas.
 Just create a toolbox context (see below) and you're able to provide dedicated elements and specific configuration for each area element.
 If your client opens the document in backend in a specific site tree for example, he will only see those defined elements in the toolbar.
 
@@ -15,7 +15,7 @@ If your client opens the document in backend in a specific site tree for example
 |------|------|------------|
 | `merge_with_root` | bool | Use the main toolbox configuration as base configuration and reconfigure them in the new context. **Note**: If you disable this note, you need to provide every single configuration by your own. |
 | `enabled_areas` | array | Enable specific Areas |
-| `disabled_areas` | array | Disable specific Areas. **Note:** If you have configured `enabled_areas` this note will be ignored. |
+| `disabled_areas` | array | Disable specific Areas. **Note:** If you have configured `enabled_areas` this option will be ignored. |
 
 ## Configuration Example
 
