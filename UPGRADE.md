@@ -16,6 +16,7 @@ After every update you should check the pimcore extension manager. Just click th
   - The config node `theme.calculators.ToolboxBundle\Calculator\*Calculator` is deprecated and will be removed in TB 3.0. Use `theme.calculators.column_calculator` or `theme.calculators.slide_calculator` instead.
 - **[NEW FEATURE]**: [jQuery Plugins](docs/80_Javascript.md) available!
 - **[NEW FEATURE]**: [Context Configuration](docs/15_Context.md) is available!
+- **[NEW FEATURE]**: [Helper Commands](docs/2_Commands.md) available!
 - **[BC BREAK]**: `toolbox-googleMaps.js` has been moved to `bundles/toolbox/js/frontend/legacy`. This file is now deprecated and will be removed in Version 3.0.0!
 - **[BC BREAK]**: `toolbox-main.js` has been moved to `bundles/toolbox/js/frontend/legacy`. This file is now deprecated and will be removed in Version 3.0.0!
 - **[BC BREAK]**: `toolbox-video.js` has been moved to `bundles/toolbox/js/frontend/legacy`. This file is now deprecated and will be removed in Version 3.0.0!
