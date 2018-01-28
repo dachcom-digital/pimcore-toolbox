@@ -12,7 +12,7 @@ After every update you should check the pimcore extension manager. Just click th
 - **[IMPROVEMENT]**: Better area availability configuration:
   - `disallowed_subareas` is deprecated and will be removed in TB 3.0, use `areas_appearance` instead
   - `disallowed_content_snippet_areas` is deprecated and will be removed in TB 3.0, use `snippet_areas_appearance` instead
-- **[IMPROVEMENT]**: Calculators needs to be a [tagged service](docs/30_ToolboxTheme.md) now.
+- **[IMPROVEMENT]**: Calculators need to be a [tagged service](docs/30_ToolboxTheme.md) now.
   - The config node `theme.calculators.ToolboxBundle\Calculator\*Calculator` is deprecated and will be removed in TB 3.0. Use `theme.calculators.column_calculator` or `theme.calculators.slide_calculator` instead.
 - **[NEW FEATURE]**: [jQuery Plugins](docs/80_Javascript.md) available!
 - **[NEW FEATURE]**: [Context Configuration](docs/15_Context.md) is available!
