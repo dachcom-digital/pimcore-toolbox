@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
+<g id="surface1">
+<path style=" fill:#4CAF50;" d="M 37 5 L 11 5 L 6 12 L 6 40 C 6 41.699219 7.300781 43 9 43 L 39 43 C 40.699219 43 42 41.699219 42 40 L 42 12 Z "/>
+<path style=" fill:#2E7D32;" d="M 18 12 C 18 15.300781 20.699219 18 24 18 C 27.300781 18 30 15.300781 30 12 L 39.5 12 L 36 7 L 12 7 L 8.398438 12 Z "/>
+<path style=" fill:#CCFF90;" d="M 26 30 L 26 23 L 22 23 L 22 30 L 17 30 L 24 38 L 31 30 Z "/>
+</g>
+</svg>

@@ -157,6 +157,14 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getIcon()
+    {
+        return '/bundles/toolbox/areas/' . $this->getId() . '/icon.svg';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getHtmlTagOpen(Info $info)

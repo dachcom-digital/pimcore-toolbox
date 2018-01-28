@@ -19,6 +19,12 @@ If your client opens the document in backend in a specific site tree for example
 
 > **Note**: If you have enabled `merge_with_root` you cannot use a different theme in sub context since there would be a layout mismatch.
 
+### Merge Hierarchy
+Merge from root means:
+1. get all config from toolbox core bundle
+2. merge with all `toolbox` configs defined in app
+3. merge with all `toolbox.context.context_name.xy` configs defined in app
+
 ## Configuration Example
 
 ```yml
