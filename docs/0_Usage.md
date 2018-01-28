@@ -44,29 +44,39 @@ area_block_configuration:
 ## Allow/Disallow Elements
 
 #### In Snippets
+
+Use the `snippet_areas_appearance`  config node to disable Bricks in specific Snippets.
+
 ```yaml
 # define which elements should not appear in snippet documents
-disallowed_content_snippet_areas:
-    - parallaxContainer
-    - teaser
-    - container
-    - snippet
-    - accordion
-    - anchor
-    - container
-    - teaser        
+toolbox:
+    disallowed_content_snippet_areas:
+        snippet_c:
+            dissallowed:
+                - parallaxContainer
+                - teaser
+                - container
+                - snippet
+                - accordion
+                - anchor
+                - container
+                - teaser
+        accordion:
+            allowed: # if "allowed" is configured the "disallowed" node will be ignored
+                - teaser
+                - download
 ```
 
 #### In Area-Blocks
 
-Use the `disallowed_subareas` config node to disable Bricks in specific Areas.
+Use the `areas_appearance` config node to disable Bricks in specific Areas.
 
 **Example**  
 ```yaml
 toolbox:
-    disallowed_subareas:
+    areas_appearance:
         container:
-            disallowed:
+            allowed: # if "allowed" is configured the "disallowed" node will be ignored
                 - container
                 - parallaxContainer
         columns:

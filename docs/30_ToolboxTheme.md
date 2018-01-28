@@ -83,7 +83,7 @@ toolbox:
 ```
 
 From now on, the Toolbox Bundle will search every element view in `@ToolboxBundle/Resources/views/Toolbox/YourGridSystem/*`.
-Now implement the calculators:
+Now implement the calculators (don't forget the tags):
 
 ```yaml
 # /app/config/services.yml
@@ -94,10 +94,16 @@ services:
         public: false
 
      # column calculator
-    AppBundle\Calculator\ColumnCalculator: ~
+    AppBundle\Calculator\ColumnCalculator:
+        calls:
+            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
+        tags:
+            - { name: toolbox.calculator, type: column }
     
     # slide column calculator
-    AppBundle\Calculator\SlideColumnCalculator: ~
+    AppBundle\Calculator\SlideColumnCalculator:
+        tags:
+            - { name: toolbox.calculator, type: slide_column }
 ```
 
 ```yaml
@@ -105,8 +111,8 @@ services:
 toolbox:
     theme:
         calculators:
-            ToolboxBundle\Calculator\ColumnCalculator: AppBundle\Calculator\ColumnCalculator
-            ToolboxBundle\Calculator\SlideColumnCalculator: AppBundle\Calculator\SlideColumnCalculator
+            column_calculator: AppBundle\Calculator\ColumnCalculator
+            slide_calculator: AppBundle\Calculator\SlideColumnCalculator
 ```
 
 ### Column Calculator
@@ -115,37 +121,36 @@ toolbox:
 <?php
 
 namespace AppBundle\Calculator;
+
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
-    public function calculateColumns($value, $columnConfiguration = [], $gridSize = 12)
+    protected $configManager;
+
+    public function setConfigManager(ConfigManager $configManager)
     {
+        $this->configManager = $configManager;
+        $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
+        return $this;
+    }
+
+    public function calculateColumns($value, $columnConfiguration = [])
+    {
+        $themeSettings = $this->configManager->getConfig('theme');
+        $gridSettings = $themeSettings['grid'];
+        $gridSize = $gridSettings['grid_size'];
+
         $columns = [];
 
-        //$value: selected column value from column.
-        $t = explode('_', $value);
-
-        $_columns = array_splice($t, 1);
-
-        //define your column classes.
-        $bootstrapClassConfig = [];
-
-        foreach ($_columns as $i => $columnClass) {
-
-            $columns[] = [
-                'columnClass' => join(' ', $bootstrapClassConfig),
-                'columnType'  => $value,
-                'name'        => 'column_' . $i
-            ];
-        }
-
-        // generate column classes.
+        // generate column classes here.
         // please check out the bootstrap4 calculator if you need more information.
+
         return $columns;
     }
     
-    public function getColumnInfoForAdjuster($currentColumn = '', $columnConfiguration = [], $gridSettings = []) {
+    public function getColumnInfoForAdjuster($value, $columnConfiguration = null)
+    {
          // generate column info for the column adjuster.
          // please check out the bootstrap4 calculator if you need more information.
     }
@@ -158,13 +163,15 @@ class ColumnCalculator implements ColumnCalculatorInterface
 <?php
 
 namespace AppBundle\Calculator;
+
 use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 
 class SlideColumnCalculator implements SlideColumnCalculatorInterface
 {
     public function calculateSlideColumnClasses($columnType, $columnConfiguration)
     {
-        //generate slide column classes. please check out the bootstrap3 calculator if you need more information. 
+        // generate slide column classes here.
+        // please check out the bootstrap3 slide column calculator if you need more information.
         return [];
     }
 }

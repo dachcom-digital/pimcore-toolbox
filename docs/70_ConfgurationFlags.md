@@ -7,8 +7,10 @@ To avoid this and keep the backward compatibility promise, we've implemented the
 |------|------|------------|
 | `strict_column_counter` | bool | false |
 
-
 ## strict_column_counter flag
+
+> Note: This is only necessary if want to update from TB <= `2.1.2` and there are offset columns (for example `column_o1_6_o1_6`) in your configuration to migrate!
+> if you don't have any offset columns, just skip this.
 
 ```yaml
 toolbox:

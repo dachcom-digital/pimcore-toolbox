@@ -16,7 +16,7 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~2.1.0"
+    "dachcom-digital/toolbox" : "~2.3.0"
 }
 ```
 
@@ -72,6 +72,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
 - [CK-Editor Configuration](docs/13_CkEditor.md)
 - [Image Thumbnails Strategy](docs/14_ImageThumbnails.md)
+- [Configuration Context](docs/15_Context.md) (New!)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)
