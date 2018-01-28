@@ -89,6 +89,8 @@ class AreaManager
             if (count($cleanedGroup) > 0) {
                 $cleanedGroups[$groupName] = $cleanedGroup;
                 $cleanedGroupsSorted = array_merge($cleanedGroupsSorted, $cleanedGroup);
+                //sort group by cleaned group
+                sort($cleanedGroupsSorted);
             }
         }
 
@@ -112,6 +114,9 @@ class AreaManager
     private function getActiveBricks($arrayKeys = true)
     {
         $areaElements = $this->brickManager->getBricks();
+
+        //sort area elements by key => area name
+        ksort($areaElements);
 
         /** get system bricks first
          *
