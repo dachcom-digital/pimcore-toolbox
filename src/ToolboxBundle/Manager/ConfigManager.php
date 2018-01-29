@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\Manager;
 
-use Symfony\Component\Finder\Finder;
 use ToolboxBundle\Resolver\ContextResolverInterface;
 
 class ConfigManager
@@ -74,15 +73,6 @@ class ConfigManager
     {
         $this->areaNamespace = $namespace;
         return $this;
-    }
-
-    /**
-     * @param null $contextId
-     * @throws \Exception
-     */
-    public function setContextNameSpace($contextId = null)
-    {
-        $this->ensureCoreConfig($contextId);
     }
 
     /**
@@ -170,45 +160,39 @@ class ConfigManager
     }
 
     /**
-     * @return array
+     * @return string|null|false
      */
-    public function getValidCoreBricks()
+    public function getContextIdentifier()
     {
-        $areaBricks = [];
-        $finder = new Finder();
-        $finder->name('*.yml');
-
-        /** @var \Symfony\Component\Finder\SplFileInfo $file */
-        foreach ($finder->in(dirname(__DIR__) . '/Resources/config/pimcore/areas') as $file) {
-            $areaBricks[] = str_replace('.' . $file->getExtension(), '', $file->getFilename());
-        }
-
-        return $areaBricks;
+        return $this->contextResolver->getCurrentContextIdentifier();
     }
 
     /**
-     * @param null|bool|string $contextId
      * @return void
      * @throws \Exception
      */
-    private function ensureCoreConfig($contextId = null)
+    private function ensureCoreConfig()
     {
-        if ($contextId === false) {
+        $contextIdentifierId = $this->getContextIdentifier();
+
+        if ($contextIdentifierId === false) {
             $this->contextResolved = true;
             return;
         }
 
-        if ($this->contextResolved === false) {
-            $currentContextId = $contextId !== null ? $contextId : $this->contextResolver->getCurrentContextIdentifier();
-            if ($currentContextId !== null) {
-                $contextData = $this->parseContextConfig($currentContextId);
-                $this->config = $contextData['config'];
-                $this->contextSettings[$currentContextId] = $contextData['settings'];
-                $this->currentContextId = $currentContextId;
-            }
-
-            $this->contextResolved = true;
+        if ($this->contextResolved === true) {
+            return;
         }
+
+        if ($contextIdentifierId !== null) {
+            $contextData = $this->parseContextConfig($contextIdentifierId);
+            $this->config = $contextData['config'];
+            $this->contextSettings[$contextIdentifierId] = $contextData['settings'];
+            $this->currentContextId = $contextIdentifierId;
+        }
+
+        $this->contextResolved = true;
+
     }
 
     /**

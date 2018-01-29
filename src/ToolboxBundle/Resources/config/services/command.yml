@@ -1,0 +1,6 @@
+services:
+
+    ToolboxBundle\Command\AreaConfigurationCommand:
+        autowire: true
+        autoconfigure: true
+        public: false

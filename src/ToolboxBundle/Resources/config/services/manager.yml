@@ -1,18 +1,28 @@
 services:
 
-    _defaults:
+    # toolbox service layout
+    ToolboxBundle\Manager\LayoutManager:
         autowire: true
         autoconfigure: true
         public: false
-
-    # toolbox service layout
-    ToolboxBundle\Manager\LayoutManager:
         calls:
             - [setTemplating, ['@templating']]
 
     # toolbox service area
-    ToolboxBundle\Manager\AreaManager: ~
+    ToolboxBundle\Manager\AreaManager:
+        autowire: true
+        autoconfigure: true
+        public: false
 
     # toolbox service configuration
     ToolboxBundle\Manager\ConfigManager:
         public: true
+        autowire: true
+        public: false
+
+    # toolbox service configuration
+    ToolboxBundle\Manager\AdaptiveConfigManager:
+        parent: ToolboxBundle\Manager\ConfigManager
+        autowire: true
+        public: false
+

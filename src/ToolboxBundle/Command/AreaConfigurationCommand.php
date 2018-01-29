@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -10,19 +11,25 @@ use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use ToolboxBundle\Manager\AdaptiveConfigManager;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\ToolboxConfig;
 
-class AreaConfigurationCommand extends ContainerAwareCommand
+class AreaConfigurationCommand extends Command
 {
+    private $adaptiveConfigManager;
+
+    public function __construct(AdaptiveConfigManager $adaptiveConfigManager)
+    {
+        $this->adaptiveConfigManager = $adaptiveConfigManager;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-        parent::configure();
-
         $this
             ->setName('toolbox:check-config')
             ->setDescription('Check configuration of a given area element. ')
@@ -44,7 +51,6 @@ class AreaConfigurationCommand extends ContainerAwareCommand
         $hasContext = true;
 
         if (empty($contextId)) {
-            $contextId = false;
             $hasContext = false;
         }
 
@@ -53,22 +59,20 @@ class AreaConfigurationCommand extends ContainerAwareCommand
             return;
         }
 
-        $configManager = $this->getContainer()->get(ConfigManager::class);
-
         $namespace = ConfigManager::AREABRICK_NAMESPACE_INTERNAL;
         if (!in_array($brickId, ToolboxConfig::TOOLBOX_TYPES)) {
             $namespace = ConfigManager::AREABRICK_NAMESPACE_EXTERNAL;
         }
 
-        $configManager->setAreaNameSpace($namespace);
-        $configManager->setContextNameSpace($contextId);
+        $this->adaptiveConfigManager->setAreaNameSpace($namespace);
+        $this->adaptiveConfigManager->setContextNameSpace($contextId);
 
-        $brickConfig = $configManager->getAreaConfig($brickId);
+        $brickConfig = $this->adaptiveConfigManager->getAreaConfig($brickId);
 
         if (empty($brickConfig)) {
 
             if ($hasContext) {
-                $settings = $configManager->getCurrentContextSettings();
+                $settings = $this->adaptiveConfigManager->getCurrentContextSettings();
                 if (in_array($brickId, $settings['disabled_areas'])) {
                     $output->writeln('');
                     $output->writeln(sprintf('<comment>Area Brick with Id "%s" is disabled in "%s" context.</comment>', $brickId, $contextId));

@@ -8,6 +8,7 @@ use Pimcore\Model\Document\Tag\Area\Info;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\LayoutManager;
+use ToolboxBundle\ToolboxConfig;
 
 abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 {
@@ -104,9 +105,9 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     {
         if(!$this->getConfigManager() instanceof ConfigManager) {
             throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
-        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
+        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');
-        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), $this->configManager->getValidCoreBricks())) {
+        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick is using a reserved id. Please change the id of your custom AreaBrick.');
         }
 
@@ -120,7 +121,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         $view->elementConfigBar = $configWindowData;
         $view->elementThemeConfig = $this->layoutManager->getAreaThemeConfig($this->getId());
         $view->areaId = $this->getId();
-
     }
 
     /**
