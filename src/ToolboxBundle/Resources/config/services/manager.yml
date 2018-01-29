@@ -2,27 +2,26 @@ services:
 
     ToolboxBundle\Manager\LayoutManagerInterface: '@ToolboxBundle\Manager\LayoutManager'
     ToolboxBundle\Manager\LayoutManager:
+        public: true
         autowire: true
         autoconfigure: true
-        public: true
         calls:
             - [setTemplating, ['@templating']]
 
     ToolboxBundle\Manager\AreaManagerInterface: '@ToolboxBundle\Manager\AreaManager'
     ToolboxBundle\Manager\AreaManager:
+        public: false
         autowire: true
         autoconfigure: true
-        public: false
 
     ToolboxBundle\Manager\ConfigManagerInterface: '@ToolboxBundle\Manager\ConfigManager'
     ToolboxBundle\Manager\ConfigManager:
         public: true
         autowire: true
-        public: true
 
     ToolboxBundle\Manager\AdaptiveConfigManagerInterface: '@ToolboxBundle\Manager\AdaptiveConfigManager'
     ToolboxBundle\Manager\AdaptiveConfigManager:
         parent: ToolboxBundle\Manager\ConfigManager
-        autowire: true
         public: false
+        autowire: true
 
