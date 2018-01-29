@@ -71,10 +71,8 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
-     *
      * @param mixed $data
-     *
-     * @return void
+     * @return $this
      */
     public function setDataFromEditmode($data)
     {

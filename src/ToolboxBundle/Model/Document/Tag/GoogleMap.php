@@ -129,6 +129,7 @@ class GoogleMap extends Document\Tag
      * @see Document\Tag\TagInterface::setDataFromEditmode
      * @param mixed $data
      * @return $this
+     * @throws \Exception
      */
     public function setDataFromEditmode($data)
     {

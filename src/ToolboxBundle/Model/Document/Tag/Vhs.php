@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Model\Document\Tag;
 
 use Pimcore\Model;
+use Pimcore\Model\Document;
 
 class Vhs extends Model\Document\Tag\Video
 {
@@ -91,10 +92,8 @@ class Vhs extends Model\Document\Tag\Video
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
-     *
      * @param mixed $data
-     *
-     * @return void
+     * @return $this
      */
     public function setDataFromEditmode($data)
     {
