@@ -2,15 +2,15 @@
 
 namespace ToolboxBundle\Calculator;
 
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 interface ColumnCalculatorInterface
 {
     /**
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      * @return mixed
      */
-    public function setConfigManager(ConfigManager $configManager);
+    public function setConfigManager(ConfigManagerInterface $configManager);
 
     /**
      * @param string     $value

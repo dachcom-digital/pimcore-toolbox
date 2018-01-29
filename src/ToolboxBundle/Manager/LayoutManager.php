@@ -4,7 +4,7 @@ namespace ToolboxBundle\Manager;
 
 use Symfony\Component\Templating\EngineInterface;
 
-class LayoutManager
+class LayoutManager implements LayoutManagerInterface
 {
     /**
      * @var ConfigManager
@@ -31,11 +31,11 @@ class LayoutManager
     }
 
     /**
-     * @param null $areaId
+     * @param null   $areaId
      * @param string $viewName
      * @param string $extension
-     *
      * @return string
+     * @throws \Exception
      */
     public function getAreaTemplateDir($areaId = NULL, $viewName = 'view', $extension = 'html.twig')
     {
@@ -78,12 +78,12 @@ class LayoutManager
 
     /**
      * @param string $areaName
-     *
-     * @return array|bool
+     * @return array
+     * @throws \Exception
      */
     public function getAreaThemeConfig($areaName = '')
     {
-        $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
+        $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
 
         $theme = [
             'layout'         => $layoutConfiguration['layout'],

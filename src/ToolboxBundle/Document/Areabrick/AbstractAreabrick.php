@@ -6,14 +6,14 @@ use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
 use ToolboxBundle\Builder\BrickConfigBuilder;
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManager;
 use ToolboxBundle\ToolboxConfig;
 
 abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
@@ -53,21 +53,21 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      */
-    public function setConfigManager(ConfigManager $configManager)
+    public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
 
     /**
-     * @return \ToolboxBundle\Manager\ConfigManager object
+     * @return \ToolboxBundle\Manager\ConfigManagerInterface object
      */
     public function getConfigManager()
     {
         $space = $this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL
-            ? ConfigManager::AREABRICK_NAMESPACE_INTERNAL
-            : ConfigManager::AREABRICK_NAMESPACE_EXTERNAL;
+            ? ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL
+            : ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL;
 
         return $this->configManager->setAreaNameSpace($space);
     }
@@ -103,7 +103,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function action(Info $info)
     {
-        if(!$this->getConfigManager() instanceof ConfigManager) {
+        if(!$this->getConfigManager() instanceof ConfigManagerInterface) {
             throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
         } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');

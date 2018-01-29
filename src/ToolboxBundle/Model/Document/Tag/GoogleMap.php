@@ -4,6 +4,7 @@ namespace ToolboxBundle\Model\Document\Tag;
 
 use Pimcore\Model\Document;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class GoogleMap extends Document\Tag
 {
@@ -35,8 +36,8 @@ class GoogleMap extends Document\Tag
 
     /**
      * Return the data for direct output to the frontend, can also contain HTML code!
-     *
      * @return string
+     * @throws \Exception
      */
     public function frontend()
     {
@@ -49,7 +50,7 @@ class GoogleMap extends Document\Tag
 
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {
 
@@ -94,7 +95,8 @@ class GoogleMap extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::admin
-     * @return string
+     * @return mixed|string
+     * @throws \Exception
      */
     public function admin()
     {
@@ -125,10 +127,8 @@ class GoogleMap extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
-     *
      * @param mixed $data
-     *
-     * @return void
+     * @return $this
      */
     public function setDataFromEditmode($data)
     {
@@ -156,14 +156,14 @@ class GoogleMap extends Document\Tag
 
     /**
      * @param $location
-     *
      * @return mixed
+     * @throws \Exception
      */
     protected function geocodeLocation($location)
     {
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
         $address = urlencode($address);

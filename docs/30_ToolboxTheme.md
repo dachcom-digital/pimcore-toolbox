@@ -123,12 +123,13 @@ toolbox:
 namespace AppBundle\Calculator;
 
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
     protected $configManager;
 
-    public function setConfigManager(ConfigManager $configManager)
+    public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
         $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);

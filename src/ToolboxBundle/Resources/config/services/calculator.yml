@@ -5,8 +5,8 @@ services:
         autoconfigure: true
         public: false
 
-    ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator'
-    ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator'
+    ToolboxBundle\Calculator\ColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator'
+    ToolboxBundle\Calculator\SlideColumnCalculatorInterface: '@ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator'
 
     # column calculator
     ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator:

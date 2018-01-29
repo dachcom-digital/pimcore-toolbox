@@ -3,30 +3,31 @@
 namespace ToolboxBundle\Calculator\Bootstrap3;
 
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
     /**
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      * @return $this
      */
-    public function setConfigManager(ConfigManager $configManager)
+    public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
-        $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
+        $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
         return $this;
     }
 
     /**
-     * @param string     $value
-     * @param array|null $customColumnConfiguration
+     * @param string $value
+     * @param null   $customColumnConfiguration
      * @return array
+     * @throws \Exception
      */
     public function calculateColumns($value, $customColumnConfiguration = NULL)
     {
@@ -132,8 +133,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
     /**
      * @param string $value
-     * @param null|array $customColumnConfiguration
-     * @return mixed
+     * @param null   $customColumnConfiguration
+     * @return bool|mixed
+     * @throws \Exception
      */
     public function getColumnInfoForAdjuster($value, $customColumnConfiguration = NULL)
     {

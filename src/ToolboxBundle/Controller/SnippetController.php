@@ -5,19 +5,21 @@ namespace ToolboxBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class SnippetController extends FrontendController
 {
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function teaserAction(Request $request)
     {
-        /** @var ConfigManager $configManager */
+        /** @var ConfigManagerInterface $configManager */
         $configManager = $this->container->get(ConfigManager::class);
-        $layoutStore = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'layout');
-        $addClStore = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'additional_classes');
+        $layoutStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'layout');
+        $addClStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'additional_classes');
 
         $store = $layoutStore['config']['store'];
         $layoutExtJsStore = [];

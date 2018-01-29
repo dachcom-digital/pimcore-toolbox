@@ -4,13 +4,13 @@ namespace ToolboxBundle\Twig\Extension;
 
 use Pimcore\Model\Asset;
 use ToolboxBundle\Connector\BundleConnector;
-use ToolboxBundle\Manager\ConfigManager;
 use Pimcore\Translation\Translator;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class DownloadExtension extends \Twig_Extension
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
@@ -25,13 +25,13 @@ class DownloadExtension extends \Twig_Extension
     protected $translator;
 
     /**
-     * AreaBlockConfigExtension constructor.
+     * DownloadExtension constructor.
      *
-     * @param ConfigManager   $configManager
-     * @param BundleConnector $bundleConnector
-     * @param Translator      $translator
+     * @param ConfigManagerInterface $configManager
+     * @param BundleConnector        $bundleConnector
+     * @param Translator             $translator
      */
-    public function __construct(ConfigManager $configManager, BundleConnector $bundleConnector, Translator $translator)
+    public function __construct(ConfigManagerInterface $configManager, BundleConnector $bundleConnector, Translator $translator)
     {
         $this->configManager = $configManager;
         $this->bundleConnector = $bundleConnector;
@@ -54,10 +54,10 @@ class DownloadExtension extends \Twig_Extension
     /**
      * @param string|array $areaType toolbox element or custom config
      * @param null|object  $element related element to track
-     *
      * @return string
+     * @throws \Exception
      */
-    public function getDownloadTracker($areaType, $element = NULL)
+    public function getDownloadTracker($areaType, $element = null)
     {
         if (empty($areaType)) {
             return '';
@@ -66,7 +66,7 @@ class DownloadExtension extends \Twig_Extension
         if (is_array($areaType)) {
             $trackerInfo = $areaType;
         } else {
-            $configNode = $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
+            $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
 
             if (empty($configNode) || !isset($configNode['event_tracker'])) {
                 return '';
@@ -106,13 +106,13 @@ class DownloadExtension extends \Twig_Extension
      * @param string               $fileSizeUnit
      * @param int                  $fileSizePrecision
      * @param bool                 $showFileNameIfTitleEmpty
-     *
      * @return array
+     * @throws \Exception
      */
-    public function getDownloadInfo($download, $showPreviewImage = FALSE, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = FALSE)
+    public function getDownloadInfo($download, $showPreviewImage = false, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = false)
     {
-        if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === TRUE
-            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== FALSE
+        if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === true
+            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== false
         ) {
             $dPath = $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionUri::class)->generateAssetUrl($download);
         } else {
@@ -132,7 +132,7 @@ class DownloadExtension extends \Twig_Extension
         $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : '';
         $dImageAltText = !empty($dAltText) ? $dAltText : $dName;
 
-        $dPreviewImage = NULL;
+        $dPreviewImage = null;
         $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
 
         if ($showPreviewImage) {
@@ -143,19 +143,19 @@ class DownloadExtension extends \Twig_Extension
                     ? $download->getThumbnail($previewThumbName)
                     : ($download instanceof Asset\Document
                     ? $download->getImageThumbnail($previewThumbName)
-                    : NULL)
+                    : null)
                 );
         }
 
-        $dPreviewImagePath = NULL;
-        $hasPreviewImage = FALSE;
+        $dPreviewImagePath = null;
+        $hasPreviewImage = false;
 
         if ($dPreviewImage instanceof Asset\Image\Thumbnail) {
             $dPreviewImagePath = $dPreviewImage->getPath();
-            $hasPreviewImage = TRUE;
+            $hasPreviewImage = true;
         } elseif ($dPreviewImage instanceof Asset\Document\ImageThumbnail && !empty($dPreviewImage->getConfig())) {
             $dPreviewImagePath = $dPreviewImage->getPath();
-            $hasPreviewImage = TRUE;
+            $hasPreviewImage = true;
         }
 
         return [

@@ -2,22 +2,21 @@
 
 namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 
-use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
-use ToolboxBundle\Registry\CalculatorRegistry;
+use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class SlideColumns extends AbstractAreabrick
 {
     /**
-     * @var CalculatorRegistry
+     * @var CalculatorRegistryInterface
      */
     private $calculatorRegistry;
 
     /**
-     * @param CalculatorRegistry $calculatorRegistry
+     * @param CalculatorRegistryInterface $calculatorRegistry
      */
-    public function __construct(CalculatorRegistry $calculatorRegistry)
+    public function __construct(CalculatorRegistryInterface $calculatorRegistry)
     {
         $this->calculatorRegistry = $calculatorRegistry;
     }
@@ -40,7 +39,7 @@ class SlideColumns extends AbstractAreabrick
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
         $theme = $this->configManager->getConfig('theme');
-        $calculator = $this->calculatorRegistry->get($theme['calculators']['slide_calculator'], 'slide_column');
+        $calculator = $this->calculatorRegistry->getSlideColumnCalculator($theme['calculators']['slide_calculator']);
 
         $slideColumnConfig = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
         $slidesPerViewClass = $calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);

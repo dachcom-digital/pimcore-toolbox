@@ -6,6 +6,7 @@ services:
         public: false
 
     # registry: language
+    ToolboxBundle\Registry\CalculatorRegistryInterface: '@ToolboxBundle\Registry\CalculatorRegistry'
     ToolboxBundle\Registry\CalculatorRegistry:
         arguments:
             $columnInterface: 'ToolboxBundle\Calculator\ColumnCalculatorInterface'

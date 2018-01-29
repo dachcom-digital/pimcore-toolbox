@@ -4,7 +4,7 @@ namespace ToolboxBundle\Manager;
 
 use ToolboxBundle\Resolver\ContextResolverInterface;
 
-class ConfigManager
+class ConfigManager implements ConfigManagerInterface
 {
     /**
      * @var ContextResolverInterface
@@ -41,9 +41,6 @@ class ConfigManager
      */
     private $areaNamespace = null;
 
-    const AREABRICK_NAMESPACE_INTERNAL = 'areas';
-
-    const AREABRICK_NAMESPACE_EXTERNAL = 'custom_areas';
 
     /**
      * ConfigManager constructor.
@@ -69,7 +66,7 @@ class ConfigManager
      *
      * @return $this
      */
-    public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL)
+    public function setAreaNameSpace($namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)
     {
         $this->areaNamespace = $namespace;
         return $this;

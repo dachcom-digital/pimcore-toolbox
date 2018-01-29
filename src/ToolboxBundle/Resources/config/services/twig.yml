@@ -3,17 +3,20 @@ services:
     # twig extensions
     ToolboxBundle\Twig\Extension\AreaBlockConfigExtension:
         autowire: true
+        public: false
         tags:
             - { name: twig.extension }
 
     ToolboxBundle\Twig\Extension\DownloadExtension:
         autowire: true
+        public: false
         tags:
             - { name: twig.extension }
 
     ToolboxBundle\Twig\Extension\DocumentTagExtension:
         parent: Pimcore\Twig\Extension\DocumentTagExtension
         autowire: true
+        public: false
         tags:
             - { name: twig.extension }
 

@@ -3,28 +3,28 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use Pimcore\Model\Document\Snippet;
-use ToolboxBundle\Manager\ConfigManager;
-use ToolboxBundle\Manager\AreaManager;
+use ToolboxBundle\Manager\AreaManagerInterface;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class AreaBlockConfigExtension extends \Twig_Extension
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
     /**
-     * @var AreaManager
+     * @var AreaManagerInterface
      */
     protected $areaManager;
 
     /**
      * AreaBlockConfigExtension constructor.
      *
-     * @param ConfigManager $configManager
-     * @param AreaManager   $areaManager
+     * @param ConfigManagerInterface $configManager
+     * @param AreaManagerInterface   $areaManager
      */
-    public function __construct(ConfigManager $configManager, AreaManager $areaManager)
+    public function __construct(ConfigManagerInterface $configManager, AreaManagerInterface $areaManager)
     {
         $this->configManager = $configManager;
         $this->areaManager = $areaManager;
@@ -37,18 +37,18 @@ class AreaBlockConfigExtension extends \Twig_Extension
     {
         return [
             new \Twig_Function('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'], [
-                'needs_context' => TRUE
+                'needs_context' => true
             ])
         ];
     }
 
     /**
-     * @param      $context
-     * @param      $type
-     *
+     * @param array $context
+     * @param null  $type
      * @return array
+     * @throws \Exception
      */
-    public function getAreaBlockConfiguration($context = [], $type = NULL)
+    public function getAreaBlockConfiguration($context = [], $type = null)
     {
         $document = $context['document'];
         return $this->areaManager->getAreaBlockConfiguration($type, $document instanceof Snippet);

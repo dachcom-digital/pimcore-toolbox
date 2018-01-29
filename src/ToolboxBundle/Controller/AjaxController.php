@@ -5,7 +5,9 @@ namespace ToolboxBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManager;
+use ToolboxBundle\Manager\LayoutManagerInterface;
 
 class AjaxController extends FrontendController
 {
@@ -16,7 +18,7 @@ class AjaxController extends FrontendController
      */
     public function gmInfoWindowAction(Request $request)
     {
-        /** @var LayoutManager $layoutManager */
+        /** @var LayoutManagerInterface $layoutManager */
         $layoutManager = $this->container->get(LayoutManager::class);
 
         return $this->render(
@@ -30,14 +32,14 @@ class AjaxController extends FrontendController
 
     /**
      * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
     public function videoGetTypesAction(Request $request)
     {
-        /** @var ConfigManager $configManager */
+        /** @var ConfigManagerInterface $configManager */
         $configManager = $this->container->get(ConfigManager::class);
-        $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
+        $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['video_types'];
         $allowedVideoTypes = [];

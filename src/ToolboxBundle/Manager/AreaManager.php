@@ -4,10 +4,10 @@ namespace ToolboxBundle\Manager;
 
 use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 
-class AreaManager
+class AreaManager implements AreaManagerInterface
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     var $configManager;
 
@@ -19,15 +19,19 @@ class AreaManager
     /**
      * ElementBuilder constructor.
      *
-     * @param ConfigManager    $configManager
-     * @param AreabrickManager $brickManager
+     * @param ConfigManagerInterface $configManager
+     * @param AreabrickManager       $brickManager
      */
-    public function __construct(ConfigManager $configManager, AreabrickManager $brickManager)
+    public function __construct(ConfigManagerInterface $configManager, AreabrickManager $brickManager)
     {
         $this->configManager = $configManager;
         $this->brickManager = $brickManager;
     }
 
+    /**
+     * @param null $type
+     * @return string
+     */
     public function getAreaBlockName($type = null)
     {
         if ($type === 'parallaxContainerSection') {

@@ -2,21 +2,21 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class DataAttributesExtension extends \Twig_Extension
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
     /**
      * DataAttributesExtension constructor.
      *
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      */
-    public function __construct(ConfigManager $configManager)
+    public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
@@ -34,8 +34,8 @@ class DataAttributesExtension extends \Twig_Extension
     /**
      * @param       $node
      * @param array $overrides
-     *
      * @return string
+     * @throws \Exception
      */
     public function generateDataAttributes($node, $overrides = [])
     {

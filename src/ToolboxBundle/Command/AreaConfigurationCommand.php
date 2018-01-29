@@ -2,24 +2,30 @@
 
 namespace ToolboxBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
 use Symfony\Component\Console\Helper\TableSeparator;
-use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use ToolboxBundle\Manager\AdaptiveConfigManager;
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\AdaptiveConfigManagerInterface;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\ToolboxConfig;
 
 class AreaConfigurationCommand extends Command
 {
+    /**
+     * @var AdaptiveConfigManagerInterface
+     */
     private $adaptiveConfigManager;
 
-    public function __construct(AdaptiveConfigManager $adaptiveConfigManager)
+    /**
+     * AreaConfigurationCommand constructor.
+     *
+     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
+     */
+    public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
         $this->adaptiveConfigManager = $adaptiveConfigManager;
         parent::__construct();
@@ -59,9 +65,9 @@ class AreaConfigurationCommand extends Command
             return;
         }
 
-        $namespace = ConfigManager::AREABRICK_NAMESPACE_INTERNAL;
+        $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL;
         if (!in_array($brickId, ToolboxConfig::TOOLBOX_TYPES)) {
-            $namespace = ConfigManager::AREABRICK_NAMESPACE_EXTERNAL;
+            $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL;
         }
 
         $this->adaptiveConfigManager->setAreaNameSpace($namespace);

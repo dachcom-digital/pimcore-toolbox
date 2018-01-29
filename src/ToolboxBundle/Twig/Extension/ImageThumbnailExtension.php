@@ -2,21 +2,21 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class ImageThumbnailExtension extends \Twig_Extension
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
     /**
      * ImageThumbnailExtension constructor.
      *
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      */
-    public function __construct(ConfigManager $configManager)
+    public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
@@ -33,10 +33,10 @@ class ImageThumbnailExtension extends \Twig_Extension
 
     /**
      * @param null $thumbnailName
-     *
      * @return mixed
+     * @throws \Exception
      */
-    public function getImageThumbnail($thumbnailName = NULL)
+    public function getImageThumbnail($thumbnailName = null)
     {
         return $this->configManager->getImageThumbnailFromConfig($thumbnailName);
     }

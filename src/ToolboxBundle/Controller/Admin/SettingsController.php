@@ -4,6 +4,7 @@ namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class SettingsController extends Controller\AdminController
 {
@@ -23,7 +24,8 @@ class SettingsController extends Controller\AdminController
     public $ckEditorAreaConfig = [];
 
     /**
-     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function ckEditorAreaStyleAction()
     {
@@ -42,7 +44,8 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function ckEditorObjectStyleAction()
     {
@@ -60,10 +63,11 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     *
+     * @throws \Exception
      */
     private function setData()
     {
+        /** @var ConfigManagerInterface $toolboxConfig */
         $toolboxConfig = $this->container->get(ConfigManager::class);
         $ckEditorSettings = $toolboxConfig->getConfig('ckeditor');
 

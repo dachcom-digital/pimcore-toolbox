@@ -3,23 +3,23 @@
 namespace ToolboxBundle\Calculator\Bootstrap4;
 
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
-use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
     /**
-     * @var ConfigManager
+     * @var ConfigManagerInterface
      */
     protected $configManager;
 
     /**
-     * @param ConfigManager $configManager
+     * @param ConfigManagerInterface $configManager
      * @return $this
      */
-    public function setConfigManager(ConfigManager $configManager)
+    public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
-        $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
+        $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
         return $this;
     }
 

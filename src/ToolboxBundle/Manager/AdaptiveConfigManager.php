@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Manager;
 
-class AdaptiveConfigManager extends ConfigManager
+class AdaptiveConfigManager extends ConfigManager implements ConfigManagerInterface, AdaptiveConfigManagerInterface
 {
     /**
      * @var null

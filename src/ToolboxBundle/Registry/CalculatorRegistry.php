@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Registry;
 
-class CalculatorRegistry
+class CalculatorRegistry implements CalculatorRegistryInterface
 {
     /**
      * @var array
@@ -53,6 +53,30 @@ class CalculatorRegistry
     public function has($alias, $type)
     {
         return isset($this->adapter[$type][$alias]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getColumnCalculator($alias)
+    {
+        if (!$this->has($alias, 'column')) {
+            throw new \Exception('"' . $alias . '" Column Calculator Identifier does not exist');
+        }
+
+        return $this->get($alias, 'column');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSlideColumnCalculator($alias)
+    {
+        if (!$this->has($alias, 'slide_column')) {
+            throw new \Exception('"' . $alias . '" Slide Column Calculator Identifier does not exist');
+        }
+
+        return $this->get($alias, 'slide_column');
     }
 
     /**
