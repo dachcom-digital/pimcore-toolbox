@@ -8,8 +8,11 @@
   mapParams['city']
   mapParams['country']
   mapParams['add']
- 
+  mapParams['lat']
+  mapParams['lng']
+
 #}
+{% import '@Toolbox/Macro/mapLink.html.twig' as link_generator %}
 <div class="info-window">
     <strong>{{ mapParams.title }}</strong><br>
     {{ mapParams.street }}<br>
@@ -18,6 +21,6 @@
         <br>{{ mapParams.add }}
     {% endif %}
     <div class="google-map-route-planer">
-        <a href="{{ googleMapsHostUrl }}/?daddr={{ mapParams.street }},{{ mapParams.zip }} {{ mapParams.city }},{{ mapParams.country }}" target="_blank">{{  'route planer'|trans }}</a>
+        <a href="{{- link_generator.generate(googleMapsHostUrl, mapParams) -}}" target="_blank">{{  'route planer'|trans }}</a>
     </div>
 </div>

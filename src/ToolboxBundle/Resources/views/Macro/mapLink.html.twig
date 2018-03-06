@@ -1,0 +1,21 @@
+{%- macro generate(googleMapsHostUrl, mapParams, useLangLat = true, point = 'daddr', mode = 'driving') %}
+    {%- spaceless %}
+        {% set pointMode = 'daddr' %}
+        {% set validPointMode = ['daddr', 'saddr'] %}
+        {% if point in validPointMode|keys %}
+            {% set pointMode = point %}
+        {% endif %}
+
+        {% set directionMode = 'driving' %}
+        {% set validDirectionMode = ['driving', 'transit', 'bicycling', 'walking'] %}
+        {% if mode in validDirectionMode|keys %}
+            {% set directionMode = mode %}
+        {% endif %}
+
+        {% if useLangLat == true %}
+            {{ googleMapsHostUrl  ~ '/?' ~ pointMode ~ '=' ~  mapParams.lat ~ ',' ~ mapParams.lng ~ '&directionsmode=' ~ directionMode }}
+        {% else %}
+            {{ googleMapsHostUrl ~ '/?' ~ pointMode ~ '=' ~ mapParams.street|replace({' ' : '+'}) ~ ',' ~ mapParams.zip ~ '+' ~ mapParams.city|replace({' ' : '+'}) ~ ',' ~ mapParams.country|replace({' ' : '+'}) ~ '&directionsmode=' ~ directionMode }}
+        {% endif %}
+    {% endspaceless -%}
+{% endmacro -%}
