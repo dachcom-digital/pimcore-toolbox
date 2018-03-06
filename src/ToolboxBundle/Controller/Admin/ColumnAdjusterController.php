@@ -4,26 +4,52 @@ namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use ToolboxBundle\Calculator\ColumnCalculatorInterface;
+use ToolboxBundle\Manager\ConfigManagerInterface;
+use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class ColumnAdjusterController extends Controller\AdminController
 {
     /**
+     * @var CalculatorRegistryInterface
+     */
+    private $calculatorRegistry;
+
+    /**
+     * @var ConfigManagerInterface
+     */
+    private $configManager;
+
+    /**
+     * @param ConfigManagerInterface      $configManager
+     * @param CalculatorRegistryInterface $calculatorRegistry
+     */
+    public function __construct(
+        ConfigManagerInterface $configManager,
+        CalculatorRegistryInterface $calculatorRegistry
+    ) {
+        $this->configManager = $configManager;
+        $this->calculatorRegistry = $calculatorRegistry;
+    }
+
+    /**
      * @param Request $request
-     * @return \Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Exception
      */
     public function getColumnInfoAction(Request $request)
     {
         $currentColumn = $request->request->get('currentColumn');
         $customColumnConfigurationData = $request->request->get('customColumnConfiguration');
 
-        $response = json_decode($customColumnConfigurationData, TRUE);
-        $customColumnConfiguration = NULL;
-        if(is_array($response)) {
+        $response = json_decode($customColumnConfigurationData, true);
+        $customColumnConfiguration = null;
+
+        if (is_array($response)) {
             $customColumnConfiguration = [$currentColumn => $response];
         }
 
-        $columnCalculator = $this->get(ColumnCalculatorInterface::class);
+        $theme = $this->configManager->getConfig('theme');
+        $columnCalculator = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator']);
         $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $customColumnConfiguration);
 
         return $this->json(['breakPoints' => $breakPointConfiguration]);

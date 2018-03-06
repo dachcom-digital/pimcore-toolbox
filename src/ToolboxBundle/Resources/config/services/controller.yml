@@ -1,0 +1,4 @@
+services:
+
+    ToolboxBundle\Controller\Admin\ColumnAdjusterController:
+        autowire: true

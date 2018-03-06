@@ -4,13 +4,12 @@ namespace ToolboxBundle\Document\Areabrick\Columns;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
-use ToolboxBundle\Registry\CalculatorRegistry;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class Columns extends AbstractAreabrick
 {
     /**
-     * @var CalculatorRegistry
+     * @var CalculatorRegistryInterface
      */
     private $calculatorRegistry;
 
@@ -49,7 +48,7 @@ class Columns extends AbstractAreabrick
         }
 
         $theme = $this->configManager->getConfig('theme');
-        $columns = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator'], 'column')->calculateColumns($type, $customColumnConfiguration);
+        $columns = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator'])->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
 
