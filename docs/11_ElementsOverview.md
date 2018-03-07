@@ -10,7 +10,7 @@ It's possible to change the layout from accordion to tabs without loosing the co
 |------|------|-----------------------------|---------------|-------------------------------|
 | `type` | select | Choose a accordion type | panel-default | `pimcore_select('type')` |
 | `component` | select | Choose the component type | accordion | `pimcore_select('component')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Anchor
 Create a anchor element.
@@ -21,7 +21,6 @@ Create a anchor element.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `anchor_name` | input | Set the anchor name | - | `pimcore_input('anchor_name')` |
 | `anchor_title` | input | Set the anchor title | - | `pimcore_input('anchor_title')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
 
 ## Columns
 
@@ -44,7 +43,7 @@ If you're using a different grid system, you probably need to change the [grid c
 | `type` | select | Set the column type. see example below. | column_6_6 | `pimcore_input('type')` |
 | `columnadjuster` | section | This element comes by default after the `type` field. Read more about this feature [here](60_ColumnAdjuster.md) | - | - |
 | `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Column Calculation Example
 
@@ -106,7 +105,7 @@ Create a container element. Useful if you're using a full width layout.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `full_width_container` | checkbox | Adds the `container-fluid` class | false | `pimcore_checkbox('full_width_container')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Content
 Create a wysiwyg editor.
@@ -115,7 +114,7 @@ Create a wysiwyg editor.
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 
 ## Download
@@ -130,7 +129,7 @@ Create download elements.
 | `downloads` | multihref | Add download files / folders | - | `pimcore_multihref('downloads')` |
 | `show_preview_images` | checkbox | Display Preview Images | false | `pimcore_checkbox('show_preview_images')` |
 | `show_file_info` | checkbox | Display File Info | false | `pimcore_checkbox('show_file_info')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 Use the `event_tracker` Parameter to build a helper markup for google events:
@@ -176,7 +175,7 @@ If you want to use a different extension to generate your galleries, just overri
 | `images` | multihref | Add images / folders | - | `pimcore_multihref('images')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `use_thumbnails` | checkbox | Add a thumbnail slider | false | `pimcore_checkbox('use_thumbnails')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. Toolbox will automatically generate the long/lat information after saving the document.
@@ -195,7 +194,7 @@ Please be sure that you've included a valid google maps api key. Include the scr
 | `map_zoom` | numeric | Map Zoom | 12 | `pimcore_numeric('map_zoom')` |
 | `map_type` | select | Map Type (ROADMAP, HYBRID ..) | roadmap | `pimcore_select('map_type')` |
 | `iw_on_init` | checkbox | Open Info Window by Default | false | `pimcore_checkbox('iw_on_init')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -222,7 +221,7 @@ toolbox:
                 marker_icon: false
                 map_api_key: false
 ```
-### Jquery Plugin
+### jQuery Plugin
 There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
 
 ## Headline
@@ -234,7 +233,7 @@ Create a headline.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `headline_type` | select | Define the headline size | h3 | `pimcore_select('headline_type')` |
 | `anchor_name` | input | Define a anchor name | - | `pimcore_input('anchor_name')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 
 ## Image
@@ -246,7 +245,7 @@ Create a image field.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `show_caption` | checkbox | Render image caption | false | `pimcore_checkbox('show_caption')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | `see [section additional classes](#additional-classes) |
 
 
 ## Link List
@@ -258,7 +257,7 @@ Create a link list (via pimcore block element).
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Parallax Container
 Build a Parallax Container.
@@ -272,7 +271,7 @@ Build a Parallax Container.
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
 | `image_front` | parallaximage | Parallax Images behind content | - | *not available* |
 | `image_behind` | parallaximage | Parallax Images in front of content | - | *not available* |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -307,7 +306,7 @@ Build a Parallax Container Section.
 | `container_type` | select | Define a Container Type | none | `pimcore_select('container_type')` |
 | `background_image` | href | Define a background image | - | `pimcore_href('background_image')` |
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -332,7 +331,7 @@ Create a Separator Element (hr)
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `space` | select | Add some seperator spacer classes | default | `pimcore_select('space')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 
 ## Slide Columns
@@ -351,7 +350,7 @@ This is just a hint if you're going to use a different javascript extension: Be 
 |------|------|-----------------------------|---------------|-------------------------------|
 | `slides_per_view` | select | Slides per View | 4 | `pimcore_select('slides_per_view')` |
 | `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -377,7 +376,7 @@ Create a spacer element.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `spacer_class` | select | Spacer classes | spacer-none | `pimcore_select('spacer_class')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Teaser
 Create teaser elements.
@@ -391,7 +390,7 @@ Create teaser elements.
 | `type` | select | Define Teaser Type: direct or as snippet | direct | `pimcore_select('type')`. Read more about below in "Teaser Type" Section. |
 | `layout` | select | Define Teaser Layout | default | `pimcore_select('layout')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link for teaser image | false | `pimcore_checkbox('use_light_box')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Teaser Types
 Like explained above, it's possible to switch between two Types of Teasers:
@@ -416,7 +415,7 @@ Create a Video Element.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `autoplay` | checkbox | Start/Stop Video if it's in a visible viewport | false | `pimcore_checkbox('autoplay')` |
-| `additional_classes` | select | Add custom classes | - | `pimcore_select('add_classes')` |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -443,7 +442,7 @@ toolbox:
                         allow_lightbox: true
 ```
 
-### Jquery Plugin
+### jQuery Plugin
 There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#video-extension)
 
 # Element Config Field Overview
@@ -463,19 +462,82 @@ toolbox:
                         # https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
 ```
 
-There is also the `additionalClasses` field. This Element will help you to generate some additional classes for every toolbox element.
+# Additional Classes
+
+Almost every toolbox element supports the `additionalClasses` field type.
+This Element will help you to generate some additional classes for every toolbox element.
+This is great since you don't need to override the element view, just add one or more additional classes via config.
 
 > Note: The class gets attached to the `toolbox-*` wrapper element.
 
-**Example** 
+## Main Additional Class
+To add some
+
 ```yaml
 toolbox:
     areas:
-        container:
+        headline:
             config_elements:
                 additional_classes:
                     type: additionalClasses
                     config:
                         store:
                             white-bg: 'White Background'
+```
+
+This will generate a drop-down in your area config field:
+
+![single](https://user-images.githubusercontent.com/700119/37090031-0a132888-2203-11e8-9b52-b7f5acb7eebf.png)
+
+> **Note!** You can only use `additionalClasses` once per field.
+
+> **Note!** Name needs to be `additional_classes`.
+
+## Chained Additional Classes
+If you need to add more additional classes you need to add one or more fields of type `additionalClassesChained`.
+
+```yml
+toolbox:
+    areas:
+        headline:
+            config_elements:
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store:
+                            ac_class_1: 'class 1'
+                            ac_class_2: 'class 2'
+                            ac_class_3: 'class 3'
+                additional_classes_chain_1:
+                    type: additionalClassesChained
+                    title: 'II. Chained Classes'
+                    config:
+                        store:
+                            chain_one_class_1: 'chain one class 1'
+                            chain_one_class_2: 'chain one class 2'
+                            chain_one_class_3: 'chain one class 3'
+                additional_classes_chain_2:
+                    type: additionalClassesChained
+                    title: 'III. Chained Classes'
+                    config:
+                        store:
+                            chain_two_class_1: 'chain two class 1'
+                            chain_two_class_2: 'chain two class 2'
+                            chain_two_class_3: 'chain two class 3'
+```
+
+This will generate some drop-downs in your area config field:
+
+![multiple](https://user-images.githubusercontent.com/700119/37089995-f16cee40-2202-11e8-8dff-cf9cc07df6aa.png)
+
+> **Note!** You can only use `additionalClassesChained` if there is a configured `additionalClasses` field.
+
+> **Note!** Name needs to be `additional_classes_chain_[INT]` where `[INT]` needs to be numeric.
+
+Now check the toolbox-element, all additional classes are available in the `toolbox-element`:
+
+```html
+<div class="toolbox-element toolbox-headline ac_class_1 chain_one_class_2 chain_two_class_3">
+ [...]
+</div>
 ```
