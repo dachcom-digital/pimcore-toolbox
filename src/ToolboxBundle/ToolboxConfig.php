@@ -52,6 +52,7 @@ final class ToolboxConfig
 
     const CUSTOM_TYPES = [
         'additionalClasses',
+        'additionalClassesChained',
         'parallaximage',
         'googlemap',
         'vhs',

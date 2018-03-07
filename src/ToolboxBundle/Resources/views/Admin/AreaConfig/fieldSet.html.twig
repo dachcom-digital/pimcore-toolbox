@@ -7,7 +7,7 @@
 
         <div class="toolbox-edit-overlay {{ window_size }}">
 
-            {% set half_counter = 0 %}
+            {% set row_element_counter = 0 %}
             {% set row_counter = 0 %}
             {% set last_col_class = null %}
 
@@ -19,13 +19,13 @@
                     <div class="t-row clearfix {{ edit_mode_hidden_class }}" data-index="0">
                 {% endif %}
 
-                {% if config_element.additional_config.col_class == 't-col-half' %}
-                    {% set half_counter = half_counter + 1 %}
+                {% if config_element.additional_config.col_class == 't-col-half' or config_element.additional_config.col_class == 't-col-third' %}
+                    {% set row_element_counter = row_element_counter + 1 %}
                 {% else %}
-                    {% set half_counter = 0 %}
+                    {% set row_element_counter = 0 %}
                 {% endif %}
 
-                {% if config_element.additional_config.col_class == 't-col-full' and last_col_class == 't-col-half' %}
+                {% if config_element.additional_config.col_class == 't-col-full' and last_col_class != 't-col-full' %}
                    </div><div class="t-row clearfix {{ edit_mode_hidden_class }}" data-index="{{ row_counter }}">
                 {% endif %}
 
@@ -44,10 +44,9 @@
                     </div><!-- .col-class -->
                 </div><!-- .toolbox-element -->
 
-                {% if half_counter == 0 or half_counter == 2 %}
+                {% if row_element_counter == 0 or (config_element.additional_config.col_class == 't-col-half' and row_element_counter == 2) or (config_element.additional_config.col_class == 't-col-third' and row_element_counter == 3) %}
                     {% set edit_mode_hidden_class = config_elements[c+1].additional_config is defined and config_elements[c+1].additional_config.editmode_hidden == true ? 'editmode-hidden' : '' %}
                     </div><div class="t-row clearfix {{ edit_mode_hidden_class }}" data-index="{{ row_counter }}">
-
                 {% endif %}
 
                 {% set last_col_class = config_element.additional_config.col_class %}

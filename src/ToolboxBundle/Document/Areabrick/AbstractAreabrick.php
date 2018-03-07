@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick;
 
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Tag;
 
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManagerInterface;
@@ -39,7 +39,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * @param string $type
      */
-    public function setAreaBrickType($type = self::AREABRICK_TYPE_INTERNAL) {
+    public function setAreaBrickType($type = self::AREABRICK_TYPE_INTERNAL)
+    {
 
         $this->areaBrickType = $type;
     }
@@ -47,7 +48,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * @return string
      */
-    public function getAreaBrickType() {
+    public function getAreaBrickType()
+    {
 
         return $this->areaBrickType;
     }
@@ -97,17 +99,17 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param Info $info
+     * @param Tag\Area\Info $info
      *
      * @throws \Exception
      */
-    public function action(Info $info)
+    public function action(Tag\Area\Info $info)
     {
-        if(!$this->getConfigManager() instanceof ConfigManagerInterface) {
+        if (!$this->getConfigManager() instanceof ConfigManagerInterface) {
             throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
-        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
+        } elseif ($this->getAreaBrickType() == self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');
-        } else if($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
+        } elseif ($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
             throw new \Exception('The "' . $info->getId() . '" AreaBrick is using a reserved id. Please change the id of your custom AreaBrick.');
         }
 
@@ -115,12 +117,49 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         $themeOptions = $this->getConfigManager()->getConfig('theme');
         $configWindowData = $this->getBrickConfigBuilder()->buildElementConfig($this->getId(), $this->getName(), $info, $configNode, $themeOptions);
 
-        $layoutDir = NULL;
+        $layoutDir = null;
 
         $view = $info->getView();
         $view->elementConfigBar = $configWindowData;
+        $view->additionalClassesData = $this->configureAdditionalClasses($info, $configNode);
         $view->elementThemeConfig = $this->layoutManager->getAreaThemeConfig($this->getId());
         $view->areaId = $this->getId();
+    }
+
+    /**
+     * @param Tag\Area\Info $info
+     * @param               $configNode
+     * @return array
+     */
+    private function configureAdditionalClasses(Tag\Area\Info $info, $configNode)
+    {
+        $classesArray = [];
+
+        if (!isset($configNode['config_elements'])) {
+            return $classesArray;
+        }
+
+        foreach ($configNode['config_elements'] as $name => $configElement) {
+            if (!isset($configElement['type'])) {
+                continue;
+            }
+
+            if ($configElement['type'] === 'additionalClasses') {
+                $addClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_classes');
+                if ($addClassField instanceof Tag\Select && !empty($addClassField->getValue())) {
+                    $classesArray[] = (string)$addClassField->getValue();
+                }
+            } elseif ($configElement['type'] === 'additionalClassesChained') {
+                $chainedElementName = explode('_', $name);
+                $chainedIncrementor = end($chainedElementName);
+                $addChainedClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_cclasses_' . $chainedIncrementor);
+                if ($addChainedClassField instanceof Tag\Select && !empty($addChainedClassField->getValue())) {
+                    $classesArray[] = (string)$addChainedClassField->getValue();
+                }
+            }
+        }
+
+        return $classesArray;
     }
 
     /**
@@ -131,7 +170,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function getTemplateLocation()
     {
-        if($this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL) {
+        if ($this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL) {
             return static::TEMPLATE_LOCATION_BUNDLE;
         }
 
@@ -167,7 +206,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function getHtmlTagOpen(Info $info)
+    public function getHtmlTagOpen(Tag\Area\Info $info)
     {
         return '';
     }
@@ -175,7 +214,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function getHtmlTagClose(Info $info)
+    public function getHtmlTagClose(Tag\Area\Info $info)
     {
         return '';
     }

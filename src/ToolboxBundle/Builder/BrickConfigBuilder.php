@@ -12,57 +12,62 @@ class BrickConfigBuilder
     /**
      * @var Translator
      */
-    var $translator;
+    protected $translator;
 
     /**
      * @var TagRenderer
      */
-    var $tagRenderer;
+    protected $tagRenderer;
 
     /**
      * @var EngineInterface
      */
-    var $templating;
+    protected $templating;
 
     /**
      * @var bool
      */
-    var $hasReload = FALSE;
+    protected $hasReload = false;
 
     /**
      * @var bool
      */
-    var $documentEditableId = FALSE;
+    protected $documentEditableId = false;
 
     /**
      * @var string
      */
-    var $documentEditableName = '';
+    protected $documentEditableName = '';
 
     /**
      * @var \Pimcore\Model\Document\Tag\Area\Info null
      */
-    var $info = NULL;
+    protected $info = null;
 
     /**
      * @var array
      */
-    var $themeOptions = [];
+    protected $themeOptions = [];
 
     /**
      * @var array
      */
-    var $configElements = [];
+    protected $configElements = [];
 
     /**
      * @var array
      */
-    var $configParameter = [];
+    protected $configParameter = [];
+
+    /**
+     * @var bool
+     */
+    protected $hasAdditionalClassStore = false;
 
     /**
      * @var null
      */
-    var $configWindowSize = NULL;
+    protected $configWindowSize = null;
 
     /**
      * ElementBuilder constructor.
@@ -76,7 +81,6 @@ class BrickConfigBuilder
         TagRenderer $tagRenderer,
         EngineInterface $templating
     ) {
-
         $this->translator = $translator;
         $this->tagRenderer = $tagRenderer;
         $this->templating = $templating;
@@ -88,13 +92,15 @@ class BrickConfigBuilder
      * @param Info  $info
      * @param array $configNode
      * @param array $themeOptions
-     *
-     * @return string
+     * @return bool|string
+     * @throws \Exception
      */
     public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
     {
-        if ($info->getView()->get('editmode') === FALSE) {
-            return FALSE;
+        $this->reset();
+
+        if ($info->getView()->get('editmode') === false) {
+            return false;
         }
 
         $this->documentEditableId = $documentEditableId;
@@ -105,8 +111,20 @@ class BrickConfigBuilder
         $this->configParameter = isset($configNode['config_parameter']) ? $configNode['config_parameter'] : [];
         $this->configWindowSize = $this->getConfigWindowSize();
 
+        $defaultFields = [];
+        $acFields = [];
+        $configElements = $this->parseConfigElements();
+
+        foreach ($configElements as $configElement) {
+            if ($configElement['additional_config']['additional_classes_element'] === true) {
+                $acFields[] = $configElement;
+            } else {
+                $defaultFields[] = $configElement;
+            }
+        }
+
         $fieldSetArgs = [
-            'config_elements'        => $this->parseConfigElements(),
+            'config_elements'        => array_merge($defaultFields, $acFields),
             'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
             'window_size'            => $this->configWindowSize,
             'document'               => $info->getDocument(),
@@ -121,7 +139,7 @@ class BrickConfigBuilder
      */
     private function getConfigWindowSize()
     {
-        $configWindowSize = isset($this->configParameter['window_size']) ? (string)$this->configParameter['window_size'] : NULL;
+        $configWindowSize = isset($this->configParameter['window_size']) ? (string)$this->configParameter['window_size'] : null;
         return !is_null($configWindowSize) ? $configWindowSize : 'small';
     }
 
@@ -131,7 +149,7 @@ class BrickConfigBuilder
      */
     private function needStore($type)
     {
-        return in_array($type, ['select', 'multiselect', 'additionalClasses']);
+        return in_array($type, ['select', 'multiselect', 'additionalClasses', 'additionalClassesChained']);
     }
 
     /**
@@ -157,7 +175,9 @@ class BrickConfigBuilder
                 'textarea',
                 'video',
                 'wysiwyg',
-                'parallaximage'
+                'parallaximage',
+                'additionalClasses',
+                'additionalClassesChained'
             ]);
     }
 
@@ -169,7 +189,6 @@ class BrickConfigBuilder
     {
         return in_array($type, [
             'multihref',
-            'width',
             'image',
             'multiselect',
             'embed',
@@ -184,27 +203,46 @@ class BrickConfigBuilder
     }
 
     /**
+     * Reset class for next element to build
+     */
+    private function reset()
+    {
+        $this->hasReload = false;
+        $this->documentEditableId = false;
+        $this->documentEditableName = '';
+        $this->info = null;
+        $this->themeOptions = [];
+        $this->configElements = [];
+        $this->configParameter = [];
+        $this->hasAdditionalClassStore = false;
+        $this->configWindowSize = null;
+    }
+
+    /**
      * @param $type
      * @param $config
+     * @param $additionalConfig
      * @return array
      * @throws \Exception
      */
-    private function getTagConfig($type, $config)
+    private function getTagConfig($type, $config, $additionalConfig)
     {
         if (is_null($config)) {
             return [];
         }
 
-        $this->hasReload = isset($config['reload']) ? $config['reload'] === TRUE : TRUE;
+        $this->hasReload = isset($config['reload']) ? $config['reload'] === true : true;
 
         $parsedConfig = $config;
 
         //override reload
-        $parsedConfig['reload'] = FALSE;
+        $parsedConfig['reload'] = false;
 
         //set width
         if ($this->canHaveDynamicWidth($type)) {
-            $parsedConfig['width'] = isset($parsedConfig['width']) ? $parsedConfig['width'] : ($this->configWindowSize === 'large' ? 760 : 560);
+            $parsedConfig['width'] = isset($parsedConfig['width'])
+                ? $parsedConfig['width']
+                : (isset($additionalConfig['col_class']) ? '100%' : ($this->configWindowSize === 'large' ? 760 : 560));
         } else {
             unset($parsedConfig['width']);
         }
@@ -257,7 +295,7 @@ class BrickConfigBuilder
         }
 
         $config = $rawConfig;
-        $defaultConfigValue = isset($config['config']['default']) ? $config['config']['default'] : NULL;
+        $defaultConfigValue = isset($config['config']['default']) ? $config['config']['default'] : null;
 
         //remove tag area config.
         unset($config['config']);
@@ -290,11 +328,11 @@ class BrickConfigBuilder
         $el = $this->tagRenderer->getTag($this->info->getDocument(), $config['type'], $config['name']);
 
         //force default (only if it returns false. checkboxes may return an empty string and are impossible to track into default mode
-        if (!empty($defaultConfigValue) && ($el->isEmpty() === TRUE)) {
+        if (!empty($defaultConfigValue) && ($el->isEmpty() === true)) {
             $el->setDataFromResource($defaultConfigValue);
         }
 
-        $value = NULL;
+        $value = null;
 
         switch ($config['type']) {
 
@@ -313,15 +351,55 @@ class BrickConfigBuilder
     /**
      * @param $configElementName
      * @param $elConf
-     *
      * @return mixed
+     * @throws \Exception
      */
     private function parseElementConfig($configElementName, $elConf)
     {
+        $elConf['additional_classes_element'] = false;
+
         if ($elConf['type'] === 'additionalClasses') {
+
+            if ($this->hasAdditionalClassStore === true) {
+                throw new \Exception(
+                    sprintf('A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
+                        $this->documentEditableName, 'additionalClasses', 'additionalClassesChained')
+                );
+            }
+
             $elConf['type'] = 'select';
-            $elConf['title'] = 'Additional';
+            $elConf['title'] = isset($elConf['title']) && !empty($elConf['title']) ? $elConf['title'] : 'Additional';
+            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] :  't-col-third';
+            $elConf['additional_classes_element'] = true;
             $elementName = 'add_classes';
+            $this->hasAdditionalClassStore = true;
+
+        } elseif ($elConf['type'] === 'additionalClassesChained') {
+
+            if ($this->hasAdditionalClassStore === false) {
+                throw new \Exception(
+                    sprintf('You need to add a element of type "%s" before adding a "%s" element.',
+                        'additionalClasses', 'additionalClassesChained')
+                );
+            } elseif (substr($configElementName, 0, 25) !== 'additional_classes_chain_') {
+                throw new \Exception(
+                    sprintf('Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
+                        'additional_classes_chain_', $configElementName)
+                );
+            }
+
+            $chainedElementName = explode('_', $configElementName);
+            $chainedIncrementor = end($chainedElementName);
+            if (!is_numeric($chainedIncrementor)) {
+                throw new \Exception('Chained AC element name must end with an numeric. "' . $chainedIncrementor . '" given.');
+            }
+
+            $elConf['type'] = 'select';
+            $elConf['title'] = isset($elConf['title']) && !empty($elConf['title']) ? $elConf['title'] : 'Additional';
+            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] : 't-col-third';
+            $elConf['additional_classes_element'] = true;
+            $elementName = 'add_cclasses_' . $chainedIncrementor;
+
         } else {
             $elementName = $configElementName;
         }
@@ -333,7 +411,7 @@ class BrickConfigBuilder
         $elConf['edit_reload'] = $this->hasReload;
 
         //set editmode hidden to false on initial state
-        $elConf['editmode_hidden'] = FALSE;
+        $elConf['editmode_hidden'] = false;
 
         //translate title
         if (!empty($elConf['title'])) {
@@ -350,6 +428,7 @@ class BrickConfigBuilder
 
     /**
      * @return array
+     * @throws \Exception
      */
     private function parseConfigElements()
     {
@@ -360,8 +439,8 @@ class BrickConfigBuilder
 
         foreach ($this->configElements as $configElementName => $c) {
             $tagConfig = $c['config'];
-            $parsedTagConfig = $this->getTagConfig($c['type'], $tagConfig);
             $parsedAdditionalConfig = $this->getAdditionalConfig($configElementName, $c);
+            $parsedTagConfig = $this->getTagConfig($c['type'], $tagConfig, $parsedAdditionalConfig);
 
             $parsedConfig[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $parsedAdditionalConfig];
             $parsedConfig = $this->checkDependingSystemField($configElementName, $parsedConfig);
@@ -374,6 +453,7 @@ class BrickConfigBuilder
 
     /**
      * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns"
+     *
      * @param $configElementName
      * @param $configFields
      * @return array
@@ -382,18 +462,18 @@ class BrickConfigBuilder
     {
         // add column adjuster (only if breakpoints are defined!
         if ($this->documentEditableId === 'columns' && $configElementName === 'type') {
-            if(empty($this->themeOptions['grid']['breakpoints'])) {
+            if (empty($this->themeOptions['grid']['breakpoints'])) {
                 return $configFields;
             }
 
-            $parsedTagConfig = ['reload' => FALSE];
+            $parsedTagConfig = ['reload' => false];
             $additionalConfig = [
                 'type'            => 'columnadjuster',
-                'editmode_hidden' => FALSE,
+                'editmode_hidden' => false,
                 'col_class'       => '',
                 'name'            => 'columnadjuster',
-                'title'           => NULL,
-                'edit_reload'     => FALSE,
+                'title'           => null,
+                'edit_reload'     => false,
             ];
             $configFields[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $additionalConfig];
         }
@@ -424,28 +504,28 @@ class BrickConfigBuilder
             $orConditions = $el['additional_config']['conditions'];
 
             $orGroup = [];
-            $orState = FALSE;
+            $orState = false;
 
             foreach ($orConditions as $andConditions) {
                 $andGroup = [];
-                $andState = TRUE;
+                $andState = true;
 
                 foreach ($andConditions as $andConditionKey => $andConditionValue) {
                     $andGroup[] = self::getElementState($andConditionKey, $configElements) == $andConditionValue;
                 }
 
-                if (in_array(FALSE, $andGroup, TRUE)) {
-                    $andState = FALSE;
+                if (in_array(false, $andGroup, true)) {
+                    $andState = false;
                 }
 
                 $orGroup[] = $andState;
             }
 
-            if (in_array(TRUE, $orGroup, TRUE)) {
-                $orState = TRUE;
+            if (in_array(true, $orGroup, true)) {
+                $orState = true;
             }
 
-            if ($orState === TRUE) {
+            if ($orState === true) {
                 $filteredData[] = $el;
             } else {
                 //we need to reset value, if possible!
@@ -465,7 +545,7 @@ class BrickConfigBuilder
     private function getElementState($name = '', $elements)
     {
         if (empty($elements)) {
-            return NULL;
+            return null;
         }
 
         foreach ($elements as $el) {
@@ -474,7 +554,7 @@ class BrickConfigBuilder
             }
         }
 
-        return NULL;
+        return null;
     }
 
     /**
@@ -484,10 +564,10 @@ class BrickConfigBuilder
      */
     private function resetElement($el)
     {
-        $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : NULL;
+        $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : null;
         $this->tagRenderer->getTag($this->info->getDocument(), $el['additional_config']['type'], $el['additional_config']['name'])->setDataFromResource($value);
         $el['additional_config']['selected_value'] = $value;
-        $el['additional_config']['editmode_hidden'] = TRUE;
+        $el['additional_config']['editmode_hidden'] = true;
 
         return $el;
     }

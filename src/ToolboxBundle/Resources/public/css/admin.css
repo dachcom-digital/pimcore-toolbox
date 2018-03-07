@@ -533,6 +533,25 @@
     min-height: 1px;
 }
 
+.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-half {
+    padding-right:5px;
+}
+
+.toolbox-edit-overlay .t-row .t-col-third {
+    float: left;
+    width: 33.3333%;
+    position: relative;
+    min-height: 1px;
+}
+
+.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-third {
+    padding-right:5px;
+}
+
+.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(2) > .t-col-third {
+    padding-right:5px;
+}
+
 .x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
     width: 760px;
 }
