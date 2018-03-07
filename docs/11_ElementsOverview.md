@@ -198,7 +198,6 @@ Please be sure that you've included a valid google maps api key. Include the scr
 
 ### Configuration Parameter
 
-
 | Name | Type | Description | Default Value | 
 |------|------|-------------|---------------|
 | `map_options` | array | Map Zoom | [] |
@@ -223,6 +222,25 @@ toolbox:
 ```
 ### jQuery Plugin
 There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
+
+### Route Link Renderer
+There is a macro in `views/Macro/mapLink.html.twig` (used in `views/Theme/GoogleMap/infoWindow.html.twig`) which will render the map route link:
+
+```twig
+{# default #}
+{{ link_generator.generate(googleMapsHostUrl, mapParams) }}
+
+{# generates #}
+{# https://maps.google.ch/?daddr=47.4838827,9.7574593&directionsmode=driving #}
+```
+
+```twig
+{# use address params #}
+{{ link_generator.generate(googleMapsHostUrl, mapParams, false) }}
+
+{# generates #}
+{# https://maps.google.ch/?daddr=way+132,666+city,country&directionsmode=driving #}
+```
 
 ## Headline
 Create a headline.

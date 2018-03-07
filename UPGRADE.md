@@ -3,6 +3,14 @@
 ***
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.3.0 to Version 2.4.0
+
+- **[BUGFIX]**: Fix private service request in column adjuster
+- **[BUGFIX]**: Don't throw exception if no google maps key has been defined in system settings
+- **[IMPROVEMENT]**: improve google maps route link renderer, see [docs](docs/11_ElementsOverview.md#route-link-renderer)
+- **[NEW FEATURE]**: Introduce `additionalClassesChained` type, see [docs](docs/11_ElementsOverview.md#additional-classes)
+ - **Important**: If you have changed any views in `views/Areas/*/view.html.twig` check them against the original ones and adapt the changes!
+
 #### Update from Version 2.2.x to Version 2.3.0
 
 > Please check the symfony deprecation log. There are some deprecations which will be removed in TB 3.0
