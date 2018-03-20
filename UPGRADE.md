@@ -5,6 +5,7 @@ After every update you should check the pimcore extension manager. Just click th
 
 #### Update from Version 2.4.0 to Version 2.4.1
 - **[NEW FEATURE]**: Introduce new `iFrame` element, see [docs](docs/11_ElementsOverview.md#iframe)
+- **[BUGFIX]**: only load icon if area type is internal
 
 #### Update from Version 2.3.0 to Version 2.4.0
 
