@@ -263,7 +263,7 @@ Create a iFrame field.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `url` | input | Set a Url which should be loaded. If the Url is not allowed to implement (Source has a `SAMEORIGIN`, `DENY` entry in `x-frame-options` header) you'll receive an error. | - | `pimcore_input('url')` |
 | `iheight` | numeric | Initial Height of the iFrame | 200 | `pimcore_numeric('iheight')` |
-| `additional_classes` | select | Add custom classes | - | `see [section additional classes](#additional-classes) |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### jQuery Plugin
 There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#iframe-extension).
@@ -283,7 +283,7 @@ Create a image field.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `show_caption` | checkbox | Render image caption | false | `pimcore_checkbox('show_caption')` |
-| `additional_classes` | select | Add custom classes | - | `see [section additional classes](#additional-classes) |
+| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 
 ## Link List
