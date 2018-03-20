@@ -1,119 +1,124 @@
-"key";"en";"de";
-"Default";"Default";"Standard";
-"Toolbox";"Toolbox";"Toolbox";
-"Dangers";"Dangers";"Dangers";
-"1 Column";"1 Column";"1 Spalte";
-"2 Columns (33:66)";"2 Columns (33:66)";"2 Spalten (33:66)";
-"2 Columns (66:33)";"2 Columns (66:33)";"2 Spalten (66:33)";
-"2 Columns (25:75)";"2 Columns (25:75)";"2 Spalten (25:75)";
-"2 Columns (75:25)";"2 Columns (75:25)";"2 Spalten (75:25)";
-"2 Columns (50:50)";"2 Columns (50:50)";"2 Spalten (50:50)";
-"3 Columns (33:33:33)";"3 Columns (33:33:33)";"3 Spalten (33:33:33)";
-"Equal heights?";"Equal heights?";"Gleiche Höhe?";
-"Additional";"Additional";"Zusatz";
-"Headline Size";"Headline Size";"Headline Grösse";
-"Headline 1";"Headline 1";"Headline 1";
-"Headline 2";"Headline 2";"Headline 2";
-"Headline 3";"Headline 3";"Headline 3";
-"Headline 4";"Headline 4";"Headline 4";
-"Headline 5";"Headline 5";"Headline 5";
-"Headline 6";"Headline 6";"Headline 6";
-"Type";"Type";"Typ";
-"Image";"Image";"Bild";
-"Images or Folder";"Images or Folder";"Bilder oder Ordner";
-"Snippet";"Snippet";"Snippet";
-"Space before & after separator";"Space before & after separator";"Abstand vor & nach Trennlinie";
-"Direct";"Direct";"Direkt";
-"use Lightbox?";"use Lightbox?";"Lightbox verwenden?";
-"use Lightbox";"use Lightbox";"Lightbox verwenden";
-"use Thumbnails";"use Thumbnails";"Thumbnails anzeigen";
-"Image";"Image";"Bild";
-"Toolbox Image";"Toolbox Image";"Toolbox Image";
-"Headline";"Headline";"Headline";
-"Toolbox Headline";"Toolbox Headline";"Toolbox Headline";
-"Gallery";"Gallery";"Galerie";
-"Toolbox Galerie";"Toolbox Galerie";"Toolbox Galerie";
-"Downloads";"Downloads";"Downloads";
-"Toolbox Downloads";"Toolbox Downloads";"Toolbox Downloads";
-"WYSIWYG Editor";"WYSIWYG Editor";"WYSIWYG Editor";
-"Toolbox wysiwyg";"Toolbox wysiwyg";"Toolbox Texteditor";
-"Container";"Container";"Container";
-"Toolbox Container";"Toolbox Container";"Toolbox Container";
-"Columns";"Columns";"Spalten";
-"Toolbox Grid Columns";"Toolbox Grid Columns";"Toolbox Grid Columns";
-"Toolbox Google Map";"Toolbox Google Map";"Toolbox Google Map";
-"Open Info Window by Default";"Open Info Window by Default";"Info-Fenster initial öffnen";
-"Accordion / Tab";"Accordion / Tab";"Akkordeon / Tab";
-"Toolbox Accordion / Tabs";"Toolbox Accordion / Tabs";"Toolbox Akkordeon / Tabs";
-"Toolbox Anchor";"Toolbox Anchor";"Toolbox Anker";
-"Component";"Component";"Komponente";
-"Tab";"Tab";"Tab";
-"Accordion";"Accordion";"Akkordeon";
-"Teaser";"Teaser";"Teaser";
-"Toolbox Spacer";"Toolbox Spacer";"Toolbox Spacer";
-"Spacer";"Spacer";"Spacer";
-"No Space";"No Space";"Keinen Abstand";
-"Toolbox Teaser";"Toolbox Teaser";"Toolbox Teaser";
-"Separator";"Separator";"Separator";
-"Toolbox Separator";"Toolbox Separator";"Toolbox Trennline";
-"Toolbox Snippet";"Toolbox Snippet";"Toolbox Snippet";
-"Parallax Container";"Parallax Container";"Parallax Container";
-"Section Wrapper Type";"Section Wrapper Type";"Section Wrapper Typ";
-"No Section Wrapper";"No Section Wrapper";"Ohne Section Wrapper";
-"Default Container Wrapper";"Default Container Wrapper";"Standard Container Wrapper";
-"Fluid Container Wrapper";"Fluid Container Wrapper";"Fluid Container Wrapper";
-"If you need to add some content columns, apply a default or fluid container as wrapper.";"If you need to add some content columns, apply a default or fluid container as wrapper.";"Wenn Sie im Container Spaltenelemente (Columns) einfügen möchten, müssen Sie zuerst den Standard- oder Fluid-Container aktivieren.";
-"You're using columns without a valid container wrapper.";"You're using columns without a valid container wrapper.";"Sie verwenden Spaltenelemente (Columns) ohne Container Wrapper.";
-"Toolbox Parallax Container";"Toolbox Parallax Container";"Toolbox Parallax Container";
-"Video";"Video";"Video";
-"Toolbox Video";"Toolbox Video";"Toolbox Video";
-"Link List";"Link List";"Link Liste";
-"Toolbox Link List";"Toolbox Link List";"Toolbox Link Liste";
-"Display Caption";"Display Caption";"Bild-Untertext anzeigen";
-"Medium";"Medium";"Mittel";
-"Large";"Large";"Hoch";
-"Toolbox Gallery";"Toolbox Gallery";"Toolbox Gallery";
-"Extra CSS-Class";"Extra CSS-Class";"Extra CSS-Klassen";
-"Files";"Files";"Dateien";
-"Default Page";"Default Page";"Standardseite";
-"Home Page";"Home Page";"Startseite";
-"Show preview images";"Show preview images";"Vorschaubilder anzeigen";
-"Show file info";"Show file info";"Datei-Info anzeigen";
-"Anchor Name";"Anchor Name";"Anker Name";
-"Anchor Title";"Anchor Title";"Anker Titel";
-"Anchor";"Anchor";"Anker";
-"map zoom";"Map zoom";"Zoomfaktor der Karte";
-"map type";"Map type";"Art der Karte";
-"Slide Columns";"Slide Columns";"Slide Columns";
-"Toolbox Slide Columns";"Toolbox Slide Columns";"Toolbox Slide Columns";
-"Slides Per View";"Slides Per View";"Elemente pro Slide";
-"2 Columns";"2 Columns";"2 Elemente";
-"3 Columns";"3 Columns";"3 Elemente";
-"4 Columns";"4 Columns";"4 Elemente";
-"6 Columns";"6 Columns";"6 Elemente";
-"Google Map";"Google Map";"Google Map";
-"Roadmap";"Roadmap";"Kartenansicht mit Straßen";
-"Satellite";"Satellite";"Satelliten-Ansicht";
-"Hybrid";"Hybrid";"Satelliten-Ansicht mit wichtigen Straßen";
-"Terrain";"Terrain";"Gelände-Karte";
-"Images Behind Main Container";"Images Behind Main Container";"Bilder hinter Container";
-"Images In Front Of Main Container";"Images In Front Of Main Container";"Bilder vor Container";
-"Background Image";"Background Image";"Hintergrundbild";
-"Background Color";"Background Color";"Hintergrundfarbe";
-"No Background Color";"No Background Color";"Keine Hintergrundfarbe";
-"No Template";"No Template";"Kein Template";
-"Default";"Default";"Standard";
-"Top Left";"Top Left";"Oben Links";
-"Top Center";"Top Center";"Oben Zentriert";
-"Top Right";"Top Right";"Oben Rechts";
-"Bottom Left";"Bottom Left";"Unten Links";
-"Bottom Center";"Bottom Center";"Unten Zentriert";
-"Bottom Right";"Bottom Right";"Unten Rechts";
-"Center Left";"Center Left";"Mitte Links";
-"Center Center";"Center Center";"Mitte Mitte";
-"Center Right";"Center Right";"Mitte Rechts";
-"Half Window Width";"Half Window Width";"Halbe Fensterbreite";
-"Third Window Width";"Third Window Width";"Drittel Fensterbreite";
-"Quarter Window Width";"Quarter Window Width";"Viertel Fensterbreite";
-"Fluid Container (Full Width)";"Fluid Container (Full Width)";"Fluid Container (Volle Breite)";
-"No Images for this gallery found.";"No Images for this gallery found.";"Es wurden keine Bilder für die Galerie gewählt.";
+"key","en","de",
+"Default","Default","Standard",
+"Toolbox","Toolbox","Toolbox",
+"Dangers","Dangers","Dangers",
+"1 Column","1 Column","1 Spalte",
+"2 Columns (33:66)","2 Columns (33:66)","2 Spalten (33:66)",
+"2 Columns (66:33)","2 Columns (66:33)","2 Spalten (66:33)",
+"2 Columns (25:75)","2 Columns (25:75)","2 Spalten (25:75)",
+"2 Columns (75:25)","2 Columns (75:25)","2 Spalten (75:25)",
+"2 Columns (50:50)","2 Columns (50:50)","2 Spalten (50:50)",
+"3 Columns (33:33:33)","3 Columns (33:33:33)","3 Spalten (33:33:33)",
+"Equal heights?","Equal heights?","Gleiche Höhe?",
+"Additional","Additional","Zusatz",
+"Headline Size","Headline Size","Headline Grösse",
+"Headline 1","Headline 1","Headline 1",
+"Headline 2","Headline 2","Headline 2",
+"Headline 3","Headline 3","Headline 3",
+"Headline 4","Headline 4","Headline 4",
+"Headline 5","Headline 5","Headline 5",
+"Headline 6","Headline 6","Headline 6",
+"Type","Type","Typ",
+"Image","Image","Bild",
+"Images or Folder","Images or Folder","Bilder oder Ordner",
+"Snippet","Snippet","Snippet",
+"Space before & after separator","Space before & after separator","Abstand vor & nach Trennlinie",
+"Direct","Direct","Direkt",
+"use Lightbox?","use Lightbox?","Lightbox verwenden?",
+"use Lightbox","use Lightbox","Lightbox verwenden",
+"use Thumbnails","use Thumbnails","Thumbnails anzeigen",
+"Image","Image","Bild",
+"Toolbox Image","Toolbox Image","Toolbox Image",
+"Headline","Headline","Headline",
+"Toolbox Headline","Toolbox Headline","Toolbox Headline",
+"iFrame","iFrame","iFrame",
+"No iFrame url available","No iFrame url available.","Keine iFrame URL verfügbar.",
+"Iframe url is not embedabble since the source does not allow to be included in iframes","Url is not embedabble since the source does not allow to be included in iframes.","Diese Url kann nicht verarbeitet werden da die Quelle das Einbinden von iFrames verbietet.",
+"Toolbox iFrame","Toolbox iFrame","Toolbox iFrame",
+"Initial Height","Initial Height","Initiale Höhe",
+"Gallery","Gallery","Galerie",
+"Toolbox Galerie","Toolbox Galerie","Toolbox Galerie",
+"Downloads","Downloads","Downloads",
+"Toolbox Downloads","Toolbox Downloads","Toolbox Downloads",
+"WYSIWYG Editor","WYSIWYG Editor","WYSIWYG Editor",
+"Toolbox wysiwyg","Toolbox wysiwyg","Toolbox Texteditor",
+"Container","Container","Container",
+"Toolbox Container","Toolbox Container","Toolbox Container",
+"Columns","Columns","Spalten",
+"Toolbox Grid Columns","Toolbox Grid Columns","Toolbox Grid Columns",
+"Toolbox Google Map","Toolbox Google Map","Toolbox Google Map",
+"Open Info Window by Default","Open Info Window by Default","Info-Fenster initial öffnen",
+"Accordion / Tab","Accordion / Tab","Akkordeon / Tab",
+"Toolbox Accordion / Tabs","Toolbox Accordion / Tabs","Toolbox Akkordeon / Tabs",
+"Toolbox Anchor","Toolbox Anchor","Toolbox Anker",
+"Component","Component","Komponente",
+"Tab","Tab","Tab",
+"Accordion","Accordion","Akkordeon",
+"Teaser","Teaser","Teaser",
+"Toolbox Spacer","Toolbox Spacer","Toolbox Spacer",
+"Spacer","Spacer","Spacer",
+"No Space","No Space","Keinen Abstand",
+"Toolbox Teaser","Toolbox Teaser","Toolbox Teaser",
+"Separator","Separator","Separator",
+"Toolbox Separator","Toolbox Separator","Toolbox Trennline",
+"Toolbox Snippet","Toolbox Snippet","Toolbox Snippet",
+"Parallax Container","Parallax Container","Parallax Container",
+"Section Wrapper Type","Section Wrapper Type","Section Wrapper Typ",
+"No Section Wrapper","No Section Wrapper","Ohne Section Wrapper",
+"Default Container Wrapper","Default Container Wrapper","Standard Container Wrapper",
+"Fluid Container Wrapper","Fluid Container Wrapper","Fluid Container Wrapper",
+"If you need to add some content columns, apply a default or fluid container as wrapper.","If you need to add some content columns, apply a default or fluid container as wrapper.","Wenn Sie im Container Spaltenelemente (Columns) einfügen möchten, müssen Sie zuerst den Standard- oder Fluid-Container aktivieren.",
+"You're using columns without a valid container wrapper.","You're using columns without a valid container wrapper.","Sie verwenden Spaltenelemente (Columns) ohne Container Wrapper.",
+"Toolbox Parallax Container","Toolbox Parallax Container","Toolbox Parallax Container",
+"Video","Video","Video",
+"Toolbox Video","Toolbox Video","Toolbox Video",
+"Link List","Link List","Link Liste",
+"Toolbox Link List","Toolbox Link List","Toolbox Link Liste",
+"Display Caption","Display Caption","Bild-Untertext anzeigen",
+"Medium","Medium","Mittel",
+"Large","Large","Hoch",
+"Toolbox Gallery","Toolbox Gallery","Toolbox Gallery",
+"Extra CSS-Class","Extra CSS-Class","Extra CSS-Klassen",
+"Files","Files","Dateien",
+"Default Page","Default Page","Standardseite",
+"Home Page","Home Page","Startseite",
+"Show preview images","Show preview images","Vorschaubilder anzeigen",
+"Show file info","Show file info","Datei-Info anzeigen",
+"Anchor Name","Anchor Name","Anker Name",
+"Anchor Title","Anchor Title","Anker Titel",
+"Anchor","Anchor","Anker",
+"map zoom","Map zoom","Zoomfaktor der Karte",
+"map type","Map type","Art der Karte",
+"Slide Columns","Slide Columns","Slide Columns",
+"Toolbox Slide Columns","Toolbox Slide Columns","Toolbox Slide Columns",
+"Slides Per View","Slides Per View","Elemente pro Slide",
+"2 Columns","2 Columns","2 Elemente",
+"3 Columns","3 Columns","3 Elemente",
+"4 Columns","4 Columns","4 Elemente",
+"6 Columns","6 Columns","6 Elemente",
+"Google Map","Google Map","Google Map",
+"Roadmap","Roadmap","Kartenansicht mit Straßen",
+"Satellite","Satellite","Satelliten-Ansicht",
+"Hybrid","Hybrid","Satelliten-Ansicht mit wichtigen Straßen",
+"Terrain","Terrain","Gelände-Karte",
+"Images Behind Main Container","Images Behind Main Container","Bilder hinter Container",
+"Images In Front Of Main Container","Images In Front Of Main Container","Bilder vor Container",
+"Background Image","Background Image","Hintergrundbild",
+"Background Color","Background Color","Hintergrundfarbe",
+"No Background Color","No Background Color","Keine Hintergrundfarbe",
+"No Template","No Template","Kein Template",
+"Default","Default","Standard",
+"Top Left","Top Left","Oben Links",
+"Top Center","Top Center","Oben Zentriert",
+"Top Right","Top Right","Oben Rechts",
+"Bottom Left","Bottom Left","Unten Links",
+"Bottom Center","Bottom Center","Unten Zentriert",
+"Bottom Right","Bottom Right","Unten Rechts",
+"Center Left","Center Left","Mitte Links",
+"Center Center","Center Center","Mitte Mitte",
+"Center Right","Center Right","Mitte Rechts",
+"Half Window Width","Half Window Width","Halbe Fensterbreite",
+"Third Window Width","Third Window Width","Drittel Fensterbreite",
+"Quarter Window Width","Quarter Window Width","Viertel Fensterbreite",
+"Fluid Container (Full Width)","Fluid Container (Full Width)","Fluid Container (Volle Breite)",
+"No Images for this gallery found.","No Images for this gallery found.","Es wurden keine Bilder für die Galerie gewählt.",

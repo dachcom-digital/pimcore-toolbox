@@ -50,6 +50,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - Gallery
 - Google Map
 - Headline
+- iFrame
 - Image
 - Link List
 - Parallax Container

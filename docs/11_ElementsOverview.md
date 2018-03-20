@@ -254,6 +254,26 @@ Create a headline.
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 
+## iFrame
+Create a iFrame field.
+
+### Available Options
+
+| Name | Type | Description | Default Value | Frontend
+|------|------|-----------------------------|---------------|-------------------------------|
+| `url` | input | Set a Url which should be loaded. If the Url is not allowed to implement (Source has a `SAMEORIGIN`, `DENY` entry in `x-frame-options` header) you'll receive an error. | - | `pimcore_input('url')` |
+| `iheight` | numeric | Initial Height of the iFrame | 200 | `pimcore_numeric('iheight')` |
+| `additional_classes` | select | Add custom classes | - | `see [section additional classes](#additional-classes) |
+
+### jQuery Plugin
+There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#iframe-extension).
+We can't provide any out-of-the-box solution for changing the iframe height dynamically (cross-domain policy), so you need to take care about that by yourself.
+Possible Solutions to mastering dynamic iFrame heights:
+
+- Define a iFrame height for every breakpoint in your stylesheet.
+- Use the plugin events (see iframe javascript extension) and connect it with a plugin like the [iframe-resizer](https://github.com/davidjbradshaw/iframe-resizer).
+
+
 ## Image
 Create a image field.
 

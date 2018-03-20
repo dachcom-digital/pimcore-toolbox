@@ -200,6 +200,10 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function getIcon()
     {
+        if ($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL) {
+            return false;
+        }
+
         return '/bundles/toolbox/areas/' . $this->getId() . '/icon.svg';
     }
 

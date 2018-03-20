@@ -3,6 +3,9 @@
 ***
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.4.0 to Version 2.4.1
+- **[NEW FEATURE]**: Introduce new `iFrame` element, see [docs](docs/11_ElementsOverview.md#iframe)
+
 #### Update from Version 2.3.0 to Version 2.4.0
 
 - **[BUGFIX]**: Fix private service request in column adjuster

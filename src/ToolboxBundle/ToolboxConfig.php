@@ -14,6 +14,7 @@ final class ToolboxConfig
         'gallery',
         'googleMap',
         'headline',
+        'iFrame',
         'image',
         'linkList',
         'parallaxContainer',

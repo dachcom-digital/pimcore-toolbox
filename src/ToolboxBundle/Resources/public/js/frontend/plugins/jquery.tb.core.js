@@ -21,6 +21,11 @@
                         enabled: true,
                         selector: '.toolbox-video',
                         config: {}
+                    },
+                    iframeHandler: {
+                        enabled: true,
+                        selector: '.toolbox-iframe',
+                        config: {}
                     }
                 },
                 _ = this,
@@ -45,6 +50,12 @@
                     settings.editmode = this.settings.editmode;
                     settings.theme = this.settings.theme;
                     $(this.settings.videoHandler.selector).toolboxVideo(settings);
+                }
+
+                if(this.settings.iframeHandler.enabled === true) {
+                    var settings = this.settings.iframeHandler.config;
+                    settings.editmode = this.settings.editmode;
+                    $(this.settings.iframeHandler.selector).toolboxIframe(settings);
                 }
             }
 
