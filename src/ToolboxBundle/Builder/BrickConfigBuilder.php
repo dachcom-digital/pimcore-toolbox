@@ -27,11 +27,6 @@ class BrickConfigBuilder
     /**
      * @var bool
      */
-    protected $hasReload = false;
-
-    /**
-     * @var bool
-     */
     protected $documentEditableId = false;
 
     /**
@@ -207,7 +202,6 @@ class BrickConfigBuilder
      */
     private function reset()
     {
-        $this->hasReload = false;
         $this->documentEditableId = false;
         $this->documentEditableName = '';
         $this->info = null;
@@ -230,8 +224,6 @@ class BrickConfigBuilder
         if (is_null($config)) {
             return [];
         }
-
-        $this->hasReload = isset($config['reload']) ? $config['reload'] === true : true;
 
         $parsedConfig = $config;
 
@@ -302,6 +294,8 @@ class BrickConfigBuilder
 
         //set element config data
         $parsedConfig = $this->parseElementConfig($configElementName, $config);
+
+        $parsedConfig['edit_reload'] = isset($rawConfig['config']['reload']) ? $rawConfig['config']['reload'] === true : true;
 
         //set default
         $parsedConfig = $this->getSelectedValue($parsedConfig, $defaultConfigValue);
@@ -406,9 +400,6 @@ class BrickConfigBuilder
 
         //set config element name
         $elConf['name'] = $elementName;
-
-        //set edit_reload to element reload setting
-        $elConf['edit_reload'] = $this->hasReload;
 
         //set editmode hidden to false on initial state
         $elConf['editmode_hidden'] = false;
