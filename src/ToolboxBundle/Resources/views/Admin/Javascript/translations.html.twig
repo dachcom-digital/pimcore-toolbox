@@ -1,0 +1,9 @@
+{%- spaceless %}
+    <script type="text/javascript">
+        var toolboxJsTranslations = {
+            {%- for translation in translations %}
+            '{{ translation }}': '{{ translation|trans }}',
+            {% endfor -%}
+        }
+    </script>
+{% endspaceless -%}

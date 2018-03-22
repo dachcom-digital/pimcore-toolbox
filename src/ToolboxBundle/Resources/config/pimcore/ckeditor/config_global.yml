@@ -1,6 +1,7 @@
 toolbox:
     ckeditor:
         config:
+            extraPlugins: 'tbGoogleOptOutLink'
             toolbar:
               - name: basicstyles
                 items:
@@ -64,6 +65,7 @@ toolbox:
                 items:
                     - Styles
                     - Format
+                    - GoogleOptOutLink
               - name: tools
                 items:
                     - Maximize

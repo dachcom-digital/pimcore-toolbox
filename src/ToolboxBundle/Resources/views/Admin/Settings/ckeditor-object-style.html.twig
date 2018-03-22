@@ -15,10 +15,9 @@ CKEDITOR.on( 'instanceCreated', function( event ) {
 
         {% if config is iterable %}
             {% for configName, configData in config %}
-                if( editor.config.{{ configName }} === undefined ) {
+                if( editor.config.{{ configName }} === undefined || editor.config.{{ configName }} === '' ) {
                     editor.config.{{ configName }} = {{ configData|json_encode|raw }};
                 }
-
             {% endfor %}
         {% endif %}
 

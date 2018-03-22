@@ -4,3 +4,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+    ToolboxBundle\EventListener\Frontend\FrontendJsTranslationsListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 0 }

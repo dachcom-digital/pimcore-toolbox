@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
-    const BUNDLE_VERSION = '2.4.3';
+    const BUNDLE_VERSION = '2.4.4';
 
     /**
      * @inheritDoc
@@ -44,6 +44,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     {
         return [
             '/admin/toolbox-ckeditor-object-style.js',
+            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
             '/bundles/toolbox/js/document/edit.js',
             '/bundles/toolbox/js/document/helpers.js',
             '/bundles/toolbox/js/startup.js',
@@ -57,6 +58,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     {
         return [
             '/bundles/toolbox/js/backend/toolbox.js',
+            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
             '/bundles/toolbox/js/document/tags/areablock.js',
             '/bundles/toolbox/js/document/tags/dynamiclink.js',
             '/bundles/toolbox/js/document/tags/googlemap.js',
