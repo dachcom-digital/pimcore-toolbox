@@ -12,7 +12,7 @@
     function ToolboxGoogleOptOutLink(element, options) {
         this.$element = $(element);
         this.options = $.extend(true, $.fn.toolboxVideo.defaults, options);
-        this.translations = window['toolboxJsTranslations'] ? window['toolboxJsTranslations'] : {};
+        this.translations = window['toolboxJsFrontend'] ? window['toolboxJsFrontend']['translations'] : {};
         this.init();
     }
 
@@ -30,20 +30,27 @@
             }
 
             if (_.readCookie('tb-google-opt-out-link') !== null) {
-                window['ga-disable-' + _.readCookie('tb-google-opt-out-link')] = true;
                 _.$element.addClass('disabled');
             }
 
             _.$element.on('click', function (ev) {
                 ev.preventDefault();
                 if (_.readCookie('tb-google-opt-out-link') !== null) {
-                    alert(_.translations['toolbox.goptout_alreay_opt_out']);
+                    _.notify(_.translations['toolbox.goptout_already_opt_out']);
                 } else {
                     _.createCookie('tb-google-opt-out-link', $(this).attr('name'), 999);
-                    alert(_.translations['toolbox.goptout_successfully_opt_out']);
+                     _.notify(_.translations['toolbox.goptout_successfully_opt_out']);
                     $(this).addClass('disabled');
                 }
             });
+        },
+
+        notify: function (message) {
+            if (typeof this.options.notify === 'function') {
+                this.options.notify.call(undefined, message);
+            } else {
+                alert(message);
+            }
         },
 
         readCookie: function (name) {
@@ -80,7 +87,8 @@
     };
 
     $.fn.toolboxGoogleOptOutLink.defaults = {
-        editmode: false
+        editmode: false,
+        notify: null
     };
 
 })

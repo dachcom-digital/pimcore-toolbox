@@ -40,7 +40,19 @@ CKEDITOR.dialog.add('tbGoogleOptOutLinkDialog', function (editor) {
                             element.setAttribute('name', gac);
                         }
                     },
-
+                    {
+                        type: 'text',
+                        id: 'title',
+                        label: 'Text',
+                        validate: CKEDITOR.dialog.validate.notEmpty('Text field cannot be empty.'),
+                        setup: function (element) {
+                            this.data(element.getText());
+                        },
+                        commit: function (element) {
+                            var text = this.getValue();
+                            element.setText(text);
+                        }
+                    },
                 ]
             }
         ],

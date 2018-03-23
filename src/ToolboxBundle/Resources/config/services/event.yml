@@ -5,7 +5,7 @@ services:
         autoconfigure: true
         public: false
 
-    ToolboxBundle\EventListener\Frontend\FrontendJsTranslationsListener:
+    ToolboxBundle\EventListener\Frontend\FrontendJsListener:
         public: true
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 0 }

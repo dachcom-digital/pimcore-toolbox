@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\Templating\EngineInterface;
 
-class FrontendJsTranslationsListener
+class FrontendJsListener
 {
     use EnabledTrait;
     use ResponseInjectionTrait;
@@ -73,13 +73,17 @@ class FrontendJsTranslationsListener
             return;
         }
 
+        $optOutCookie = $request->cookies->get('tb-google-opt-out-link');
+
         $codeHead = $this->renderTemplate(
-            '@Toolbox/Admin/Javascript/translations.html.twig',
+            '@Toolbox/Admin/Javascript/frontend.html.twig',
             [
-                'translations' => [
-                    'toolbox.goptout_alreay_opt_out',
+                'translations'       => [
+                    'toolbox.goptout_already_opt_out',
                     'toolbox.goptout_successfully_opt_out'
-                ]
+                ],
+                'trackingIsDisabled' => !empty($optOutCookie),
+                'code'               => $optOutCookie
             ]
         );
 

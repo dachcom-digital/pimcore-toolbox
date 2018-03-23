@@ -1,0 +1,14 @@
+{%- spaceless %}
+    <script type="text/javascript">
+        var toolboxJsFrontend = {
+            translations : {
+                {%- for translation in translations %}
+                '{{ translation }}': '{{ translation|trans }}',
+                {% endfor -%}
+            }
+        };
+        {% if trackingIsDisabled == true %}
+            window['ga-disable-{{ code }}'] = true;
+        {% endif %}
+    </script>
+{% endspaceless -%}
