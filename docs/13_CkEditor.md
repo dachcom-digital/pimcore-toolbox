@@ -106,3 +106,12 @@ toolbox:
                 attributes:
                     class: 'secret-color'
 ```
+
+## Area CK-Editor Plugins
+Toolbox provides some CK-Editor Plugins:
+
+### Google Opt Out
+![ck-editor-google-opt-out](https://user-images.githubusercontent.com/700119/37820009-9dd6a418-2e7f-11e8-94b4-99c7a001a3a9.png)
+
+Add a link to allow user to disable google analytics tracking.
+There is also a [frontend Javascript Plugin](./80_Javascript.md#google-opt-out-link-extension).

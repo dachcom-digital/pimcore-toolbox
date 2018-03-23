@@ -4,6 +4,13 @@ Of course it's up to you to copy those files into your project and modify them a
 
 > Note: Be sure that jQuery has been initialized, before you load one of those toolbox extensions.
 
+## Overview
+- [Core Plugin](#core-plugin)
+- [Google Maps Extension](#google-maps-extension)
+- [Video Extension](#video-extension)
+- [iFrame Extension](#iframe-extension)
+- [Google Opt-Out Extension](#google-opt-out-link-extension)
+
 ## Core Plugin
 This Plugin will automatically register all toolbox extensions:
 
@@ -238,9 +245,38 @@ $('.toolbox-iframe').on('toolbox.iframe.load', function(ev) {
 ```javascript
 $('.toolbox-iframe').on('toolbox.iframe.loaded', function(ev) {
     console.log($(this), ev);
-
     // use the iframe-resizer plugin for example
     // @see https://github.com/davidjbradshaw/iframe-resizer
-    //$(this).find('iframe').iFrameResize( [{options}] );
+    // $(this).find('iframe').iFrameResize( [{options}] );
 })
+```
+
+## Google Opt-Out Link Extension
+This Extension searches for google opt-out links.
+By clicking on a link with the class `a.google-opt-out-link` a cookie will be stored to prevent future analytic tracking.
+
+If you're using the `toolboxCore` instance, you only need to include the javascript file:
+
+### Enable Extension
+```html
+<script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/plugins/jquery.tb.ext.googleOptOutLink.js') }}"></script>
+```
+
+### Single Call
+```javascript
+$(function () {
+    $('a.google-opt-out-link').toolboxGoogleOptOutLink({});
+});
+```
+
+### Extended Usage
+```javascript
+$(function () {
+   $('a.google-opt-out-link').toolboxGoogleOptOutLink({
+       notify: function(message) {
+            // implement your message style here
+            console.log(message);
+       }
+    });
+});
 ```
