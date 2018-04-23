@@ -67,7 +67,7 @@ pimcore.plugin.toolbox.main = Class.create({
                         this.editWindows[id] = {
                             editor: win,
                             element: element,
-                            needReload: needReload
+                            needReload: false
                         };
 
                     }.bind(this)
@@ -103,13 +103,15 @@ pimcore.plugin.toolbox.main = Class.create({
     editmodeSave: function (scope, button) {
         var editWindow = button.up('window'),
             data = this.editWindows[editWindow.id];
+
+        document.body.className = document.body.classList.remove('toolbox-modal-open');
+
         if (!data.needReload) {
             data.editor.close();
             return;
         }
 
         data.editor.close();
-        document.body.className = document.body.classList.remove('toolbox-modal-open');
         window.editWindow.reload();
 
     },
