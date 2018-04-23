@@ -6,6 +6,9 @@ To avoid this and keep the backward compatibility promise, we've implemented the
 | Name | Type | Default
 |------|------|------------|
 | `strict_column_counter` | bool | false |
+| `use_dynamic_links` | bool | false |
+
+***
 
 ## 🚩 strict_column_counter flag
 
