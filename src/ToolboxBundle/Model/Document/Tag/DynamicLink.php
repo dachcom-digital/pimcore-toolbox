@@ -9,6 +9,7 @@ class DynamicLink extends Model\Document\Tag\Link
 {
     /**
      * Return the type of the element
+     *
      * @return string
      */
     public function getType()
@@ -25,7 +26,7 @@ class DynamicLink extends Model\Document\Tag\Link
 
         $url = $this->data['path'];
 
-        if ($this->data['internalType'] == 'object') {
+        if ($this->data['internalType'] === 'toolbox') {
             $objectInfo = explode('::', $url);
             if (count($objectInfo) == 2) {
 
@@ -35,9 +36,13 @@ class DynamicLink extends Model\Document\Tag\Link
                     'objectFrontendUrl' => $url
                 ]);
 
+                if (!\Pimcore\Tool::isFrontend()) {
+                    return $url;
+                }
+
                 \Pimcore::getEventDispatcher()->dispatch(
                     'toolbox.dynamiclink.object.url',
-                        $event
+                    $event
                 );
 
                 $this->data['path'] = $event->getArgument('objectFrontendUrl');
@@ -56,9 +61,9 @@ class DynamicLink extends Model\Document\Tag\Link
     {
         parent::setDataFromEditmode($data);
 
-        if (strpos($this->data['path'], '::') !== FALSE) {
-            $this->data['internal'] = TRUE;
-            $this->data['internalType'] = 'object';
+        if (strpos($this->data['path'], '::') !== false) {
+            $this->data['internal'] = true;
+            $this->data['internalType'] = 'toolbox';
         }
 
         return $this;
