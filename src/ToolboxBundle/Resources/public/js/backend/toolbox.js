@@ -67,7 +67,7 @@ pimcore.plugin.toolbox.main = Class.create({
                         this.editWindows[id] = {
                             editor: win,
                             element: element,
-                            needReload: false
+                            needReload: needReload
                         };
 
                     }.bind(this)
