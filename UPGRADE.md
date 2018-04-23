@@ -12,7 +12,7 @@ After every update you should check the pimcore extension manager. Just click th
         flags:
             use_dynamic_links: true
     ```
-    Please [read more here](./docs/70_ConfigurationFlags.md#use_dynamic_links-flag) if you want to migrate from dynamic links to the pimcore default links (highly recommended)
+    Please [read more here](./docs/70_ConfigurationFlags.md#-use_dynamic_links-flag) if you want to migrate from dynamic links to the pimcore default links (highly recommended)
 
 #### Update from Version 2.4.0 to Version 2.4.1
 - **[NEW FEATURE]**: Introduce new `iFrame` element, see [docs](docs/11_ElementsOverview.md#iframe)

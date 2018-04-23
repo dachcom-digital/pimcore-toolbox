@@ -4,7 +4,7 @@ Of course it's impossible to generate a valid url from objects, so you need to d
 
 > **WARNING!!** This Service has been deprecated.
 > Please use the default Pimcore Link Tag which also allows object paths by using a [linkGenerator service](https://pimcore.com/docs/5.x/Development_Documentation/Objects/Object_Classes/Class_Settings/Link_Generator.html).
-> If you want to migrate existing dynamic links read more about it [here](./70_ConfigurationFlags.md#use_dynamic_links-flag) .
+> If you want to migrate existing dynamic links read more about it [here](./70_ConfigurationFlags.md#-use_dynamic_links-flag) .
 
 ### Usage
 
