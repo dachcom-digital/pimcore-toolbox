@@ -22,49 +22,48 @@ class DynamicLink extends Model\Document\Tag\Link
      */
     public function getHref()
     {
-        $this->updatePathFromInternal();
-
         $url = $this->data['path'];
 
-        if ($this->data['internalType'] === 'toolbox') {
-            $objectInfo = explode('::', $url);
-            if (count($objectInfo) == 2) {
-
-                $event = new GenericEvent($this, [
-                    'className'         => $objectInfo[0],
-                    'path'              => $objectInfo[1],
-                    'objectFrontendUrl' => $url
-                ]);
-
-                if (!\Pimcore\Tool::isFrontend()) {
-                    return $url;
-                }
-
-                \Pimcore::getEventDispatcher()->dispatch(
-                    'toolbox.dynamiclink.object.url',
-                    $event
-                );
-
-                $this->data['path'] = $event->getArgument('objectFrontendUrl');
-            }
+        if (strpos($url, '::') === false) {
+            return parent::getHref();
         }
 
-        return parent::getHref();
+        $objectInfo = explode('::', $url);
+        if (count($objectInfo) !== 2) {
+            return parent::getHref();
+        }
+
+        if (!\Pimcore\Tool::isFrontend()) {
+            return parent::getHref();
+        }
+
+        $event = new GenericEvent($this, [
+            'className'         => $objectInfo[0],
+            'path'              => $objectInfo[1],
+            'objectFrontendUrl' => $url
+        ]);
+
+        \Pimcore::getEventDispatcher()->dispatch(
+            'toolbox.dynamiclink.object.url',
+            $event
+        );
+
+        return $event->getArgument('objectFrontendUrl');
+
     }
 
     /**
      * @param mixed $data
-     *
      * @return $this
      */
     public function setDataFromEditmode($data)
     {
-        parent::setDataFromEditmode($data);
-
-        if (strpos($this->data['path'], '::') !== false) {
-            $this->data['internal'] = true;
-            $this->data['internalType'] = 'toolbox';
+        if (strpos($this->data['path'], '::') === false) {
+            return parent::setDataFromEditmode($data);
         }
+
+        $this->data['internal'] = true;
+        $this->data['internalType'] = 'object';
 
         return $this;
     }

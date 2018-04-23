@@ -62,7 +62,6 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - Video
 
 ## Additional Editables
-- [Dynamic Link](docs/20_DynamicLinkElement.md)
 - [VHS Video](docs/21_VhsElement.md)
 - [Google Maps Element](docs/22_GoogleMapsElement.md)
 
@@ -80,7 +79,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Overriding Views](docs/31_OverridingViews.md)
 - [Data Attributes Generator](docs/40_DataAttributesGenerator.md)
 - [Column Adjuster](docs/60_ColumnAdjuster.md)
-- [Configuration Flags](docs/70_ConfgurationFlags.md)
+- [Configuration Flags](docs/70_ConfigurationFlags.md)
 - [Javascript Plugins](docs/80_Javascript.md)
 
 ## Pimcore Fixes / Overrides

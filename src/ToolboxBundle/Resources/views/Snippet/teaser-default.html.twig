@@ -1,13 +1,24 @@
 {% set lightBoxParam = useLightBox is defined and useLightBox is not empty ? useLightBox : pimcore_checkbox('use_light_box').isChecked() %}
 {% set useLightBox = lightBoxParam and editmode == false %}
-{% set hasLink = pimcore_dynamiclink('link').isEmpty() == false %}
-{% set linkTarget = hasLink ? pimcore_dynamiclink('link').getTarget() : null %}
+{% set hasLink = false %}
+{% set link = null %}
+{% set linkTarget = null %}
+
+{% if useDynamicLinks == true %}
+    {% set hasLink = pimcore_dynamiclink('link').isEmpty() == false %}
+    {% set link = hasLink ? pimcore_dynamiclink('link').getHref() : null %}
+    {% set linkTarget = hasLink ? pimcore_dynamiclink('link').getTarget() : null %}
+{% else %}
+    {% set hasLink = pimcore_link('link', {'class' : 'btn btn-default teaser-link'}).isEmpty() == false %}
+    {% set link = hasLink ? pimcore_link('link').getHref() : null %}
+    {% set linkTarget = hasLink ? pimcore_link('link').getTarget() : null %}
+{% endif %}
 
 <div class="single-teaser default {{ useLightBox ? 'light-box' : '' }}">
 
-    {{  editmode == false and useLightBox
+    {{ editmode == false and useLightBox
         ? ('<a href="' ~ pimcore_image('image').getThumbnail(toolbox_get_image_thumbnail('teaser_lightbox')) ~ '" class="item">')|raw
-        : (editmode == false and hasLink ? '<a href="' ~ pimcore_dynamiclink('link').getHref() ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ pimcore_dynamiclink('link').getTarget() ~ '"' : '') ~ ' class="item">' : '')|raw
+        : (editmode == false and hasLink ? '<a href="' ~ link ~ '" ' ~ (linkTarget is not empty ? 'target="' ~ linkTarget ~ '"' : '') ~ ' class="item">' : '')|raw
     }}
 
     {{ pimcore_image('image', {'thumbnail' : toolbox_get_image_thumbnail('teaser_element'), 'class' : 'img-responsive'}) }}
@@ -20,6 +31,9 @@
         {{ pimcore_wysiwyg('text', {'height' : 100, 'customConfig' : '/admin/toolbox-ckeditor-style.js'}) }}
     </div>
 
-    {{ pimcore_dynamiclink('link', {'class' : 'btn btn-default teaser-link'}) }}
-
+    {% if useDynamicLinks == true %}
+        {{ pimcore_dynamiclink('link', {'class' : 'btn btn-default teaser-link'}) }}
+    {% else %}
+        {{ pimcore_link('link', {'class' : 'btn btn-default teaser-link'}) }}
+    {% endif %}
 </div>

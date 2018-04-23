@@ -3,6 +3,17 @@
 ***
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.4.0 to Version 2.5.0
+
+- **[BC BREAK]**: Use the `use_dynamic_links` Flag if you still want to use the dynamicLink:
+
+    ```yml
+    toolbox:
+        flags:
+            use_dynamic_links: true
+    ```
+    Please [read more here](./docs/70_ConfigurationFlags.md#use_dynamic_links-flag) if you want to migrate from dynamic links to the pimcore default links (highly recommended)
+
 #### Update from Version 2.4.0 to Version 2.4.1
 - **[NEW FEATURE]**: Introduce new `iFrame` element, see [docs](docs/11_ElementsOverview.md#iframe)
 - **[BUGFIX]**: only load icon if area type is internal
@@ -35,7 +46,7 @@ After every update you should check the pimcore extension manager. Just click th
 - **[BC BREAK]**: `vimeo-api.min.js` has been marked as deprecated and will be removed in Version 3.0.0! The toolbox-video extension will include the recent api by itself.
 
 #### Update from Version 2.1.x to Version 2.2.0
-**[BC BREAK]**: Use the `strict_column_counter` Flag if you're using offset columns! Read more about it [here](docs/70_ConfgurationFlags.md#strict_column_counter-flag)
+**[BC BREAK]**: Use the `strict_column_counter` Flag if you're using offset columns! Read more about it [here](docs/70_ConfigurationFlags.md#strict_column_counter-flag)
 
 - [Column Adjuster](docs/60_ColumnAdjuster.md) added
 - Google Maps: Allow deactivation of InfoWindow per location

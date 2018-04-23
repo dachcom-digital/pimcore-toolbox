@@ -83,6 +83,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('strict_column_counter')->defaultValue(false)->end()
+                        ->booleanNode('use_dynamic_links')->defaultValue(false)->end()
                     ->end()
                 ->end()
                 ->arrayNode('areas')
