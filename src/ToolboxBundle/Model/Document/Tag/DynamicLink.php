@@ -52,8 +52,15 @@ class DynamicLink extends Model\Document\Tag\Link
 
     }
 
+    /**
+     * @return bool
+     */
     public function checkValidity()
     {
+        if (strpos($this->data['path'], '::') === false) {
+            return parent::checkValidity();
+        }
+
         return true;
     }
 
