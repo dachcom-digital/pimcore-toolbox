@@ -52,18 +52,25 @@ class DynamicLink extends Model\Document\Tag\Link
 
     }
 
+    public function checkValidity()
+    {
+        return true;
+    }
+
     /**
      * @param mixed $data
      * @return $this
      */
     public function setDataFromEditmode($data)
     {
-        if (strpos($this->data['path'], '::') === false) {
+        if (strpos($data['path'], '::') === false) {
             return parent::setDataFromEditmode($data);
         }
 
-        $this->data['internal'] = true;
-        $this->data['internalType'] = 'object';
+        $data['internal'] = true;
+        $data['internalType'] = 'object';
+
+        $this->data = $data;
 
         return $this;
     }
