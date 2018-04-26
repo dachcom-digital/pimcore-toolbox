@@ -5,7 +5,8 @@ After every update you should check the pimcore extension manager. Just click th
 
 #### Update from Version 2.4.0 to Version 2.5.0
 
-- **[BC BREAK]**: Use the `use_dynamic_links` Flag if you still want to use the dynamicLink:
+- **[HOTFIX]**: In some cases pimcore will remove links within the validity check without any response. If you're using object links within the DynamicLink element you should update immediately!
+- **[BC BREAK]**: Use the `use_dynamic_links` Flag if you still want to use the dynamicLink element:
 
     ```yml
     toolbox:
