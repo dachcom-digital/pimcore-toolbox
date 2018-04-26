@@ -65,13 +65,27 @@ class DynamicLink extends Model\Document\Tag\Link
     }
 
     /**
+     * @param bool $realPath
+     * @param bool $editmode
+     */
+    protected function updatePathFromInternal($realPath = false, $editmode = false)
+    {
+        if (is_null($this->data['internalId']) && strpos($this->data['path'], '::') !== false) {
+            return;
+        }
+
+        parent::updatePathFromInternal($realPath, $editmode);
+    }
+
+    /**
      * @param mixed $data
      * @return $this
      */
     public function setDataFromEditmode($data)
     {
         if (strpos($data['path'], '::') === false) {
-            return parent::setDataFromEditmode($data);
+            parent::setDataFromEditmode($data);
+            return $this;
         }
 
         $data['internal'] = true;
