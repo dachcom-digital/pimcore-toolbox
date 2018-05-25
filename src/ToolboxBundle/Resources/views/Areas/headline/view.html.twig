@@ -3,7 +3,7 @@
 <div class="toolbox-element toolbox-headline {{ additionalClassesData|join(' ') }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
     {% if anchorName is not empty %}
-        <a id="{{ anchorName }}"></a>
+        <a class="toolbox-anchor" id="{{ anchorName }}"></a>
     {% endif %}
     {% include toolbox_area_path(areaId) %}
     {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
