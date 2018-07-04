@@ -134,7 +134,7 @@ class Configuration implements ConfigurationInterface
                                 ->useAttributeAsKey('name')
                                 ->prototype('array')
                                     ->children()
-                                        ->enumNode('type')->isRequired()->values($allowedTypes)->end()
+                                        ->scalarNode('type')->isRequired()->end()
                                         ->scalarNode('title')->defaultValue(null)->end()
                                         ->scalarNode('description')->defaultValue(null)->end()
                                         ->scalarNode('col_class')->defaultValue(null)->end()
