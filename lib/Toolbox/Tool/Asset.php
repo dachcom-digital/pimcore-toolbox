@@ -7,7 +7,7 @@ class Asset
     /**
      * @var array
      */
-    var $scriptQueue = ['header' => '', 'footer' => ''];
+    var $scriptQueue = ['header' => [], 'footer' => []];
 
     /**
      * @var bool
@@ -61,6 +61,7 @@ class Asset
      * @param array $nameArray
      * @param array $dependencies
      * @param array $params
+     * @throws \Zend_Exception
      */
     public function appendStylesheetGroup(array $nameArray = [], $dependencies = [], $params = [])
     {
@@ -74,8 +75,8 @@ class Asset
      * @param string $path
      * @param array  $dependencies
      * @param array  $params
-     *
      * @return $this
+     * @throws \Zend_Exception
      */
     public function appendStylesheet($name = '', $path = '', $dependencies = [], $params = [])
     {
@@ -109,6 +110,7 @@ class Asset
      * @param array $nameArray
      * @param array $dependencies
      * @param array $params
+     * @throws \Zend_Exception
      */
     public function appendScriptGroup(array $nameArray = [], $dependencies = [], $params = [])
     {
@@ -122,8 +124,8 @@ class Asset
      * @param string $path
      * @param array  $dependencies
      * @param array  $params
-     *
      * @return $this
+     * @throws \Zend_Exception
      */
     public function appendScript($name = '', $path = '', $dependencies = [], $params = [])
     {
