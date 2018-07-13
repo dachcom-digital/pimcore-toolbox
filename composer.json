@@ -26,7 +26,5 @@
                 "ToolboxBundle\\ToolboxBundle"
             ]
         }
-    },
-    "require": {
     }
 }
