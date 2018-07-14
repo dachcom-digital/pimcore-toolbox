@@ -60,7 +60,7 @@ class BundleConnector
         try {
             $hasExtension = $this->bundleManager->isEnabled($bundleName);
         } catch (\Exception $e) {
-            $hasExtension = FALSE;
+            $hasExtension = false;
         }
 
         return $hasExtension;

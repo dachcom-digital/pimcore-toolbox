@@ -11,7 +11,7 @@ class ColumnAdjuster extends Document\Tag
      *
      * @var bool|array
      */
-    public $data = FALSE;
+    public $data = false;
 
     /**
      * Return the type of the element
@@ -39,7 +39,7 @@ class ColumnAdjuster extends Document\Tag
      */
     public function frontend()
     {
-        return NULL;
+        return null;
     }
 
     /**
@@ -63,7 +63,7 @@ class ColumnAdjuster extends Document\Tag
         $this->data = \Pimcore\Tool\Serialize::unserialize($data);
 
         if (!is_array($this->data)) {
-            $this->data = FALSE;
+            $this->data = false;
         }
 
         return $this;
@@ -77,7 +77,7 @@ class ColumnAdjuster extends Document\Tag
     public function setDataFromEditmode($data)
     {
         if (!is_array($data)) {
-            $data = FALSE;
+            $data = false;
         }
 
         $this->data = $data;

@@ -363,7 +363,7 @@ class BrickConfigBuilder
 
             $elConf['type'] = 'select';
             $elConf['title'] = isset($elConf['title']) && !empty($elConf['title']) ? $elConf['title'] : 'Additional';
-            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] :  't-col-third';
+            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] : 't-col-third';
             $elConf['additional_classes_element'] = true;
             $elementName = 'add_classes';
             $this->hasAdditionalClassStore = true;

@@ -12,6 +12,7 @@ class ParallaxImage extends Model\Document\Tag\Multihref
 {
     /**
      * Return the type of the element
+     *
      * @return string
      */
     public function getType()
@@ -30,9 +31,9 @@ class ParallaxImage extends Model\Document\Tag\Multihref
                 $el = Element\Service::getElementById($elementId['type'], $elementId['id']);
                 if ($el instanceof Element\ElementInterface) {
                     $this->elements[] = [
-                        'obj' => $el,
+                        'obj'              => $el,
                         'parallaxPosition' => $elementId['parallaxPosition'],
-                        'parallaxSize' => $elementId['parallaxSize']
+                        'parallaxSize'     => $elementId['parallaxSize']
                     ];
                 }
             }
@@ -43,6 +44,7 @@ class ParallaxImage extends Model\Document\Tag\Multihref
 
     /**
      * Converts the data so it's suitable for the editmode
+     *
      * @return mixed
      */
     public function getDataEditmode()
@@ -54,13 +56,41 @@ class ParallaxImage extends Model\Document\Tag\Multihref
             foreach ($this->elements as $element) {
                 $obj = $element['obj'];
                 if ($obj instanceof DataObject\Concrete) {
-                    $return[] = [$obj->getId(), $obj->getRealFullPath(), 'object', $obj->getClassName(), $element['parallaxPosition'], $element['parallaxSize']];
+                    $return[] = [
+                        $obj->getId(),
+                        $obj->getRealFullPath(),
+                        'object',
+                        $obj->getClassName(),
+                        $element['parallaxPosition'],
+                        $element['parallaxSize']
+                    ];
                 } elseif ($obj instanceof DataObject\AbstractObject) {
-                    $return[] = [$obj->getId(), $obj->getRealFullPath(), 'object', 'folder', $element['parallaxPosition'], $element['parallaxSize']];
+                    $return[] = [
+                        $obj->getId(),
+                        $obj->getRealFullPath(),
+                        'object',
+                        'folder',
+                        $element['parallaxPosition'],
+                        $element['parallaxSize']
+                    ];
                 } elseif ($obj instanceof Asset) {
-                    $return[] = [$obj->getId(), $obj->getRealFullPath(), 'asset', $obj->getType(), $element['parallaxPosition'], $element['parallaxSize']];
+                    $return[] = [
+                        $obj->getId(),
+                        $obj->getRealFullPath(),
+                        'asset',
+                        $obj->getType(),
+                        $element['parallaxPosition'],
+                        $element['parallaxSize']
+                    ];
                 } elseif ($obj instanceof Document) {
-                    $return[] = [$obj->getId(), $obj->getRealFullPath(), 'document', $obj->getType(), $element['parallaxPosition'], $element['parallaxSize']];
+                    $return[] = [
+                        $obj->getId(),
+                        $obj->getRealFullPath(),
+                        'document',
+                        $obj->getType(),
+                        $element['parallaxPosition'],
+                        $element['parallaxSize']
+                    ];
                 }
             }
         }

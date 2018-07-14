@@ -24,6 +24,10 @@ class LayoutManager implements LayoutManagerInterface
         $this->configManager = $configManager;
     }
 
+    /**
+     * @param EngineInterface $templating
+     * @return $this
+     */
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
@@ -37,7 +41,7 @@ class LayoutManager implements LayoutManagerInterface
      * @return string
      * @throws \Exception
      */
-    public function getAreaTemplateDir($areaId = NULL, $viewName = 'view', $extension = 'html.twig')
+    public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig')
     {
         $elementThemeConfig = $this->getAreaThemeConfig($areaId);
 
@@ -49,11 +53,11 @@ class LayoutManager implements LayoutManagerInterface
         );
 
         //no fallback layout defined. return default.
-        if($elementThemeConfig['default_layout'] === FALSE || empty($elementThemeConfig['default_layout'])) {
+        if ($elementThemeConfig['default_layout'] === false || empty($elementThemeConfig['default_layout'])) {
             return $defaultDir;
         }
 
-        if($this->templating->exists($defaultDir . DIRECTORY_SEPARATOR . $viewName . '.' . $extension)) {
+        if ($this->templating->exists($defaultDir . DIRECTORY_SEPARATOR . $viewName . '.' . $extension)) {
             return $defaultDir;
         }
 
@@ -68,10 +72,10 @@ class LayoutManager implements LayoutManagerInterface
      * @param null   $areaId
      * @param string $viewName
      * @param string $extension
-     *
      * @return string
+     * @throws \Exception
      */
-    public function getAreaTemplatePath($areaId = NULL, $viewName = 'view', $extension = 'html.twig')
+    public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig')
     {
         return $this->getAreaTemplateDir($areaId, $viewName) . DIRECTORY_SEPARATOR . $viewName . '.' . $extension;
     }
@@ -88,7 +92,7 @@ class LayoutManager implements LayoutManagerInterface
         $theme = [
             'layout'         => $layoutConfiguration['layout'],
             'default_layout' => $layoutConfiguration['default_layout'],
-            'wrapper'        => FALSE
+            'wrapper'        => false
         ];
 
         if (isset($layoutConfiguration['wrapper'][$areaName]['wrapper_classes'])) {

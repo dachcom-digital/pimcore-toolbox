@@ -8,6 +8,11 @@ use Pimcore\Model\Asset;
 
 class Video extends AbstractAreabrick
 {
+    /**
+     * @param Info $info
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
+     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -15,13 +20,13 @@ class Video extends AbstractAreabrick
         $view = $info->getView();
 
         /** @var \ToolboxBundle\Model\Document\Tag\Vhs $videoTag */
-        $videoTag = $this->getDocumentTag($info->getDocument(),'vhs', 'video');
+        $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
 
-        $playInLightBox = $videoTag->getShowAsLightbox() === TRUE ? 'true' : 'false';
-        $autoPlay = $this->getDocumentTag($info->getDocument(),'checkbox', 'autoplay')->isChecked() === TRUE && !$view->get('editmode');
+        $playInLightBox = $videoTag->getShowAsLightbox() === true ? 'true' : 'false';
+        $autoPlay = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay')->isChecked() === true && !$view->get('editmode');
         $videoType = $videoTag->getVideoType();
-        $posterPath = NULL;
-        $imageThumbnail = NULL;
+        $posterPath = null;
+        $imageThumbnail = null;
         $poster = $videoTag->getPosterAsset();
         $videoId = $videoTag->id;
 
@@ -30,11 +35,11 @@ class Video extends AbstractAreabrick
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $view->autoPlay       = $autoPlay;
-        $view->posterPath     = $posterPath;
-        $view->videoType      = $videoType;
+        $view->autoPlay = $autoPlay;
+        $view->posterPath = $posterPath;
+        $view->videoType = $videoType;
         $view->playInLightbox = $playInLightBox;
-        $view->videoId        = $videoId;
+        $view->videoId = $videoId;
     }
 
     public function getName()

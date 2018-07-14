@@ -28,7 +28,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container)
     {
         // prevent throwing exception if no gm key has been defined.
-        if($container->hasParameter('pimcore_system_config.services.google.browserapikey') === false) {
+        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === false) {
             $container->setParameter('pimcore_system_config.services.google.browserapikey', null);
         }
 

@@ -45,7 +45,7 @@ class Install extends AbstractInstaller
         $this->installOrUpdateConfigFile();
         $this->importTranslations();
         $this->installDocumentTypes();
-        return TRUE;
+        return true;
     }
 
     /**
@@ -101,7 +101,7 @@ class Install extends AbstractInstaller
      */
     public function needsReloadAfterInstall()
     {
-        return FALSE;
+        return false;
     }
 
     /**
@@ -109,11 +109,11 @@ class Install extends AbstractInstaller
      */
     public function canBeUpdated()
     {
-        $needUpdate = FALSE;
+        $needUpdate = false;
         if ($this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH)) {
             $config = Yaml::parse(file_get_contents(self::SYSTEM_CONFIG_FILE_PATH));
-            if($config['version'] !== ToolboxBundle::BUNDLE_VERSION) {
-                $needUpdate = TRUE;
+            if ($config['version'] !== ToolboxBundle::BUNDLE_VERSION) {
+                $needUpdate = true;
             }
         }
 
@@ -122,11 +122,12 @@ class Install extends AbstractInstaller
 
     /**
      * imports admin-translations
+     *
      * @throws \Exception
      */
     private function importTranslations()
     {
-        Admin::importTranslationsFromFile($this->installSourcesPath . '/admin-translations/data.csv', TRUE);
+        Admin::importTranslationsFromFile($this->installSourcesPath . '/admin-translations/data.csv', true);
     }
 
     /**
@@ -138,18 +139,18 @@ class Install extends AbstractInstaller
         $list = new DocType\Listing();
         $list->load();
 
-        $skipInstall = FALSE;
+        $skipInstall = false;
         $elementName = 'Teaser Snippet';
 
         foreach ($list->getDocTypes() as $type) {
             if ($type->getName() === $elementName) {
-                $skipInstall = TRUE;
+                $skipInstall = true;
                 break;
             }
         }
 
         if ($skipInstall) {
-            return FALSE;
+            return false;
         }
 
         $type = DocType::create();
@@ -173,7 +174,7 @@ class Install extends AbstractInstaller
      */
     private function installOrUpdateConfigFile()
     {
-        if(!$this->fileSystem->exists(self::SYSTEM_CONFIG_DIR_PATH)) {
+        if (!$this->fileSystem->exists(self::SYSTEM_CONFIG_DIR_PATH)) {
             $this->fileSystem->mkdir(self::SYSTEM_CONFIG_DIR_PATH);
         }
 

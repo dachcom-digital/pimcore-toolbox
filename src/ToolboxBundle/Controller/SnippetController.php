@@ -23,7 +23,7 @@ class SnippetController extends FrontendController
 
         $store = $layoutStore['config']['store'];
         $layoutExtJsStore = [];
-        if(is_array($store)) {
+        if (is_array($store)) {
             foreach ($store as $key => $item) {
                 $layoutExtJsStore[] = [$key, $item];
             }
@@ -31,7 +31,7 @@ class SnippetController extends FrontendController
 
         $store = $addClStore['config']['store'];
         $addClExtJsStore = [];
-        if(is_array($store)) {
+        if (is_array($store)) {
             foreach ($store as $key => $item) {
                 $addClExtJsStore[] = [$key, $item];
             }

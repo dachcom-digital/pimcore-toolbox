@@ -39,6 +39,7 @@ interface ConfigManagerInterface
      * @throws \Exception
      */
     public function getCurrentContextSettings();
+
     /**
      * @param string $areaName
      * @return mixed

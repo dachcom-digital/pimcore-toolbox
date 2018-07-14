@@ -9,13 +9,13 @@ interface LayoutManagerInterface
     public function setTemplating(EngineInterface $templating);
 
     /**
-     * @param null $areaId
+     * @param null   $areaId
      * @param string $viewName
      * @param string $extension
      *
      * @return string
      */
-    public function getAreaTemplateDir($areaId = NULL, $viewName = 'view', $extension = 'html.twig');
+    public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig');
 
     /**
      * @param null   $areaId
@@ -24,7 +24,7 @@ interface LayoutManagerInterface
      *
      * @return string
      */
-    public function getAreaTemplatePath($areaId = NULL, $viewName = 'view', $extension = 'html.twig');
+    public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig');
 
     /**
      * @param string $areaName

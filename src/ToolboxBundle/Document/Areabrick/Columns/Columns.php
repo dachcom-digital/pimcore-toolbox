@@ -37,13 +37,13 @@ class Columns extends AbstractAreabrick
         $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
         $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();
 
-        $equalHeight = $equalHeightElement->isChecked() && $editMode === FALSE;
+        $equalHeight = $equalHeightElement->isChecked() && $editMode === false;
         $type = $typeElement->getData();
 
         $partialName = '';
 
-        $customColumnConfiguration = NULL;
-        if ($gridAdjustment !== FALSE) {
+        $customColumnConfiguration = null;
+        if ($gridAdjustment !== false) {
             $customColumnConfiguration = [$type => $gridAdjustment];
         }
 
@@ -64,7 +64,7 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $view->type = $type . ($gridAdjustment !== FALSE ? '-grid-adjuster' : '');
+        $view->type = $type . ($gridAdjustment !== false ? '-grid-adjuster' : '');
         $view->columns = $columns;
         $view->partialName = $partialName;
         $view->equalHeight = $equalHeight;

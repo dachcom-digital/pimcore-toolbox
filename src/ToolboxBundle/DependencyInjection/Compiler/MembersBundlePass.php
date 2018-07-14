@@ -21,7 +21,7 @@ class MembersBundlePass implements CompilerPassInterface
         }
 
         $toolboxBundleConnector = $container->getDefinition(BundleConnector::class);
-        foreach($this->getRequiredServices() as $service) {
+        foreach ($this->getRequiredServices() as $service) {
             $toolboxBundleConnector->addMethodCall(
                 'registerBundleService',
                 [$service, new Reference($service)]

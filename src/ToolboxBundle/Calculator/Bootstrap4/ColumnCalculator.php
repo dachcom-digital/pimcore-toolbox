@@ -29,7 +29,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
      * @return array
      * @throws \Exception
      */
-    public function calculateColumns($value, $customColumnConfiguration = NULL)
+    public function calculateColumns($value, $customColumnConfiguration = null)
     {
         $themeSettings = $this->configManager->getConfig('theme');
         $gridSettings = $themeSettings['grid'];
@@ -38,7 +38,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
         $flags = $this->configManager->getConfig('flags');
         $strictColumnCounter = $flags['strict_column_counter'];
 
-        if ($customColumnConfiguration !== NULL) {
+        if ($customColumnConfiguration !== null) {
             $columnConfiguration = $customColumnConfiguration;
         } else {
             $columnConfigNode = $this->configManager->getAreaElementConfig('columns', 'type');
@@ -139,7 +139,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
      * @return bool|mixed
      * @throws \Exception
      */
-    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = NULL)
+    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null)
     {
         $columnData = $this->calculateColumns($value, $customColumnConfiguration);
 
@@ -148,7 +148,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
         //no data found, calculateColumns does not return columnData!
         if (count($columnData) === 0 || !isset($columnData[0]['columnData'])) {
-            return FALSE;
+            return false;
         }
 
         $breakPoints = $gridSettings['breakpoints'];
@@ -161,14 +161,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 if (array_key_exists($breakpoint['identifier'], $column['columnData']['gridOffset'])) {
                     $columnConfig['offset'] = $column['columnData']['gridOffset'][$breakpoint['identifier']];
                 } else {
-                    $columnConfig['offset'] = NULL;
+                    $columnConfig['offset'] = null;
                 }
 
                 //grid size
                 if (array_key_exists($breakpoint['identifier'], $column['columnData']['grid'])) {
                     $columnConfig['value'] = $column['columnData']['grid'][$breakpoint['identifier']];
                 } else {
-                    $columnConfig['value'] = NULL;
+                    $columnConfig['value'] = null;
                 }
 
                 $breakpointColumnData[] = $columnConfig;

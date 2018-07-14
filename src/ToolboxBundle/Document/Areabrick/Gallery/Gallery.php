@@ -14,7 +14,7 @@ class Gallery extends AbstractAreabrick
         $view = $info->getView();
         $view->galleryId = 'gallery-' . uniqid();
         $view->images = $this->getAssetArray(
-            $this->getDocumentTag($info->getDocument(),'multihref', 'images')->getElements()
+            $this->getDocumentTag($info->getDocument(), 'multihref', 'images')->getElements()
         );
     }
 
@@ -44,7 +44,7 @@ class Gallery extends AbstractAreabrick
         foreach ($data as $element) {
             if ($element instanceof \Pimcore\Model\Asset\Image) {
                 $assets[] = $element;
-            } else if ($element instanceof \Pimcore\Model\Asset\Folder) {
+            } elseif ($element instanceof \Pimcore\Model\Asset\Folder) {
                 foreach ($element->getChildren() as $child) {
                     if ($child instanceof \Pimcore\Model\Asset\Image) {
                         $assets[] = $child;

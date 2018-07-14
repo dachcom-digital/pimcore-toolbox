@@ -7,6 +7,11 @@ use Pimcore\Model\Document\Tag\Area\Info;
 
 class Teaser extends AbstractAreabrick
 {
+    /**
+     * @param Info $info
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
+     */
     public function action(Info $info)
     {
         parent::action($info);

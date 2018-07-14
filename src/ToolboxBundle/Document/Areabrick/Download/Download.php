@@ -28,6 +28,8 @@ class Download extends AbstractAreabrick
 
     /**
      * @param Info $info
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
      */
     public function action(Info $info)
     {
@@ -37,7 +39,7 @@ class Download extends AbstractAreabrick
 
         //check if member extension exist
         $hasMembers = $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
-        $downloadField = $this->getDocumentTag($info->getDocument(),'multihref', 'downloads');
+        $downloadField = $this->getDocumentTag($info->getDocument(), 'multihref', 'downloads');
 
         $assets = [];
         if (!$downloadField->isEmpty()) {
@@ -46,13 +48,13 @@ class Download extends AbstractAreabrick
             foreach ($downloadField->getElements() as $node) {
 
                 //it's a folder. get all sub assets
-                if($node instanceof Asset\Folder) {
+                if ($node instanceof Asset\Folder) {
 
                     $assetListing = new Asset\Listing();
                     $fullPath = rtrim($node->getFullPath(), '/') . '/';
                     $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
 
-                    if($hasMembers) {
+                    if ($hasMembers) {
                         $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
                             $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
                                 ->addRestrictionInjection($query, $assetListing, 'assets.id');
@@ -66,13 +68,13 @@ class Download extends AbstractAreabrick
                         }
                     }
 
-                //default asset
+                    //default asset
                 } else {
 
-                    if($hasMembers) {
+                    if ($hasMembers) {
                         /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
                         $elementRestriction = $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->getElementRestrictionStatus($node);
-                        if($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
+                        if ($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
                             $assets[] = $node;
                         }
                     } else {

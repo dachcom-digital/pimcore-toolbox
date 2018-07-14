@@ -36,6 +36,7 @@ class GoogleMap extends Document\Tag
 
     /**
      * Return the data for direct output to the frontend, can also contain HTML code!
+     *
      * @return string
      * @throws \Exception
      */
@@ -60,7 +61,7 @@ class GoogleMap extends Document\Tag
 
             if (is_array($mapOptions) && count($mapOptions) > 0) {
                 foreach ($mapOptions as $name => $value) {
-                    $value = is_bool($value) ? ($value === TRUE ? 'true' : 'false') : (string)$value;
+                    $value = is_bool($value) ? ($value === true ? 'true' : 'false') : (string)$value;
                     // convert camelCase to camel-case, because we will read these property with $el.data(), which converts them back to camelCase
                     $name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '-\\1', $name));
                     $dataAttr['data-mapoption-' . $name] = $value;
@@ -182,7 +183,7 @@ class GoogleMap extends Document\Tag
         $response = curl_exec($c);
         curl_close($c);
 
-        $result = json_decode($response, FALSE);
+        $result = json_decode($response, false);
 
         if ($result->status === 'OK') {
             $location['lat'] = $result->results[0]->geometry->location->lat;
