@@ -25,9 +25,9 @@ class BrickConfigBuilder
     protected $templating;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $documentEditableId = false;
+    protected $documentEditableId = '';
 
     /**
      * @var string
@@ -60,7 +60,7 @@ class BrickConfigBuilder
     protected $hasAdditionalClassStore = false;
 
     /**
-     * @var null
+     * @var null|string
      */
     protected $configWindowSize = null;
 
@@ -202,7 +202,7 @@ class BrickConfigBuilder
      */
     private function reset()
     {
-        $this->documentEditableId = false;
+        $this->documentEditableId = '';
         $this->documentEditableName = '';
         $this->info = null;
         $this->themeOptions = [];
@@ -439,7 +439,7 @@ class BrickConfigBuilder
         }
 
         //condition needs to applied after all elements has been initialized!
-        return self::checkCondition($parsedConfig);
+        return $this->checkCondition($parsedConfig);
     }
 
     /**
@@ -502,7 +502,7 @@ class BrickConfigBuilder
                 $andState = true;
 
                 foreach ($andConditions as $andConditionKey => $andConditionValue) {
-                    $andGroup[] = self::getElementState($andConditionKey, $configElements) == $andConditionValue;
+                    $andGroup[] = $this->getElementState($andConditionKey, $configElements) == $andConditionValue;
                 }
 
                 if (in_array(false, $andGroup, true)) {
@@ -520,7 +520,7 @@ class BrickConfigBuilder
                 $filteredData[] = $el;
             } else {
                 //we need to reset value, if possible!
-                $filteredData[] = self::resetElement($el);
+                $filteredData[] = $this->resetElement($el);
             }
         }
 
@@ -529,11 +529,11 @@ class BrickConfigBuilder
 
     /**
      * @param string $name
-     * @param        $elements
+     * @param array  $elements
      *
-     * @return null
+     * @return null|string
      */
-    private function getElementState($name = '', $elements)
+    private function getElementState($name = '', $elements = [])
     {
         if (empty($elements)) {
             return null;
