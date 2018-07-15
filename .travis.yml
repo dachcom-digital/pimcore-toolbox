@@ -25,10 +25,10 @@ cache:
         - vendor
 
 install:
-    - etc/travis/install
+    - tests/etc/travis/install
 
 script:
-    - etc/travis/script
+    - tests/etc/travis/script
 
 notifications:
     email:
