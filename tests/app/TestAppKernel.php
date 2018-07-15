@@ -29,6 +29,7 @@ class TestAppKernel extends Kernel
         parent::registerContainerConfiguration($loader);
 
         $loader->load(function (\Symfony\Component\DependencyInjection\ContainerBuilder $container) use ($loader) {
+            $container->addCompilerPass(new \Toolbox\Test\DependencyInjection\MakeServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
             $container->addCompilerPass(new \Toolbox\Test\DependencyInjection\MonologChannelLoggerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
         });
     }

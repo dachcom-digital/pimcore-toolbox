@@ -18,7 +18,8 @@ class AllTests extends SuiteBase
         $suite = new TestSuite('Models');
 
         $tests = [
-            '\\Toolbox\\Test\\PHPUnit\\Suites\\Zone',
+            '\\Toolbox\\Test\\PHPUnit\\Suites\\AreaManager',
+            '\\Toolbox\\Test\\PHPUnit\\Suites\\ColumnCalculator',
         ];
 
         shuffle($tests);
