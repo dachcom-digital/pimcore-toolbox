@@ -7,8 +7,6 @@ build:
                     - cd ./pimcore
                     - git reset --hard b132bb1b89d2b0318a188769aba0bc4e509dfa2f
                     - composer install
-                    - composer require dachcom-digital/lucene-search:~2.1.0
-                    - composer require pimcore/customer-management-framework-bundle:~1.7.0
                     - cd ../
 
             project_setup:
@@ -37,4 +35,5 @@ filter:
         - pimcore/
     excluded_paths:
         - tests/
+        - src/ToolboxBundle/Resources/public/js/frontend/vendor
         - docs/
