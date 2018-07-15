@@ -24,8 +24,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
     }
 
     /**
-     * @param string $value
-     * @param null   $customColumnConfiguration
+     * @param string     $value
+     * @param null|array $customColumnConfiguration
      * @return array
      * @throws \Exception
      */
@@ -132,8 +132,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
     }
 
     /**
-     * @param string $value
-     * @param null   $customColumnConfiguration
+     * @param string     $value
+     * @param null|array $customColumnConfiguration
      * @return bool|mixed
      * @throws \Exception
      */

@@ -16,14 +16,14 @@ use ToolboxBundle\ToolboxConfig;
 class AreaConfigurationCommand extends Command
 {
     /**
-     * @var AdaptiveConfigManagerInterface
+     * @var AdaptiveConfigManagerInterface|ConfigManagerInterface
      */
     private $adaptiveConfigManager;
 
     /**
      * AreaConfigurationCommand constructor.
      *
-     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
+     * @param AdaptiveConfigManagerInterface|ConfigManagerInterface $adaptiveConfigManager
      */
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
