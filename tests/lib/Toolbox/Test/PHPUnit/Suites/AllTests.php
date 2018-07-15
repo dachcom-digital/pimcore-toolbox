@@ -22,16 +22,16 @@ class AllTests extends SuiteBase
         ];
 
         shuffle($tests);
-        echo "Created the following execution order:\n";
+        echo 'Created the following execution order:' . PHP_EOL;
 
         foreach ($tests as $test) {
-            echo '    - '.$test."\n";
-
+            echo '    - ' . $test . PHP_EOL;
             $suite->addTestSuite($test);
         }
 
-        echo "Install Test Data:\n";
+        echo 'Install Test Data:' . PHP_EOL;
         \Toolbox\Test\Data::createData();
+        echo PHP_EOL;
 
         return $suite;
     }

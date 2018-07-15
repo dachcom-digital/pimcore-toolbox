@@ -16,20 +16,7 @@ abstract class Base extends TestCase
             throw new \Exception();
         } catch (\Exception $e) {
             $trace = $e->getTrace();
-            echo '### running ...  '.$trace[1]['class'].'::'.$trace[1]['function']." ... good luck!\n";
-        }
-    }
-
-    /**
-     * Print TO-DO Test Name.
-     */
-    public function printTodoTestName()
-    {
-        try {
-            throw new \Exception();
-        } catch (\Exception $e) {
-            $trace = $e->getTrace();
-            echo '### running ...  '.$trace[1]['class'].'::'.$trace[1]['function']." ... good luck! TODO! \n";
+            echo '.. running ' . $trace[1]['class'] . '::' . $trace[1]['function'] . ' ... good luck!' . PHP_EOL;
         }
     }
 

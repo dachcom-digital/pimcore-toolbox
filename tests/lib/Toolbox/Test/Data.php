@@ -22,10 +22,11 @@ class Data
         $purger = new PurgeDatabase();
         $purger->purge();
 
-        //self::setup();
+        self::setup();
     }
 
     public static function setup()
     {
+        echo 'no data to install. skipping... ' . PHP_EOL;
     }
 }

@@ -13,4 +13,12 @@ class Zone extends Base
     {
         $this->printTestName();
     }
+
+    /**
+     * Test Zone Creation.
+     */
+    public function testDingZoneCreation()
+    {
+        $this->printTestName();
+    }
 }
