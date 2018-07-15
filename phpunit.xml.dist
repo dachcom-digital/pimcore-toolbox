@@ -1,0 +1,19 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="tests/_bootstrap.php">
+    <testsuites>
+        <testsuite name="Toolbox Test Suite">
+            <directory suffix="AllTests.php">tests/</directory>
+            <file>tests/lib/Toolbox/Test/PHPUnit/Suites/AllTests.php</file>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="KERNEL_CLASS" value="TestAppKernel" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="100"/>
+    </php>
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+</phpunit>

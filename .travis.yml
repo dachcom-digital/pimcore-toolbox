@@ -1,0 +1,35 @@
+sudo: false
+language: php
+addons:
+    mariadb: '10.1'
+    hosts:
+        - pimcore-test.dev
+env:
+    global:
+        - PIMCORE_ENVIRONMENT=test
+        - DACHCOM_BUNDLE_TEST=1
+        - PIMCORE_TEST_DB_DSN="mysql://root@localhost/dachcom_bundle_test"
+
+matrix:
+    include:
+        -
+          sudo: required
+          php: 7.2
+          env:
+            - PIMCORE_BRANCH="tags/v5.1.3"
+    fast_finish: true
+
+cache:
+    directories:
+        - ~/.composer/cache/files
+        - vendor
+
+install:
+    - etc/travis/install
+
+script:
+    - etc/travis/script
+
+notifications:
+    email:
+        - shagspiel@dachcom.ch

@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -e
+
+##########################################################################################
+#########
+######### Setup mysql
+#########
+##########################################################################################
+
+mysql --version
+mysql -e "SET GLOBAL innodb_file_format=Barracuda;"
+mysql -e "SET GLOBAL innodb_large_prefix=1;"
+mysql -e "CREATE DATABASE dachcom_bundle_test CHARSET=utf8mb4;"
+
+##########################################################################################
+#########
+######### Move $DACHCOM_BUNDLE_NAME in Order to install Pimcore
+#########
+##########################################################################################
+mkdir $DACHCOM_BUNDLE_HOME/../lib
+mkdir $DACHCOM_BUNDLE_HOME/../lib/$DACHCOM_BUNDLE_NAME
+mv $DACHCOM_BUNDLE_HOME/{.[!.],}* $DACHCOM_BUNDLE_HOME/../lib/$DACHCOM_BUNDLE_NAME
+rm -rf $DACHCOM_BUNDLE_HOME/{.[!.],}*
+
+##########################################################################################
+#########
+######### Clone Pimcore
+#########
+##########################################################################################
+git clone https://github.com/pimcore/pimcore.git $DACHCOM_BUNDLE_HOME
+git checkout ${PIMCORE_BRANCH} $DACHCOM_BUNDLE_HOME
+
+##########################################################################################
+#########
+#########  Move $DACHCOM_BUNDLE_NAME into lib/$DACHCOM_BUNDLE_NAME
+#########
+##########################################################################################
+mkdir $DACHCOM_BUNDLE_HOME/lib
+mv $DACHCOM_BUNDLE_HOME/../lib/$DACHCOM_BUNDLE_NAME $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME
+
+##########################################################################################
+#########
+#########  Copy scripts to root dir
+#########
+##########################################################################################
+cp -r $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/etc $DACHCOM_BUNDLE_HOME/etc
+chmod -R +x $DACHCOM_BUNDLE_HOME/etc
+
+##########################################################################################
+#########
+#########  add config templates
+#########
+##########################################################################################
+mkdir -p $DACHCOM_BUNDLE_HOME/var/config
+cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc/_config/system.template.php var/config/system.php
+cp app/config/parameters.example.yml app/config/parameters.yml
+
+##########################################################################################
+#########
+#########  Install composer dependencies
+#########
+##########################################################################################
+composer install --no-dev --no-scripts
+composer remove codeception/codeception --dev --no-scripts
+
+##########################################################################################
+#########
+#########  Install $DACHCOM_BUNDLE_NAME dependencies
+#########
+##########################################################################################
+composer require symfony/phpunit-bridge:^3 phpunit/phpunit:^6 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#DACHCOM_BUNDLE_COMMIT
+
+
+##########################################################################################
+#########
+#########  Clear cache and install $DACHCOM_BUNDLE_NAME test config
+#########
+##########################################################################################
+rm -rf var/cache
+cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc/_config/config.yml app/config/config.yml
