@@ -53,6 +53,7 @@ chmod -R +x $DACHCOM_BUNDLE_HOME/etc
 ##########################################################################################
 mkdir -p $DACHCOM_BUNDLE_HOME/var/config
 cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/etc/_config/system.template.php var/config/system.php
+cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/etc/_config/config.yml app/config/config.yml
 cp app/config/parameters.example.yml app/config/parameters.yml
 
 ##########################################################################################
@@ -70,11 +71,9 @@ composer remove codeception/codeception --dev --no-scripts
 ##########################################################################################
 composer require symfony/phpunit-bridge:^3 phpunit/phpunit:^6 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#DACHCOM_BUNDLE_COMMIT
 
-
 ##########################################################################################
 #########
-#########  Clear cache and install $DACHCOM_BUNDLE_NAME test config
+#########  Clear cache
 #########
 ##########################################################################################
 rm -rf var/cache
-cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc/_config/config.yml app/config/config.yml
