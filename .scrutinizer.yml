@@ -7,6 +7,7 @@ build:
                     - cd ./pimcore
                     - git reset --hard b132bb1b89d2b0318a188769aba0bc4e509dfa2f
                     - composer install
+                    - composer require dachcom-digital/members:~2.1.0
                     - cd ../
 
             project_setup:
@@ -15,10 +16,10 @@ build:
             tests:
                 override:
                     - php-scrutinizer-run
+                    - js-scrutinizer-run
                     -
                         command: phpcs-run
                         use_website_config: true
-                    - js-scrutinizer-run
 checks:
     php: true
 coding_style:
@@ -35,5 +36,6 @@ filter:
         - pimcore/
     excluded_paths:
         - tests/
+        - vendor/
         - src/ToolboxBundle/Resources/public/js/frontend/vendor
         - docs/
