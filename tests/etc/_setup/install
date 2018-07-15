@@ -43,8 +43,8 @@ mv $DACHCOM_BUNDLE_HOME/../lib/$DACHCOM_BUNDLE_NAME $DACHCOM_BUNDLE_HOME/lib/$DA
 #########  Copy scripts to root dir
 #########
 ##########################################################################################
-cp -r $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc $DACHCOM_BUNDLE_HOME/tests/etc
-chmod -R +x $DACHCOM_BUNDLE_HOME/tests/etc
+cp -r $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc $DACHCOM_BUNDLE_HOME/etc
+chmod -R +x $DACHCOM_BUNDLE_HOME/etc
 
 ##########################################################################################
 #########
@@ -52,7 +52,7 @@ chmod -R +x $DACHCOM_BUNDLE_HOME/tests/etc
 #########
 ##########################################################################################
 mkdir -p $DACHCOM_BUNDLE_HOME/var/config
-cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/etc/_config/system.template.php var/config/system.php
+cp $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/etc/_config/system.template.php var/config/system.php
 cp app/config/parameters.example.yml app/config/parameters.yml
 
 ##########################################################################################

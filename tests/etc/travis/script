@@ -4,4 +4,4 @@ set -e
 export DACHCOM_BUNDLE_HOME=$TRAVIS_BUILD_DIR
 export DACHCOM_BUNDLE_NAME="Toolbox"
 
-$DACHCOM_BUNDLE_HOME/tests/etc/travis/scripts/tests
+$DACHCOM_BUNDLE_HOME/etc/travis/scripts/tests

@@ -28,7 +28,7 @@ install:
     - tests/etc/travis/install
 
 script:
-    - tests/etc/travis/script
+    - etc/travis/script
 
 notifications:
     email:
