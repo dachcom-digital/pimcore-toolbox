@@ -41,7 +41,6 @@ class Setup
 
         $schemaManager->createDatabase($connection->quoteIdentifier($dbName));
 
-
         if (!$connection->isConnected()) {
             $connection->connect();
         }
