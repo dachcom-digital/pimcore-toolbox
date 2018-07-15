@@ -53,6 +53,7 @@ chmod -R +x $DACHCOM_BUNDLE_HOME/etc
 ##########################################################################################
 mkdir -p $DACHCOM_BUNDLE_HOME/var/config
 cp $DACHCOM_BUNDLE_HOME/etc/_config/system.template.php var/config/system.php
+cp $DACHCOM_BUNDLE_HOME/etc/_config/extensions.template.php var/config/extensions.php
 cp $DACHCOM_BUNDLE_HOME/etc/_config/config.yml app/config/config.yml
 cp app/config/parameters.example.yml app/config/parameters.yml
 
