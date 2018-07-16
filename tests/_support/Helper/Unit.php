@@ -35,7 +35,7 @@ class Unit extends \Codeception\Module
         /** @var PimcoreBundle $pimcoreModule */
         $pimcoreModule = $this->getModule('\\' . PimcoreBundle::class);
 
-        $this->debug('[TOOLBOX] Running toolbox framework installer');
+        $this->debug('[TOOLBOX] Running toolbox installer');
 
         // install dachcom bundle
         $installer = $pimcoreModule->getContainer()->get(Install::class);

@@ -62,14 +62,14 @@ cp app/config/parameters.example.yml app/config/parameters.yml
 #########  Install composer dependencies
 #########
 ##########################################################################################
-composer install --no-dev --no-scripts
+composer install --no-scripts
 
 ##########################################################################################
 #########
 #########  Install $DACHCOM_BUNDLE_NAME dependencies
 #########
 ##########################################################################################
-composer require symfony/phpunit-bridge:^3 codeception/codeception:~2.3.8 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
+composer require symfony/phpunit-bridge:^3 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
 
 ##########################################################################################
 #########
