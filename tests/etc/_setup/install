@@ -69,7 +69,7 @@ composer install --no-dev --no-scripts
 #########  Install $DACHCOM_BUNDLE_NAME dependencies
 #########
 ##########################################################################################
-composer require symfony/phpunit-bridge:^3 phpunit/phpunit:^6 codeception/codeception:~2.3.8 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
+composer require symfony/phpunit-bridge:^3 codeception/codeception:~2.3.8 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
 
 ##########################################################################################
 #########

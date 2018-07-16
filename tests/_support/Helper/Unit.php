@@ -6,9 +6,7 @@ namespace Toolbox\Test\Helper;
 // all public methods declared in helper class will be available in $I
 
 use Codeception\Lib\ModuleContainer;
-use Toolbox\Test\Helper\PimcoreBundle;
 use ToolboxBundle\Tool\Install;
-use Pimcore\Tests\Util\Autoloader;
 
 class Unit extends \Codeception\Module
 {
@@ -39,12 +37,8 @@ class Unit extends \Codeception\Module
 
         $this->debug('[TOOLBOX] Running toolbox framework installer');
 
-        // install toolbox
+        // install dachcom bundle
         $installer = $pimcoreModule->getContainer()->get(Install::class);
-        //$installer->install();
-
-        //explicitly load installed classes so that the new ones are used during tests
-        //Autoloader::load(OnlineShopTaxClass::class);
-
+        $installer->install();
     }
 }
