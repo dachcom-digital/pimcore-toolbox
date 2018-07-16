@@ -1,57 +1,65 @@
 <?php
 
-namespace Toolbox\Test\PHPUnit\Suites;
+namespace Toolbox\Test\Unit;
 
 use Symfony\Component\HttpFoundation\Request;
-use Toolbox\Test\Base;
+use Toolbox\Test\Test\ToolboxTestCase;
+use ToolboxBundle\Manager\AreaManager;
 use ToolboxBundle\Manager\AreaManagerInterface;
 
-class AreaManager extends Base
+class AreaManagerTest extends ToolboxTestCase
 {
-
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testAreaBlockAppearanceDisallowConfiguration()
     {
-        $this->printTestName();
         $this->setupRequest();
 
         /** @var AreaManagerInterface $areaManager */
-        $areaManager = $this->get(\ToolboxBundle\Manager\AreaManager::class);
+        $areaManager = $this->getContainer()->get(AreaManager::class);
         $areaConfig = $areaManager->getAreaBlockConfiguration('disallowed_content');
 
         $this->assertNotContains('image', $areaConfig['allowed']);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testAreaBlockAppearanceAllowConfiguration()
     {
-        $this->printTestName();
         $this->setupRequest();
 
         /** @var AreaManagerInterface $areaManager */
-        $areaManager = $this->get(\ToolboxBundle\Manager\AreaManager::class);
+        $areaManager = $this->getContainer()->get(AreaManager::class);
         $areaConfig = $areaManager->getAreaBlockConfiguration('allowed_content');
 
         $this->assertContains('image', $areaConfig['allowed']);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testAreaBlockAppearanceMixedConfiguration()
     {
-        $this->printTestName();
         $this->setupRequest();
 
         /** @var AreaManagerInterface $areaManager */
-        $areaManager = $this->get(\ToolboxBundle\Manager\AreaManager::class);
+        $areaManager = $this->getContainer()->get(AreaManager::class);
         $areaConfig = $areaManager->getAreaBlockConfiguration('mixed_content');
 
         $this->assertContains('image', $areaConfig['allowed']);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testAreaBlockAppearanceDisallowedInSnippetConfiguration()
     {
-        $this->printTestName();
         $this->setupRequest();
 
         /** @var AreaManagerInterface $areaManager */
-        $areaManager = $this->get(\ToolboxBundle\Manager\AreaManager::class);
+        $areaManager = $this->getContainer()->get(AreaManager::class);
         $areaConfig = $areaManager->getAreaBlockConfiguration('disallowed_content', true);
 
         $this->assertNotContains('headline', $areaConfig['allowed']);

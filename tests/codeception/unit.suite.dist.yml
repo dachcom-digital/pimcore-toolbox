@@ -1,0 +1,6 @@
+class_name: UnitTester
+modules:
+    enabled:
+        - \Toolbox\Test\Helper\PimcoreBundle:
+            connect_db: true
+        - \Toolbox\Test\Helper\Unit

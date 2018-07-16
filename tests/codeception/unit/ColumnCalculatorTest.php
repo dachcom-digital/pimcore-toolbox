@@ -1,18 +1,19 @@
 <?php
 
-namespace Toolbox\Test\PHPUnit\Suites;
+namespace Toolbox\Test\Unit;
 
-use Toolbox\Test\Base;
+use Toolbox\Test\Test\ToolboxTestCase;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
-class ColumnCalculator extends Base
+class ColumnCalculatorTest extends ToolboxTestCase
 {
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testDefaultColumnCalculatorB3()
     {
-        $this->printTestName();
-
         /** @var ColumnCalculatorInterface $columnCalculator */
-        $columnCalculator = $this->get(\ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator::class);
+        $columnCalculator = $this->getContainer()->get(\ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator::class);
         $calculatedValue = $columnCalculator->calculateColumns('column_4_4_4');
 
         $expected = [
@@ -57,12 +58,13 @@ class ColumnCalculator extends Base
         $this->assertEquals($expected, $calculatedValue);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testDefaultColumnCalculatorB4()
     {
-        $this->printTestName();
-
         /** @var ColumnCalculatorInterface $columnCalculator */
-        $columnCalculator = $this->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
+        $columnCalculator = $this->getContainer()->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
         $calculatedValue = $columnCalculator->calculateColumns('column_4_4_4');
 
         $expected = [
@@ -107,12 +109,13 @@ class ColumnCalculator extends Base
         $this->assertEquals($expected, $calculatedValue);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testOffsetColumnCalculatorB4()
     {
-        $this->printTestName();
-
         /** @var ColumnCalculatorInterface $columnCalculator */
-        $columnCalculator = $this->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
+        $columnCalculator = $this->getContainer()->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
         $calculatedValue = $columnCalculator->calculateColumns('column_o1_4_4_4');
 
         $expected = [
@@ -159,12 +162,13 @@ class ColumnCalculator extends Base
         $this->assertEquals($expected, $calculatedValue);
     }
 
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
     public function testAdjustedColumnCalculatorB4()
     {
-        $this->printTestName();
-
         /** @var ColumnCalculatorInterface $columnCalculator */
-        $columnCalculator = $this->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
+        $columnCalculator = $this->getContainer()->get(\ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator::class);
         $custom = [
             'column_4_4_4' => [
                 'breakpoints' => [

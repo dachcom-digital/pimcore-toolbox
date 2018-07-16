@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -e
 
-$DACHCOM_BUNDLE_HOME/etc/_scripts/phpunit
+$DACHCOM_BUNDLE_HOME/etc/_scripts/codeception
