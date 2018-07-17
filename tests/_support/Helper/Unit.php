@@ -37,6 +37,10 @@ class Unit extends \Codeception\Module
         $bundleName = getenv('DACHCOM_BUNDLE_NAME');
         $installerClass = getenv('DACHCOM_BUNDLE_INSTALLER_CLASS');
 
+        if ($installerClass === false) {
+            return;
+        }
+
         $this->debug(sprintf('[%s] Running installer...', strtoupper($bundleName)));
 
         // install dachcom bundle
