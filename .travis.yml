@@ -28,6 +28,7 @@ install:
     - tests/etc/travis/install
 
 script:
+    # we moved etc dir during install to .
     - etc/travis/script
 
 notifications:

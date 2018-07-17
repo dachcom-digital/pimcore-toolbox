@@ -14,5 +14,6 @@ if ($debug) {
     @ini_set('display_errors', 'On');
 }
 
-$kernel = new \Toolbox\Test\App\TestAppKernel($environment, $debug);
+$kernel = new \DachcomBundle\Test\App\TestAppKernel($environment, $debug);
+
 return $kernel;

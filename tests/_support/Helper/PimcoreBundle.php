@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Test\Helper;
+namespace DachcomBundle\Test\Helper;
 
 use Pimcore\Event\TestEvents;
 use Pimcore\Tests\Helper\Pimcore;

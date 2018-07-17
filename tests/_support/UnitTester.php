@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Test;
+namespace DachcomBundle\Test;
 
 /**
  * Inherited Methods

@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Test\App;
+namespace DachcomBundle\Test\App;
 
 use Pimcore\Kernel;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,8 +20,8 @@ class TestAppKernel extends Kernel
      */
     protected function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new \Toolbox\Test\DependencyInjection\MakeServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
-        $container->addCompilerPass(new \Toolbox\Test\DependencyInjection\MonologChannelLoggerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
+        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MakeServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
+        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MonologChannelLoggerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
     }
 
     /**

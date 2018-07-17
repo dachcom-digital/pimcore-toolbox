@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-phpenv config-add $DACHCOM_BUNDLE_HOME/tests/etc/_config/php.ini
-
-$DACHCOM_BUNDLE_HOME/tests/etc/_setup/install

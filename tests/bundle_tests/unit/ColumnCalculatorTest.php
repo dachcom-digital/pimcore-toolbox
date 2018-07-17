@@ -1,11 +1,11 @@
 <?php
 
-namespace Toolbox\Test\Unit;
+namespace DachcomBundle\Test\Unit;
 
-use Toolbox\Test\Test\ToolboxTestCase;
+use DachcomBundle\Test\Test\DachcomBundleTestCase;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
-class ColumnCalculatorTest extends ToolboxTestCase
+class ColumnCalculatorTest extends DachcomBundleTestCase
 {
     /**
      * @throws \Codeception\Exception\ModuleException

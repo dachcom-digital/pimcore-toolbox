@@ -1,13 +1,13 @@
 <?php
 
-namespace Toolbox\Test\Unit;
+namespace DachcomBundle\Test\Unit;
 
 use Symfony\Component\HttpFoundation\Request;
-use Toolbox\Test\Test\ToolboxTestCase;
+use DachcomBundle\Test\Test\DachcomBundleTestCase;
 use ToolboxBundle\Manager\AreaManager;
 use ToolboxBundle\Manager\AreaManagerInterface;
 
-class AreaManagerTest extends ToolboxTestCase
+class AreaManagerTest extends DachcomBundleTestCase
 {
     /**
      * @throws \Codeception\Exception\ModuleException
@@ -68,7 +68,7 @@ class AreaManagerTest extends ToolboxTestCase
     private function setupRequest()
     {
         $request = Request::create('/');
-        $requestStack = \Pimcore::getContainer()->get('request_stack');
+        $requestStack = $this->getContainer()->get('request_stack');
         $requestStack->push($request);
     }
 }

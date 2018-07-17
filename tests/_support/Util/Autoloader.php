@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Test\Util;
+namespace DachcomBundle\Test\Util;
 
 use Codeception\Util\Autoload;
 

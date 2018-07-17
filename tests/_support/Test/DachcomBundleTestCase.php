@@ -1,11 +1,11 @@
 <?php
 
-namespace Toolbox\Test\Test;
+namespace DachcomBundle\Test\Test;
 
 use Pimcore\Tests\Test\TestCase;
-use Toolbox\Test\Helper\PimcoreBundle;
+use DachcomBundle\Test\Helper\PimcoreBundle;
 
-abstract class ToolboxTestCase extends TestCase
+abstract class DachcomBundleTestCase extends TestCase
 {
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface

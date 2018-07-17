@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-export DACHCOM_BUNDLE_HOME=$TRAVIS_BUILD_DIR
-export DACHCOM_BUNDLE_NAME="Toolbox"
-export DACHCOM_BUNDLE_REPO_NAME="toolbox"
+source $TRAVIS_BUILD_DIR/bundle_configuration
 
-$DACHCOM_BUNDLE_HOME/etc/travis/scripts/tests
+$DACHCOM_BUNDLE_HOME/etc/scripts/codeception

@@ -1,7 +1,7 @@
-namespace: Toolbox\Test
+namespace: DachcomBundle\Test
 actor: Tester
 paths:
-    tests: codeception
+    tests: bundle_tests
     output: _output
     data: _data
     support: _support

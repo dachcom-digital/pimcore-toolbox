@@ -1,6 +1,6 @@
 <?php
 
-namespace Toolbox\Test\DependencyInjection;
+namespace DachcomBundle\Test\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
