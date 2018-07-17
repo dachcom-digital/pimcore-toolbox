@@ -13,8 +13,15 @@ abstract class DachcomBundleTestCase extends TestCase
      */
     protected function getContainer()
     {
-        /** @var \Pimcore $pimcoreModule */
-        $pimcoreModule = $this->getModule('\\' . PimcoreBundle::class);
-        return $pimcoreModule->getContainer();
+        return $this->getPimcoreBundle()->getContainer();
+    }
+
+    /***
+     * @return PimcoreBundle
+     * @throws \Codeception\Exception\ModuleException
+     */
+    protected function getPimcoreBundle()
+    {
+        return $this->getModule('\\' . PimcoreBundle::class);
     }
 }

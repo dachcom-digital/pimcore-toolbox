@@ -17,7 +17,6 @@ require_once PIMCORE_PROJECT_ROOT . '/vendor/autoload.php';
  * @var $loader \Composer\Autoload\ClassLoader
  */
 Autoloader::addNamespace('Pimcore\Model\DataObject', __DIR__ . '/_output/var/classes/DataObject');
-Autoloader::addNamespace('DachcomBundle\Test\Unit', __DIR__ . '/unit');
 Autoloader::addNamespace('Pimcore\Tests', PIMCORE_PROJECT_ROOT . '/pimcore/tests/_support');
 
 if (!defined('TESTS_PATH')) {

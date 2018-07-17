@@ -1,0 +1,8 @@
+toolbox:
+    context_resolver: 'DachcomBundle\Test\App\Services\ContextResolverTestClass'
+    context:
+        context_a:
+            settings:
+                merge_with_root: true
+                enabled_areas:
+                    - 'headline'

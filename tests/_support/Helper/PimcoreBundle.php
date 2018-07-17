@@ -2,13 +2,42 @@
 
 namespace DachcomBundle\Test\Helper;
 
+use Codeception\Lib\ModuleContainer;
 use Pimcore\Event\TestEvents;
 use Pimcore\Tests\Helper\Pimcore;
+use Symfony\Component\Filesystem\Filesystem;
 
 class PimcoreBundle extends Pimcore
 {
     /**
-     * Initialize the kernel (see parent Symfony module)
+     * @inheritDoc
+     */
+    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    {
+        $this->config = array_merge($this->config, [
+            // set specific configuration file for container
+            'configuration_file' => null
+        ]);
+
+        parent::__construct($moduleContainer, $config);
+    }
+
+    public function _initialize()
+    {
+        $isNew = \Pimcore::getKernel() === null;
+
+        parent::_initialize();
+
+        if ($isNew === true) {
+            return;
+        }
+
+        $this->initializeKernel();
+
+    }
+
+    /**
+     * Initialize the kernel (see parent Pimcore module)
      */
     protected function initializeKernel()
     {
@@ -18,7 +47,19 @@ class PimcoreBundle extends Pimcore
             ini_set($xdebugMaxLevelKey, $maxNestingLevel);
         }
 
-        $this->kernel = require_once __DIR__ . '/../../kernelBuilder.php';
+        if ($this->config['configuration_file'] !== null) {
+            putenv('DACHCOM_BUNDLE_CONFIG_FILE=' . $this->config['configuration_file']);
+        } else {
+            putenv('DACHCOM_BUNDLE_CONFIG_FILE');
+        }
+
+        //touch cache container to force refresh
+        $fileSystem = new Filesystem();
+        $this->kernel = require __DIR__ . '/../../kernelBuilder.php';
+
+        $fileSystem->remove($this->kernel->getCacheDir());
+        $fileSystem->mkdir($this->kernel->getCacheDir());
+
         $this->kernel->boot();
 
         $this->setupPimcoreDirectories();

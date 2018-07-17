@@ -6,7 +6,6 @@ namespace DachcomBundle\Test\Helper;
 // all public methods declared in helper class will be available in $I
 
 use Codeception\Lib\ModuleContainer;
-use ToolboxBundle\Tool\Install;
 
 class Unit extends \Codeception\Module
 {
@@ -35,10 +34,13 @@ class Unit extends \Codeception\Module
         /** @var PimcoreBundle $pimcoreModule */
         $pimcoreModule = $this->getModule('\\' . PimcoreBundle::class);
 
-        $this->debug('[TOOLBOX] Running toolbox installer');
+        $bundleName = getenv('DACHCOM_BUNDLE_NAME');
+        $installerClass = getenv('DACHCOM_BUNDLE_INSTALLER_CLASS');
+
+        $this->debug(sprintf('[%s] Running installer...', strtoupper($bundleName)));
 
         // install dachcom bundle
-        $installer = $pimcoreModule->getContainer()->get(Install::class);
+        $installer = $pimcoreModule->getContainer()->get($installerClass);
         $installer->install();
     }
 }

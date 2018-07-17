@@ -9,7 +9,7 @@ class MakeServicesPublicPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $prefix = 'Toolbox';
+        $prefix = getenv('DACHCOM_BUNDLE_NAME');
         $serviceIds = array_filter($container->getServiceIds(), function (string $id) use ($prefix) {
             return strpos($id, $prefix) === 0;
         });

@@ -5,3 +5,11 @@ export DACHCOM_BUNDLE_NAME="Toolbox"
 export DACHCOM_BUNDLE_REPO_NAME="toolbox"
 export DACHCOM_BUNDLE_COMMIT=$TRAVIS_COMMIT
 export DACHCOM_BUNDLE_BRANCH=$TRAVIS_BRANCH
+
+export DACHCOM_BUNDLE_CLASS='ToolboxBundle\ToolboxBundle'
+export DACHCOM_BUNDLE_INSTALLER_CLASS='ToolboxBundle\Tool\Install'
+
+declare -A DACHCOM_INSTALL_CONFIG_FILES=(
+ ["$DACHCOM_BUNDLE_HOME/etc/config/bundle/extensions.template.php"]="var/config/extensions.php"
+ ["$DACHCOM_BUNDLE_HOME/etc/config/bundle/system.template.php"]="var/config/system.php"
+)
