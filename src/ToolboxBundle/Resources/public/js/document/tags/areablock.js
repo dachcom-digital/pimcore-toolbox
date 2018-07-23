@@ -11,9 +11,9 @@ pimcore.document.tags.areablock = Class.create(pimcore.document.tags.areablock, 
      * @param data
      * @param inherited
      */
-    initialize: function($super, id, name, options, data, inherited) {
+    initialize: function ($super, id, name, options, data, inherited) {
 
-        var i, $el, $editButton, $editDiv;
+        var i, $areaEl, $el, $editButton, $editDiv;
 
         $super(id, name, options, data, inherited);
 
@@ -23,9 +23,12 @@ pimcore.document.tags.areablock = Class.create(pimcore.document.tags.areablock, 
 
                 try {
 
-                    $editDiv = Ext.get(this.elements[i]).query('.pimcore_area_edit_button[data-name="' + this.name + '"]')[0];
+                    $areaEl = Ext.get(this.elements[i]);
+                    $editDiv = $areaEl.query('.pimcore_area_edit_button[data-name="' + this.name + '"]')[0];
 
-                    if($editDiv) {
+                    $areaEl.clearListeners();
+
+                    if ($editDiv) {
 
                         $el = Ext.DomHelper.insertAfter($editDiv, {
                             'tag': 'div',
@@ -49,11 +52,7 @@ pimcore.document.tags.areablock = Class.create(pimcore.document.tags.areablock, 
                 } catch (e) {
                     console.log(e);
                 }
-
             }
-
         }
-
     }
-
 });
