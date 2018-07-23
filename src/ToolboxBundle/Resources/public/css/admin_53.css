@@ -36,12 +36,16 @@
 
 .pimcore_area_buttons {
     position: relative;
-    top: 5px;
-    padding-bottom: 6px;
+    top: 0;
+    margin-top: 20px;
     left: 0;
     width: 100% !important;
     display: block !important;
     visibility: visible !important;
+}
+
+.toolbox-columns .toolbox-column .pimcore_area_entry:first-child .pimcore_area_buttons {
+    margin-top: 0;
 }
 
 .pimcore_area_buttons .pimcore_area_buttons_inner {
