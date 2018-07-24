@@ -7,7 +7,7 @@ After every update you should check the pimcore extension manager. Just click th
 - **[NEW FEATURE]**: Pimcore 5.3.0 ready. Pimcore changed the areablock behaviour and so did we. It's backwards compatible since
   we're only loading the styling adoptions in Pimcore >= 5.3.0.
 - **[NEW FEATURE]**: Image Link. There is a new config element `image_link`. If you already have added a image link in your existing project
-  and its not called `image_link` you should disable the new config element otherwise there will be two of them:
+  and it's not called `image_link`, you should disable the new config element otherwise there will be two of them:
   
 ```yaml
 toolbox:
