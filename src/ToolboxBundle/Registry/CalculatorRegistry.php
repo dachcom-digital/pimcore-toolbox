@@ -16,6 +16,7 @@ class CalculatorRegistry implements CalculatorRegistryInterface
      * @var string
      */
     private $columnInterface;
+
     /**
      * @var string
      */

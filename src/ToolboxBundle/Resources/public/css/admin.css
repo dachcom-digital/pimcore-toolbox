@@ -70,7 +70,7 @@
     padding-left: 10px;
     padding-right: 10px;
     height: 20px;
-    margin-bottom:5px;
+    margin-bottom: 5px;
     position: relative;
 }
 
@@ -78,7 +78,7 @@
     position: absolute;
     content: "";
     border: 1px dashed #707a82;
-    background: rgba(255,255,255, .3);
+    background: rgba(255, 255, 255, .3);
     left: 10px;
     right: 10px;
     top: 0;
@@ -225,7 +225,6 @@
     width: 15%;
 }
 
-
 /**
 
     Toolbox Iframe
@@ -233,13 +232,12 @@
 **/
 .toolbox-iframe .no-iframe-selected {
     width: 100%;
-    padding:50px 0;
-    text-align:center;
+    padding: 50px 0;
+    text-align: center;
     display: block;
     border: 1px solid #e6e6e6;
     background-color: #dcdcdc;
 }
-
 
 /**
 
@@ -398,6 +396,10 @@
     width: auto !important;
 }
 
+.pimcore_area_editmode_hidden {
+    visibility: hidden;
+}
+
 /**
 
     Toolbox .toolbox-element-window Overlay Defaults
@@ -550,7 +552,7 @@
 }
 
 .toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-half {
-    padding-right:5px;
+    padding-right: 5px;
 }
 
 .toolbox-edit-overlay .t-row .t-col-third {
@@ -561,11 +563,11 @@
 }
 
 .toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-third {
-    padding-right:5px;
+    padding-right: 5px;
 }
 
 .toolbox-edit-overlay .t-row > .toolbox-element:nth-child(2) > .t-col-third {
-    padding-right:5px;
+    padding-right: 5px;
 }
 
 .x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
