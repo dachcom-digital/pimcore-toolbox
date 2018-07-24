@@ -1,9 +1,12 @@
 {% set class = 'img-fluid' %}
 {% set useLightBox = pimcore_checkbox('use_light_box').isChecked() and editmode == false %}
+{% set hasLink = pimcore_link('image_link').isEmpty() == false and editmode == false %}
 
 <div {{ useLightBox ? 'class="light-box"' : '' }}>
     {% if useLightBox == true %}
         {% include toolbox_area_path(areaId, 'Partial/lightbox') with { 'class' : class } %}
+    {% elseif hasLink == true %}
+        {% include toolbox_area_path(areaId, 'Partial/single_link') with { 'class' : class } %}
     {% else %}
         {% include toolbox_area_path(areaId, 'Partial/single') with { 'class' : class } %}
     {% endif %}

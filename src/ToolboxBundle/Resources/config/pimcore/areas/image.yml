@@ -7,6 +7,11 @@ toolbox:
     areas:
         image:
             config_elements:
+                image_link:
+                    type: link
+                    title: 'Link'
+                    config:
+                        reload: true
                 use_light_box:
                     type: checkbox
                     title: 'Use Lightbox'
