@@ -104,7 +104,7 @@ pimcore.plugin.toolbox.main = Class.create({
         var editWindow = button.up('window'),
             data = this.editWindows[editWindow.id];
 
-        document.body.className = document.body.classList.remove('toolbox-modal-open');
+        document.body.classList.remove('toolbox-modal-open');
 
         if (!data.needReload) {
             data.editor.close();
@@ -119,7 +119,7 @@ pimcore.plugin.toolbox.main = Class.create({
     editmodeClose: function (scope, button) {
         var editWindow = button.up('window'),
             data = this.editWindows[editWindow.id];
-        document.body.className = document.body.classList.remove('toolbox-modal-open');
+        document.body.classList.remove('toolbox-modal-open');
         data.editor.close();
     }
 
