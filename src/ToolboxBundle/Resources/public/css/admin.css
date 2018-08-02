@@ -437,6 +437,7 @@
     padding: 4px;
     background: #7b7b7b;
     opacity: .8;
+    text-align: left;
     -webkit-transition: opacity .3s ease;
     -ms-transition: opacity .3s ease;
     transition: opacity .3s ease;
@@ -457,7 +458,7 @@
     font-weight: normal;
     letter-spacing: 0.1em;
     color: #bfbfbf;
-
+    line-height: 1.5;
 }
 
 .toolbox-element-edit-button:hover {

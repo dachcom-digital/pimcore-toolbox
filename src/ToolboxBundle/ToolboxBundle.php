@@ -77,7 +77,8 @@ class ToolboxBundle extends AbstractPimcoreBundle
             '/bundles/toolbox/css/admin.css'
         ];
 
-        if (version_compare(\Pimcore\Version::getVersion(), '5.3.0', '>=')) {
+        $pimcoreVersion = preg_replace('/[^0-9.]/', '', \Pimcore\Version::getVersion());
+        if (version_compare($pimcoreVersion, '5.3.0', '>=')) {
             $cssFiles[] = '/bundles/toolbox/css/admin_53.css';
         }
 
