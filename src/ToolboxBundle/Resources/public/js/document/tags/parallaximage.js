@@ -154,7 +154,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                         items:[
                             {
                                 tooltip:t('up'),
-                                icon:'/pimcore/static6/img/flat-color-icons/up.svg',
+                                icon:'/bundles/toolbox/images/admin/up.svg',
                                 handler:function (grid, rowIndex) {
                                     if (rowIndex > 0) {
                                         var rec = grid.getStore().getAt(rowIndex);
@@ -171,7 +171,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                         items:[
                             {
                                 tooltip:t('down'),
-                                icon:'/pimcore/static6/img/flat-color-icons/down.svg',
+                                icon:'/bundles/toolbox/images/admin/down.svg',
                                 handler:function (grid, rowIndex) {
                                     if (rowIndex < (grid.getStore().getCount() - 1)) {
                                         var rec = grid.getStore().getAt(rowIndex);
@@ -187,7 +187,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                         width: 30,
                         items: [{
                             tooltip: t('open'),
-                            icon: '/pimcore/static6/img/flat-color-icons/cursor.svg',
+                            icon: '/bundles/toolbox/images/admin/cursor.svg',
                             handler: function (grid, rowIndex) {
                                 var data = grid.getStore().getAt(rowIndex);
                                 var subtype = data.data.subtype;
@@ -203,7 +203,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
                         width: 30,
                         items: [{
                             tooltip: t('remove'),
-                            icon: '/pimcore/static6/img/flat-color-icons/delete.svg',
+                            icon: '/bundles/toolbox/images/admin/delete.svg',
                             handler: function (grid, rowIndex) {
                                 grid.getStore().removeAt(rowIndex);
                             }.bind(this)

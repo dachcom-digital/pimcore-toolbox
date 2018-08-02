@@ -33,7 +33,7 @@
 
 **/
 .toolbox_column_adjuster {
-    background: url(/pimcore/static6/img/flat-color-icons/grid.svg) left center no-repeat !important;
+    background: url(/bundles/toolbox/images/admin/grid.svg) left center no-repeat !important;
 }
 
 .grid-preview {
