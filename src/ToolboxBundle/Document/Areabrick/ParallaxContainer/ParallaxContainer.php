@@ -92,7 +92,7 @@ class ParallaxContainer extends AbstractAreabrick
 
             if ($containerWrapper !== 'none') {
                 $wrapperArgs = ['containerWrapperClass' => $containerWrapper, 'document' => $info->getDocument()];
-                $wrapContent = $templating->render($this->getTemplatePath('wrapper/container-wrapper'), $wrapperArgs);
+                $wrapContent = $templating->render($this->getTemplatePath('Wrapper/container-wrapper'), $wrapperArgs);
                 $areaBlock = sprintf($wrapContent, $areaBlock);
             }
 
