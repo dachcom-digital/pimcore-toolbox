@@ -3,6 +3,10 @@
 ***
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.6.0 to Version 2.6.1
+- **[NEW FEATURE]**: Pimcore 5.4.0 ready.
+- Fix Composer PSR-4 Path
+
 #### Update from Version 2.5.0 to Version 2.6.0
 - **[NEW FEATURE]**: Pimcore 5.3.0 ready. Pimcore changed the areablock behaviour and so did we. It's backwards compatible since
   we're only loading the styling adoptions in Pimcore >= 5.3.0.
