@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
-    const BUNDLE_VERSION = '2.6.0';
+    const BUNDLE_VERSION = '2.6.1';
 
     /**
      * @inheritDoc
