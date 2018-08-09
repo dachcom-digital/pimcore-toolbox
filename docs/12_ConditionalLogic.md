@@ -5,7 +5,7 @@ Define some conditions to display/hide config elements.
 Append the condition field. 
 In this example, we only show the field `layout` if `type` selected value is "direct".
 
-> condition change needs a reload of the edit window.
+> condition changes need a reload of the edit window.
 
 ```yaml
 toolbox:
