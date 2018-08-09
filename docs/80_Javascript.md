@@ -74,7 +74,7 @@ If you're using the `toolboxCore` instance, you only need to include the javascr
 <script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/plugins/jquery.tb.ext.google-maps.js') }}"></script>
 ```
 
-Single Call (after new elements has been dynamically added for example)
+Single Call (after new elements have been dynamically added for example)
 ```javascript
 $(function () {
     $('.toolbox-googlemap').toolboxGoogleMaps({});
@@ -103,7 +103,7 @@ If you're using the `toolboxCore` instance, you only need to include the javascr
 <script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/plugins/jquery.tb.ext.video.js') }}"></script>
 ```
 
-Single Call (after new elements has been dynamically added for example)
+Single Call (after new elements have been dynamically added for example)
 
 ```javascript
 $(function () {
