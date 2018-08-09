@@ -2,7 +2,7 @@
 We're providing some helpful Javascript Plugins to simplify your daily work with the ToolboxBundle.
 Of course it's up to you to copy those files into your project and modify them as required.
 
-> Note: Be sure that jQuery has been initialized, before you load one of those toolbox extensions.
+> Note: Make sure that jQuery has been initialized, before you load one of those toolbox extensions.
 
 ## Overview
 - [Core Plugin](#core-plugin)
@@ -137,7 +137,7 @@ $(function () {
 ```
 
 ### Video Extended I: Open Video in a Light Box
-If have selected the Light Box option you need to take care about the video by yourself:
+If you have selected the Light Box option, you need to take care about the video by yourself:
 
 ```javascript
 $('.toolbox-video')
