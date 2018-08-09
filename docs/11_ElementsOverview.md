@@ -1,19 +1,19 @@
 # Elements Overview
 
 ## Accordion / Tab
-Create a accordion or tab element.
+Create an accordion or tab element.
 It's possible to change the layout from accordion to tabs without loosing the content.
 
 ### Available Options
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `type` | select | Choose a accordion type | panel-default | `pimcore_select('type')` |
+| `type` | select | Choose accordion type | panel-default | `pimcore_select('type')` |
 | `component` | select | Choose the component type | accordion | `pimcore_select('component')` |
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ## Anchor
-Create a anchor element.
+Create an anchor element.
 
 ### Available Options
 
@@ -28,10 +28,10 @@ Create (nested) columns.
 
 ### Configuration
 
-By default, the toolbox will transform the store values into bootstrap grid values.
+By default, the toolbox will transform the stored values into bootstrap grid values.
 If you're using a different grid system, you probably need to change the [grid calculation](30_ToolboxTheme.md).
 
-**Note:** If you're changing the column amounts during a layout change, the nested content may gets lost depending on the new column amount
+**Note:** If you're changing the column amount during a layout change, the nested content may gets lost depending on the new column amount
 
 - Changing from 3 columns to 2 columns: the content of the third column gets lost.
 - Changing from 2 columns to 4 columns: the content of the first two columns stays the same.
@@ -179,7 +179,7 @@ If you want to use a different extension to generate your galleries, just overri
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. Toolbox will automatically generate the long/lat information after saving the document.
-Please be sure that you've included a valid google maps api key. Include the script tag in your footer:
+Please make sure that you've included a valid google maps api key. Include the script tag in your footer:
 
 ```html
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=API_KEY"></script>
@@ -203,7 +203,7 @@ Please be sure that you've included a valid google maps api key. Include the scr
 | `map_options` | array | Map Zoom | [] |
 | `map_style_url` | string | Define a custom map style (path to json) | false |
 | `marker_icon` | string | Define a custom marker_icon (path to icon) | false |
-| `map_api_key` | string | Set a map custom api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! | `'%pimcore_system_config.services.google.browserapikey%'` |
+| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! | `'%pimcore_system_config.services.google.browserapikey%'` |
 
 **Example**  
 ```yaml
@@ -255,7 +255,7 @@ Create a headline.
 
 
 ## iFrame
-Create a iFrame field.
+Create an iFrame field.
 
 ### Available Options
 
@@ -270,12 +270,12 @@ There is also a jquery plugin for the video element. Read more about it [here](8
 We can't provide any out-of-the-box solution for changing the iframe height dynamically (cross-domain policy), so you need to take care about that by yourself.
 Possible Solutions to mastering dynamic iFrame heights:
 
-- Define a iFrame height for every breakpoint in your stylesheet.
+- Define an iFrame height for every breakpoint in your stylesheet.
 - Use the plugin events (see iframe javascript extension) and connect it with a plugin like the [iframe-resizer](https://github.com/davidjbradshaw/iframe-resizer).
 
 
 ## Image
-Create a image field.
+Create an image field.
 
 ### Available Options
 
@@ -435,9 +435,9 @@ The `direct` teaser type allows you to place a teaser structure at any place in 
 #### Snippet
 Sometimes you want do add teasers in a more reusable way. For that you should use the `snippet` type.
 The ToolboxBundle will add a `Teaser Snippet` document type during installation, use it to create teaser elements in snippet context. 
-This document type will also add a all custom elements (`layout`, `use_light_box`, `additional_classes`) with all given teaser layouts.
+This document type will also add all custom elements (`layout`, `use_light_box`, `additional_classes`) with all given teaser layouts.
 
-> Note: If you're using the `snippet` type, all option fields (`layout`, `use_light_box`, `additional_classes`) will be unavailable in your document anymore.
+> Note: If you're using the `snippet` type, all option fields (`layout`, `use_light_box`, `additional_classes`) will become unavailable in your document.
 
 ## Video
 Create a Video Element.
