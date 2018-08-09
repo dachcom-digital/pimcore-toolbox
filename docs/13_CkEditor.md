@@ -9,7 +9,7 @@ There are several reasons for that:
 
 ## CK Editor Toolbar
 The Toolbox Bundle already removes some (mostly dangerous) elements. Feel free to modify them according to your needs.
-You may use the [online toolbar configurator](https://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced) to do that.
+You may use the [online toolbar configurator](https://ckeditor.com/latest/samples/toolbarconfigurator/index.html#basic) (old link: ~~[online toolbar configurator](https://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced)~~) to do that.
 
 > Info: This is the global configuration for the CK-Editor Toolbar.
 > If you need to provide a different configuration in objects or areas, use the object/area configuration (see below)
@@ -17,8 +17,8 @@ You may use the [online toolbar configurator](https://ckeditor.com/tmp/4.5.0-bet
 > Info: It's possible to modify all the [CK-Editor Configuration](https://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-stylesSet)
 
 ### Overriding Configuration
-The config node is a variableNode, so the values **doesn't get merged** with the default ones.
-If your going to define the `toolbox -> ckeditor -> config` node, you must provide the complete configuration.
+The config node is a variableNode, so the values **don't get merged** with the default ones.
+If you're going to define the `toolbox -> ckeditor -> config` node, you must provide the complete configuration.
 
 **Example** 
 ```yaml
@@ -47,7 +47,7 @@ toolbox:
 ```
 
 ### Area CK-Editor Configuration
-If you need to modify the toolbar configuration just for document areas, add this to your configuration:
+If you only need to modify the toolbar configuration for document areas, add this to your configuration:
 
 **Example** 
 ```yaml
@@ -63,7 +63,7 @@ toolbox:
 ```
 
 ### Object CK-Editor Configuration
-If you need to modify the toolbar configuration just for objects, add this to your configuration:
+If you only need to modify the toolbar configuration for objects, add this to your configuration:
 
 **Example** 
 ```yaml
