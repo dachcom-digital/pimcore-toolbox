@@ -1,6 +1,6 @@
 # Pimcore 5 Toolbox
 
-The Toolbox is a Kickstarter for your every day project. It provides some important bricks and structure basics which allows rapid and quality-orientated web development. 
+The Toolbox is a Kickstarter for your every day project. It provides some important bricks and structure basics which allow rapid and quality-oriented web development. 
 
 [![Join the chat at https://gitter.im/pimcore/pimcore](https://img.shields.io/gitter/room/pimcore/pimcore.svg?style=flat-square)](https://gitter.im/pimcore/pimcore)
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -36,7 +36,7 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 - removes the default `pimcore_area_*` element wrapper from each brick
 
 ### And what's not?
-- It's not a Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
+- It's not an Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
 - Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
 
 **Frontend JS Implementation**  
