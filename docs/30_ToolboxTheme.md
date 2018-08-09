@@ -54,10 +54,10 @@ toolbox:
 > Note: `default_layout` is set to `false` by default, so no fallback layout gets loaded if the layout template is not available.
 
 #### Wrapper
-Overriding templates are a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some wrappers to specific elements.
+Overriding templates is a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some wrappers to specific elements.
 
 ## Views
-All Views gets loaded from `@Toolbox/Toolbox/[LAYOUT_NAME]`.
+All Views get loaded from `@Toolbox/Toolbox/[LAYOUT_NAME]`.
 
 ## Calculators
 There are two elements which needs some special calculation, depending on the current Grid-Framework: 
