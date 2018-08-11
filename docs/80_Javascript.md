@@ -2,7 +2,7 @@
 We're providing some helpful Javascript Plugins to simplify your daily work with the ToolboxBundle.
 Of course it's up to you to copy those files into your project and modify them as required.
 
-> Note: Be sure that jQuery has been initialized, before you load one of those toolbox extensions.
+> Note: Make sure that jQuery has been initialized, before you load one of those toolbox extensions.
 
 ## Overview
 - [Core Plugin](#core-plugin)
@@ -74,7 +74,7 @@ If you're using the `toolboxCore` instance, you only need to include the javascr
 <script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/plugins/jquery.tb.ext.google-maps.js') }}"></script>
 ```
 
-Single Call (after new elements has been dynamically added for example)
+Single Call (after new elements have been dynamically added for example)
 ```javascript
 $(function () {
     $('.toolbox-googlemap').toolboxGoogleMaps({});
@@ -103,7 +103,7 @@ If you're using the `toolboxCore` instance, you only need to include the javascr
 <script type="text/javascript" src="{{ asset('bundles/toolbox/js/frontend/plugins/jquery.tb.ext.video.js') }}"></script>
 ```
 
-Single Call (after new elements has been dynamically added for example)
+Single Call (after new elements have been dynamically added for example)
 
 ```javascript
 $(function () {
@@ -137,7 +137,7 @@ $(function () {
 ```
 
 ### Video Extended I: Open Video in a Light Box
-If have selected the Light Box option you need to take care about the video by yourself:
+If you have selected the Light Box option, you need to take care about the video by yourself:
 
 ```javascript
 $('.toolbox-video')

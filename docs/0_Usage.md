@@ -1,6 +1,6 @@
 # Usage
 
-Some important advices if you're going to use this Bundle in your Projekt.
+Some important advices if you're going to use this bundle in your project.
 
 ## Area Brick
 ![bildschirmfoto 2017-08-30 um 08 43 46](https://user-images.githubusercontent.com/700119/29858787-6198a2c4-8d5f-11e7-8376-8c3acd9d267f.png)
@@ -8,7 +8,7 @@ Some important advices if you're going to use this Bundle in your Projekt.
 The Toolbox Bundle will help you to display area bricks with some nice additions.
 
 #### Area Brick Configuration
-**Important!** Be sure, that every `pimcore_areablock` in your project implements the `toolbox_areablock_config()` element. 
+**Important!** Make sure that every `pimcore_areablock` in your project implements the `toolbox_areablock_config()` element. 
 If you miss this, the toolbar will get messy.
 
 ```twig
@@ -43,9 +43,9 @@ area_block_configuration:
 ```
 ## Allow/Disallow Elements
 
-#### In Snippets
+#### In snippets
 
-Use the `snippet_areas_appearance`  config node to disable Bricks in specific Snippets.
+Use the `snippet_areas_appearance`  config node to disable bricks in specific snippets.
 
 ```yaml
 # define which elements should not appear in snippet documents
@@ -69,7 +69,7 @@ toolbox:
 
 #### In Area-Blocks
 
-Use the `areas_appearance` config node to disable Bricks in specific Areas.
+Use the `areas_appearance` config node to disable bricks in specific areas.
 
 **Example**  
 ```yaml
