@@ -29,7 +29,7 @@ rm -rf $DACHCOM_BUNDLE_HOME/{.[!.],}*
 ## clone pimcore
 
 git clone https://github.com/pimcore/skeleton.git $DACHCOM_BUNDLE_HOME
-git checkout ${PIMCORE_BRANCH} $DACHCOM_BUNDLE_HOME
+git checkout ${PIMCORE_SKELETON_BRANCH} $DACHCOM_BUNDLE_HOME
 
 
 ## move bundle back into lib/$DACHCOM_BUNDLE_NAME
