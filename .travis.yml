@@ -9,7 +9,7 @@ env:
         - PIMCORE_ENVIRONMENT=test
         - DACHCOM_BUNDLE_TEST=1
         - PIMCORE_TEST_DB_DSN="mysql://root@localhost/dachcom_bundle_test"
-
+        - SYMFONY_DEPRECATIONS_HELPER=weak
 matrix:
     include:
         -
