@@ -2,22 +2,14 @@
 
 use DachcomBundle\Test\Util\Autoloader;
 
-if (!defined('PIMCORE_PROJECT_ROOT')) {
-    define(
-        'PIMCORE_PROJECT_ROOT',
-        getenv('PIMCORE_PROJECT_ROOT')
-            ?: getenv('REDIRECT_PIMCORE_PROJECT_ROOT')
-            ?: realpath(getcwd())
-    );
-}
+define('PIMCORE_PROJECT_ROOT', realpath(getcwd()));
 
 require_once PIMCORE_PROJECT_ROOT . '/vendor/autoload.php';
 
 /**
  * @var $loader \Composer\Autoload\ClassLoader
  */
-Autoloader::addNamespace('Pimcore\Model\DataObject', __DIR__ . '/_output/var/classes/DataObject');
-Autoloader::addNamespace('Pimcore\Tests', PIMCORE_PROJECT_ROOT . '/pimcore/tests/_support');
+Autoloader::addNamespace('Pimcore\Tests', PIMCORE_PROJECT_ROOT . '/vendor/pimcore/pimcore/tests/_support');
 
 if (!defined('TESTS_PATH')) {
     define('TESTS_PATH', __DIR__);

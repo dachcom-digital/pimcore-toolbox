@@ -3,8 +3,8 @@
 use Pimcore\Config;
 use Symfony\Component\Debug\Debug;
 
-require_once PIMCORE_PROJECT_ROOT . '/pimcore/config/constants.php';
-require_once PIMCORE_PROJECT_ROOT . '/pimcore/lib/helper-functions.php';
+\Pimcore\Bootstrap::setProjectRoot();
+\Pimcore\Bootstrap::boostrap();
 
 $environment = Config::getEnvironment();
 $debug = Config::getEnvironmentConfig()->activatesKernelDebugMode($environment);
