@@ -16,7 +16,7 @@ matrix:
           sudo: required
           php: 7.2
           env:
-            - PIMCORE_BRANCH="tags/v5.1.3"
+            - PIMCORE_BRANCH="tags/v5.4.2"
     fast_finish: true
 
 cache:

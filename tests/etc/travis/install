@@ -28,7 +28,7 @@ rm -rf $DACHCOM_BUNDLE_HOME/{.[!.],}*
 
 ## clone pimcore
 
-git clone https://github.com/pimcore/pimcore.git $DACHCOM_BUNDLE_HOME
+git clone https://github.com/pimcore/skeleton.git $DACHCOM_BUNDLE_HOME
 git checkout ${PIMCORE_BRANCH} $DACHCOM_BUNDLE_HOME
 
 
@@ -56,11 +56,11 @@ done
 
 ##  install composer dependencies
 
-composer install --no-scripts
+COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts
 
 ##  install $DACHCOM_BUNDLE_NAME dependencies
 
-composer require symfony/phpunit-bridge:^3 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
+COMPOSER_MEMORY_LIMIT=-1 composer require symfony/phpunit-bridge:^3 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
 
 
 ##  clear cache
