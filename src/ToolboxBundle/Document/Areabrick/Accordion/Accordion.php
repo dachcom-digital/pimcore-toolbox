@@ -10,7 +10,15 @@ class Accordion extends AbstractAreabrick
     public function action(Info $info)
     {
         parent::action($info);
-        $info->getView()->id = uniqid('accordion-');
+
+        $infoParams = $info->getParams();
+        if (isset($infoParams['toolboxAccordionId'])) {
+            $id = $infoParams['toolboxAccordionId'];
+        } else {
+            $id = uniqid('accordion-');
+        }
+
+        $info->getView()->getParameters()->add(['id' => $id]);
     }
 
     public function getName()

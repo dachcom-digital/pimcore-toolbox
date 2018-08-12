@@ -26,3 +26,7 @@ toolbox:
                     title: 'Equal heights?'
                     config:
                         reload: false
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~

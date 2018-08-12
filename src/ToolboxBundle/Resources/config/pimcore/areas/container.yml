@@ -12,3 +12,7 @@ toolbox:
                     title: 'Fluid Container (Full Width)'
                     config:
                         reload: true
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~

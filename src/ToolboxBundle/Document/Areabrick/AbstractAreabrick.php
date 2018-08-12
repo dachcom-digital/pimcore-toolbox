@@ -120,10 +120,12 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
         $layoutDir = null;
 
         $view = $info->getView();
-        $view->elementConfigBar = $configWindowData;
-        $view->additionalClassesData = $this->configureAdditionalClasses($info, $configNode);
-        $view->elementThemeConfig = $this->layoutManager->getAreaThemeConfig($this->getId());
-        $view->areaId = $this->getId();
+        $view->getParameters()->add([
+            'elementConfigBar'      => $configWindowData,
+            'additionalClassesData' => $this->configureAdditionalClasses($info, $configNode),
+            'elementThemeConfig'    => $this->layoutManager->getAreaThemeConfig($this->getId()),
+            'areaId'                => $this->getId()
+        ]);
     }
 
     /**
