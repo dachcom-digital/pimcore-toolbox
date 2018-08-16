@@ -54,29 +54,7 @@ class VideoTest extends AbstractAreaTest
             $this->filter($this->generateRenderedArea('video', $elements))
         );
     }
-    public function testAssetVideo()
-    {
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-
-        $video = new Vhs();
-        $video->setDataFromEditmode([
-            'type'   => 'asset',
-            'path'   => $asset->getFullPath(),
-            'poster' => $asset->getFullPath()
-        ]);
-
-        $elements = [
-            'video' => $video
-        ];
-
-        $this->assertEquals(
-            $this->filter($this->getCompareAsset($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
-        );
-    }
-
+    
     public function testVideoWithLightBox()
     {
         $this->setupRequest();
@@ -178,22 +156,6 @@ class VideoTest extends AbstractAreaTest
                         </div>
                     </div>
                 </div>';
-    }
-
-    private function getCompareAsset($path)
-    {
-        return '<div class="toolbox-element toolbox-video  " data-type="asset">
-                    <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="' . $path . '"></div>
-                        <div id="pimcore_video_" class="pimcore_tag_video">
-                            <div class="pimcore_tag_video_error" style="text-align:center; width: 100%; height: 249px; border:1px solid #000; background: url(/bundles/pimcoreadmin/img/filetype-not-supported.svg) no-repeat center center #fff;">                Asset is not a video, or missing thumbnail configuration            </div>
-                        </div>
-                    </div>
-                    <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
-                        <span class="icon"></span>
-                    </div>
-                </div>
-            </div>';
     }
 
     private function getCompareWithLightBox($path)
