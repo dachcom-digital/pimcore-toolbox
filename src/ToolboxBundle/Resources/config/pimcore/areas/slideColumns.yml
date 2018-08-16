@@ -23,6 +23,10 @@ toolbox:
                     title: 'Equal heights?'
                     config:
                         reload: false
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
             config_parameter:
                 column_classes:
                     '2': 'col-12 col-sm-6'

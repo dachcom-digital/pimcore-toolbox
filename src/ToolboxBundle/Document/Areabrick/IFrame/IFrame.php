@@ -11,6 +11,7 @@ class IFrame extends AbstractAreabrick
 {
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
@@ -32,15 +33,17 @@ class IFrame extends AbstractAreabrick
             }
         }
 
-        $view->isValid = $isValid;
-        $view->errorMessage = $errorMessage;
-        $view->initialHeight = is_numeric($initialHeight) ? (int)$initialHeight : null;
-        $view->iFrameUrl = $iFrameUrl;
-
+        $view->getParameters()->add([
+            'isValid'       => $isValid,
+            'errorMessage'  => $errorMessage,
+            'initialHeight' => is_numeric($initialHeight) ? (int)$initialHeight : null,
+            'iFrameUrl'     => $iFrameUrl
+        ]);
     }
 
     /**
      * @param $iFrameUrl
+     *
      * @return bool|string
      */
     private function checkIfUrlIsEmbeddable($iFrameUrl)

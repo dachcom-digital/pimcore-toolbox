@@ -9,14 +9,13 @@ class ParallaxContainer extends AbstractAreabrick
 {
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
     public function action(Info $info)
     {
         parent::action($info);
-
-        $view = $info->getView();
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
 
@@ -48,13 +47,16 @@ class ParallaxContainer extends AbstractAreabrick
                 ['elements' => $parallaxFront, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
-        $view->parallaxTemplate = $parallaxTemplate;
-        $view->backgroundMode = $backgroundMode;
-        $view->backgroundTags = $backgroundTags;
-        $view->backgroundColorClass = $backgroundColorClass;
-        $view->behindElements = $behindElements;
-        $view->frontElements = $frontElements;
-        $view->sectionContent = $this->_buildSectionContent($info, $templating, $translator);
+
+        $info->getView()->getParameters()->add([
+            'parallaxTemplate'     => $parallaxTemplate,
+            'backgroundMode'       => $backgroundMode,
+            'backgroundTags'       => $backgroundTags,
+            'backgroundColorClass' => $backgroundColorClass,
+            'behindElements'       => $behindElements,
+            'frontElements'        => $frontElements,
+            'sectionContent'       => $this->_buildSectionContent($info, $templating, $translator)
+        ]);
 
     }
 
@@ -62,6 +64,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param Info $info
      * @param      $templating
      * @param      $translator
+     *
      * @return string
      * @throws \Exception
      */
@@ -99,13 +102,15 @@ class ParallaxContainer extends AbstractAreabrick
             if ($info->getView()->get('editmode') === true) {
 
                 $configNode = $this->getConfigManager()->getAreaConfig('parallaxContainerSection');
-                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info, $configNode);
+                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection',
+                    'Parallax Container Section', $info, $configNode);
 
                 if ($containerWrapper === 'none' && strpos($areaBlock, 'toolbox-columns') !== false) {
                     $message = $translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
-                    $messageWrap = $templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), ['type'     => 'danger',
-                                                                                                                     'message'  => $message,
-                                                                                                                     'document' => $info->getDocument()
+                    $messageWrap = $templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), [
+                        'type'     => 'danger',
+                        'message'  => $message,
+                        'document' => $info->getDocument()
                     ]);
                     $areaBlock = $messageWrap . $areaBlock;
                 }
@@ -138,6 +143,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param        $backgroundColor
      * @param array  $config
      * @param string $type
+     *
      * @return string
      * @throws \Exception
      */
@@ -192,6 +198,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param        $backgroundColor
      * @param array  $config
      * @param string $type
+     *
      * @return string
      */
     private function getBackgroundColorClass($backgroundColor, $config = [], $type = 'parallax')

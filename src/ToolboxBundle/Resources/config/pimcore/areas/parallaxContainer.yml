@@ -72,6 +72,10 @@ toolbox:
                             third-window-width: 'Third Window Width'
                             quarter-window-width: 'Quarter Window Width'
                         reload: true
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
             config_parameter:
                 window_size: large
                 background_mode: wrap

@@ -38,6 +38,10 @@ toolbox:
                     title: 'Open Info Window by Default'
                     config:
                         reload: false
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
             config_parameter:
                 map_options:
                     streetViewControl: true

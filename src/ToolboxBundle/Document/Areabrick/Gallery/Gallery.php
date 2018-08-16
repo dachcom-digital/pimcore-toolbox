@@ -11,11 +11,19 @@ class Gallery extends AbstractAreabrick
     {
         parent::action($info);
 
-        $view = $info->getView();
-        $view->galleryId = 'gallery-' . uniqid();
-        $view->images = $this->getAssetArray(
-            $this->getDocumentTag($info->getDocument(), 'multihref', 'images')->getElements()
-        );
+        $infoParams = $info->getParams();
+        if (isset($infoParams['toolboxGalleryId'])) {
+            $id = $infoParams['toolboxGalleryId'];
+        } else {
+            $id = uniqid('gallery-');
+        }
+
+        $info->getView()->getParameters()->add([
+            'galleryId' => $id,
+            'images'    => $this->getAssetArray(
+                $this->getDocumentTag($info->getDocument(), 'multihref', 'images')->getElements()
+            )
+        ]);
     }
 
     public function getName()

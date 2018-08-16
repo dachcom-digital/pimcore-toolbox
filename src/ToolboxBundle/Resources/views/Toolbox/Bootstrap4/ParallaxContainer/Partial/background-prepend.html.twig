@@ -1,4 +1,4 @@
-<div class="parallax-background {{ backgroundColorClass }}" {{ backgroundTags }}></div>
+<div class="parallax-background {{ backgroundColorClass }}" {{ backgroundTags|raw }}></div>
 <div class="parallax-content-wrapper">
     {% include toolbox_area_path(areaId, 'Partial/parallax-content') with {
     'behindElements' : behindElements,
