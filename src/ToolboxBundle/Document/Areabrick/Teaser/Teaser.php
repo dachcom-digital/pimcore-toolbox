@@ -9,6 +9,7 @@ class Teaser extends AbstractAreabrick
 {
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
@@ -19,7 +20,7 @@ class Teaser extends AbstractAreabrick
         $flags = $this->configManager->getConfig('flags');
         $useDynamicLinks = $flags['use_dynamic_links'];
 
-        $info->getView()->useDynamicLinks = $useDynamicLinks;
+        $info->getView()->getParameters()->add(['useDynamicLinks' => $useDynamicLinks]);
     }
 
     public function getName()

@@ -87,15 +87,37 @@ class BrickConfigBuilder
      * @param Info  $info
      * @param array $configNode
      * @param array $themeOptions
-     * @return bool|string
+     *
+     * @return string
      * @throws \Exception
      */
     public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
     {
+        $fieldSetArgs = $this->buildElementConfigArguments($documentEditableId, $documentEditableName, $info, $configNode, $themeOptions);
+        
+        if(empty($fieldSetArgs)) {
+            return '';
+        }
+
+        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
+    }
+
+    /**
+     * @param       $documentEditableId
+     * @param       $documentEditableName
+     * @param Info  $info
+     * @param array $configNode
+     * @param array $themeOptions
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function buildElementConfigArguments($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
+    {
         $this->reset();
 
         if ($info->getView()->get('editmode') === false) {
-            return false;
+            return [];
         }
 
         $this->documentEditableId = $documentEditableId;
@@ -126,7 +148,7 @@ class BrickConfigBuilder
             'brick_id'               => $info->id
         ];
 
-        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
+        return $fieldSetArgs;
     }
 
     /**
@@ -140,6 +162,7 @@ class BrickConfigBuilder
 
     /**
      * @param $type
+     *
      * @return bool
      */
     private function needStore($type)
@@ -148,7 +171,18 @@ class BrickConfigBuilder
     }
 
     /**
+     * @param $parsedConfig
+     *
+     * @return bool
+     */
+    private function hasValidStore($parsedConfig)
+    {
+        return isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0;
+    }
+
+    /**
      * @param $type
+     *
      * @return bool
      */
     private function canHaveDynamicWidth($type)
@@ -178,6 +212,7 @@ class BrickConfigBuilder
 
     /**
      * @param $type
+     *
      * @return bool
      */
     private function canHaveDynamicHeight($type)
@@ -216,6 +251,7 @@ class BrickConfigBuilder
      * @param $type
      * @param $config
      * @param $additionalConfig
+     *
      * @return array
      * @throws \Exception
      */
@@ -345,6 +381,7 @@ class BrickConfigBuilder
     /**
      * @param $configElementName
      * @param $elConf
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -433,6 +470,11 @@ class BrickConfigBuilder
             $parsedAdditionalConfig = $this->getAdditionalConfig($configElementName, $c);
             $parsedTagConfig = $this->getTagConfig($c['type'], $tagConfig, $parsedAdditionalConfig);
 
+            //if element need's a store and store is empty: skip field
+            if ($this->needStore($c['type']) && $this->hasValidStore($parsedTagConfig) === false) {
+                continue;
+            }
+
             $parsedConfig[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $parsedAdditionalConfig];
             $parsedConfig = $this->checkDependingSystemField($configElementName, $parsedConfig);
 
@@ -447,6 +489,7 @@ class BrickConfigBuilder
      *
      * @param $configElementName
      * @param $configFields
+     *
      * @return array
      */
     private function checkDependingSystemField($configElementName, $configFields)
@@ -474,6 +517,7 @@ class BrickConfigBuilder
 
     /**
      * @param $configElements
+     *
      * @return array
      */
     private function checkCondition($configElements)
@@ -556,7 +600,13 @@ class BrickConfigBuilder
     private function resetElement($el)
     {
         $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : null;
-        $this->tagRenderer->getTag($this->info->getDocument(), $el['additional_config']['type'], $el['additional_config']['name'])->setDataFromResource($value);
+
+        $this->tagRenderer->getTag(
+            $this->info->getDocument(),
+            $el['additional_config']['type'],
+            $el['additional_config']['name']
+        )->setDataFromResource($value);
+
         $el['additional_config']['selected_value'] = $value;
         $el['additional_config']['editmode_hidden'] = true;
 

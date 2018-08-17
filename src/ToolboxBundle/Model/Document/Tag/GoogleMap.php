@@ -9,6 +9,16 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 class GoogleMap extends Document\Tag
 {
     /**
+     * @var bool
+     */
+    private $disableGoogleLookUp = false;
+
+    /**
+     * @var int
+     */
+    private $mapId;
+
+    /**
      * Contains the data
      *
      * @var array
@@ -85,11 +95,11 @@ class GoogleMap extends Document\Tag
             array_keys($dataAttr)
         ));
 
-        if (!$this->id) {
-            $this->id = uniqid('map-');
+        if (empty($this->getId())) {
+            $this->mapId = uniqid('map-');
         }
 
-        $html = '<div class="embed-responsive-item toolbox-googlemap" id="' . $this->id . '" ' . $dataAttrString . '></div>';
+        $html = '<div class="embed-responsive-item toolbox-googlemap" id="' . $this->mapId . '" ' . $dataAttrString . '></div>';
 
         return $html;
     }
@@ -128,7 +138,9 @@ class GoogleMap extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
+     *
      * @param mixed $data
+     *
      * @return $this
      * @throws \Exception
      */
@@ -149,15 +161,42 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @return mixed
+     * @return bool
+     */
+    public function googleLookUpIsDisabled()
+    {
+        return $this->disableGoogleLookUp;
+    }
+
+    public function disableGoogleLookup()
+    {
+        $this->disableGoogleLookUp = true;
+    }
+
+    public function enableGoogleLookup()
+    {
+        $this->disableGoogleLookUp = false;
+    }
+
+    /**
+     * @param $mapId
+     */
+    public function setId($mapId)
+    {
+        $this->mapId = $mapId;
+    }
+
+    /**
+     * @return null|int
      */
     public function getId()
     {
-        return $this->id;
+        return $this->mapId;
     }
 
     /**
      * @param $location
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -173,6 +212,10 @@ class GoogleMap extends Document\Tag
         $key = '';
         if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
             $key = '&key=' . $configNode['map_api_key'];
+        }
+
+        if ($this->googleLookUpIsDisabled()) {
+            return $location;
         }
 
         $url = 'https://maps.google.com/maps/api/geocode/json?address=' . $address . $key;

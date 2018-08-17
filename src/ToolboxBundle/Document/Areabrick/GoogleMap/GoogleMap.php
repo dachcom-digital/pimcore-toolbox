@@ -31,7 +31,7 @@ class GoogleMap extends AbstractAreabrick
     {
         parent::action($info);
 
-        $info->getView()->googleMapsHostUrl = $this->googleMapsHostUrl;
+        $info->getView()->getParameters()->add(['googleMapsHostUrl' => $this->googleMapsHostUrl]);
     }
 
     /**

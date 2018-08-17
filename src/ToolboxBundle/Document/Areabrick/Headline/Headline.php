@@ -7,11 +7,15 @@ use Pimcore\Model\Document\Tag\Area\Info;
 
 class Headline extends AbstractAreabrick
 {
+    /**
+     * @param Info $info
+     *
+     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @throws \Exception
+     */
     public function action(Info $info)
     {
         parent::action($info);
-
-        $view = $info->getView();
 
         $anchorName = null;
         $anchorNameElement = $this->getDocumentTag($info->getDocument(), 'input', 'anchor_name');
@@ -20,7 +24,7 @@ class Headline extends AbstractAreabrick
             $anchorName = \Pimcore\File::getValidFilename($anchorNameElement->getData());
         }
 
-        $view->anchorName = $anchorName;
+        $info->getView()->getParameters()->add(['anchorName' => $anchorName]);
 
     }
 

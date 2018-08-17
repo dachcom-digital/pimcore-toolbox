@@ -10,6 +10,7 @@ class Video extends AbstractAreabrick
 {
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
@@ -35,11 +36,13 @@ class Video extends AbstractAreabrick
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $view->autoPlay = $autoPlay;
-        $view->posterPath = $posterPath;
-        $view->videoType = $videoType;
-        $view->playInLightbox = $playInLightBox;
-        $view->videoId = $videoId;
+        $view->getParameters()->add([
+            'autoPlay'       => $autoPlay,
+            'posterPath'     => $posterPath,
+            'videoType'      => $videoType,
+            'playInLightbox' => $playInLightBox,
+            'videoId'        => $videoId
+        ]);
     }
 
     public function getName()

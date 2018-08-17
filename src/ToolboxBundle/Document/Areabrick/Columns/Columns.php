@@ -23,6 +23,7 @@ class Columns extends AbstractAreabrick
 
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
@@ -48,7 +49,9 @@ class Columns extends AbstractAreabrick
         }
 
         $theme = $this->configManager->getConfig('theme');
-        $columns = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator'])->calculateColumns($type, $customColumnConfiguration);
+        $columns = $this->calculatorRegistry
+            ->getColumnCalculator($theme['calculators']['column_calculator'])
+            ->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
 
@@ -64,11 +67,12 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $view->type = $type . ($gridAdjustment !== false ? '-grid-adjuster' : '');
-        $view->columns = $columns;
-        $view->partialName = $partialName;
-        $view->equalHeight = $equalHeight;
-
+        $view->getParameters()->add([
+            'type'        => $type . ($gridAdjustment !== false ? '-grid-adjuster' : ''),
+            'columns'     => $columns,
+            'partialName' => $partialName,
+            'equalHeight' => $equalHeight
+        ]);
     }
 
     public function getName()

@@ -84,7 +84,9 @@ class Download extends AbstractAreabrick
             }
         }
 
-        $view->downloads = $assets;
+        $view->getParameters()->add([
+            'downloads' => $assets
+        ]);
 
     }
 

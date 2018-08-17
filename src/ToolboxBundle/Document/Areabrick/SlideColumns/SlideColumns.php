@@ -23,14 +23,13 @@ class SlideColumns extends AbstractAreabrick
 
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
     public function action(Info $info)
     {
         parent::action($info);
-
-        $view = $info->getView();
 
         $equalHeight = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height')->isChecked() && !$info->getView()->get('editmode');
         $id = $info->getView()->get('brick')->getId() . '-' . $info->getView()->get('brick')->getIndex();
@@ -45,12 +44,15 @@ class SlideColumns extends AbstractAreabrick
         $slidesPerViewClass = $calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);
         $breakpoints = $this->calculateSlideColumnBreakpoints($slidesPerView);
 
-        $view->id = $id;
-        $view->slideElements = $slideElements;
-        $view->slidesPerView = $slidesPerView;
-        $view->slidesPerViewClasses = $slidesPerViewClass;
-        $view->breakpoints = $breakpoints;
-        $view->equalHeight = $equalHeight;
+        $info->getView()->getParameters()->add([
+            'id'                   => $id,
+            'slideElements'        => $slideElements,
+            'slidesPerView'        => $slidesPerView,
+            'slidesPerViewClasses' => $slidesPerViewClass,
+            'breakpoints'          => $breakpoints,
+            'equalHeight'          => $equalHeight
+        ]);
+
     }
 
     public function getName()
@@ -65,6 +67,7 @@ class SlideColumns extends AbstractAreabrick
 
     /**
      * @param $columnType
+     *
      * @return array
      * @throws \Exception
      */

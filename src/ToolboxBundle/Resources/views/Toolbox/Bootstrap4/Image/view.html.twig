@@ -12,8 +12,6 @@
     {% endif %}
 
     {% if pimcore_checkbox('show_caption').isChecked() == true %}
-        <span class="caption">
-            {{ pimcore_image('ci').text }}
-        </span>
+        <span class="caption">{{ pimcore_image('ci').text }}</span>
     {% endif %}
 </div>

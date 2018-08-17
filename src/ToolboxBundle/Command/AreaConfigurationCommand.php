@@ -161,7 +161,7 @@ class AreaConfigurationCommand extends Command
      * @param int    $depth
      * @return string
      */
-    function parseArrayForOutput(array $array = [], $string = '', $depth = 0)
+    private function parseArrayForOutput(array $array = [], $string = '', $depth = 0)
     {
         $depthStr = str_repeat(' ', $depth * 3);
         foreach ($array as $key => $value) {
