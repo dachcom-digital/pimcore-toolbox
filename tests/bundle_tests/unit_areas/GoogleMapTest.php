@@ -9,6 +9,27 @@ use ToolboxBundle\Model\Document\Tag\GoogleMap;
 
 class GoogleMapTest extends AbstractAreaTest
 {
+    const TYPE = 'googleMap';
+
+    public function testGoogleMapBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(3, $configElements);
+        $this->assertEquals('numeric', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('map_zoom', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('map_type', $configElements[1]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('iw_on_init', $configElements[2]['additional_config']['name']);
+
+    }
+
     public function testGoogleMapConfigParameter()
     {
         $configParam = $this->getToolboxConfig()->getAreaParameterConfig('googleMap');
@@ -66,11 +87,11 @@ class GoogleMapTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('googleMap', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
-    public function testGoogleMapWidthAdditionalClasses()
+    public function testGoogleMapWidthAdditionalClass()
     {
         $this->setupRequest();
 
@@ -114,8 +135,8 @@ class GoogleMapTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClasses()),
-            $this->filter($this->generateRenderedArea('googleMap', $elements))
+            $this->filter($this->getCompareWithAdditionalClass()),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -128,7 +149,7 @@ class GoogleMapTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithAdditionalClasses()
+    private function getCompareWithAdditionalClass()
     {
         return '<div class="toolbox-element toolbox-google-map additional-class">
                     <div class="toolbox-google-map-container">

@@ -6,6 +6,18 @@ use Pimcore\Model\Document\Tag\Select;
 
 class ContentTest extends AbstractAreaTest
 {
+    const TYPE = 'content';
+
+    public function testContentBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(0, $configElements);
+    }
+
     public function testContent()
     {
         $this->setupRequest();
@@ -14,11 +26,11 @@ class ContentTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('content', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
-     public function testContentWithAdditionalClass()
+    public function testContentWithAdditionalClass()
     {
         $this->setupRequest();
 
@@ -31,7 +43,7 @@ class ContentTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('content', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

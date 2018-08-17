@@ -8,6 +8,26 @@ use ToolboxBundle\Model\Document\Tag\ColumnAdjuster;
 
 class ColumnsTest extends AbstractAreaTest
 {
+    const TYPE = 'columns';
+
+    public function testColumnsBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(3, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('columnadjuster', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('columnadjuster', $configElements[1]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('equal_height', $configElements[2]['additional_config']['name']);
+    }
+
     public function testDefaultColumns()
     {
         $this->setupRequest();
@@ -21,7 +41,7 @@ class ColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('columns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -42,7 +62,7 @@ class ColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithEqualHeights()),
-            $this->filter($this->generateRenderedArea('columns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -62,8 +82,8 @@ class ColumnsTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClasses()),
-            $this->filter($this->generateRenderedArea('columns', $elements))
+            $this->filter($this->getCompareWithAdditionalClass()),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -90,7 +110,7 @@ class ColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithColumnsAdjuster()),
-            $this->filter($this->generateRenderedArea('columns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -122,7 +142,7 @@ class ColumnsTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithAdditionalClasses()
+    private function getCompareWithAdditionalClass()
     {
         return '<div class="toolbox-element toolbox-columns type-column_4_8 additional-class ">
                     <div class="row">

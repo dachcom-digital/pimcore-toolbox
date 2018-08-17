@@ -6,6 +6,20 @@ use Pimcore\Model\Document\Tag\Select;
 
 class SpacerTest extends AbstractAreaTest
 {
+    const TYPE = 'spacer';
+
+    public function testSpacerBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(1, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('spacer_class', $configElements[0]['additional_config']['name']);
+    }
+
     public function testSpacer()
     {
         $this->setupRequest();
@@ -19,7 +33,7 @@ class SpacerTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('spacer', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -40,7 +54,7 @@ class SpacerTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('spacer', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

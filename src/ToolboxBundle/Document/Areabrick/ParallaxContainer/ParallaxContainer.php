@@ -47,7 +47,6 @@ class ParallaxContainer extends AbstractAreabrick
                 ['elements' => $parallaxFront, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
-
         $info->getView()->getParameters()->add([
             'parallaxTemplate'     => $parallaxTemplate,
             'backgroundMode'       => $backgroundMode,
@@ -102,8 +101,7 @@ class ParallaxContainer extends AbstractAreabrick
             if ($info->getView()->get('editmode') === true) {
 
                 $configNode = $this->getConfigManager()->getAreaConfig('parallaxContainerSection');
-                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection',
-                    'Parallax Container Section', $info, $configNode);
+                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info, $configNode);
 
                 if ($containerWrapper === 'none' && strpos($areaBlock, 'toolbox-columns') !== false) {
                     $message = $translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
@@ -117,7 +115,6 @@ class ParallaxContainer extends AbstractAreabrick
             }
 
             $sectionArgs = [
-
                 'backgroundTags'       => $backgroundTags,
                 'backgroundColorClass' => $backgroundColorClass,
                 'content'              => $areaBlock,

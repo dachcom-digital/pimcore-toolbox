@@ -8,6 +8,18 @@ use Pimcore\Model\Document\Tag\Select;
 
 class LinkListTest extends AbstractAreaTest
 {
+    const TYPE = 'linkList';
+
+    public function testLinkListBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(0, $configElements);
+    }
+
     public function testLinkList()
     {
         $this->setupRequest();
@@ -30,7 +42,7 @@ class LinkListTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('linkList', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -60,7 +72,7 @@ class LinkListTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('linkList', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

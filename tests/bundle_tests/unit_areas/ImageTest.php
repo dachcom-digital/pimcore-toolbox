@@ -10,6 +10,21 @@ use Pimcore\Tests\Util\TestHelper;
 
 class ImageTest extends AbstractAreaTest
 {
+    const TYPE = 'image';
+
+    public function testIframeBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(3, $configElements);
+        $this->assertEquals('link', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+    }
+
     public function testImage()
     {
         $this->setupRequest();
@@ -26,7 +41,7 @@ class ImageTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareDefault($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('image', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -50,7 +65,7 @@ class ImageTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareCaption($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('image', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
 
     }
@@ -75,7 +90,7 @@ class ImageTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareLightBox($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('image', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -99,7 +114,7 @@ class ImageTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareLink($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('image', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -123,7 +138,7 @@ class ImageTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('image', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

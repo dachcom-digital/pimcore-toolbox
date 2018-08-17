@@ -9,21 +9,35 @@ use ToolboxBundle\Model\Document\Tag\Vhs;
 
 class VideoTest extends AbstractAreaTest
 {
+    const TYPE = 'video';
+
+    public function testVideoBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(1, $configElements);
+        $this->assertEquals('checkbox', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('autoplay', $configElements[0]['additional_config']['name']);
+    }
+
     public function testVideoConfigParameter()
     {
         $configParam = $this->getToolboxConfig()->getAreaParameterConfig('video');
         $this->assertEquals(
             [
                 'video_types' => [
-                    'asset' => [
+                    'asset'       => [
                         'active'         => false,
                         'allow_lightbox' => true
                     ],
-                    'youtube' => [
+                    'youtube'     => [
                         'active'         => true,
                         'allow_lightbox' => true
                     ],
-                    'vimeo' => [
+                    'vimeo'       => [
                         'active'         => false,
                         'allow_lightbox' => true
                     ],
@@ -56,7 +70,7 @@ class VideoTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -79,7 +93,7 @@ class VideoTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareVimeo($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -103,7 +117,7 @@ class VideoTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithLightBox($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -131,7 +145,7 @@ class VideoTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAutoplay($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -158,7 +172,7 @@ class VideoTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('video', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

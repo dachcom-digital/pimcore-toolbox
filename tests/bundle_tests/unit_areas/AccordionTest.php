@@ -6,12 +6,29 @@ use Pimcore\Model\Document\Tag\Select;
 
 class AccordionTest extends AbstractAreaTest
 {
+    const TYPE = 'accordion';
+
+    public function testAccordionBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(2, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('component', $configElements[1]['additional_config']['name']);
+    }
+
     public function testAccordion()
     {
         $this->setupRequest();
 
         $component = new Select();
-        $component->setDataFromResource('accordion');
+        $component->setDataFromResource(self::TYPE);
 
         $elements = [
             'component' => $component
@@ -19,7 +36,7 @@ class AccordionTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareDefault()),
-            $this->filter($this->generateRenderedArea('accordion', $elements, ['toolboxAccordionId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxAccordionId' => 'test']))
         );
     }
 
@@ -39,8 +56,8 @@ class AccordionTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClasses()),
-            $this->filter($this->generateRenderedArea('accordion', $elements, ['toolboxAccordionId' => 'test']))
+            $this->filter($this->getCompareWithAdditionalClass()),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxAccordionId' => 'test']))
         );
     }
 
@@ -57,7 +74,7 @@ class AccordionTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareTabs()),
-            $this->filter($this->generateRenderedArea('accordion', $elements, ['toolboxAccordionId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxAccordionId' => 'test']))
         );
     }
 
@@ -90,7 +107,7 @@ class AccordionTest extends AbstractAreaTest
             </div>';
     }
 
-    private function getCompareWithAdditionalClasses()
+    private function getCompareWithAdditionalClass()
     {
         return '
             <div class="toolbox-element toolbox-accordion component-accordion additional-class">

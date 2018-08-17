@@ -10,9 +10,35 @@ use ToolboxBundle\Model\Document\Tag\ParallaxImage;
 
 class ParallaxContainerTest extends AbstractAreaTest
 {
+    const TYPE = 'parallaxContainer';
+
+    public function testParallaxContainerBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(5, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('template', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('href', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('background_image', $configElements[1]['additional_config']['name']);
+
+        $this->assertEquals('select', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('background_color', $configElements[2]['additional_config']['name']);
+
+        $this->assertEquals('parallaximage', $configElements[3]['additional_config']['type']);
+        $this->assertEquals('image_front', $configElements[3]['additional_config']['name']);
+
+        $this->assertEquals('parallaximage', $configElements[4]['additional_config']['type']);
+        $this->assertEquals('image_behind', $configElements[4]['additional_config']['name']);
+    }
+
     public function testParallaxContainerConfigParameter()
     {
-        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('parallaxContainer');
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig(self::TYPE);
         $this->assertEquals(
             [
                 'window_size'           => 'large',
@@ -22,14 +48,40 @@ class ParallaxContainerTest extends AbstractAreaTest
             ],
             $configParam
         );
+    }
 
-        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('parallaxContainerSection');
+    public function testParallaxContainer()
+    {
+        // wrap mode:
+
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+
+        $elements = $this->getDefaultElements($asset);
+
         $this->assertEquals(
-            [
-                'background_image_mode' => 'data',
-                'background_color_mode' => 'data'
-            ],
-            $configParam
+            $this->filter($this->getCompare($asset->getFullPath())),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
+        );
+    }
+
+    public function testParallaxContainerWithAdditionalClass()
+    {
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+
+        $elements = $this->getDefaultElements($asset);
+
+        $combo = new Select();
+        $combo->setDataFromResource('additional-class');
+
+        $elements['add_classes'] = $combo;
+
+        $this->assertEquals(
+            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -115,41 +167,6 @@ class ParallaxContainerTest extends AbstractAreaTest
             'pcB:2.background_color' => $sectionBackgroundColor
         ];
 
-    }
-
-    public function testParallaxContainer()
-    {
-        // wrap mode:
-
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-
-        $elements = $this->getDefaultElements($asset);
-
-        $this->assertEquals(
-            $this->filter($this->getCompare($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('parallaxContainer', $elements))
-        );
-    }
-
-    public function testParallaxContainerWithAdditionalClasses()
-    {
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-
-        $elements = $this->getDefaultElements($asset);
-
-        $combo = new Select();
-        $combo->setDataFromResource('additional-class');
-
-        $elements['add_classes'] = $combo;
-
-        $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('parallaxContainer', $elements))
-        );
     }
 
     private function getCompare($imagePath)

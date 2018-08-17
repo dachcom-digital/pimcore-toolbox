@@ -12,6 +12,75 @@ use Pimcore\Tests\Util\TestHelper;
 
 class TeaserTest extends AbstractAreaTest
 {
+    const TYPE = 'teaser';
+
+    public function testTeaserBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(3, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('layout', $configElements[1]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('use_light_box', $configElements[2]['additional_config']['name']);
+    }
+
+    public function testTeaser()
+    {
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+        $elements = $this->getDefaultElements($asset);
+
+        $this->assertEquals(
+            $this->filter($this->getCompare($asset->getFullPath())),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
+        );
+    }
+
+    public function testTeaserWithLightBox()
+    {
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+        $elements = $this->getDefaultElements($asset);
+
+        $lightBox = new Checkbox();
+        $lightBox->setDataFromEditmode(1);
+
+        $elements['use_light_box'] = $lightBox;
+
+        $this->assertEquals(
+            $this->filter($this->getCompareWithLightBox($asset->getFullPath())),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
+        );
+    }
+
+    public function testTeaserWithAdditionalClass()
+    {
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+        $elements = $this->getDefaultElements($asset);
+
+        $combo = new Select();
+        $combo->setDataFromResource('additional-class');
+
+        $elements['add_classes'] = $combo;
+
+        $this->assertEquals(
+            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
+        );
+    }
+
     private function getDefaultElements($asset)
     {
         $type = new Select();
@@ -43,55 +112,6 @@ class TeaserTest extends AbstractAreaTest
             'text'     => $text,
             'headline' => $headline
         ];
-    }
-
-    public function testTeaser()
-    {
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-        $elements = $this->getDefaultElements($asset);
-
-        $this->assertEquals(
-            $this->filter($this->getCompare($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('teaser', $elements))
-        );
-    }
-
-    public function testTeaserWithLightBox()
-    {
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-        $elements = $this->getDefaultElements($asset);
-
-        $lightBox = new Checkbox();
-        $lightBox->setDataFromEditmode(1);
-
-        $elements['use_light_box'] = $lightBox;
-
-        $this->assertEquals(
-            $this->filter($this->getCompareWithLightBox($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('teaser', $elements))
-        );
-    }
-
-    public function testTeaserWithAdditionalClass()
-    {
-        $this->setupRequest();
-
-        $asset = TestHelper::createImageAsset('', true);
-        $elements = $this->getDefaultElements($asset);
-
-        $combo = new Select();
-        $combo->setDataFromResource('additional-class');
-
-        $elements['add_classes'] = $combo;
-
-        $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
-            $this->filter($this->generateRenderedArea('teaser', $elements))
-        );
     }
 
     private function getCompare($asset)

@@ -10,6 +10,20 @@ use Pimcore\Tests\Util\TestHelper;
 
 class ContainerTest extends AbstractAreaTest
 {
+    const TYPE = 'container';
+
+    public function testContainerBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(1, $configElements);
+        $this->assertEquals('checkbox', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('full_width_container', $configElements[0]['additional_config']['name']);
+    }
+
     public function testImage()
     {
         $this->setupRequest();
@@ -19,7 +33,7 @@ class ContainerTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareDefault()),
-            $this->filter($this->generateRenderedArea('container', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -36,7 +50,7 @@ class ContainerTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithFullWidth()),
-            $this->filter($this->generateRenderedArea('container', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
 
     }
@@ -54,7 +68,7 @@ class ContainerTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('container', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

@@ -6,6 +6,20 @@ use Pimcore\Model\Document\Tag\Select;
 
 class SeparatorTest extends AbstractAreaTest
 {
+    const TYPE = 'separator';
+
+    public function testSeparatorBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(1, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('space', $configElements[0]['additional_config']['name']);
+    }
+
     public function testSeparator()
     {
         $this->setupRequest();
@@ -19,7 +33,7 @@ class SeparatorTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('separator', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -40,7 +54,7 @@ class SeparatorTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('separator', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

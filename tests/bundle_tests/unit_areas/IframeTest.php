@@ -8,6 +8,23 @@ use Pimcore\Model\Document\Tag\Select;
 
 class IframeTest extends AbstractAreaTest
 {
+    const TYPE = 'iFrame';
+
+    public function testIframeBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(2, $configElements);
+        $this->assertEquals('input', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('url', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('numeric', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('iheight', $configElements[1]['additional_config']['name']);
+    }
+
     public function testIframe()
     {
         $this->setupRequest();
@@ -21,7 +38,7 @@ class IframeTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('iFrame', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -42,7 +59,7 @@ class IframeTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithHeight()),
-            $this->filter($this->generateRenderedArea('iFrame', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -59,7 +76,7 @@ class IframeTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('iFrame', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 

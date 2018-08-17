@@ -9,6 +9,26 @@ use Pimcore\Tests\Util\TestHelper;
 
 class GalleryTest extends AbstractAreaTest
 {
+    const TYPE = 'gallery';
+
+    public function testGalleryBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(3, $configElements);
+        $this->assertEquals('multihref', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('images', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('use_light_box', $configElements[1]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('use_thumbnails', $configElements[2]['additional_config']['name']);
+    }
+
     public function testGallery()
     {
         $this->setupRequest();
@@ -34,7 +54,7 @@ class GalleryTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare($asset1->getFullPath(), $asset2->getFullPath())),
-            $this->filter($this->generateRenderedArea('gallery', $elements, ['toolboxGalleryId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
 
@@ -67,7 +87,7 @@ class GalleryTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithLightBox($asset1->getFullPath(), $asset2->getFullPath())),
-            $this->filter($this->generateRenderedArea('gallery', $elements, ['toolboxGalleryId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
 
@@ -100,7 +120,7 @@ class GalleryTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithThumbnails($asset1->getFullPath(), $asset2->getFullPath())),
-            $this->filter($this->generateRenderedArea('gallery', $elements, ['toolboxGalleryId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
 
@@ -133,7 +153,7 @@ class GalleryTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass($asset1, $asset2)),
-            $this->filter($this->generateRenderedArea('gallery', $elements, ['toolboxGalleryId' => 'test']))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
 

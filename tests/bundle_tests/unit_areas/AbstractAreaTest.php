@@ -7,6 +7,7 @@ use Pimcore\Model\Document\Tag\Area;
 use Pimcore\Templating\Model\ViewModel;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
+use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
@@ -21,7 +22,7 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
         $configManager = $this->getContainer()->get(ConfigManager::class);
         $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
 
-        return$configManager;
+        return $configManager;
     }
 
     /**
@@ -37,6 +38,28 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
         $info->getTag()->getView()->get('document')->setElements($documentElements);
 
         return $this->getAreaOutput($info);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function generateBackendArea($id)
+    {
+        $info = $this->generateAreaInfo($id);
+
+        $info->getView()->getParameters()->add(['editmode' => true]);
+
+        $builder = $this->getContainer()->get(BrickConfigBuilder::class);
+        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
+
+        $configNode = $configManager->getAreaConfig($info->getId());
+        $themeOptions = $configManager->getConfig('theme');
+
+        return $builder->buildElementConfigArguments($info->getId(), $info->getTag()->getName(), $info, $configNode, $themeOptions);
     }
 
     /**
@@ -56,10 +79,12 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
 
         $area = new Area();
         $area->setView($view);
+        $area->setName($id);
 
         $info = new Area\Info();
         $info->setId($id);
         $info->setTag($area);
+        $info->setView($view);
         $info->setIndex(1);
         $info->setParams($infoParams);
         return $info;

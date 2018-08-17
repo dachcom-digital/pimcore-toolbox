@@ -88,20 +88,36 @@ class BrickConfigBuilder
      * @param array $configNode
      * @param array $themeOptions
      *
-     * @return bool|string
+     * @return string
      * @throws \Exception
      */
-    public function buildElementConfig(
-        $documentEditableId,
-        $documentEditableName,
-        Info $info,
-        $configNode = [],
-        $themeOptions = []
-    ) {
+    public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
+    {
+        $fieldSetArgs = $this->buildElementConfigArguments($documentEditableId, $documentEditableName, $info, $configNode, $themeOptions);
+        
+        if(empty($fieldSetArgs)) {
+            return '';
+        }
+
+        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
+    }
+
+    /**
+     * @param       $documentEditableId
+     * @param       $documentEditableName
+     * @param Info  $info
+     * @param array $configNode
+     * @param array $themeOptions
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function buildElementConfigArguments($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
+    {
         $this->reset();
 
         if ($info->getView()->get('editmode') === false) {
-            return false;
+            return [];
         }
 
         $this->documentEditableId = $documentEditableId;
@@ -132,7 +148,7 @@ class BrickConfigBuilder
             'brick_id'               => $info->id
         ];
 
-        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
+        return $fieldSetArgs;
     }
 
     /**

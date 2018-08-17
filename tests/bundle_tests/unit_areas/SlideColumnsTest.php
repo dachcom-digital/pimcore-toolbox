@@ -7,6 +7,23 @@ use Pimcore\Model\Document\Tag\Select;
 
 class SlideColumnsTest extends AbstractAreaTest
 {
+    const TYPE = 'slideColumns';
+
+    public function testSlideColumnsBackendConfig()
+    {
+        $this->setupRequest();
+
+        $areaConfig = $this->generateBackendArea(self::TYPE);
+        $configElements = $areaConfig['config_elements'];
+
+        $this->assertCount(2, $configElements);
+        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('slides_per_view', $configElements[0]['additional_config']['name']);
+
+        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('equal_height', $configElements[1]['additional_config']['name']);
+    }
+
     public function testSlideColumnsConfigParameter()
     {
         $configParam = $this->getToolboxConfig()->getAreaParameterConfig('slideColumns');
@@ -34,7 +51,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompare()),
-            $this->filter($this->generateRenderedArea('slideColumns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -55,7 +72,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithEqualHeight()),
-            $this->filter($this->generateRenderedArea('slideColumns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -71,7 +88,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $configManager = $this->getToolboxConfig();
 
-        $slideColumns = $configManager->getConfig('slideColumns');
+        $slideColumns = $configManager->getConfig(self::TYPE);
         $theme = $configManager->getConfig('theme');
 
         $slideColumns['config_parameter'] = [
@@ -83,7 +100,7 @@ class SlideColumnsTest extends AbstractAreaTest
             ]
         ];
 
-        $configManager->setConfig(['areas' => ['slideColumns' => $slideColumns], 'theme' => $theme]);
+        $configManager->setConfig(['areas' => [self::TYPE => $slideColumns], 'theme' => $theme]);
 
         $elements = [
             'slides_per_view' => $slidesPerView,
@@ -92,7 +109,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithBreakPoints()),
-            $this->filter($this->generateRenderedArea('slideColumns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
@@ -113,7 +130,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $this->assertEquals(
             $this->filter($this->getCompareWithAdditionalClass()),
-            $this->filter($this->generateRenderedArea('slideColumns', $elements))
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
