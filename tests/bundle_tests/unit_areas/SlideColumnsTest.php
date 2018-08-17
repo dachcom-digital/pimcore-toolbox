@@ -4,10 +4,23 @@ namespace DachcomBundle\Test\Unit;
 
 use Pimcore\Model\Document\Tag\Checkbox;
 use Pimcore\Model\Document\Tag\Select;
-use ToolboxBundle\Manager\ConfigManager;
 
 class SlideColumnsTest extends AbstractAreaTest
 {
+    public function testSlideColumnsConfigParameter()
+    {
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('slideColumns');
+        $this->assertEquals(
+            [
+                'column_classes' => [
+                    '2' => 'col-12 col-sm-6'
+                ],
+                'breakpoints'    => []
+            ],
+            $configParam
+        );
+    }
+
     public function testSlideColumns()
     {
         $this->setupRequest();
@@ -56,7 +69,7 @@ class SlideColumnsTest extends AbstractAreaTest
         $equalHeight = new Checkbox();
         $equalHeight->setDataFromEditmode(1);
 
-        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $configManager = $this->getToolboxConfig();
 
         $slideColumns = $configManager->getConfig('slideColumns');
         $theme = $configManager->getConfig('theme');
@@ -65,7 +78,7 @@ class SlideColumnsTest extends AbstractAreaTest
             'column_classes' => [
                 4 => 'col-12 col-sm-12 col-lg-2',
             ],
-            'breakpoints' => [
+            'breakpoints'    => [
                 4 => 'col-12 col-sm-12 col-lg-2'
             ]
         ];

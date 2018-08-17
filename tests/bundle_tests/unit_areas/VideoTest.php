@@ -9,6 +9,34 @@ use ToolboxBundle\Model\Document\Tag\Vhs;
 
 class VideoTest extends AbstractAreaTest
 {
+    public function testVideoConfigParameter()
+    {
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('video');
+        $this->assertEquals(
+            [
+                'video_types' => [
+                    'asset' => [
+                        'active'         => false,
+                        'allow_lightbox' => true
+                    ],
+                    'youtube' => [
+                        'active'         => true,
+                        'allow_lightbox' => true
+                    ],
+                    'vimeo' => [
+                        'active'         => false,
+                        'allow_lightbox' => true
+                    ],
+                    'dailymotion' => [
+                        'active'         => false,
+                        'allow_lightbox' => true
+                    ]
+                ]
+            ],
+            $configParam
+        );
+    }
+
     public function testYoutubeVideo()
     {
         $this->setupRequest();
@@ -54,7 +82,7 @@ class VideoTest extends AbstractAreaTest
             $this->filter($this->generateRenderedArea('video', $elements))
         );
     }
-    
+
     public function testVideoWithLightBox()
     {
         $this->setupRequest();

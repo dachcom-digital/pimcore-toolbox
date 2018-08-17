@@ -7,9 +7,23 @@ use Pimcore\Model\Document\Tag\Area;
 use Pimcore\Templating\Model\ViewModel;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
+use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\ConfigManagerInterface;
 
 abstract class AbstractAreaTest extends DachcomBundleTestCase
 {
+    /**
+     * @return object|ConfigManager
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function getToolboxConfig()
+    {
+        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
+
+        return$configManager;
+    }
+
     /**
      * @param       $id
      * @param       $documentElements
@@ -23,7 +37,6 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
         $info->getTag()->getView()->get('document')->setElements($documentElements);
 
         return $this->getAreaOutput($info);
-
     }
 
     /**

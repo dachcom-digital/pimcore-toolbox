@@ -16,7 +16,6 @@ toolbox:
                             spacer-none: 'No Space'
                             spacer-50: '50 Pixel'
                         default: spacer-none
-
                 additional_classes:
                     type: additionalClasses
                     config:

@@ -10,6 +10,29 @@ use ToolboxBundle\Model\Document\Tag\ParallaxImage;
 
 class ParallaxContainerTest extends AbstractAreaTest
 {
+    public function testParallaxContainerConfigParameter()
+    {
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('parallaxContainer');
+        $this->assertEquals(
+            [
+                'window_size'           => 'large',
+                'background_mode'       => 'wrap',
+                'background_image_mode' => 'data',
+                'background_color_mode' => 'data'
+            ],
+            $configParam
+        );
+
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('parallaxContainerSection');
+        $this->assertEquals(
+            [
+                'background_image_mode' => 'data',
+                'background_color_mode' => 'data'
+            ],
+            $configParam
+        );
+    }
+
     private function getDefaultElements($asset)
     {
         $backgroundImage = new Href();

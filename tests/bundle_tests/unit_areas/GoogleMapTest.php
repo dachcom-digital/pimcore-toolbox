@@ -3,14 +3,31 @@
 namespace DachcomBundle\Test\Unit;
 
 use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Multihref;
 use Pimcore\Model\Document\Tag\Numeric;
 use Pimcore\Model\Document\Tag\Select;
-use Pimcore\Tests\Util\TestHelper;
 use ToolboxBundle\Model\Document\Tag\GoogleMap;
 
 class GoogleMapTest extends AbstractAreaTest
 {
+    public function testGoogleMapConfigParameter()
+    {
+        $configParam = $this->getToolboxConfig()->getAreaParameterConfig('googleMap');
+        $this->assertEquals(
+            [
+                'map_options'   => [
+                    'streetViewControl' => true,
+                    'mapTypeControl'    => false,
+                    'panControl'        => false,
+                    'scrollwheel'       => false
+                ],
+                'map_style_url' => false,
+                'marker_icon'   => false,
+                'map_api_key'   => '',
+            ],
+            $configParam
+        );
+    }
+
     public function testGoogleMap()
     {
         $this->setupRequest();
@@ -21,9 +38,9 @@ class GoogleMapTest extends AbstractAreaTest
 
         $googleMapElement->setDataFromEditmode([
             [
-                'street' => 'Rorschacherstrasse 15',
-                'zip' => '9424',
-                'city' => 'Rheineck',
+                'street'  => 'Rorschacherstrasse 15',
+                'zip'     => '9424',
+                'city'    => 'Rheineck',
                 'country' => 'Schweiz'
             ]
         ]);
@@ -41,9 +58,9 @@ class GoogleMapTest extends AbstractAreaTest
         $iwOnInit->setDataFromResource(1);
 
         $elements = [
-            'googlemap' => $googleMapElement,
-            'map_zoom' => $mapZoom,
-            'map_type' => $mapType,
+            'googlemap'  => $googleMapElement,
+            'map_zoom'   => $mapZoom,
+            'map_type'   => $mapType,
             'iw_on_init' => $iwOnInit
         ];
 
@@ -63,9 +80,9 @@ class GoogleMapTest extends AbstractAreaTest
 
         $googleMapElement->setDataFromEditmode([
             [
-                'street' => 'Rorschacherstrasse 15',
-                'zip' => '9424',
-                'city' => 'Rheineck',
+                'street'  => 'Rorschacherstrasse 15',
+                'zip'     => '9424',
+                'city'    => 'Rheineck',
                 'country' => 'Schweiz'
             ]
         ]);
@@ -89,10 +106,10 @@ class GoogleMapTest extends AbstractAreaTest
         $combo->setDataFromResource('additional-class');
 
         $elements = [
-            'googlemap' => $googleMapElement,
-            'map_zoom' => $mapZoom,
-            'map_type' => $mapType,
-            'iw_on_init' => $iwOnInit,
+            'googlemap'   => $googleMapElement,
+            'map_zoom'    => $mapZoom,
+            'map_type'    => $mapType,
+            'iw_on_init'  => $iwOnInit,
             'add_classes' => $combo
         ];
 
