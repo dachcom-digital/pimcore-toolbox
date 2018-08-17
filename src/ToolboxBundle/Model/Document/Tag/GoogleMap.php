@@ -14,7 +14,7 @@ class GoogleMap extends Document\Tag
     private $disableGoogleLookUp = false;
 
     /**
-     * @var int
+     * @var string
      */
     private $mapId;
 
@@ -187,7 +187,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @return null|int
+     * @return null|string
      */
     public function getId()
     {
