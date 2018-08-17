@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param ArrayNodeDefinition $rootNode
      */
-    function addContextNode(ArrayNodeDefinition $rootNode)
+    public function addContextNode(ArrayNodeDefinition $rootNode)
     {
         $node = $rootNode
             ->children()
@@ -72,7 +72,7 @@ class Configuration implements ConfigurationInterface
      * @param ArrayNodeDefinition $rootNode
      * @param bool                $addContextSettings
      */
-    function getConfigNode(ArrayNodeDefinition $rootNode, $addContextSettings = true)
+    public function getConfigNode(ArrayNodeDefinition $rootNode, $addContextSettings = true)
     {
         //@todo: get them dynamically!!
         $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
