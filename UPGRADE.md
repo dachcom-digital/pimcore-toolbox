@@ -3,6 +3,9 @@
 ***
 After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.6.1 to Version 2.6.2
+- implemented [PackageVersionTrait](https://github.com/pimcore/pimcore/blob/master/lib/Extension/Bundle/Traits/PackageVersionTrait.php)
+
 #### Update from Version 2.6.0 to Version 2.6.1
 - **[NEW FEATURE]**: Pimcore 5.4.0 ready.
 - Fix Composer PSR-4 Path

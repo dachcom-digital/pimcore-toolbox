@@ -2,15 +2,16 @@
 
 namespace ToolboxBundle;
 
-use ToolboxBundle\Tool\Install;
+use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
-use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use ToolboxBundle\Tool\Install;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
-    const BUNDLE_VERSION = '2.6.1';
+    use PackageVersionTrait;
 
     /**
      * @inheritDoc
@@ -19,14 +20,6 @@ class ToolboxBundle extends AbstractPimcoreBundle
     {
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getVersion()
-    {
-        return self::BUNDLE_VERSION;
     }
 
     /**
@@ -84,4 +77,13 @@ class ToolboxBundle extends AbstractPimcoreBundle
 
         return $cssFiles;
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getComposerPackageName(): string
+    {
+        return 'dachcom-digital/toolbox';
+    }
+
 }
