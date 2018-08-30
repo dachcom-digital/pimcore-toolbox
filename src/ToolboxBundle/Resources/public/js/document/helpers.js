@@ -151,6 +151,10 @@ pimcore.helpers.editmode.openVhsEditPanel = function (data, callback) {
             lightboxEl.show();
         }
 
+        if (typeConfig.id_label) {
+            labelEl.update(typeConfig.id_label);
+        }
+
     };
 
     var videoTypeStore = new Ext.data.JsonStore({
