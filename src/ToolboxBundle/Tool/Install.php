@@ -2,11 +2,11 @@
 
 namespace ToolboxBundle\Tool;
 
+use PackageVersions\Versions;
 use Pimcore\Extension\Bundle\Installer\AbstractInstaller;
-
 use Pimcore\Model\Document\DocType;
-use Symfony\Component\Filesystem\Filesystem;
 use Pimcore\Model\Translation\Admin;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use ToolboxBundle\ToolboxBundle;
 
@@ -27,6 +27,11 @@ class Install extends AbstractInstaller
     private $fileSystem;
 
     /**
+     * @var string
+     */
+    private $currentVersion;
+
+    /**
      * Install constructor.
      */
     public function __construct()
@@ -35,6 +40,8 @@ class Install extends AbstractInstaller
 
         $this->installSourcesPath = __DIR__ . '/../Resources/install';
         $this->fileSystem = new Filesystem();
+
+        $this->currentVersion = Versions::getVersion(ToolboxBundle::PACKAGE_NAME);
     }
 
     /**
@@ -112,7 +119,7 @@ class Install extends AbstractInstaller
         $needUpdate = false;
         if ($this->fileSystem->exists(self::SYSTEM_CONFIG_FILE_PATH)) {
             $config = Yaml::parse(file_get_contents(self::SYSTEM_CONFIG_FILE_PATH));
-            if ($config['version'] !== ToolboxBundle::BUNDLE_VERSION) {
+            if ($config['version'] !== $this->currentVersion) {
                 $needUpdate = true;
             }
         }
@@ -178,7 +185,7 @@ class Install extends AbstractInstaller
             $this->fileSystem->mkdir(self::SYSTEM_CONFIG_DIR_PATH);
         }
 
-        $config = ['version' => ToolboxBundle::BUNDLE_VERSION];
+        $config = ['version' => $this->currentVersion];
         $yml = Yaml::dump($config);
         file_put_contents(self::SYSTEM_CONFIG_FILE_PATH, $yml);
     }
