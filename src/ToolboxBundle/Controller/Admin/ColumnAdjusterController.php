@@ -38,8 +38,8 @@ class ColumnAdjusterController extends Controller\AdminController
      */
     public function getColumnInfoAction(Request $request)
     {
-        $currentColumn = $request->request->get('currentColumn');
-        $customColumnConfigurationData = $request->request->get('customColumnConfiguration');
+        $currentColumn = $request->get('currentColumn');
+        $customColumnConfigurationData = $request->get('customColumnConfiguration');
 
         $response = json_decode($customColumnConfigurationData, true);
         $customColumnConfiguration = null;
