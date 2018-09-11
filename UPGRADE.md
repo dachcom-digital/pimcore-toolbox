@@ -5,6 +5,8 @@ After every update you should check the pimcore extension manager. Just click th
 
 #### Update from Version 2.6.1 to Version 2.6.2
 - implemented [PackageVersionTrait](https://github.com/pimcore/pimcore/blob/master/lib/Extension/Bundle/Traits/PackageVersionTrait.php)
+- Fix ColumnCalculator Issuse (https://github.com/dachcom-digital/pimcore-toolbox/pull/75)
+- Allow changing video label (https://github.com/dachcom-digital/pimcore-toolbox/pull/76)
 
 #### Update from Version 2.6.0 to Version 2.6.1
 - **[NEW FEATURE]**: Pimcore 5.4.0 ready.
