@@ -11,6 +11,7 @@ class SnippetController extends FrontendController
 {
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
@@ -20,6 +21,7 @@ class SnippetController extends FrontendController
         $configManager = $this->container->get(ConfigManager::class);
         $layoutStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'layout');
         $addClStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'additional_classes');
+        $flags = $configManager->getConfig('flags');
 
         $store = $layoutStore['config']['store'];
         $layoutExtJsStore = [];
@@ -38,12 +40,11 @@ class SnippetController extends FrontendController
         }
 
         return $this->renderTemplate(
-            '@Toolbox/Snippet/Layout/teaser-layout.html.twig',
-            [
-                'mapParams'              => $request->get('mapParams'),
-                'layoutStore'            => $layoutExtJsStore,
-                'additionalClassesStore' => $addClExtJsStore
-            ]
-        );
+            '@Toolbox/Snippet/Layout/teaser-layout.html.twig', [
+            'useDynamicLinks'        => $flags['use_dynamic_links'],
+            'mapParams'              => $request->get('mapParams'),
+            'layoutStore'            => $layoutExtJsStore,
+            'additionalClassesStore' => $addClExtJsStore
+        ]);
     }
 }
