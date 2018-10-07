@@ -57,18 +57,15 @@ class PimcoreBackend extends Module\REST
             return;
         }
 
+        $firewallName = 'admin';
         $pimcoreUser = $this->getUser($username);
 
         /** @var Session $session */
         $session = $pimcoreModule->getContainer()->get('session');
 
-        $firewallName = 'admin';
-        $firewallContext = 'admin';
-
         $user = new \Pimcore\Bundle\AdminBundle\Security\User\User($pimcoreUser);
         $token = new UsernamePasswordToken($user, null, $firewallName, $pimcoreUser->getRoles());
-        $session->set('_security_' . $firewallContext, serialize($token));
-        $session->save();
+        $pimcoreModule->getContainer()->get('security.token_storage')->setToken($token);
 
         \Pimcore\Tool\Session::useSession(function (AttributeBagInterface $adminSession) use ($pimcoreUser) {
             \Pimcore\Tool\Session::regenerateId();
