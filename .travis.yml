@@ -15,9 +15,14 @@ matrix:
     include:
         -
           sudo: required
+          php: 7.1
+          env:
+            - PIMCORE_SKELETON_BRANCH="tags/v1.0.4"
+        -
+          sudo: required
           php: 7.2
           env:
-            - PIMCORE_SKELETON_BRANCH="tags/v1.0.0"
+            - PIMCORE_SKELETON_BRANCH="tags/v1.0.4"
     fast_finish: true
 
 cache:
