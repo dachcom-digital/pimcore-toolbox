@@ -12,6 +12,7 @@ class SnippetControllerCest
      */
     public function testSnippetController(FunctionalTester $I)
     {
+        $I->haveAUserWithAdminRights('dachcom_test');
         $I->amLoggedInAs('dachcom_test');
         $I->haveASnippet('snippet-test');
         $I->amOnPage('/snippet-test?pimcore_editmode=true');
@@ -28,6 +29,7 @@ class SnippetControllerCest
         $combo->setDataFromResource('default');
         $combo->setName('ts_type');
 
+        $I->haveAUserWithAdminRights('dachcom_test');
         $I->amLoggedInAs('dachcom_test');
         $I->haveASnippet('snippet-test', ['ts_type' => $combo]);
         $I->amOnPage('/snippet-test?pimcore_editmode=true');

@@ -1,5 +1,4 @@
 toolbox:
-
     theme:
         grid:
             grid_size: 12
@@ -20,7 +19,6 @@ toolbox:
                     identifier: 'lg'
                     name: 'Breakpoint: LG'
                     description: 'Your Description'
-
     areas_appearance:
         disallowed_content:
             disallowed:
@@ -33,7 +31,6 @@ toolbox:
                 - image
             disallowed:
                 - image
-
     snippet_areas_appearance:
         disallowed_content:
             disallowed:

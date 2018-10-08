@@ -25,6 +25,7 @@ class AjaxControllerCest
             'locale'    => 'en'
         ];
 
+        $I->haveAUserWithAdminRights('dachcom_test');
         $I->amOnPage(sprintf('/toolbox/ajax/gm-info-window?%s', http_build_query($query)));
 
         $I->seeElement('.info-window');
@@ -36,7 +37,9 @@ class AjaxControllerCest
      */
     public function testVideoTypesRequest(FunctionalTester $I)
     {
+        $I->haveAUserWithAdminRights('dachcom_test');
         $I->amOnPage('/toolbox/ajax/video-allowed-video-types');
+
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
             'name'   => 'youtube',

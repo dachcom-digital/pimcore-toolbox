@@ -5,9 +5,11 @@ modules:
             connect_db: true
             initialize_db: true
             configuration_file: config_default.yml
-        - \DachcomBundle\Test\Helper\PimcoreBackend:
-            depends:
-                - \DachcomBundle\Test\Helper\PimcoreBundle
+            rebootable_client: true
+        - \DachcomBundle\Test\Helper\PimcoreAdminJson:
+            depends: \DachcomBundle\Test\Helper\PimcoreBundle
+        - \DachcomBundle\Test\Helper\PimcoreBackend
+        - \DachcomBundle\Test\Helper\PimcoreUser
 
 env:
     http:

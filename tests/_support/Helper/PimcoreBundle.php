@@ -2,13 +2,26 @@
 
 namespace DachcomBundle\Test\Helper;
 
+use Codeception\Exception\ModuleException;
 use Codeception\Lib\ModuleContainer;
 use Pimcore\Event\TestEvents;
+use Pimcore\Model\User;
 use Pimcore\Tests\Helper\Pimcore;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\BrowserKit\Cookie;
 
 class PimcoreBundle extends Pimcore
 {
+    const PIMCORE_ADMIN_CSRF_TOKEN_NAME = 'MOCK_CSRF_TOKEN';
+
+    /**
+     * @var Cookie
+     */
+    protected $sessionSnapShot;
+
     /**
      * @inheritDoc
      */
@@ -24,6 +37,7 @@ class PimcoreBundle extends Pimcore
 
     public function _initialize()
     {
+        $this->sessionSnapShot = [];
         $isNew = \Pimcore::getKernel() === null;
 
         parent::_initialize();
@@ -33,6 +47,70 @@ class PimcoreBundle extends Pimcore
         }
 
         $this->initializeKernel();
+
+    }
+
+    /**
+     * @param string $url
+     * @param array  $params
+     */
+    public function sendTokenAjaxPostRequest(string $url, array $params = [])
+    {
+        $params['csrfToken'] = self::PIMCORE_ADMIN_CSRF_TOKEN_NAME;
+        self::sendAjaxPostRequest($url, $params);
+    }
+
+    /**
+     * Actor Function to login into Pimcore Backend
+     *
+     * @param $username
+     */
+    public function amLoggedInAs($username)
+    {
+        $firewallName = 'admin';
+
+        try {
+            /** @var PimcoreUser $pimcoreUserModule */
+            $pimcoreUserModule = $this->getModule('\\' . PimcoreUser::class);
+        } catch (ModuleException $pimcoreUserModule) {
+            $this->debug('[PIMCORE BUNDLE MODULE] could not load pimcore user module');
+            return;
+        }
+
+        $pimcoreUser = $pimcoreUserModule->getUser($username);
+
+        if (!$pimcoreUser instanceof User) {
+            $this->debug(sprintf('[PIMCORE BUNDLE MODULE] could not fetch user %s.', $username));
+            return;
+        }
+
+        /** @var Session $session */
+        $session = $this->getContainer()->get('session');
+
+        /** @var \Codeception\Lib\Connector\Symfony $client */
+        $client = $this->client;
+
+        $client->getCookieJar()->clear();
+
+        $user = new \Pimcore\Bundle\AdminBundle\Security\User\User($pimcoreUser);
+        $token = new UsernamePasswordToken($user, null, $firewallName, $pimcoreUser->getRoles());
+        $this->getContainer()->get('security.token_storage')->setToken($token);
+
+        \Pimcore\Tool\Session::useSession(function (AttributeBagInterface $adminSession) use ($pimcoreUser) {
+            \Pimcore\Tool\Session::regenerateId();
+            $adminSession->set('user', $pimcoreUser);
+            $adminSession->set('csrfToken', self::PIMCORE_ADMIN_CSRF_TOKEN_NAME);
+        });
+
+        // allow re-usage of session in same cest.
+        if (!empty($this->sessionSnapShot)) {
+            $cookie = $this->sessionSnapShot;
+        } else {
+            $cookie = new Cookie($session->getName(), $session->getId());
+            $this->sessionSnapShot = $cookie;
+        }
+
+        $client->getCookieJar()->set($cookie);
 
     }
 
