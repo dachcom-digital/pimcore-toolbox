@@ -6,3 +6,35 @@ toolbox:
                 merge_with_root: true
                 enabled_areas:
                     - 'headline'
+        context_b:
+            settings:
+                merge_with_root: true
+                disabled_areas:
+                    - 'accordion'
+                    - 'anchor'
+                    - 'columns'
+                    - 'container'
+                    - 'content'
+                    - 'download'
+                    - 'gallery'
+                    - 'googleMap'
+                    - 'iFrame'
+                    - 'image'
+                    - 'linkList'
+                    - 'parallaxContainer'
+                    - 'separator'
+                    - 'slideColumns'
+                    - 'snippet'
+                    - 'spacer'
+                    - 'teaser'
+                    - 'video'
+        context_c:
+            settings:
+                merge_with_root: false
+            areas:
+                content:
+                    config_elements:
+                        additional_classes:
+                            type: additionalClasses
+                            config:
+                                store: ~
