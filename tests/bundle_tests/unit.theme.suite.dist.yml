@@ -1,0 +1,9 @@
+actor: UnitTester
+modules:
+    enabled:
+        - \DachcomBundle\Test\Helper\PimcoreCore:
+            configuration_file: 'config_theme.yml'
+            connect_db: true
+        - \DachcomBundle\Test\Helper\PimcoreBundleCore:
+            run_installer: true
+        - \DachcomBundle\Test\Helper\Unit

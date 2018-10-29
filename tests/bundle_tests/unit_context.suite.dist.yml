@@ -1,7 +1,0 @@
-class_name: UnitTester
-modules:
-    enabled:
-        - \DachcomBundle\Test\Helper\PimcoreBundle:
-            connect_db: true
-            configuration_file: config_context.yml
-        - \DachcomBundle\Test\Helper\Unit

@@ -10,14 +10,6 @@ use Pimcore\Model\Document;
 class PimcoreBackend extends Module
 {
     /**
-     * @inheritDoc
-     */
-    public function _initialize()
-    {
-        parent::_initialize();
-    }
-
-    /**
      * @param TestInterface $test
      */
     public function _before(TestInterface $test)

@@ -41,7 +41,6 @@ class ConfigManager implements ConfigManagerInterface
      */
     private $areaNamespace = null;
 
-
     /**
      * ConfigManager constructor.
      *
@@ -54,6 +53,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param array $config
+     *
      * @throws \Exception
      */
     public function setConfig($config = [])
@@ -74,6 +74,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param $section
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -110,6 +111,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -123,6 +125,7 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * @param string $areaName
      * @param string $configElementName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -135,6 +138,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -147,6 +151,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param string $thumbnailName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -204,6 +209,7 @@ class ConfigManager implements ConfigManagerInterface
 
     /**
      * @param $currentContextId
+     *
      * @return array
      * @throws \Exception
      */

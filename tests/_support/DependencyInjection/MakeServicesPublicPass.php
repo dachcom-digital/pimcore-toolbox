@@ -7,6 +7,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class MakeServicesPublicPass implements CompilerPassInterface
 {
+    /**
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $prefix = getenv('DACHCOM_BUNDLE_NAME');

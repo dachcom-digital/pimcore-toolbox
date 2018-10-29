@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page for Toolbox</title>
+</head>
+<body>
+    <div id="site">
+        {% block content %}
+            {{ pimcore_areablock('dachcomBundleTest') }}
+        {% endblock %}
+    </div>
+</body>
+</html>

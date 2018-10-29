@@ -30,6 +30,10 @@ class TestAppKernel extends Kernel
      */
     public function registerBundlesToCollection(\Pimcore\HttpKernel\BundleCollection\BundleCollection $collection)
     {
+        if (class_exists('\\AppBundle\\AppBundle')) {
+            $collection->addBundle(new \AppBundle\AppBundle());
+        }
+
         $bundleClass = getenv('DACHCOM_BUNDLE_CLASS');
         $collection->addBundle(new $bundleClass());
     }
@@ -39,8 +43,10 @@ class TestAppKernel extends Kernel
      */
     protected function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MakeServicesPublicPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
-        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MonologChannelLoggerPass(), \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
+        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MakeServicesPublicPass(),
+            \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
+        $container->addCompilerPass(new \DachcomBundle\Test\DependencyInjection\MonologChannelLoggerPass(),
+            \Symfony\Component\DependencyInjection\Compiler\PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
     }
 
     /**

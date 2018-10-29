@@ -2,8 +2,8 @@
 
 namespace DachcomBundle\Test\Test;
 
+use DachcomBundle\Test\Helper\PimcoreCore;
 use Pimcore\Tests\Test\TestCase;
-use DachcomBundle\Test\Helper\PimcoreBundle;
 
 abstract class DachcomBundleTestCase extends TestCase
 {
@@ -16,12 +16,12 @@ abstract class DachcomBundleTestCase extends TestCase
         return $this->getPimcoreBundle()->getContainer();
     }
 
-    /***
-     * @return PimcoreBundle
+    /**
+     * @return PimcoreCore
      * @throws \Codeception\Exception\ModuleException
      */
     protected function getPimcoreBundle()
     {
-        return $this->getModule('\\' . PimcoreBundle::class);
+        return $this->getModule('\\' . PimcoreCore::class);
     }
 }
