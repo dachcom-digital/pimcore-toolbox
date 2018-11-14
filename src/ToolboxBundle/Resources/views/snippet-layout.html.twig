@@ -1,9 +1,12 @@
+{% if editmode %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-    <head>
-    </head>
+    <head></head>
     <body>
-        {% block snippet_content %}
-        {% endblock snippet_content %}
+{% endif %}
+    {% block snippet_content %}
+    {% endblock snippet_content %}
+{% if editmode %}
     </body>
 </html>
+{% endif %}
