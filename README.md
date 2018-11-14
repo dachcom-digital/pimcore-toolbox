@@ -22,7 +22,7 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~2.4.0"
+    "dachcom-digital/toolbox" : "~2.6.0"
 }
 ```
 
