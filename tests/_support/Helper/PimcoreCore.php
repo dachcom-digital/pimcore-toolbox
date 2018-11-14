@@ -50,7 +50,7 @@ class PimcoreCore extends PimcoreCoreModule
      */
     public function _afterSuite()
     {
-        //$this->clearCache();
+        $this->clearCache();
         parent::_afterSuite();
     }
 
