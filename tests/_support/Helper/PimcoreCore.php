@@ -3,6 +3,7 @@
 namespace DachcomBundle\Test\Helper;
 
 use Codeception\Lib\ModuleContainer;
+use Codeception\Lib\Connector\Symfony as SymfonyConnector;
 use Pimcore\Cache;
 use Pimcore\Config;
 use Pimcore\Event\TestEvents;
@@ -11,6 +12,11 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PimcoreCore extends PimcoreCoreModule
 {
+    /**
+     * @var bool
+     */
+    protected $kernelHasCustomConfig = false;
+
     /**
      * @inheritDoc
      */
@@ -24,19 +30,44 @@ class PimcoreCore extends PimcoreCoreModule
         parent::__construct($moduleContainer, $config);
     }
 
-    public function _initialize()
+    /**
+     * @inheritDoc
+     */
+    public function _after(\Codeception\TestInterface $test)
     {
-        Config::setEnvironment($this->config['environment']);
+        parent::_after($test);
 
-        $this->initializeKernel();
-
-        // connect and initialize DB
-        $this->setupDbConnection();
-
-        // disable cache
-        Cache::disable();
+        // config has changed, we need to restore default config before starting a new test!
+        if ($this->kernelHasCustomConfig === true) {
+            $this->clearCache();
+            $this->bootKernelWithConfiguration(null);
+            $this->kernelHasCustomConfig = false;
+        }
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function _afterSuite()
+    {
+        //$this->clearCache();
+        parent::_afterSuite();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function _initialize()
+    {
+        $this->setPimcoreEnvironment($this->config['environment']);
+        $this->initializeKernel();
+        $this->setupDbConnection();
+        $this->setPimcoreCacheAvailability('disabled');
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function initializeKernel()
     {
         $maxNestingLevel = 200; // Symfony may have very long nesting level
@@ -48,26 +79,27 @@ class PimcoreCore extends PimcoreCoreModule
         $configFile = null;
         if ($this->config['configuration_file'] !== null) {
             $configFile = $this->config['configuration_file'];
-        } else {
-            $configFile = 'config_default.yml';
         }
 
         $this->bootKernelWithConfiguration($configFile);
-
         $this->setupPimcoreDirectories();
     }
 
     /**
-     * @param string $configuration
+     * @param $configuration
      */
-    public function bootKernelWithConfiguration($configuration)
+    protected function bootKernelWithConfiguration($configuration)
     {
-        putenv('DACHCOM_BUNDLE_CONFIG_FILE=' . $configuration);
+        if ($configuration === null) {
+            $configuration = 'config_default.yml';
+        }
 
-        $this->clearCache();
+        putenv('DACHCOM_BUNDLE_CONFIG_FILE=' . $configuration);
 
         $this->kernel = require __DIR__ . '/../../kernelBuilder.php';
         $this->getKernel()->boot();
+
+        $this->client = new SymfonyConnector($this->kernel, $this->persistentServices, $this->config['rebootable_client']);
 
         if ($this->config['cache_router'] === true) {
             $this->persistService('router', true);
@@ -80,7 +112,7 @@ class PimcoreCore extends PimcoreCoreModule
     /**
      * @param bool $force
      */
-    public function clearCache($force = true)
+    protected function clearCache($force = true)
     {
         $fileSystem = new Filesystem();
 
@@ -95,4 +127,37 @@ class PimcoreCore extends PimcoreCoreModule
             }
         }
     }
+
+    /**
+     * @param $env
+     */
+    protected function setPimcoreEnvironment($env)
+    {
+        Config::setEnvironment($env);
+    }
+
+    /**
+     * @param string $state
+     */
+    protected function setPimcoreCacheAvailability($state = 'disabled')
+    {
+        if ($state === 'disabled') {
+            Cache::disable();
+        } else {
+            Cache::enable();
+        }
+    }
+
+    /**
+     * Actor Function to boot symfony with a specific bundle configuration
+     *
+     * @param string $configuration
+     */
+    public function haveABootedSymfonyConfiguration(string $configuration)
+    {
+        $this->kernelHasCustomConfig = true;
+        $this->clearCache();
+        $this->bootKernelWithConfiguration($configuration);
+    }
 }
+

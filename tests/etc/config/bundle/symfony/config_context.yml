@@ -1,33 +1,53 @@
 toolbox:
+
+    ckeditor:
+        global_style_sets:
+            default:
+            -   name: 'Lead Global'
+                element: p
+                attributes:
+                    class: 'lead'
+
     context_resolver: 'DachcomBundle\Test\App\Services\ContextResolverTestClass'
     context:
         context_a:
             settings:
                 merge_with_root: true
                 enabled_areas:
-                    - 'headline'
+                - 'headline'
+            ckeditor:
+                global_style_sets:
+                    default:
+                    -   name: 'Lead For Portal1'
+                        element: p
+                        attributes:
+                            class: 'lead-portal'
+                    -   name: 'Dark Grey'
+                        element: h1
+                        attributes:
+                            class: 'grey-1'
         context_b:
             settings:
                 merge_with_root: true
                 disabled_areas:
-                    - 'accordion'
-                    - 'anchor'
-                    - 'columns'
-                    - 'container'
-                    - 'content'
-                    - 'download'
-                    - 'gallery'
-                    - 'googleMap'
-                    - 'iFrame'
-                    - 'image'
-                    - 'linkList'
-                    - 'parallaxContainer'
-                    - 'separator'
-                    - 'slideColumns'
-                    - 'snippet'
-                    - 'spacer'
-                    - 'teaser'
-                    - 'video'
+                - 'accordion'
+                - 'anchor'
+                - 'columns'
+                - 'container'
+                - 'content'
+                - 'download'
+                - 'gallery'
+                - 'googleMap'
+                - 'iFrame'
+                - 'image'
+                - 'linkList'
+                - 'parallaxContainer'
+                - 'separator'
+                - 'slideColumns'
+                - 'snippet'
+                - 'spacer'
+                - 'teaser'
+                - 'video'
         context_c:
             settings:
                 merge_with_root: false

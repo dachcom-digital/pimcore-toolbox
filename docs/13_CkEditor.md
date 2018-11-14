@@ -9,7 +9,7 @@ There are several reasons for that:
 
 ## CK Editor Toolbar
 The Toolbox Bundle already removes some (mostly dangerous) elements. Feel free to modify them according to your needs.
-You may use the [online toolbar configurator](https://ckeditor.com/latest/samples/toolbarconfigurator/index.html#basic) (old link: ~~[online toolbar configurator](https://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced)~~) to do that.
+You may use the [online toolbar configurator](https://ckeditor.com/latest/samples/toolbarconfigurator/index.html#basic) to do that.
 
 > Info: This is the global configuration for the CK-Editor Toolbar.
 > If you need to provide a different configuration in objects or areas, use the object/area configuration (see below)
@@ -64,6 +64,9 @@ toolbox:
 
 ### Object CK-Editor Configuration
 If you only need to modify the toolbar configuration for objects, add this to your configuration:
+
+> **Note!** The object configuration does not respect different toolbox context environments at the moment. 
+> Objects are not restricted to any sites by nature which makes any context-binding quite impossible.
 
 **Example** 
 ```yaml

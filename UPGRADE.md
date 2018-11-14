@@ -1,7 +1,18 @@
 # Upgrade Notes
 ![upgrade](https://user-images.githubusercontent.com/700119/31535145-3c01a264-affa-11e7-8d86-f04c33571f65.png)  
+
 ***
-After every update you should check the pimcore extension manager. Just click the "update" button to finish the bundle update.
+
+After every update you should check the pimcore extension manager. 
+Just click the "update" button to finish the bundle update.
+
+#### Update from Version 2.6.2 to Version 2.6.3
+- **[NEW FEATURE]**: Pimcore 5.5.0 ready.
+- **[VIEW CHANGES]**: Instead of `/admin/toolbox-ckeditor-style.js` you need to add the `toolbox_get_ckeditor_config_path()` twig helper method.
+  - Changed View: `views/Toolbox/Snippet/teaser-default.html.twig`
+  - Changed View: `views/Toolbox/Bootstrap3/Content/view.html.twig`
+  - Changed View: `views/Toolbox/Bootstrap4/Content/view.html.twig`
+- **[NEW FEATURE]**: CK-Editor is Context Ready. You can now use different CK-Editor configurations per context. Checkout the [context docs](docs/15_Context.md) to checkout the updated context resolver.
 
 #### Update from Version 2.6.1 to Version 2.6.2
 - implemented [PackageVersionTrait](https://github.com/pimcore/pimcore/blob/master/lib/Extension/Bundle/Traits/PackageVersionTrait.php)

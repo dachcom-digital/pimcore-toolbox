@@ -37,3 +37,9 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    ToolboxBundle\Twig\Extension\CkEditorExtension:
+        autowire: true
+        public: false
+        tags:
+            - { name: twig.extension }

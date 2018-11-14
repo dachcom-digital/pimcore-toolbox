@@ -78,6 +78,68 @@ class ContextTest extends DachcomBundleTestCase
     }
 
     /**
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function testCkEditorSettingsOnNoneContextConfiguration()
+    {
+        $this->setupRequest(['mock_toolbox_context' => 'disabled']);
+
+        /** @var ConfigManagerInterface $configManager */
+        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $ckEditorSettings = $configManager->getConfig('ckeditor');
+
+        $this->assertArrayHasKey('config', $ckEditorSettings);
+        $this->assertArrayHasKey('global_style_sets', $ckEditorSettings);
+        $globalStyleSets = $ckEditorSettings['global_style_sets'];
+
+        $this->assertArrayHasKey('default', $globalStyleSets);
+
+        $data = [
+            [
+                'name'       => 'Lead Global',
+                'element'    => 'p',
+                'attributes' => ['class' => 'lead'],
+
+            ]
+        ];
+
+        $this->assertEquals($data, $globalStyleSets['default']);
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function testCkEditorSettingsOnContextConfiguration()
+    {
+        $this->setupRequest(['mock_toolbox_context' => 'context_a']);
+
+        /** @var ConfigManagerInterface $configManager */
+        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $ckEditorSettings = $configManager->getConfig('ckeditor');
+
+        $this->assertArrayHasKey('config', $ckEditorSettings);
+        $this->assertArrayHasKey('global_style_sets', $ckEditorSettings);
+        $globalStyleSets = $ckEditorSettings['global_style_sets'];
+
+        $this->assertArrayHasKey('default', $globalStyleSets);
+
+        $data = [
+            [
+                'name'       => 'Lead For Portal1',
+                'element'    => 'p',
+                'attributes' => ['class' => 'lead-portal']
+            ],
+            [
+                'name'       => 'Dark Grey',
+                'element'    => 'h1',
+                'attributes' => ['class' => 'grey-1']
+            ]
+        ];
+
+        $this->assertEquals($data, $globalStyleSets['default']);
+    }
+
+    /**
      * @param array $query
      *
      * @throws \Codeception\Exception\ModuleException

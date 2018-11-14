@@ -79,6 +79,8 @@ toolbox:
 
 namespace AppBundle\Services\ToolboxBundle;
 
+use Pimcore\Model\Document;
+use Symfony\Component\HttpFoundation\RequestStack;
 use ToolboxBundle\Resolver\ContextResolverInterface;
 use Pimcore\Http\Request\Resolver\DocumentResolver;
 use Pimcore\Http\Request\Resolver\EditmodeResolver;
@@ -86,45 +88,85 @@ use Pimcore\Http\Request\Resolver\SiteResolver;
 use Pimcore\Model\Site;
 use Pimcore\Tool;
 
-class ContextResolver implements ContextResolverInterface
+class ToolboxContextResolver implements ContextResolverInterface
 {
+    /**
+     * @var SiteResolver
+     */
     protected $siteResolver;
 
-    private $editmodeResolver;
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
 
+    /**
+     * @var EditmodeResolver
+     */
+    private $editModeResolver;
+
+    /**
+     * @var DocumentResolver
+     */
     private $documentResolver;
 
+    /**
+     * ToolboxContextResolver constructor.
+     *
+     * @param RequestStack     $requestStack
+     * @param SiteResolver     $siteResolver
+     * @param EditmodeResolver $editModeResolver
+     * @param DocumentResolver $documentResolver
+     */
     public function __construct(
+        RequestStack $requestStack,
         SiteResolver $siteResolver,
-        EditmodeResolver $editmodeResolver,
+        EditmodeResolver $editModeResolver,
         DocumentResolver $documentResolver
     ) {
+        $this->requestStack = $requestStack;
         $this->siteResolver = $siteResolver;
-        $this->editmodeResolver = $editmodeResolver;
+        $this->editModeResolver = $editModeResolver;
         $this->documentResolver = $documentResolver;
     }
 
     public function getCurrentContextIdentifier()
     {
+        $request = $this->requestStack->getMasterRequest();
+
         $site = null;
-        //if request is not in editmode we can determinate site by site resolver
-        if (!$this->editmodeResolver->isEditmode()) {
-            if ($this->siteResolver->isSiteRequest()) {
-                $site = $this->siteResolver->getSite();
+
+        //if request is coming from a ckeditor configuration request (/admin/*.js)
+        if ($request->query->has('tb_document_request_id')) {
+            try {
+                $currentDocument = Document::getById($request->query->get('tb_document_request_id'));
+            } catch (\Exception $e) {
+                $currentDocument = null;
             }
-        // in backend we don't have any site request, we need to fetch it via document
+
+            if ($currentDocument instanceof Document) {
+                $site = Tool\Frontend::getSiteForDocument($currentDocument);
+            }
         } else {
-            $currentDocument = $this->documentResolver->getDocument();
-            $site = Tool\Frontend::getSiteForDocument($currentDocument);
+            //if request is not in editmode we can determinate site by site resolver
+            if (!$this->editModeResolver->isEditmode($request)) {
+                if ($this->siteResolver->isSiteRequest($request)) {
+                    $site = $this->siteResolver->getSite($request);
+                }
+                // in backend we don't have any site request, we need to fetch it via document
+            } else {
+                $currentDocument = $this->documentResolver->getDocument();
+                $site = Tool\Frontend::getSiteForDocument($currentDocument);
+            }
         }
 
         if (!$site instanceof Site) {
             return null;
         }
 
-        if ($site->getId() === 1) {
+        if ($site->getRootId() === 1) {
             return 'portal';
-        } elseif ($site->getId() === 2) {
+        } elseif ($site->getRootId() === 2) {
             return 'app';
         }
 
