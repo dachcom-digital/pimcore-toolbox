@@ -6,6 +6,9 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.6.3 to Version 2.6.4
+- **[NEW FEATURE]**: GoogleMaps-Areabrick now supports Server API Key (systemconfig)
+
 #### Update from Version 2.6.2 to Version 2.6.3
 - **[NEW FEATURE]**: Pimcore 5.5.0 ready.
 - **[VIEW CHANGES]**: Instead of `/admin/toolbox-ckeditor-style.js` you need to add the `toolbox_get_ckeditor_config_path()` twig helper method.
