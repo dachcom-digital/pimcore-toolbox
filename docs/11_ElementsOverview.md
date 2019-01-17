@@ -220,6 +220,7 @@ toolbox:
                 map_style_url: false
                 marker_icon: false
                 map_api_key: false
+                simple_api_key: false
 ```
 ### jQuery Plugin
 There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
