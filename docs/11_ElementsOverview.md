@@ -203,7 +203,8 @@ Please make sure that you've included a valid google maps api key. Include the s
 | `map_options` | array | Map Zoom | [] |
 | `map_style_url` | string | Define a custom map style (path to json) | false |
 | `marker_icon` | string | Define a custom marker_icon (path to icon) | false |
-| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! | `'%pimcore_system_config.services.google.browserapikey%'` |
+| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! This key is used by frontend-api-requests | `'%pimcore_system_config.services.google.browserapikey%'` |
+| `simple_api_key` | string | Set a custom simple api key. To extend the daily request to 2.500 per day. This parameter tries to load the server api key from the system settings! This key is used by backend-api-requests | `'%pimcore_system_config.services.google.simpleapikey%'` |
 
 **Example**  
 ```yaml

@@ -31,6 +31,9 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === false) {
             $container->setParameter('pimcore_system_config.services.google.browserapikey', null);
         }
+        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey') === false) {
+            $container->setParameter('pimcore_system_config.services.google.simpleapikey', null);
+        }
 
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
