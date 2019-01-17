@@ -64,7 +64,6 @@ class GoogleMap extends Document\Tag
         $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {
-
             $mapOptions = $configNode['map_options'];
             $mapStyleUrl = $configNode['map_style_url'];
             $markerIcon = $configNode['marker_icon'];
@@ -210,7 +209,12 @@ class GoogleMap extends Document\Tag
         $address = urlencode($address);
 
         $key = '';
-        if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+        // first try to get server-api-key
+        if (!empty($configNode) && isset($configNode['simple_api_key']) && !empty($configNode['simple_api_key'])) {
+            $key = '&key=' . $configNode['simple_api_key'];
+        }
+        // if not set, get browser-api-key
+        if ($key === '' && !empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
             $key = '&key=' . $configNode['map_api_key'];
         }
 

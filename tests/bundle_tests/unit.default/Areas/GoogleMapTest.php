@@ -35,15 +35,16 @@ class GoogleMapTest extends AbstractAreaTest
         $configParam = $this->getToolboxConfig()->getAreaParameterConfig('googleMap');
         $this->assertEquals(
             [
-                'map_options'   => [
+                'map_options'    => [
                     'streetViewControl' => true,
                     'mapTypeControl'    => false,
                     'panControl'        => false,
                     'scrollwheel'       => false
                 ],
-                'map_style_url' => false,
-                'marker_icon'   => false,
-                'map_api_key'   => '',
+                'map_style_url'  => false,
+                'marker_icon'    => false,
+                'map_api_key'    => '',
+                'simple_api_key' => ''
             ],
             $configParam
         );
