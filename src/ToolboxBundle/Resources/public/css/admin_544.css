@@ -1,0 +1,11 @@
+/**
+##
+##      ---------------------------------------
+##      ONLY TOOLBOX INTERNAL STUFF FOR PIMCORE >= 5.4.4
+##      ---------------------------------------
+##
+**/
+
+.pimcore_area_buttons.top {
+    top: 15px !important;
+}

@@ -17,24 +17,33 @@ env:
     - SYMFONY_DEPRECATIONS_HELPER=weak
 matrix:
     include:
+    # pimcore 5.4.x
     -   sudo: required
         php: 7.1
         env:
-        # pimcore 5.4.x
         - PIMCORE_SKELETON_BRANCH="tags/v1.0.4"
     -   sudo: required
         php: 7.2
         env:
         - PIMCORE_SKELETON_BRANCH="tags/v1.0.4"
+    # pimcore 5.5.x
     -   sudo: required
         php: 7.1
         env:
-        # pimcore 5.5.x
         - PIMCORE_SKELETON_BRANCH="tags/v1.0.5"
     -   sudo: required
         php: 7.2
         env:
         - PIMCORE_SKELETON_BRANCH="tags/v1.0.5"
+    # pimcore 5.6.x
+    -   sudo: required
+        php: 7.1
+        env:
+        - PIMCORE_SKELETON_BRANCH="tags/v1.1.0"
+    -   sudo: required
+        php: 7.2
+        env:
+        - PIMCORE_SKELETON_BRANCH="tags/v1.1.0"
     fast_finish: true
 
 cache:
