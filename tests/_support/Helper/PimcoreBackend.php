@@ -20,6 +20,35 @@ class PimcoreBackend extends Module
     }
 
     /**
+     * Actor Function to create a Page Document
+     *
+     * @param string      $documentKey
+     * @param null|string $action
+     * @param null|string $controller
+     * @param null|string $locale
+     *
+     * @return Document\Page
+     */
+    public function haveAPageDocument(
+        $documentKey = 'toolbox-test',
+        $action = null,
+        $controller = null,
+        $locale = 'en'
+    ) {
+        $document = $this->generatePageDocument($documentKey, $action, $controller, $locale);
+
+        try {
+            $document->save();
+        } catch (\Exception $e) {
+            \Codeception\Util\Debug::debug(sprintf('[TOOLBOX ERROR] error while saving document page. message was: ' . $e->getMessage()));
+        }
+
+        $this->assertInstanceOf(Document\Page::class, Document\Page::getById($document->getId()));
+
+        return $document;
+    }
+
+    /**
      * Actor Function to create a Snippet
      *
      * @param       $snippetName
@@ -29,6 +58,49 @@ class PimcoreBackend extends Module
     public function haveASnippet($snippetName, $elements = [])
     {
         $this->createSnippet($snippetName, $elements);
+    }
+
+    /**
+     * Actor Function to place a toolbox area on a document
+     *
+     * @param Document\Page $document
+     */
+    public function seeAToolboxAreaElementPlacedOnDocument(Document\Page $document)
+    {
+        $areaElement = $this->createToolboxArea();
+        $document->setElements($areaElement);
+
+        try {
+            $document->save();
+        } catch (\Exception $e) {
+            \Codeception\Util\Debug::debug(sprintf('[TOOLBOX ERROR] error while saving document. message was: ' . $e->getMessage()));
+        }
+
+        $this->assertCount(count($areaElement), $document->getElements());
+    }
+
+    /**
+     * API Function to create a page document
+     *
+     * @param string      $key
+     * @param null|string $action
+     * @param null|string $controller
+     * @param string      $locale
+     *
+     * @return Document\Page
+     */
+    protected function generatePageDocument($key = 'toolbox-test', $action = null, $controller = null, $locale = 'en')
+    {
+        $action = is_null($action) ? 'default' : $action;
+        $controller = is_null($controller) ? '@AppBundle\Controller\DefaultController' : $controller;
+
+        $document = TestHelper::createEmptyDocumentPage('', false);
+        $document->setController($controller);
+        $document->setAction($action);
+        $document->setKey($key);
+        $document->setProperty('language', 'text', $locale, false, 1);
+
+        return $document;
     }
 
     /**
@@ -63,5 +135,39 @@ class PimcoreBackend extends Module
 
         return $document;
 
+    }
+
+    /**
+     * API Function to create a toolbox area element.
+     *
+     * @return array
+     */
+    protected function createToolboxArea()
+    {
+        $blockArea = new Document\Tag\Areablock();
+        $blockArea->setName('dachcomBundleTest');
+        $headlineType = new Document\Tag\Select();
+        $headlineType->setDataFromResource('h6');
+        $headlineType->setName('dachcomBundleTest:1.headline_type');
+
+        $headlineText = new Document\Tag\Input();
+        $headlineText->setDataFromResource('this is a headline');
+        $headlineText->setName('dachcomBundleTest:1.headline_text');
+
+        $blockArea->setDataFromEditmode([
+            [
+                'key'    => '1',
+                'type'   => 'headline',
+                'hidden' => false
+            ]
+        ]);
+
+        $data = [
+            'dachcomBundleTest'                 => $blockArea,
+            'dachcomBundleTest.1.headline_type' => $headlineType,
+            'dachcomBundleTest.1.headline_text' => $headlineText
+        ];
+
+        return $data;
     }
 }
