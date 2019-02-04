@@ -267,6 +267,7 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->integerNode('grid_size')->min(0)->defaultValue(12)->end()
                                 ->arrayNode('breakpoints')
+                                    ->performNoDeepMerging()
                                     ->prototype('array')
                                         ->children()
                                             ->scalarNode('identifier')->isRequired()->end()

@@ -51,6 +51,16 @@ toolbox:
         context_c:
             settings:
                 merge_with_root: false
+            theme:
+                grid:
+                    grid_size: 8
+                    breakpoints:
+                        -   identifier: 'xs-c'
+                            name: 'Breakpoint: XS for Context C'
+                            description: 'Your Description'
+                        -   identifier: 'lg-c'
+                            name: 'Breakpoint: LG for Context C'
+                            description: 'Your Description'
             areas:
                 content:
                     config_elements:

@@ -6,6 +6,10 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button to finish the bundle update.
 
+#### Update from Version 2.6.4 to Version 2.6.5
+- **[NEW FEATURE]**: Allow Column Adjuster Context-based Configuration
+- **[NEW FEATURE]**: Pimcore 5.6.0 ready.
+
 #### Update from Version 2.6.3 to Version 2.6.4
 - **[NEW FEATURE]**: GoogleMaps-Areabrick now supports Server API Key (systemconfig)
 
@@ -17,7 +21,6 @@ Just click the "update" button to finish the bundle update.
   - Changed View: `views/Toolbox/Bootstrap4/Content/view.html.twig`
 - **[NEW FEATURE]**: CK-Editor is Context Ready. You can now use different CK-Editor configurations per context. Checkout the [context docs](docs/15_Context.md) to checkout the updated context resolver.
 - ([Milestone for 2.6.3](https://github.com/dachcom-digital/pimcore-toolbox/milestone/11?closed=1))
-
 
 #### Update from Version 2.6.1 to Version 2.6.2
 - implemented [PackageVersionTrait](https://github.com/pimcore/pimcore/blob/master/lib/Extension/Bundle/Traits/PackageVersionTrait.php)

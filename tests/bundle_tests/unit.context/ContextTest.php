@@ -140,6 +140,27 @@ class ContextTest extends DachcomBundleTestCase
     }
 
     /**
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function testThemeGridOnContextConfiguration()
+    {
+        $this->setupRequest(['mock_toolbox_context' => 'context_c']);
+
+        /** @var ConfigManagerInterface $configManager */
+        $configManager = $this->getContainer()->get(ConfigManager::class);
+        $themeSettings = $configManager->getConfig('theme');
+
+        $this->assertArrayHasKey('grid', $themeSettings);
+        $this->assertArrayHasKey('grid_size', $themeSettings['grid']);
+        $this->assertArrayHasKey('breakpoints', $themeSettings['grid']);
+
+        $this->assertEquals(8, $themeSettings['grid']['grid_size']);
+        $this->assertCount(2, $themeSettings['grid']['breakpoints']);
+
+    }
+
+
+    /**
      * @param array $query
      *
      * @throws \Codeception\Exception\ModuleException

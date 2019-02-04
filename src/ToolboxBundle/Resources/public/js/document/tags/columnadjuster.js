@@ -35,6 +35,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
         this.breakPoints = [];
 
         this.gridAmount = 0;
+        this.gridSize = 0;
 
         this.setupWrapper();
 
@@ -85,9 +86,9 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
             }
         });
 
-        var checkInitState = function() {
+        var checkInitState = function () {
             //there is only 1 column: we don't need a column adjuster...
-            if(this.currentColumnSelection.split('_').length === 2) {
+            if (this.currentColumnSelection.split('_').length === 2) {
                 this.data = false;
                 this.gridEditButton.setDisabled(true);
                 this.statusButton.setValue(false);
@@ -109,7 +110,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
         this.toolbar = new Ext.form.FormPanel({
             layout: 'fit',
-            tbar : [this.statusButton, '->', this.gridEditButton]
+            tbar: [this.statusButton, '->', this.gridEditButton]
         });
 
         this.gridForm = new Ext.FormPanel({
@@ -127,7 +128,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
     expandEditor: function () {
 
-        if(this.gridEditorActive === true) {
+        if (this.gridEditorActive === true) {
             return;
         }
 
@@ -166,7 +167,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
     closeEditor: function () {
 
-        if(this.gridEditorActive === false) {
+        if (this.gridEditorActive === false) {
             return;
         }
 
@@ -205,22 +206,28 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
      * @returns {null|Ext.FormPanel}
      */
     populateGridForm: function () {
-        var _ = this;
-        var tabPanel = new Ext.TabPanel({
-            title: t('grid_configuration_for') + ' "' + this.currentColumnSelectionName + '"',
-            closable: false,
-            layout: 'fit',
-            activeTab: 0,
-            border: false
-        });
+        var _ = this,
+            currentDocumentId = null,
+            tabPanel = new Ext.TabPanel({
+                title: t('grid_configuration_for') + ' "' + this.currentColumnSelectionName + '"',
+                closable: false,
+                layout: 'fit',
+                activeTab: 0,
+                border: false
+            });
 
         this.gridForm.add(tabPanel);
+
+        if (typeof pimcore_document_id !== 'undefined') {
+            currentDocumentId = pimcore_document_id;
+        }
 
         Ext.Ajax.request({
             url: '/admin/toolbox-get-column-info',
             params: {
                 currentColumn: this.currentColumnSelection,
-                customColumnConfiguration: Ext.encode(this.data)
+                customColumnConfiguration: Ext.encode(this.data),
+                tb_document_request_id: currentDocumentId
             },
             success: function (response) {
 
@@ -235,6 +242,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
 
                 //Set global breakpoints!
                 _.breakPoints = res.breakPoints;
+                _.gridSize = res.gridSize;
 
                 //Map breakpoint data with current one!
                 _.mergeCustomGridValue();
@@ -248,7 +256,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                         return false;
                     }
 
-                    if(breakpointIndex === 0) {
+                    if (breakpointIndex === 0) {
                         _.gridAmount = breakpoint.grid.length;
                     }
 
@@ -416,7 +424,12 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                             })
                         });
 
-                        return new Ext.XTemplate("<div class='grid-preview'><div class='grid-pre-row'>{value}</div></div>").apply({value: gridHtml});
+                        return new Ext.XTemplate("<div class='grid-preview grid-size-{gridSize}'><div class='grid-pre-row'>{value}</div></div>").apply(
+                            {
+                                value: gridHtml,
+                                gridSize: _.gridSize
+                            }
+                        );
                     };
 
                     _.gridPreview[breakpoint.identifier] = new Ext.form.Panel({
@@ -435,7 +448,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                     tabPanel.add(tab);
                 });
 
-                if(validResponse === true) {
+                if (validResponse === true) {
                     tabPanel.setActiveTab(0);
                     _.toolbar.updateLayout();
                     _.gridForm.updateLayout();
@@ -545,7 +558,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                     return offset + a.value;
                 });
 
-                if(elements.length !== _.gridAmount) {
+                if (elements.length !== _.gridAmount) {
                     validData = false;
                     return false;
                 }
@@ -554,7 +567,7 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
             }
         });
 
-        if(validData === false) {
+        if (validData === false) {
             _.adjustmentFailed = true;
             _.cancelAdjustment('there was a error while recalculating the custom grid configuration.', 250);
             return;
@@ -663,11 +676,11 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
      * @param message
      * @param startDelayed
      */
-    cancelAdjustment: function(message, startDelayed) {
+    cancelAdjustment: function (message, startDelayed) {
         this.statusButton.setValue(false);
         this.adjustmentFailed = false;
         this.data = false;
-        setTimeout(function() {
+        setTimeout(function () {
             this.closeEditor();
             Ext.MessageBox.alert(t('error'), t('invalid_column_configuration') + ' "' + message + '"');
         }.bind(this), startDelayed ? startDelayed : 0);

@@ -98,51 +98,51 @@
     display: none;
 }
 
-.grid-preview .grid-pre-row .pre-col-1 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-1 {
     width: 8.333333333333333%;
 }
 
-.grid-preview .grid-pre-row .pre-col-2 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-2 {
     width: 16.6666666667%;
 }
 
-.grid-preview .grid-pre-row .pre-col-3 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-3 {
     width: 25%;
 }
 
-.grid-preview .grid-pre-row .pre-col-4 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-4 {
     width: 33.3333333333%;
 }
 
-.grid-preview .grid-pre-row .pre-col-5 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-5 {
     width: 41.6666666667%;
 }
 
-.grid-preview .grid-pre-row .pre-col-6 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-6 {
     width: 50%;
 }
 
-.grid-preview .grid-pre-row .pre-col-7 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-7 {
     width: 58.3333333333%;
 }
 
-.grid-preview .grid-pre-row .pre-col-8 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-8 {
     width: 66.6666666667%;
 }
 
-.grid-preview .grid-pre-row .pre-col-9 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-9 {
     width: 75%;
 }
 
-.grid-preview .grid-pre-row .pre-col-10 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-10 {
     width: 83.3333333333%;
 }
 
-.grid-preview .grid-pre-row .pre-col-11 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-11 {
     width: 91.6666666667%;
 }
 
-.grid-preview .grid-pre-row .pre-col-12 {
+.grid-preview.grid-size-12 .grid-pre-row .pre-col-12 {
     width: 100%;
 }
 

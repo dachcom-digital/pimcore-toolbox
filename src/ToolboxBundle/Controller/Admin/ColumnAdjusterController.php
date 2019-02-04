@@ -49,9 +49,10 @@ class ColumnAdjusterController extends Controller\AdminController
         }
 
         $theme = $this->configManager->getConfig('theme');
+        $gridSize = isset($theme['grid']) && isset($theme['grid']['grid_size']) ? $theme['grid']['grid_size'] : null;
         $columnCalculator = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator']);
         $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $customColumnConfiguration);
 
-        return $this->json(['breakPoints' => $breakPointConfiguration]);
+        return $this->json(['breakPoints' => $breakPointConfiguration, 'gridSize' => $gridSize]);
     }
 }
