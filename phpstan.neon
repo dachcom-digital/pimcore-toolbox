@@ -6,9 +6,6 @@ parameters:
         - %currentWorkingDirectory%/vendor/pimcore/pimcore/stubs/compatibility-v4.php
     symfony:
         container_xml_path: var/cache/dev/appDevDebugProjectContainer.xml
-    excludes_analyse:
-        # @fixme:
-        - '**/ToolboxBundle/Model/Document/Tag/ParallaxImage.php'
     ignoreErrors:
         # There is no global constants definition file we could include, ignore it:
         - '#Constant PIMCORE_[A-Z\\_]+ not found\.#'
