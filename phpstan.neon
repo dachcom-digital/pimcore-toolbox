@@ -14,7 +14,9 @@ parameters:
         - '#Constant PIMCORE_[A-Z\\_]+ not found\.#'
         # Symfony DI (remove this line with symfony 4.2):
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
-        # Bundle Dependencies:
+        # Bundle dependency calls we need to ignore:
         - '#Class MembersBundle\\Manager\\RestrictionManager not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionUri not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionQuery not found\.#'
+        - '#Access to constant PROTECTED_ASSET_FOLDER(.*)\.#'
+        - '#Access to constant RESTRICTION_SECTION_ALLOWED(.*)\.#'
