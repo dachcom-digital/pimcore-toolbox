@@ -44,7 +44,7 @@ git checkout ${PIMCORE_SKELETON_BRANCH} $DACHCOM_BUNDLE_HOME
 mv $DACHCOM_BUNDLE_HOME/../lib $DACHCOM_BUNDLE_HOME
 
 
-## copy etc dir to root dir
+## copy _etc dir to root dir
 
 cp -r $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/_etc/bundle_configuration $DACHCOM_BUNDLE_HOME/bundle_configuration
 cp -r $DACHCOM_BUNDLE_HOME/lib/$DACHCOM_BUNDLE_NAME/tests/_etc $DACHCOM_BUNDLE_HOME/_etc
@@ -65,10 +65,18 @@ done
 
 COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts
 
+COMPOSER_MEMORY_LIMIT=-1 composer require phpstan/phpstan:^0.11.1 phpstan/phpstan-symfony:^0.11.0 --no-scripts
+
 ##  install $DACHCOM_BUNDLE_NAME dependencies
+BRANCH_REGEX="^(([[:digit:]]+\.)+[[:digit:]]+)$"
 
-COMPOSER_MEMORY_LIMIT=-1 composer require symfony/phpunit-bridge:^3 dachcom-digital/$DACHCOM_BUNDLE_REPO_NAME:dev-$DACHCOM_BUNDLE_BRANCH#$DACHCOM_BUNDLE_COMMIT
-
+if [[ ${TRAVIS_BRANCH} =~ $BRANCH_REGEX ]]; then
+    echo "composer require dachcom-digital/${DACHCOM_BUNDLE_REPO_NAME}:${TRAVIS_BRANCH}"
+    COMPOSER_MEMORY_LIMIT=-1 composer require dachcom-digital/${DACHCOM_BUNDLE_REPO_NAME}:${TRAVIS_BRANCH}
+else
+    echo "composer require dachcom-digital/${DACHCOM_BUNDLE_REPO_NAME}:dev-${TRAVIS_BRANCH}"
+    COMPOSER_MEMORY_LIMIT=-1 composer require "dachcom-digital/${DACHCOM_BUNDLE_REPO_NAME}:dev-${TRAVIS_BRANCH}#${TRAVIS_COMMIT}"
+fi
 
 ##  clear cache
 
