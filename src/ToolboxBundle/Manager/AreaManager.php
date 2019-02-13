@@ -125,10 +125,7 @@ class AreaManager implements AreaManagerInterface
         //sort area elements by key => area name
         ksort($areaElements);
 
-        /* get system bricks first
-         *
-         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick
-         **/
+        /** @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (!$this->brickManager->isEnabled($areaElementName)) {
                 unset($areaElements[$areaElementName]);
@@ -276,10 +273,7 @@ class AreaManager implements AreaManagerInterface
         $areaElements = $this->getActiveBricks(false);
         $toolboxBricks = [];
 
-        /**
-         * @var string
-         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData
-         */
+        /** @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (substr($areaElementData->getDescription(), 0, 7) === 'Toolbox') {
                 $toolboxBricks[$areaElementName] = $areaElementData;
