@@ -125,7 +125,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 'name'        => $columnName
             ];
 
-            ++$columnCounter;
+            $columnCounter++;
             $bootstrapOffsetConfig = [];
             $gridOffsetConfig = [];
         }
