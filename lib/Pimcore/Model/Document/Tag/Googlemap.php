@@ -3,8 +3,7 @@
 namespace Pimcore\Model\Document\Tag;
 
 use Pimcore\Model;
-use Pimcore\Tool;
-use Pimcore\Model\Asset;
+use Pimcore\Config as PimcoreConfig;
 use Pimcore\Model\Document;
 use Toolbox\Config;
 
@@ -12,12 +11,14 @@ class Googlemap extends Model\Document\Tag
 {
     /**
      * Contains the data
+     *
      * @var array
      */
     public $data;
 
     /**
      * Return the type of the element
+     *
      * @return string
      */
     public function getType()
@@ -36,28 +37,29 @@ class Googlemap extends Model\Document\Tag
 
     /**
      * Return the data for direct output to the frontend, can also contain HTML code!
+     *
      * @return string
      */
     public function frontend()
     {
-        $dataAttr = [];
-        $dataAttr['data-locations'] = json_encode($this->data);
+        $dataAttr                                  = [];
+        $dataAttr['data-locations']                = json_encode($this->data);
         $dataAttr['data-show-info-window-on-load'] = $this->options['iwOnInit'];
 
-        $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
+        $dataAttr['data-mapoption-zoom']        = $this->options['mapZoom'];
         $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
 
         $configNode = Config::getConfig()->googleMap;
 
         if (!empty($configNode)) {
 
-            $mapOptions = $configNode->mapOptions->toArray();
+            $mapOptions  = $configNode->mapOptions->toArray();
             $mapStyleUrl = $configNode->mapStyleUrl;
-            $markerIcon = $configNode->markerIcon;
+            $markerIcon  = $configNode->markerIcon;
 
             if (is_array($mapOptions) && count($mapOptions) > 0) {
                 foreach ($mapOptions as $name => $value) {
-                    $value = is_bool($value) ? ($value === TRUE ? 'true' : 'false') : (string)$value;
+                    $value = is_bool($value) ? ($value === true ? 'true' : 'false') : (string)$value;
 
                     // convert camelCase to camel-case, because we will read these property with $el.data(), which converts them back to camelCase
                     $name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '-\\1', $name));
@@ -132,7 +134,8 @@ class Googlemap extends Model\Document\Tag
      *
      * @param mixed $data
      *
-     * @return void
+     * @return self
+     * @throws \Zend_Exception
      */
     public function setDataFromEditmode($data)
     {
@@ -166,14 +169,21 @@ class Googlemap extends Model\Document\Tag
      * @param $location
      *
      * @return mixed
+     * @throws \Zend_Exception
      */
     protected function geocodeLocation($location)
     {
-
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
         $address = urlencode($address);
 
-        $url = "http://maps.google.com/maps/api/geocode/json?address=" . $address;
+        $coreConfig = PimcoreConfig::getSystemConfig();
+        $browserAPIKey = $coreConfig->services->google->browserapikey;
+
+        $url = "https://maps.google.com/maps/api/geocode/json?address=" . $address;
+
+        if (!empty($browserAPIKey)) {
+            $url .= '&key=' . $browserAPIKey;
+        }
 
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -181,7 +191,7 @@ class Googlemap extends Model\Document\Tag
         $response = curl_exec($c);
         curl_close($c);
 
-        $result = json_decode($response, FALSE);
+        $result = json_decode($response, false);
 
         if ($result->status = 'OK') {
 
