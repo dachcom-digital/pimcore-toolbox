@@ -19,14 +19,14 @@ class GoogleMap extends Document\Tag
     private $mapId;
 
     /**
-     * Contains the data
+     * Contains the data.
      *
      * @var array
      */
     public $data;
 
     /**
-     * Return the type of the element
+     * Return the type of the element.
      *
      * @return string
      */
@@ -37,6 +37,7 @@ class GoogleMap extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::getData
+     *
      * @return mixed
      */
     public function getData()
@@ -48,6 +49,7 @@ class GoogleMap extends Document\Tag
      * Return the data for direct output to the frontend, can also contain HTML code!
      *
      * @return string
+     *
      * @throws \Exception
      */
     public function frontend()
@@ -70,7 +72,7 @@ class GoogleMap extends Document\Tag
 
             if (is_array($mapOptions) && count($mapOptions) > 0) {
                 foreach ($mapOptions as $name => $value) {
-                    $value = is_bool($value) ? ($value === true ? 'true' : 'false') : (string)$value;
+                    $value = is_bool($value) ? ($value === true ? 'true' : 'false') : (string) $value;
                     // convert camelCase to camel-case, because we will read these property with $el.data(), which converts them back to camelCase
                     $name = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '-\\1', $name));
                     $dataAttr['data-mapoption-' . $name] = $value;
@@ -105,7 +107,9 @@ class GoogleMap extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::admin
+     *
      * @return mixed|string
+     *
      * @throws \Exception
      */
     public function admin()
@@ -114,13 +118,13 @@ class GoogleMap extends Document\Tag
 
         // get frontendcode for preview
         // put the video code inside the generic code
-        $html = str_replace("</div>", $this->frontend() . "</div>", $html);
+        $html = str_replace('</div>', $this->frontend() . '</div>', $html);
 
         return $html;
     }
 
     /**
-     * Receives the data from the resource, an convert to the internal data in the object eg. image-id to Asset\Image
+     * Receives the data from the resource, an convert to the internal data in the object eg. image-id to Asset\Image.
      *
      * @param mixed $data
      *
@@ -132,6 +136,7 @@ class GoogleMap extends Document\Tag
         if (!is_array($this->data)) {
             $this->data = [];
         }
+
         return $this;
     }
 
@@ -141,6 +146,7 @@ class GoogleMap extends Document\Tag
      * @param mixed $data
      *
      * @return $this
+     *
      * @throws \Exception
      */
     public function setDataFromEditmode($data)
@@ -156,6 +162,7 @@ class GoogleMap extends Document\Tag
         }
 
         $this->data = $data;
+
         return $this;
     }
 
@@ -197,6 +204,7 @@ class GoogleMap extends Document\Tag
      * @param array $location
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function geocodeLocation($location)

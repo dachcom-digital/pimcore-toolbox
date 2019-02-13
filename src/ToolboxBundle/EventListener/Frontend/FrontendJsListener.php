@@ -102,6 +102,7 @@ class FrontendJsListener
     /**
      * @param string $template
      * @param array  $data
+     *
      * @return string
      */
     private function renderTemplate(string $template, array $data): string

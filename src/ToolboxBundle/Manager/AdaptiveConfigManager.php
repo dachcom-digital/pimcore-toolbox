@@ -10,7 +10,7 @@ class AdaptiveConfigManager extends ConfigManager implements AdaptiveConfigManag
     protected $adaptiveContextId = null;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setContextNameSpace($id)
     {

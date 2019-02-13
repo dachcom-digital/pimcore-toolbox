@@ -46,16 +46,22 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->arrayNode('settings')
                                 ->beforeNormalization()
-                                    ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['disabled_areas'])); })
+                                    ->ifTrue(function ($v) {
+                                        return $v['merge_with_root'] === false && (!empty($v['disabled_areas']));
+                                    })
                                     ->then(function ($v) {
                                         @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "disabled_areas"', E_USER_ERROR);
+
                                         return $v;
                                     })
                                 ->end()
                                 ->beforeNormalization()
-                                    ->ifTrue(function ($v) { return $v['merge_with_root'] === false && (!empty($v['enabled_areas'])); })
+                                    ->ifTrue(function ($v) {
+                                        return $v['merge_with_root'] === false && (!empty($v['enabled_areas']));
+                                    })
                                     ->then(function ($v) {
                                         @trigger_error('Toolbox context conflict: "merge_with_root" is disabled but there are defined elements in "enabled_areas"', E_USER_ERROR);
+
                                         return $v;
                                     })
                                 ->end()
@@ -74,7 +80,6 @@ class Configuration implements ConfigurationInterface
         $node->end()
             ->end()
         ->end();
-
     }
 
     /**
@@ -96,15 +101,18 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->arrayNode('areas')
                     ->validate()
-                        ->ifTrue(function ($v) { return count(array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES)) > 0; })
-                        ->then(function($v)  {
+                        ->ifTrue(function ($v) {
+                            return count(array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES)) > 0;
+                        })
+                        ->then(function ($v) {
                             $invalidTags = array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES);
+
                             throw new InvalidConfigurationException(sprintf(
                                 'Invalid elements in toolbox "area" configuration: %s. to add custom areas, use the "custom_area" node. allowed tags for "area" are: %s',
                                 implode(', ', $invalidTags),
                                 implode(', ', ToolboxConfig::TOOLBOX_TYPES)
-                                ));
-                            })
+                            ));
+                        })
                     ->end()
                     ->useAttributeAsKey('name')
                     ->prototype('array')
@@ -121,7 +129,9 @@ class Configuration implements ConfigurationInterface
                                         ->variableNode('config')->defaultValue([])->end()
                                     ->end()
                                     ->validate()
-                                        ->ifTrue(function($v) { return $v['enabled'] === false; })
+                                        ->ifTrue(function ($v) {
+                                            return $v['enabled'] === false;
+                                        })
                                         ->thenUnset()
                                     ->end()
                                     ->canBeUnset()
@@ -150,7 +160,9 @@ class Configuration implements ConfigurationInterface
                                         ->variableNode('config')->defaultValue([])->end()
                                     ->end()
                                     ->validate()
-                                        ->ifTrue(function($v) { return $v['enabled'] === false; })
+                                        ->ifTrue(function ($v) {
+                                            return $v['enabled'] === false;
+                                        })
                                         ->thenUnset()
                                     ->end()
                                     ->canBeUnset()
@@ -291,8 +303,12 @@ class Configuration implements ConfigurationInterface
                             ->prototype('array')
                             ->performNoDeepMerging()
                             ->beforeNormalization()
-                                ->ifTrue(function ($v) { return is_array($v) && !isset($v['wrapper_classes']); })
-                                ->then(function ($v) { return array('wrapper_classes' => $v); })
+                                ->ifTrue(function ($v) {
+                                    return is_array($v) && !isset($v['wrapper_classes']);
+                                })
+                                ->then(function ($v) {
+                                    return array('wrapper_classes' => $v);
+                                })
                             ->end()
                                 ->children()
                                     ->arrayNode('wrapper_classes')
@@ -312,8 +328,12 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                         ->prototype('array')
                         ->beforeNormalization()
-                            ->ifTrue(function ($v) { return is_array($v) && !isset($v['values']); })
-                            ->then(function ($v) { return array('values' => $v); })
+                            ->ifTrue(function ($v) {
+                                return is_array($v) && !isset($v['values']);
+                            })
+                            ->then(function ($v) {
+                                return array('values' => $v);
+                            })
                         ->end()
                         ->children()
                             ->variableNode('values')->end()

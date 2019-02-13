@@ -91,5 +91,4 @@ class CalculatorRegistry implements CalculatorRegistryInterface
 
         return $this->adapter[$type][$alias];
     }
-
 }

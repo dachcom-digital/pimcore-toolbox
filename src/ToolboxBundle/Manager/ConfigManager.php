@@ -69,6 +69,7 @@ class ConfigManager implements ConfigManagerInterface
     public function setAreaNameSpace($namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)
     {
         $this->areaNamespace = $namespace;
+
         return $this;
     }
 
@@ -76,26 +77,31 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $section
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getConfig($section)
     {
         $this->ensureCoreConfig();
+
         return $this->config[$section];
     }
 
     /**
      * @throws \Exception
+     *
      * @return bool
      */
     public function isContextConfig()
     {
         $this->ensureCoreConfig();
+
         return $this->currentContextId != null;
     }
 
     /**
      * @return false|array
+     *
      * @throws \Exception
      */
     public function getCurrentContextSettings()
@@ -113,12 +119,14 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $areaName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaConfig($areaName = '')
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName];
     }
 
@@ -127,12 +135,14 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $configElementName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaElementConfig($areaName = '', $configElementName = '')
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName]['config_elements'][$configElementName];
     }
 
@@ -140,12 +150,14 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $areaName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaParameterConfig($areaName = '')
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
+
         return $this->config[$this->areaNamespace][$areaName]['config_parameter'];
     }
 
@@ -153,11 +165,13 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $thumbnailName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getImageThumbnailFromConfig($thumbnailName = '')
     {
         $this->ensureCoreConfig();
+
         return $this->config['image_thumbnails'][$thumbnailName];
     }
 
@@ -170,7 +184,6 @@ class ConfigManager implements ConfigManagerInterface
     }
 
     /**
-     * @return void
      * @throws \Exception
      */
     private function ensureCoreConfig()
@@ -179,6 +192,7 @@ class ConfigManager implements ConfigManagerInterface
 
         if ($contextIdentifierId === false) {
             $this->contextResolved = true;
+
             return;
         }
 
@@ -194,7 +208,6 @@ class ConfigManager implements ConfigManagerInterface
         }
 
         $this->contextResolved = true;
-
     }
 
     /**
@@ -211,12 +224,14 @@ class ConfigManager implements ConfigManagerInterface
      * @param string $currentContextId
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function parseContextConfig($currentContextId)
     {
         if (!is_string($currentContextId) || !isset($this->config['context'][$currentContextId])) {
-            @trigger_error(sprintf('toolbox context conflict: context with identifier "%s" is not configured.',
+            @trigger_error(sprintf(
+                'toolbox context conflict: context with identifier "%s" is not configured.',
                 $currentContextId
             ), E_USER_ERROR);
         }
@@ -227,7 +242,6 @@ class ConfigManager implements ConfigManagerInterface
         unset($contextData['settings']);
 
         if ($contextSettings['merge_with_root'] === true) {
-
             $parsedData = $contextData;
 
             // enabled areas passes first!
@@ -244,7 +258,7 @@ class ConfigManager implements ConfigManagerInterface
                 $parsedData['areas'] = $filteredElements['areas'];
                 $parsedData['custom_areas'] = $filteredElements['custom_areas'];
 
-                // remove disabled areas for this context
+            // remove disabled areas for this context
             } elseif (!empty($contextSettings['disabled_areas'])) {
                 foreach ($contextSettings['disabled_areas'] as $areaId) {
                     if (isset($parsedData['areas'][$areaId])) {
@@ -260,5 +274,4 @@ class ConfigManager implements ConfigManagerInterface
 
         return ['config' => $parsedData, 'settings' => $contextSettings];
     }
-
 }

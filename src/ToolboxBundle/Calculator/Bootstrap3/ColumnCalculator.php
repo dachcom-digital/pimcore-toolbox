@@ -14,19 +14,23 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
     /**
      * @param ConfigManagerInterface $configManager
+     *
      * @return $this
      */
     public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
         $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
+
         return $this;
     }
 
     /**
      * @param string     $value
      * @param null|array $customColumnConfiguration
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function calculateColumns($value, $customColumnConfiguration = null)
@@ -60,10 +64,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
         $columnCounter = 0;
         foreach ($_columns as $i => $columnClass) {
-
             $gridConfig = $customColumnConfiguration ? [] : [
                 'xs' => $gridSize,
-                'sm' => (int)$columnClass
+                'sm' => (int) $columnClass
             ];
 
             $bootstrapClassConfig = $customColumnConfiguration ? [] : [
@@ -76,15 +79,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                 foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
-                    $customColAmount = isset($customBreakPointDataColumns[$i]) ? (int)$customBreakPointDataColumns[$i] : $gridSize;
+                    $customColAmount = isset($customBreakPointDataColumns[$i]) ? (int) $customBreakPointDataColumns[$i] : $gridSize;
                     $bootstrapClassConfig[$customBreakPointName] = 'col-' . $customBreakPointName . '-' . $customColAmount;
                     $gridConfig[$customBreakPointName] = $customColAmount;
                 }
             }
 
             if (substr($columnClass, 0, 1) === 'o') {
-
-                $offset = (int)substr($columnClass, 1);
+                $offset = (int) substr($columnClass, 1);
 
                 $gridOffsetConfig = $customColumnConfiguration ? [] : [
                     'sm' => $offset
@@ -101,7 +103,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                         $customBreakPointDataColumns = explode('_', $customBreakPointData);
                         $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : $gridSize;
                         if (substr($customColAmount, 0, 1) === 'o') {
-                            $customOffset = (int)substr($customColAmount, 1);
+                            $customOffset = (int) substr($customColAmount, 1);
                             $bootstrapOffsetConfig[$customBreakPointName] = 'col-' . $customBreakPointName . '-offset-' . $customOffset;
                             $gridOffsetConfig[$customBreakPointName] = $customOffset;
                         }
@@ -134,7 +136,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
     /**
      * @param string     $value
      * @param null|array $customColumnConfiguration
+     *
      * @return bool|mixed
+     *
      * @throws \Exception
      */
     public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null)
@@ -170,7 +174,6 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 }
 
                 $breakpointColumnData[] = $columnConfig;
-
             }
             $breakPoints[$index]['grid'] = $breakpointColumnData;
         }

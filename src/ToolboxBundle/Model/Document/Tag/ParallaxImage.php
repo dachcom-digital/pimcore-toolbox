@@ -11,7 +11,7 @@ use Pimcore\Model\DataObject;
 class ParallaxImage extends Model\Document\Tag\Multihref
 {
     /**
-     * Return the type of the element
+     * Return the type of the element.
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class ParallaxImage extends Model\Document\Tag\Multihref
     }
 
     /**
-     * Converts the data so it's suitable for the editmode
+     * Converts the data so it's suitable for the editmode.
      *
      * @return mixed
      */
@@ -100,6 +100,7 @@ class ParallaxImage extends Model\Document\Tag\Multihref
 
     /**
      * @see Document\Tag\TagInterface::frontend
+     *
      * @return string
      */
     public function frontend()

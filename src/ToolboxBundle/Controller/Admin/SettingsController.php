@@ -25,6 +25,7 @@ class SettingsController extends Controller\AdminController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function ckEditorAreaStyleAction()
@@ -45,6 +46,7 @@ class SettingsController extends Controller\AdminController
 
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function ckEditorObjectStyleAction()
@@ -59,6 +61,7 @@ class SettingsController extends Controller\AdminController
         $response->headers->set('Content-Type', 'application/javascript');
         $response->headers->set('Pragma', 'no-cache');
         $response->headers->set('Expires', '0');
+
         return $response;
     }
 
@@ -103,6 +106,7 @@ class SettingsController extends Controller\AdminController
     private function parseToolbarConfig($defaultConfig, $userConfig)
     {
         $config = array_replace_recursive($defaultConfig, $userConfig);
+
         return $config;
     }
 }

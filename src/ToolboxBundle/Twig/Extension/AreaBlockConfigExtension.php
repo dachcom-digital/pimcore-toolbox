@@ -45,13 +45,15 @@ class AreaBlockConfigExtension extends \Twig_Extension
     /**
      * @param array $context
      * @param null  $type
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function getAreaBlockConfiguration($context = [], $type = null)
     {
         $document = $context['document'];
+
         return $this->areaManager->getAreaBlockConfiguration($type, $document instanceof Snippet);
     }
-
 }

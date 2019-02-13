@@ -32,7 +32,9 @@ class AjaxController extends FrontendController
 
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
      * @throws \Exception
      */
     public function videoGetTypesAction(Request $request)
@@ -52,7 +54,7 @@ class AjaxController extends FrontendController
                         'value'  => $name,
                         'config' => [
                             'allow_lightbox' => $settings['allow_lightbox'],
-                            'id_label' => $settings['id_label']
+                            'id_label'       => $settings['id_label']
                         ]
                     ];
                 }
@@ -61,5 +63,4 @@ class AjaxController extends FrontendController
 
         return $this->json($allowedVideoTypes);
     }
-
 }

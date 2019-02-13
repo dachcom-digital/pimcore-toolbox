@@ -14,6 +14,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param Info $info
      *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -63,7 +64,6 @@ class ParallaxContainer extends AbstractAreabrick
             'frontElements'        => $frontElements,
             'sectionContent'       => $this->_buildSectionContent($info, $templating, $translator)
         ]);
-
     }
 
     /**
@@ -72,6 +72,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param TranslatorInterface $translator
      *
      * @return string
+     *
      * @throws \Exception
      */
     private function _buildSectionContent(Info $info, $templating, $translator)
@@ -85,7 +86,6 @@ class ParallaxContainer extends AbstractAreabrick
 
         $loopIndex = 1;
         while ($sectionBlock->loop()) {
-
             $sectionConfig = '';
 
             /** @var \Pimcore\Model\Document\Tag\Href $parallaxBackgroundElement */
@@ -109,7 +109,6 @@ class ParallaxContainer extends AbstractAreabrick
             }
 
             if ($info->getView()->get('editmode') === true) {
-
                 $configNode = $this->getConfigManager()->getAreaConfig('parallaxContainerSection');
                 $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info, $configNode);
 
@@ -152,6 +151,7 @@ class ParallaxContainer extends AbstractAreabrick
      * @param string $type
      *
      * @return string
+     *
      * @throws \Exception
      */
     private function getBackgroundTags($backgroundImage, $backgroundColor, $config = [], $type = 'parallax')
@@ -165,7 +165,7 @@ class ParallaxContainer extends AbstractAreabrick
         $styles = [];
         $data = [];
 
-        if ($backgroundImage instanceOf Asset\Image) {
+        if ($backgroundImage instanceof Asset\Image) {
             $image = $backgroundImage->getThumbnail($thumbnail);
             if ($backgroundImageMode === 'style') {
                 $styles['background-image'] = 'url(\'' . $image . '\')';

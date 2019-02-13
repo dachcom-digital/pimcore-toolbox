@@ -37,12 +37,18 @@ class AreaConfigurationCommand extends Command
         $this
             ->setName('toolbox:check-config')
             ->setDescription('Check configuration of a given area element.')
-            ->addOption('area', 'a',
+            ->addOption(
+                'area',
+                'a',
                 InputOption::VALUE_REQUIRED,
-                'Area Brick Id ("image" for example")')
-            ->addOption('context', 'c',
+                'Area Brick Id ("image" for example")'
+            )
+            ->addOption(
+                'context',
+                'c',
                 InputOption::VALUE_OPTIONAL,
-                'Context Name');
+                'Context Name'
+            );
     }
 
     /**
@@ -60,6 +66,7 @@ class AreaConfigurationCommand extends Command
 
         if (empty($brickId)) {
             $output->writeln('<error>Please provide a valid Area Brick Id.</error>');
+
             return;
         }
 
@@ -85,12 +92,14 @@ class AreaConfigurationCommand extends Command
                     $output->writeln(sprintf('<comment>Area Brick with Id "%s" is not enabled in "%s" context.</comment>', $brickId, $contextId));
                     $output->writeln('');
                 }
+
                 return;
             }
 
             $output->writeln('');
             $output->writeln(sprintf('<error>Area Brick with Id "%s" not found.</error>', $brickId));
             $output->writeln('');
+
             return;
         }
 
@@ -101,6 +110,7 @@ class AreaConfigurationCommand extends Command
             $output->writeln('');
             $output->writeln(sprintf('<comment>Area Brick with Id "%s" does not have any configuration elements.</comment>', $brickId));
             $output->writeln('');
+
             return;
         }
 
@@ -117,7 +127,6 @@ class AreaConfigurationCommand extends Command
         $c = 0;
 
         foreach ($configElements as $configName => $configData) {
-
             $elementConfigData = empty($configData['config']) ? '--' : $this->parseArrayForOutput($configData['config']);
             $conditionParameter = empty($configData['conditions']) ? '--' : $this->parseArrayForOutput($configData['conditions']);
 
@@ -148,7 +157,6 @@ class AreaConfigurationCommand extends Command
             ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements'])
             ->setRows($rows);
         $table->render();
-
     }
 
     /**
@@ -168,6 +176,7 @@ class AreaConfigurationCommand extends Command
 
             if (is_array($value)) {
                 $depth++;
+
                 return $this->parseArrayForOutput($value, $string, $depth);
             }
         }

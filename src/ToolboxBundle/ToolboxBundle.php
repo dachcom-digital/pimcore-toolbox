@@ -16,7 +16,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     const PACKAGE_NAME = 'dachcom-digital/toolbox';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function build(ContainerBuilder $container)
     {
@@ -85,11 +85,10 @@ class ToolboxBundle extends AbstractPimcoreBundle
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getComposerPackageName(): string
     {
         return self::PACKAGE_NAME;
     }
-
 }

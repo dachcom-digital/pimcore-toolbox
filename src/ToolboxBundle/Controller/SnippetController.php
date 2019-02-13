@@ -13,6 +13,7 @@ class SnippetController extends FrontendController
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Exception
      */
     public function teaserAction(Request $request)
@@ -40,11 +41,13 @@ class SnippetController extends FrontendController
         }
 
         return $this->renderTemplate(
-            '@Toolbox/Snippet/Layout/teaser-layout.html.twig', [
-            'useDynamicLinks'        => $flags['use_dynamic_links'],
-            'mapParams'              => $request->get('mapParams'),
-            'layoutStore'            => $layoutExtJsStore,
-            'additionalClassesStore' => $addClExtJsStore
-        ]);
+            '@Toolbox/Snippet/Layout/teaser-layout.html.twig',
+            [
+                'useDynamicLinks'        => $flags['use_dynamic_links'],
+                'mapParams'              => $request->get('mapParams'),
+                'layoutStore'            => $layoutExtJsStore,
+                'additionalClassesStore' => $addClExtJsStore
+            ]
+        );
     }
 }

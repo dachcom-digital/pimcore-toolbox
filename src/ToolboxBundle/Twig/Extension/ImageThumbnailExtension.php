@@ -33,7 +33,9 @@ class ImageThumbnailExtension extends \Twig_Extension
 
     /**
      * @param null $thumbnailName
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getImageThumbnail($thumbnailName = null)

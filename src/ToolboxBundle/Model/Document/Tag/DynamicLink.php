@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class DynamicLink extends Model\Document\Tag\Link
 {
     /**
-     * Return the type of the element
+     * Return the type of the element.
      *
      * @return string
      */
@@ -49,7 +49,6 @@ class DynamicLink extends Model\Document\Tag\Link
         );
 
         return $event->getArgument('objectFrontendUrl');
-
     }
 
     /**
@@ -79,12 +78,14 @@ class DynamicLink extends Model\Document\Tag\Link
 
     /**
      * @param mixed $data
+     *
      * @return $this
      */
     public function setDataFromEditmode($data)
     {
         if (strpos($data['path'], '::') === false) {
             parent::setDataFromEditmode($data);
+
             return $this;
         }
 

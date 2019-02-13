@@ -90,6 +90,7 @@ class BrickConfigBuilder
      * @param array  $themeOptions
      *
      * @return string
+     *
      * @throws \Exception
      */
     public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
@@ -111,6 +112,7 @@ class BrickConfigBuilder
      * @param array  $themeOptions
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function buildElementConfigArguments($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
@@ -157,7 +159,8 @@ class BrickConfigBuilder
      */
     private function getConfigWindowSize()
     {
-        $configWindowSize = isset($this->configParameter['window_size']) ? (string)$this->configParameter['window_size'] : null;
+        $configWindowSize = isset($this->configParameter['window_size']) ? (string) $this->configParameter['window_size'] : null;
+
         return !is_null($configWindowSize) ? $configWindowSize : 'small';
     }
 
@@ -188,7 +191,8 @@ class BrickConfigBuilder
      */
     private function canHaveDynamicWidth($type)
     {
-        return in_array($type,
+        return in_array(
+            $type,
             [
                 'multihref',
                 'href',
@@ -208,7 +212,8 @@ class BrickConfigBuilder
                 'parallaximage',
                 'additionalClasses',
                 'additionalClassesChained'
-            ]);
+            ]
+        );
     }
 
     /**
@@ -234,7 +239,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * Reset class for next element to build
+     * Reset class for next element to build.
      */
     private function reset()
     {
@@ -254,6 +259,7 @@ class BrickConfigBuilder
      * @param array  $additionalConfig
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getTagConfig($type, $config, $additionalConfig)
@@ -285,14 +291,12 @@ class BrickConfigBuilder
 
         //check store
         if ($this->needStore($type) && isset($parsedConfig['store']) && !is_null($parsedConfig['store'])) {
-
             if (empty($parsedConfig['store'])) {
                 throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
             }
 
             $store = [];
             foreach ($parsedConfig['store'] as $k => $v) {
-
                 if (is_array($v)) {
                     $v = $v['name'];
                 }
@@ -309,12 +313,13 @@ class BrickConfigBuilder
     }
 
     /**
-     * types: type, title, description, col_class, conditions
+     * types: type, title, description, col_class, conditions.
      *
      * @param string $configElementName
      * @param array  $rawConfig
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getAdditionalConfig($configElementName, $rawConfig)
@@ -381,6 +386,7 @@ class BrickConfigBuilder
      * @param array  $elConf
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function parseElementConfig($configElementName, $elConf)
@@ -388,11 +394,14 @@ class BrickConfigBuilder
         $elConf['additional_classes_element'] = false;
 
         if ($elConf['type'] === 'additionalClasses') {
-
             if ($this->hasAdditionalClassStore === true) {
                 throw new \Exception(
-                    sprintf('A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
-                        $this->documentEditableName, 'additionalClasses', 'additionalClassesChained')
+                    sprintf(
+                        'A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
+                        $this->documentEditableName,
+                        'additionalClasses',
+                        'additionalClassesChained'
+                    )
                 );
             }
 
@@ -402,18 +411,22 @@ class BrickConfigBuilder
             $elConf['additional_classes_element'] = true;
             $elementName = 'add_classes';
             $this->hasAdditionalClassStore = true;
-
         } elseif ($elConf['type'] === 'additionalClassesChained') {
-
             if ($this->hasAdditionalClassStore === false) {
                 throw new \Exception(
-                    sprintf('You need to add a element of type "%s" before adding a "%s" element.',
-                        'additionalClasses', 'additionalClassesChained')
+                    sprintf(
+                        'You need to add a element of type "%s" before adding a "%s" element.',
+                        'additionalClasses',
+                        'additionalClassesChained'
+                    )
                 );
             } elseif (substr($configElementName, 0, 25) !== 'additional_classes_chain_') {
                 throw new \Exception(
-                    sprintf('Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
-                        'additional_classes_chain_', $configElementName)
+                    sprintf(
+                        'Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
+                        'additional_classes_chain_',
+                        $configElementName
+                    )
                 );
             }
 
@@ -428,7 +441,6 @@ class BrickConfigBuilder
             $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] : 't-col-third';
             $elConf['additional_classes_element'] = true;
             $elementName = 'add_cclasses_' . $chainedIncrementor;
-
         } else {
             $elementName = $configElementName;
         }
@@ -454,6 +466,7 @@ class BrickConfigBuilder
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     private function parseConfigElements()
@@ -475,7 +488,6 @@ class BrickConfigBuilder
 
             $parsedConfig[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $parsedAdditionalConfig];
             $parsedConfig = $this->checkDependingSystemField($configElementName, $parsedConfig);
-
         }
 
         //condition needs to applied after all elements has been initialized!
@@ -483,7 +495,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns"
+     * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns".
      *
      * @param string $configElementName
      * @param array  $configFields
@@ -527,10 +539,10 @@ class BrickConfigBuilder
         }
 
         foreach ($configElements as $configElementName => $el) {
-
             //no conditions? add it!
             if (empty($el['additional_config']['conditions'])) {
                 $filteredData[] = $el;
+
                 continue;
             }
 

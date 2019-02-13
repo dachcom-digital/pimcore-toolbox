@@ -5,7 +5,7 @@ namespace ToolboxBundle\Resolver;
 class ContextResolver implements ContextResolverInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getCurrentContextIdentifier()
     {

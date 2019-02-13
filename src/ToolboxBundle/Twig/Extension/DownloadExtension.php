@@ -45,16 +45,20 @@ class DownloadExtension extends \Twig_Extension
     {
         return [
             new \Twig_Function('toolbox_download_info', [$this, 'getDownloadInfo']),
-            new \Twig_Function('toolbox_download_tracker',
-                [$this, 'getDownloadTracker'], ['is_safe' => ['html']]
+            new \Twig_Function(
+                'toolbox_download_tracker',
+                [$this, 'getDownloadTracker'],
+                ['is_safe' => ['html']]
             )
         ];
     }
 
     /**
      * @param string|array $areaType toolbox element or custom config
-     * @param null|object  $element related element to track
+     * @param null|object  $element  related element to track
+     *
      * @return string
+     *
      * @throws \Exception
      */
     public function getDownloadTracker($areaType, $element = null)
@@ -81,11 +85,10 @@ class DownloadExtension extends \Twig_Extension
             $val = $trackerInfo[$key];
 
             if (is_bool($val)) {
-                $val = (int)$val;
+                $val = (int) $val;
             }
 
             if ($key === 'label' && is_array($val)) {
-
                 $getter = $val;
                 $val = call_user_func_array([$element, $getter[0]], $getter[1]);
 
@@ -106,7 +109,9 @@ class DownloadExtension extends \Twig_Extension
      * @param string               $fileSizeUnit
      * @param int                  $fileSizePrecision
      * @param bool                 $showFileNameIfTitleEmpty
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function getDownloadInfo($download, $showPreviewImage = false, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = false)
@@ -172,7 +177,7 @@ class DownloadExtension extends \Twig_Extension
     }
 
     /**
-     * Get optimized file size
+     * Get optimized file size.
      *
      * @param int $bytes
      * @param int $precision

@@ -32,7 +32,6 @@ class DynamicLinkMigrationCommand extends Command
         $documentTagsToClear = [];
 
         foreach ($elements as $element) {
-
             $data = \Pimcore\Tool\Serialize::unserialize($element['data']);
             $newData = $data;
 
@@ -45,11 +44,9 @@ class DynamicLinkMigrationCommand extends Command
             $output->writeln(sprintf('<comment>check "%s" for document %s</comment>', $element['name'], $element['documentId']));
 
             if (strpos($data['path'], '::') !== false) {
-
                 $pathFragments = explode('::', $data['path']);
 
                 if (count($pathFragments) === 2) {
-
                     $oldPath = $pathFragments[1];
 
                     $target = Service::getElementByPath('object', $oldPath);
@@ -71,7 +68,6 @@ class DynamicLinkMigrationCommand extends Command
                     unset($newData['type']);
 
                     $output->writeln(sprintf('  -> <info>tranform dynamic path "%s" to "%s"</info>', $oldPath, $newData['path']));
-
                 }
             }
 

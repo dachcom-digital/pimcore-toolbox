@@ -13,6 +13,7 @@ class IFrame extends AbstractAreabrick
      * @param Info $info
      *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -36,7 +37,7 @@ class IFrame extends AbstractAreabrick
         $view->getParameters()->add([
             'isValid'       => $isValid,
             'errorMessage'  => $errorMessage,
-            'initialHeight' => is_numeric($initialHeight) ? (int)$initialHeight : null,
+            'initialHeight' => is_numeric($initialHeight) ? (int) $initialHeight : null,
             'iFrameUrl'     => $iFrameUrl
         ]);
     }

@@ -11,6 +11,7 @@ class Headline extends AbstractAreabrick
      * @param Info $info
      *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -26,7 +27,6 @@ class Headline extends AbstractAreabrick
         }
 
         $info->getView()->getParameters()->add(['anchorName' => $anchorName]);
-
     }
 
     public function getName()

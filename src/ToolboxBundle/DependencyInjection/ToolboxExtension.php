@@ -60,7 +60,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         foreach ($selfConfigs as $config) {
             if (isset($config['context'])) {
                 foreach ($config['context'] as $contextName => $contextConfig) {
-
                     if (!isset($contextMerge[$contextName]) || $contextMerge[$contextName] !== true) {
                         continue;
                     }
@@ -88,7 +87,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         $this->contextMergeData = $data;
-
     }
 
     /**
@@ -136,7 +134,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         //context resolver
         $definition = $container->getDefinition(ContextResolver::class);
         $definition->setClass($contextResolver);
-
     }
 
     /**
@@ -147,7 +144,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         foreach ($config['context'] as $contextId => $contextConfig) {
             //check if theme is same since it's not possible to merge different themes
             if ($contextConfig['settings']['merge_with_root'] === true && isset($contextConfig['theme']) && $contextConfig['theme']['layout'] !== $config['theme']['layout']) {
-                @trigger_error(sprintf('toolbox context conflict for "%s": merged context cannot have another theme than "%s", "%s" given.',
+                @trigger_error(sprintf(
+                    'toolbox context conflict for "%s": merged context cannot have another theme than "%s", "%s" given.',
                     $contextId,
                     $config['theme']['layout'],
                     $contextConfig['theme']['layout']

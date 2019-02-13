@@ -63,5 +63,4 @@ class BundleConnector
 
         return $hasExtension;
     }
-
 }

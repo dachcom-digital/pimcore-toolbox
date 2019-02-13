@@ -41,6 +41,7 @@ interface CalculatorRegistryInterface
      * @param string $type
      *
      * @throws \Exception
+     *
      * @return SlideColumnCalculatorInterface|ColumnCalculatorInterface
      */
     public function get($alias, $type);

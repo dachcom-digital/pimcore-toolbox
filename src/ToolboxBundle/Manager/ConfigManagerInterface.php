@@ -26,18 +26,21 @@ interface ConfigManagerInterface
      * @param string $section
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getConfig($section);
 
     /**
      * @throws \Exception
+     *
      * @return bool
      */
     public function isContextConfig();
 
     /**
      * @return false|array
+     *
      * @throws \Exception
      */
     public function getCurrentContextSettings();
@@ -46,6 +49,7 @@ interface ConfigManagerInterface
      * @param string $areaName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaConfig($areaName = '');
@@ -55,6 +59,7 @@ interface ConfigManagerInterface
      * @param string $configElementName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaElementConfig($areaName = '', $configElementName = '');
@@ -63,6 +68,7 @@ interface ConfigManagerInterface
      * @param string $areaName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getAreaParameterConfig($areaName = '');
@@ -71,6 +77,7 @@ interface ConfigManagerInterface
      * @param string $thumbnailName
      *
      * @return mixed
+     *
      * @throws \Exception
      */
     public function getImageThumbnailFromConfig($thumbnailName = '');

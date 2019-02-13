@@ -4,7 +4,6 @@ namespace ToolboxBundle\Document\Areabrick;
 
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Model\Document\Tag;
-
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManager;
@@ -30,7 +29,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * @var string
      */
-    var $areaBrickType = 'internal';
+    public $areaBrickType = 'internal';
 
     const AREABRICK_TYPE_INTERNAL = 'internal';
 
@@ -41,7 +40,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function setAreaBrickType($type = self::AREABRICK_TYPE_INTERNAL)
     {
-
         $this->areaBrickType = $type;
     }
 
@@ -50,7 +48,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
      */
     public function getAreaBrickType()
     {
-
         return $this->areaBrickType;
     }
 
@@ -150,14 +147,14 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
             if ($configElement['type'] === 'additionalClasses') {
                 $addClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_classes');
                 if ($addClassField instanceof Tag\Select && !empty($addClassField->getValue())) {
-                    $classesArray[] = (string)$addClassField->getValue();
+                    $classesArray[] = (string) $addClassField->getValue();
                 }
             } elseif ($configElement['type'] === 'additionalClassesChained') {
                 $chainedElementName = explode('_', $name);
                 $chainedIncrementor = end($chainedElementName);
                 $addChainedClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_cclasses_' . $chainedIncrementor);
                 if ($addChainedClassField instanceof Tag\Select && !empty($addChainedClassField->getValue())) {
-                    $classesArray[] = (string)$addChainedClassField->getValue();
+                    $classesArray[] = (string) $addChainedClassField->getValue();
                 }
             }
         }
@@ -167,9 +164,9 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 
     /**
      * Internal Areas: load from Bundle
-     * External Areas: defined in AppBundle with a view in /app/Resources/views/Areas/*
+     * External Areas: defined in AppBundle with a view in /app/Resources/views/Areas/*.
      *
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTemplateLocation()
     {
@@ -191,7 +188,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTemplateSuffix()
     {
@@ -199,7 +196,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getIcon()
     {
@@ -225,5 +222,4 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     {
         return '';
     }
-
 }

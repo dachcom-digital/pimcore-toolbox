@@ -9,7 +9,9 @@ class Separator extends AbstractAreabrick
 {
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
