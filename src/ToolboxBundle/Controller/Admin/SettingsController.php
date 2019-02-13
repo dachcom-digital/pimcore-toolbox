@@ -95,8 +95,8 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     * @param $defaultConfig
-     * @param $userConfig
+     * @param array $defaultConfig
+     * @param array $userConfig
      *
      * @return array
      */

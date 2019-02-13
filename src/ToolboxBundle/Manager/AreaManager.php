@@ -17,8 +17,6 @@ class AreaManager implements AreaManagerInterface
     var $brickManager;
 
     /**
-     * ElementBuilder constructor.
-     *
      * @param ConfigManagerInterface $configManager
      * @param AreabrickManager       $brickManager
      */
@@ -30,6 +28,7 @@ class AreaManager implements AreaManagerInterface
 
     /**
      * @param null $type
+     *
      * @return string
      */
     public function getAreaBlockName($type = null)
@@ -44,6 +43,7 @@ class AreaManager implements AreaManagerInterface
     /**
      * @param null $type
      * @param bool $fromSnippet
+     *
      * @return array
      * @throws \Exception
      */
@@ -112,6 +112,7 @@ class AreaManager implements AreaManagerInterface
 
     /**
      * @param bool $arrayKeys
+     *
      * @return array
      * @throws \Exception
      */
@@ -218,7 +219,8 @@ class AreaManager implements AreaManagerInterface
     }
 
     /**
-     * @param $type
+     * @param string $type
+     *
      * @return array
      * @throws \Exception
      */

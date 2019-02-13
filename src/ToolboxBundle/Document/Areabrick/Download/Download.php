@@ -39,6 +39,8 @@ class Download extends AbstractAreabrick
 
         //check if member extension exist
         $hasMembers = $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
+
+        /** @var \Pimcore\Model\Document\Tag\Multihref $downloadField */
         $downloadField = $this->getDocumentTag($info->getDocument(), 'multihref', 'downloads');
 
         $assets = [];

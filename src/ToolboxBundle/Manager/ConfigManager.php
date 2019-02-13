@@ -73,7 +73,7 @@ class ConfigManager implements ConfigManagerInterface
     }
 
     /**
-     * @param $section
+     * @param string $section
      *
      * @return mixed
      * @throws \Exception
@@ -208,7 +208,7 @@ class ConfigManager implements ConfigManagerInterface
     }
 
     /**
-     * @param $currentContextId
+     * @param string $currentContextId
      *
      * @return array
      * @throws \Exception

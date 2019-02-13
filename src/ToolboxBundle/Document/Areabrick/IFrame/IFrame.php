@@ -42,7 +42,7 @@ class IFrame extends AbstractAreabrick
     }
 
     /**
-     * @param $iFrameUrl
+     * @param string $iFrameUrl
      *
      * @return bool|string
      */

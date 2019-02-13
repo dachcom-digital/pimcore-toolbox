@@ -7,6 +7,12 @@ use Pimcore\Model\Document\Tag\Area\Info;
 
 class Gallery extends AbstractAreabrick
 {
+    /**
+     * @param Info $info
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|void|null
+     * @throws \Exception
+     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -18,26 +24,33 @@ class Gallery extends AbstractAreabrick
             $id = uniqid('gallery-');
         }
 
+        /** @var \Pimcore\Model\Document\Tag\Multihref $imagesField */
+        $imagesField = $this->getDocumentTag($info->getDocument(), 'multihref', 'images');
+
         $info->getView()->getParameters()->add([
             'galleryId' => $id,
-            'images'    => $this->getAssetArray(
-                $this->getDocumentTag($info->getDocument(), 'multihref', 'images')->getElements()
-            )
+            'images'    => $this->getAssetArray($imagesField->getElements())
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Gallery';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Gallery';
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return array
      */

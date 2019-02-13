@@ -7,10 +7,10 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 class SlideColumnCalculator implements SlideColumnCalculatorInterface
 {
     /**
-     * @param $columnType
-     * @param $columnConfiguration
+     * @param int   $columnType
+     * @param array $columnConfiguration
      *
-     * @return mixed|string
+     * @return string
      */
     public function calculateSlideColumnClasses($columnType, $columnConfiguration)
     {

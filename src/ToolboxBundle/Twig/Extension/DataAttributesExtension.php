@@ -32,8 +32,9 @@ class DataAttributesExtension extends \Twig_Extension
     }
 
     /**
-     * @param       $node
-     * @param array $overrides
+     * @param string $node
+     * @param array  $overrides
+     *
      * @return string
      * @throws \Exception
      */
@@ -51,7 +52,7 @@ class DataAttributesExtension extends \Twig_Extension
     }
 
     /**
-     * @param $values
+     * @param array $values
      *
      * @return string
      */
@@ -62,15 +63,15 @@ class DataAttributesExtension extends \Twig_Extension
         foreach ($values as $key => $value) {
 
             //continue if real empty
-            if (!is_bool($value) && (($value === 0 || $value) === FALSE) ) {
+            if (!is_bool($value) && (($value === 0 || $value) === false)) {
                 continue;
             }
 
             if (is_array($value)) {
                 $parsedValue = htmlspecialchars(json_encode($value));
-            } else if (is_bool($value)) {
+            } elseif (is_bool($value)) {
                 $parsedValue = $value ? 'true' : 'false';
-            } else if (is_object($value)) {
+            } elseif (is_object($value)) {
                 $parsedValue = get_class($value);
             } else {
                 $parsedValue = $value;
@@ -83,7 +84,7 @@ class DataAttributesExtension extends \Twig_Extension
     }
 
     /**
-     * @param $input
+     * @param string $input
      *
      * @return mixed
      */

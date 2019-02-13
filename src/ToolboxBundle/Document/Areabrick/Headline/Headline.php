@@ -18,6 +18,7 @@ class Headline extends AbstractAreabrick
         parent::action($info);
 
         $anchorName = null;
+        /** @var \Pimcore\Model\Document\Tag\Input $anchorNameElement */
         $anchorNameElement = $this->getDocumentTag($info->getDocument(), 'input', 'anchor_name');
 
         if (!$anchorNameElement->isEmpty()) {

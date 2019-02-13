@@ -10,6 +10,7 @@ interface ConfigManagerInterface
 
     /**
      * @param array $config
+     *
      * @throws \Exception
      */
     public function setConfig($config = []);
@@ -22,7 +23,8 @@ interface ConfigManagerInterface
     public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL);
 
     /**
-     * @param $section
+     * @param string $section
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -42,6 +44,7 @@ interface ConfigManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -50,6 +53,7 @@ interface ConfigManagerInterface
     /**
      * @param string $areaName
      * @param string $configElementName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -57,6 +61,7 @@ interface ConfigManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return mixed
      * @throws \Exception
      */
@@ -64,6 +69,7 @@ interface ConfigManagerInterface
 
     /**
      * @param string $thumbnailName
+     *
      * @return mixed
      * @throws \Exception
      */

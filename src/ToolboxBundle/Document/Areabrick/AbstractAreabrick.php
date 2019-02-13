@@ -130,7 +130,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 
     /**
      * @param Tag\Area\Info $info
-     * @param               $configNode
+     * @param array         $configNode
+     *
      * @return array
      */
     private function configureAdditionalClasses(Tag\Area\Info $info, $configNode)

@@ -94,6 +94,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     /**
      * @param array            $configs
      * @param ContainerBuilder $container
+     *
+     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -138,7 +140,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * @param $config
+     * @param array $config
      */
     private function validateToolboxContextConfig($config)
     {
@@ -156,8 +158,10 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
     /**
      * @deprecated since 2.3. gets removed in 3.0
-     * @param                  $config
+     *
+     * @param array            $config
      * @param ContainerBuilder $container
+     *
      * @return mixed
      */
     private function handleCalculatorDeprecation($config, ContainerBuilder $container)

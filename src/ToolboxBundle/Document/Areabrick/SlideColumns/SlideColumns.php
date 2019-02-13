@@ -24,15 +24,19 @@ class SlideColumns extends AbstractAreabrick
     /**
      * @param Info $info
      *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
     public function action(Info $info)
     {
         parent::action($info);
 
-        $equalHeight = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height')->isChecked() && !$info->getView()->get('editmode');
-        $id = $info->getView()->get('brick')->getId() . '-' . $info->getView()->get('brick')->getIndex();
+        /** @var \Pimcore\Model\Document\Tag\Checkbox $equalHeightElement */
+        $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
+        $equalHeight = $equalHeightElement->isChecked() && !$info->getView()->get('editmode');
+
+        /** @var Info $brick */
+        $brick = $info->getView()->get('brick');
+        $id = $brick->getId() . '-' . $brick->getIndex();
 
         $slidesPerView = (int)$this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
@@ -55,18 +59,24 @@ class SlideColumns extends AbstractAreabrick
 
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Slide Columns';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Slide Columns';
     }
 
     /**
-     * @param $columnType
+     * @param int $columnType
      *
      * @return array
      * @throws \Exception
