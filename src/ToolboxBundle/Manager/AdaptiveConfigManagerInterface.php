@@ -2,10 +2,10 @@
 
 namespace ToolboxBundle\Manager;
 
-interface AdaptiveConfigManagerInterface
+interface AdaptiveConfigManagerInterface extends ConfigManagerInterface
 {
     /**
-     * @param $id
+     * @param string $id
      */
     public function setContextNameSpace($id);
 }

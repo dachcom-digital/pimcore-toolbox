@@ -15,5 +15,6 @@ parameters:
         - '#Class MembersBundle\\Manager\\RestrictionManager not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionUri not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionQuery not found\.#'
+        - '#Call to method getSection\(\) on an unknown class MembersBundle\\Restriction\\ElementRestriction\.#'
         - '#Access to constant PROTECTED_ASSET_FOLDER(.*)\.#'
         - '#Access to constant RESTRICTION_SECTION_ALLOWED(.*)\.#'

@@ -138,13 +138,13 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * @return bool
+     * @throws \Exception
      */
     private function installDocumentTypes()
     {
         // get list of types
         $list = new DocType\Listing();
-        $list->load();
+        $list->getDao()->load();
 
         $skipInstall = false;
         $elementName = 'Teaser Snippet';
@@ -157,7 +157,7 @@ class Install extends AbstractInstaller
         }
 
         if ($skipInstall) {
-            return false;
+            return;
         }
 
         $type = DocType::create();
@@ -173,7 +173,7 @@ class Install extends AbstractInstaller
         ];
 
         $type->setValues($data);
-        $type->save();
+        $type->getDao()->save();
     }
 
     /**

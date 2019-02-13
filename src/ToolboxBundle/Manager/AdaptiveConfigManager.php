@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Manager;
 
-class AdaptiveConfigManager extends ConfigManager implements ConfigManagerInterface, AdaptiveConfigManagerInterface
+class AdaptiveConfigManager extends ConfigManager implements AdaptiveConfigManagerInterface
 {
     /**
      * @var null
@@ -10,7 +10,7 @@ class AdaptiveConfigManager extends ConfigManager implements ConfigManagerInterf
     protected $adaptiveContextId = null;
 
     /**
-     * @param $id
+     * @inheritdoc
      */
     public function setContextNameSpace($id)
     {
@@ -22,7 +22,7 @@ class AdaptiveConfigManager extends ConfigManager implements ConfigManagerInterf
     }
 
     /**
-     * @return string|null|false
+     * @return string|null
      */
     public function getContextIdentifier()
     {

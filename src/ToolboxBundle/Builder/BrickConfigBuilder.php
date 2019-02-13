@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Builder;
 
 use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Tag\Checkbox;
 use Pimcore\Translation\Translator;
 use Pimcore\Templating\Renderer\TagRenderer;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -82,11 +83,11 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param       $documentEditableId
-     * @param       $documentEditableName
-     * @param Info  $info
-     * @param array $configNode
-     * @param array $themeOptions
+     * @param string $documentEditableId
+     * @param string $documentEditableName
+     * @param Info   $info
+     * @param array  $configNode
+     * @param array  $themeOptions
      *
      * @return string
      * @throws \Exception
@@ -94,8 +95,8 @@ class BrickConfigBuilder
     public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
     {
         $fieldSetArgs = $this->buildElementConfigArguments($documentEditableId, $documentEditableName, $info, $configNode, $themeOptions);
-        
-        if(empty($fieldSetArgs)) {
+
+        if (empty($fieldSetArgs)) {
             return '';
         }
 
@@ -103,11 +104,11 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param       $documentEditableId
-     * @param       $documentEditableName
-     * @param Info  $info
-     * @param array $configNode
-     * @param array $themeOptions
+     * @param string $documentEditableId
+     * @param string $documentEditableName
+     * @param Info   $info
+     * @param array  $configNode
+     * @param array  $themeOptions
      *
      * @return array
      * @throws \Exception
@@ -161,7 +162,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return bool
      */
@@ -171,7 +172,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $parsedConfig
+     * @param array $parsedConfig
      *
      * @return bool
      */
@@ -181,7 +182,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return bool
      */
@@ -211,7 +212,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return bool
      */
@@ -248,9 +249,9 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $type
-     * @param $config
-     * @param $additionalConfig
+     * @param string $type
+     * @param array  $config
+     * @param array  $additionalConfig
      *
      * @return array
      * @throws \Exception
@@ -310,8 +311,8 @@ class BrickConfigBuilder
     /**
      * types: type, title, description, col_class, conditions
      *
-     * @param $configElementName
-     * @param $rawConfig
+     * @param string $configElementName
+     * @param array  $rawConfig
      *
      * @return array
      * @throws \Exception
@@ -347,30 +348,27 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $config
-     * @param $defaultConfigValue
+     * @param array $config
+     * @param mixed $defaultConfigValue
      *
      * @return mixed
      */
     private function getSelectedValue($config, $defaultConfigValue)
     {
-        /** @var \Pimcore\Model\Document\Tag\* $el */
+        /** @var \Pimcore\Model\Document\Tag\TagInterface $el */
         $el = $this->tagRenderer->getTag($this->info->getDocument(), $config['type'], $config['name']);
 
-        //force default (only if it returns false. checkboxes may return an empty string and are impossible to track into default mode
-        if (!empty($defaultConfigValue) && ($el->isEmpty() === true)) {
+        // force default (only if it returns false)
+        // checkboxes may return an empty string and are impossible to track into default mode
+        if (!empty($defaultConfigValue) && (method_exists($el, 'isEmpty') && $el->isEmpty() === true)) {
             $el->setDataFromResource($defaultConfigValue);
         }
 
         $value = null;
-
-        switch ($config['type']) {
-
-            case 'checkbox' :
-                $value = $el->isChecked();
-                break;
-            default:
-                $value = $el->getData();
+        if ($el instanceof Checkbox) {
+            $value = $el->isChecked();
+        } else {
+            $value = $el->getData();
         }
 
         $config['selected_value'] = !empty($value) ? $value : $defaultConfigValue;
@@ -379,10 +377,10 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $configElementName
-     * @param $elConf
+     * @param string $configElementName
+     * @param array  $elConf
      *
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
     private function parseElementConfig($configElementName, $elConf)
@@ -487,8 +485,8 @@ class BrickConfigBuilder
     /**
      * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns"
      *
-     * @param $configElementName
-     * @param $configFields
+     * @param string $configElementName
+     * @param array  $configFields
      *
      * @return array
      */
@@ -516,7 +514,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $configElements
+     * @param array $configElements
      *
      * @return array
      */
@@ -593,7 +591,7 @@ class BrickConfigBuilder
     }
 
     /**
-     * @param $el
+     * @param array $el
      *
      * @return mixed
      */

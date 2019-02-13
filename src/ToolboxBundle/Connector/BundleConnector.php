@@ -15,11 +15,9 @@ class BundleConnector
     /**
      * @var array
      */
-    private $services = [];
+    protected $services = [];
 
     /**
-     * Configuration constructor.
-     *
      * @param PimcoreBundleManager $bundleManager
      */
     public function __construct(PimcoreBundleManager $bundleManager)
@@ -28,8 +26,8 @@ class BundleConnector
     }
 
     /**
-     * @param $serviceId
-     * @param $service
+     * @param string $serviceId
+     * @param mixed  $service
      */
     public function registerBundleService($serviceId, $service)
     {
@@ -37,7 +35,7 @@ class BundleConnector
     }
 
     /**
-     * @param $serviceId
+     * @param string $serviceId
      *
      * @return mixed
      */

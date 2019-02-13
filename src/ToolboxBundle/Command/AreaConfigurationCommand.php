@@ -16,14 +16,12 @@ use ToolboxBundle\ToolboxConfig;
 class AreaConfigurationCommand extends Command
 {
     /**
-     * @var AdaptiveConfigManagerInterface|ConfigManagerInterface
+     * @var AdaptiveConfigManagerInterface
      */
-    private $adaptiveConfigManager;
+    protected $adaptiveConfigManager;
 
     /**
-     * AreaConfigurationCommand constructor.
-     *
-     * @param AdaptiveConfigManagerInterface|ConfigManagerInterface $adaptiveConfigManager
+     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
      */
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
@@ -38,7 +36,7 @@ class AreaConfigurationCommand extends Command
     {
         $this
             ->setName('toolbox:check-config')
-            ->setDescription('Check configuration of a given area element. ')
+            ->setDescription('Check configuration of a given area element.')
             ->addOption('area', 'a',
                 InputOption::VALUE_REQUIRED,
                 'Area Brick Id ("image" for example")')
@@ -76,7 +74,6 @@ class AreaConfigurationCommand extends Command
         $brickConfig = $this->adaptiveConfigManager->getAreaConfig($brickId);
 
         if (empty($brickConfig)) {
-
             if ($hasContext) {
                 $settings = $this->adaptiveConfigManager->getCurrentContextSettings();
                 if (in_array($brickId, $settings['disabled_areas'])) {
@@ -152,13 +149,13 @@ class AreaConfigurationCommand extends Command
             ->setRows($rows);
         $table->render();
 
-
     }
 
     /**
      * @param array  $array
      * @param string $string
      * @param int    $depth
+     *
      * @return string
      */
     private function parseArrayForOutput(array $array = [], $string = '', $depth = 0)

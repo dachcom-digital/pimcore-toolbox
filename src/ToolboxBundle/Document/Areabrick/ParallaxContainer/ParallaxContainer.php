@@ -4,6 +4,9 @@ namespace ToolboxBundle\Document\Areabrick\ParallaxContainer;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Asset;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ParallaxContainer extends AbstractAreabrick
 {
@@ -19,7 +22,9 @@ class ParallaxContainer extends AbstractAreabrick
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
 
-        $parallaxBackground = $this->getDocumentTag($info->getDocument(), 'href', 'background_image')->getElement();
+        /** @var \Pimcore\Model\Document\Tag\Href $parallaxBackgroundElement */
+        $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'href', 'background_image');
+        $parallaxBackground = $parallaxBackgroundElement->getElement();
         $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();
 
         $parallaxTemplate = $this->getDocumentTag($info->getDocument(), 'select', 'template')->getData();
@@ -32,7 +37,9 @@ class ParallaxContainer extends AbstractAreabrick
         $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
         $backgroundColorClass = $this->getBackgroundColorClass($parallaxBackgroundColor, $config, 'section');
 
+        /** @var EngineInterface $templating */
         $templating = $this->container->get('templating');
+        /** @var TranslatorInterface $translator */
         $translator = $this->container->get('pimcore.translator');
 
         $behindElements = !empty($parallaxBehind)
@@ -60,9 +67,9 @@ class ParallaxContainer extends AbstractAreabrick
     }
 
     /**
-     * @param Info $info
-     * @param      $templating
-     * @param      $translator
+     * @param Info                $info
+     * @param EngineInterface     $templating
+     * @param TranslatorInterface $translator
      *
      * @return string
      * @throws \Exception
@@ -73,6 +80,7 @@ class ParallaxContainer extends AbstractAreabrick
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainerSection');
 
+        /** @var \Pimcore\Model\Document\Tag\Areablock $sectionBlock */
         $sectionBlock = $this->getDocumentTag($info->getDocument(), 'block', 'pcB', ['default' => 1]);
 
         $loopIndex = 1;
@@ -80,7 +88,9 @@ class ParallaxContainer extends AbstractAreabrick
 
             $sectionConfig = '';
 
-            $parallaxBackground = $this->getDocumentTag($info->getDocument(), 'href', 'background_image')->getElement();
+            /** @var \Pimcore\Model\Document\Tag\Href $parallaxBackgroundElement */
+            $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'href', 'background_image');
+            $parallaxBackground = $parallaxBackgroundElement->getElement();
             $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();
 
             $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
@@ -136,8 +146,8 @@ class ParallaxContainer extends AbstractAreabrick
     }
 
     /**
-     * @param        $backgroundImage
-     * @param        $backgroundColor
+     * @param Asset  $backgroundImage
+     * @param string $backgroundColor
      * @param array  $config
      * @param string $type
      *
@@ -155,7 +165,7 @@ class ParallaxContainer extends AbstractAreabrick
         $styles = [];
         $data = [];
 
-        if ($backgroundImage instanceOf \Pimcore\Model\Asset) {
+        if ($backgroundImage instanceOf Asset\Image) {
             $image = $backgroundImage->getThumbnail($thumbnail);
             if ($backgroundImageMode === 'style') {
                 $styles['background-image'] = 'url(\'' . $image . '\')';
@@ -192,7 +202,7 @@ class ParallaxContainer extends AbstractAreabrick
     }
 
     /**
-     * @param        $backgroundColor
+     * @param string $backgroundColor
      * @param array  $config
      * @param string $type
      *

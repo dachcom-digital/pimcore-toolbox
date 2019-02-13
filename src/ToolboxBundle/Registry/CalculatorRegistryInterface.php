@@ -8,35 +8,38 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 interface CalculatorRegistryInterface
 {
     /**
-     * @param $id
-     * @param $service
-     * @param $type
-     * @return void
+     * @param string $id
+     * @param string $service
+     * @param string $type
      */
     public function register($id, $service, $type);
 
     /**
-     * @param $alias
+     * @param string $alias
+     *
      * @return SlideColumnCalculatorInterface
      */
     public function getSlideColumnCalculator($alias);
 
     /**
-     * @param $alias
+     * @param string $alias
+     *
      * @return ColumnCalculatorInterface
      */
     public function getColumnCalculator($alias);
 
     /**
-     * @param $alias
-     * @param $type
+     * @param string $alias
+     * @param string $type
+     *
      * @return bool
      */
     public function has($alias, $type);
 
     /**
-     * @param $alias
-     * @param $type
+     * @param string $alias
+     * @param string $type
+     *
      * @throws \Exception
      * @return SlideColumnCalculatorInterface|ColumnCalculatorInterface
      */

@@ -11,7 +11,6 @@ class Video extends AbstractAreabrick
     /**
      * @param Info $info
      *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
      * @throws \Exception
      */
     public function action(Info $info)
@@ -24,7 +23,9 @@ class Video extends AbstractAreabrick
         $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
 
         $playInLightBox = $videoTag->getShowAsLightbox() === true ? 'true' : 'false';
-        $autoPlay = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay')->isChecked() === true && !$view->get('editmode');
+        /** @var \Pimcore\Model\Document\Tag\Checkbox $autoPlayElement */
+        $autoPlayElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay');
+        $autoPlay = $autoPlayElement->isChecked() === true && !$view->get('editmode');
         $videoType = $videoTag->getVideoType();
         $posterPath = null;
         $imageThumbnail = null;
@@ -45,11 +46,17 @@ class Video extends AbstractAreabrick
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Video';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Video';

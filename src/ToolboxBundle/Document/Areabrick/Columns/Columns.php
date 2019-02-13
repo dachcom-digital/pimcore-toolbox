@@ -34,6 +34,7 @@ class Columns extends AbstractAreabrick
         $view = $info->getView();
         $editMode = $view->get('editmode');
 
+        /** @var \Pimcore\Model\Document\Tag\Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
         $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
         $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();

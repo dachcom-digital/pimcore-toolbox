@@ -178,7 +178,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @param $mapId
+     * @param string $mapId
      */
     public function setId($mapId)
     {
@@ -194,7 +194,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @param $location
+     * @param array $location
      *
      * @return mixed
      * @throws \Exception

@@ -3,6 +3,7 @@
 namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
@@ -13,13 +14,21 @@ use ToolboxBundle\ToolboxConfig;
 
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * @return TreeBuilder
+     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('toolbox');
 
-        $this->getConfigNode($rootNode, true);
+        $this->getConfigNode($rootNode);
         $this->addContextNode($rootNode);
+
+        $rootNode
+            ->children()
+                ->scalarNode('context_resolver')->defaultValue(ContextResolver::class)->end()
+            ->end();
 
         return $treeBuilder;
     }
@@ -60,7 +69,7 @@ class Configuration implements ConfigurationInterface
                             ->end()
                         ->end();
 
-        $this->getConfigNode($node, false);
+        $this->getConfigNode($node);
 
         $node->end()
             ->end()
@@ -69,10 +78,9 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param ArrayNodeDefinition $rootNode
-     * @param bool                $addContextSettings
+     * @param NodeDefinition $rootNode
      */
-    public function getConfigNode(ArrayNodeDefinition $rootNode, $addContextSettings = true)
+    public function getConfigNode(NodeDefinition $rootNode)
     {
         //@todo: get them dynamically!!
         $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
@@ -312,16 +320,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
-
-        if($addContextSettings) {
-            $rootNode
-                ->children()
-                    ->scalarNode('context_resolver')->defaultValue(ContextResolver::class)->end()
-                ->end()
             ->end();
-
-        }
     }
 }

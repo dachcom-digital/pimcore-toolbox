@@ -8,12 +8,12 @@ use Pimcore\Model\Document;
 class Vhs extends Model\Document\Tag\Video
 {
     /**
-     * @var string
+     * @var bool
      */
     public $showAsLightbox = false;
 
     /**
-     * one of asset, youtube, vimeo, dailymotion
+     * Enum: [asset, youtube, vimeo, dailymotion]
      *
      * @var string
      */
@@ -30,7 +30,7 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @param $showAsLightbox
+     * @param bool $showAsLightbox
      *
      * @return $this
      */
@@ -94,7 +94,9 @@ class Vhs extends Model\Document\Tag\Video
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
+     *
      * @param mixed $data
+     *
      * @return $this
      */
     public function setDataFromEditmode($data)
