@@ -38,7 +38,7 @@ class SlideColumns extends AbstractAreabrick
         $brick = $info->getView()->get('brick');
         $id = $brick->getId() . '-' . $brick->getIndex();
 
-        $slidesPerView = (int)$this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
+        $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
         $theme = $this->configManager->getConfig('theme');
@@ -56,7 +56,6 @@ class SlideColumns extends AbstractAreabrick
             'breakpoints'          => $breakpoints,
             'equalHeight'          => $equalHeight
         ]);
-
     }
 
     /**
@@ -79,11 +78,12 @@ class SlideColumns extends AbstractAreabrick
      * @param int $columnType
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function calculateSlideColumnBreakpoints($columnType)
     {
-        $columnType = (int)$columnType;
+        $columnType = (int) $columnType;
         $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
 
         $breakpoints = [];

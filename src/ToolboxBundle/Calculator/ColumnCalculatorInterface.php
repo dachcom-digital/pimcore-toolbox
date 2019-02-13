@@ -8,6 +8,7 @@ interface ColumnCalculatorInterface
 {
     /**
      * @param ConfigManagerInterface $configManager
+     *
      * @return mixed
      */
     public function setConfigManager(ConfigManagerInterface $configManager);
@@ -18,12 +19,13 @@ interface ColumnCalculatorInterface
      *
      * @return array
      */
-    public function calculateColumns($value, $customColumnConfiguration = NULL);
+    public function calculateColumns($value, $customColumnConfiguration = null);
 
     /**
      * @param string     $value
      * @param null|array $customColumnConfiguration
+     *
      * @return mixed
      */
-    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = NULL);
+    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null);
 }

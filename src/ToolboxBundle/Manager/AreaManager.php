@@ -9,12 +9,12 @@ class AreaManager implements AreaManagerInterface
     /**
      * @var ConfigManagerInterface
      */
-    var $configManager;
+    public $configManager;
 
     /**
      * @var AreabrickManager
      */
-    var $brickManager;
+    public $brickManager;
 
     /**
      * @param ConfigManagerInterface $configManager
@@ -45,6 +45,7 @@ class AreaManager implements AreaManagerInterface
      * @param bool $fromSnippet
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function getAreaBlockConfiguration($type = null, $fromSnippet = false)
@@ -114,6 +115,7 @@ class AreaManager implements AreaManagerInterface
      * @param bool $arrayKeys
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getActiveBricks($arrayKeys = true)
@@ -125,7 +127,7 @@ class AreaManager implements AreaManagerInterface
 
         /** get system bricks first
          *
-         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData
+         * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick
          **/
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (!$this->brickManager->isEnabled($areaElementName)) {
@@ -174,6 +176,7 @@ class AreaManager implements AreaManagerInterface
      * @param string $type
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getAvailableBricks($type = null)
@@ -222,6 +225,7 @@ class AreaManager implements AreaManagerInterface
      * @param string $type
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function getAvailableBricksForSnippets($type)
@@ -260,11 +264,11 @@ class AreaManager implements AreaManagerInterface
         }
 
         return ['allowed' => $bricks, 'params' => $params];
-
     }
 
     /**
      * @return array
+     *
      * @throws \Exception
      */
     private function getToolboxBricks()
@@ -273,7 +277,7 @@ class AreaManager implements AreaManagerInterface
         $toolboxBricks = [];
 
         /**
-         * @var String                                                          $areaElementName
+         * @var string
          * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData
          */
         foreach ($areaElements as $areaElementName => $areaElementData) {

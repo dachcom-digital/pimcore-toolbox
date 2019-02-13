@@ -25,6 +25,7 @@ class Columns extends AbstractAreabrick
      * @param Info $info
      *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -55,7 +56,6 @@ class Columns extends AbstractAreabrick
             ->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
-
             if ($this->container->get('templating')->exists($this->getTemplatePath($type))) {
                 $partialName = $type;
             } else {

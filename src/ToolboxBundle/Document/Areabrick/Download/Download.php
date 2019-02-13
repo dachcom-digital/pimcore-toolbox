@@ -6,7 +6,6 @@ use Pimcore\Db\ZendCompatibility\QueryBuilder;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
-
 use Pimcore\Model\Asset;
 
 class Download extends AbstractAreabrick
@@ -28,7 +27,9 @@ class Download extends AbstractAreabrick
 
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -45,13 +46,10 @@ class Download extends AbstractAreabrick
 
         $assets = [];
         if (!$downloadField->isEmpty()) {
-
             /** @var \Pimcore\Model\Asset $node */
             foreach ($downloadField->getElements() as $node) {
-
                 //it's a folder. get all sub assets
                 if ($node instanceof Asset\Folder) {
-
                     $assetListing = new Asset\Listing();
                     $fullPath = rtrim($node->getFullPath(), '/') . '/';
                     $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
@@ -72,7 +70,6 @@ class Download extends AbstractAreabrick
 
                     //default asset
                 } else {
-
                     if ($hasMembers) {
                         /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
                         $elementRestriction = $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->getElementRestrictionStatus($node);
@@ -89,7 +86,6 @@ class Download extends AbstractAreabrick
         $view->getParameters()->add([
             'downloads' => $assets
         ]);
-
     }
 
     public function getName()

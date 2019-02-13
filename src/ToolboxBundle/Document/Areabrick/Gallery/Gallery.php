@@ -11,6 +11,7 @@ class Gallery extends AbstractAreabrick
      * @param Info $info
      *
      * @return \Symfony\Component\HttpFoundation\Response|void|null
+     *
      * @throws \Exception
      */
     public function action(Info $info)
@@ -76,5 +77,4 @@ class Gallery extends AbstractAreabrick
 
         return $assets;
     }
-
 }

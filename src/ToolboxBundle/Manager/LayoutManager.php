@@ -26,11 +26,13 @@ class LayoutManager implements LayoutManagerInterface
 
     /**
      * @param EngineInterface $templating
+     *
      * @return $this
      */
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
+
         return $this;
     }
 
@@ -38,7 +40,9 @@ class LayoutManager implements LayoutManagerInterface
      * @param null   $areaId
      * @param string $viewName
      * @param string $extension
+     *
      * @return string
+     *
      * @throws \Exception
      */
     public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig')
@@ -47,7 +51,8 @@ class LayoutManager implements LayoutManagerInterface
 
         $pathStructure = '@Toolbox/Toolbox/%s/%s';
 
-        $defaultDir = sprintf($pathStructure,
+        $defaultDir = sprintf(
+            $pathStructure,
             $elementThemeConfig['layout'],
             ucfirst($areaId)
         );
@@ -62,7 +67,8 @@ class LayoutManager implements LayoutManagerInterface
         }
 
         //return fallback layout.
-        return sprintf($pathStructure,
+        return sprintf(
+            $pathStructure,
             $elementThemeConfig['default_layout'],
             ucfirst($areaId)
         );
@@ -72,7 +78,9 @@ class LayoutManager implements LayoutManagerInterface
      * @param null   $areaId
      * @param string $viewName
      * @param string $extension
+     *
      * @return string
+     *
      * @throws \Exception
      */
     public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig')
@@ -82,7 +90,9 @@ class LayoutManager implements LayoutManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function getAreaThemeConfig($areaName = '')

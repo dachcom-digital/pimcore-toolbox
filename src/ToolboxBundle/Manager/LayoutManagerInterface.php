@@ -28,7 +28,9 @@ interface LayoutManagerInterface
 
     /**
      * @param string $areaName
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function getAreaThemeConfig($areaName = '');

@@ -52,6 +52,7 @@ class Install extends AbstractInstaller
         $this->installOrUpdateConfigFile();
         $this->importTranslations();
         $this->installDocumentTypes();
+
         return true;
     }
 
@@ -128,7 +129,7 @@ class Install extends AbstractInstaller
     }
 
     /**
-     * imports admin-translations
+     * imports admin-translations.
      *
      * @throws \Exception
      */
@@ -152,6 +153,7 @@ class Install extends AbstractInstaller
         foreach ($list->getDocTypes() as $type) {
             if ($type->getName() === $elementName) {
                 $skipInstall = true;
+
                 break;
             }
         }

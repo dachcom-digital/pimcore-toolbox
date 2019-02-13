@@ -8,7 +8,7 @@ use Pimcore\Model\Document\Tag\Area\Info;
 class GoogleMap extends AbstractAreabrick
 {
     /**
-     * string
+     * string.
      */
     protected $googleMapsHostUrl;
 
@@ -24,7 +24,9 @@ class GoogleMap extends AbstractAreabrick
 
     /**
      * @param Info $info
+     *
      * @return null|\Symfony\Component\HttpFoundation\Response|void
+     *
      * @throws \Exception
      */
     public function action(Info $info)

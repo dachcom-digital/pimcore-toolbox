@@ -7,14 +7,14 @@ use Pimcore\Model\Document;
 class ColumnAdjuster extends Document\Tag
 {
     /**
-     * Contains the data
+     * Contains the data.
      *
      * @var bool|array
      */
     public $data = false;
 
     /**
-     * Return the type of the element
+     * Return the type of the element.
      *
      * @return string
      */
@@ -25,6 +25,7 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::getData
+     *
      * @return mixed
      */
     public function getData()
@@ -34,8 +35,6 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * No frontend available.
-     *
-     * @return NULL
      */
     public function frontend()
     {
@@ -44,16 +43,17 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::admin
+     *
      * @return string
      */
     public function admin()
     {
         $html = parent::admin();
+
         return $html;
     }
 
     /**
-     *
      * @param mixed $data
      *
      * @return string
@@ -71,7 +71,9 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @see Document\Tag\TagInterface::setDataFromEditmode
+     *
      * @param mixed $data
+     *
      * @return $this
      */
     public function setDataFromEditmode($data)
@@ -81,6 +83,7 @@ class ColumnAdjuster extends Document\Tag
         }
 
         $this->data = $data;
+
         return $this;
     }
 }

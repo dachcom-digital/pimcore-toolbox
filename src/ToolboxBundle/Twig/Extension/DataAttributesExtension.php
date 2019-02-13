@@ -36,6 +36,7 @@ class DataAttributesExtension extends \Twig_Extension
      * @param array  $overrides
      *
      * @return string
+     *
      * @throws \Exception
      */
     public function generateDataAttributes($node, $overrides = [])
@@ -61,7 +62,6 @@ class DataAttributesExtension extends \Twig_Extension
         $attributes = [];
 
         foreach ($values as $key => $value) {
-
             //continue if real empty
             if (!is_bool($value) && (($value === 0 || $value) === false)) {
                 continue;

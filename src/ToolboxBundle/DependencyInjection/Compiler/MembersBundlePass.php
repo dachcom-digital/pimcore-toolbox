@@ -38,7 +38,6 @@ class MembersBundlePass implements CompilerPassInterface
             \MembersBundle\Manager\RestrictionManager::class,
             \MembersBundle\Security\RestrictionUri::class,
             \MembersBundle\Security\RestrictionQuery::class,
-
         ];
     }
 }

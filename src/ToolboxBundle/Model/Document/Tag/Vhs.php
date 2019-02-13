@@ -13,14 +13,14 @@ class Vhs extends Model\Document\Tag\Video
     public $showAsLightbox = false;
 
     /**
-     * Enum: [asset, youtube, vimeo, dailymotion]
+     * Enum: [asset, youtube, vimeo, dailymotion].
      *
      * @var string
      */
     public $type = '';
 
     /**
-     * Return the type of the element
+     * Return the type of the element.
      *
      * @return string
      */
@@ -51,6 +51,7 @@ class Vhs extends Model\Document\Tag\Video
 
     /**
      * @see Document\Tag\TagInterface::getData
+     *
      * @return mixed
      */
     public function getData()
@@ -61,9 +62,6 @@ class Vhs extends Model\Document\Tag\Video
         return $data;
     }
 
-    /**
-     *
-     */
     public function getDataForResource()
     {
         $data = parent::getDataForResource();
@@ -109,5 +107,4 @@ class Vhs extends Model\Document\Tag\Video
 
         return $this;
     }
-
 }
