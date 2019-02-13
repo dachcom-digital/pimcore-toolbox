@@ -4,7 +4,11 @@
 ***
 
 After every update you should check the pimcore extension manager. 
-Just click the "update" button to finish the bundle update.
+Just click the "update" button or execute the migration command to finish the bundle update.
+
+#### Update from Version 2.6.x to Version 2.7.0
+- **[ATTENTION]**: Installer has moved to the [MigrationBundle](https://github.com/dachcom-digital/pimcore-toolbox/issues/89). After updating to this version you need to enable this extension again!
+- ([Milestone for 2.7.0](https://github.com/dachcom-digital/pimcore-toolbox/milestone/12?closed=1))
 
 #### Update from Version 2.6.4 to Version 2.6.5
 - **[NEW FEATURE]**: Allow Column Adjuster Context-based Configuration

@@ -5,5 +5,6 @@ services:
         autoconfigure: true
         public: true
 
-    # toolbox installer
-    ToolboxBundle\Tool\Install: ~
+    ToolboxBundle\Tool\Install:
+        arguments:
+            $bundle: "@=service('kernel').getBundle('ToolboxBundle')"

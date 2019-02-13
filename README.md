@@ -18,16 +18,33 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolbox/tree/pimcore4).
 
 ### Installation  
-1. Add code below to your `composer.json`    
-2. Activate & install it through the ExtensionManager
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~2.6.0"
+    "dachcom-digital/toolbox" : "~2.7.0"
 }
 ```
 
-### What's the meaning of Toolbox?
+### Installation via Extension Manager
+After you have installed the Toolbox Bundle via composer, open pimcore backend and go to `Tools` => `Extension`:
+- Click the green `+` Button in `Enable / Disable` row
+- Click the green `+` Button in `Install/Uninstall` row
+
+## Upgrading
+
+### Upgrading via Extension Manager
+After you have updated the Toolbox Bundle via composer, open pimcore backend and go to `Tools` => `Extension`:
+- Click the green `+` Button in `Update` row
+
+### Upgrading via CommandLine
+After you have updated the Toolbox Bundle via composer:
+- Execute: `$ bin/console pimcore:bundle:update ToolboxBundle`
+
+### Migrate via CommandLine
+Does actually the same as the update command and preferred in CI-Workflow:
+- Execute: `$ bin/console pimcore:migrations:migrate -b ToolboxBundle`
+
+## What's the meaning of Toolbox?
 - create often used bricks in a second
 - extend, override toolbox bricks 
 - add config elements via yml configuration
@@ -36,7 +53,7 @@ Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolb
 - add your custom bricks while using the toolbox config environment
 - removes the default `pimcore_area_*` element wrapper from each brick
 
-### And what's not?
+## And what's not?
 - It's not an Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
 - Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
 
