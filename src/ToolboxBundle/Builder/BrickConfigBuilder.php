@@ -212,8 +212,8 @@ class BrickConfigBuilder
                 'parallaximage',
                 'additionalClasses',
                 'additionalClassesChained'
-        ]
-            );
+            ]
+        );
     }
 
     /**
@@ -398,10 +398,10 @@ class BrickConfigBuilder
                 throw new \Exception(
                     sprintf(
                         'A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
-                    $this->documentEditableName,
+                        $this->documentEditableName,
                         'additionalClasses',
                         'additionalClassesChained'
-                        )
+                    )
                 );
             }
 
@@ -416,17 +416,17 @@ class BrickConfigBuilder
                 throw new \Exception(
                     sprintf(
                         'You need to add a element of type "%s" before adding a "%s" element.',
-                    'additionalClasses',
+                        'additionalClasses',
                         'additionalClassesChained'
-                        )
+                    )
                 );
             } elseif (substr($configElementName, 0, 25) !== 'additional_classes_chain_') {
                 throw new \Exception(
                     sprintf(
                         'Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
-                    'additional_classes_chain_',
+                        'additional_classes_chain_',
                         $configElementName
-                        )
+                    )
                 );
             }
 

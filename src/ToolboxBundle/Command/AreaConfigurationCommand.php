@@ -41,14 +41,14 @@ class AreaConfigurationCommand extends Command
                 'area',
                 'a',
                 InputOption::VALUE_REQUIRED,
-            'Area Brick Id ("image" for example")'
-                )
+                'Area Brick Id ("image" for example")'
+            )
             ->addOption(
                 'context',
                 'c',
                 InputOption::VALUE_OPTIONAL,
-            'Context Name'
-                );
+                'Context Name'
+            );
     }
 
     /**
@@ -143,7 +143,7 @@ class AreaConfigurationCommand extends Command
                 $rows[] = new TableSeparator();
             }
 
-            ++$c;
+            $c++;
         }
 
         if (!empty($configParameter)) {
@@ -175,7 +175,7 @@ class AreaConfigurationCommand extends Command
             $string .= $depthStr . $dash . $key . $displayValue . "\n";
 
             if (is_array($value)) {
-                ++$depth;
+                $depth++;
 
                 return $this->parseArrayForOutput($value, $string, $depth);
             }

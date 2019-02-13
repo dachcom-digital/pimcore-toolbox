@@ -125,7 +125,7 @@ class AreaManager implements AreaManagerInterface
         //sort area elements by key => area name
         ksort($areaElements);
 
-        /** get system bricks first
+        /* get system bricks first
          *
          * @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick
          **/

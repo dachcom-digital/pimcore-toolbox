@@ -19,7 +19,8 @@ services:
             - var
     PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer:
         align_double_arrow: true
-    PhpCsFixer\Fixer\Operator\IncrementStyleFixer: ~
+    PhpCsFixer\Fixer\Operator\IncrementStyleFixer:
+        style: post
     PhpCsFixer\Fixer\Operator\UnaryOperatorSpacesFixer: ~
     PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer: ~
     PhpCsFixer\Fixer\CastNotation\CastSpacesFixer: ~
@@ -40,6 +41,7 @@ services:
     PhpCsFixer\Fixer\Phpdoc\NoEmptyPhpdocFixer: ~
     PhpCsFixer\Fixer\Phpdoc\PhpdocSeparationFixer: ~
     PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer: ~
+    PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer: ~
     PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer:
         tokens:
             - curly_brace_block

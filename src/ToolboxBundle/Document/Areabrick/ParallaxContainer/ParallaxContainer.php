@@ -133,7 +133,7 @@ class ParallaxContainer extends AbstractAreabrick
                 'document'             => $info->getDocument()
             ];
 
-            ++$loopIndex;
+            $loopIndex++;
 
             echo $sectionConfig;
             echo $templating->render($this->getTemplatePath('section'), $sectionArgs);
