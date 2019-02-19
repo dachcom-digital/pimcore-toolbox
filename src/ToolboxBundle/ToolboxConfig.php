@@ -42,6 +42,8 @@ final class ToolboxConfig
         'numeric',
         'embed',
         'pdf',
+        'relation',
+        'relations',
         'renderlet',
         'select',
         'snippet',
