@@ -1,12 +1,11 @@
 pimcore.registerNS('pimcore.document.tags.vhs');
 pimcore.document.tags.vhs = Class.create(pimcore.document.tags.video, {
 
-    initialize: function(id, name, options, data, inherited) {
+    initialize: function(id, name, options, data) {
 
         this.id = id;
         this.name = name;
-        this.data = {};
-
+        this.videoEditor = {};
         this.options = this.parseOptions(options);
         this.data = data;
 
@@ -33,14 +32,22 @@ pimcore.document.tags.vhs = Class.create(pimcore.document.tags.video, {
     },
 
     openEditor: function () {
-
-        // disable the global dnd handler in this editmode/frame
-        window.dndManager.disable();
-
-        this.window = pimcore.helpers.editmode.openVhsEditPanel(this.data, {
+        this.videoEditor = new pimcore.plugin.toolbox.vhs.editor(this.data, {
             save: this.save.bind(this),
             cancel: this.cancel.bind(this)
         });
+
+        this.videoEditor.loadWindow();
+    },
+
+    save: function () {
+        this.data = this.videoEditor.getFieldValues();
+        this.videoEditor.hideWindow();
+        this.reloadDocument();
+    },
+
+    cancel: function () {
+        this.videoEditor.hideWindow();
     },
 
     getType: function () {

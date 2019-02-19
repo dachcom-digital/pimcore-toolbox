@@ -81,6 +81,7 @@
         playerEngine: null,
         autoPlay: false,
         playInLightBox: false,
+        videoParameter: {},
 
         hasPoster: false,
         posterPath: null,
@@ -103,8 +104,6 @@
 
         setupVideoElement: function () {
 
-            var _ = this;
-
             this.elementId = this.$element.data('tb-ext-video-index');
             this.videoType = this.$element.data('type');
 
@@ -120,6 +119,10 @@
             this.videoId = this.getVideoId(this.$player.data('video-uri'));
             this.playInLightBox = this.$player.data('play-in-lightbox');
             this.posterPath = this.$player.data('poster-path');
+
+            if (this.$player.data('video-parameter') !== undefined) {
+                this.videoParameter = this.$player.data('video-parameter');
+            }
 
             if (this.posterPath) {
                 this.hasPoster = true;
@@ -257,23 +260,24 @@
                 } else {
 
                     var initPlayer = function ($el, autostart) {
-
-                        var options = {
-                            videoId: _.videoId,
-                            events: {
-                                'onReady': function () {
-                                    _.isReady = true;
-                                    _.playerEngine = player;
-                                    _.$element.addClass('player-ready');
-                                    if (autostart === true) {
-                                        _.playVideo();
+                        var player,
+                            playerVars = $.extend({}, _.options.apiParameter.youtube, _.videoParameter),
+                            options = {
+                                videoId: _.videoId,
+                                events: {
+                                    'onReady': function () {
+                                        _.isReady = true;
+                                        _.playerEngine = player;
+                                        _.$element.addClass('player-ready');
+                                        if (autostart === true) {
+                                            _.playVideo();
+                                        }
                                     }
                                 }
-                            }
-                        };
+                            };
 
-                        var player = new window.YT.Player(
-                            $el, $.extend({}, {playerVars: _.options.apiParameter.youtube}, options)
+                        player = new window.YT.Player(
+                            $el, $.extend({}, {playerVars: playerVars}, options)
                         );
                     };
 
@@ -354,12 +358,13 @@
 
                     var initPlayer = function (el, autostart) {
 
-                        var options = {
-                            id: _.videoId
-                        };
+                        var player,
+                            options = {
+                                id: _.videoId
+                            };
 
-                        var player = new Vimeo.Player(
-                            el, $.extend({}, _.options.apiParameter.vimeo, options)
+                        player = new Vimeo.Player(
+                            el, $.extend({}, _.options.apiParameter.vimeo, _.videoParameter, options)
                         );
 
                         player.on('loaded', function () {
@@ -492,7 +497,6 @@
             } else {
                 _.pauseVideo();
             }
-
         }
     });
 

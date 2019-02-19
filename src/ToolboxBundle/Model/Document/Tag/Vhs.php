@@ -10,14 +10,19 @@ class Vhs extends Model\Document\Tag\Video
     /**
      * @var bool
      */
-    public $showAsLightbox = false;
+    public $showAsLightBox = false;
 
     /**
      * Enum: [asset, youtube, vimeo, dailymotion].
      *
      * @var string
      */
-    public $type = '';
+    public $type;
+
+    /**
+     * @var array
+     */
+    public $videoParameter;
 
     /**
      * Return the type of the element.
@@ -30,42 +35,64 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @param bool $showAsLightbox
+     * @return string
+     */
+    public function getShowAsLightBox()
+    {
+        return $this->showAsLightBox;
+    }
+
+    /**
+     * @param array $videoParameter
      *
      * @return $this
      */
-    public function setShowAsLightbox($showAsLightbox)
+    public function setVideoParameter($videoParameter)
     {
-        $this->showAsLightbox = $showAsLightbox;
+        $this->videoParameter = $videoParameter;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getShowAsLightbox()
+    public function getVideoParameter()
     {
-        return $this->showAsLightbox;
+        if (!is_array($this->videoParameter)) {
+            return [];
+        }
+
+        $parsedParameter = [];
+        foreach ($this->videoParameter as $parameter) {
+            $parsedParameter[$parameter['key']] = $parameter['value'];
+        }
+
+        return $parsedParameter;
     }
 
     /**
      * @see Document\Tag\TagInterface::getData
      *
-     * @return mixed
+     * @return array
      */
     public function getData()
     {
         $data = parent::getData();
-        $data['showAsLightbox'] = $this->showAsLightbox;
+        $data['showAsLightbox'] = $this->showAsLightBox;
+        $data['videoParameter'] = $this->videoParameter;
 
         return $data;
     }
 
+    /**
+     * @return array
+     */
     public function getDataForResource()
     {
         $data = parent::getDataForResource();
-        $data['showAsLightbox'] = $this->showAsLightbox;
+        $data['showAsLightbox'] = $this->showAsLightBox;
+        $data['videoParameter'] = $this->videoParameter;
 
         return $data;
     }
@@ -85,7 +112,8 @@ class Vhs extends Model\Document\Tag\Video
             $data = \Pimcore\Tool\Serialize::unserialize($data);
         }
 
-        $this->showAsLightbox = $data['showAsLightbox'];
+        $this->showAsLightBox = $data['showAsLightbox'];
+        $this->videoParameter = $data['videoParameter'];
 
         return $this;
     }
@@ -102,7 +130,11 @@ class Vhs extends Model\Document\Tag\Video
         parent::setDataFromEditmode($data);
 
         if ($data['showAsLightbox']) {
-            $this->showAsLightbox = $data['showAsLightbox'];
+            $this->showAsLightBox = $data['showAsLightbox'];
+        }
+
+        if ($data['videoParameter']) {
+            $this->videoParameter = $data['videoParameter'];
         }
 
         return $this;
