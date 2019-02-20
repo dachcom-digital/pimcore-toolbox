@@ -277,6 +277,10 @@ pimcore.plugin.toolbox.vhs.editor = Class.create({
 
     updateVideoType: function (type, typeInfo) {
 
+        if (typeInfo === null) {
+            return;
+        }
+
         var lightBoxEl = this.form.getComponent('showAsLightbox'),
             pathContainer = this.form.getComponent('pathContainer'),
             searchButton = pathContainer.query('button')[0],
