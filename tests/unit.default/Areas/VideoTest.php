@@ -149,6 +149,45 @@ class VideoTest extends AbstractAreaTest
         );
     }
 
+    public function testVideoWithVideoParameter()
+    {
+        $this->setupRequest();
+
+        $asset = TestHelper::createImageAsset('', true);
+
+        $videoParameter = [
+            ['key' => 'color', 'value' => 'red'],
+            ['key' => 'rel', 'value' => '0']
+        ];
+
+        $parsedVideoParameters = [
+            'color' => 'red',
+            'rel' => '0'
+        ];
+
+        $video = new Vhs();
+        $video->setDataFromEditmode([
+            'type'           => 'youtube',
+            'path'           => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
+            'poster'         => $asset->getFullPath(),
+            'showAsLightbox' => true,
+            'videoParameter' => $videoParameter
+        ]);
+
+        $autoplay = new Checkbox();
+        $autoplay->setDataFromEditmode(1);
+
+        $elements = [
+            'video'    => $video,
+            'autoplay' => $autoplay
+        ];
+
+        $this->assertEquals(
+            $this->filter($this->getCompareWithVideoParameter($asset->getFullPath(), $parsedVideoParameters)),
+            $this->filter($this->generateRenderedArea(self::TYPE, $elements))
+        );
+    }
+
     public function testVideoWithAdditionalClass()
     {
         $this->setupRequest();
@@ -180,7 +219,7 @@ class VideoTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-video  " data-type="youtube">
                     <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
+                        <div class="player"  data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
                         <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
                             <span class="icon"></span>
                         </div>
@@ -192,7 +231,7 @@ class VideoTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-video  " data-type="vimeo">
                     <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://vimeo.com/76979871"></div>
+                        <div class="player"  data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://vimeo.com/76979871"></div>
                         <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
                             <span class="icon"></span>
                         </div>
@@ -204,7 +243,7 @@ class VideoTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-video  " data-type="youtube">
                     <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="true" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
+                        <div class="player"  data-poster-path="' . $path . '" data-play-in-lightbox="true" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
                         <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
                             <span class="icon"></span>
                         </div>
@@ -216,7 +255,20 @@ class VideoTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-video   autoplay" data-type="youtube">
                     <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="true" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
+                        <div class="player"  data-poster-path="' . $path . '" data-play-in-lightbox="true" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
+                        <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
+                            <span class="icon"></span>
+                        </div>
+                    </div>
+                </div>';
+    }
+
+    private function getCompareWithVideoParameter($path, $attributes)
+    {
+        $safeAttributes = htmlspecialchars(json_encode($attributes));
+        return '<div class="toolbox-element toolbox-video   autoplay" data-type="youtube">
+                    <div class="video-inner">
+                        <div class="player" data-video-parameter="' . $safeAttributes . '" data-poster-path="' . $path . '" data-play-in-lightbox="true" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
                         <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
                             <span class="icon"></span>
                         </div>
@@ -228,7 +280,7 @@ class VideoTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-video additional-class " data-type="youtube">
                     <div class="video-inner">
-                        <div class="player" data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
+                        <div class="player"  data-poster-path="' . $path . '" data-play-in-lightbox="false" data-video-uri="https://www.youtube.com/watch?v=EhhGzxhtx48"></div>
                         <div class="poster-overlay lightbox" style="background-image:url(\'' . $path . '\');">
                             <span class="icon"></span>
                         </div>

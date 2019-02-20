@@ -8,6 +8,7 @@ Just click the "update" button or execute the migration command to finish the bu
 
 #### Update from Version 2.6.x to Version 2.7.0
 - **[ATTENTION]**: Installer has moved to the [MigrationBundle](https://github.com/dachcom-digital/pimcore-toolbox/issues/89). After updating to this version you need to enable this extension again!
+- **[NEW FEATURE]**: Parameter for video elements (e.g. youtube api parameters)
 - ([Milestone for 2.7.0](https://github.com/dachcom-digital/pimcore-toolbox/milestone/12?closed=1))
 
 #### Update from Version 2.6.4 to Version 2.6.5

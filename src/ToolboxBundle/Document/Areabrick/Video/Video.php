@@ -22,7 +22,9 @@ class Video extends AbstractAreabrick
         /** @var \ToolboxBundle\Model\Document\Tag\Vhs $videoTag */
         $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
 
-        $playInLightBox = $videoTag->getShowAsLightbox() === true ? 'true' : 'false';
+        $videoParameter = $videoTag->getVideoParameter();
+
+        $playInLightBox = $videoTag->getShowAsLightBox() === true ? 'true' : 'false';
         /** @var \Pimcore\Model\Document\Tag\Checkbox $autoPlayElement */
         $autoPlayElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay');
         $autoPlay = $autoPlayElement->isChecked() === true && !$view->get('editmode');
@@ -42,6 +44,7 @@ class Video extends AbstractAreabrick
             'posterPath'     => $posterPath,
             'videoType'      => $videoType,
             'playInLightbox' => $playInLightBox,
+            'videoParameter' => $videoParameter,
             'videoId'        => $videoId
         ]);
     }

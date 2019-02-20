@@ -41,7 +41,6 @@ class ToolboxBundle extends AbstractPimcoreBundle
             '/admin/toolbox-ckeditor-object-style.js',
             '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
             '/bundles/toolbox/js/document/edit.js',
-            '/bundles/toolbox/js/document/helpers.js',
             '/bundles/toolbox/js/startup.js',
         ];
     }
@@ -58,8 +57,9 @@ class ToolboxBundle extends AbstractPimcoreBundle
             '/bundles/toolbox/js/document/tags/dynamiclink.js',
             '/bundles/toolbox/js/document/tags/googlemap.js',
             '/bundles/toolbox/js/document/tags/parallaximage.js',
+            '/bundles/toolbox/js/document/tags/columnadjuster.js',
             '/bundles/toolbox/js/document/tags/vhs.js',
-            '/bundles/toolbox/js/document/tags/columnadjuster.js'
+            '/bundles/toolbox/js/document/tags/vhs/editor.js',
         ];
     }
 

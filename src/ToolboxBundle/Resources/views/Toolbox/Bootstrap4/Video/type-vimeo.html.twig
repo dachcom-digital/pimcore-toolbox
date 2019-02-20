@@ -1,4 +1,4 @@
-<div class="player" data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}"></div>
+<div class="player" {{ toolbox_data_attributes_generator('video_parameter', {'video_parameter' : videoParameter}, true)|raw }} data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}"></div>
 {% if posterPath is not empty %}
     {% include toolbox_area_path(areaId, '/Partial/overlay') with {'posterPath' : posterPath, 'playInLightbox' : playInLightbox} %}
 {% endif %}
