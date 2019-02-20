@@ -34,19 +34,19 @@ class DataAttributesExtension extends \Twig_Extension
     /**
      * @param string $node
      * @param array  $overrides
-     * @param bool   $ignoreNonExistingStoreAttributes
+     * @param bool   $ignoreNonExistingCoreAttributes
      *
      * @return string
      *
      * @throws \Exception
      */
-    public function generateDataAttributes($node, $overrides = [], $ignoreNonExistingStoreAttributes = false)
+    public function generateDataAttributes($node, $overrides = [], $ignoreNonExistingCoreAttributes = false)
     {
         $attributesNode = $this->configManager->getConfig('data_attributes');
 
         $coreAttributesAvailable = isset($attributesNode[$node]['values']) && is_array($attributesNode[$node]['values']) && !empty($attributesNode[$node]['values']);
 
-        if ($ignoreNonExistingStoreAttributes === false && $coreAttributesAvailable === false) {
+        if ($ignoreNonExistingCoreAttributes === false && $coreAttributesAvailable === false) {
             return '';
         }
 

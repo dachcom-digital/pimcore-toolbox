@@ -43,18 +43,6 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @param array $videoParameter
-     *
-     * @return $this
-     */
-    public function setVideoParameter($videoParameter)
-    {
-        $this->videoParameter = $videoParameter;
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getVideoParameter()
