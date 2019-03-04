@@ -189,6 +189,17 @@ Now head into the pimcore-backend, open systemsettings, navigate to Google Crede
 
 ![2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
 
+If you made your own toolbox-/googleMap-config, please make sure to add the last line to it:
+```yaml
+toolbox:
+    areas:
+        googleMap:
+            config_parameter:
+                map_api_key: '%pimcore_system_config.services.google.browserapikey%'
+```
+
+> Note: like all other systemsettings, this one is also stored in system.php for versioning
+
 > Note: This is a [custom toolbox element](22_GoogleMapsElement.md).
 
 ### Available Options
