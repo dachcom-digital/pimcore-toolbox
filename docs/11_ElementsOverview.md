@@ -182,8 +182,12 @@ Create a Google Map Element. You're able to define one or multiple markers. Tool
 Please make sure that you've included a valid google maps api key. Include the script tag in your footer:
 
 ```html
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=API_KEY"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ toolbox_get_google_map_api_key() }}"></script>
 ```
+
+Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
+
+![2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
 
 > Note: This is a [custom toolbox element](22_GoogleMapsElement.md).
 

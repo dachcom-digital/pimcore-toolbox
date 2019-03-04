@@ -43,3 +43,9 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+
+    ToolboxBundle\Twig\Extension\GoogleAPIKeysExtension:
+        public: false
+        autowire: true
+        tags:
+            - { name: twig.extension }
