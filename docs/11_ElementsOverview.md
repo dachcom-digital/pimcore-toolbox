@@ -190,7 +190,9 @@ parameters:
     googleapikey: %pimcore_system_config.services.google.browserapikey%
 ```
 
-Now head into the pimcore-backend, open systemsettings, navigate to Google Access & API Keys and insert the api key for google maps into the browser-api-key-field
+Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field
+
+![Bildschirmfoto 2019-03-04 um 10.04.51.png](https://github.com/dachcom-digital/pimcore-toolbox/blob/google_api_key_update/Bildschirmfoto%202019-03-04%20um%2010.04.51.png)
 
 > Note: This is a [custom toolbox element](22_GoogleMapsElement.md).
 
