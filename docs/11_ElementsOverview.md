@@ -184,14 +184,8 @@ Please make sure that you've included a valid google maps api key. Include the s
 ```html
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ googleapikey }}"></script>
 ```
-Additionally, update your config with following definition:
-```yaml
-twig:
-    globals:
-        googleapikey: %pimcore_system_config.services.google.browserapikey%
-```
 
-Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field
+Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
 
 ![Bildschirmfoto 2019-03-04 um 10.04.51.png](https://github.com/dachcom-digital/pimcore-toolbox/blob/google_api_key_update/Bildschirmfoto%202019-03-04%20um%2010.04.51.png)
 
