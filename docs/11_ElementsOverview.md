@@ -186,8 +186,9 @@ Please make sure that you've included a valid google maps api key. Include the s
 ```
 Additionally, update your config with following definition:
 ```yaml
-parameters:
-    googleapikey: %pimcore_system_config.services.google.browserapikey%
+twig:
+    globals:
+        googleapikey: %pimcore_system_config.services.google.browserapikey%
 ```
 
 Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field
