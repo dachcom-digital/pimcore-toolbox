@@ -2,23 +2,23 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
-use Symfony\Component\HttpFoundation\RequestStack;
-use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class GoogleAPIKeysExtension extends \Twig_Extension
 {
     /**
-     * @var RequestStack
+     * @var ConfigManagerInterface
      */
-    protected $requestStack;
+    protected $configManager;
 
     /**
-     * @param RequestStack $requestStack
+     * GoogleAPIKeysExtension constructor.
+     *
+     * @param ConfigManagerInterface $configManager
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(ConfigManagerInterface $configManager)
     {
-        $this->requestStack = $requestStack;
+        $this->configManager = $configManager;
     }
 
     /**
@@ -39,15 +39,14 @@ class GoogleAPIKeysExtension extends \Twig_Extension
     public function getGoogleMapAPIKey()
     {
         /** @var ConfigManagerInterface $configManager */
-        $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
-        $browser_key = 'please_configure_key_in_systemsettings.';
+        $browserKey = 'please_configure_key_in_systemsettings';
         if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
-            $browser_key = $configNode['map_api_key'];
+            $browserKey = $configNode['map_api_key'];
         }
 
-        return $browser_key;
+        return $browserKey;
     }
 
 }
