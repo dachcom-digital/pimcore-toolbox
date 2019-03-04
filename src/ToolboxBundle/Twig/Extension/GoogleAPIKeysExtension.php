@@ -8,11 +8,12 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class GoogleAPIKeysExtension extends \Twig_Extension
 {
+    /**
+     * @var RequestStack
+     */
     protected $requestStack;
 
     /**
-     * JavascriptExtension constructor.
-     *
      * @param RequestStack $requestStack
      */
     public function __construct(RequestStack $requestStack)
@@ -26,7 +27,7 @@ class GoogleAPIKeysExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_get_google_map_api_key', [$this, 'getGoogleMapAPIKey'])
+            new \Twig_Function('toolbox_google_map_api_key', [$this, 'getGoogleMapAPIKey'])
         ];
     }
 
