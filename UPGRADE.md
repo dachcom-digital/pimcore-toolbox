@@ -6,6 +6,9 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 2.7.0 to Version 2.7.1
+- **[NEW FEATURE]**: Google Map API Key now configurable via systemsettings, [read more here](./docs/11_ElementsOverview.md#google-map)
+
 #### Update from Version 2.6.x to Version 2.7.0
 - **[ATTENTION]**: Installer has moved to the [MigrationBundle](https://github.com/dachcom-digital/pimcore-toolbox/issues/89). After updating to this version you need to enable this extension again!
 - **[NEW FEATURE]**: Parameter for video elements (e.g. youtube api parameters)
