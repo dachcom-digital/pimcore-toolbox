@@ -6,7 +6,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Release](https://img.shields.io/packagist/v/dachcom-digital/toolbox.svg?style=flat-square)](https://packagist.org/packages/dachcom-digital/toolbox)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/dachcom-digital/pimcore-toolbox.svg?style=flat-square)](https://www.scrutinizer-ci.com/g/dachcom-digital/pimcore-toolbox)
-[![Travis](https://img.shields.io/travis/dachcom-digital/pimcore-toolbox/master.svg?style=flat-square)](https://travis-ci.org/dachcom-digital/pimcore-toolbox)
+[![Travis](https://img.shields.io/travis/com/dachcom-digital/pimcore-toolbox/master.svg?style=flat-square)](https://travis-ci.org/dachcom-digital/pimcore-toolbox)
 [![PhpStan](https://img.shields.io/badge/PHPStan-level%202-brightgreen.svg?style=flat-square)](#)
 
 ![bildschirmfoto 2017-06-21 um 09 30 29](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
