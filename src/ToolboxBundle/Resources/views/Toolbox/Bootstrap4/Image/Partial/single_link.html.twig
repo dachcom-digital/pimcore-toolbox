@@ -2,6 +2,6 @@
     {{ pimcore_image('ci') }}
 {% else %}
     <a href="{{ pimcore_link('image_link').getHref() }}" target="{{ pimcore_link('image_link').getTarget() }}">
-        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : 'img-fluid '  ~ class } %}
+        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : class } %}
     </a>
 {% endif %}

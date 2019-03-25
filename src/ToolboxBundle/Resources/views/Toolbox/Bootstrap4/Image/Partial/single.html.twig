@@ -2,6 +2,6 @@
     {{ pimcore_image('ci', { 'class' : class}) }}
 {% else %}
     {% if pimcore_image('ci').thumbnail(toolbox_get_image_thumbnail('image_element')) is not empty %}
-        {{ pimcore_image('ci', { 'class' : class}).thumbnail(toolbox_get_image_thumbnail('image_element')).html|raw }}
+        {{ pimcore_image('ci').thumbnail(toolbox_get_image_thumbnail('image_element')).html({'class':class})|raw }}
     {% endif %}
 {% endif %}

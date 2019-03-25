@@ -7,6 +7,6 @@
     {{ pimcore_image('ci') }}
 {% else %}
     <a href="{{ lightBoxLink }}" class="item">
-        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : 'img-fluid '  ~ class } %}
+        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : class } %}
     </a>
 {% endif %}
