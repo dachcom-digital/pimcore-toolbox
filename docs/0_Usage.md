@@ -52,7 +52,7 @@ Use the `snippet_areas_appearance`  config node to disable bricks in specific sn
 toolbox:
     disallowed_content_snippet_areas:
         snippet_c:
-            dissallowed:
+            disallowed:
                 - parallaxContainer
                 - teaser
                 - container
