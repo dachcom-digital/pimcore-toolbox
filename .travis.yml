@@ -61,9 +61,9 @@ matrix:
             env:
                 - PIMCORE_SKELETON_BRANCH="tags/v1.1.0"
         -   name: "Codeception Tests (Pimcore 5.7.x, PHP 7.1)"
-                sudo: required
-                php: 7.1
-                env:
+            sudo: required
+            php: 7.1
+            env:
                 - PIMCORE_SKELETON_BRANCH="tags/v1.2.0"
         -   name: "Codeception Tests (Pimcore 5.7.x, PHP 7.2)"
             sudo: required
