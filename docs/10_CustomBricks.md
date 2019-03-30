@@ -6,6 +6,11 @@ There are three simple steps to create a custom Brick with a Toolbox context.
 
 > **Tip:** Add this to a separate config file.
 
+### Code Style
+> **Important!** Don't use dashes in your area name! Always use Camel- or Snake Case!
+> Example: Instead of `my-brick` you need to define your custom area as `my_brick` or `myBrick`.
+> Since it's symfony standard, we recommend to use the underscore strategy!
+ 
 ```yaml
 # It's always a good idea to add your brick as a service.
 services:
@@ -15,12 +20,12 @@ services:
             # set the brick type to external
             - [setAreaBrickType, ['external']]
         tags:
-            - { name: pimcore.area.brick, id: myBrick }
+            - { name: pimcore.area.brick, id: my_brick }
 
 toolbox:
     custom_areas:
         # that's the name of your brick. 
-        myBrick:
+        my_brick:
             config_elements:
                 title1:
                     type: input
@@ -68,12 +73,12 @@ class MyBrick extends AbstractAreabrick
 
     public function getIcon()
     {
-        return '/static/areas/myBrick/icon.svg';
+        return '/static/areas/my_brick/icon.svg';
     }
 }
 ```
 
-3. Add the view to `/app/Resources/views/Areas/myBrick/view.html.twig`:
+3. Add the view to `/app/Resources/views/Areas/my_brick/view.html.twig`:
 
 ```twig
 {{ elementConfigBar|raw }}
