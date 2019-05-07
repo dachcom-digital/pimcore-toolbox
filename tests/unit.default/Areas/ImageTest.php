@@ -148,7 +148,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img alt="" src="' . $fileName . '" />
+                                <img class="img-fluid" alt="" src="' . $fileName . '" />
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img alt="" src="' . $fileName . '" />
+                                <img class="img-fluid" alt="" src="' . $fileName . '" />
                                 <span class="caption">caption</span>
                             </div>
                         </div>
@@ -176,7 +176,7 @@ class ImageTest extends AbstractAreaTest
                         <div class="col-12">
                             <div class="light-box">
                                 <a href="' . $fileName . '" class="item">
-                                    <img alt="" src="' . $fileName . '" />
+                                    <img class="img-fluid" alt="" src="' . $fileName . '" />
                                 </a>
                             </div>
                         </div>
@@ -191,7 +191,7 @@ class ImageTest extends AbstractAreaTest
                         <div class="col-12">
                             <div >
                                 <a href="/test/test2" target="">
-                                    <img alt="" src="' . $fileName . '" />
+                                    <img class="img-fluid" alt="" src="' . $fileName . '" />
                                 </a>
                             </div>
                         </div>
@@ -205,7 +205,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img alt="" src="' . $fileName . '" />
+                                <img class="img-fluid" alt="" src="' . $fileName . '" />
                             </div>
                         </div>
                     </div>
