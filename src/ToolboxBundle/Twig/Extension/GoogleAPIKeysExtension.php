@@ -48,5 +48,4 @@ class GoogleAPIKeysExtension extends \Twig_Extension
 
         return $browserKey;
     }
-
 }
