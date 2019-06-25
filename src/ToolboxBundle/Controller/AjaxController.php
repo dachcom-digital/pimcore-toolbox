@@ -13,14 +13,12 @@ class AjaxController extends FrontendController
 {
     /**
      * @param Request $request
+     * @param LayoutManagerInterface $layoutManager
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function gmInfoWindowAction(Request $request)
+    public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager)
     {
-        /** @var LayoutManagerInterface $layoutManager */
-        $layoutManager = $this->container->get(LayoutManager::class);
-
         return $this->render(
             $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
             [
@@ -32,15 +30,14 @@ class AjaxController extends FrontendController
 
     /**
      * @param Request $request
+     * @param ConfigManagerInterface $configManager
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      *
      * @throws \Exception
      */
-    public function videoGetTypesAction(Request $request)
+    public function videoGetTypesAction(Request $request, ConfigManagerInterface $configManager)
     {
-        /** @var ConfigManagerInterface $configManager */
-        $configManager = $this->container->get(ConfigManager::class);
         $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['video_types'];
