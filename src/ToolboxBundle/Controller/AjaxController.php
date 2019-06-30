@@ -2,20 +2,20 @@
 
 namespace ToolboxBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use ToolboxBundle\Manager\ConfigManager;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
-use ToolboxBundle\Manager\LayoutManager;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 
 class AjaxController extends FrontendController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param LayoutManagerInterface $layoutManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager)
     {
@@ -23,16 +23,16 @@ class AjaxController extends FrontendController
             $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
             [
                 'mapParams'         => $request->get('mapParams'),
-                'googleMapsHostUrl' => $this->container->getParameter('toolbox_google_maps_host_url')
+                'googleMapsHostUrl' => $this->getParameter('toolbox_google_maps_host_url')
             ]
         );
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param ConfigManagerInterface $configManager
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      *
      * @throws \Exception
      */
