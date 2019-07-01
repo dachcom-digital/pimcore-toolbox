@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
@@ -34,7 +35,7 @@ class ColumnAdjusterController extends Controller\AdminController
     /**
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      *
      * @throws \Exception
      */

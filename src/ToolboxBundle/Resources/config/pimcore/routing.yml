@@ -1,8 +1,8 @@
 toolbox_ckeditor_area_style:
-    path:     /admin/toolbox-ckeditor-style.js
+    path: /admin/toolbox-ckeditor-style.js
     defaults: { _controller: ToolboxBundle\Controller\Admin\SettingsController:ckEditorAreaStyleAction }
 toolbox_ckeditor_object_style:
-    path:     /admin/toolbox-ckeditor-object-style.js
+    path: /admin/toolbox-ckeditor-object-style.js
     defaults: { _controller: ToolboxBundle\Controller\Admin\SettingsController:ckEditorObjectStyleAction }
 toolbox_frontend_ajax_google_maps_iw:
     path: /toolbox/ajax/gm-info-window
