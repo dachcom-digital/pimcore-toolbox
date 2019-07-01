@@ -22,9 +22,9 @@ class AreaPositionCest
         $I->submitForm('form', ['username' => 'backendTester', 'password' => 'backendTester']);
 
         // wait for pimcore gui
-        $I->waitForElement('div.pimcore_icon_object', 10);
+        $I->waitForElement('div#pimcore_panel_tree_objects', 20);
         // wait for document gui
-        $I->waitForElement('div.x-panel .x-tab-inner', 10);
+        $I->waitForElement('div.x-panel .x-tab-inner', 20);
         // switch to document edit iframe
         $I->switchToIFrame('document_iframe_' . $document->getId());
         // wait for input element

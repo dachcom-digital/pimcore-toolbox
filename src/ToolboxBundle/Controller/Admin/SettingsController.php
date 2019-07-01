@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
@@ -24,7 +25,7 @@ class SettingsController extends Controller\AdminController
     public $ckEditorAreaConfig = [];
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Exception
      */
@@ -45,7 +46,7 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Exception
      */
