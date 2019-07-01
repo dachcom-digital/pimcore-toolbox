@@ -4,16 +4,16 @@ namespace ToolboxBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use ToolboxBundle\Manager\ConfigManager;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class SnippetController extends FrontendController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
      * @param ConfigManagerInterface $configManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @throws \Exception
      */
