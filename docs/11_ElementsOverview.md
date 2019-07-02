@@ -179,15 +179,21 @@ If you want to use a different extension to generate your galleries, just overri
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. Toolbox will automatically generate the long/lat information after saving the document.
-Please make sure that you've included a valid google maps api key. Include the script tag in your footer:
+
+### Get & set your api key
+
+To get a valid API Key you need to follow those steps:
+- Create [a valid google maps api key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+- Enable two API: Geocoding API, Maps Javascript API
+- Head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
+
+[2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
+
+Now you can include the script tag in your footer:
 
 ```html
 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ toolbox_google_map_api_key() }}"></script>
 ```
-
-Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
-
-![2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
 
 If you made your own toolbox-/googleMap-config, please make sure to add the last line to it:
 ```yaml
