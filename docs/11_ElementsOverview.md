@@ -184,10 +184,8 @@ Create a Google Map Element. You're able to define one or multiple markers. Tool
 
 To get a valid API Key you need to follow those steps:
 - Create [a valid google maps api key](https://developers.google.com/maps/documentation/javascript/get-api-key)
-- Enable two API: Geocoding API, Maps Javascript API
-- Head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
-
-[2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
+- Enable two APIs: Geocoding API, Maps Javascript API
+- Head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field: ![2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
 
 Now you can include the script tag in your footer:
 
