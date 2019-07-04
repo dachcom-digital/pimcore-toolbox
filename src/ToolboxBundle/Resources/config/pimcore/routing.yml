@@ -1,15 +1,15 @@
 toolbox_ckeditor_area_style:
-    path:     /admin/toolbox-ckeditor-style.js
-    defaults: { _controller: ToolboxBundle:Admin\Settings:ckEditorAreaStyle }
+    path: /admin/toolbox-ckeditor-style.js
+    defaults: { _controller: ToolboxBundle\Controller\Admin\SettingsController:ckEditorAreaStyleAction }
 toolbox_ckeditor_object_style:
-    path:     /admin/toolbox-ckeditor-object-style.js
-    defaults: { _controller: ToolboxBundle:Admin\Settings:ckEditorObjectStyle }
+    path: /admin/toolbox-ckeditor-object-style.js
+    defaults: { _controller: ToolboxBundle\Controller\Admin\SettingsController:ckEditorObjectStyleAction }
 toolbox_frontend_ajax_google_maps_iw:
     path: /toolbox/ajax/gm-info-window
-    defaults: { _controller: ToolboxBundle:Ajax:gmInfoWindow }
+    defaults: { _controller: ToolboxBundle\Controller\AjaxController:gmInfoWindowAction }
 toolbox_frontend_ajax_video_types:
     path: /toolbox/ajax/video-allowed-video-types
-    defaults: { _controller: ToolboxBundle:Ajax:videoGetTypes }
+    defaults: { _controller: ToolboxBundle\Controller\AjaxController:videoGetTypesAction }
 toolbox_column_adjuster:
     path: /admin/toolbox-get-column-info
-    defaults: { _controller: ToolboxBundle:Admin\ColumnAdjuster:getColumnInfo }
+    defaults: { _controller: ToolboxBundle\Controller\Admin\ColumnAdjusterController:getColumnInfoAction }

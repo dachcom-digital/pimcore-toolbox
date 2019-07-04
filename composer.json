@@ -2,7 +2,7 @@
     "name": "dachcom-digital/toolbox",
     "type": "pimcore-bundle",
     "license": "GPL-3.0-or-later",
-    "description": "Pimcore 5.x Project Kickstarter.",
+    "description": "Pimcore Project Kickstarter.",
     "keywords": ["pimcore", "toolbox"],
     "homepage": "https://github.com/dachcom-digital/pimcore-toolbox",
     "authors": [
@@ -26,10 +26,10 @@
         }
     },
     "require": {
-        "pimcore/core-version": "^5.4.0"
+        "pimcore/pimcore": "^6.0.0"
     },
     "require-dev": {
-        "codeception/codeception": "~2.3.0",
+        "codeception/codeception": "~2.4.0",
         "phpstan/phpstan": "^0.11.1",
         "phpstan/phpstan-symfony": "^0.11.0",
         "symplify/easy-coding-standard": "^5.4"

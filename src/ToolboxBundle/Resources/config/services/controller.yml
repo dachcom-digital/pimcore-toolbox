@@ -2,3 +2,20 @@ services:
 
     ToolboxBundle\Controller\Admin\ColumnAdjusterController:
         autowire: true
+        tags:
+            - { name: controller.service_arguments }
+
+    ToolboxBundle\Controller\Admin\SettingsController:
+        autowire: true
+        tags:
+              - { name: controller.service_arguments }
+
+    ToolboxBundle\Controller\AjaxController:
+        autowire: true
+        tags:
+              - { name: controller.service_arguments }
+
+    ToolboxBundle\Controller\SnippetController:
+        autowire: true
+        tags:
+              - { name: controller.service_arguments }

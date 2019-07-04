@@ -2,45 +2,42 @@
 
 namespace ToolboxBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Pimcore\Controller\FrontendController;
-use ToolboxBundle\Manager\ConfigManager;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
-use ToolboxBundle\Manager\LayoutManager;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 
 class AjaxController extends FrontendController
 {
     /**
-     * @param Request $request
+     * @param Request                $request
+     * @param LayoutManagerInterface $layoutManager
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function gmInfoWindowAction(Request $request)
+    public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager)
     {
-        /** @var LayoutManagerInterface $layoutManager */
-        $layoutManager = $this->container->get(LayoutManager::class);
-
         return $this->render(
             $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
             [
                 'mapParams'         => $request->get('mapParams'),
-                'googleMapsHostUrl' => $this->container->getParameter('toolbox_google_maps_host_url')
+                'googleMapsHostUrl' => $this->getParameter('toolbox_google_maps_host_url')
             ]
         );
     }
 
     /**
-     * @param Request $request
+     * @param Request                $request
+     * @param ConfigManagerInterface $configManager
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      *
      * @throws \Exception
      */
-    public function videoGetTypesAction(Request $request)
+    public function videoGetTypesAction(Request $request, ConfigManagerInterface $configManager)
     {
-        /** @var ConfigManagerInterface $configManager */
-        $configManager = $this->container->get(ConfigManager::class);
         $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['video_types'];

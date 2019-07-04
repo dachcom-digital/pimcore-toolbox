@@ -1,4 +1,4 @@
-# Pimcore 5 Toolbox
+# Pimcore Toolbox
 
 The Toolbox is a Kickstarter for your every day project. It provides some important bricks and structure basics which allow rapid and quality-oriented web development. 
 
@@ -11,17 +11,19 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ![pimcore-toolbox](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
 
-## Requirements
-Pimcore >= 5.4.0
+### Release Plan
 
-#### Pimcore 4 
-Get the Pimcore4 Version [here](https://github.com/dachcom-digital/pimcore-toolbox/tree/pimcore4).
+| Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
+|---------|-----------------------------------|----------------------------|--------------|----------------|------------|
+| **3.0** | `6.0`                             | `3.4`, `^4.0`              | --           | Feature Branch | dev-master |
+| **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Bugfix only    | 2.8        |
+| **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4   |
 
 ### Installation  
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~2.7.0"
+    "dachcom-digital/toolbox" : "~3.0.0"
 }
 ```
 
