@@ -4,7 +4,7 @@ use Pimcore\Config;
 use Symfony\Component\Debug\Debug;
 
 \Pimcore\Bootstrap::setProjectRoot();
-\Pimcore\Bootstrap::boostrap();
+\Pimcore\Bootstrap::bootstrap();
 
 $environment = Config::getEnvironment();
 $debug = Config::getEnvironmentConfig()->activatesKernelDebugMode($environment);
