@@ -6,6 +6,16 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 2.x to Version 3.0.0
+- **[NEW FEATURE]**: Pimcore 6.0.0 ready
+- **[BC BREAK]**: All Controllers are registered as services now!
+
+***
+
+#### Update from Version 2.7.x to Version 2.8.0
+- **[ATTENTION]**: This release will be the last minor release which supports Pimcore 5!
+- ([Milestone for 2.8.0](https://github.com/dachcom-digital/pimcore-toolbox/milestone/13?closed=1)
+
 #### Update from Version 2.7.0 to Version 2.7.1
 - **[NEW FEATURE]**: Google Map API Key now configurable via systemsettings, [read more here](./docs/11_ElementsOverview.md#google-map)
 
@@ -141,6 +151,8 @@ toolbox:
                 column_classes:
                     '2': 'col-xs-12 col-sm-6'
 ```
+
+***
 
 #### Update from Version 1.x to Version 2.0.0
 - rename globallink to dynamiclink:
