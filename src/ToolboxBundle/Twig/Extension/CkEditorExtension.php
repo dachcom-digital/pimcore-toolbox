@@ -3,8 +3,10 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use Pimcore\Model\Document;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CkEditorExtension extends \Twig_Extension
+class CkEditorExtension extends AbstractExtension
 {
     /**
      * {@inheritdoc}
@@ -12,7 +14,7 @@ class CkEditorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_get_ckeditor_config_path', [$this, 'getConfigPath'], [
+            new TwigFunction('toolbox_get_ckeditor_config_path', [$this, 'getConfigPath'], [
                 'needs_context' => true
             ])
         ];

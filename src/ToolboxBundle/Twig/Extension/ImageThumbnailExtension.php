@@ -3,8 +3,10 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use ToolboxBundle\Manager\ConfigManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class ImageThumbnailExtension extends \Twig_Extension
+class ImageThumbnailExtension extends AbstractExtension
 {
     /**
      * @var ConfigManagerInterface
@@ -12,8 +14,6 @@ class ImageThumbnailExtension extends \Twig_Extension
     protected $configManager;
 
     /**
-     * ImageThumbnailExtension constructor.
-     *
      * @param ConfigManagerInterface $configManager
      */
     public function __construct(ConfigManagerInterface $configManager)
@@ -27,7 +27,7 @@ class ImageThumbnailExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_get_image_thumbnail', [$this, 'getImageThumbnail'])
+            new TwigFunction('toolbox_get_image_thumbnail', [$this, 'getImageThumbnail'])
         ];
     }
 

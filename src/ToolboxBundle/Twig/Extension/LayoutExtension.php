@@ -3,8 +3,10 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use ToolboxBundle\Manager\LayoutManager;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class LayoutExtension extends \Twig_Extension
+class LayoutExtension extends AbstractExtension
 {
     /**
      * @var LayoutManager
@@ -12,8 +14,6 @@ class LayoutExtension extends \Twig_Extension
     protected $layoutManager;
 
     /**
-     * LayoutExtension constructor.
-     *
      * @param LayoutManager $layoutManager
      */
     public function __construct(LayoutManager $layoutManager)
@@ -27,7 +27,7 @@ class LayoutExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_area_path', [$this, 'getAreaPath'])
+            new TwigFunction('toolbox_area_path', [$this, 'getAreaPath'])
         ];
     }
 
