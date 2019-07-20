@@ -62,6 +62,10 @@ class PimcoreCore extends PimcoreCoreModule
             return;
         }
 
+        if ($this->config['configuration_file'] === self::DEFAULT_CONFIG_FILE) {
+            return;
+        }
+
         $configuration = $this->config['configuration_file'];
 
         $this->kernelHasCustomSuiteConfig = true;
@@ -227,8 +231,6 @@ class PimcoreCore extends PimcoreCoreModule
 
     protected function clearCache()
     {
-        Debug::debug('[PIMCORE] Clear Cache!');
-
         $fileSystem = new Filesystem();
         $cacheDir = PIMCORE_SYMFONY_CACHE_DIRECTORY;
 
