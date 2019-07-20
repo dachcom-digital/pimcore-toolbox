@@ -1,5 +1,5 @@
 {%- macro generate(googleMapsHostUrl, mapParams, useLangLat = true, point = 'daddr', mode = 'driving') %}
-    {%- spaceless %}
+    {%- apply spaceless %}
         {% set pointMode = 'daddr' %}
         {% set validPointMode = ['daddr', 'saddr'] %}
         {% if point in validPointMode|keys %}
@@ -17,5 +17,5 @@
         {% else %}
             {{ googleMapsHostUrl ~ '/?' ~ pointMode ~ '=' ~ mapParams.street|replace({' ' : '+'}) ~ ',' ~ mapParams.zip ~ '+' ~ mapParams.city|replace({' ' : '+'}) ~ ',' ~ mapParams.country|replace({' ' : '+'}) ~ '&directionsmode=' ~ directionMode }}
         {% endif %}
-    {% endspaceless -%}
+    {% endapply -%}
 {% endmacro -%}
