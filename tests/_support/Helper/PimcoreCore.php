@@ -62,10 +62,6 @@ class PimcoreCore extends PimcoreCoreModule
             return;
         }
 
-        if ($this->config['configuration_file'] === self::DEFAULT_CONFIG_FILE) {
-            return;
-        }
-
         $configuration = $this->config['configuration_file'];
 
         $this->kernelHasCustomSuiteConfig = true;
