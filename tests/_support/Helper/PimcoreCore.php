@@ -10,6 +10,7 @@ use Pimcore\Config;
 use Pimcore\Event\TestEvents;
 use Pimcore\Tests\Helper\Pimcore as PimcoreCoreModule;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Kernel;
 
 class PimcoreCore extends PimcoreCoreModule
 {
@@ -230,6 +231,11 @@ class PimcoreCore extends PimcoreCoreModule
 
     protected function clearCache()
     {
+        // not required anymore in S4.
+        if (Kernel::MAJOR_VERSION > 3) {
+            return;
+        }
+
         Debug::debug('[PIMCORE] Clear Cache!');
 
         $fileSystem = new Filesystem();
