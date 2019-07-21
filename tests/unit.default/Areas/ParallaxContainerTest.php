@@ -3,7 +3,7 @@
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Pimcore\Model\Document\Tag\Block;
-use Pimcore\Model\Document\Tag\Href;
+use Pimcore\Model\Document\Tag\Relation;
 use Pimcore\Model\Document\Tag\Select;
 use Pimcore\Tests\Util\TestHelper;
 use ToolboxBundle\Model\Document\Tag\ParallaxImage;
@@ -23,7 +23,7 @@ class ParallaxContainerTest extends AbstractAreaTest
         $this->assertEquals('select', $configElements[0]['additional_config']['type']);
         $this->assertEquals('template', $configElements[0]['additional_config']['name']);
 
-        $this->assertEquals('href', $configElements[1]['additional_config']['type']);
+        $this->assertEquals('relation', $configElements[1]['additional_config']['type']);
         $this->assertEquals('background_image', $configElements[1]['additional_config']['name']);
 
         $this->assertEquals('select', $configElements[2]['additional_config']['type']);
@@ -87,7 +87,7 @@ class ParallaxContainerTest extends AbstractAreaTest
 
     private function getDefaultElements($asset)
     {
-        $backgroundImage = new Href();
+        $backgroundImage = new Relation();
         $backgroundImage->setDataFromEditmode([
             'id'   => $asset->getId(),
             'type' => 'asset'
@@ -141,7 +141,7 @@ class ParallaxContainerTest extends AbstractAreaTest
         $sectionContainerType = new Select();
         $sectionContainerType->setDataFromEditmode('container-fluid');
 
-        $sectionBackgroundImage = new Href();
+        $sectionBackgroundImage = new Relation();
         $sectionBackgroundImage->setDataFromEditmode([
             'id'   => $asset->getId(),
             'type' => 'asset'

@@ -1,6 +1,6 @@
 pimcore.registerNS('pimcore.document.tags.parallaximage');
 
-pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihref, {
+pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.relations, {
 
     updateLayout: function() {
 
@@ -17,7 +17,7 @@ pimcore.document.tags.parallaximage = Class.create(pimcore.document.tags.multihr
 
         this.setupWrapper();
 
-        var modelName = 'ParallaxImageMultihrefEntry';
+        var modelName = 'ParallaxImageRelationsEntry';
         if(!Ext.ClassManager.isCreated(modelName) ) {
             Ext.define(modelName, {
                 extend: 'Ext.data.Model',

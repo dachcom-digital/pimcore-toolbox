@@ -20,7 +20,7 @@ class ParallaxContainerSectionTest extends AbstractAreaTest
         $this->assertEquals('select', $configElements[1]['additional_config']['type']);
         $this->assertEquals('container_type', $configElements[1]['additional_config']['name']);
 
-        $this->assertEquals('href', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('relation', $configElements[2]['additional_config']['type']);
         $this->assertEquals('background_image', $configElements[2]['additional_config']['name']);
 
         $this->assertEquals('select', $configElements[3]['additional_config']['type']);

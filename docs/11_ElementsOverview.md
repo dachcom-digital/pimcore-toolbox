@@ -126,7 +126,7 @@ Create download elements.
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `downloads` | multihref | Add download files / folders | - | `pimcore_multihref('downloads')` |
+| `downloads` | relations | Add download files / folders | - | `pimcore_relations('downloads')` |
 | `show_preview_images` | checkbox | Display Preview Images | false | `pimcore_checkbox('show_preview_images')` |
 | `show_file_info` | checkbox | Display File Info | false | `pimcore_checkbox('show_file_info')` |
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
@@ -172,7 +172,7 @@ If you want to use a different extension to generate your galleries, just overri
 
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
-| `images` | multihref | Add images / folders | - | `pimcore_multihref('images')` |
+| `images` | relations | Add images / folders | - | `pimcore_relations('images')` |
 | `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
 | `use_thumbnails` | checkbox | Add a thumbnail slider | false | `pimcore_checkbox('use_thumbnails')` |
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
