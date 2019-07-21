@@ -16,7 +16,7 @@ toolbox:
                             no-template: 'No Template'
                         default: no-template
                 background_image:
-                    type: href
+                    type: relation
                     title: 'Background Image'
                     config:
                         types:

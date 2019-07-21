@@ -22,7 +22,7 @@ toolbox:
                             container-fluid: 'Fluid Container Wrapper'
                         default: none
                 background_image:
-                    type: href
+                    type: relation
                     title: 'Background Image'
                     config:
                         reload: true
