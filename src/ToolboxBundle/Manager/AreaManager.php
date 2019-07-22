@@ -180,7 +180,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        // @deprecated: remove in 3.0
+        // @deprecated: remove in 4.0
         $disallowedSubAreas = $this->configManager->getConfig('disallowed_subareas');
         $depElementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
 
@@ -229,7 +229,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        // @deprecated: remove in 3.0
+        // @deprecated: remove in 4.0
         $disallowedSubAreas = $this->configManager->getConfig('disallowed_content_snippet_areas');
 
         $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');

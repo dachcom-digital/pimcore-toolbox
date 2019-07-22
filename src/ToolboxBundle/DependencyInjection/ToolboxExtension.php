@@ -155,7 +155,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * @deprecated since 2.3. gets removed in 3.0
+     * @deprecated since 2.3. gets removed in 4.0
      *
      * @param array            $config
      * @param ContainerBuilder $container
