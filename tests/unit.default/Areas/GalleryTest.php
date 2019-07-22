@@ -3,7 +3,7 @@
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Multihref;
+use Pimcore\Model\Document\Tag\Relations;
 use Pimcore\Model\Document\Tag\Select;
 use Pimcore\Tests\Util\TestHelper;
 
@@ -19,7 +19,7 @@ class GalleryTest extends AbstractAreaTest
         $configElements = $areaConfig['config_elements'];
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('multihref', $configElements[0]['additional_config']['type']);
+        $this->assertEquals('relations', $configElements[0]['additional_config']['type']);
         $this->assertEquals('images', $configElements[0]['additional_config']['name']);
 
         $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
@@ -36,7 +36,7 @@ class GalleryTest extends AbstractAreaTest
         $asset1 = TestHelper::createImageAsset('', true);
         $asset2 = TestHelper::createImageAsset('', true);
 
-        $images = new Multihref();
+        $images = new Relations();
         $images->setDataFromEditmode([
             [
                 'id'   => $asset1->getId(),
@@ -65,7 +65,7 @@ class GalleryTest extends AbstractAreaTest
         $asset1 = TestHelper::createImageAsset('', true);
         $asset2 = TestHelper::createImageAsset('', true);
 
-        $images = new Multihref();
+        $images = new Relations();
         $images->setDataFromEditmode([
             [
                 'id'   => $asset1->getId(),
@@ -98,7 +98,7 @@ class GalleryTest extends AbstractAreaTest
         $asset1 = TestHelper::createImageAsset('', true);
         $asset2 = TestHelper::createImageAsset('', true);
 
-        $images = new Multihref();
+        $images = new Relations();
         $images->setDataFromEditmode([
             [
                 'id'   => $asset1->getId(),
@@ -134,7 +134,7 @@ class GalleryTest extends AbstractAreaTest
         $asset1 = TestHelper::createImageAsset('', true);
         $asset2 = TestHelper::createImageAsset('', true);
 
-        $images = new Multihref();
+        $images = new Relations();
         $images->setDataFromEditmode([
             [
                 'id'   => $asset1->getId(),

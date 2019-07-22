@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Download;
 
 use Pimcore\Db\ZendCompatibility\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
@@ -28,7 +29,7 @@ class Download extends AbstractAreabrick
     /**
      * @param Info $info
      *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
+     * @return null|Response|void
      *
      * @throws \Exception
      */
@@ -41,8 +42,8 @@ class Download extends AbstractAreabrick
         //check if member extension exist
         $hasMembers = $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
 
-        /** @var \Pimcore\Model\Document\Tag\Multihref $downloadField */
-        $downloadField = $this->getDocumentTag($info->getDocument(), 'multihref', 'downloads');
+        /** @var \Pimcore\Model\Document\Tag\Relations $downloadField */
+        $downloadField = $this->getDocumentTag($info->getDocument(), 'relations', 'downloads');
 
         $assets = [];
         if (!$downloadField->isEmpty()) {

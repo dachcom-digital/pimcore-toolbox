@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Document\Areabrick\Gallery;
 
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
 
@@ -10,7 +11,7 @@ class Gallery extends AbstractAreabrick
     /**
      * @param Info $info
      *
-     * @return \Symfony\Component\HttpFoundation\Response|void|null
+     * @return Response|void|null
      *
      * @throws \Exception
      */
@@ -25,8 +26,8 @@ class Gallery extends AbstractAreabrick
             $id = uniqid('gallery-');
         }
 
-        /** @var \Pimcore\Model\Document\Tag\Multihref $imagesField */
-        $imagesField = $this->getDocumentTag($info->getDocument(), 'multihref', 'images');
+        /** @var \Pimcore\Model\Document\Tag\Relations $imagesField */
+        $imagesField = $this->getDocumentTag($info->getDocument(), 'relations', 'images');
 
         $info->getView()->getParameters()->add([
             'galleryId' => $id,

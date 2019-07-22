@@ -8,7 +8,7 @@ use Pimcore\Model\Document;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject;
 
-class ParallaxImage extends Model\Document\Tag\Multihref
+class ParallaxImage extends Model\Document\Tag\Relations
 {
     /**
      * Return the type of the element.

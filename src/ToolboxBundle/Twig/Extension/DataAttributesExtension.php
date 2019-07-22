@@ -3,8 +3,10 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use ToolboxBundle\Manager\ConfigManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DataAttributesExtension extends \Twig_Extension
+class DataAttributesExtension extends AbstractExtension
 {
     /**
      * @var ConfigManagerInterface
@@ -12,8 +14,6 @@ class DataAttributesExtension extends \Twig_Extension
     protected $configManager;
 
     /**
-     * DataAttributesExtension constructor.
-     *
      * @param ConfigManagerInterface $configManager
      */
     public function __construct(ConfigManagerInterface $configManager)
@@ -27,7 +27,7 @@ class DataAttributesExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_data_attributes_generator', [$this, 'generateDataAttributes']),
+            new TwigFunction('toolbox_data_attributes_generator', [$this, 'generateDataAttributes']),
         ];
     }
 

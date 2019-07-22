@@ -199,9 +199,9 @@ class Configuration implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->prototype('scalar')->end()
                 ->end()
-                // @deprecated: remove with toolbox 3.0
+                // @deprecated: remove with toolbox 4.0
                 ->arrayNode('disallowed_subareas')
-                    ->setDeprecated('The "%node%" option key is deprecated since version 2.3 and will be removed in Toolbox 3.0. Use the "areas_appearance" configuration key instead')
+                    ->setDeprecated('The "%node%" option key is deprecated since version 2.3 and will be removed in Toolbox 4.0. Use the "areas_appearance" configuration key instead')
                     ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
@@ -226,9 +226,9 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                // @deprecated: remove with toolbox 3.0
+                // @deprecated: remove with toolbox 4.0
                 ->variableNode('disallowed_content_snippet_areas')
-                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 3.0. Use the "snippet_areas_appearance" configuration key instead')
+                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 4.0. Use the "snippet_areas_appearance" configuration key instead')
                 ->end()
                 ->arrayNode('snippet_areas_appearance')
                     ->useAttributeAsKey('name')
@@ -274,11 +274,11 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('column_calculator')->defaultValue(ColumnCalculator::class)->end()
                                 ->scalarNode('ToolboxBundle\Calculator\ColumnCalculator')->defaultValue(ColumnCalculator::class)
-                                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 3.0. Use "column_calculator" instead.')
+                                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 4.0. Use "column_calculator" instead.')
                                 ->end()
                                 ->scalarNode('slide_calculator')->defaultValue(SlideColumnCalculator::class)->end()
                                 ->scalarNode('ToolboxBundle\Calculator\SlideColumnCalculator')->defaultValue(SlideColumnCalculator::class)
-                                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 3.0. Use "slide_calculator" instead.')
+                                    ->setDeprecated('The "%node%" option is deprecated since version 2.3 and will be removed in Toolbox 4.0. Use "slide_calculator" instead.')
                                 ->end()
                             ->end()
                         ->end()

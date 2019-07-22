@@ -5,8 +5,10 @@ namespace ToolboxBundle\Twig\Extension;
 use Pimcore\Model\Document\Snippet;
 use ToolboxBundle\Manager\AreaManagerInterface;
 use ToolboxBundle\Manager\ConfigManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class AreaBlockConfigExtension extends \Twig_Extension
+class AreaBlockConfigExtension extends AbstractExtension
 {
     /**
      * @var ConfigManagerInterface
@@ -19,8 +21,6 @@ class AreaBlockConfigExtension extends \Twig_Extension
     protected $areaManager;
 
     /**
-     * AreaBlockConfigExtension constructor.
-     *
      * @param ConfigManagerInterface $configManager
      * @param AreaManagerInterface   $areaManager
      */
@@ -36,7 +36,7 @@ class AreaBlockConfigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'], [
+            new TwigFunction('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'], [
                 'needs_context' => true
             ])
         ];

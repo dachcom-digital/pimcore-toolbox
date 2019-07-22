@@ -3,8 +3,10 @@
 namespace ToolboxBundle\Twig\Extension;
 
 use ToolboxBundle\Manager\ConfigManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class GoogleAPIKeysExtension extends \Twig_Extension
+class GoogleAPIKeysExtension extends AbstractExtension
 {
     /**
      * @var ConfigManagerInterface
@@ -12,8 +14,6 @@ class GoogleAPIKeysExtension extends \Twig_Extension
     protected $configManager;
 
     /**
-     * GoogleAPIKeysExtension constructor.
-     *
      * @param ConfigManagerInterface $configManager
      */
     public function __construct(ConfigManagerInterface $configManager)
@@ -27,7 +27,7 @@ class GoogleAPIKeysExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_google_map_api_key', [$this, 'getGoogleMapAPIKey'])
+            new TwigFunction('toolbox_google_map_api_key', [$this, 'getGoogleMapAPIKey'])
         ];
     }
 

@@ -9,7 +9,7 @@ toolbox:
         download:
             config_elements:
                 downloads:
-                    type: multihref
+                    type: relations
                     title: 'Files'
                     config:
                         reload: true

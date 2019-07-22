@@ -8,7 +8,7 @@ toolbox:
         gallery:
             config_elements:
                 images:
-                    type: multihref
+                    type: relations
                     title: 'Images or Folder'
                     config:
                         reload: true

@@ -2,6 +2,8 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
+use Twig\TwigFunction;
+
 class DocumentTagExtension extends \Pimcore\Twig\Extension\DocumentTagExtension
 {
     /**
@@ -10,11 +12,11 @@ class DocumentTagExtension extends \Pimcore\Twig\Extension\DocumentTagExtension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_document_tag', [$this, 'renderTag'], [
+            new TwigFunction('toolbox_document_tag', [$this, 'renderTag'], [
                 'needs_context' => true,
                 'is_safe'       => ['html'],
             ]),
-            new \Twig_Function('pimcore_iterate_block', [$this, 'getBlockIterator'])
+            new TwigFunction('pimcore_iterate_block', [$this, 'getBlockIterator'])
         ];
     }
 }

@@ -6,8 +6,10 @@ use Pimcore\Model\Asset;
 use ToolboxBundle\Connector\BundleConnector;
 use Pimcore\Translation\Translator;
 use ToolboxBundle\Manager\ConfigManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DownloadExtension extends \Twig_Extension
+class DownloadExtension extends AbstractExtension
 {
     /**
      * @var ConfigManagerInterface
@@ -20,13 +22,11 @@ class DownloadExtension extends \Twig_Extension
     protected $bundleConnector;
 
     /**
-     * @var \Pimcore\Translation\Translator
+     * @var Translator
      */
     protected $translator;
 
     /**
-     * DownloadExtension constructor.
-     *
      * @param ConfigManagerInterface $configManager
      * @param BundleConnector        $bundleConnector
      * @param Translator             $translator
@@ -44,8 +44,8 @@ class DownloadExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_Function('toolbox_download_info', [$this, 'getDownloadInfo']),
-            new \Twig_Function(
+            new TwigFunction('toolbox_download_info', [$this, 'getDownloadInfo']),
+            new TwigFunction(
                 'toolbox_download_tracker',
                 [$this, 'getDownloadTracker'],
                 ['is_safe' => ['html']]
@@ -104,11 +104,11 @@ class DownloadExtension extends \Twig_Extension
     }
 
     /**
-     * @param \Pimcore\Model\Asset $download
-     * @param bool                 $showPreviewImage
-     * @param string               $fileSizeUnit
-     * @param int                  $fileSizePrecision
-     * @param bool                 $showFileNameIfTitleEmpty
+     * @param Asset  $download
+     * @param bool   $showPreviewImage
+     * @param string $fileSizeUnit
+     * @param int    $fileSizePrecision
+     * @param bool   $showFileNameIfTitleEmpty
      *
      * @return array
      *
