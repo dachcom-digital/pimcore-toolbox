@@ -197,6 +197,7 @@ class BrickConfigBuilder
                 'multihref',
                 'relations',
                 'href',
+                'relation',
                 'image',
                 'input',
                 'multiselect',
@@ -226,7 +227,7 @@ class BrickConfigBuilder
     {
         return in_array($type, [
             'multihref',
-            'relation',
+            'relations',
             'image',
             'multiselect',
             'embed',

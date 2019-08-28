@@ -320,7 +320,7 @@ Build a Parallax Container.
 | Name | Type | Description | Default Value | Frontend
 |------|------|-----------------------------|---------------|-------------------------------|
 | `template` | select | Define a Parallax Template | no-template | `pimcore_select('template')` |
-| `background_image` | href | Define a background image | - | `pimcore_href('background_image')` |
+| `background_image` | relation | Define a background image | - | `pimcore_relation('background_image')` |
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
 | `image_front` | parallaximage | Parallax Images behind content | - | *not available* |
 | `image_behind` | parallaximage | Parallax Images in front of content | - | *not available* |
@@ -357,7 +357,7 @@ Build a Parallax Container Section.
 |------|------|-----------------------------|---------------|-------------------------------|
 | `template` | select | Define a Parallax Section Template | no-template | `pimcore_select('template')` |
 | `container_type` | select | Define a Container Type | none | `pimcore_select('container_type')` |
-| `background_image` | href | Define a background image | - | `pimcore_href('background_image')` |
+| `background_image` | relation | Define a background image | - | `pimcore_relation('background_image')` |
 | `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
