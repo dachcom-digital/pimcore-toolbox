@@ -37,6 +37,6 @@ class SnippetControllerCest
         $I->seeElement('.single-teaser.default');
         $I->seeElement('.teaser-headline');
         $I->seeElement('.teaser-text');
-        $I->seeElement('.teaser-link');
+        $I->seeElement('.pimcore_tag_link');
     }
 }
