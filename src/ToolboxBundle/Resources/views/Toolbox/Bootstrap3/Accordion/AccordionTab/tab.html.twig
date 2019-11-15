@@ -23,7 +23,7 @@
     {% if editmode == false %}
         <div class="tab-content">
             {% for tab in tabContent %}
-                <div role="tabpanel" class="tab-pane fade {{ tab.index == '1' ? 'active in' : '' }}" id="tab-{{ id }}-{{ tab.index }}">
+                <div role="tabpanel" class="tab-pane fade {{ loop.index == '1' ? 'active in' : '' }}" id="tab-{{ id }}-{{ tab.index }}">
                     {{ tab.content }}
                 </div>
             {% endfor %}

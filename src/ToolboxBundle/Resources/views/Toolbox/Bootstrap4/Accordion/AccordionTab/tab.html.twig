@@ -9,7 +9,7 @@
                         {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
                     </div>
                 {% else %}
-                    <a href="#panel-{{ id }}-{{ panel.currentIndex }}" id="tab-{{ id }}-{{ panel.currentIndex }}" class="nav-link {{ panel.currentIndex == '1' ? 'active' : '' }}" aria-controls="panel-{{ id }}-{{ panel.currentIndex }}" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
+                    <a href="#panel-{{ id }}-{{ panel.currentIndex }}" id="tab-{{ id }}-{{ panel.currentIndex }}" class="nav-link {{ loop.index == 1 ? 'active' : '' }}" aria-controls="panel-{{ id }}-{{ panel.currentIndex }}" role="tab" data-toggle="tab" aria-expanded="{{ loop.first ? 'true' : 'false' }}">
                         {{ pimcore_input('name').data }}
                     </a>
                     {% set content %}
@@ -23,7 +23,7 @@
     {% if editmode == false %}
         <div class="tab-content">
             {% for tab in tabContent %}
-                <div role="tabpanel" class="tab-pane fade {{ tab.index == '1' ? 'show active' : '' }}" id="panel-{{ id }}-{{ tab.index }}" aria-labelledby="tab-{{ id }}-{{ tab.index }}">
+                <div role="tabpanel" class="tab-pane fade {{ loop.index == 1 ? 'show active' : '' }}" id="panel-{{ id }}-{{ tab.index }}" aria-labelledby="tab-{{ id }}-{{ tab.index }}">
                     {{ tab.content }}
                 </div>
             {% endfor %}
