@@ -51,12 +51,12 @@ matrix:
             sudo: required
             php: 7.2
             env:
-                - PIMCORE_SKELETON_BRANCH="tags/v2.2.0"
+                - PIMCORE_SKELETON_BRANCH="tags/v2.3.0"
         -   name: "Codeception Tests (Pimcore 6.3.x, Symfony ^4.0, PHP 7.3)"
             sudo: required
             php: 7.3
             env:
-                - PIMCORE_SKELETON_BRANCH="tags/v2.2.0"
+                - PIMCORE_SKELETON_BRANCH="tags/v2.3.0"
         -   name: "Codeception Tests (Pimcore 6.3.x, Symfony ^3.4, PHP 7.3)"
             sudo: required
             php: 7.3
