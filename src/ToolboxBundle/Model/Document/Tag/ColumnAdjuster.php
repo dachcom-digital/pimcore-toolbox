@@ -25,8 +25,8 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @return mixed
-     * @see Document\Tag\TagInterface::getData
      *
+     * @see Document\Tag\TagInterface::getData
      */
     public function getData()
     {
@@ -43,8 +43,8 @@ class ColumnAdjuster extends Document\Tag
 
     /**
      * @return string
-     * @see Document\Tag\TagInterface::admin
      *
+     * @see Document\Tag\TagInterface::admin
      */
     public function admin()
     {
@@ -83,7 +83,6 @@ class ColumnAdjuster extends Document\Tag
      * @return $this
      *
      * @see Document\Tag\TagInterface::setDataFromEditmode
-     *
      */
     public function setDataFromEditmode($data)
     {
