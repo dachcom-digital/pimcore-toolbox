@@ -24,9 +24,9 @@ class ColumnAdjuster extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::getData
-     *
      * @return mixed
+     *
+     * @see Document\Tag\TagInterface::getData
      */
     public function getData()
     {
@@ -42,15 +42,23 @@ class ColumnAdjuster extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::admin
-     *
      * @return string
+     *
+     * @see Document\Tag\TagInterface::admin
      */
     public function admin()
     {
         $html = parent::admin();
 
         return $html;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return $this->data === false || empty($this->data);
     }
 
     /**
@@ -70,11 +78,11 @@ class ColumnAdjuster extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::setDataFromEditmode
-     *
      * @param mixed $data
      *
      * @return $this
+     *
+     * @see Document\Tag\TagInterface::setDataFromEditmode
      */
     public function setDataFromEditmode($data)
     {

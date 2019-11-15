@@ -124,6 +124,14 @@ class GoogleMap extends Document\Tag
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return $this->data === false || empty($this->data);
+    }
+
+    /**
      * Receives the data from the resource, an convert to the internal data in the object eg. image-id to Asset\Image.
      *
      * @param mixed $data
