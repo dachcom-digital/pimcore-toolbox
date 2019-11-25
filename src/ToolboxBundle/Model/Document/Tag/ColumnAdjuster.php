@@ -94,4 +94,16 @@ class ColumnAdjuster extends Document\Tag
 
         return $this;
     }
+
+
+    /**
+     * @return boolean
+     *
+     * @see Document\Tag\TagInterface::isEmpty
+     *
+     */
+    public function isEmpty()
+    {
+        return ($this->data === false || !is_array($this->data) || count($this->data) === 0);
+    }
 }
