@@ -181,9 +181,9 @@
             var _ = this;
 
             if (_.playInLightBox && _.hasPoster) {
-                $container.on('click', function (ev) {
+                _.$element.on('click', function (ev) {
                     ev.preventDefault();
-                    $container.trigger('toolbox.video.asset.lightbox', [{
+                    _.$element.trigger('toolbox.video.asset.lightbox', [{
                         'videoId': _.videoId,
                         'posterPath': _.posterPath
                     }]);
@@ -345,9 +345,9 @@
             var init = function () {
 
                 if (_.playInLightBox && _.hasPoster) {
-                    $container.on('click', function (ev) {
+                    _.$element.on('click', function (ev) {
                         ev.preventDefault();
-                        $container.trigger('toolbox.video.vimeo.lightbox', [{
+                        _.$element.trigger('toolbox.video.vimeo.lightbox', [{
                             'videoId': _.videoId,
                             'posterPath': _.posterPath,
                             'Vimeo': Vimeo.Player
