@@ -4,9 +4,10 @@ namespace ToolboxBundle\Builder;
 
 use Pimcore\Model\Document\Tag\Area\Info;
 use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Translation\Translator;
 use Pimcore\Templating\Renderer\TagRenderer;
+use Pimcore\Translation\Translator;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use ToolboxBundle\Providers\ToolboxStoreProviderInterface;
 
 class BrickConfigBuilder
 {
@@ -181,7 +182,22 @@ class BrickConfigBuilder
      */
     private function hasValidStore($parsedConfig)
     {
-        return isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0;
+        $check = false;
+
+        if (isset($parsedConfig['store'])
+            && is_array($parsedConfig['store'])
+            && count($parsedConfig['store']) > 0) {
+            $check = true;
+        } elseif (
+            isset($parsedConfig['store_provider'])
+            && strlen($parsedConfig['store_provider']) > 0
+            && class_exists($parsedConfig['store_provider'])
+            && is_subclass_of($parsedConfig['store_provider'], ToolboxStoreProviderInterface::class, true)
+        ) {
+            $check = true;
+        }
+
+        return $check;
     }
 
     /**
@@ -293,23 +309,40 @@ class BrickConfigBuilder
         }
 
         //check store
-        if ($this->needStore($type) && isset($parsedConfig['store']) && !is_null($parsedConfig['store'])) {
-            if (empty($parsedConfig['store'])) {
-                throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
-            }
+        if ($this->needStore($type) && $this->hasValidStore($parsedConfig)) {
+            if (isset($parsedConfig['store']) && !is_null($parsedConfig['store'])) {
+                $store = [];
+                foreach ($parsedConfig['store'] as $k => $v) {
+                    if (is_array($v)) {
+                        $v = $v['name'];
+                    }
 
-            $store = [];
-            foreach ($parsedConfig['store'] as $k => $v) {
-                if (is_array($v)) {
-                    $v = $v['name'];
+                    $store[] = [$k, $this->translator->trans($v, [], 'admin')];
                 }
 
-                $store[] = [$k, $this->translator->trans($v, [], 'admin')];
-            }
+                $parsedConfig['store'] = $store;
 
-            $parsedConfig['store'] = $store;
+            } elseif (isset($parsedConfig['store_provider']) && !is_null($parsedConfig['store_provider'])) {
+                $provider = new $parsedConfig['store_provider']();
+                if ($provider instanceof ToolboxStoreProviderInterface) {
+                    $store = [];
+
+                    foreach ($provider->getValues() as $k => $v) {
+                        if (is_array($v)) {
+                            $v = $v['name'];
+                        }
+
+                        $store[] = [$k, $this->translator->trans($v, [], 'admin')];
+                    }
+
+                    $parsedConfig['store'] = $store;
+                }
+            } else {
+                throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
+            }
         } else {
             unset($parsedConfig['store']);
+            unset($parsedConfig['store_provider']);
         }
 
         return $parsedConfig;
