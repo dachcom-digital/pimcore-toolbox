@@ -497,7 +497,6 @@ toolbox:
 There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#video-extension)
 
 # Element Config Field Overview
-
 In short, you're able to use all the [pimcore editables](https://www.pimcore.org/docs/5.0.0/Documents/Editables/index.html).
 
 **Example** 
@@ -513,8 +512,10 @@ toolbox:
                         # https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
 ```
 
-# Additional Classes
+## Editable Store Provider
+In addition, you could use the toolbox editable store provider to generate dynamic store data. Read more about it [here](./16_EditableStoreProvider.md).
 
+# Additional Classes
 Almost every toolbox element supports the `additionalClasses` field type.
 This Element will help you to generate some additional classes for every toolbox element.
 This is great since you don't need to override the element view, just add one or more additional classes via config.
