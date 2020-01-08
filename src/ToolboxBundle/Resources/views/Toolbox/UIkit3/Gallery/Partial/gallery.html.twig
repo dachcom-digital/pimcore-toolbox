@@ -1,0 +1,45 @@
+{% if images is not empty %}
+    <div id="{{ galleryId }}-gal" class="uk-position-relative uk-visible-toggle uk-light" data-uk-slideshow>
+        <ul class="uk-slideshow-items {{ useThumbnails ? 'thumbnail-slider' : '' }}" {{ useLightbox ? 'data-uk-lightbox' : '' }}
+                {{ galleryDataAttributes|raw }}
+        >
+            {% for image in images %}
+                {% if useLightbox %}
+                    <li>
+                        <a class="uk-inline" href="{{ image.thumbnail(toolbox_get_image_thumbnail('gallery_lightbox')) }}" data-caption="">
+                            {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_element')).html|raw }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_element')).html|raw }}
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+        </ul>
+
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>
+
+        {% if useThumbnails %}
+            <div class="thumbnav-slider" data-uk-slider="">
+                <ul class="uk-thumbnav uk-slider-items uk-grid">
+                    {% for image in images %}
+                        <li class="uk-width-1-5 thumbnav-item" data-uk-slideshow-item="{{ loop.index0 }}">
+                            <a href="#">
+                                {{ image.thumbnail(toolbox_get_image_thumbnail('gallery_thumbnail')).html|raw }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% else %}
+    {% if editmode %}
+        <div class="uk-alert uk-alert-danger" data-uk-alert>
+            {{ 'No Images for this gallery found.'|trans({}, 'admin') }}
+        </div>
+    {% endif %}
+{% endif %}

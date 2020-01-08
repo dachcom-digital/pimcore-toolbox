@@ -56,6 +56,9 @@ class ColumnAdjusterController extends Controller\AdminController
         $columnCalculator = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator']);
         $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $customColumnConfiguration);
 
-        return $this->json(['breakPoints' => $breakPointConfiguration, 'gridSize' => $gridSize]);
+        $columnStore = isset($theme['grid']) && isset($theme['grid']['column_store']) ? $theme['grid']['column_store'] : null;
+        $layout = isset($theme['layout']) ? strtolower($theme['layout']) : null;
+
+        return $this->json(['breakPoints' => $breakPointConfiguration, 'gridSize' => $gridSize, 'columnStore' => $columnStore, 'layout' => $layout]);
     }
 }

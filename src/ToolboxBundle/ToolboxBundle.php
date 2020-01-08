@@ -69,7 +69,8 @@ class ToolboxBundle extends AbstractPimcoreBundle
     public function getEditmodeCssPaths()
     {
         $cssFiles = [
-            '/bundles/toolbox/css/admin.css'
+            '/bundles/toolbox/css/admin.css',
+            '/bundles/toolbox/css/admin_uikit.css'
         ];
 
         $pimcoreVersion = preg_replace('/[^0-9.]/', '', \Pimcore\Version::getVersion());

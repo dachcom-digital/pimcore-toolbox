@@ -1,0 +1,5 @@
+{% if editmode %}
+        {{ pimcore_input('name') }}
+{% else %}
+        <a class="uk-accordion-title" href="#">{{ pimcore_input('name').data }}</a>
+{% endif %}

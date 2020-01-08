@@ -1,0 +1,12 @@
+<div class="accordion" id="{{ id }}" role="tablist" aria-multiselectable="true">
+    <ul class="uk-list-divider uk-list-large uk-margin-remove uk-accordion" data-uk-accordion="multiple: true">
+        {% for i in pimcore_iterate_block(panel) %}
+            <li>
+                {% include toolbox_area_path(areaId, 'Partial/Accordion/title') %}
+                <div class="uk-accordion-content">
+                    {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

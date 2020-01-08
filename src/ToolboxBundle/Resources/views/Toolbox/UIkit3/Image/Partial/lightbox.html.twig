@@ -1,0 +1,12 @@
+{% set lightBoxLink = '' %}
+{% if pimcore_image('ci').thumbnail(toolbox_get_image_thumbnail('image_lightbox')) is not empty %}
+    {% set lightBoxLink = pimcore_image('ci').thumbnail(toolbox_get_image_thumbnail('image_lightbox')) %}
+{% endif %}
+
+{% if editmode %}
+    {{ pimcore_image('ci') }}
+{% else %}
+    <a href="{{ lightBoxLink }}" class="item">
+        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : 'img-fluid '  ~ class } %}
+    </a>
+{% endif %}

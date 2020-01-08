@@ -243,6 +243,8 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                 //Set global breakpoints!
                 _.breakPoints = res.breakPoints;
                 _.gridSize = res.gridSize;
+                _.columnStore = res.columnStore;
+                _.layout = res.layout;
 
                 //Map breakpoint data with current one!
                 _.mergeCustomGridValue();
@@ -288,14 +290,26 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                     breakpoint.inherit = isInherited;
                     _.combos[breakpoint.identifier] = [];
 
+                    // TODO push data from config column_store
+                    // console.log(Ext.encode(_.columnStore));
+
+
+
+
                     Ext.Array.each(breakpoint.grid, function (grid, gridIndex) {
                         var storeData = [],
                             hasOffset = _.gridColumnHasOffset(gridIndex),
                             inherited = grid.value === null,
                             realValue = grid.value === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'value') : grid.value;
 
-                        for (var i = 1; i <= grid.amount; i++) {
-                            storeData.push([i, ((100 / grid.amount) * i).toFixed(2) + '% (' + i + ')'])
+                        if(_.columnStore) {
+                            Ext.Object.each(_.columnStore, function(k,v) {
+                                storeData.push([k, v]);
+                            });
+                        } else {
+                            for (var i = 1; i <= grid.amount; i++) {
+                                storeData.push([i, ((100 / grid.amount) * i).toFixed(2) + '% (' + i + ')'])
+                            }
                         }
 
                         var store = new Ext.data.ArrayStore({
@@ -424,10 +438,11 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                             })
                         });
 
-                        return new Ext.XTemplate("<div class='grid-preview grid-size-{gridSize}'><div class='grid-pre-row'>{value}</div></div>").apply(
+                        return new Ext.XTemplate("<div class='{layout} grid-preview grid-size-{gridSize}'><div class='grid-pre-row'>{value}</div></div>").apply(
                             {
                                 value: gridHtml,
-                                gridSize: _.gridSize
+                                gridSize: _.gridSize,
+                                layout: _.layout
                             }
                         );
                     };

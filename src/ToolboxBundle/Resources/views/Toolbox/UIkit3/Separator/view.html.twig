@@ -1,0 +1,10 @@
+{% set space = pimcore_select('space').data %}
+{% if space == 'medium'  %}
+    <hr class="uk-margin-medium-top uk-margin-medium-bottom">
+{% elseif space == 'large' %}
+    <hr class="uk-margin-large-top uk-margin-large-bottom">
+{% elseif space == 'default' %}
+    <hr class="uk-margin-top uk-margin-bottom">
+{% else %}
+    <hr class="{{ space }}">
+{% endif %}

@@ -21,11 +21,21 @@ services:
         tags:
             - { name: toolbox.calculator, type: column }
 
+    ToolboxBundle\Calculator\UIkit3\ColumnCalculator:
+        calls:
+            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
+        tags:
+            - { name: toolbox.calculator, type: column }
+
     # slide column calculator
     ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator:
         tags:
             - { name: toolbox.calculator, type: slide_column }
 
     ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator:
+        tags:
+            - { name: toolbox.calculator, type: slide_column }
+
+    ToolboxBundle\Calculator\UIkit3\SlideColumnCalculator:
         tags:
             - { name: toolbox.calculator, type: slide_column }

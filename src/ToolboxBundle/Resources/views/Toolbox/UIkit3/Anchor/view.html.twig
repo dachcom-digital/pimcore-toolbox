@@ -1,0 +1,4 @@
+{% if pimcore_input('anchor_name').isEmpty() == false %}
+    {% set anchorName = pimcore_input('anchor_name').data|trim('#', 'left') %}
+    <a class="toolbox-element toolbox-anchor" id="{{ anchorName }}" data-anchortitle="{{ pimcore_input('anchor_title').data }}"></a>
+{% endif %}

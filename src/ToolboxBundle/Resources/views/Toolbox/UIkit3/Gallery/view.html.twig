@@ -1,0 +1,10 @@
+{% include toolbox_area_path(areaId, 'Partial/gallery') with
+{
+    'editmode': editmode,
+    'images': images,
+    'galleryId': galleryId,
+    'useThumbnails': pimcore_checkbox('use_thumbnails').isChecked(),
+    'useLightbox': pimcore_checkbox('use_light_box').isChecked(),
+    'galleryDataAttributes': toolbox_data_attributes_generator('gallery'),
+    'thumbsDataAttributes': toolbox_data_attributes_generator('gallery_thumbs')
+} %}

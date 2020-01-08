@@ -1,0 +1,9 @@
+{% if behindElements is not empty %}
+    <div class="behind-elements">{{ behindElements|raw }}</div>
+{% endif %}
+
+<div class="parallax-content">{{ sectionContent|raw }}</div>
+
+{% if frontElements is not empty %}
+    <div class="front-elements">{{ frontElements|raw }}</div>
+{% endif %}

@@ -1,0 +1,8 @@
+{% if playInLightbox  %}
+    <img src="{{ posterPath }}" alt="">
+    <a class="uk-cover uk-background-cover uk-width-1-1 uk-height-1-1" href="https://www.youtube.com/watch?v=c2pz2mlSfXA" data-caption="" >
+    </a>
+{% else %}
+    <iframe class="uk-width-1-1" src="https://www.youtube-nocookie.com/embed/{{ videoId }}" data-uk-video="autoplay: inview" {{ toolbox_data_attributes_generator('video_parameter', {'video_parameter' : videoParameter}, true)|raw }}>
+    </iframe>
+{% endif %}
