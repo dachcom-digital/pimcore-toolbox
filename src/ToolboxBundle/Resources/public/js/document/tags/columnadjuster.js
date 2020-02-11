@@ -290,12 +290,6 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                     breakpoint.inherit = isInherited;
                     _.combos[breakpoint.identifier] = [];
 
-                    // TODO push data from config column_store
-                    // console.log(Ext.encode(_.columnStore));
-
-
-
-
                     Ext.Array.each(breakpoint.grid, function (grid, gridIndex) {
                         var storeData = [],
                             hasOffset = _.gridColumnHasOffset(gridIndex),
@@ -303,12 +297,12 @@ pimcore.document.tags.columnadjuster = Class.create(pimcore.document.tag, {
                             realValue = grid.value === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'value') : grid.value;
 
                         if(_.columnStore) {
-                            Ext.Object.each(_.columnStore, function(k,v) {
+                            Ext.Object.each(_.columnStore, function(k, v) {
                                 storeData.push([k, v]);
                             });
                         } else {
                             for (var i = 1; i <= grid.amount; i++) {
-                                storeData.push([i, ((100 / grid.amount) * i).toFixed(2) + '% (' + i + ')'])
+                                storeData.push([i, ((100 / grid.amount) * i).toFixed(2) + '% (' + i + ')']);
                             }
                         }
 

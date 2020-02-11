@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Calculator\UIkit3;
 
+use Exception;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
@@ -31,7 +32,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function calculateColumns($value, $customColumnConfiguration = null)
     {
@@ -47,7 +48,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
             $columnConfiguration = $customColumnConfiguration;
         } else {
             $columnConfigNode = $this->configManager->getAreaElementConfig('columns', 'type');
-            $columnConfiguration = isset($columnConfigNode['config']['store']) ? $columnConfigNode['config']['store'] : [];
+            $columnConfiguration = $columnConfigNode['config']['store'] ?? [];
         }
 
         $columns = [];
@@ -57,12 +58,12 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
         $t = explode('_', $value);
 
-        //remove "column" in string.
+        // remove "column" in string.
         $_columns = array_splice($t, 1);
         $columnCounter = 0;
 
         foreach ($_columns as $i => $columnClass) {
-            // Set when no custom config exists
+            // set when no custom config exists
             $gridConfig = $customColumnConfiguration ? [] : [
                 's' => $gridSize,
                 'm' => (int) $columnClass
@@ -81,17 +82,17 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
                 foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
-                    $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : 11;
+                    $customColAmount = $customBreakPointDataColumns[$i] ?? 11;
                     $ukCol = $this->getUikitCol($customColAmount);
                     $uikitClassConfig[$customBreakPointName] = 'uk-width-' .  $ukCol . '@'  . $customBreakPointName;
                     $gridConfig[$customBreakPointName] = $customColAmount;
                 }
 
-                // Smallest one without breakpoint modifier
-                if  (array_key_exists('xs', $customBreakPoints)) {
+                // smallest one without breakpoint modifier
+                if (array_key_exists('xs', $customBreakPoints)) {
                     $customBreakPointData = $customBreakPoints['xs'];
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
-                    $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : 11;
+                    $customColAmount = $customBreakPointDataColumns[$i] ?? 11;
                     $ukCol = $this->getUikitCol($customColAmount);
                     $uikitClassConfig['xs'] = 'uk-width-' .  $ukCol;
                 }
@@ -115,6 +116,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
     /**
      * @param $numerator
+     *
      * @return string
      */
     private function getUikitCol($numerator): string
@@ -125,13 +127,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
         }
         return $numerator;
     }
+
     /**
      * @param string     $value
      * @param null|array $customColumnConfiguration
      *
      * @return bool|mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null)
     {

@@ -12,7 +12,7 @@ class SlideColumnCalculator implements SlideColumnCalculatorInterface
      *
      * @return string
      */
-    public function calculateSlideColumnClasses($columnType, $columnConfiguration)
+    public function calculateSlideColumnClasses($columnType, $columnConfiguration): string
     {
         $columnType = (int) $columnType;
 
@@ -24,11 +24,11 @@ class SlideColumnCalculator implements SlideColumnCalculatorInterface
         ];
 
         if (empty($columnConfiguration)) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'uk-child-width-1-1';
+            return $systemClasses[$columnType] ?? 'uk-child-width-1-1';
         }
 
-        if (!isset($columnConfiguration['column_classes']) || !isset($columnConfiguration['column_classes'][$columnType])) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'uk-child-width-1-1';
+        if (!isset($columnConfiguration['column_classes'][$columnType])) {
+            return $systemClasses[$columnType] ?? 'uk-child-width-1-1';
         }
 
         return $columnConfiguration['column_classes'][$columnType];
