@@ -52,8 +52,6 @@ class ParallaxContainerTest extends AbstractAreaTest
 
     public function testParallaxContainer()
     {
-        // wrap mode:
-
         $this->setupRequest();
 
         $asset = TestHelper::createImageAsset('', null);
@@ -104,12 +102,14 @@ class ParallaxContainerTest extends AbstractAreaTest
             [
                 'id'               => $asset->getId(),
                 'type'             => 'asset',
+                'subtype'          => null,
                 'parallaxPosition' => 'top-left',
                 'parallaxSize'     => 'quarter-window-width'
             ],
             [
                 'id'               => $asset->getId(),
                 'type'             => 'asset',
+                'subtype'          => null,
                 'parallaxPosition' => 'top-left',
                 'parallaxSize'     => 'half-window-width'
             ]
@@ -120,12 +120,14 @@ class ParallaxContainerTest extends AbstractAreaTest
             [
                 'id'               => $asset->getId(),
                 'type'             => 'asset',
+                'subtype'          => null,
                 'parallaxPosition' => 'top-left',
                 'parallaxSize'     => 'third-window-width'
             ],
             [
                 'id'               => $asset->getId(),
                 'type'             => 'asset',
+                'subtype'          => null,
                 'parallaxPosition' => 'center-right',
                 'parallaxSize'     => 'half-window-width'
             ]

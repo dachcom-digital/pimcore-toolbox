@@ -35,6 +35,9 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     public function generateRenderedArea($id, $documentElements, $infoParams = [])
     {
         $info = $this->generateAreaInfo($id, $infoParams);
+
+        $info->getView()->getParameters()->add(['editmode' => false]);
+
         $info->getTag()->getView()->get('document')->setElements($documentElements);
 
         return $this->getAreaOutput($info);
