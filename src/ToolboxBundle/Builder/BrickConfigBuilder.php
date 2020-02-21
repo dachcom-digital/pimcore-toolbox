@@ -67,7 +67,7 @@ class BrickConfigBuilder
     protected $configWindowSize = null;
 
     /**
-     * @var null|string
+     * @var StoreProviderRegistryInterface
      */
     protected $storeProvider = null;
 
