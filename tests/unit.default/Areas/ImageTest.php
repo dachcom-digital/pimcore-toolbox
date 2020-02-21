@@ -29,7 +29,7 @@ class ImageTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $imageTag = new Image();
         $imageTag->setImage($asset);
@@ -49,7 +49,7 @@ class ImageTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $imageTag = new Image();
         $imageTag->setImage($asset);
@@ -74,7 +74,7 @@ class ImageTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $imageTag = new Image();
         $imageTag->setImage($asset);
@@ -98,7 +98,7 @@ class ImageTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $imageTag = new Image();
         $imageTag->setImage($asset);
@@ -122,7 +122,7 @@ class ImageTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $imageTag = new Image();
         $imageTag->setImage($asset);

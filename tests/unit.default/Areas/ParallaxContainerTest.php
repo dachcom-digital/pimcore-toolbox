@@ -56,7 +56,7 @@ class ParallaxContainerTest extends AbstractAreaTest
 
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $elements = $this->getDefaultElements($asset);
 
@@ -70,7 +70,7 @@ class ParallaxContainerTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $elements = $this->getDefaultElements($asset);
 

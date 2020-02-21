@@ -33,8 +33,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -62,8 +62,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -95,8 +95,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -128,8 +128,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([

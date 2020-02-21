@@ -55,13 +55,18 @@ class VideoTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $video = new Vhs();
         $video->setDataFromEditmode([
-            'type'   => 'youtube',
-            'path'   => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
-            'poster' => $asset->getFullPath()
+            'type'           => 'youtube',
+            'path'           => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
+            'title'          => '',
+            'description'    => '',
+            'id'             => null,
+            'videoParameter' => [],
+            'showAsLightbox' => false,
+            'poster'         => $asset->getFullPath()
         ]);
 
         $elements = [
@@ -78,13 +83,18 @@ class VideoTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $video = new Vhs();
         $video->setDataFromEditmode([
-            'type'   => 'vimeo',
-            'path'   => 'https://vimeo.com/76979871',
-            'poster' => $asset->getFullPath()
+            'type'           => 'vimeo',
+            'path'           => 'https://vimeo.com/76979871',
+            'title'          => '',
+            'description'    => '',
+            'id'             => null,
+            'videoParameter' => [],
+            'showAsLightbox' => false,
+            'poster'         => $asset->getFullPath()
         ]);
 
         $elements = [
@@ -101,13 +111,17 @@ class VideoTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $video = new Vhs();
         $video->setDataFromEditmode([
             'type'           => 'youtube',
             'path'           => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
             'poster'         => $asset->getFullPath(),
+            'title'          => '',
+            'description'    => '',
+            'videoParameter' => [],
+            'id'             => null,
             'showAsLightbox' => true
         ]);
 
@@ -125,13 +139,17 @@ class VideoTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $video = new Vhs();
         $video->setDataFromEditmode([
             'type'           => 'youtube',
             'path'           => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
             'poster'         => $asset->getFullPath(),
+            'title'          => '',
+            'description'    => '',
+            'id'             => null,
+            'videoParameter' => [],
             'showAsLightbox' => true
         ]);
 
@@ -153,7 +171,7 @@ class VideoTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $videoParameter = [
             ['key' => 'color', 'value' => 'red'],
@@ -162,7 +180,7 @@ class VideoTest extends AbstractAreaTest
 
         $parsedVideoParameters = [
             'color' => 'red',
-            'rel' => '0'
+            'rel'   => '0'
         ];
 
         $video = new Vhs();
@@ -171,6 +189,9 @@ class VideoTest extends AbstractAreaTest
             'path'           => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
             'poster'         => $asset->getFullPath(),
             'showAsLightbox' => true,
+            'title'          => '',
+            'description'    => '',
+            'id'             => null,
             'videoParameter' => $videoParameter
         ]);
 
@@ -195,13 +216,17 @@ class VideoTest extends AbstractAreaTest
         $combo = new Select();
         $combo->setDataFromResource('additional-class');
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
 
         $video = new Vhs();
         $video->setDataFromEditmode([
-            'type'   => 'youtube',
-            'id'     => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
-            'poster' => $asset->getFullPath()
+            'type'           => 'youtube',
+            'id'             => 'https://www.youtube.com/watch?v=EhhGzxhtx48',
+            'title'          => '',
+            'description'    => '',
+            'videoParameter' => [],
+            'showAsLightbox' => false,
+            'poster'         => $asset->getFullPath()
         ]);
 
         $elements = [

@@ -33,8 +33,8 @@ class GalleryTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $images = new Relations();
         $images->setDataFromEditmode([
@@ -62,8 +62,8 @@ class GalleryTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $images = new Relations();
         $images->setDataFromEditmode([
@@ -95,8 +95,8 @@ class GalleryTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $images = new Relations();
         $images->setDataFromEditmode([
@@ -131,8 +131,8 @@ class GalleryTest extends AbstractAreaTest
         $combo = new Select();
         $combo->setDataFromResource('additional-class');
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $images = new Relations();
         $images->setDataFromEditmode([

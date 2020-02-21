@@ -36,7 +36,7 @@ class TeaserTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
         $elements = $this->getDefaultElements($asset);
 
         $this->assertEquals(
@@ -49,7 +49,7 @@ class TeaserTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
         $elements = $this->getDefaultElements($asset);
 
         $lightBox = new Checkbox();
@@ -67,7 +67,7 @@ class TeaserTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset = TestHelper::createImageAsset('', true);
+        $asset = TestHelper::createImageAsset('', null);
         $elements = $this->getDefaultElements($asset);
 
         $combo = new Select();
@@ -90,7 +90,7 @@ class TeaserTest extends AbstractAreaTest
         $layout->setDataFromResource('default');
 
         $link = new Link();
-        $link->setDataFromResource(['path' => '/test/test2']);
+        $link->setDataFromResource(['path' => '/test/test2', 'linktype' => 'direct', 'text' => '']);
 
         $image = new Image();
         $image->setDataFromEditmode([
