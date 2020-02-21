@@ -87,8 +87,9 @@ class ParallaxContainerTest extends AbstractAreaTest
     {
         $backgroundImage = new Relation();
         $backgroundImage->setDataFromEditmode([
-            'id'   => $asset->getId(),
-            'type' => 'asset'
+            'id'      => $asset->getId(),
+            'type'    => 'asset',
+            'subtype' => null,
         ]);
 
         $template = new Select();
@@ -145,8 +146,9 @@ class ParallaxContainerTest extends AbstractAreaTest
 
         $sectionBackgroundImage = new Relation();
         $sectionBackgroundImage->setDataFromEditmode([
-            'id'   => $asset->getId(),
-            'type' => 'asset'
+            'id'      => $asset->getId(),
+            'type'    => 'asset',
+            'subtype' => null,
         ]);
 
         $sectionBackgroundColor = new Select();
