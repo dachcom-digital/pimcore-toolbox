@@ -207,13 +207,13 @@ class DownloadTest extends AbstractAreaTest
                             <li>
                                 <a href="' . $path1 . '"  target="_blank" class="icon-download-jpg">
                                     <span class="title">Download</span>
-                                    <span class="file-info">(<span class="file-type">jpg</span>, 1 byte)</span>
+                                    <span class="file-info">(<span class="file-type">jpg</span>, 337 kb)</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="' . $path2 . '"  target="_blank" class="icon-download-jpg">
                                     <span class="title">Download</span>
-                                    <span class="file-info">(<span class="file-type">jpg</span>, 1 byte)</span>
+                                    <span class="file-info">(<span class="file-type">jpg</span>, 337 kb)</span>
                                 </a>
                             </li>
                         </ul>

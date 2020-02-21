@@ -174,8 +174,8 @@ class ParallaxContainerTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-parallax-container template-no-template ">
                     <div class="parallax-background " data-background-image="' . $imagePath . '" data-background-color="default">
                         <div class="behind-elements">
-                            <div class="element position-top-left size-third-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="third-window-width"></div>
-                            <div class="element position-center-right size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="center-right"        data-element-size="half-window-width"></div>
+                            <div class="element position-top-left size-third-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="third-window-width"></div>
+                            <div class="element position-center-right size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="center-right"        data-element-size="half-window-width"></div>
                         </div>
                         <div class="parallax-content">
                             <div class="parallax-section template-no-template " data-background-image="' . $imagePath . '" data-loop-index="1" data-section-index="1" data-template="no-template">
@@ -194,8 +194,8 @@ class ParallaxContainerTest extends AbstractAreaTest
                             </div>
                         </div>
                         <div class="front-elements">
-                            <div class="element position-top-left size-quarter-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="quarter-window-width"></div>
-                            <div class="element position-top-left size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="half-window-width"></div>
+                            <div class="element position-top-left size-quarter-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="quarter-window-width"></div>
+                            <div class="element position-top-left size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="half-window-width"></div>
                         </div>
                     </div>
                 </div>';
@@ -207,8 +207,8 @@ class ParallaxContainerTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-parallax-container template-no-template additional-class">
                     <div class="parallax-background " data-background-image="' . $imagePath . '" data-background-color="default">
                         <div class="behind-elements">
-                            <div class="element position-top-left size-third-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="third-window-width"></div>
-                            <div class="element position-center-right size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="center-right"        data-element-size="half-window-width"></div>
+                            <div class="element position-top-left size-third-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="third-window-width"></div>
+                            <div class="element position-center-right size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="center-right"        data-element-size="half-window-width"></div>
                         </div>
                         <div class="parallax-content">
                             <div class="parallax-section template-no-template " data-background-image="' . $imagePath . '" data-loop-index="1" data-section-index="1" data-template="no-template">
@@ -227,8 +227,8 @@ class ParallaxContainerTest extends AbstractAreaTest
                             </div>
                         </div>
                         <div class="front-elements">
-                            <div class="element position-top-left size-quarter-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="quarter-window-width"></div>
-                            <div class="element position-top-left size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="" data-height=""        data-element-position="top-left"        data-element-size="half-window-width"></div>
+                            <div class="element position-top-left size-quarter-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="quarter-window-width"></div>
+                            <div class="element position-top-left size-half-window-width"        data-background-image="' . $imagePath . '"        data-width="700" data-height="467"        data-element-position="top-left"        data-element-size="half-window-width"></div>
                         </div>
                     </div>
                 </div>';
