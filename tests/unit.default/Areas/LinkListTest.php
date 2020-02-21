@@ -25,10 +25,10 @@ class LinkListTest extends AbstractAreaTest
         $this->setupRequest();
 
         $link1 = new Link();
-        $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com']);
+        $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
         $link2 = new Link();
-        $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com']);
+        $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
         $block = new Block();
         $block->setName('test-block-name');
@@ -54,10 +54,10 @@ class LinkListTest extends AbstractAreaTest
         $combo->setDataFromResource('additional-class');
 
         $link1 = new Link();
-        $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com']);
+        $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
         $link2 = new Link();
-        $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com']);
+        $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
         $block = new Block();
         $block->setName('test-block-name');
@@ -81,10 +81,10 @@ class LinkListTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-linklist ">
                     <ul>
                         <li>
-                            <a href="https://www.dachcom.com" class="list-link"></a>
+                            <a href="https://www.dachcom.com" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link"></a>
+                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';
@@ -95,10 +95,10 @@ class LinkListTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-linklist additional-class">
                     <ul>
                         <li>
-                            <a href="https://www.dachcom.com" class="list-link"></a>
+                            <a href="https://www.dachcom.com" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link"></a>
+                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';

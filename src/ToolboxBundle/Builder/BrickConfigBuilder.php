@@ -515,13 +515,15 @@ class BrickConfigBuilder
 
             $parsedTagConfig = ['reload' => false];
             $additionalConfig = [
-                'type'            => 'columnadjuster',
-                'editmode_hidden' => false,
-                'col_class'       => '',
-                'name'            => 'columnadjuster',
-                'title'           => null,
-                'edit_reload'     => false,
+                'type'                       => 'columnadjuster',
+                'editmode_hidden'            => false,
+                'col_class'                  => '',
+                'name'                       => 'columnadjuster',
+                'title'                      => null,
+                'edit_reload'                => false,
+                'additional_classes_element' => false
             ];
+
             $configFields[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $additionalConfig];
         }
 

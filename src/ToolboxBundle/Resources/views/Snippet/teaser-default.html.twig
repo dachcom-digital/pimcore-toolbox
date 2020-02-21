@@ -5,13 +5,17 @@
 {% set linkTarget = null %}
 
 {% if useDynamicLinks == true %}
-    {% set hasLink = pimcore_dynamiclink('link').isEmpty() == false %}
-    {% set link = hasLink ? pimcore_dynamiclink('link').getHref() : null %}
-    {% set linkTarget = hasLink ? pimcore_dynamiclink('link').getTarget() : null %}
+    {% set linkElement = pimcore_dynamiclink('link') %}
+    {% set hasLink = linkElement.isEmpty() == false %}
+    {% set linkElementData = hasLink ? linkElement.data : [] %}
+    {% set link = hasLink ? linkElement.href : null %}
+    {% set linkTarget = hasLink and linkElementData.target is defined ? linkElement.target : null %}
 {% else %}
-    {% set hasLink = pimcore_link('link', {'class' : 'btn btn-default teaser-link'}).isEmpty() == false %}
-    {% set link = hasLink ? pimcore_link('link').getHref() : null %}
-    {% set linkTarget = hasLink ? pimcore_link('link').getTarget() : null %}
+    {% set linkElement = pimcore_link('link') %}
+    {% set hasLink = linkElement.isEmpty() == false %}
+    {% set linkElementData = hasLink ? linkElement.data : [] %}
+    {% set link = hasLink ? linkElement.href : null %}
+    {% set linkTarget = hasLink and linkElementData.target is defined ? linkElement.target : null %}
 {% endif %}
 
 <div class="single-teaser default {{ useLightBox ? 'light-box' : '' }}">

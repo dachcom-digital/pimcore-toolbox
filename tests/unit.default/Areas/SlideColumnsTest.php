@@ -88,7 +88,7 @@ class SlideColumnsTest extends AbstractAreaTest
 
         $configManager = $this->getToolboxConfig();
 
-        $slideColumns = $configManager->getConfig(self::TYPE);
+        $slideColumns = $configManager->getAreaConfig(self::TYPE);
         $theme = $configManager->getConfig('theme');
 
         $slideColumns['config_parameter'] = [
@@ -100,7 +100,12 @@ class SlideColumnsTest extends AbstractAreaTest
             ]
         ];
 
-        $configManager->setConfig(['areas' => [self::TYPE => $slideColumns], 'theme' => $theme]);
+        $configManager->setConfig([
+            'areas'                    => [self::TYPE => $slideColumns],
+            'theme'                    => $theme,
+            'area_block_configuration' => [],
+            'areas_appearance'         => [],
+        ]);
 
         $elements = [
             'slides_per_view' => $slidesPerView,
