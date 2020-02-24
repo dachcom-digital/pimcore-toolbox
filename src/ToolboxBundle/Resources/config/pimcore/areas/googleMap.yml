@@ -50,5 +50,5 @@ toolbox:
                     scrollwheel: false
                 map_style_url: false
                 marker_icon: false
-                map_api_key: '%pimcore_system_config.services.google.browserapikey%'
-                simple_api_key: '%pimcore_system_config.services.google.simpleapikey%'
+                map_api_key: '%toolbox.google_maps.browser_api_key%'
+                simple_api_key: '%toolbox.google_maps.simple_api_key%'

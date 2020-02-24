@@ -9,6 +9,7 @@ Just click the "update" button or execute the migration command to finish the bu
 #### Update from Version 3.1.x to Version 3.2.0
 - **[NEW FEATURE]**: Pimcore 6.4.0 and Pimcore 6.5.0 ready
 - **[NEW FEATURE]**: Store Provider added (https://github.com/dachcom-digital/pimcore-toolbox/pull/128)
+- **[IMPROVEMENT]**: Better Google API Key Fetching: Introduces `toolbox.google_maps.browser_api_key` and `toolbox.google_maps.simple_api_key`. Read more about it [here](./docs/11_ElementsOverview.md#google-map)
 - **[BUG FIX]**: Video Autoplay Fix (https://github.com/dachcom-digital/pimcore-toolbox/issues/129)
 
 #### Update from Version 3.x to Version 3.1.0
