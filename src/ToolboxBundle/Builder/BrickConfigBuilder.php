@@ -4,9 +4,10 @@ namespace ToolboxBundle\Builder;
 
 use Pimcore\Model\Document\Tag\Area\Info;
 use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Translation\Translator;
 use Pimcore\Templating\Renderer\TagRenderer;
+use Pimcore\Translation\Translator;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 
 class BrickConfigBuilder
 {
@@ -66,20 +67,26 @@ class BrickConfigBuilder
     protected $configWindowSize = null;
 
     /**
-     * ElementBuilder constructor.
-     *
+     * @var StoreProviderRegistryInterface
+     */
+    protected $storeProvider = null;
+
+    /**
      * @param Translator      $translator
      * @param TagRenderer     $tagRenderer
      * @param EngineInterface $templating
+     * @param StoreProviderRegistryInterface $storeProvider
      */
     public function __construct(
         Translator $translator,
         TagRenderer $tagRenderer,
-        EngineInterface $templating
+        EngineInterface $templating,
+        StoreProviderRegistryInterface $storeProvider
     ) {
         $this->translator = $translator;
         $this->tagRenderer = $tagRenderer;
         $this->templating = $templating;
+        $this->storeProvider = $storeProvider;
     }
 
     /**
@@ -181,7 +188,53 @@ class BrickConfigBuilder
      */
     private function hasValidStore($parsedConfig)
     {
-        return isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0;
+        if (isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0) {
+            return true;
+        }
+
+        if (isset($parsedConfig['store_provider']) && $this->storeProvider->has($parsedConfig['store_provider'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $type
+     * @param array  $config
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function buildStore($type, $config)
+    {
+        $dataConfig = $config;
+
+        unset($dataConfig['store'], $dataConfig['store_provider']);
+
+        $storeValues = [];
+        if (isset($config['store']) && !is_null($config['store'])) {
+            $storeValues = $config['store'];
+        } elseif (isset($config['store_provider']) && !is_null($config['store_provider'])) {
+            $storeProvider = $this->storeProvider->get($config['store_provider']);
+            $storeValues = $storeProvider->getValues();
+        }
+
+        if (count($storeValues) === 0) {
+            throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
+        }
+
+        $store = [];
+        foreach ($storeValues as $k => $v) {
+            if (is_array($v)) {
+                $v = $v['name'];
+            }
+            $store[] = [$k, $this->translator->trans($v, [], 'admin')];
+        }
+
+        $dataConfig['store'] = $store;
+
+        return $dataConfig;
     }
 
     /**
@@ -293,23 +346,8 @@ class BrickConfigBuilder
         }
 
         //check store
-        if ($this->needStore($type) && isset($parsedConfig['store']) && !is_null($parsedConfig['store'])) {
-            if (empty($parsedConfig['store'])) {
-                throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
-            }
-
-            $store = [];
-            foreach ($parsedConfig['store'] as $k => $v) {
-                if (is_array($v)) {
-                    $v = $v['name'];
-                }
-
-                $store[] = [$k, $this->translator->trans($v, [], 'admin')];
-            }
-
-            $parsedConfig['store'] = $store;
-        } else {
-            unset($parsedConfig['store']);
+        if ($this->needStore($type) && $this->hasValidStore($parsedConfig)) {
+            $parsedConfig = $this->buildStore($type, $parsedConfig);
         }
 
         return $parsedConfig;

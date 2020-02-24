@@ -99,7 +99,8 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
 - [CK-Editor Configuration](docs/13_CkEditor.md)
 - [Image Thumbnails Strategy](docs/14_ImageThumbnails.md)
-- [Configuration Context](docs/15_Context.md) (New!)
+- [Configuration Context](docs/15_Context.md)
+- [Editable Store Provider](docs/16_EditableStoreProvider.md)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)
@@ -109,7 +110,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Javascript Plugins](docs/80_Javascript.md)
 
 ## Pimcore Fixes / Overrides
-- fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
+- Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license

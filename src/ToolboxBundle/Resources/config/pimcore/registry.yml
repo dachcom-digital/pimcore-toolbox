@@ -11,3 +11,7 @@ services:
         arguments:
             $columnInterface: 'ToolboxBundle\Calculator\ColumnCalculatorInterface'
             $slideColumnInterface: 'ToolboxBundle\Calculator\SlideColumnCalculatorInterface'
+
+    # registry: store provider
+    ToolboxBundle\Registry\StoreProviderRegistryInterface: '@ToolboxBundle\Registry\StoreProviderRegistry'
+    ToolboxBundle\Registry\StoreProviderRegistry: ~

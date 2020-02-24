@@ -7,6 +7,7 @@ use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
+use ToolboxBundle\DependencyInjection\Compiler\StoreProviderPass;
 use ToolboxBundle\Tool\Install;
 
 class ToolboxBundle extends AbstractPimcoreBundle
@@ -22,6 +23,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     {
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
+        $container->addCompilerPass(new StoreProviderPass());
     }
 
     /**
