@@ -44,7 +44,7 @@
                     </div><!-- .col-class -->
                 </div><!-- .toolbox-element -->
 
-                {% if row_element_counter == 0 or (config_element.additional_config.col_class == 't-col-half' and row_element_counter == 2) or (config_element.additional_config.col_class == 't-col-third' and row_element_counter == 3) %}
+                {% if row_element_counter == 0 or (config_element.additional_config.col_class == 't-col-half' and row_element_counter is divisible by(2)) or (config_element.additional_config.col_class == 't-col-third' and row_element_counter is divisible by(3)) %}
                     {% set edit_mode_hidden_class = config_elements[c+1].additional_config is defined and config_elements[c+1].additional_config.editmode_hidden == true ? 'editmode-hidden' : '' %}
                     </div><div class="t-row clearfix {{ edit_mode_hidden_class }}" data-index="{{ row_counter }}">
                 {% endif %}
