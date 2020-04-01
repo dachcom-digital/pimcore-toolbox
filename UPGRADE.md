@@ -6,6 +6,12 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 2.8.1 to Version 2.8.2
+- **[NEW FEATURE]**: Fix rendering of multiple t-col-half elements [@christopher-siegel](https://github.com/dachcom-digital/pimcore-toolbox/pull/135)
+
+#### Update from Version 2.8.0 to Version 2.8.1
+- **[BUG FIX]**: video youtube autoplay not working [@pixel81k, @solverat](https://github.com/dachcom-digital/pimcore-toolbox/issues/129)
+
 #### Update from Version 2.7.0 to Version 2.7.1
 - **[NEW FEATURE]**: Google Map API Key now configurable via systemsettings, [read more here](./docs/11_ElementsOverview.md#google-map)
 
