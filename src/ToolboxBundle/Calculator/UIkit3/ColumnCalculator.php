@@ -123,8 +123,10 @@ class ColumnCalculator implements ColumnCalculatorInterface
     {
         if (is_numeric($numerator)) {
             $split =  str_split($numerator);
+
             return $split[0] . '-' . $split[1];
         }
+
         return $numerator;
     }
 

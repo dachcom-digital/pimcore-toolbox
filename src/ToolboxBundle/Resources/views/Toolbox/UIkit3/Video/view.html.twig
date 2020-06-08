@@ -11,11 +11,13 @@
     }) }}
 
 {% else %}
-    <div class="uk-position-relative {{ posterPath ? 'uk-cover-container' }}" {{ playInLightbox ? 'data-uk-lightbox'}}>
-        {% include toolbox_area_path(areaId, 'type-' ~ videoType) %}
+    {% set playInLightbox = playInLightbox == 'false' ? false : true  %}
 
+    <div class="{{ posterPath ? 'uk-cover-container' }}" {{ playInLightbox == 'true' ? 'data-uk-lightbox'}}>
         {% if posterPath is not empty %}
             {% include toolbox_area_path(areaId, '/Partial/overlay') with {'posterPath' : posterPath, 'playInLightbox': playInLightbox} %}
         {% endif %}
+
+        {% include toolbox_area_path(areaId, 'type-' ~ videoType) %}
     </div>
 {% endif %}

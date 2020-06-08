@@ -1,1 +1,14 @@
-<div class="player" {{ toolbox_data_attributes_generator('video_parameter', {'video_parameter' : videoParameter}, true)|raw }} data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}"></div>
+{% if playInLightbox  %}
+    <canvas height="1080" width="1920"></canvas>
+    <a class="uk-cover uk-background-cover uk-width-1-1 uk-height-1-1"
+       {% if posterPath %}data-uk-toggle="target: #video-{{ info.index }}-{{ videoId }}; animation: uk-animation-fade"{% endif %}
+       href="https://www.youtube.com/watch?v={{ videoId }}" >
+    </a>
+{% else %}
+    <iframe class="uk-responsive-width" src="https://www.youtube.com/embed/{{ videoId }}{{ autoPlay ? '?rel=0&autoplay=1&playsinline=1' }}"
+            {% if autoPlay %}playsinline {% endif %}
+            data-uk-video="autoplay: true"
+            width="1920" height="1080" data-uk-responsive
+            {{ toolbox_data_attributes_generator('video_parameter', {'video_parameter' : videoParameter}, true)|raw }}>
+    </iframe>
+{% endif %}
