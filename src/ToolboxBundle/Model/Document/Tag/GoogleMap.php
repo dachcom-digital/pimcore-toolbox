@@ -100,7 +100,7 @@ class GoogleMap extends Document\Tag
             $this->mapId = uniqid('map-');
         }
 
-        $html = '<div class="embed-responsive-item toolbox-googlemap" ' . $this->options['attr'] . ' id="' . $this->mapId . '" ' . $dataAttrString . '></div>';
+        $html = '<div class="embed-responsive-item toolbox-googlemap" id="' . $this->mapId . '" ' . $dataAttrString . '></div>';
 
         return $html;
     }
