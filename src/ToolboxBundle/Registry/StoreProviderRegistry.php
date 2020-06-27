@@ -12,7 +12,7 @@ class StoreProviderRegistry implements StoreProviderRegistryInterface
     protected $services = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function register($identifier, $service)
     {
@@ -26,7 +26,7 @@ class StoreProviderRegistry implements StoreProviderRegistryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function has($identifier)
     {
@@ -34,7 +34,7 @@ class StoreProviderRegistry implements StoreProviderRegistryInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($identifier)
     {

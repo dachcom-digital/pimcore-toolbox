@@ -9,7 +9,7 @@ use Pimcore\Model\Asset;
 class Video extends AbstractAreabrick
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {

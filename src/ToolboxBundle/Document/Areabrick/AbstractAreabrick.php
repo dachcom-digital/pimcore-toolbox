@@ -96,7 +96,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function action(Tag\Area\Info $info)
     {

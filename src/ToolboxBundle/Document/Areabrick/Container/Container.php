@@ -8,7 +8,7 @@ use Pimcore\Model\Document\Tag\Area\Info;
 class Container extends AbstractAreabrick
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {

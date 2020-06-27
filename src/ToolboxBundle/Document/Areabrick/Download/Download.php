@@ -3,7 +3,6 @@
 namespace ToolboxBundle\Document\Areabrick\Download;
 
 use Pimcore\Db\ZendCompatibility\QueryBuilder;
-use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
@@ -25,7 +24,7 @@ class Download extends AbstractAreabrick
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {

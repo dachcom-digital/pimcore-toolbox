@@ -22,7 +22,7 @@ class SlideColumns extends AbstractAreabrick
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {
