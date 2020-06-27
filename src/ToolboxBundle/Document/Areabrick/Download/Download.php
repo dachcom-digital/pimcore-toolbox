@@ -17,8 +17,6 @@ class Download extends AbstractAreabrick
     protected $bundleConnector;
 
     /**
-     * Download constructor.
-     *
      * @param BundleConnector $bundleConnector
      */
     public function __construct(BundleConnector $bundleConnector)
@@ -27,11 +25,7 @@ class Download extends AbstractAreabrick
     }
 
     /**
-     * @param Info $info
-     *
-     * @return null|Response|void
-     *
-     * @throws \Exception
+     * {@inheritDoc}
      */
     public function action(Info $info)
     {
@@ -87,13 +81,21 @@ class Download extends AbstractAreabrick
         $view->getParameters()->add([
             'downloads' => $assets
         ]);
+
+        return null;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Downloads';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Downloads';

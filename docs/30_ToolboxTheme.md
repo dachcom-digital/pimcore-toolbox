@@ -133,6 +133,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
     {
         $this->configManager = $configManager;
         $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
+
         return $this;
     }
 

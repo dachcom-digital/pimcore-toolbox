@@ -38,7 +38,6 @@ class GoogleAPIKeysExtension extends AbstractExtension
      */
     public function getGoogleMapAPIKey()
     {
-        /** @var ConfigManagerInterface $configManager */
         $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
 
         $browserKey = 'please_configure_key_in_systemsettings';

@@ -1,18 +1,22 @@
 includes:
 	- ../../vendor/phpstan/phpstan-symfony/extension.neon
 parameters:
+    level: 2
     reportUnmatchedIgnoredErrors: false
     symfony:
-        container_xml_path: var/cache/dev/appAppKernelDevDebugContainer.xml
+        container_xml_path: %rootDir%/../../../var/cache/test/appAppKernelTestDebugContainer.xml
     ignoreErrors:
         # There is no global constants definition file we could include, ignore it:
         - '#Constant PIMCORE_[A-Z\\_]+ not found\.#'
         # Symfony DI (remove this line with symfony 4.2):
         - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
+        # Symfony DI (remove this line after symfony 4 support only):
+        - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.#'
         # Bundle dependency calls we need to ignore:
         - '#Class MembersBundle\\Manager\\RestrictionManager not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionUri not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionQuery not found\.#'
+        - '#PHPDoc tag @var for variable \$elementRestriction contains unknown class MembersBundle\\Restriction\\ElementRestriction\.$#'
         - '#Call to method getSection\(\) on an unknown class MembersBundle\\Restriction\\ElementRestriction\.#'
         - '#Access to constant PROTECTED_ASSET_FOLDER(.*)\.#'
         - '#Access to constant RESTRICTION_SECTION_ALLOWED(.*)\.#'

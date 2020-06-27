@@ -7,6 +7,9 @@ use Pimcore\Model\Document\Tag\Area\Info;
 
 class Accordion extends AbstractAreabrick
 {
+    /**
+     * {@inheritDoc}
+     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -19,13 +22,21 @@ class Accordion extends AbstractAreabrick
         }
 
         $info->getView()->getParameters()->add(['id' => $id]);
+
+        return null;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'Accordion';
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return 'Toolbox Accordion / Tabs';

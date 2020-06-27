@@ -67,7 +67,7 @@ class AreaConfigurationCommand extends Command
         if (empty($brickId)) {
             $output->writeln('<error>Please provide a valid Area Brick Id.</error>');
 
-            return;
+            return 0;
         }
 
         $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL;
@@ -93,14 +93,14 @@ class AreaConfigurationCommand extends Command
                     $output->writeln('');
                 }
 
-                return;
+                return 0;
             }
 
             $output->writeln('');
             $output->writeln(sprintf('<error>Area Brick with Id "%s" not found.</error>', $brickId));
             $output->writeln('');
 
-            return;
+            return 0;
         }
 
         $configElements = $brickConfig['config_elements'];
@@ -111,7 +111,7 @@ class AreaConfigurationCommand extends Command
             $output->writeln(sprintf('<comment>Area Brick with Id "%s" does not have any configuration elements.</comment>', $brickId));
             $output->writeln('');
 
-            return;
+            return 0;
         }
 
         $contextHeadline = $hasContext ? ('in Context "' . $contextId . '"') : '';
@@ -157,6 +157,8 @@ class AreaConfigurationCommand extends Command
             ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements'])
             ->setRows($rows);
         $table->render();
+
+        return 0;
     }
 
     /**
