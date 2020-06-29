@@ -22,9 +22,7 @@ class SlideColumns extends AbstractAreabrick
     }
 
     /**
-     * @param Info $info
-     *
-     * @throws \Exception
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {
@@ -56,6 +54,8 @@ class SlideColumns extends AbstractAreabrick
             'breakpoints'          => $breakpoints,
             'equalHeight'          => $equalHeight
         ]);
+
+        return null;
     }
 
     /**

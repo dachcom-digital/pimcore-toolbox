@@ -96,9 +96,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param Tag\Area\Info $info
-     *
-     * @throws \Exception
+     * {@inheritdoc}
      */
     public function action(Tag\Area\Info $info)
     {
@@ -123,6 +121,8 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
             'elementThemeConfig'    => $this->layoutManager->getAreaThemeConfig($this->getId()),
             'areaId'                => $this->getId()
         ]);
+
+        return null;
     }
 
     /**

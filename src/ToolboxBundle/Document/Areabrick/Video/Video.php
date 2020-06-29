@@ -9,9 +9,7 @@ use Pimcore\Model\Asset;
 class Video extends AbstractAreabrick
 {
     /**
-     * @param Info $info
-     *
-     * @throws \Exception
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {
@@ -47,6 +45,8 @@ class Video extends AbstractAreabrick
             'videoParameter' => $videoParameter,
             'videoId'        => $videoId
         ]);
+
+        return null;
     }
 
     /**

@@ -189,8 +189,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
      * @param ContainerBuilder $container
      *
      * @return mixed
-     * @deprecated since 2.3. gets removed in 4.0
      *
+     * @deprecated since 2.3. gets removed in 4.0
      */
     private function handleCalculatorDeprecation($config, ContainerBuilder $container)
     {

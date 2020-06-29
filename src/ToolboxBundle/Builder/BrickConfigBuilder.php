@@ -72,9 +72,9 @@ class BrickConfigBuilder
     protected $storeProvider = null;
 
     /**
-     * @param Translator      $translator
-     * @param TagRenderer     $tagRenderer
-     * @param EngineInterface $templating
+     * @param Translator                     $translator
+     * @param TagRenderer                    $tagRenderer
+     * @param EngineInterface                $templating
      * @param StoreProviderRegistryInterface $storeProvider
      */
     public function __construct(
@@ -204,6 +204,7 @@ class BrickConfigBuilder
      * @param array  $config
      *
      * @return array
+     *
      * @throws \Exception
      */
     private function buildStore($type, $config)
