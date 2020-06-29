@@ -15,7 +15,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 | Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
 |---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **3.x** | `6.0` - `6.3`                     | `3.4`, `^4.0`              | 16.07.2019   | Feature Branch | master     |
+| **3.x** | `6.0` - `6.6`                     | `3.4`, `^4.0`              | 16.07.2019   | Feature Branch | master     |
 | **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Bugfix only    | 2.8        |
 | **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4   |
 
@@ -23,7 +23,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~3.1.0"
+    "dachcom-digital/toolbox" : "~3.2.0"
 }
 ```
 
@@ -99,7 +99,8 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Conditional Logic in Configuration](docs/12_ConditionalLogic.md)
 - [CK-Editor Configuration](docs/13_CkEditor.md)
 - [Image Thumbnails Strategy](docs/14_ImageThumbnails.md)
-- [Configuration Context](docs/15_Context.md) (New!)
+- [Configuration Context](docs/15_Context.md)
+- [Editable Store Provider](docs/16_EditableStoreProvider.md)
 - [Create a Custom Brick](docs/10_CustomBricks.md)
 - [Theme / Layout](docs/30_ToolboxTheme.md)
 - [Overriding Views](docs/31_OverridingViews.md)
@@ -109,7 +110,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Javascript Plugins](docs/80_Javascript.md)
 
 ## Pimcore Fixes / Overrides
-- fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
+- Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license

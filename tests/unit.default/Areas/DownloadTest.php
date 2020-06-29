@@ -33,8 +33,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -62,8 +62,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -95,8 +95,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -128,8 +128,8 @@ class DownloadTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $asset1 = TestHelper::createImageAsset('', true);
-        $asset2 = TestHelper::createImageAsset('', true);
+        $asset1 = TestHelper::createImageAsset('', null);
+        $asset2 = TestHelper::createImageAsset('', null);
 
         $downloads = new Relations();
         $downloads->setDataFromEditmode([
@@ -207,13 +207,13 @@ class DownloadTest extends AbstractAreaTest
                             <li>
                                 <a href="' . $path1 . '"  target="_blank" class="icon-download-jpg">
                                     <span class="title">Download</span>
-                                    <span class="file-info">(<span class="file-type">jpg</span>, 1 byte)</span>
+                                    <span class="file-info">(<span class="file-type">jpg</span>, 337 kb)</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="' . $path2 . '"  target="_blank" class="icon-download-jpg">
                                     <span class="title">Download</span>
-                                    <span class="file-info">(<span class="file-type">jpg</span>, 1 byte)</span>
+                                    <span class="file-info">(<span class="file-type">jpg</span>, 337 kb)</span>
                                 </a>
                             </li>
                         </ul>

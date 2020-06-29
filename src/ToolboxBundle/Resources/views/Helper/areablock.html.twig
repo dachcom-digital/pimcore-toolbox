@@ -1,6 +1,7 @@
 {% set block_name = name ? name : 'default' %}
 {% set block_type = type ? type : null %}
 {% set block_config = toolbox_areablock_config(block_type) %}
+{% set editmode = editmode is defined ? editmode : null %}
 
 {% if block_config.allowed|length > 0 %}
     {{ pimcore_areablock('c' ~ block_name, block_config) }}

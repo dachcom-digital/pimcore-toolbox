@@ -27,13 +27,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
-        // prevent throwing exception if no gm key has been defined.
-        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === false) {
-            $container->setParameter('pimcore_system_config.services.google.browserapikey', null);
-        }
-        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey') === false) {
-            $container->setParameter('pimcore_system_config.services.google.simpleapikey', null);
-        }
+        $container->setParameter('toolbox.google_maps.browser_api_key', null);
+        $container->setParameter('toolbox.google_maps.simple_api_key', null);
 
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
@@ -118,6 +113,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
         $this->validateToolboxContextConfig($config);
 
+        $this->allocateGoogleMapsApiKey($container);
+
         $contextResolver = $config['context_resolver'];
         unset($config['context_resolver']);
 
@@ -134,6 +131,39 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         //context resolver
         $definition = $container->getDefinition(ContextResolver::class);
         $definition->setClass($contextResolver);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function allocateGoogleMapsApiKey(ContainerBuilder $container)
+    {
+        $googleBrowserApiKey = null;
+        $googleSimpleApiKey = null;
+
+        $pimcoreCoreConfig = $container->hasParameter('pimcore.config') ? $container->getParameter('pimcore.config') : [];
+        $pimcoreGoogleServiceConfig = isset($pimcoreCoreConfig['services']) && isset($pimcoreCoreConfig['services']['google']) ? $pimcoreCoreConfig['services']['google'] : [];
+
+        // browser api key
+        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === true) {
+            $googleBrowserApiKey = $container->getParameter('pimcore_system_config.services.google.browserapikey');
+        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key') === true) {
+            $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
+        } elseif (isset($pimcoreGoogleServiceConfig['browser_api_key'])) {
+            $googleBrowserApiKey = $pimcoreGoogleServiceConfig['browser_api_key'];
+        }
+
+        //simple api key
+        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey') === true) {
+            $googleSimpleApiKey = $container->getParameter('pimcore_system_config.services.google.simpleapikey');
+        } elseif ($container->hasParameter('toolbox_google_service_simple_api_key') === true) {
+            $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
+        } elseif (isset($pimcoreGoogleServiceConfig['simple_api_key'])) {
+            $googleSimpleApiKey = $pimcoreGoogleServiceConfig['simple_api_key'];
+        }
+
+        $container->setParameter('toolbox.google_maps.browser_api_key', $googleBrowserApiKey);
+        $container->setParameter('toolbox.google_maps.simple_api_key', $googleSimpleApiKey);
     }
 
     /**
@@ -155,12 +185,12 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * @deprecated since 2.3. gets removed in 4.0
-     *
      * @param array            $config
      * @param ContainerBuilder $container
      *
      * @return mixed
+     * @deprecated since 2.3. gets removed in 4.0
+     *
      */
     private function handleCalculatorDeprecation($config, ContainerBuilder $container)
     {

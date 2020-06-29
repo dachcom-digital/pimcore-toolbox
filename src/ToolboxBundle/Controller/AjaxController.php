@@ -50,8 +50,8 @@ class AjaxController extends FrontendController
                         'name'   => $name,
                         'value'  => $name,
                         'config' => [
-                            'allow_lightbox' => $settings['allow_lightbox'],
-                            'id_label'       => $settings['id_label']
+                            'allow_lightbox' => $settings['allow_lightbox'] ?? false,
+                            'id_label'       => $settings['id_label'] ?? null
                         ]
                     ];
                 }

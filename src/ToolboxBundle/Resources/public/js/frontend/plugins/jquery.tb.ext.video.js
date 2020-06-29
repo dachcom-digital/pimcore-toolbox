@@ -282,7 +282,7 @@
                     };
 
                     if (!_.hasPoster) {
-                        initPlayer(_.$player.get(0));
+                        initPlayer(_.$player.get(0), _.autoPlay);
                     } else {
                         _.$element.one('click', function (ev) {
                             ev.preventDefault();
@@ -378,7 +378,7 @@
                     };
 
                     if (!_.hasPoster) {
-                        initPlayer(_.$player.get(0));
+                        initPlayer(_.$player.get(0), _.autoPlay);
                     } else {
                         _.$element.one('click', function (ev) {
                             ev.preventDefault();

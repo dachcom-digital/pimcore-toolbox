@@ -179,26 +179,54 @@ If you want to use a different extension to generate your galleries, just overri
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. Toolbox will automatically generate the long/lat information after saving the document.
-Please make sure that you've included a valid google maps api key. Include the script tag in your footer:
 
-```html
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ toolbox_google_map_api_key() }}"></script>
-```
+### Get & set your API Key
+To get a valid API Key you need to follow those steps:
+- Create [a valid google maps api key](https://developers.google.com/maps/documentation/javascript/get-api-key)
+- Enable two APIs: Geocoding API, Maps Javascript API
+- Generate an API Key
+- Copy API Key
 
-Now head into the pimcore-backend, open systemsettings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field:
+### Key Integration
+You have three ways to integrate your Keys.
+
+#### I. Pimcore Configuration
+
+> Note: This is the recommended way to integrate GM Keys!
+
+Head into the pimcore backend, open system settings, navigate to Google Credentials & API Keys and insert the api key for google maps into the browser-api-key-field: 
 
 ![2_7_1_google_api_keys.png](./img/2_7_1_google_api_keys.png)
 
-If you made your own toolbox-/googleMap-config, please make sure to add the last line to it:
+#### II. Using a Parameter
+If you want to define them via parameters, you're able to define them like this:
+
+```yaml
+# app/config/parameters.yml
+parameters:
+    toolbox_google_service_browser_api_key: YOUR_BROWSER_KEY
+    toolbox_google_service_simple_api_key: YOUR_SIMPLE_KEY
+```
+
+#### III. Direct Element Configuration
+If you don't want do define them via parameters, you need to override the default parameters
+on configuration layer:
+
 ```yaml
 toolbox:
     areas:
         googleMap:
             config_parameter:
-                map_api_key: '%pimcore_system_config.services.google.browserapikey%'
+                map_api_key: '%toolbox.google_maps.browser_api_key%' # replace here
+                simple_api_key: '%toolbox.google_maps.simple_api_key%' # replace here
 ```
 
-> Note: like all other systemsettings, this one is also stored in system.php for versioning
+### Script Integration
+Now you can include the script tag in your footer:
+
+```html
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ toolbox_google_map_api_key() }}"></script>
+```
 
 > Note: This is a [custom toolbox element](22_GoogleMapsElement.md).
 
@@ -218,8 +246,8 @@ toolbox:
 | `map_options` | array | Map Zoom | [] |
 | `map_style_url` | string | Define a custom map style (path to json) | false |
 | `marker_icon` | string | Define a custom marker_icon (path to icon) | false |
-| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This parameter tries to load the browser api key from the system settings! This key is used by frontend-api-requests | `'%pimcore_system_config.services.google.browserapikey%'` |
-| `simple_api_key` | string | Set a custom simple api key. To extend the daily request to 2.500 per day. This parameter tries to load the server api key from the system settings! This key is used by backend-api-requests | `'%pimcore_system_config.services.google.simpleapikey%'` |
+| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This key is used by frontend-api-requests | `'%toolbox.google_maps.browser_api_key%'` |
+| `simple_api_key` | string | Set a custom simple api key. To extend the daily request to 2.500 per day. This key is used by backend-api-requests | `'%toolbox.google_maps.simple_api_key%'` |
 
 **Example**  
 ```yaml
@@ -497,7 +525,6 @@ toolbox:
 There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#video-extension)
 
 # Element Config Field Overview
-
 In short, you're able to use all the [pimcore editables](https://www.pimcore.org/docs/5.0.0/Documents/Editables/index.html).
 
 **Example** 
@@ -513,8 +540,10 @@ toolbox:
                         # https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
 ```
 
-# Additional Classes
+## Editable Store Provider
+In addition, you could use the toolbox editable store provider to generate dynamic store data. Read more about it [here](./16_EditableStoreProvider.md).
 
+# Additional Classes
 Almost every toolbox element supports the `additionalClasses` field type.
 This Element will help you to generate some additional classes for every toolbox element.
 This is great since you don't need to override the element view, just add one or more additional classes via config.

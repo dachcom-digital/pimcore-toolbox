@@ -245,6 +245,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('area_block_configuration')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->arrayNode('toolbar')
                             ->children()
