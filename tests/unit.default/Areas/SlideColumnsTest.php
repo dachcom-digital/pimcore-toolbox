@@ -2,8 +2,7 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Select;
+use DachcomBundle\Test\Util\VersionHelper;
 
 class SlideColumnsTest extends AbstractAreaTest
 {
@@ -42,7 +41,13 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $slidesPerView = new Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+        } else {
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+        }
+
+        $slidesPerView = new $selectClass();
         $slidesPerView->setDataFromResource('4');
 
         $elements = [
@@ -59,10 +64,18 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $slidesPerView = new Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
+        } else {
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
+        }
+
+        $slidesPerView = new $selectClass();
         $slidesPerView->setDataFromResource('4');
 
-        $equalHeight = new Checkbox();
+        $equalHeight = new $checkboxClass();
         $equalHeight->setDataFromEditmode(1);
 
         $elements = [
@@ -80,10 +93,18 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $slidesPerView = new Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
+        } else {
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
+        }
+
+        $slidesPerView = new $selectClass();
         $slidesPerView->setDataFromResource('4');
 
-        $equalHeight = new Checkbox();
+        $equalHeight = new $checkboxClass();
         $equalHeight->setDataFromEditmode(1);
 
         $configManager = $this->getToolboxConfig();
@@ -122,10 +143,16 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $combo = new Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+        } else {
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+        }
+
+        $combo = new $selectClass();
         $combo->setDataFromResource('additional-class');
 
-        $slidesPerView = new Select();
+        $slidesPerView = new $selectClass();
         $slidesPerView->setDataFromResource('4');
 
         $elements = [
