@@ -4,6 +4,7 @@ namespace DachcomBundle\Test\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use DachcomBundle\Test\Util\VersionHelper;
 use Pimcore\Tests\Util\TestHelper;
 use Pimcore\Model\Document;
 
@@ -67,8 +68,13 @@ class PimcoreBackend extends Module
      */
     public function seeAToolboxAreaElementPlacedOnDocument(Document\Page $document)
     {
-        $areaElement = $this->createToolboxArea();
-        $document->setElements($areaElement);
+        $editables = $this->createToolboxArea();
+
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $document->setEditables($editables);
+        } else {
+            $document->setElements($editables);
+        }
 
         try {
             $document->save();
@@ -76,7 +82,7 @@ class PimcoreBackend extends Module
             \Codeception\Util\Debug::debug(sprintf('[TOOLBOX ERROR] error while saving document. message was: ' . $e->getMessage()));
         }
 
-        $this->assertCount(count($areaElement), $document->getElements());
+        $this->assertCount(count($editables), VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0') ? $document->getEditables() : $document->getElements());
     }
 
     /**
@@ -144,16 +150,34 @@ class PimcoreBackend extends Module
      */
     protected function createToolboxArea()
     {
-        $blockArea = new Document\Tag\Areablock();
-        $blockArea->setName('dachcomBundleTest');
-        $headlineType = new Document\Tag\Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $blockAreaClass = 'Pimcore\Model\Document\Editable\Areablock';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $inputClass = 'Pimcore\Model\Document\Editable\Input';
+        } else {
+            $blockAreaClass = 'Pimcore\Model\Document\Tag\Areablock';
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $inputClass = 'Pimcore\Model\Document\Tag\Input';
+        }
+
+        $headlineType = new $selectClass();
         $headlineType->setDataFromResource('h6');
         $headlineType->setName('dachcomBundleTest:1.headline_type');
 
-        $headlineText = new Document\Tag\Input();
+        $headlineText = new $inputClass();
         $headlineText->setDataFromResource('this is a headline');
         $headlineText->setName('dachcomBundleTest:1.headline_text');
 
+        $anchorName = new $inputClass();
+        $anchorName->setDataFromResource('this is a anchor name');
+        $anchorName->setName('dachcomBundleTest:1.anchor_name');
+
+        $addClasses = new $selectClass();
+        $addClasses->setDataFromResource(null);
+        $addClasses->setName('dachcomBundleTest:1.add_classes');
+
+        $blockArea = new $blockAreaClass();
+        $blockArea->setName('dachcomBundleTest');
         $blockArea->setDataFromEditmode([
             [
                 'key'    => '1',
@@ -162,12 +186,12 @@ class PimcoreBackend extends Module
             ]
         ]);
 
-        $data = [
+        return [
             'dachcomBundleTest'                 => $blockArea,
-            'dachcomBundleTest.1.headline_type' => $headlineType,
-            'dachcomBundleTest.1.headline_text' => $headlineText
+            'dachcomBundleTest:1.headline_type' => $headlineType,
+            'dachcomBundleTest:1.headline_text' => $headlineText,
+            'dachcomBundleTest:1.anchor_name'   => $anchorName,
+            'dachcomBundleTest:1.add_classes'   => $addClasses,
         ];
-
-        return $data;
     }
 }
