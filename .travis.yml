@@ -37,16 +37,19 @@ matrix:
             sudo: required
             php: 7.3
             env:
+                - SYMFONY_VERSION="~4.3.0" # https://github.com/pimcore/pimcore/issues/5302
                 - PIMCORE_SKELETON_BRANCH="tags/v2.0.0"
         -   name: "Codeception Tests (Pimcore 6.1.x, Symfony ^4.4, PHP 7.3)"
             sudo: required
             php: 7.3
             env:
+                - SYMFONY_VERSION="~4.3.0" # https://github.com/pimcore/pimcore/issues/5302
                 - PIMCORE_SKELETON_BRANCH="tags/v2.1.0"
         -   name: "Codeception Tests (Pimcore 6.2.x, Symfony ^4.4, PHP 7.3)"
             sudo: required
             php: 7.3
             env:
+                - SYMFONY_VERSION="~4.3.0" # https://github.com/pimcore/pimcore/issues/5302
                 - PIMCORE_SKELETON_BRANCH="tags/v2.2.0"
         -   name: "Codeception Tests (Pimcore 6.3.x, Symfony ^4.4, PHP 7.3)"
             sudo: required
