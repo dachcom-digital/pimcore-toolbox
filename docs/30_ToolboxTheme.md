@@ -11,7 +11,7 @@ The Toolbox Bundle is currently using Bootstrap 4 as default framework.
 It's also possible to create your custom layout / theme.
 
 ## Theme Configuration
-This is the default theme configuration.
+Within the `theme` node you're able to define your custom layout information.
 
 ```yaml
 toolbox:
@@ -28,7 +28,7 @@ toolbox:
                 - {tag: 'div', class: 'row'}
             gallery:
                 - {tag: 'div', class: 'row'}
-                - {tag: 'div', class: 'col-12 col-gallery'}
+                - {tag: 'div', class: 'col-12 col-gallery', attr: 'data-my-special-attribute="toolbox"'}
             slideColumns:
                 - {tag: 'div', class: 'row'}
             teaser:
@@ -54,7 +54,7 @@ toolbox:
 
 ```twig
 
-{# example: Image. #}
+{# example: Image #}
 
 1. search layout: @Toolbox/Toolbox/Special/Image/view.html.twig
 2. fallback layout: @Toolbox/Toolbox/Bootstrap3/Image/view.html.twig
@@ -63,7 +63,9 @@ toolbox:
 > Note: `default_layout` is set to `false` by default, so no fallback layout gets loaded if the layout template is not available.
 
 #### Wrapper
-Overriding templates is a great thing. Using the yaml configuration files is even better. With this property you have the power to wrap as many elements as you want around every toolbox element. As you can see, this bundle already adds some wrappers to specific elements.
+Overriding templates is a great thing. Using the yaml configuration files is even better. 
+With this property you have the power to wrap as many elements as you want around every toolbox element. 
+As you can see, this bundle already adds some wrappers to specific elements.
 
 ## Views
 All Views get loaded from `@Toolbox/Toolbox/[LAYOUT_NAME]`.
