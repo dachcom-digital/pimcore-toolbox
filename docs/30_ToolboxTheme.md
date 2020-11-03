@@ -28,7 +28,7 @@ toolbox:
                 - {tag: 'div', class: 'row'}
             gallery:
                 - {tag: 'div', class: 'row'}
-                - {tag: 'div', class: 'col-12 col-gallery', attr: 'data-my-special-attribute="toolbox"'}
+                - {tag: 'div', class: 'col-12 col-gallery', attr: 'only-attributes-without-values-are-allowed'}
             slideColumns:
                 - {tag: 'div', class: 'row'}
             teaser:
