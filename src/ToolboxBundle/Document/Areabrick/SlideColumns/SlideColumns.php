@@ -2,8 +2,9 @@
 
 namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 
-use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use Pimcore\Model\Document\Tag\Checkbox;
 use Pimcore\Model\Document\Tag\Area\Info;
+use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class SlideColumns extends AbstractAreabrick
@@ -22,21 +23,17 @@ class SlideColumns extends AbstractAreabrick
     }
 
     /**
-     * @param Info $info
-     *
-     * @throws \Exception
+     * {@inheritdoc}
      */
     public function action(Info $info)
     {
         parent::action($info);
 
-        /** @var \Pimcore\Model\Document\Tag\Checkbox $equalHeightElement */
+        /** @var Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
         $equalHeight = $equalHeightElement->isChecked() && !$info->getView()->get('editmode');
 
-        /** @var Info $brick */
-        $brick = $info->getView()->get('brick');
-        $id = $brick->getId() . '-' . $brick->getIndex();
+        $id = sprintf('%s-%s', $info->getId(), $info->getIndex());
 
         $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
         $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
@@ -56,6 +53,8 @@ class SlideColumns extends AbstractAreabrick
             'breakpoints'          => $breakpoints,
             'equalHeight'          => $equalHeight
         ]);
+
+        return null;
     }
 
     /**

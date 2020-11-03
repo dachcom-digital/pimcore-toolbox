@@ -311,7 +311,7 @@ Create an iFrame field.
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### jQuery Plugin
-There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#iframe-extension).
+There is also a jquery plugin for the iFrame element. Read more about it [here](80_Javascript.md#iframe-extension).
 We can't provide any out-of-the-box solution for changing the iframe height dynamically (cross-domain policy), so you need to take care about that by yourself.
 Possible Solutions to mastering dynamic iFrame heights:
 

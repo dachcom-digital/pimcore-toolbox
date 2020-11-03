@@ -6,6 +6,9 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 3.2.1 to Version 3.2.2
+- **[NEW FEATURE]**: Pimcore 6.8.0 ready
+
 #### Update from Version 3.2.0 to Version 3.2.1
 - **[NEW FEATURE]**: Pimcore 6.6.0 ready
 - **[NEW FEATURE]** : Fix rendering of multiple t-col-half elements [@christopher-siegel](https://github.com/dachcom-digital/pimcore-toolbox/pull/135)

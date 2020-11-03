@@ -89,5 +89,7 @@ class DynamicLinkMigrationCommand extends Command
                 Cache::clearTag('document_' . $tag);
             }
         }
+
+        return 0;
     }
 }
