@@ -1,5 +1,14 @@
 # Toolbox Theme / Layout
-The Toolbox Bundle is currently using Bootstrap 4 as a supporting framework. It's, however, possible to create your custom layout / theme.
+The Toolbox Bundle is currently using Bootstrap 4 as default framework. 
+
+## Supported Frameworks
+- [Bootstrap 4](./themes/Bootstrap4.md)
+- [Bootstrap 3](./themes/Bootstrap3.md)
+- [UIkit3](./themes/UiKit3.md)
+
+***
+
+It's also possible to create your custom layout / theme.
 
 ## Theme Configuration
 This is the default theme configuration.
@@ -40,7 +49,7 @@ Define a fallback layout. If you're using a custom layout and you have defined a
 toolbox:
     theme:
         layout: 'Special'
-        default_layout: 'Bootstrap3'
+        default_layout: 'Bootstrap4'
 ```
 
 ```twig
