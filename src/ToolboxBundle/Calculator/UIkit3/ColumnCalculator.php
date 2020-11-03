@@ -69,9 +69,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 'm' => (int) $columnClass
             ];
 
-            $ukCol = $this->getUikitCol($columnClass);
+            $ukCol = $this->getUIKitCol($columnClass);
 
-            $uikitClassConfig = $customColumnConfiguration ? [] : [
+            $ukClassConfig = $customColumnConfiguration ? [] : [
                 's' => 'uk-width-1-1',
                 'm' => 'uk-width-' . $ukCol . '@s'
             ];
@@ -83,8 +83,8 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
                     $customColAmount = $customBreakPointDataColumns[$i] ?? 11;
-                    $ukCol = $this->getUikitCol($customColAmount);
-                    $uikitClassConfig[$customBreakPointName] = 'uk-width-' .  $ukCol . '@'  . $customBreakPointName;
+                    $ukCol = $this->getUIKitCol($customColAmount);
+                    $ukClassConfig[$customBreakPointName] = 'uk-width-' . $ukCol . '@' . $customBreakPointName;
                     $gridConfig[$customBreakPointName] = $customColAmount;
                 }
 
@@ -93,14 +93,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
                     $customBreakPointData = $customBreakPoints['xs'];
                     $customBreakPointDataColumns = explode('_', $customBreakPointData);
                     $customColAmount = $customBreakPointDataColumns[$i] ?? 11;
-                    $ukCol = $this->getUikitCol($customColAmount);
-                    $uikitClassConfig['xs'] = 'uk-width-' .  $ukCol;
+                    $ukCol = $this->getUIKitCol($customColAmount);
+                    $ukClassConfig['xs'] = 'uk-width-' . $ukCol;
                 }
             }
 
             $columnName = $strictColumnCounter ? 'column_' . $i : 'column_' . $columnCounter;
             $columns[] = [
-                'columnClass' => implode(' ', $uikitClassConfig),
+                'columnClass' => implode(' ', $ukClassConfig),
                 'columnData'  => [
                     'grid'       => $gridConfig,
                     'gridOffset' => []
@@ -108,6 +108,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 'columnType'  => $value,
                 'name'        => $columnName
             ];
+            
             $columnCounter++;
         }
 
@@ -115,14 +116,14 @@ class ColumnCalculator implements ColumnCalculatorInterface
     }
 
     /**
-     * @param $numerator
+     * @param string $numerator
      *
      * @return string
      */
-    private function getUikitCol($numerator): string
+    private function getUIKitCol($numerator): string
     {
         if (is_numeric($numerator)) {
-            $split =  str_split($numerator);
+            $split = str_split($numerator);
 
             return $split[0] . '-' . $split[1];
         }
