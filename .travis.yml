@@ -64,17 +64,6 @@ matrix:
             php: 7.3
             env:
                 - PIMCORE_SKELETON_BRANCH="tags/v2.5.0"
-        -   name: "Codeception Tests (Pimcore 6.6.x, Symfony ^4.4, PHP 7.3)"
-            sudo: required
-            php: 7.3
-            env:
-                - PIMCORE_SKELETON_BRANCH="tags/v2.6.0"
-        -   name: "Codeception Tests (Pimcore 6.6.x, Symfony ^3.4, PHP 7.3)"
-            sudo: required
-            php: 7.3
-            env:
-                - SYMFONY_VERSION=^3.4
-                - PIMCORE_SKELETON_BRANCH="tags/v2.6.0"
         -   name: "Codeception Tests (Pimcore 6.6.x, Symfony ^4.4, PHP 7.4)"
             sudo: required
             php: 7.4
@@ -86,6 +75,17 @@ matrix:
             env:
                 - SYMFONY_VERSION=^3.4
                 - PIMCORE_SKELETON_BRANCH="tags/v2.7.0"
+        -   name: "Codeception Tests (Pimcore 6.8.x, Symfony ^4.4, PHP 7.3)"
+            sudo: required
+            php: 7.3
+            env:
+                - PIMCORE_SKELETON_BRANCH="tags/v2.8.0"
+        -   name: "Codeception Tests (Pimcore 6.8.x, Symfony ^3.4, PHP 7.3)"
+            sudo: required
+            php: 7.3
+            env:
+                - SYMFONY_VERSION=^3.4
+                - PIMCORE_SKELETON_BRANCH="tags/v2.8.0"
         -   name: "Codeception Tests (Pimcore 6.8.x, Symfony ^4.4, PHP 7.4)"
             sudo: required
             php: 7.4
