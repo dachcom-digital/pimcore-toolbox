@@ -115,12 +115,8 @@ jobs:
 
             -   name: Setup Chromium
                 run: |
-                    wget -c -nc --retry-connrefused --tries=0 "https://chromedriver.storage.googleapis.com/${{ env.CHROME_DRIVER_VERSION }}/chromedriver_linux64.zip" -O chromedriver_linux64.zip
-                    unzip chromedriver_linux64.zip
-                    rm -rf chromedriver_linux64.zip
-                    sudo mv chromedriver /usr/local/bin/chromedriver
-                    sudo chmod +x /usr/local/bin/chromedriver
-                    chromedriver --version
+                    echo $CHROMEWEBDRIVER
+                    nohup $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
 
             -   name: Start Webserver and Chrome
                 run: |
