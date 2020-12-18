@@ -8,6 +8,7 @@ Just click the "update" button or execute the migration command to finish the bu
 
 #### Update from Version 3.2.1 to Version 3.2.2
 - **[NEW FEATURE]**: Pimcore 6.8.0 ready
+- **[NEW FEATURE]** : UIkit3 theme added [@AndiKeiser](https://github.com/dachcom-digital/pimcore-toolbox/pull/138)
 
 #### Update from Version 3.2.0 to Version 3.2.1
 - **[NEW FEATURE]**: Pimcore 6.6.0 ready
