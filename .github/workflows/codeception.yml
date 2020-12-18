@@ -125,8 +125,8 @@ jobs:
             -   name: Start Webserver
                 run: |
                     /usr/local/bin/chromedriver --url-base=/wd/hub &
-                    php bin/console server:start 127.0.0.1:8080 -d web
-                    php bin/console server:status
+                     ~/.symfony/bin/symfony server:start --port=8080 --dir=web --force-php-discovery --daemon
+                    bin/console server:status
 
             -   name: Get Composer Cache Directory
                 id: composer-cache
