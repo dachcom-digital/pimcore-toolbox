@@ -30,6 +30,7 @@ class TestAppKernel extends Kernel
             $collection->addBundle(new \AppBundle\AppBundle());
         }
 
+        $collection->addBundle(new \Symfony\Bundle\WebServerBundle\WebServerBundle());
     }
 
     /**
