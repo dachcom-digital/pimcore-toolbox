@@ -122,12 +122,6 @@ jobs:
                     sudo chmod +x /usr/local/bin/chromedriver
                     chromedriver --version
 
-            -   name: Start Webserver
-                run: |
-                    /usr/local/bin/chromedriver --url-base=/wd/hub &
-                     ~/.symfony/bin/symfony server:start --port=8080 --dir=web --force-php-discovery --daemon
-                    bin/console server:status
-
             -   name: Get Composer Cache Directory
                 id: composer-cache
                 run: |
@@ -145,6 +139,12 @@ jobs:
                 run: |
                     composer req pimcore/pimcore:${{ matrix.pimcore }} symfony/symfony:${{ matrix.symfony }} --no-interaction --ignore-platform-reqs --no-scripts
                     composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
+
+            -   name: Start Webserver
+                run: |
+                    /usr/local/bin/chromedriver --url-base=/wd/hub &
+                    bin/console server:start 127.0.0.1:8080 -d web
+                    bin/console server:status
 
             -   name: Tests
                 run: |
