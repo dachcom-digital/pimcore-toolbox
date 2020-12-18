@@ -29,8 +29,6 @@ class TestAppKernel extends Kernel
         if (class_exists('\\AppBundle\\AppBundle')) {
             $collection->addBundle(new \AppBundle\AppBundle());
         }
-
-        $collection->addBundle(new \Symfony\Bundle\WebServerBundle\WebServerBundle());
     }
 
     /**

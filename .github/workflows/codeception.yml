@@ -142,9 +142,8 @@ jobs:
 
             -   name: Start Webserver
                 run: |
-                    /usr/local/bin/chromedriver --url-base=/wd/hub &
-                    bin/console server:start 127.0.0.1:8080 -d web
-                    bin/console server:status
+                    run: wget https://get.symfony.com/cli/installer -O - | bash
+                    run: ~/.symfony/bin/symfony server:start --port=8080 --dir=web --force-php-discovery --daemon
 
             -   name: Tests
                 run: |
