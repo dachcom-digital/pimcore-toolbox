@@ -9,6 +9,10 @@ jobs:
     codeception:
         runs-on: ubuntu-latest
         env:
+            CHROME_DRIVER_VERSION: 2.41
+            SELENIUM_VERSION: 3.6.0
+            WEBDRIVER_HOST: localhost
+            WEBDRIVER_URL: "http://localhost:8080/"
             DACHCOM_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
             DACHCOM_BUNDLE_NAME: "ToolboxBundle"
             DACHCOM_BUNDLE_CLASS: "ToolboxBundle\\ToolboxBundle"
