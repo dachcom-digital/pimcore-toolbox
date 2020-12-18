@@ -143,7 +143,7 @@ jobs:
             -   name: Start Webserver
                 run: |
                     run: wget https://get.symfony.com/cli/installer -O - | bash
-                    run: ~/.symfony/bin/symfony server:start --port=8080 --dir=web --force-php-discovery --daemon
+                    run: ~/.symfony/bin/symfony server:start --port=8080 --dir=public --force-php-discovery --daemon
 
             -   name: Tests
                 run: |
