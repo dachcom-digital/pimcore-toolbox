@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+## include global bundle test configuration
+source ./tests/_etc/bundle_configuration
+
+## create download dir
+mkdir -p tests/_data/downloads
+
+## add config templates
+cp tests/_etc/config/system/config.yml app/config/config.yml
+cp app/config/parameters.example.yml app/config/parameters.yml
+
+for K in "${!DACHCOM_INSTALL_CONFIG_FILES[@]}"
+do
+    cp $K ${DACHCOM_INSTALL_CONFIG_FILES[$K]};
+done

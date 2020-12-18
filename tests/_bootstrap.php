@@ -3,7 +3,7 @@
 use Pimcore\Bootstrap;
 use DachcomBundle\Test\Util\Autoloader;
 
-include __DIR__ . '/../../../vendor/autoload.php';
+include __DIR__ . '/../vendor/autoload.php';
 
 define('PIMCORE_KERNEL_CLASS', '\DachcomBundle\Test\App\TestAppKernel');
 define('PIMCORE_TEST', true);
