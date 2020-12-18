@@ -113,6 +113,21 @@ jobs:
                     mysql -uroot -h127.0.0.1 -proot -e "SET GLOBAL innodb_large_prefix=1;"
                     mysql -uroot -h127.0.0.1 -proot -e "CREATE DATABASE dachcom_bundle_test CHARSET=utf8mb4;"
 
+            -   name: Setup Chromium
+                run: |
+                    wget -c -nc --retry-connrefused --tries=0 "https://chromedriver.storage.googleapis.com/${{ env.CHROME_DRIVER_VERSION }}/chromedriver_linux64.zip" -O chromedriver_linux64.zip
+                    unzip chromedriver_linux64.zip
+                    rm -rf chromedriver_linux64.zip
+                    sudo mv chromedriver /usr/local/bin/chromedriver
+                    sudo chmod +x /usr/local/bin/chromedriver
+                    chromedriver --version
+
+            -   name: Start Webserver
+                run: |
+                    /usr/local/bin/chromedriver --url-base=/wd/hub &
+                    php bin/console server:start 127.0.0.1:8080 -d web
+                    php bin/console server:status
+
             -   name: Get Composer Cache Directory
                 id: composer-cache
                 run: |
