@@ -122,6 +122,11 @@ jobs:
                     sudo chmod +x /usr/local/bin/chromedriver
                     chromedriver --version
 
+            -   name: Start Webserver
+                run: |
+                    wget https://get.symfony.com/cli/installer -O - | bash
+                    ~/.symfony/bin/symfony server:start --port=8080 --dir=public --force-php-discovery --allow-http --no-tls --daemon
+
             -   name: Get Composer Cache Directory
                 id: composer-cache
                 run: |
@@ -139,11 +144,6 @@ jobs:
                 run: |
                     composer req pimcore/pimcore:${{ matrix.pimcore }} symfony/symfony:${{ matrix.symfony }} --no-interaction --ignore-platform-reqs --no-scripts
                     composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
-
-            -   name: Start Webserver
-                run: |
-                    run: wget https://get.symfony.com/cli/installer -O - | bash
-                    run: ~/.symfony/bin/symfony server:start --port=8080 --dir=public --force-php-discovery --daemon
 
             -   name: Tests
                 run: |
