@@ -115,14 +115,12 @@ jobs:
 
             -   name: Setup Chromium
                 run: |
-                    echo $CHROMEWEBDRIVER
                     nohup $CHROMEWEBDRIVER/chromedriver --url-base=/wd/hub /dev/null 2>&1 &
 
             -   name: Start Webserver and Chrome
                 run: |
                     wget https://get.symfony.com/cli/installer -O - | bash
-                    /usr/local/bin/chromedriver/chromedriver --url-base=/wd/hub &
-                    ~/.symfony/bin/symfony server:start --port=8080 --dir=public --force-php-discovery --allow-http --no-tls --daemon
+                    ~/.symfony/bin/symfony server:start --port=8080 --dir=web --force-php-discovery --allow-http --no-tls --daemon
 
             -   name: Get Composer Cache Directory
                 id: composer-cache
