@@ -1,0 +1,14 @@
+{% if playInLightbox  %}
+    <canvas height="1080" width="1920"></canvas>
+    <a class="uk-cover uk-background-cover uk-width-1-1 uk-height-1-1"
+       {% if posterPath %}data-uk-toggle="target: #video-{{ info.index }}-{{ videoId }}; animation: uk-animation-fade"{% endif %}
+       href="https://player.vimeo.com/video/{{ videoId }}" >
+    </a>
+{% else %}
+    <iframe class="uk-responsive-width" src="https://player.vimeo.com/video/{{ videoId }}{{ autoPlay ? '?rel=0&autoplay=1&playsinline=1' }}"
+            {% if autoPlay %}playsinline allow="autoplay;"{% endif %}
+            data-uk-video="autoplay: true"
+            width="1920" height="1080" data-uk-responsive
+            {{ toolbox_data_attributes_generator('video_parameter', {'video_parameter' : videoParameter}, true)|raw }}>
+    </iframe>
+{% endif %}

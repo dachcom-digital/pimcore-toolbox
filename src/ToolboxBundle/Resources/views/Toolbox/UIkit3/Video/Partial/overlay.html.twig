@@ -1,0 +1,5 @@
+<div id="video-{{ info.index }}-{{ videoId }}" class="uk-cover uk-background-cover uk-width-1-1 uk-height-1-1"
+     data-uk-cover style="background-image:url('{{ posterPath  }}');"
+     {% if posterPath %}data-uk-toggle="target: #video-{{ info.index }}-{{ videoId }}; animation: uk-animation-fade"{% endif %}>
+    <span class="uk-position-center" data-uk-icon="icon: play; ratio: 5"></span>
+</div>

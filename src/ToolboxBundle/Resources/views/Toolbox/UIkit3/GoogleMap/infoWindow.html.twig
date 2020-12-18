@@ -1,0 +1,26 @@
+{#
+
+  Available Params:
+ 
+  mapParams['title']
+  mapParams['street']
+  mapParams['zip']
+  mapParams['city']
+  mapParams['country']
+  mapParams['add']
+  mapParams['lat']
+  mapParams['lng']
+
+#}
+{% import '@Toolbox/Macro/mapLink.html.twig' as link_generator %}
+<div class="info-window">
+    <strong>{{ mapParams.title }}</strong><br>
+    {{ mapParams.street }}<br>
+    {{ mapParams.zip }} {{ mapParams.city }}
+    {% if mapParams.add is defined %}
+        <br>{{ mapParams.add }}
+    {% endif %}
+    <div class="google-map-route-planer">
+        <a href="{{- link_generator.generate(googleMapsHostUrl, mapParams) -}}" target="_blank">{{  'route planer'|trans }}</a>
+    </div>
+</div>

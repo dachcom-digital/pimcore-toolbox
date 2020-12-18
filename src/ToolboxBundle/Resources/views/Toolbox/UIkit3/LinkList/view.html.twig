@@ -1,0 +1,9 @@
+<ul class="uk-list">
+    {% for i in pimcore_iterate_block(pimcore_block('linklistblock')) %}
+        {% if useDynamicLinks == true %}
+            <li>{{ pimcore_dynamiclink('linklist', {'class' : 'list-link'}) }}</li>
+        {% else %}
+            <li>{{ pimcore_link('linklist', {'class' : 'list-link'}) }}</li>
+        {% endif %}
+    {% endfor %}
+</ul>

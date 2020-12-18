@@ -1,0 +1,13 @@
+{% if downloads is iterable %}
+    <div class="download-list{{ showPreviewImages ? ' show-image-preview' : '' }}">
+        <ul class="uk-list">
+            {% for download in downloads %}
+                {% include toolbox_area_path(areaId, '/Partial/item') with {
+                    'download': download,
+                    'showPreviewImages' : showPreviewImages,
+                    'showFileInfo' : showFileInfo,
+                } %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

@@ -1,0 +1,16 @@
+<div data-uk-slider>
+    {% set c = 1 %}
+    <ul class="uk-slider-items {{ slidesPerViewClasses }} uk-grid" data-uk-grid>
+    {% for i in pimcore_iterate_block(slideElements) %}
+        <li>
+            {% if editmode == true %}
+                <span class="count">{{ c }} / {{ slideElements.count }}</span>
+            {% endif %}
+            <div class="slide-column slide-{{ slideElements.currentIndex }}">
+                {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'slideCol', 'type' : 'slideColumns'} %}
+            </div>
+        </li>
+        {% set c = c+1 %}
+    {% endfor %}
+    </ul>
+</div>

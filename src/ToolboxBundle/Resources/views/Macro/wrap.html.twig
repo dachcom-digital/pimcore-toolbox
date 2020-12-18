@@ -1,7 +1,7 @@
 {% macro createWrapHead(elementTheme) %}
     {% if attribute(elementTheme, 'wrapper') is defined and elementTheme.wrapper is iterable %}
         {% for element in elementTheme.wrapper %}
-            <{{ element.tag }} class="{{ element.class }}">
+            <{{ element.tag }} class="{{ element.class }}" {{ element.attr is defined ? element.attr }}>
         {% endfor %}
     {% endif %}
 {% endmacro %}

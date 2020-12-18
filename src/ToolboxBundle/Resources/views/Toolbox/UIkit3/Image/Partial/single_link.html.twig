@@ -1,0 +1,7 @@
+{% if editmode %}
+    {{ pimcore_image('ci') }}
+{% else %}
+    <a href="{{ pimcore_link('image_link').getHref() }}" target="{{ pimcore_link('image_link').getTarget() }}">
+        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : 'img-fluid '  ~ class } %}
+    </a>
+{% endif %}

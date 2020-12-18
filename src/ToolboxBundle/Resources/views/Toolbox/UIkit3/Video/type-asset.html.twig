@@ -1,0 +1,20 @@
+{% set video = pimcore_vhs('video', {
+    'attributes': {
+        'class': 'video-js vjs-default-skin vjs-big-play-centered',
+        'data-setup': '{}'
+    },
+    'disableProgressReload' : true,
+    'height': 250
+}) %}
+
+{% if playInLightbox  %}
+    <canvas width="1920" height="1080"></canvas>
+    <a class="uk-cover uk-background-cover uk-width-1-1 uk-height-1-1"
+       href="{{ video.data.path }}" >
+    </a>
+{% else %}
+    <video src="{{ video.data.path }}"
+           {% if posterPath %}data-uk-toggle="target: #video-{{ info.index }}-{{ videoId }}; animation: uk-animation-fade"{% endif %}
+           class="uk-responsive-width" width="1920" height="1080" data-uk-responsive controls playsinline
+           data-uk-video="{{ autoPlay ? 'inview' : 'false'  }}"></video>
+{% endif %}

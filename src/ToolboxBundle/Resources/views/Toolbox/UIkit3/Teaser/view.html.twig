@@ -1,0 +1,11 @@
+{% set type = pimcore_select('type').data %}
+{% if type == 'direct' or (type is null and pimcore_select('layout').isEmpty == false) %}
+    {% set layout = pimcore_select('layout').data %}
+    {% if layout is empty %}
+        {% set layout = 'standard' %}
+    {% endif %}
+    {% include '@Toolbox/Snippet/teaser-' ~ layout ~ '.html.twig' %}
+{% else %}
+    {# "teaser-standard" is the snippet name. define your teaser layout in the specific teaser snippet! #}
+    {{ pimcore_snippet('teaser-standard', {'useLightBox' : pimcore_checkbox('use_light_box').isChecked()}) }}
+{% endif %}

@@ -1,0 +1,32 @@
+{% set tabContent = [] %}
+<div class="tabs" id="{{ id }}">
+    <ul data-uk-tab >
+        {% for i in pimcore_iterate_block(panel) %}
+            <li class="{{ type }} nav-item">
+                {% if editmode %}
+                    {{ pimcore_input('name') }}
+                    <div class="tab-content">
+                        {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                    </div>
+                {% else %}
+                    <a href="#">
+                        {{ pimcore_input('name').data }}
+                    </a>
+                    {% set content %}
+                        {% include '@Toolbox/Helper/areablock.html.twig' with {'name': 'accord', 'type' : 'accordion'} %}
+                    {% endset %}
+                    {% set tabContent = tabContent|merge([{ 'index': panel.currentIndex, 'content': content}]) %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if editmode == false %}
+        <ul class="uk-switcher uk-margin">
+            {% for tab in tabContent %}
+                <li>
+                    {{ tab.content }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

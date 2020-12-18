@@ -1,0 +1,5 @@
+{% include toolbox_area_path(areaId, 'Partial/list') with {
+    'editmode': editmode,
+    'showPreviewImages': pimcore_checkbox('show_preview_images').isChecked(),
+    'showFileInfo': pimcore_checkbox('show_file_info').isChecked(),
+} %}

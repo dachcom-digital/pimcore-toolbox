@@ -1,0 +1,14 @@
+{% if editmode == true and iFrameUrl is empty %}
+    <span class="no-iframe-selected">{{ 'No iframe url available'|trans({}, 'admin') }}</span>
+{% else %}
+    {% if isValid == false %}
+        <div class="uk-alert uk-alert-danger" data-uk-alert>
+            {{ 'Iframe url is not embedabble since the source does not allow to be included in iframes'|trans({}, 'admin') }}
+            {% if errorMessage != null %}
+                <small><br>Error was: "{{ errorMessage }}"</small>
+            {% endif %}
+        </div>
+    {% else %}
+        <iframe src="{{ iFrameUrl }}" frameborder="0" width="100%" {{ initialHeight != null ? ('height="' ~ (initialHeight) ~ 'px"')|raw : '' }}></iframe>
+    {% endif %}
+{% endif %}

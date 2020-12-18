@@ -1,0 +1,23 @@
+{% if editmode %}
+    {{ pimcore_vhs('video', {
+        'attributes': {
+            'class': 'video-js vjs-default-skin vjs-big-play-centered',
+            'data-setup': '{}'
+        },
+        'thumbnail': toolbox_get_image_thumbnail('video_thumbnail'),
+        'disableProgressReload': true,
+        'height': 250
+
+    }) }}
+
+{% else %}
+    {% set playInLightbox = playInLightbox == 'false' ? false : true  %}
+
+    <div class="{{ posterPath ? 'uk-cover-container' }}" {{ playInLightbox == 'true' ? 'data-uk-lightbox'}}>
+        {% if posterPath is not empty %}
+            {% include toolbox_area_path(areaId, '/Partial/overlay') with {'posterPath' : posterPath, 'playInLightbox': playInLightbox} %}
+        {% endif %}
+
+        {% include toolbox_area_path(areaId, 'type-' ~ videoType) %}
+    </div>
+{% endif %}
