@@ -2,9 +2,11 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
+use Codeception\Exception\ModuleException;
 use DachcomBundle\Test\Test\DachcomBundleTestCase;
+use DachcomBundle\Test\Util\VersionHelper;
+use Pimcore\Document\Editable\EditableHandler;
 use Pimcore\Model\Document\Tag\Area;
-use Pimcore\Templating\Model\ViewModel;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Builder\BrickConfigBuilder;
@@ -15,7 +17,7 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
 {
     /**
      * @return object|ConfigManager
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function getToolboxConfig()
     {
@@ -35,9 +37,7 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     public function generateRenderedArea($id, $documentElements, $infoParams = [])
     {
         $info = $this->generateAreaInfo($id, $infoParams);
-
         $info->getView()->getParameters()->add(['editmode' => false]);
-
         $info->getTag()->getView()->get('document')->setElements($documentElements);
 
         return $this->getAreaOutput($info);
@@ -52,7 +52,6 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     public function generateBackendArea($id)
     {
         $info = $this->generateAreaInfo($id);
-
         $info->getView()->getParameters()->add(['editmode' => true]);
 
         $builder = $this->getContainer()->get(BrickConfigBuilder::class);
@@ -75,21 +74,39 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     {
         $document = TestHelper::createEmptyDocumentPage('', true);
 
-        $view = new ViewModel([
-            'editmode' => false,
-            'document' => $document
-        ]);
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
 
-        $area = new Area();
-        $area->setView($view);
+            $areaClass = 'Pimcore\Model\Document\Editable\Area';
+            $infoClass = 'Pimcore\Model\Document\Editable\Area\Info';
+
+            $area = new $areaClass();
+            $info = new $infoClass();
+
+        } else {
+
+            $areaClass = 'Pimcore\Model\Document\Tag\Area';
+            $infoClass = 'Pimcore\Model\Document\Tag\Area\Info';
+            $viewModelClass = 'Pimcore\Templating\Model\ViewModel';
+
+            $view = new $viewModelClass([
+                'editmode' => false,
+                'document' => $document
+            ]);
+
+            $area = new $areaClass();
+            $info = new $infoClass();
+
+            $info->setTag($area);
+            $info->setView($view);
+
+        }
+
         $area->setName($id);
 
-        $info = new Area\Info();
         $info->setId($id);
-        $info->setTag($area);
-        $info->setView($view);
         $info->setIndex(1);
         $info->setParams($infoParams);
+
         return $info;
     }
 
@@ -100,7 +117,11 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
      */
     public function getAreaOutput(Area\Info $info)
     {
-        $tagHandler = \Pimcore::getContainer()->get('pimcore.document.tag.handler');
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $tagHandler = \Pimcore::getContainer()->get(EditableHandler::class);
+        } else {
+            $tagHandler = \Pimcore::getContainer()->get('pimcore.document.tag.handler');
+        }
 
         ob_start();
         $tagHandler->renderAreaFrontend($info);
@@ -123,7 +144,7 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
+     * @throws ModuleException
      */
     public function setupRequest()
     {
