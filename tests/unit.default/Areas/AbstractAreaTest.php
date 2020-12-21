@@ -75,37 +75,25 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
         $document = TestHelper::createEmptyDocumentPage('', true);
 
         if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-
-            $areaClass = 'Pimcore\Model\Document\Editable\Area';
-            $infoClass = 'Pimcore\Model\Document\Editable\Area\Info';
-
-            $area = new $areaClass();
-            $info = new $infoClass();
-
+            $areaClass = '\Pimcore\Model\Document\Editable\Area';
+            $infoClass = '\Pimcore\Model\Document\Editable\Area\Info';
         } else {
-
-            $areaClass = 'Pimcore\Model\Document\Tag\Area';
-            $infoClass = 'Pimcore\Model\Document\Tag\Area\Info';
-            $viewModelClass = 'Pimcore\Templating\Model\ViewModel';
-
-            $view = new $viewModelClass([
-                'editmode' => false,
-                'document' => $document
-            ]);
-
-            $area = new $areaClass();
-            $info = new $infoClass();
-
-            $info->setTag($area);
-            $info->setView($view);
-
+            $areaClass = '\Pimcore\Model\Document\Tag\Area';
+            $infoClass = '\Pimcore\Model\Document\Tag\Area\Info';
         }
 
+        $area = new $areaClass();
         $area->setName($id);
+        $area->setView(new \Pimcore\Templating\Model\ViewModel([
+            'editmode' => false,
+            'document' => $document
+        ]));
 
+        $info = new $infoClass();
         $info->setId($id);
         $info->setIndex(1);
         $info->setParams($infoParams);
+        $info->setTag($area);
 
         return $info;
     }
