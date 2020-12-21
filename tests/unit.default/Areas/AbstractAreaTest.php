@@ -82,18 +82,21 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
             $infoClass = '\Pimcore\Model\Document\Tag\Area\Info';
         }
 
-        $area = new $areaClass();
-        $area->setName($id);
-        $area->setView(new \Pimcore\Templating\Model\ViewModel([
+        $view = new \Pimcore\Templating\Model\ViewModel([
             'editmode' => false,
             'document' => $document
-        ]));
+        ]);
+
+        $area = new $areaClass();
+        $area->setName($id);
+        $area->setView($view);
 
         $info = new $infoClass();
         $info->setId($id);
         $info->setIndex(1);
         $info->setParams($infoParams);
         $info->setTag($area);
+        $info->setView($view);
 
         return $info;
     }
