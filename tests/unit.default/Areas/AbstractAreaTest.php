@@ -5,7 +5,7 @@ namespace DachcomBundle\Test\UnitDefault\Areas;
 use Codeception\Exception\ModuleException;
 use DachcomBundle\Test\Test\DachcomBundleTestCase;
 use DachcomBundle\Test\Util\VersionHelper;
-use Pimcore\Document\Editable\EditableHandler;
+use Pimcore\Document\Editable\EditableHandlerInterface;
 use Pimcore\Model\Document\Tag\Area;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,7 +109,7 @@ abstract class AbstractAreaTest extends DachcomBundleTestCase
     public function getAreaOutput(Area\Info $info)
     {
         if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $tagHandler = \Pimcore::getContainer()->get(EditableHandler::class);
+            $tagHandler = \Pimcore::getContainer()->get(EditableHandlerInterface::class);
         } else {
             $tagHandler = \Pimcore::getContainer()->get('pimcore.document.tag.handler');
         }
