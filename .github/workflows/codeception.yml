@@ -39,24 +39,31 @@ jobs:
         strategy:
             matrix:
                 php: [7.4]
-                symfony: [^4.4]
                 pimcore: [~6.0.0, ~6.1.0, ~6.2.0, ~6.3.0, ~6.5.0, ~6.6.0, ~6.7.0, ~6.8.0]
                 include:
                     -   pimcore: ~6.0.0
+                        symfony: ~4.3.0
                         template_tag: v2.0.0
                     -   pimcore: ~6.1.0
+                        symfony: ~4.3.0
                         template_tag: v2.1.0
                     -   pimcore: ~6.2.0
+                        symfony: ~4.3.0
                         template_tag: v2.2.0
                     -   pimcore: ~6.3.0
+                        symfony: ^4.4
                         template_tag: v2.3.0
                     -   pimcore: ~6.5.0
+                        symfony: ^4.4
                         template_tag: v2.5.0
                     -   pimcore: ~6.6.0
+                        symfony: ^4.4
                         template_tag: v2.6.0
                     -   pimcore: ~6.7.0
+                        symfony: ^4.4
                         template_tag: v2.7.0
                     -   pimcore: ~6.8.0
+                        symfony: ^4.4
                         template_tag: v2.8.0
                     -   pimcore: ~6.8.0
                         symfony: ^3.4
@@ -66,7 +73,7 @@ jobs:
             -   uses: actions/checkout@v2
 
             -   name: Adjust Error Reporting Level
-                if: ${{ matrix.pimcore == '~6.5.0' }}
+                if: ${{ matrix.pimcore == '~6.3.0' }}
                 run: |
                     echo "PIMCORE_PHP_ERROR_REPORTING=30711" >> $GITHUB_ENV
 
