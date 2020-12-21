@@ -133,3 +133,11 @@ jobs:
                 run: |
                     bin/console cache:warmup --env=test
                     vendor/bin/codecept run --env github -c ${{ env.GITHUB_WORKSPACE }}
+
+            -   name: Log Output
+                uses: actions/upload-artifact@v2
+                if: failure()
+                with:
+                    name: "Logs (PHP ${{ matrix.php }}, Symfony ${{ matrix.pimcore }})"
+                    path: tests/_output/
+                    if-no-files-found: ignore
