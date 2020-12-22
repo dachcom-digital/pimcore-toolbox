@@ -5,9 +5,8 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 [![Join the chat at https://gitter.im/pimcore/pimcore](https://img.shields.io/gitter/room/pimcore/pimcore.svg?style=flat-square)](https://gitter.im/pimcore/pimcore)
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Release](https://img.shields.io/packagist/v/dachcom-digital/toolbox.svg?style=flat-square)](https://packagist.org/packages/dachcom-digital/toolbox)
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/dachcom-digital/pimcore-toolbox.svg?style=flat-square)](https://www.scrutinizer-ci.com/g/dachcom-digital/pimcore-toolbox)
-[![Travis](https://img.shields.io/travis/com/dachcom-digital/pimcore-toolbox/master.svg?style=flat-square)](https://travis-ci.com/dachcom-digital/pimcore-toolbox)
-[![PhpStan](https://img.shields.io/badge/PHPStan-level%202-brightgreen.svg?style=flat-square)](#)
+[![Tests](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/Codeception?style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22Codeception%22)
+[![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan?style=flat-square&logo=github&label=phpstan%20level%202)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22PHP%20Stan%22)
 
 ![pimcore-toolbox](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
 

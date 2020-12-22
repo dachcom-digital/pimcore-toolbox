@@ -3,9 +3,11 @@
 namespace DachcomBundle\Test\App;
 
 use Pimcore\Kernel;
+use DachcomBundle\Test\DependencyInjection\ServiceChangePass;
 use DachcomBundle\Test\DependencyInjection\MakeServicesPublicPass;
 use DachcomBundle\Test\DependencyInjection\MonologChannelLoggerPass;
 use Pimcore\HttpKernel\BundleCollection\BundleCollection;
+use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -19,13 +21,14 @@ class TestAppKernel extends Kernel
      */
     public function registerBundlesToCollection(BundleCollection $collection)
     {
+        $collection->addBundle(new WebProfilerBundle());
+
         $bundleClass = getenv('DACHCOM_BUNDLE_CLASS');
         $collection->addBundle(new $bundleClass());
 
         if (class_exists('\\AppBundle\\AppBundle')) {
             $collection->addBundle(new \AppBundle\AppBundle());
         }
-
     }
 
     /**
@@ -49,6 +52,7 @@ class TestAppKernel extends Kernel
      */
     protected function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ServiceChangePass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
         $container->addCompilerPass(new MakeServicesPublicPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -100000);
         $container->addCompilerPass(new MonologChannelLoggerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
     }
