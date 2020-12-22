@@ -138,6 +138,6 @@ jobs:
                 uses: actions/upload-artifact@v2
                 if: failure()
                 with:
-                    name: "Logs (PHP ${{ matrix.php }}, Symfony ${{ matrix.pimcore }})"
+                    name: "Logs (PHP ${{ matrix.php }}, Pimcore ${{ matrix.pimcore }}, Symfony ${{ matrix.symfony }})"
                     path: tests/_output/
                     if-no-files-found: ignore
