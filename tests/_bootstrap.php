@@ -3,7 +3,9 @@
 use Pimcore\Bootstrap;
 use DachcomBundle\Test\Util\Autoloader;
 
-include __DIR__ . '/../vendor/autoload.php';
+$autoload = sprintf('%svendor/autoload.php', isset($_ENV['CI']) ? __DIR__ . '/../' : __DIR__ . '/../../../');
+
+include $autoload;
 
 define('PIMCORE_KERNEL_CLASS', '\DachcomBundle\Test\App\TestAppKernel');
 define('PIMCORE_TEST', true);
