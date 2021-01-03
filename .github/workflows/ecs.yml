@@ -9,14 +9,27 @@ jobs:
     ecs:
         runs-on: ubuntu-latest
         env:
-            PIMCORE_ENVIRONMENT: "test"
+            TEST_BUNDLE_NAME: "ToolboxBundle"
+            TEST_BUNDLE_NAMESPACE: "ToolboxBundle\\ToolboxBundle"
+            TEST_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
+            TEST_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
+            TEST_PROJECT_ROOT_DIR: "${{ github.workspace }}"
+
+            PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}/pimcore-codeception-framework"
+            PIMCORE_CODECEPTION_VERSION: master # ^1.0
+
+            PIMCORE_ENVIRONMENT: test
             PIMCORE_TEST_DB_DSN: "mysql://root:root@localhost/dachcom_bundle_test"
             PIMCORE_TEST_URL: "http://localhost"
+
             SYMFONY_DEPRECATIONS_HELPER: "weak"
+            PIMCORE_PHP_ERROR_REPORTING: 32767
+
+            WEBDRIVER_HOST: localhost
+            WEBDRIVER_URL: "http://localhost:8080/"
 
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: dachcom_bundle_test
-
         services:
             mysql:
                 image: mysql:5.7
@@ -47,13 +60,15 @@ jobs:
                     mv skeleton/web .
                     mv skeleton/src/AppBundle src
 
-            -   name: Setup Bundle
+            -   name: Setup Pimcore Codeception Framework
                 env:
                     MATRIX_PIMCORE_VERSION: ${{ matrix.pimcore }}
                     MATRIX_PIMCORE_TEMPLATE_TAG: ${{ matrix.template_tag }}
                 run: |
-                    chmod +x tests/_etc/scripts/install
-                    ./tests/_etc/scripts/install
+                    git clone -b ${{ env.PIMCORE_CODECEPTION_VERSION }} --single-branch --depth 1 https://github.com/dachcom-digital/pimcore-codeception-framework.git
+                    ls -al pimcore-codeception-framework
+                    chmod +x ./pimcore-codeception-framework/src/_etc/scripts/setup.sh
+                    ./pimcore-codeception-framework/src/_etc/scripts/setup.sh
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2
