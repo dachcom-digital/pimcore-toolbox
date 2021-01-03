@@ -9,11 +9,11 @@ jobs:
     codeception:
         runs-on: ubuntu-latest
         env:
-            DACHCOM_BUNDLE_NAME: "ToolboxBundle"
-            DACHCOM_BUNDLE_CLASS: "ToolboxBundle\\ToolboxBundle"
-            DACHCOM_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
-            DACHCOM_BUNDLE_ROOT_DIR: "${{ github.workspace }}"
-            DACHCOM_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
+            TEST_BUNDLE_NAME: "ToolboxBundle"
+            TEST_BUNDLE_NAMESPACE: "ToolboxBundle\\ToolboxBundle"
+            TEST_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
+            TEST_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
+            TEST_PROJECT_ROOT_DIR: "${{ github.workspace }}"
 
             PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}/pimcore-codeception-framework"
             PIMCORE_CODECEPTION_VERSION: master # ^1.0
@@ -136,7 +136,7 @@ jobs:
 
             -   name: Enable Bundle
                 run: |
-                    bin/console pimcore:bundle:enable ${{ env.DACHCOM_BUNDLE_NAME }} --no-cache-clear
+                    bin/console pimcore:bundle:enable ${{ env.TEST_BUNDLE_NAME }} --no-cache-clear
 
             -   name: Tests
                 run: |
