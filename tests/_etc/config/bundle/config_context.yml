@@ -8,7 +8,7 @@ toolbox:
                 attributes:
                     class: 'lead'
 
-    context_resolver: 'DachcomBundle\Test\App\Services\ContextResolverTestClass'
+    context_resolver: 'DachcomBundle\Test\Services\ContextResolverTestClass'
     context:
         context_a:
             settings:

@@ -1,6 +1,6 @@
 <?php
 
-namespace DachcomBundle\Test\App\Services;
+namespace DachcomBundle\Test\Services;
 
 use ToolboxBundle\Resolver\ContextResolverInterface;
 

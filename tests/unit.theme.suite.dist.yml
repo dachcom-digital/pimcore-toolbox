@@ -2,9 +2,9 @@ actor: UnitTester
 error_level: 'getenv("PIMCORE_PHP_ERROR_REPORTING")'
 modules:
     enabled:
-        - \DachcomBundle\Test\Helper\PimcoreCore:
+        - \Dachcom\Codeception\Helper\PimcoreCore:
             configuration_file: 'config_theme.yml'
             connect_db: true
-        - \DachcomBundle\Test\Helper\PimcoreBundleCore:
+        - \Dachcom\Codeception\Helper\PimcoreBundleCore:
             run_installer: true
-        - \DachcomBundle\Test\Helper\Unit
+        - \Dachcom\Codeception\Helper\Unit

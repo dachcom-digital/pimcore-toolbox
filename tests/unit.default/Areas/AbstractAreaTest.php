@@ -4,7 +4,7 @@ namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Codeception\Exception\ModuleException;
 use DachcomBundle\Test\Test\DachcomBundleTestCase;
-use DachcomBundle\Test\Util\VersionHelper;
+use Dachcom\Codeception\Util\VersionHelper;
 use Pimcore\Document\Editable\EditableHandlerInterface;
 use Pimcore\Model\Document\Tag\Area;
 use Pimcore\Tests\Util\TestHelper;
