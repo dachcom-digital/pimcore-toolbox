@@ -16,7 +16,9 @@ class AreaPositionCest
         $I->haveAUserWithAdminRights('backendTester');
 
         $document = $I->haveAPageDocument('toolbox-area-test');
-        $I->seeAToolboxAreaElementPlacedOnDocument($document);
+        $editables = $I->haveToolboxAreaEditables();
+
+        $I->seeAnAreaElementPlacedOnDocument($document, $editables);
 
         $I->amOnPage(sprintf('/admin/login/deeplink?document_%d_page', $document->getId()));
         $I->submitForm('form', ['username' => 'backendTester', 'password' => 'backendTester']);

@@ -2,7 +2,7 @@
 
 namespace DachcomBundle\Test\UnitContext;
 
-use DachcomBundle\Test\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\DachcomBundleTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Manager\AreaManager;
 use ToolboxBundle\Manager\AreaManagerInterface;

@@ -15,6 +15,7 @@ modules:
             rebootable_client: true
         - \Dachcom\Codeception\Helper\PimcoreBundleCore:
             run_installer: true
+        - \DachcomBundle\Test\Helper\Toolbox
         - \Dachcom\Codeception\Helper\Browser\WebDriver
         - \Dachcom\Codeception\Helper\PimcoreBackend
         - \Dachcom\Codeception\Helper\PimcoreUser

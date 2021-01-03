@@ -2,7 +2,7 @@
 
 namespace DachcomBundle\Test\UnitTheme;
 
-use DachcomBundle\Test\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\DachcomBundleTestCase;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
 class ColumnCalculatorTest extends DachcomBundleTestCase
