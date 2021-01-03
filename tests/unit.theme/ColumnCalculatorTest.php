@@ -2,10 +2,10 @@
 
 namespace DachcomBundle\Test\UnitTheme;
 
-use Dachcom\Codeception\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\BundleTestCase;
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 
-class ColumnCalculatorTest extends DachcomBundleTestCase
+class ColumnCalculatorTest extends BundleTestCase
 {
     public function testDefaultColumnCalculatorB3()
     {

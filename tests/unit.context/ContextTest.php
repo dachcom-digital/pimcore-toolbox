@@ -2,14 +2,14 @@
 
 namespace DachcomBundle\Test\UnitContext;
 
-use Dachcom\Codeception\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\BundleTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Manager\AreaManager;
 use ToolboxBundle\Manager\AreaManagerInterface;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class ContextTest extends DachcomBundleTestCase
+class ContextTest extends BundleTestCase
 {
     /**
      * @throws \Codeception\Exception\ModuleException

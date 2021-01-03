@@ -3,7 +3,7 @@
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Codeception\Exception\ModuleException;
-use Dachcom\Codeception\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\BundleTestCase;
 use Dachcom\Codeception\Util\VersionHelper;
 use Pimcore\Document\Editable\EditableHandlerInterface;
 use Pimcore\Model\Document\Tag\Area;
@@ -13,7 +13,7 @@ use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-abstract class AbstractAreaTest extends DachcomBundleTestCase
+abstract class AbstractAreaTest extends BundleTestCase
 {
     /**
      * @return object|ConfigManager

@@ -3,11 +3,11 @@
 namespace DachcomBundle\Test\UnitTheme;
 
 use Symfony\Component\HttpFoundation\Request;
-use Dachcom\Codeception\Test\DachcomBundleTestCase;
+use Dachcom\Codeception\Test\BundleTestCase;
 use ToolboxBundle\Manager\AreaManager;
 use ToolboxBundle\Manager\AreaManagerInterface;
 
-class AreaManagerTest extends DachcomBundleTestCase
+class AreaManagerTest extends BundleTestCase
 {
     /**
      * @throws \Exception
