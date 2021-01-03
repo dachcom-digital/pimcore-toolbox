@@ -3,6 +3,7 @@
 namespace DachcomBundle\Test\Helper;
 
 use Codeception\Module;
+use Dachcom\Codeception\Util\SystemHelper;
 use Dachcom\Codeception\Util\VersionHelper;
 
 class Toolbox extends Module
@@ -25,7 +26,7 @@ class Toolbox extends Module
         }
 
         $blockArea = new $blockAreaClass();
-        $blockArea->setName('dachcomBundleTest');
+        $blockArea->setName(SystemHelper::AREA_TEST_NAMESPACE);
         $blockArea->setDataFromEditmode([
             [
                 'key'    => '1',
@@ -36,26 +37,26 @@ class Toolbox extends Module
 
         $headlineType = new $selectClass();
         $headlineType->setDataFromResource('h6');
-        $headlineType->setName('dachcomBundleTest:1.headline_type');
+        $headlineType->setName(sprintf('%s:1.headline_type', SystemHelper::AREA_TEST_NAMESPACE));
 
         $headlineText = new $inputClass();
         $headlineText->setDataFromResource('this is a headline');
-        $headlineText->setName('dachcomBundleTest:1.headline_text');
+        $headlineText->setName(sprintf('%s:1.headline_text', SystemHelper::AREA_TEST_NAMESPACE));
 
         $anchorName = new $inputClass();
         $anchorName->setDataFromResource('this is a anchor name');
-        $anchorName->setName('dachcomBundleTest:1.anchor_name');
+        $anchorName->setName(sprintf('%s:1.anchor_name', SystemHelper::AREA_TEST_NAMESPACE));
 
         $addClasses = new $selectClass();
         $addClasses->setDataFromResource(null);
-        $addClasses->setName('dachcomBundleTest:1.add_classes');
+        $addClasses->setName(sprintf('%s:1.add_classes', SystemHelper::AREA_TEST_NAMESPACE));
 
         return [
-            'dachcomBundleTest'                 => $blockArea,
-            'dachcomBundleTest:1.headline_type' => $headlineType,
-            'dachcomBundleTest:1.headline_text' => $headlineText,
-            'dachcomBundleTest:1.anchor_name'   => $anchorName,
-            'dachcomBundleTest:1.add_classes'   => $addClasses,
+            $blockArea->getName()    => $blockArea,
+            $headlineType->getName() => $headlineType,
+            $headlineText->getName() => $headlineText,
+            $anchorName->getName()   => $anchorName,
+            $addClasses->getName()   => $addClasses,
         ];
     }
 }
