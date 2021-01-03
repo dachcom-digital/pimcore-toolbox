@@ -118,4 +118,4 @@ jobs:
                 continue-on-error: true
                 run: |
                     bin/console cache:warmup --env=test
-                    vendor/bin/ecs check src --config easy-coding-standard.yml
+                    vendor/bin/ecs check src/ToolboxBundle --config easy-coding-standard.yml
