@@ -15,7 +15,7 @@ jobs:
             DACHCOM_BUNDLE_ROOT_DIR: "${{ github.workspace }}"
             DACHCOM_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
 
-            PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}pimcore-codeception-framework"
+            PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}/pimcore-codeception-framework"
             PIMCORE_CODECEPTION_VERSION: master # ^1.0
 
             PIMCORE_ENVIRONMENT: test
