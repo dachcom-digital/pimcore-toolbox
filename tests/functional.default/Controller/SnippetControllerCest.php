@@ -38,10 +38,28 @@ class SnippetControllerCest
         ];
 
         $snippetEditables = [
-            'ts_type' => [
+            'ts_type'        => [
                 'type'             => 'select',
                 'dataFromResource' => 'default',
-            ]
+            ],
+            'use_light_box'  => [
+                'type' => 'Checkbox',
+            ],
+            'ts_add_classes' => [
+                'type' => 'select',
+            ],
+            'link'           => [
+                'type' => 'link',
+            ],
+            'image'          => [
+                'type' => 'image',
+            ],
+            'headline'       => [
+                'type' => 'input',
+            ],
+            'text'           => [
+                'type' => 'wysiwyg',
+            ],
         ];
 
         $document = $I->haveASnippet('snippet-test', $snippetParams);
