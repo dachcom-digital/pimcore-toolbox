@@ -3,7 +3,6 @@
 namespace DachcomBundle\Test\FunctionalDefault\Controller;
 
 use DachcomBundle\Test\FunctionalTester;
-use Pimcore\Model\Document;
 
 class SnippetControllerCest
 {
@@ -32,20 +31,25 @@ class SnippetControllerCest
      */
     public function testSnippetWithDefaultTeaserController(FunctionalTester $I)
     {
-        $combo = new Document\Tag\Select();
-        $combo->setDataFromResource('default');
-        $combo->setName('ts_type');
-
         $snippetParams = [
             'module'     => 'ToolboxBundle',
             'controller' => 'Snippet',
             'action'     => 'teaser'
         ];
 
+        $snippetEditables = [
+            'ts_type' => [
+                'type'             => 'select',
+                'dataFromResource' => 'default',
+            ]
+        ];
+
+        $document = $I->haveASnippet('snippet-test', $snippetParams);
+
+        $I->seeEditablesPlacedOnDocument($document, $snippetEditables);
+
         $I->haveAUserWithAdminRights('dachcom_test');
         $I->amLoggedInAs('dachcom_test');
-        $I->haveASnippet('snippet-test', $snippetParams, ['ts_type' => $combo]);
-
         $I->amOnPage('/snippet-test?pimcore_editmode=true');
 
         $I->seeElement('.single-teaser.default');
