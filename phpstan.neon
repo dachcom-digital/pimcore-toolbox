@@ -3,7 +3,7 @@ includes:
 parameters:
     reportUnmatchedIgnoredErrors: false
     symfony:
-        container_xml_path: %currentWorkingDirectory%/var/cache/test/appAppKernelTestDebugContainer.xml
+        container_xml_path: %currentWorkingDirectory%/var/cache/test/appTestKernelTestDebugContainer.xml
     ignoreErrors:
         # There is no global constants definition file we could include, ignore it:
         - '#Constant PIMCORE_[A-Z\\_]+ not found\.#'
