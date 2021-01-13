@@ -113,6 +113,10 @@ jobs:
                     composer req pimcore/pimcore:${{ matrix.pimcore }} symfony/symfony:${{ matrix.symfony }} --no-interaction --ignore-platform-reqs --no-scripts
                     composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
+            -   name: Assets Install
+                run: |
+                    bin/console assets:install web --relative --symlink
+
             -   name: Easy Coding Standard Check
                 continue-on-error: true
                 run: |
