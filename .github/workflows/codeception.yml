@@ -9,21 +9,24 @@ jobs:
     codeception:
         runs-on: ubuntu-latest
         env:
-            CHROME_DRIVER_VERSION: 2.41
-            SELENIUM_VERSION: 3.6.0
-            WEBDRIVER_HOST: localhost
-            WEBDRIVER_URL: "http://localhost:8080/"
-            DACHCOM_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
-            DACHCOM_BUNDLE_NAME: "ToolboxBundle"
-            DACHCOM_BUNDLE_CLASS: "ToolboxBundle\\ToolboxBundle"
-            DACHCOM_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
+            TEST_BUNDLE_NAME: "ToolboxBundle"
+            TEST_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
+            TEST_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
+            TEST_PROJECT_ROOT_DIR: "${{ github.workspace }}"
 
-            PIMCORE_ENVIRONMENT: "test"
+            PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}/pimcore-codeception-framework"
+            PIMCORE_CODECEPTION_VERSION: "1.0"
+
+            PIMCORE_ENVIRONMENT: test
             PIMCORE_TEST_DB_DSN: "mysql://root:root@localhost/dachcom_bundle_test"
             PIMCORE_TEST_URL: "http://localhost"
+            PIMCORE_CLASS_DIRECTORY: "${{ github.workspace }}/tests/_output/var/classes/DataObject"
 
             SYMFONY_DEPRECATIONS_HELPER: "weak"
             PIMCORE_PHP_ERROR_REPORTING: 32767
+
+            WEBDRIVER_HOST: localhost
+            WEBDRIVER_URL: "http://localhost:8080/"
 
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: dachcom_bundle_test
@@ -64,13 +67,15 @@ jobs:
                     mv skeleton/web .
                     mv skeleton/src/AppBundle src
 
-            -   name: Setup Bundle
+            -   name: Setup Pimcore Codeception Framework
                 env:
                     MATRIX_PIMCORE_VERSION: ${{ matrix.pimcore }}
                     MATRIX_PIMCORE_TEMPLATE_TAG: ${{ matrix.template_tag }}
                 run: |
-                    chmod +x tests/_etc/scripts/install
-                    ./tests/_etc/scripts/install
+                    git clone -b ${{ env.PIMCORE_CODECEPTION_VERSION }} --single-branch --depth 1 https://github.com/dachcom-digital/pimcore-codeception-framework.git
+                    ls -al pimcore-codeception-framework
+                    chmod +x ./pimcore-codeception-framework/src/_etc/scripts/setup.sh
+                    ./pimcore-codeception-framework/src/_etc/scripts/setup.sh
 
             -   name: Install PHP
                 uses: shivammathur/setup-php@v2
@@ -121,9 +126,12 @@ jobs:
                         ${{ runner.os }}-composer-
 
             -   name: Composer install
+                env:
+                    TEST_PIMCORE_VERSION: ${{ matrix.pimcore }}
+                    TEST_SYMFONY_VERSION: ${{ matrix.symfony }}
                 run: |
-                    composer req pimcore/pimcore:${{ matrix.pimcore }} symfony/symfony:${{ matrix.symfony }} --no-interaction --ignore-platform-reqs --no-scripts
-                    composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
+                    chmod +x ./pimcore-codeception-framework/src/_etc/scripts/composer.sh
+                    ./pimcore-codeception-framework/src/_etc/scripts/composer.sh
 
             -   name: Assets Install
                 run: |

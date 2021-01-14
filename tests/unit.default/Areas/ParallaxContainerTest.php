@@ -2,9 +2,7 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Block;
-use Pimcore\Model\Document\Tag\Relation;
-use Pimcore\Model\Document\Tag\Select;
+use Dachcom\Codeception\Util\VersionHelper;
 use Pimcore\Tests\Util\TestHelper;
 use ToolboxBundle\Model\Document\Tag\ParallaxImage;
 
@@ -72,7 +70,13 @@ class ParallaxContainerTest extends AbstractAreaTest
 
         $elements = $this->getDefaultElements($asset);
 
-        $combo = new Select();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+        } else {
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+        }
+
+        $combo = new $selectClass();
         $combo->setDataFromResource('additional-class');
 
         $elements['add_classes'] = $combo;
@@ -85,17 +89,27 @@ class ParallaxContainerTest extends AbstractAreaTest
 
     private function getDefaultElements($asset)
     {
-        $backgroundImage = new Relation();
+        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
+            $blockClass = 'Pimcore\Model\Document\Editable\Block';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $relationClass = 'Pimcore\Model\Document\Editable\Relation';
+        } else {
+            $blockClass = 'Pimcore\Model\Document\Tag\Block';
+            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $relationClass = 'Pimcore\Model\Document\Tag\Relation';
+        }
+
+        $backgroundImage = new $relationClass();
         $backgroundImage->setDataFromEditmode([
             'id'      => $asset->getId(),
             'type'    => 'asset',
             'subtype' => null,
         ]);
 
-        $template = new Select();
+        $template = new $selectClass();
         $template->setDataFromEditmode('no-template');
 
-        $backgroundColor = new Select();
+        $backgroundColor = new $selectClass();
         $backgroundColor->setDataFromEditmode('default');
 
         $imageFront = new ParallaxImage();
@@ -134,24 +148,24 @@ class ParallaxContainerTest extends AbstractAreaTest
             ]
         ]);
 
-        $block = new Block();
+        $block = new $blockClass();
         $block->setName('test-parallax-container-section');
         $block->setDataFromEditmode([1, 2]);
 
-        $sectionTemplate = new Select();
+        $sectionTemplate = new $selectClass();
         $sectionTemplate->setDataFromEditmode('no-template');
 
-        $sectionContainerType = new Select();
+        $sectionContainerType = new $selectClass();
         $sectionContainerType->setDataFromEditmode('container-fluid');
 
-        $sectionBackgroundImage = new Relation();
+        $sectionBackgroundImage = new $relationClass();
         $sectionBackgroundImage->setDataFromEditmode([
             'id'      => $asset->getId(),
             'type'    => 'asset',
             'subtype' => null,
         ]);
 
-        $sectionBackgroundColor = new Select();
+        $sectionBackgroundColor = new $selectClass();
         $sectionBackgroundColor->setDataFromEditmode('no-background-color');
 
         return [
@@ -170,7 +184,6 @@ class ParallaxContainerTest extends AbstractAreaTest
             'pcB:1.background_color' => $sectionBackgroundColor,
             'pcB:2.background_color' => $sectionBackgroundColor
         ];
-
     }
 
     private function getCompare($imagePath)

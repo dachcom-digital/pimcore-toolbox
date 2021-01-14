@@ -2,7 +2,7 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use DachcomBundle\Test\Util\VersionHelper;
+use Dachcom\Codeception\Util\VersionHelper;
 
 class SlideColumnsTest extends AbstractAreaTest
 {
