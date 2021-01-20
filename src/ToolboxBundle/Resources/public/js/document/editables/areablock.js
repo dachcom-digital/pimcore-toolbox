@@ -1,6 +1,5 @@
-pimcore.registerNS('pimcore.document.tags.areablock');
-// deprecated. remove with toolbox 4.0
-pimcore.document.tags.areablock = Class.create(pimcore.document.tags.areablock, {
+pimcore.registerNS('pimcore.document.editables.areablock');
+pimcore.document.editables.areablock = Class.create(pimcore.document.editables.areablock, {
 
     initialize: function ($super, id, name, options, data, inherited) {
 
