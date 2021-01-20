@@ -6,8 +6,10 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
-#### Update from Version 3.2.1 to Version 3.2.2
+#### Update from Version 3.2.1 to Version 3.2.3
 - **[NEW FEATURE]**: Pimcore 6.8.0 ready
+
+#### Update from Version 3.2.1 to Version 3.2.2
 - **[NEW FEATURE]** : UIkit3 theme added [@AndiKeiser](https://github.com/dachcom-digital/pimcore-toolbox/pull/138)
 
 #### Update from Version 3.2.0 to Version 3.2.1
