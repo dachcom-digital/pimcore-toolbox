@@ -54,12 +54,15 @@ class GoogleMap extends Document\Tag
      */
     public function frontend()
     {
+        // @todo: remove with toolbox 4.0
+        $configData = property_exists($this, 'config') ? $this->config : $this->options;
+
         $dataAttr = [];
         $dataAttr['data-locations'] = json_encode($this->data);
-        $dataAttr['data-show-info-window-on-load'] = $this->options['iwOnInit'];
+        $dataAttr['data-show-info-window-on-load'] = $configData['iwOnInit'];
 
-        $dataAttr['data-mapoption-zoom'] = $this->options['mapZoom'];
-        $dataAttr['data-mapoption-map-type-id'] = $this->options['mapType'];
+        $dataAttr['data-mapoption-zoom'] = $configData['mapZoom'];
+        $dataAttr['data-mapoption-map-type-id'] = $configData['mapType'];
 
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
