@@ -6,7 +6,7 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
-#### Update from Version 3.2.1 to Version 3.2.3
+#### Update from Version 3.2.2 to Version 3.2.3
 - **[NEW FEATURE]**: Pimcore 6.8.0 ready
 
 #### Update from Version 3.2.1 to Version 3.2.2
