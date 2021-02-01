@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Download;
 
 use Pimcore\Db\ZendCompatibility\QueryBuilder;
+use Pimcore\Model\Document\Tag\Relations;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Tag\Area\Info;
@@ -30,58 +31,79 @@ class Download extends AbstractAreabrick
     {
         parent::action($info);
 
-        $view = $info->getView();
-
-        //check if member extension exist
-        $hasMembers = $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
-
-        /** @var \Pimcore\Model\Document\Tag\Relations $downloadField */
+        /** @var Relations $downloadField */
         $downloadField = $this->getDocumentTag($info->getDocument(), 'relations', 'downloads');
 
         $assets = [];
         if (!$downloadField->isEmpty()) {
-            /** @var \Pimcore\Model\Asset $node */
+            /** @var Asset $node */
             foreach ($downloadField->getElements() as $node) {
-                //it's a folder. get all sub assets
                 if ($node instanceof Asset\Folder) {
-                    $assetListing = new Asset\Listing();
-                    $fullPath = rtrim($node->getFullPath(), '/') . '/';
-                    $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
-
-                    if ($hasMembers) {
-                        $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
-                            $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
-                                ->addRestrictionInjection($query, $assetListing, 'assets.id');
-                        });
-                    }
-
-                    /** @var Asset $entry */
-                    foreach ($assetListing->getAssets() as $entry) {
-                        if (!$entry instanceof Asset\Folder) {
-                            $assets[] = $entry;
-                        }
-                    }
-
-                    //default asset
+                    $assets = array_merge($assets, $this->getByFolder($node));
                 } else {
-                    if ($hasMembers) {
-                        /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
-                        $elementRestriction = $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->getElementRestrictionStatus($node);
-                        if ($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
-                            $assets[] = $node;
-                        }
-                    } else {
-                        $assets[] = $node;
-                    }
+                    $assets = array_merge($assets, $this->getByFile($node));
                 }
             }
         }
 
-        $view->getParameters()->add([
+        $info->getView()->getParameters()->add([
             'downloads' => $assets
         ]);
 
         return null;
+    }
+
+    /**
+     * @param Asset $node
+     *
+     * @return Asset[]
+     */
+    protected function getByFile(Asset $node)
+    {
+        if (!$this->hasMembersBundle()) {
+            return [$node];
+        }
+
+        /** @var \MembersBundle\Restriction\ElementRestriction $elementRestriction */
+        $elementRestriction = $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->getElementRestrictionStatus($node);
+        if ($elementRestriction->getSection() === \MembersBundle\Manager\RestrictionManager::RESTRICTION_SECTION_ALLOWED) {
+            return [$node];
+        }
+
+        return [];
+    }
+
+    /**
+     * @param Asset\Folder $node
+     *
+     * @return Asset[]
+     */
+    protected function getByFolder(Asset\Folder $node)
+    {
+        $assetListing = new Asset\Listing();
+        $fullPath = rtrim($node->getFullPath(), '/') . '/';
+        $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
+        $assetListing->addConditionParam('type != ?', 'folder');
+
+        if ($this->hasMembersBundle()) {
+            $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
+                $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
+                    ->addRestrictionInjection($query, $assetListing, 'assets.id');
+            });
+        }
+
+        $assetListing->setOrderKey('filename');
+        $assetListing->setOrder('asc');
+
+        return $assetListing->getAssets();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasMembersBundle()
+    {
+        return $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
     }
 
     /**
