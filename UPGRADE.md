@@ -6,6 +6,9 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 3.2.3 to Version 3.2.4
+- **[IMPROVEMENT]**: Assert correct order in download listing when members join is active
+
 #### Update from Version 3.2.2 to Version 3.2.3
 - **[NEW FEATURE]**: Pimcore 6.8.0 ready
 - **[BUGFIX]**: Use `config` property on Pimcore >= 6.8 [#146](https://github.com/dachcom-digital/pimcore-toolbox/issues/146)
