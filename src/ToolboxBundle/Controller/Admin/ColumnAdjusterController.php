@@ -52,13 +52,47 @@ class ColumnAdjusterController extends Controller\AdminController
         }
 
         $theme = $this->configManager->getConfig('theme');
-        $gridSize = isset($theme['grid']) && isset($theme['grid']['grid_size']) ? $theme['grid']['grid_size'] : null;
+        $layout = isset($theme['layout']) ? strtolower($theme['layout']) : null;
+
         $columnCalculator = $this->calculatorRegistry->getColumnCalculator($theme['calculators']['column_calculator']);
         $breakPointConfiguration = $columnCalculator->getColumnInfoForAdjuster($currentColumn, $customColumnConfiguration);
 
-        $columnStore = isset($theme['grid']) && isset($theme['grid']['column_store']) ? $theme['grid']['column_store'] : null;
-        $layout = isset($theme['layout']) ? strtolower($theme['layout']) : null;
+        $gridSize = $this->assertGridConfig($theme, 'grid_size', 'integer');
+        $columnStore = $this->assertGridConfig($theme, 'column_store', 'array');
 
-        return $this->json(['breakPoints' => $breakPointConfiguration, 'gridSize' => $gridSize, 'columnStore' => $columnStore, 'layout' => $layout]);
+        if (is_array($columnStore) && count($columnStore) === 0) {
+            $columnStore = null;
+        }
+
+        return $this->json([
+            'breakPoints' => $breakPointConfiguration,
+            'gridSize'    => $gridSize,
+            'columnStore' => $columnStore,
+            'layout'      => $layout
+        ]);
+    }
+
+    /**
+     * @param array  $theme
+     * @param string $node
+     * @param string $expectedType
+     *
+     * @return mixed|null
+     */
+    protected function assertGridConfig(array $theme, string $node, string $expectedType = 'string')
+    {
+        if (!isset($theme['grid'])) {
+            return null;
+        }
+
+        if (!isset($theme['grid'][$node])) {
+            return null;
+        }
+
+        if (gettype($theme['grid'][$node]) !== $expectedType) {
+            return null;
+        }
+
+        return $theme['grid'][$node];
     }
 }

@@ -6,6 +6,9 @@
 After every update you should check the pimcore extension manager. 
 Just click the "update" button or execute the migration command to finish the bundle update.
 
+#### Update from Version 3.2.4 to Version 3.2.45
+- **[BUG FIX]**: Fix column adjuster column_store availability check
+
 #### Update from Version 3.2.3 to Version 3.2.4
 - **[IMPROVEMENT]**: Assert correct order in download listing when members join is active
 
