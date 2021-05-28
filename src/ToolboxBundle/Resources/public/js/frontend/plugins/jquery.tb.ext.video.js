@@ -264,6 +264,7 @@
                             playerVars = $.extend({}, _.options.apiParameter.youtube, _.videoParameter),
                             options = {
                                 videoId: _.videoId,
+                                host: 'https://www.youtube-nocookie.com',
                                 events: {
                                     'onReady': function () {
                                         _.isReady = true;
