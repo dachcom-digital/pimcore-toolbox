@@ -1,9 +1,9 @@
 name: Codeception
 on:
     push:
-        branches: [ 'master' ]
+        branches: [ '3.x' ]
     pull_request:
-        branches: [ 'master' ]
+        branches: [ '3.x' ]
 
 jobs:
     codeception:
@@ -43,7 +43,7 @@ jobs:
             matrix:
                 php: [7.4]
                 symfony: [^4.4]
-                pimcore: [~6.6.0, ~6.7.0, ~6.8.0]
+                pimcore: [~6.6.0, ~6.7.0, ~6.8.0, ~6.9.0]
                 include:
                     -   pimcore: ~6.6.0
                         template_tag: v2.6.0
@@ -55,6 +55,8 @@ jobs:
                         symfony: ^3.4
                         php: 7.4
                         template_tag: v2.8.0
+                    -   pimcore: ~6.9.0
+                        template_tag: v2.8.19
         steps:
             -   uses: actions/checkout@v2
 
