@@ -1,9 +1,9 @@
 name: Easy Coding Standards
 on:
     push:
-        branches: [ 'master' ]
+        branches: [ '3.x' ]
     pull_request:
-        branches: [ 'master' ]
+        branches: [ '3.x' ]
 
 jobs:
     ecs:
