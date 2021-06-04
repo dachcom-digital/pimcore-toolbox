@@ -45,6 +45,8 @@ services:
             - { name: twig.extension }
 
     ToolboxBundle\Twig\Extension\GoogleAPIKeysExtension:
+        arguments:
+            $fallbackBrowserKey: '%toolbox.google_maps.browser_api_key%'
         public: false
         autowire: true
         tags:
