@@ -209,7 +209,7 @@ parameters:
 ```
 
 #### III. Direct Element Configuration
-If you don't want do define them via parameters, you need to override the default parameters
+If you don't want to define them via parameters, you need to override the default parameters
 on configuration layer:
 
 ```yaml
@@ -217,8 +217,8 @@ toolbox:
     areas:
         googleMap:
             config_parameter:
-                map_api_key: '%toolbox.google_maps.browser_api_key%' # replace here
-                simple_api_key: '%toolbox.google_maps.simple_api_key%' # replace here
+                map_api_key: null # replace here
+                simple_api_key: null # replace here
 ```
 
 ### Script Integration

@@ -50,5 +50,5 @@ toolbox:
                     scrollwheel: false
                 map_style_url: false
                 marker_icon: false
-                map_api_key: '%toolbox.google_maps.browser_api_key%'
-                simple_api_key: '%toolbox.google_maps.simple_api_key%'
+                map_api_key: null
+                simple_api_key: null

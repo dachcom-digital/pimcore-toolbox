@@ -220,6 +220,10 @@ class GoogleMap extends Document\Tag
      */
     protected function geocodeLocation($location)
     {
+        if ($this->googleLookUpIsDisabled()) {
+            return $location;
+        }
+
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
         $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
@@ -227,21 +231,28 @@ class GoogleMap extends Document\Tag
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
         $address = urlencode($address);
 
-        $key = '';
+        $key = null;
+        $keyParam = '';
+
+        $fallbackSimpleKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.simple_api_key');
+        $fallbackBrowserKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.browser_api_key');
+
         // first try to get server-api-key
         if (!empty($configNode) && isset($configNode['simple_api_key']) && !empty($configNode['simple_api_key'])) {
-            $key = '&key=' . $configNode['simple_api_key'];
-        }
-        // if not set, get browser-api-key
-        if ($key === '' && !empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
-            $key = '&key=' . $configNode['map_api_key'];
-        }
-
-        if ($this->googleLookUpIsDisabled()) {
-            return $location;
+            $key = $configNode['simple_api_key'];
+        } elseif (!empty($fallbackSimpleKey)) {
+            $key = $fallbackSimpleKey;
+        } elseif (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+            $key = $configNode['map_api_key'];
+        } elseif (!empty($fallbackBrowserKey)) {
+            $key = $fallbackBrowserKey;
         }
 
-        $url = 'https://maps.google.com/maps/api/geocode/json?address=' . $address . $key;
+        if ($key !== null) {
+            $keyParam = sprintf('&key=%s', $key);
+        }
+
+        $url = sprintf('https://maps.google.com/maps/api/geocode/json?address=%s%s', $address, $keyParam);
 
         $c = curl_init();
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);

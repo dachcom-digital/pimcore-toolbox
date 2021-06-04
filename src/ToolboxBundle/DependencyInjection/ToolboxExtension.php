@@ -27,9 +27,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
-        $container->setParameter('toolbox.google_maps.browser_api_key', null);
-        $container->setParameter('toolbox.google_maps.simple_api_key', null);
-
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
         $rootConfigs = [];
