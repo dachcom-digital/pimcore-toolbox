@@ -14,7 +14,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 | Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
 |---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **3.x** | `6.0` - `6.8`                     | `3.4`, `^4.4`              | 16.07.2019   | Feature Branch | master     |
+| **3.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 16.07.2019   | Feature Branch | 3.x        |
 | **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Bugfix only    | 2.8        |
 | **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4   |
 
@@ -22,7 +22,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~3.2.0"
+    "dachcom-digital/toolbox" : "~3.3.0"
 }
 ```
 
