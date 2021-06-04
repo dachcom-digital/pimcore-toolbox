@@ -9,7 +9,8 @@ Just click the "update" button or execute the migration command to finish the bu
 #### Update from Version 3.2.5 to Version 3.3.0
 - **[NEW FEATURE]**: Pimcore 6.9.0 ready
 - **[IMPROVEMENT]**: use no-cookie domain for youtube videos [@ghettopro](https://github.com/dachcom-digital/pimcore-toolbox/pull/153)
-- **[BUG FIX]**: Fix invalid asset video markup[@gpalmisano](https://github.com/dachcom-digital/pimcore-toolbox/pull/154)
+- **[BUG FIX]**: Fix invalid asset video markup [@gpalmisano](https://github.com/dachcom-digital/pimcore-toolbox/pull/154)
+- **[BUG FIX]**: Fix google maps locations with single quotes [#151](https://github.com/dachcom-digital/pimcore-toolbox/issues/151)
 
 #### Update from Version 3.2.4 to Version 3.2.5
 - **[BUG FIX]**: Fix column adjuster column_store availability check

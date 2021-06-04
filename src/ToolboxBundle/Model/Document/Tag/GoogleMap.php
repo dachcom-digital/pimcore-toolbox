@@ -58,7 +58,7 @@ class GoogleMap extends Document\Tag
         $configData = property_exists($this, 'config') ? $this->config : $this->options;
 
         $dataAttr = [];
-        $dataAttr['data-locations'] = json_encode($this->data);
+        $dataAttr['data-locations'] = json_encode($this->data, JSON_HEX_QUOT | JSON_HEX_APOS);
         $dataAttr['data-show-info-window-on-load'] = $configData['iwOnInit'];
 
         $dataAttr['data-mapoption-zoom'] = $configData['mapZoom'];
