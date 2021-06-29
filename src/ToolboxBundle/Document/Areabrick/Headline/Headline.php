@@ -3,38 +3,31 @@
 namespace ToolboxBundle\Document\Areabrick\Headline;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Headline extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
         $anchorName = null;
-        /** @var \Pimcore\Model\Document\Tag\Input $anchorNameElement */
-        $anchorNameElement = $this->getDocumentTag($info->getDocument(), 'input', 'anchor_name');
+        /** @var \Pimcore\Model\Document\Editable\Input $anchorNameElement */
+        $anchorNameElement = $this->getDocumentEditable($info->getDocument(), 'input', 'anchor_name');
 
         if (!$anchorNameElement->isEmpty()) {
             $anchorName = \Pimcore\File::getValidFilename($anchorNameElement->getData());
         }
 
-        $info->getView()->getParameters()->add(['anchorName' => $anchorName]);
+        $info->setParam('anchorName', $anchorName);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Headline';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Headline';
     }

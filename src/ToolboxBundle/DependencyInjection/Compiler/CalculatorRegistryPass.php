@@ -12,10 +12,7 @@ final class CalculatorRegistryPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         /* @deprecated since 2.3. gets removed in 4.0 */
         if ($container->hasParameter('toolbox.deprecation.calculator_tags')) {

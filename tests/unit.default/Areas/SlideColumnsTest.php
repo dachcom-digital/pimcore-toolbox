@@ -44,7 +44,7 @@ class SlideColumnsTest extends AbstractAreaTest
         if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
         } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
         }
 
         $slidesPerView = new $selectClass();
@@ -68,8 +68,8 @@ class SlideColumnsTest extends AbstractAreaTest
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
             $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
         } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
         }
 
         $slidesPerView = new $selectClass();
@@ -97,8 +97,8 @@ class SlideColumnsTest extends AbstractAreaTest
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
             $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
         } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
         }
 
         $slidesPerView = new $selectClass();
@@ -146,7 +146,7 @@ class SlideColumnsTest extends AbstractAreaTest
         if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
         } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
         }
 
         $combo = new $selectClass();

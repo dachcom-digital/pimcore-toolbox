@@ -7,39 +7,20 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class BundleConnector
 {
-    /**
-     * @var PimcoreBundleManager
-     */
-    protected $bundleManager;
+    protected PimcoreBundleManager $bundleManager;
+    protected array $services = [];
 
-    /**
-     * @var array
-     */
-    protected $services = [];
-
-    /**
-     * @param PimcoreBundleManager $bundleManager
-     */
     public function __construct(PimcoreBundleManager $bundleManager)
     {
         $this->bundleManager = $bundleManager;
     }
 
-    /**
-     * @param string $serviceId
-     * @param mixed  $service
-     */
-    public function registerBundleService($serviceId, $service)
+    public function registerBundleService(string $serviceId, $service)
     {
         $this->services[$serviceId] = $service;
     }
 
-    /**
-     * @param string $serviceId
-     *
-     * @return mixed
-     */
-    public function getBundleService($serviceId)
+    public function getBundleService(string $serviceId)
     {
         if (!isset($this->services[$serviceId])) {
             throw new ServiceNotFoundException(sprintf('BundleConnector Service "%s" not found', $serviceId));
@@ -48,12 +29,7 @@ class BundleConnector
         return $this->services[$serviceId];
     }
 
-    /**
-     * @param string $bundleName
-     *
-     * @return bool
-     */
-    public function hasBundle($bundleName = 'ExtensionBundle\ExtensionBundle')
+    public function hasBundle(string $bundleName = 'ExtensionBundle\ExtensionBundle'): bool
     {
         try {
             $hasExtension = $this->bundleManager->isEnabled($bundleName);

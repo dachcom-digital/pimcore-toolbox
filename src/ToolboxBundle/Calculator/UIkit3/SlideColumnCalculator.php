@@ -6,13 +6,7 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 
 class SlideColumnCalculator implements SlideColumnCalculatorInterface
 {
-    /**
-     * @param int   $columnType
-     * @param array $columnConfiguration
-     *
-     * @return string
-     */
-    public function calculateSlideColumnClasses($columnType, $columnConfiguration): string
+    public function calculateSlideColumnClasses(int $columnType, array $columnConfiguration): string
     {
         $columnType = (int) $columnType;
 

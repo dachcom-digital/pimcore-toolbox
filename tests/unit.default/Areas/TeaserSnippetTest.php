@@ -2,8 +2,8 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Select;
-use Pimcore\Model\Document\Tag\Snippet;
+use Pimcore\Model\Document\Editable\Select;
+use Pimcore\Model\Document\Editable\Snippet;
 use Pimcore\Model\Document;
 
 class TeaserSnippetTest extends AbstractAreaTest

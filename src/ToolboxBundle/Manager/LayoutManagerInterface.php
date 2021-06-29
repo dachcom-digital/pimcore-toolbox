@@ -6,32 +6,11 @@ use Symfony\Component\Templating\EngineInterface;
 
 interface LayoutManagerInterface
 {
-    public function setTemplating(EngineInterface $templating);
+    public function setTemplating(EngineInterface $templating): static;
 
-    /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     */
-    public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig');
+    public function getAreaTemplateDir(?string $areaId = null, string $viewName = 'view', string $extension = 'html.twig');
 
-    /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     */
-    public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig');
+    public function getAreaTemplatePath(?string $areaId = null, string $viewName = 'view', string $extension = 'html.twig'): string;
 
-    /**
-     * @param string $areaName
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getAreaThemeConfig($areaName = '');
+    public function getAreaThemeConfig(string $areaName = ''): array;
 }

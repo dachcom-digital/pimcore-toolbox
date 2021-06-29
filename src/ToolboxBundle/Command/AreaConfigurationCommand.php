@@ -15,23 +15,15 @@ use ToolboxBundle\ToolboxConfig;
 
 class AreaConfigurationCommand extends Command
 {
-    /**
-     * @var AdaptiveConfigManagerInterface
-     */
-    protected $adaptiveConfigManager;
+    protected AdaptiveConfigManagerInterface $adaptiveConfigManager;
 
-    /**
-     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
-     */
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
-        $this->adaptiveConfigManager = $adaptiveConfigManager;
         parent::__construct();
+
+        $this->adaptiveConfigManager = $adaptiveConfigManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -51,10 +43,7 @@ class AreaConfigurationCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $brickId = $input->getOption('area');
         $contextId = $input->getOption('context');
@@ -161,14 +150,7 @@ class AreaConfigurationCommand extends Command
         return 0;
     }
 
-    /**
-     * @param array  $array
-     * @param string $string
-     * @param int    $depth
-     *
-     * @return string
-     */
-    private function parseArrayForOutput(array $array = [], $string = '', $depth = 0)
+    private function parseArrayForOutput(array $array = [], string $string = '', int $depth = 0): string
     {
         $depthStr = str_repeat(' ', $depth * 3);
         foreach ($array as $key => $value) {

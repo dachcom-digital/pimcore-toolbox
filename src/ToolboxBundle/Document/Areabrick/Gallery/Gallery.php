@@ -4,17 +4,10 @@ namespace ToolboxBundle\Document\Areabrick\Gallery;
 
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Gallery extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return Response|void|null
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -26,37 +19,26 @@ class Gallery extends AbstractAreabrick
             $id = uniqid('gallery-');
         }
 
-        /** @var \Pimcore\Model\Document\Tag\Relations $imagesField */
-        $imagesField = $this->getDocumentTag($info->getDocument(), 'relations', 'images');
+        /** @var \Pimcore\Model\Document\Editable\Relations $imagesField */
+        $imagesField = $this->getDocumentEditable($info->getDocument(), 'relations', 'images');
 
-        $info->getView()->getParameters()->add([
+        $info->setParams([
             'galleryId' => $id,
             'images'    => $this->getAssetArray($imagesField->getElements())
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Gallery';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Gallery';
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function getAssetArray($data)
+    public function getAssetArray(array $data): array
     {
         if (empty($data)) {
             return [];

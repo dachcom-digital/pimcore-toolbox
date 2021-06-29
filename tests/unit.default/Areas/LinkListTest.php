@@ -26,8 +26,8 @@ class LinkListTest extends AbstractAreaTest
             $blockClass = 'Pimcore\Model\Document\Editable\Block';
             $linkClass = 'Pimcore\Model\Document\Editable\Link';
         } else {
-            $blockClass = 'Pimcore\Model\Document\Tag\Block';
-            $linkClass = 'Pimcore\Model\Document\Tag\Link';
+            $blockClass = 'Pimcore\Model\Document\Editable\Block';
+            $linkClass = 'Pimcore\Model\Document\Editable\Link';
         }
 
         $link1 = new $linkClass();
@@ -61,9 +61,9 @@ class LinkListTest extends AbstractAreaTest
             $linkClass = 'Pimcore\Model\Document\Editable\Link';
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
         } else {
-            $blockClass = 'Pimcore\Model\Document\Tag\Block';
-            $linkClass = 'Pimcore\Model\Document\Tag\Link';
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $blockClass = 'Pimcore\Model\Document\Editable\Block';
+            $linkClass = 'Pimcore\Model\Document\Editable\Link';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
         }
 
         $combo = new $selectClass();

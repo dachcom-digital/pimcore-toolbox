@@ -2,9 +2,9 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Relations;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Relations;
+use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Tests\Util\TestHelper;
 
 class DownloadTest extends AbstractAreaTest

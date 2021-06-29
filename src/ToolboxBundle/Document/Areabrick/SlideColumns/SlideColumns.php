@@ -2,41 +2,32 @@
 
 namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Area\Info;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class SlideColumns extends AbstractAreabrick
 {
-    /**
-     * @var CalculatorRegistryInterface
-     */
-    private $calculatorRegistry;
+    private CalculatorRegistryInterface $calculatorRegistry;
 
-    /**
-     * @param CalculatorRegistryInterface $calculatorRegistry
-     */
     public function __construct(CalculatorRegistryInterface $calculatorRegistry)
     {
         $this->calculatorRegistry = $calculatorRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
         /** @var Checkbox $equalHeightElement */
-        $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
-        $equalHeight = $equalHeightElement->isChecked() && !$info->getView()->get('editmode');
+        $equalHeightElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'equal_height');
+        $equalHeight = $equalHeightElement->isChecked() && !$info->getParam('editmode');
 
         $id = sprintf('%s-%s', $info->getId(), $info->getIndex());
 
-        $slidesPerView = (int) $this->getDocumentTag($info->getDocument(), 'select', 'slides_per_view')->getData();
-        $slideElements = $this->getDocumentTag($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
+        $slidesPerView = (int) $this->getDocumentEditable($info->getDocument(), 'select', 'slides_per_view')->getData();
+        $slideElements = $this->getDocumentEditable($info->getDocument(), 'block', 'slideCols', ['default' => $slidesPerView]);
 
         $theme = $this->configManager->getConfig('theme');
         $calculator = $this->calculatorRegistry->getSlideColumnCalculator($theme['calculators']['slide_calculator']);
@@ -45,7 +36,7 @@ class SlideColumns extends AbstractAreabrick
         $slidesPerViewClass = $calculator->calculateSlideColumnClasses($slidesPerView, $slideColumnConfig);
         $breakpoints = $this->calculateSlideColumnBreakpoints($slidesPerView);
 
-        $info->getView()->getParameters()->add([
+        $info->setParams([
             'id'                   => $id,
             'slideElements'        => $slideElements,
             'slidesPerView'        => $slidesPerView,
@@ -57,30 +48,17 @@ class SlideColumns extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Slide Columns';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Slide Columns';
     }
 
-    /**
-     * @param int $columnType
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function calculateSlideColumnBreakpoints($columnType)
+    private function calculateSlideColumnBreakpoints(int $columnType): array
     {
         $columnType = (int) $columnType;
         $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');

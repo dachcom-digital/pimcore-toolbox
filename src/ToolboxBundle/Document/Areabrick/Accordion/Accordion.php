@@ -3,13 +3,10 @@
 namespace ToolboxBundle\Document\Areabrick\Accordion;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Accordion extends AbstractAreabrick
 {
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -21,23 +18,17 @@ class Accordion extends AbstractAreabrick
             $id = uniqid('accordion-');
         }
 
-        $info->getView()->getParameters()->add(['id' => $id]);
+        $info->setParam('id', $id);
 
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Accordion';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Accordion / Tabs';
     }

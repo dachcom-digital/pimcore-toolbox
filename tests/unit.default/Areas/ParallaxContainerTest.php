@@ -73,7 +73,7 @@ class ParallaxContainerTest extends AbstractAreaTest
         if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
         } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
         }
 
         $combo = new $selectClass();
@@ -94,9 +94,9 @@ class ParallaxContainerTest extends AbstractAreaTest
             $selectClass = 'Pimcore\Model\Document\Editable\Select';
             $relationClass = 'Pimcore\Model\Document\Editable\Relation';
         } else {
-            $blockClass = 'Pimcore\Model\Document\Tag\Block';
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-            $relationClass = 'Pimcore\Model\Document\Tag\Relation';
+            $blockClass = 'Pimcore\Model\Document\Editable\Block';
+            $selectClass = 'Pimcore\Model\Document\Editable\Select';
+            $relationClass = 'Pimcore\Model\Document\Editable\Relation';
         }
 
         $backgroundImage = new $relationClass();

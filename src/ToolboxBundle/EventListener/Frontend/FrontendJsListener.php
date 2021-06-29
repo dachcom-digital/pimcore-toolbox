@@ -7,8 +7,8 @@ use Pimcore\Bundle\CoreBundle\EventListener\Traits\EnabledTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 class FrontendJsListener
@@ -17,41 +17,23 @@ class FrontendJsListener
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private EngineInterface $templatingEngine;
 
-    /**
-     * @var EngineInterface
-     */
-    private $templatingEngine;
-
-    /**
-     * FrontendJsTranslationsListener constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param EngineInterface          $templatingEngine
-     */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         EngineInterface $templatingEngine
     ) {
-        $this->eventDispatcher = $eventDispatcher;
         $this->templatingEngine = $templatingEngine;
     }
 
-    /**
-     * @param FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$this->isEnabled()) {
             return;
         }
 
         $request = $event->getRequest();
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -99,12 +81,6 @@ class FrontendJsListener
         $response->setContent($content);
     }
 
-    /**
-     * @param string $template
-     * @param array  $data
-     *
-     * @return string
-     */
     private function renderTemplate(string $template, array $data): string
     {
         $code = $this->templatingEngine->render(

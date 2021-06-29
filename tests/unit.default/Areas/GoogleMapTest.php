@@ -2,9 +2,9 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Numeric;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Numeric;
+use Pimcore\Model\Document\Editable\Select;
 use ToolboxBundle\Model\Document\Tag\GoogleMap;
 
 class GoogleMapTest extends AbstractAreaTest

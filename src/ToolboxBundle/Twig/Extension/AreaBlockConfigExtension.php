@@ -10,30 +10,16 @@ use Twig\TwigFunction;
 
 class AreaBlockConfigExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
+    protected AreaManagerInterface $areaManager;
 
-    /**
-     * @var AreaManagerInterface
-     */
-    protected $areaManager;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     * @param AreaManagerInterface   $areaManager
-     */
     public function __construct(ConfigManagerInterface $configManager, AreaManagerInterface $areaManager)
     {
         $this->configManager = $configManager;
         $this->areaManager = $areaManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_areablock_config', [$this, 'getAreaBlockConfiguration'], [
@@ -42,15 +28,7 @@ class AreaBlockConfigExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param array $context
-     * @param null  $type
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getAreaBlockConfiguration($context = [], $type = null)
+    public function getAreaBlockConfiguration(array $context = [], string $type = null): array
     {
         $document = $context['document'];
 

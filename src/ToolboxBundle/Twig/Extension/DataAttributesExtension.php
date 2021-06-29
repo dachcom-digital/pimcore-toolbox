@@ -8,39 +8,21 @@ use Twig\TwigFunction;
 
 class DataAttributesExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @param ConfigManagerInterface $configManager
-     */
     public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_data_attributes_generator', [$this, 'generateDataAttributes']),
         ];
     }
 
-    /**
-     * @param string $node
-     * @param array  $overrides
-     * @param bool   $ignoreNonExistingCoreAttributes
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function generateDataAttributes($node, $overrides = [], $ignoreNonExistingCoreAttributes = false)
+    public function generateDataAttributes(string $node, array $overrides = [], bool $ignoreNonExistingCoreAttributes = false): string
     {
         $attributesNode = $this->configManager->getConfig('data_attributes');
 
@@ -57,12 +39,7 @@ class DataAttributesExtension extends AbstractExtension
         return $this->parseValues($values);
     }
 
-    /**
-     * @param array $values
-     *
-     * @return string
-     */
-    private function parseValues($values)
+    private function parseValues(array $values): string
     {
         $attributes = [];
 
@@ -88,13 +65,8 @@ class DataAttributesExtension extends AbstractExtension
         return implode(' ', $attributes);
     }
 
-    /**
-     * @param string $input
-     *
-     * @return mixed
-     */
-    private function lineToDash($input)
+    private function lineToDash(string $input): string
     {
-        return preg_replace('/_/', '-', $input);
+        return str_replace("_", '-', $input);
     }
 }

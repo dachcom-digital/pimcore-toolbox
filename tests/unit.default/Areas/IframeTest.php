@@ -2,9 +2,9 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Input;
-use Pimcore\Model\Document\Tag\Numeric;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Input;
+use Pimcore\Model\Document\Editable\Numeric;
+use Pimcore\Model\Document\Editable\Select;
 
 class IframeTest extends AbstractAreaTest
 {

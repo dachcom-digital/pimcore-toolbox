@@ -11,26 +11,10 @@ use Twig\TwigFunction;
 
 class DownloadExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
+    protected BundleConnector $bundleConnector;
+    protected Translator $translator;
 
-    /**
-     * @var BundleConnector
-     */
-    protected $bundleConnector;
-
-    /**
-     * @var Translator
-     */
-    protected $translator;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     * @param BundleConnector        $bundleConnector
-     * @param Translator             $translator
-     */
     public function __construct(ConfigManagerInterface $configManager, BundleConnector $bundleConnector, Translator $translator)
     {
         $this->configManager = $configManager;
@@ -38,10 +22,7 @@ class DownloadExtension extends AbstractExtension
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_download_info', [$this, 'getDownloadInfo']),
@@ -56,12 +37,8 @@ class DownloadExtension extends AbstractExtension
     /**
      * @param string|array $areaType toolbox element or custom config
      * @param null|object  $element  related element to track
-     *
-     * @return string
-     *
-     * @throws \Exception
      */
-    public function getDownloadTracker($areaType, $element = null)
+    public function getDownloadTracker($areaType, $element = null): string
     {
         if (empty($areaType)) {
             return '';
@@ -103,18 +80,7 @@ class DownloadExtension extends AbstractExtension
         return $str;
     }
 
-    /**
-     * @param Asset  $download
-     * @param bool   $showPreviewImage
-     * @param string $fileSizeUnit
-     * @param int    $fileSizePrecision
-     * @param bool   $showFileNameIfTitleEmpty
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getDownloadInfo($download, $showPreviewImage = false, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = false)
+    public function getDownloadInfo(Asset $download, bool $showPreviewImage = false, string $fileSizeUnit = 'optimized', int $fileSizePrecision = 0, bool $showFileNameIfTitleEmpty = false): array
     {
         if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === true
             && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== false
@@ -176,15 +142,7 @@ class DownloadExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Get optimized file size.
-     *
-     * @param int $bytes
-     * @param int $precision
-     *
-     * @return string
-     */
-    public function getOptimizedFileSize($bytes, $precision)
+    public function getOptimizedFileSize(int $bytes, int $precision): string
     {
         $format = '';
 

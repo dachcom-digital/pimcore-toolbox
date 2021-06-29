@@ -8,10 +8,7 @@ use Twig\TwigFunction;
 
 class CkEditorExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_get_ckeditor_config_path', [$this, 'getConfigPath'], [
@@ -20,12 +17,7 @@ class CkEditorExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param array $context
-     *
-     * @return string
-     */
-    public function getConfigPath(array $context)
+    public function getConfigPath(array $context): string
     {
         $document = $context['document'];
         $documentId = 0;

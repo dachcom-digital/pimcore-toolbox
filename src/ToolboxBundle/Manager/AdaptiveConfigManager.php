@@ -4,27 +4,18 @@ namespace ToolboxBundle\Manager;
 
 class AdaptiveConfigManager extends ConfigManager implements AdaptiveConfigManagerInterface
 {
-    /**
-     * @var null
-     */
-    protected $adaptiveContextId = null;
+    protected ?string $adaptiveContextId = null;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setContextNameSpace($id)
+    public function setContextNameSpace(?string $id): void
     {
         if (empty($id)) {
-            $id = false;
+            $id = null;
         }
 
         $this->adaptiveContextId = $id;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getContextIdentifier()
+    public function getContextIdentifier(): ?String
     {
         return $this->adaptiveContextId;
     }
