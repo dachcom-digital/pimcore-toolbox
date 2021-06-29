@@ -2,11 +2,11 @@
 
 namespace ToolboxBundle\Controller\Admin;
 
-use Pimcore\Bundle\AdminBundle\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class SettingsController extends Controller\AdminController
+class SettingsController extends AbstractController
 {
     protected ConfigManagerInterface $configManager;
     protected array $globalStyleSets = [];
