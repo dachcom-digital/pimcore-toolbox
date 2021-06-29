@@ -2,37 +2,27 @@
 
 namespace ToolboxBundle\Document\Areabrick\Download;
 
-use Pimcore\Db\ZendCompatibility\QueryBuilder;
-use Pimcore\Model\Document\Tag\Relations;
+use Pimcore\Model\Document\Editable\Relations;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Asset;
 
 class Download extends AbstractAreabrick
 {
-    /**
-     * @var BundleConnector
-     */
-    protected $bundleConnector;
+    protected BundleConnector $bundleConnector;
 
-    /**
-     * @param BundleConnector $bundleConnector
-     */
     public function __construct(BundleConnector $bundleConnector)
     {
         $this->bundleConnector = $bundleConnector;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
         /** @var Relations $downloadField */
-        $downloadField = $this->getDocumentTag($info->getDocument(), 'relations', 'downloads');
+        $downloadField = $this->getDocumentEditable($info->getDocument(), 'relations', 'downloads');
 
         $assets = [];
         if (!$downloadField->isEmpty()) {
@@ -46,19 +36,12 @@ class Download extends AbstractAreabrick
             }
         }
 
-        $info->getView()->getParameters()->add([
-            'downloads' => $assets
-        ]);
+        $info->setParam('downloads', $assets);
 
         return null;
     }
 
-    /**
-     * @param Asset $node
-     *
-     * @return Asset[]
-     */
-    protected function getByFile(Asset $node)
+    protected function getByFile(Asset $node): array
     {
         if (!$this->hasMembersBundle()) {
             return [$node];
@@ -73,13 +56,9 @@ class Download extends AbstractAreabrick
         return [];
     }
 
-    /**
-     * @param Asset\Folder $node
-     *
-     * @return Asset[]
-     */
-    protected function getByFolder(Asset\Folder $node)
+    protected function getByFolder(Asset\Folder $node): array
     {
+        //TODO: Not compatible anymore
         $assetListing = new Asset\Listing();
         $fullPath = rtrim($node->getFullPath(), '/') . '/';
         $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
@@ -98,26 +77,17 @@ class Download extends AbstractAreabrick
         return $assetListing->getAssets();
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasMembersBundle()
+    protected function hasMembersBundle(): bool
     {
         return $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Downloads';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Downloads';
     }

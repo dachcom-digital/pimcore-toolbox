@@ -4,11 +4,5 @@ namespace ToolboxBundle\Calculator;
 
 interface SlideColumnCalculatorInterface
 {
-    /**
-     * @param int   $columnType
-     * @param array $columnConfiguration
-     *
-     * @return string
-     */
-    public function calculateSlideColumnClasses($columnType, $columnConfiguration);
+    public function calculateSlideColumnClasses(int $columnType, array $columnConfiguration): string;
 }

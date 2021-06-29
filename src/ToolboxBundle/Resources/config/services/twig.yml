@@ -14,7 +14,7 @@ services:
             - { name: twig.extension }
 
     ToolboxBundle\Twig\Extension\DocumentTagExtension:
-        parent: Pimcore\Twig\Extension\DocumentTagExtension
+        parent: Pimcore\Twig\Extension\DocumentEditableExtension
         autowire: true
         public: false
         tags:

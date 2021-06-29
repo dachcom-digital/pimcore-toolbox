@@ -6,46 +6,22 @@ use Symfony\Component\Templating\EngineInterface;
 
 class LayoutManager implements LayoutManagerInterface
 {
-    /**
-     * @var ConfigManager
-     */
-    protected $configManager;
+    protected ConfigManager $configManager;
+    protected EngineInterface $templating;
 
-    /**
-     * @var EngineInterface
-     */
-    protected $templating;
-
-    /**
-     * @param ConfigManager $configManager
-     */
     public function __construct(ConfigManager $configManager)
     {
         $this->configManager = $configManager;
     }
 
-    /**
-     * @param EngineInterface $templating
-     *
-     * @return $this
-     */
-    public function setTemplating(EngineInterface $templating)
+    public function setTemplating(EngineInterface $templating): static
     {
         $this->templating = $templating;
 
         return $this;
     }
 
-    /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig')
+    public function getAreaTemplateDir(?string $areaId = null, string $viewName = 'view', string $extension = 'html.twig'): string
     {
         $elementThemeConfig = $this->getAreaThemeConfig($areaId);
 
@@ -74,28 +50,12 @@ class LayoutManager implements LayoutManagerInterface
         );
     }
 
-    /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig')
+    public function getAreaTemplatePath(?string $areaId = null, string $viewName = 'view', string $extension = 'html.twig'): string
     {
         return $this->getAreaTemplateDir($areaId, $viewName) . DIRECTORY_SEPARATOR . $viewName . '.' . $extension;
     }
 
-    /**
-     * @param string $areaName
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getAreaThemeConfig($areaName = '')
+    public function getAreaThemeConfig(string $areaName = ''): array
     {
         $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
 

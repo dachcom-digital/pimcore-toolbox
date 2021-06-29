@@ -3,28 +3,21 @@
 namespace ToolboxBundle\Document\Areabrick\Snippet;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Snippet extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Snippet';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Snippet';
     }

@@ -2,8 +2,8 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Input;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Input;
+use Pimcore\Model\Document\Editable\Select;
 
 class HeadlineTest extends AbstractAreaTest
 {

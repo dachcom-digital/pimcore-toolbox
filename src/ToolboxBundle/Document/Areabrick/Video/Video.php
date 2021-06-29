@@ -3,41 +3,36 @@
 namespace ToolboxBundle\Document\Areabrick\Video;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Asset;
 
 class Video extends AbstractAreabrick
 {
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
-        $view = $info->getView();
-
         /** @var \ToolboxBundle\Model\Document\Tag\Vhs $videoTag */
-        $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
+        $videoTag = $this->getDocumentEditable($info->getDocument(), 'vhs', 'video');
 
         $videoParameter = $videoTag->getVideoParameter();
 
         $playInLightBox = $videoTag->getShowAsLightBox() === true ? 'true' : 'false';
-        /** @var \Pimcore\Model\Document\Tag\Checkbox $autoPlayElement */
-        $autoPlayElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay');
-        $autoPlay = $autoPlayElement->isChecked() === true && !$view->get('editmode');
+        /** @var \Pimcore\Model\Document\Editable\Checkbox $autoPlayElement */
+        $autoPlayElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'autoplay');
+        $autoPlay = $autoPlayElement->isChecked() === true && !$info->getParam('editmode');
         $videoType = $videoTag->getVideoType();
         $posterPath = null;
         $imageThumbnail = null;
         $poster = $videoTag->getPosterAsset();
-        $videoId = $videoTag->id;
+        $videoId = $videoTag->getId();
 
         if ($poster instanceof Asset\Image) {
             $imageThumbnail = $this->getConfigManager()->getImageThumbnailFromConfig('video_poster');
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $view->getParameters()->add([
+        $info->setParams([
             'autoPlay'       => $autoPlay,
             'posterPath'     => $posterPath,
             'videoType'      => $videoType,
@@ -49,18 +44,12 @@ class Video extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Video';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Video';
     }

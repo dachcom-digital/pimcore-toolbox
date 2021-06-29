@@ -5,28 +5,20 @@ namespace ToolboxBundle\Document\Areabrick\IFrame;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class IFrame extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
-        $view = $info->getView();
-        $iFrameUrl = $this->getDocumentTag($info->getDocument(), 'input', 'url')->getData();
-        $initialHeight = $this->getDocumentTag($info->getDocument(), 'numeric', 'iheight')->getData();
+        $iFrameUrl = $this->getDocumentEditable($info->getDocument(), 'input', 'url')->getData();
+        $initialHeight = $this->getDocumentEditable($info->getDocument(), 'numeric', 'iheight')->getData();
 
         $isValid = true;
         $errorMessage = null;
-        if (!empty($iFrameUrl) && $view->get('editmode') === true) {
+        if (!empty($iFrameUrl) && $info->getParam('editmode') === true) {
             $response = $this->checkIfUrlIsEmbeddable($iFrameUrl);
             if ($response !== true) {
                 $isValid = false;
@@ -34,7 +26,7 @@ class IFrame extends AbstractAreabrick
             }
         }
 
-        $view->getParameters()->add([
+        $info->setParams([
             'isValid'       => $isValid,
             'errorMessage'  => $errorMessage,
             'initialHeight' => is_numeric($initialHeight) ? (int) $initialHeight : null,
@@ -42,12 +34,7 @@ class IFrame extends AbstractAreabrick
         ]);
     }
 
-    /**
-     * @param string $iFrameUrl
-     *
-     * @return bool|string
-     */
-    private function checkIfUrlIsEmbeddable($iFrameUrl)
+    private function checkIfUrlIsEmbeddable(string $iFrameUrl)
     {
         $client = new Client();
 
@@ -72,12 +59,12 @@ class IFrame extends AbstractAreabrick
         return true;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'iFrame';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox iFrame';
     }

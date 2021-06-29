@@ -6,7 +6,7 @@ use Codeception\Exception\ModuleException;
 use Dachcom\Codeception\Test\BundleTestCase;
 use Dachcom\Codeception\Util\VersionHelper;
 use Pimcore\Document\Editable\EditableHandlerInterface;
-use Pimcore\Model\Document\Tag\Area;
+use Pimcore\Model\Document\Editable\Area;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Builder\BrickConfigBuilder;
@@ -37,8 +37,8 @@ abstract class AbstractAreaTest extends BundleTestCase
     public function generateRenderedArea($id, $documentElements, $infoParams = [])
     {
         $info = $this->generateAreaInfo($id, $infoParams);
-        $info->getView()->getParameters()->add(['editmode' => false]);
-        $info->getTag()->getView()->get('document')->setElements($documentElements);
+        $info->setParam('editmode', false);
+        $info->getEditable()->getView()->get('document')->setElements($documentElements);
 
         return $this->getAreaOutput($info);
     }
@@ -52,7 +52,7 @@ abstract class AbstractAreaTest extends BundleTestCase
     public function generateBackendArea($id)
     {
         $info = $this->generateAreaInfo($id);
-        $info->getView()->getParameters()->add(['editmode' => true]);
+        $info->setParam('editmode', true);
 
         $builder = $this->getContainer()->get(BrickConfigBuilder::class);
         $configManager = $this->getContainer()->get(ConfigManager::class);
@@ -78,8 +78,8 @@ abstract class AbstractAreaTest extends BundleTestCase
             $areaClass = '\Pimcore\Model\Document\Editable\Area';
             $infoClass = '\Pimcore\Model\Document\Editable\Area\Info';
         } else {
-            $areaClass = '\Pimcore\Model\Document\Tag\Area';
-            $infoClass = '\Pimcore\Model\Document\Tag\Area\Info';
+            $areaClass = '\Pimcore\Model\Document\Editable\Area';
+            $infoClass = '\Pimcore\Model\Document\Editable\Area\Info';
         }
 
         $view = new \Pimcore\Templating\Model\ViewModel([

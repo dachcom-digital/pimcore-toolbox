@@ -12,20 +12,10 @@ use ToolboxBundle\Resolver\ContextResolver;
 
 class ToolboxExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @var array
-     */
-    protected $contextMergeData = [];
+    protected array $contextMergeData = [];
+    protected array $contextConfigData = [];
 
-    /**
-     * @var array
-     */
-    protected $contextConfigData = [];
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
@@ -81,13 +71,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $this->contextMergeData = $data;
     }
 
-    /**
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     *
-     * @throws \Exception
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         //append merge data
         foreach ($this->contextMergeData as $append) {
@@ -130,10 +114,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $definition->setClass($contextResolver);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
-    private function allocateGoogleMapsApiKey(ContainerBuilder $container)
+    private function allocateGoogleMapsApiKey(ContainerBuilder $container): void
     {
         $googleBrowserApiKey = null;
         $googleSimpleApiKey = null;
@@ -163,10 +144,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('toolbox.google_maps.simple_api_key', $googleSimpleApiKey);
     }
 
-    /**
-     * @param array $config
-     */
-    private function validateToolboxContextConfig($config)
+    private function validateToolboxContextConfig(array $config): void
     {
         foreach ($config['context'] as $contextId => $contextConfig) {
             //check if theme is same since it's not possible to merge different themes
@@ -181,15 +159,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
     }
 
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
-     * @return mixed
-     *
-     * @deprecated since 2.3. gets removed in 4.0
-     */
-    private function handleCalculatorDeprecation($config, ContainerBuilder $container)
+    private function handleCalculatorDeprecation(array $config, ContainerBuilder $container): array
     {
         $taggedCalculator = $container->findTaggedServiceIds('toolbox.calculator', true);
 

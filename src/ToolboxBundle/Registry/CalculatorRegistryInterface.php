@@ -7,42 +7,13 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 
 interface CalculatorRegistryInterface
 {
-    /**
-     * @param string $id
-     * @param string $service
-     * @param string $type
-     */
-    public function register($id, $service, $type);
+    public function register(string $id, $service, string $type): void;
 
-    /**
-     * @param string $alias
-     *
-     * @return SlideColumnCalculatorInterface
-     */
-    public function getSlideColumnCalculator($alias);
+    public function getSlideColumnCalculator(string $alias): SlideColumnCalculatorInterface;
 
-    /**
-     * @param string $alias
-     *
-     * @return ColumnCalculatorInterface
-     */
-    public function getColumnCalculator($alias);
+    public function getColumnCalculator(string $alias): ColumnCalculatorInterface;
 
-    /**
-     * @param string $alias
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function has($alias, $type);
+    public function has(string $alias, string $type): bool;
 
-    /**
-     * @param string $alias
-     * @param string $type
-     *
-     * @throws \Exception
-     *
-     * @return SlideColumnCalculatorInterface|ColumnCalculatorInterface
-     */
-    public function get($alias, $type);
+    public function get(string $alias, string $type);
 }

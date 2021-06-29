@@ -8,7 +8,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
 use ToolboxBundle\DependencyInjection\Compiler\StoreProviderPass;
-use ToolboxBundle\Tool\Install;
 
 class ToolboxBundle extends AbstractPimcoreBundle
 {
@@ -16,28 +15,14 @@ class ToolboxBundle extends AbstractPimcoreBundle
 
     const PACKAGE_NAME = 'dachcom-digital/toolbox';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
         $container->addCompilerPass(new StoreProviderPass());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInstaller()
-    {
-        return $this->container->get(Install::class);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getJsPaths()
+    public function getJsPaths(): array
     {
         return [
             '/admin/toolbox-ckeditor-object-style.js',
@@ -47,10 +32,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function getEditmodeJsPaths()
+    public function getEditmodeJsPaths(): array
     {
         $legacyVersion = version_compare(self::getPimcoreVersion(), '6.8.0', '<');
 
@@ -83,39 +65,31 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return array_merge($routeJsPaths, $alwaysPaths, $dynamicPaths);
     }
 
-    /**
-     * @return string[]
-     */
-    public function getEditmodeCssPaths()
+    public function getEditmodeCssPaths(): array
     {
         $cssFiles = [
             '/bundles/toolbox/css/admin.css',
-            '/bundles/toolbox/css/admin_uikit.css'
+            '/bundles/toolbox/css/admin_uikit.css',
+            '/bundles/toolbox/css/admin_544.css'
         ];
-
-        if (version_compare(self::getPimcoreVersion(), '5.3.0', '>=')) {
-            $cssFiles[] = '/bundles/toolbox/css/admin_53.css';
-        }
-
-        if (version_compare(self::getPimcoreVersion(), '5.4.4', '>=')) {
-            $cssFiles[] = '/bundles/toolbox/css/admin_544.css';
-        }
+//
+//        if (version_compare(self::getPimcoreVersion(), '5.3.0', '>=')) {
+//            $cssFiles[] = '/bundles/toolbox/css/admin_53.css';
+//        }
+//
+//        if (version_compare(self::getPimcoreVersion(), '5.4.4', '>=')) {
+//            $cssFiles[] = '';
+//        }
 
         return $cssFiles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getComposerPackageName(): string
     {
         return self::PACKAGE_NAME;
     }
 
-    /**
-     * @return string
-     */
-    protected static function getPimcoreVersion()
+    protected static function getPimcoreVersion(): string
     {
         return preg_replace('/[^0-9.]/', '', \Pimcore\Version::getVersion());
     }

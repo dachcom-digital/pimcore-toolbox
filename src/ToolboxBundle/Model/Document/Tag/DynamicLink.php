@@ -5,7 +5,7 @@ namespace ToolboxBundle\Model\Document\Tag;
 use Pimcore\Model;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
-class DynamicLink extends Model\Document\Tag\Link
+class DynamicLink extends Model\Document\Editable\Link
 {
     /**
      * Return the type of the element.
@@ -44,8 +44,8 @@ class DynamicLink extends Model\Document\Tag\Link
         ]);
 
         \Pimcore::getEventDispatcher()->dispatch(
-            'toolbox.dynamiclink.object.url',
-            $event
+            $event,
+            'toolbox.dynamiclink.object.url'
         );
 
         return $event->getArgument('objectFrontendUrl');
@@ -61,19 +61,6 @@ class DynamicLink extends Model\Document\Tag\Link
         }
 
         return true;
-    }
-
-    /**
-     * @param bool $realPath
-     * @param bool $editmode
-     */
-    protected function updatePathFromInternal($realPath = false, $editmode = false)
-    {
-        if (is_null($this->data['internalId']) && strpos($this->data['path'], '::') !== false) {
-            return;
-        }
-
-        parent::updatePathFromInternal($realPath, $editmode);
     }
 
     /**

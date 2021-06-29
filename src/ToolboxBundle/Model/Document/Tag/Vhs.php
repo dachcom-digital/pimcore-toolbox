@@ -5,7 +5,7 @@ namespace ToolboxBundle\Model\Document\Tag;
 use Pimcore\Model;
 use Pimcore\Model\Document;
 
-class Vhs extends Model\Document\Tag\Video
+class Vhs extends Model\Document\Editable\Video
 {
     /**
      * @var bool
@@ -60,7 +60,7 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @see Document\Tag\TagInterface::getData
+     * @see Document\Editable\EditableInterface::getData
      *
      * @return array
      */
@@ -86,7 +86,7 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @see Document\Tag\TagInterface::setDataFromResource
+     * @see Document\Editable\EditableInterface::setDataFromResource
      *
      * @param mixed $data
      *
@@ -107,7 +107,7 @@ class Vhs extends Model\Document\Tag\Video
     }
 
     /**
-     * @see Document\Tag\TagInterface::setDataFromEditmode
+     * @see Document\Editable\EditableInterface::setDataFromEditmode
      *
      * @param mixed $data
      *

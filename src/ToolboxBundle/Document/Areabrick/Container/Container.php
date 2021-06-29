@@ -3,30 +3,21 @@
 namespace ToolboxBundle\Document\Areabrick\Container;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Container extends AbstractAreabrick
 {
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info)
     {
         return parent::action($info);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Container';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Container';
     }

@@ -6,32 +6,16 @@ use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 
 class AreaManager implements AreaManagerInterface
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    public $configManager;
+    public ConfigManagerInterface $configManager;
+    public AreabrickManager $brickManager;
 
-    /**
-     * @var AreabrickManager
-     */
-    public $brickManager;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     * @param AreabrickManager       $brickManager
-     */
     public function __construct(ConfigManagerInterface $configManager, AreabrickManager $brickManager)
     {
         $this->configManager = $configManager;
         $this->brickManager = $brickManager;
     }
 
-    /**
-     * @param null $type
-     *
-     * @return string
-     */
-    public function getAreaBlockName($type = null)
+    public function getAreaBlockName(string $type = null): string
     {
         if ($type === 'parallaxContainerSection') {
             return 'Parallax Container Section';
@@ -40,15 +24,7 @@ class AreaManager implements AreaManagerInterface
         return $this->brickManager->getBrick($type)->getName();
     }
 
-    /**
-     * @param null $type
-     * @param bool $fromSnippet
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getAreaBlockConfiguration($type = null, $fromSnippet = false)
+    public function getAreaBlockConfiguration(string $type = null, bool $fromSnippet = false): array
     {
         if ($fromSnippet === true) {
             $availableBricks = $this->getAvailableBricksForSnippets($type);
@@ -111,14 +87,7 @@ class AreaManager implements AreaManagerInterface
         return $configuration;
     }
 
-    /**
-     * @param bool $arrayKeys
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getActiveBricks($arrayKeys = true)
+    private function getActiveBricks(bool $arrayKeys = true): array
     {
         $areaElements = $this->brickManager->getBricks();
 
@@ -169,14 +138,7 @@ class AreaManager implements AreaManagerInterface
         return $areaElements;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getAvailableBricks($type = null)
+    private function getAvailableBricks(string $type = null): array
     {
         $areaElements = $this->getActiveBricks();
 
@@ -224,14 +186,7 @@ class AreaManager implements AreaManagerInterface
         return ['allowed' => $bricks, 'params' => $params];
     }
 
-    /**
-     * @param string $type
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getAvailableBricksForSnippets($type)
+    private function getAvailableBricksForSnippets(string $type): array
     {
         $areaElements = $this->getActiveBricks();
 
@@ -274,12 +229,7 @@ class AreaManager implements AreaManagerInterface
         return ['allowed' => $bricks, 'params' => $params];
     }
 
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getToolboxBricks()
+    private function getToolboxBricks(): array
     {
         $areaElements = $this->getActiveBricks(false);
         $toolboxBricks = [];

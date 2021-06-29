@@ -3,51 +3,30 @@
 namespace ToolboxBundle\Document\Areabrick\GoogleMap;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class GoogleMap extends AbstractAreabrick
 {
-    /**
-     * string.
-     */
-    protected $googleMapsHostUrl;
+    protected ?string $googleMapsHostUrl;
 
-    /**
-     * GoogleMap constructor.
-     *
-     * @param string $googleMapsHostUrl
-     */
-    public function __construct($googleMapsHostUrl = '')
+    public function __construct(?string $googleMapsHostUrl = null)
     {
         $this->googleMapsHostUrl = $googleMapsHostUrl;
     }
 
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
 
-        $info->getView()->getParameters()->add(['googleMapsHostUrl' => $this->googleMapsHostUrl]);
+        $info->setParam('googleMapsHostUrl', $this->googleMapsHostUrl);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Google Map';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Google Map';
     }

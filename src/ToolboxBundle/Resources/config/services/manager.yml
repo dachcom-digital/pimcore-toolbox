@@ -6,7 +6,7 @@ services:
         autowire: true
         autoconfigure: true
         calls:
-            - [setTemplating, ['@templating']]
+            - [setTemplating, ['@Symfony\Component\Templating\EngineInterface']]
 
     ToolboxBundle\Manager\AreaManagerInterface: '@ToolboxBundle\Manager\AreaManager'
     ToolboxBundle\Manager\AreaManager:

@@ -10,9 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DynamicLinkMigrationCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $this
@@ -20,10 +17,7 @@ class DynamicLinkMigrationCommand extends Command
             ->setDescription('Migrate Dynamic Link Tag to Pimcore Link Tag');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $db = \Pimcore\Db::get();
 

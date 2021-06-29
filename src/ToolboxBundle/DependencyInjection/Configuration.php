@@ -14,13 +14,10 @@ use ToolboxBundle\ToolboxConfig;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('toolbox');
+        $treeBuilder = new TreeBuilder('toolbox');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->getConfigNode($rootNode);
         $this->addContextNode($rootNode);
@@ -33,10 +30,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $rootNode
-     */
-    public function addContextNode(ArrayNodeDefinition $rootNode)
+    public function addContextNode(ArrayNodeDefinition $rootNode): void
     {
         $node = $rootNode
             ->children()
@@ -82,10 +76,7 @@ class Configuration implements ConfigurationInterface
         ->end();
     }
 
-    /**
-     * @param NodeDefinition $rootNode
-     */
-    public function getConfigNode(NodeDefinition $rootNode)
+    public function getConfigNode(NodeDefinition $rootNode): void
     {
         //@todo: get them dynamically!!
         $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);

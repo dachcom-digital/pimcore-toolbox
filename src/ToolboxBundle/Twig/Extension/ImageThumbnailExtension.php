@@ -8,37 +8,21 @@ use Twig\TwigFunction;
 
 class ImageThumbnailExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @param ConfigManagerInterface $configManager
-     */
     public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_get_image_thumbnail', [$this, 'getImageThumbnail'])
         ];
     }
 
-    /**
-     * @param null $thumbnailName
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getImageThumbnail($thumbnailName = null)
+    public function getImageThumbnail(string $thumbnailName = null): string
     {
         return $this->configManager->getImageThumbnailFromConfig($thumbnailName);
     }

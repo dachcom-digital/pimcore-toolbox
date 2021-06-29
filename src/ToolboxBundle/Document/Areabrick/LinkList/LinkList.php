@@ -3,17 +3,10 @@
 namespace ToolboxBundle\Document\Areabrick\LinkList;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class LinkList extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
     public function action(Info $info)
     {
         parent::action($info);
@@ -21,20 +14,20 @@ class LinkList extends AbstractAreabrick
         $flags = $this->configManager->getConfig('flags');
         $useDynamicLinks = $flags['use_dynamic_links'];
 
-        $info->getView()->getParameters()->add(['useDynamicLinks' => $useDynamicLinks]);
+        $info->setParam('useDynamicLinks', $useDynamicLinks);
     }
 
-    public function getViewTemplate()
+    public function getViewTemplate(): string
     {
         return 'ToolboxBundle:Areas/linkList:view.' . $this->getTemplateSuffix();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Link List';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Link List';
     }
