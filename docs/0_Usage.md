@@ -50,7 +50,7 @@ Use the `snippet_areas_appearance`  config node to disable bricks in specific sn
 ```yaml
 # define which elements should not appear in snippet documents
 toolbox:
-    disallowed_content_snippet_areas:
+    snippet_areas_appearance:
         snippet_c:
             disallowed:
                 - parallaxContainer

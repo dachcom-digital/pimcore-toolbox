@@ -180,25 +180,12 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        try {
-            // @deprecated: remove in 4.0
-            $disallowedSubAreas = $this->configManager->getConfig('disallowed_subareas');
-        } catch (\Exception $e) {
-            // skip notice exceptions: this node is allowed to be missed!
-            $disallowedSubAreas = [];
-        }
-
-        $depElementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
-
         $areaAppearance = $this->configManager->getConfig('areas_appearance');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 
         // strict fill means: only add defined elements.
         $strictFill = !empty($elementAllowed);
-
-        // merge disallowed with deprecated disallowed
-        $elementDisallowed = array_merge($elementDisallowed, $depElementDisallowed);
 
         $bricks = [];
         foreach ($areaElements as $a) {
@@ -235,20 +222,9 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        try {
-            // @deprecated: remove in 4.0
-            $disallowedSubAreas = $this->configManager->getConfig('disallowed_content_snippet_areas');
-        } catch (\Exception $e) {
-            // skip notice exceptions: this node is allowed to be missed!
-            $disallowedSubAreas = [];
-        }
-
         $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
-
-        // merge disallowed with deprecated disallowed
-        $elementDisallowed = array_merge($elementDisallowed, is_array($disallowedSubAreas) ? $disallowedSubAreas : []);
 
         $bricks = [];
         foreach ($areaElements as $a) {

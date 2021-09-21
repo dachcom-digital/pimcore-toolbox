@@ -121,8 +121,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->setPublic(true);
 
-        $config = $this->handleCalculatorDeprecation($config, $container);
-
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
 
         //context resolver
@@ -179,49 +177,5 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
                 ), E_USER_ERROR);
             }
         }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
-     * @return mixed
-     *
-     * @deprecated since 2.3. gets removed in 4.0
-     */
-    private function handleCalculatorDeprecation($config, ContainerBuilder $container)
-    {
-        $taggedCalculator = $container->findTaggedServiceIds('toolbox.calculator', true);
-
-        $defaultColumnCalc = 'ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator';
-        $defaultSlideColumnCalc = 'ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator';
-
-        $calculators = $config['theme']['calculators'];
-        $missingTags = [];
-        foreach ($calculators as $confName => $confValue) {
-            if ($confName === 'ToolboxBundle\Calculator\ColumnCalculator') {
-                if ($calculators['column_calculator'] !== $confValue && $confValue !== $defaultColumnCalc) {
-                    $calculators['column_calculator'] = $confValue;
-                }
-                if (!in_array($confValue, array_keys($taggedCalculator))) {
-                    $missingTags[] = [$confValue, 'column'];
-                }
-            } elseif ($confName === 'ToolboxBundle\Calculator\SlideColumnCalculator') {
-                if ($calculators['slide_calculator'] !== $confValue && $confValue !== $defaultSlideColumnCalc) {
-                    $calculators['slide_calculator'] = $confValue;
-                }
-                if (!in_array($confValue, array_keys($taggedCalculator))) {
-                    $missingTags[] = [$confValue, 'slide_column'];
-                }
-            }
-        }
-
-        $config['theme']['calculators'] = $calculators;
-
-        if (!empty($missingTags)) {
-            $container->setParameter('toolbox.deprecation.calculator_tags', $missingTags);
-        }
-
-        return $config;
     }
 }
