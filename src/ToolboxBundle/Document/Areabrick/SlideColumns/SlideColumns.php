@@ -2,8 +2,8 @@
 
 namespace ToolboxBundle\Document\Areabrick\SlideColumns;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Area\Info;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 

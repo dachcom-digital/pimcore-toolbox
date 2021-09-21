@@ -2,12 +2,12 @@
 
 namespace ToolboxBundle\Builder;
 
-use Pimcore\Model\Document\Tag\Area\Info;
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Templating\Renderer\TagRenderer;
+use Pimcore\Model\Document\Editable\Area\Info;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Templating\Renderer\EditableRenderer;
 use Pimcore\Translation\Translator;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
+use Twig\Environment;
 
 class BrickConfigBuilder
 {
@@ -17,12 +17,12 @@ class BrickConfigBuilder
     protected $translator;
 
     /**
-     * @var TagRenderer
+     * @var EditableRenderer
      */
-    protected $tagRenderer;
+    protected $editableRenderer;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     protected $templating;
 
@@ -37,7 +37,7 @@ class BrickConfigBuilder
     protected $documentEditableName = '';
 
     /**
-     * @var \Pimcore\Model\Document\Tag\Area\Info null
+     * @var \Pimcore\Model\Document\Editable\Area\Info null
      */
     protected $info = null;
 
@@ -73,18 +73,18 @@ class BrickConfigBuilder
 
     /**
      * @param Translator                     $translator
-     * @param TagRenderer                    $tagRenderer
-     * @param EngineInterface                $templating
+     * @param EditableRenderer               $editableRenderer
+     * @param Environment                    $templating
      * @param StoreProviderRegistryInterface $storeProvider
      */
     public function __construct(
         Translator $translator,
-        TagRenderer $tagRenderer,
-        EngineInterface $templating,
+        EditableRenderer $editableRenderer,
+        Environment $templating,
         StoreProviderRegistryInterface $storeProvider
     ) {
         $this->translator = $translator;
-        $this->tagRenderer = $tagRenderer;
+        $this->editableRenderer = $editableRenderer;
         $this->templating = $templating;
         $this->storeProvider = $storeProvider;
     }
@@ -155,7 +155,7 @@ class BrickConfigBuilder
             'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
             'window_size'            => $this->configWindowSize,
             'document'               => $info->getDocument(),
-            'brick_id'               => $info->id
+            'brick_id'               => $info->getId()
         ];
 
         return $fieldSetArgs;
@@ -402,8 +402,8 @@ class BrickConfigBuilder
      */
     private function getSelectedValue($config, $defaultConfigValue)
     {
-        /** @var \Pimcore\Model\Document\Tag\TagInterface $el */
-        $el = $this->tagRenderer->getTag($this->info->getDocument(), $config['type'], $config['name']);
+        /** @var \Pimcore\Model\Document\Editable\TagInterface $el */
+        $el = $this->editableRenderer->getEditable($this->info->getDocument(), $config['type'], $config['name']);
 
         // force default (only if it returns false)
         // checkboxes may return an empty string and are impossible to track into default mode
@@ -655,7 +655,7 @@ class BrickConfigBuilder
     {
         $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : null;
 
-        $this->tagRenderer->getTag(
+        $this->editableRenderer->getEditable(
             $this->info->getDocument(),
             $el['additional_config']['type'],
             $el['additional_config']['name']

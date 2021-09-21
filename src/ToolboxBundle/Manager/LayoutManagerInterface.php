@@ -2,11 +2,16 @@
 
 namespace ToolboxBundle\Manager;
 
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 interface LayoutManagerInterface
 {
-    public function setTemplating(EngineInterface $templating);
+    /**
+     * @param Environment $templating
+     *
+     * @return mixed
+     */
+    public function setTemplating(Environment $templating);
 
     /**
      * @param null   $areaId

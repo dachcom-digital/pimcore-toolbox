@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Video;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Asset;
 
 class Video extends AbstractAreabrick
@@ -17,13 +17,13 @@ class Video extends AbstractAreabrick
 
         $view = $info->getView();
 
-        /** @var \ToolboxBundle\Model\Document\Tag\Vhs $videoTag */
+        /** @var \ToolboxBundle\Model\Document\Editable\Vhs $videoTag */
         $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
 
         $videoParameter = $videoTag->getVideoParameter();
 
         $playInLightBox = $videoTag->getShowAsLightBox() === true ? 'true' : 'false';
-        /** @var \Pimcore\Model\Document\Tag\Checkbox $autoPlayElement */
+        /** @var \Pimcore\Model\Document\Editable\Checkbox $autoPlayElement */
         $autoPlayElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay');
         $autoPlay = $autoPlayElement->isChecked() === true && !$view->get('editmode');
         $videoType = $videoTag->getVideoType();

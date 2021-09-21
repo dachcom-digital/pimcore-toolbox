@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Manager;
 
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class LayoutManager implements LayoutManagerInterface
 {
@@ -12,7 +12,7 @@ class LayoutManager implements LayoutManagerInterface
     protected $configManager;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     protected $templating;
 
@@ -25,11 +25,11 @@ class LayoutManager implements LayoutManagerInterface
     }
 
     /**
-     * @param EngineInterface $templating
+     * @param Environment $templating
      *
      * @return $this
      */
-    public function setTemplating(EngineInterface $templating)
+    public function setTemplating(Environment $templating)
     {
         $this->templating = $templating;
 

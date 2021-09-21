@@ -4,7 +4,7 @@ namespace ToolboxBundle\Document\Areabrick\Gallery;
 
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Gallery extends AbstractAreabrick
 {
@@ -26,7 +26,7 @@ class Gallery extends AbstractAreabrick
             $id = uniqid('gallery-');
         }
 
-        /** @var \Pimcore\Model\Document\Tag\Relations $imagesField */
+        /** @var \Pimcore\Model\Document\Editable\Relations $imagesField */
         $imagesField = $this->getDocumentTag($info->getDocument(), 'relations', 'images');
 
         $info->getView()->getParameters()->add([

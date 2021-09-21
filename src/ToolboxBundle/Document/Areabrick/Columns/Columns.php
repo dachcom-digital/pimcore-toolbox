@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Columns;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class Columns extends AbstractAreabrick
@@ -35,7 +35,7 @@ class Columns extends AbstractAreabrick
         $view = $info->getView();
         $editMode = $view->get('editmode');
 
-        /** @var \Pimcore\Model\Document\Tag\Checkbox $equalHeightElement */
+        /** @var \Pimcore\Model\Document\Editable\Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
         $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
         $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();

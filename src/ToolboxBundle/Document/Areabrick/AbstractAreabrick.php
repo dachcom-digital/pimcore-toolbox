@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick;
 
 use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
-use Pimcore\Model\Document\Tag;
+use Pimcore\Model\Document\Editable;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManager;
@@ -98,7 +98,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function action(Tag\Area\Info $info)
+    public function action(Editable\Area\Info $info)
     {
         if (!$this->getConfigManager() instanceof ConfigManagerInterface) {
             throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
@@ -126,12 +126,12 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     }
 
     /**
-     * @param Tag\Area\Info $info
+     * @param Editable\Area\Info $info
      * @param array         $configNode
      *
      * @return array
      */
-    private function configureAdditionalClasses(Tag\Area\Info $info, $configNode)
+    private function configureAdditionalClasses(Editable\Area\Info $info, $configNode)
     {
         $classesArray = [];
 
@@ -146,14 +146,14 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
 
             if ($configElement['type'] === 'additionalClasses') {
                 $addClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_classes');
-                if ($addClassField instanceof Tag\Select && !empty($addClassField->getValue())) {
+                if ($addClassField instanceof Editable\Select && !empty($addClassField->getValue())) {
                     $classesArray[] = (string) $addClassField->getValue();
                 }
             } elseif ($configElement['type'] === 'additionalClassesChained') {
                 $chainedElementName = explode('_', $name);
                 $chainedIncrementor = end($chainedElementName);
                 $addChainedClassField = $this->getDocumentTag($info->getDocument(), 'select', 'add_cclasses_' . $chainedIncrementor);
-                if ($addChainedClassField instanceof Tag\Select && !empty($addChainedClassField->getValue())) {
+                if ($addChainedClassField instanceof Editable\Select && !empty($addChainedClassField->getValue())) {
                     $classesArray[] = (string) $addChainedClassField->getValue();
                 }
             }
@@ -210,7 +210,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function getHtmlTagOpen(Tag\Area\Info $info)
+    public function getHtmlTagOpen(Editable\Area\Info $info)
     {
         return '';
     }
@@ -218,7 +218,7 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function getHtmlTagClose(Tag\Area\Info $info)
+    public function getHtmlTagClose(Editable\Area\Info $info)
     {
         return '';
     }

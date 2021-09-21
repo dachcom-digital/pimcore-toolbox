@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Headline;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Headline extends AbstractAreabrick
 {
@@ -19,7 +19,7 @@ class Headline extends AbstractAreabrick
         parent::action($info);
 
         $anchorName = null;
-        /** @var \Pimcore\Model\Document\Tag\Input $anchorNameElement */
+        /** @var \Pimcore\Model\Document\Editable\Input $anchorNameElement */
         $anchorNameElement = $this->getDocumentTag($info->getDocument(), 'input', 'anchor_name');
 
         if (!$anchorNameElement->isEmpty()) {

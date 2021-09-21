@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\GoogleMap;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class GoogleMap extends AbstractAreabrick
 {

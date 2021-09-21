@@ -5,7 +5,7 @@ namespace ToolboxBundle\Document\Areabrick\IFrame;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class IFrame extends AbstractAreabrick
 {

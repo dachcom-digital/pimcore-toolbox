@@ -3,10 +3,10 @@
 namespace ToolboxBundle\Document\Areabrick\Download;
 
 use Pimcore\Db\ZendCompatibility\QueryBuilder;
-use Pimcore\Model\Document\Tag\Relations;
+use Pimcore\Model\Document\Editable\Relations;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Asset;
 
 class Download extends AbstractAreabrick

@@ -8,7 +8,7 @@ use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Templating\EngineInterface;
 
 class FrontendJsListener
@@ -28,8 +28,6 @@ class FrontendJsListener
     private $templatingEngine;
 
     /**
-     * FrontendJsTranslationsListener constructor.
-     *
      * @param EventDispatcherInterface $eventDispatcher
      * @param EngineInterface          $templatingEngine
      */
@@ -42,9 +40,9 @@ class FrontendJsListener
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$this->isEnabled()) {
             return;

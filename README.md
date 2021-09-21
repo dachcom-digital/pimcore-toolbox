@@ -6,7 +6,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Release](https://img.shields.io/packagist/v/dachcom-digital/toolbox.svg?style=flat-square)](https://packagist.org/packages/dachcom-digital/toolbox)
 [![Tests](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/Codeception?style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22Codeception%22)
-[![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan?style=flat-square&logo=github&label=phpstan%20level%202)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22PHP%20Stan%22)
+[![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan?style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22PHP%20Stan%22)
 
 ![pimcore-toolbox](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
 
@@ -14,36 +14,25 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 | Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
 |---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **3.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 16.07.2019   | Feature Branch | 3.x        |
-| **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Bugfix only    | 2.8        |
+| **4.x** | `10.1`                            | `5.3`                      | --           | Feature Branch | dev-master |
+| **3.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 16.07.2019   | Bugfix only    | 3.x        |
+| **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Unsupported    | 2.8        |
 | **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4   |
 
 ### Installation  
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~3.3.0"
+    "dachcom-digital/toolbox" : "~4.0.0"
 }
 ```
 
-### Installation via Extension Manager
-After you have installed the Toolbox Bundle via composer, open pimcore backend and go to `Tools` => `Extension`:
-- Click the green `+` Button in `Enable / Disable` row
-- Click the green `+` Button in `Install/Uninstall` row
+### Installation
+- Execute: `$ bin/console pimcore:bundle:enable ToolboxBundle`
+- Execute: `$ bin/console pimcore:bundle:install ToolboxBundle`
 
 ## Upgrading
-
-### Upgrading via Extension Manager
-After you have updated the Toolbox Bundle via composer, open pimcore backend and go to `Tools` => `Extension`:
-- Click the green `+` Button in `Update` row
-
-### Upgrading via CommandLine
-After you have updated the Toolbox Bundle via composer:
-- Execute: `$ bin/console pimcore:bundle:update ToolboxBundle`
-
-### Migrate via CommandLine
-Does actually the same as the update command and preferred in CI-Workflow:
-- Execute: `$ bin/console pimcore:migrations:migrate -b ToolboxBundle`
+- Execute: `$ bin/console doctrine:migrations:version --add --all --prefix 'ToolboxBundle\Migrations'`
 
 ## What's the meaning of Toolbox?
 - create often used bricks in a second

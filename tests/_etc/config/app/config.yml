@@ -1,7 +1,5 @@
 imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
+    - { resource: services.yaml }
     - { resource: 'local/' }
 
 services:
@@ -12,11 +10,12 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
-# don't send real emails in functional tests
-swiftmailer:
-    disable_delivery: true
-
 framework:
     profiler:
         enabled: true
         collect: false
+    # don't send real emails in functional tests
+    mailer:
+        transports:
+            main: 'null://null'
+            newsletter: 'null://null'

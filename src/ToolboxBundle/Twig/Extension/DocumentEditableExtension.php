@@ -4,7 +4,7 @@ namespace ToolboxBundle\Twig\Extension;
 
 use Twig\TwigFunction;
 
-class DocumentTagExtension extends \Pimcore\Twig\Extension\DocumentTagExtension
+class DocumentEditableExtension extends \Pimcore\Twig\Extension\DocumentEditableExtension
 {
     /**
      * {@inheritdoc}

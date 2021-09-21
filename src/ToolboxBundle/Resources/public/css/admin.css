@@ -674,3 +674,78 @@ body > .single-teaser img {
 .toolbox-modal-open {
     overflow: hidden;
 }
+
+/* Since PIMCORE 5.3 */
+
+.pimcore_area_buttons .pimcore_block_plus,
+.pimcore_area_buttons .pimcore_block_plus_up,
+.pimcore_area_buttons .pimcore_block_minus,
+.pimcore_area_buttons .pimcore_block_up,
+.pimcore_area_buttons .pimcore_block_down,
+.pimcore_area_buttons .pimcore_block_amount,
+.pimcore_area_buttons .pimcore_block_type,
+.pimcore_area_buttons .pimcore_block_options,
+.pimcore_area_buttons .pimcore_block_visibility {
+    float: left;
+}
+
+.pimcore_area_buttons {
+    opacity: 0.3;
+    -webkit-transition: opacity 0.3s ease;
+    -moz-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.pimcore_area_buttons .pimcore_block_label {
+    display: none !important;
+}
+
+.pimcore_block_entry:hover > div.pimcore_area_buttons {
+    opacity: 1;
+}
+
+.pimcore_area_buttons {
+    position: relative;
+    top: 0;
+    margin-top: 20px;
+    left: 0;
+    width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.toolbox-columns .toolbox-column .pimcore_area_entry:first-child .pimcore_area_buttons {
+    margin-top: 0;
+}
+
+.pimcore_area_buttons .pimcore_area_buttons_inner {
+    background: transparent;
+}
+
+.pimcore_area_buttons::after {
+    content: none;
+}
+
+.toolbox-element-edit-button {
+    padding: 0;
+}
+
+.toolbox-element-edit-button .x-btn-default-small {
+    padding: 1px 7px 1px 7px;
+    margin: 3px;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    font: 400 11px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}
+
+.toolbox-element-edit-button.no-interaction {
+    height: 26px;
+}
+
+/* Since PIMCORE 5.4.4 */
+
+.pimcore_area_buttons.top {
+    top: 15px !important;
+}

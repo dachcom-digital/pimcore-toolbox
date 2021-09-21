@@ -4,7 +4,7 @@ namespace ToolboxBundle\Document\Areabrick\ParallaxContainer;
 
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag;
+use Pimcore\Model\Document\Editable;
 use Pimcore\Model\Asset;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -12,19 +12,19 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ParallaxContainer extends AbstractAreabrick
 {
     /**
-     * @param Tag\Area\Info $info
+     * @param Editable\Area\Info $info
      *
      * @return null|Response|void
      *
      * @throws \Exception
      */
-    public function action(Tag\Area\Info $info)
+    public function action(Editable\Area\Info $info)
     {
         parent::action($info);
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
 
-        /** @var Tag\Relation $parallaxBackgroundElement */
+        /** @var Editable\Relation $parallaxBackgroundElement */
         $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'relation', 'background_image');
         $parallaxBackground = $parallaxBackgroundElement->getElement();
         $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();
@@ -68,7 +68,7 @@ class ParallaxContainer extends AbstractAreabrick
     }
 
     /**
-     * @param Tag\Area\Info       $info
+     * @param Editable\Area\Info       $info
      * @param EngineInterface     $templating
      * @param TranslatorInterface $translator
      *
@@ -76,20 +76,20 @@ class ParallaxContainer extends AbstractAreabrick
      *
      * @throws \Exception
      */
-    private function _buildSectionContent(Tag\Area\Info $info, $templating, $translator)
+    private function _buildSectionContent(Editable\Area\Info $info, $templating, $translator)
     {
         ob_start();
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainerSection');
 
-        /** @var Tag\Areablock $sectionBlock */
+        /** @var Editable\Areablock $sectionBlock */
         $sectionBlock = $this->getDocumentTag($info->getDocument(), 'block', 'pcB', ['default' => 1]);
 
         $loopIndex = 1;
         while ($sectionBlock->loop()) {
             $sectionConfig = '';
 
-            /** @var Tag\Relation $parallaxBackgroundElement */
+            /** @var Editable\Relation $parallaxBackgroundElement */
             $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'relation', 'background_image');
             $parallaxBackground = $parallaxBackgroundElement->getElement();
             $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();

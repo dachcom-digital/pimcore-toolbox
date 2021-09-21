@@ -3,7 +3,7 @@
 namespace ToolboxBundle\Document\Areabrick\Image;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Image extends AbstractAreabrick
 {

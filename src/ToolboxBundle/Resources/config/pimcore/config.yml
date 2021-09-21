@@ -1,3 +1,7 @@
+doctrine_migrations:
+    migrations_paths:
+        'ToolboxBundle\Migrations': '@ToolboxBundle/Migrations'
+
 imports:
     - { resource: areas/*.yml }
     - { resource: ckeditor/*.yml }
