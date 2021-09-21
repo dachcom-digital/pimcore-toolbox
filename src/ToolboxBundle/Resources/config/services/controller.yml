@@ -1,33 +1,8 @@
 services:
 
-    ToolboxBundle\Controller\Admin\ColumnAdjusterController:
+    ToolboxBundle\Controller\:
+        resource: '../../Controller'
         public: true
         autowire: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: controller.service_arguments }
-
-    ToolboxBundle\Controller\Admin\SettingsController:
-        public: true
-        autowire: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-              - { name: controller.service_arguments }
-
-    ToolboxBundle\Controller\AjaxController:
-        public: true
-        autowire: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-              - { name: controller.service_arguments }
-
-    ToolboxBundle\Controller\SnippetController:
-        public: true
-        autowire: true
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-              - { name: controller.service_arguments }
+        autoconfigure: true
+        tags: ['controller.service_arguments']

@@ -2,41 +2,24 @@
 
 namespace ToolboxBundle\Manager;
 
-use Twig\Environment;
+use Symfony\Component\Templating\EngineInterface;
 
 interface LayoutManagerInterface
 {
-    /**
-     * @param Environment $templating
-     *
-     * @return mixed
-     */
-    public function setTemplating(Environment $templating);
+    public function setTemplating(EngineInterface $templating): void;
 
     /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     */
-    public function getAreaTemplateDir($areaId = null, $viewName = 'view', $extension = 'html.twig');
-
-    /**
-     * @param null   $areaId
-     * @param string $viewName
-     * @param string $extension
-     *
-     * @return string
-     */
-    public function getAreaTemplatePath($areaId = null, $viewName = 'view', $extension = 'html.twig');
-
-    /**
-     * @param string $areaName
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    public function getAreaThemeConfig($areaName = '');
+    public function getAreaTemplateDir(string $areaId, string $viewName = 'view', string $extension = 'html.twig'): string;
+
+    /**
+     * @throws \Exception
+     */
+    public function getAreaTemplatePath(string $areaId, string $viewName = 'view', string $extension = 'html.twig'): string;
+
+    /**
+     * @throws \Exception
+     */
+    public function getAreaThemeConfig(string $areaName = ''): array;
 }

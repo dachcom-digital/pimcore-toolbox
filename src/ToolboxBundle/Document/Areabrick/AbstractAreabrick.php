@@ -190,14 +190,6 @@ abstract class AbstractAreabrick extends AbstractTemplateAreabrick
     /**
      * {@inheritdoc}
      */
-    public function getTemplateSuffix()
-    {
-        return static::TEMPLATE_SUFFIX_TWIG;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getIcon()
     {
         if ($this->getAreaBrickType() == self::AREABRICK_TYPE_EXTERNAL) {

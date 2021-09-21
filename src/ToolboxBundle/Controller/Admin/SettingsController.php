@@ -2,46 +2,27 @@
 
 namespace ToolboxBundle\Controller\Admin;
 
+use Exception;
 use Pimcore\Bundle\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class SettingsController extends Controller\AdminController
 {
-    /**
-     * @var array
-     */
-    protected $globalStyleSets = [];
+    protected array $globalStyleSets = [];
+    protected array $ckEditorObjectConfig = [];
+    protected array $ckEditorAreaConfig = [];
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @var array
-     */
-    protected $ckEditorObjectConfig = [];
-
-    /**
-     * @var array
-     */
-    protected $ckEditorAreaConfig = [];
-
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     */
     public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
 
     /**
-     * @return Response
-     *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function ckEditorAreaStyleAction()
+    public function ckEditorAreaStyleAction(): Response
     {
         $this->setData();
 
@@ -58,11 +39,9 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     * @return Response
-     *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function ckEditorObjectStyleAction()
+    public function ckEditorObjectStyleAction(): Response
     {
         $this->setData();
 
@@ -79,9 +58,9 @@ class SettingsController extends Controller\AdminController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    private function setData()
+    private function setData(): void
     {
         $ckEditorSettings = $this->configManager->getConfig('ckeditor');
 
@@ -99,7 +78,7 @@ class SettingsController extends Controller\AdminController
             $userCkEditorAreaConfig = $ckEditorSettings['area_editor']['config'];
         }
 
-        //global Style Sets config
+        //global style sets config
         if (isset($ckEditorSettings['global_style_sets'])) {
             $this->globalStyleSets = $ckEditorSettings['global_style_sets'];
         }
@@ -108,16 +87,8 @@ class SettingsController extends Controller\AdminController
         $this->ckEditorAreaConfig = $this->parseToolbarConfig($ckEditorGlobalConfig, $userCkEditorAreaConfig);
     }
 
-    /**
-     * @param array $defaultConfig
-     * @param array $userConfig
-     *
-     * @return array
-     */
-    private function parseToolbarConfig($defaultConfig, $userConfig)
+    private function parseToolbarConfig(array $defaultConfig, array $userConfig): array
     {
-        $config = array_replace_recursive($defaultConfig, $userConfig);
-
-        return $config;
+        return array_replace_recursive($defaultConfig, $userConfig);
     }
 }

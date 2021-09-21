@@ -6,7 +6,7 @@ services:
         autowire: true
         autoconfigure: true
         calls:
-            - [setTemplating, ['@pimcore.templating.engine.twig']]
+            - [setTemplating, ['@pimcore.templating.engine.delegating']]
 
     ToolboxBundle\Manager\AreaManagerInterface: '@ToolboxBundle\Manager\AreaManager'
     ToolboxBundle\Manager\AreaManager:

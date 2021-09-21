@@ -14,7 +14,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
 {
     use PackageVersionTrait;
 
-    const PACKAGE_NAME = 'dachcom-digital/toolbox';
+    public const PACKAGE_NAME = 'dachcom-digital/toolbox';
 
     /**
      * {@inheritdoc}
