@@ -21,8 +21,7 @@ toolbox:
                 equal_height:
                     type: checkbox
                     title: 'Equal heights?'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

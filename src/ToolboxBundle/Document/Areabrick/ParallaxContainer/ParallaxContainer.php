@@ -2,36 +2,38 @@
 
 namespace ToolboxBundle\Document\Areabrick\ParallaxContainer;
 
+use Pimcore\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable;
 use Pimcore\Model\Asset;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class ParallaxContainer extends AbstractAreabrick
 {
-    /**
-     * @param Editable\Area\Info $info
-     *
-     * @return null|Response|void
-     *
-     * @throws \Exception
-     */
-    public function action(Editable\Area\Info $info)
+    private Translator $translator;
+    private EngineInterface $templating;
+
+    public function __construct(Translator $translator, EngineInterface $templating)
+    {
+        $this->translator = $translator;
+        $this->templating = $templating;
+    }
+
+    public function action(Editable\Area\Info $info): ?Response
     {
         parent::action($info);
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainer');
 
         /** @var Editable\Relation $parallaxBackgroundElement */
-        $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'relation', 'background_image');
+        $parallaxBackgroundElement = $this->getDocumentEditable($info->getDocument(), 'relation', 'background_image');
         $parallaxBackground = $parallaxBackgroundElement->getElement();
-        $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();
+        $parallaxBackgroundColor = $this->getDocumentEditable($info->getDocument(), 'select', 'background_color')->getData();
 
-        $parallaxTemplate = $this->getDocumentTag($info->getDocument(), 'select', 'template')->getData();
-        $parallaxBehind = $this->getDocumentTag($info->getDocument(), 'parallaximage', 'image_behind');
-        $parallaxFront = $this->getDocumentTag($info->getDocument(), 'parallaximage', 'image_front');
+        $parallaxTemplate = $this->getDocumentEditable($info->getDocument(), 'select', 'template')->getData();
+        $parallaxBehind = $this->getDocumentEditable($info->getDocument(), 'parallaximage', 'image_behind');
+        $parallaxFront = $this->getDocumentEditable($info->getDocument(), 'parallaximage', 'image_front');
 
         $backgroundMode = isset($config['background_mode']) ? $config['background_mode'] : 'wrap';
         $backgroundImageMode = isset($config['background_image_mode']) ? $config['background_image_mode'] : 'data';
@@ -39,83 +41,75 @@ class ParallaxContainer extends AbstractAreabrick
         $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
         $backgroundColorClass = $this->getBackgroundColorClass($parallaxBackgroundColor, $config, 'section');
 
-        /** @var EngineInterface $templating */
-        $templating = $this->container->get('templating');
-        /** @var TranslatorInterface $translator */
-        $translator = $this->container->get('pimcore.translator');
-
         $behindElements = !empty($parallaxBehind)
-            ? $templating->render(
+            ? $this->templating->render(
                 $this->getTemplatePath('Partial/behind-front-elements'),
                 ['elements' => $parallaxBehind, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
         $frontElements = !empty($parallaxFront)
-            ? $templating->render(
+            ? $this->templating->render(
                 $this->getTemplatePath('Partial/behind-front-elements'),
                 ['elements' => $parallaxFront, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
-        $info->getView()->getParameters()->add([
+        $info->setParams(array_merge($info->getParams(), [
             'parallaxTemplate'     => $parallaxTemplate,
             'backgroundMode'       => $backgroundMode,
             'backgroundTags'       => $backgroundTags,
             'backgroundColorClass' => $backgroundColorClass,
             'behindElements'       => $behindElements,
             'frontElements'        => $frontElements,
-            'sectionContent'       => $this->_buildSectionContent($info, $templating, $translator)
-        ]);
+            'sectionContent'       => $this->_buildSectionContent($info)
+        ]));
+
+        return null;
     }
 
     /**
-     * @param Editable\Area\Info       $info
-     * @param EngineInterface     $templating
-     * @param TranslatorInterface $translator
+     * @param Editable\Area\Info $info
      *
      * @return string
      *
      * @throws \Exception
      */
-    private function _buildSectionContent(Editable\Area\Info $info, $templating, $translator)
+    private function _buildSectionContent(Editable\Area\Info $info)
     {
         ob_start();
 
         $config = $this->getConfigManager()->getAreaParameterConfig('parallaxContainerSection');
 
         /** @var Editable\Areablock $sectionBlock */
-        $sectionBlock = $this->getDocumentTag($info->getDocument(), 'block', 'pcB', ['default' => 1]);
+        $sectionBlock = $this->getDocumentEditable($info->getDocument(), 'block', 'pcB', ['default' => 1]);
 
         $loopIndex = 1;
         while ($sectionBlock->loop()) {
             $sectionConfig = '';
 
             /** @var Editable\Relation $parallaxBackgroundElement */
-            $parallaxBackgroundElement = $this->getDocumentTag($info->getDocument(), 'relation', 'background_image');
+            $parallaxBackgroundElement = $this->getDocumentEditable($info->getDocument(), 'relation', 'background_image');
             $parallaxBackground = $parallaxBackgroundElement->getElement();
-            $parallaxBackgroundColor = $this->getDocumentTag($info->getDocument(), 'select', 'background_color')->getData();
+            $parallaxBackgroundColor = $this->getDocumentEditable($info->getDocument(), 'select', 'background_color')->getData();
 
             $backgroundTags = $this->getBackgroundTags($parallaxBackground, $parallaxBackgroundColor, $config, 'section');
             $backgroundColorClass = $this->getBackgroundColorClass($parallaxBackgroundColor, $config, 'section');
 
-            $template = $this->getDocumentTag($info->getDocument(), 'select', 'template')->getData();
-            $containerWrapper = $this->getDocumentTag($info->getDocument(), 'select', 'container_type')->getData();
+            $template = $this->getDocumentEditable($info->getDocument(), 'select', 'template')->getData();
+            $containerWrapper = $this->getDocumentEditable($info->getDocument(), 'select', 'container_type')->getData();
 
             $areaArgs = ['name' => 'pcs', 'type' => 'parallaxContainer', 'document' => $info->getDocument()];
-            $areaBlock = $templating->render('@Toolbox/Helper/areablock.' . $this->getTemplateSuffix(), $areaArgs);
+            $areaBlock = $this->templating->render('@Toolbox/Helper/areablock.' . $this->getTemplateSuffix(), $areaArgs);
 
             if ($containerWrapper !== 'none') {
                 $wrapperArgs = ['containerWrapperClass' => $containerWrapper, 'document' => $info->getDocument()];
-                $wrapContent = $templating->render($this->getTemplatePath('Wrapper/container-wrapper'), $wrapperArgs);
+                $wrapContent = $this->templating->render($this->getTemplatePath('Wrapper/container-wrapper'), $wrapperArgs);
                 $areaBlock = sprintf($wrapContent, $areaBlock);
             }
 
-            if ($info->getView()->get('editmode') === true) {
-                $configNode = $this->getConfigManager()->getAreaConfig('parallaxContainerSection');
-                $sectionConfig = $this->getBrickConfigBuilder()->buildElementConfig('parallaxContainerSection', 'Parallax Container Section', $info, $configNode);
-
-                if ($containerWrapper === 'none' && strpos($areaBlock, 'toolbox-columns') !== false) {
-                    $message = $translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
-                    $messageWrap = $templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), [
+            if ($info->getParam('editmode') === true) {
+                if ($containerWrapper === 'none' && str_contains($areaBlock, 'toolbox-columns')) {
+                    $message = $this->translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
+                    $messageWrap = $this->templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), [
                         'type'     => 'danger',
                         'message'  => $message,
                         'document' => $info->getDocument()
@@ -136,13 +130,10 @@ class ParallaxContainer extends AbstractAreabrick
 
             $loopIndex++;
 
-            echo $sectionConfig;
-            echo $templating->render($this->getTemplatePath('section'), $sectionArgs);
+            echo $this->templating->render($this->getTemplatePath('section'), $sectionArgs);
         }
 
-        $string = ob_get_clean();
-
-        return $string;
+        return ob_get_clean();
     }
 
     /**
@@ -157,8 +148,8 @@ class ParallaxContainer extends AbstractAreabrick
      */
     private function getBackgroundTags($backgroundImage, $backgroundColor, $config = [], $type = 'parallax')
     {
-        $backgroundImageMode = isset($config['background_image_mode']) ? $config['background_image_mode'] : 'data';
-        $backgroundColorMode = isset($config['background_color_mode']) ? $config['background_color_mode'] : 'data';
+        $backgroundImageMode = $config['background_image_mode'] ?? 'data';
+        $backgroundColorMode = $config['background_color_mode'] ?? 'data';
         $thumbnail = $type === 'parallax'
             ? $this->configManager->getImageThumbnailFromConfig('parallax_background')
             : $this->configManager->getImageThumbnailFromConfig('parallax_section_background');
@@ -187,14 +178,14 @@ class ParallaxContainer extends AbstractAreabrick
 
         if (count($styles) > 0) {
             $str .= 'style="';
-            $str .= join(' ', array_map(function ($key) use ($styles) {
+            $str .= join(' ', array_map(static function ($key) use ($styles) {
                 return $key . ':' . $styles[$key] . ';';
             }, array_keys($styles)));
             $str .= '"';
         }
 
         if (count($data) > 0) {
-            $str .= join(' ', array_map(function ($key) use ($data) {
+            $str .= join(' ', array_map(static function ($key) use ($data) {
                 return 'data-' . $key . '="' . $data[$key] . '"';
             }, array_keys($data)));
         }
@@ -211,7 +202,7 @@ class ParallaxContainer extends AbstractAreabrick
      */
     private function getBackgroundColorClass($backgroundColor, $config = [], $type = 'parallax')
     {
-        $mode = isset($config['background_color_mode']) ? $config['background_color_mode'] : 'data';
+        $mode = $config['background_color_mode'] ?? 'data';
         if ($backgroundColor === 'no-background-color' || empty($backgroundColor) || $mode !== 'class') {
             return '';
         }

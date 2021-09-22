@@ -1,6 +1,6 @@
 <?php
 
-namespace ToolboxBundle\Model\Document\Tag;
+namespace ToolboxBundle\Model\Document\Editable;
 
 use Pimcore\Model;
 use Pimcore\Model\Element;
@@ -8,7 +8,7 @@ use Pimcore\Model\Document;
 use Pimcore\Model\Asset;
 use Pimcore\Model\DataObject;
 
-class ParallaxImage extends Model\Document\Tag\Relations
+class ParallaxImage extends Model\Document\Editable\Relations
 {
     /**
      * Return the type of the element.
@@ -99,7 +99,7 @@ class ParallaxImage extends Model\Document\Tag\Relations
     }
 
     /**
-     * @see Document\Tag\TagInterface::frontend
+     * @see Document\Editable\TagInterface::frontend
      *
      * @return string
      */

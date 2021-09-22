@@ -2,49 +2,45 @@
 
 namespace ToolboxBundle\Document\Areabrick\Video;
 
+use Pimcore\Model\Document\Editable\Checkbox;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Asset;
+use ToolboxBundle\Model\Document\Editable\Vhs;
 
 class Video extends AbstractAreabrick
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
-        $view = $info->getView();
-
-        /** @var \ToolboxBundle\Model\Document\Editable\Vhs $videoTag */
-        $videoTag = $this->getDocumentTag($info->getDocument(), 'vhs', 'video');
+        /** @var Vhs $videoTag */
+        $videoTag = $this->getDocumentEditable($info->getDocument(), 'vhs', 'video');
 
         $videoParameter = $videoTag->getVideoParameter();
 
         $playInLightBox = $videoTag->getShowAsLightBox() === true ? 'true' : 'false';
-        /** @var \Pimcore\Model\Document\Editable\Checkbox $autoPlayElement */
-        $autoPlayElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'autoplay');
-        $autoPlay = $autoPlayElement->isChecked() === true && !$view->get('editmode');
+        /** @var Checkbox $autoPlayElement */
+        $autoPlayElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'autoplay');
+        $autoPlay = $autoPlayElement->isChecked() === true && !$info->getParam('editmode');
         $videoType = $videoTag->getVideoType();
         $posterPath = null;
-        $imageThumbnail = null;
         $poster = $videoTag->getPosterAsset();
-        $videoId = $videoTag->id;
 
         if ($poster instanceof Asset\Image) {
             $imageThumbnail = $this->getConfigManager()->getImageThumbnailFromConfig('video_poster');
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $view->getParameters()->add([
+        $info->setParams(array_merge($info->getParams(), [
             'autoPlay'       => $autoPlay,
             'posterPath'     => $posterPath,
             'videoType'      => $videoType,
             'playInLightbox' => $playInLightBox,
             'videoParameter' => $videoParameter,
-            'videoId'        => $videoId
-        ]);
+            'videoId'        => $videoTag->getId()
+        ]));
 
         return null;
     }

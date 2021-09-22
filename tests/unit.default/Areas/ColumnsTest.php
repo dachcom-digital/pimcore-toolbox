@@ -2,9 +2,9 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Select;
-use ToolboxBundle\Model\Document\Tag\ColumnAdjuster;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Select;
+use ToolboxBundle\Model\Document\Editable\ColumnAdjuster;
 
 class ColumnsTest extends AbstractAreaTest
 {

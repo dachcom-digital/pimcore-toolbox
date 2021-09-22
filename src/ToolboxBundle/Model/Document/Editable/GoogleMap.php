@@ -1,12 +1,12 @@
 <?php
 
-namespace ToolboxBundle\Model\Document\Tag;
+namespace ToolboxBundle\Model\Document\Editable;
 
 use Pimcore\Model\Document;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class GoogleMap extends Document\Tag
+class GoogleMap extends Document\Editable
 {
     /**
      * @var bool
@@ -36,7 +36,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::getData
+     * @see Document\Editable\TagInterface::getData
      *
      * @return mixed
      */
@@ -109,7 +109,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::admin
+     * @see Document\Editable\TagInterface::admin
      *
      * @return mixed|string
      *
@@ -152,7 +152,7 @@ class GoogleMap extends Document\Tag
     }
 
     /**
-     * @see Document\Tag\TagInterface::setDataFromEditmode
+     * @see Document\Editable\TagInterface::setDataFromEditmode
      *
      * @param mixed $data
      *

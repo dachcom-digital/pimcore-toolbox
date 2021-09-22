@@ -42,7 +42,6 @@ class SnippetController extends FrontendController
         return $this->renderTemplate(
             '@Toolbox/Snippet/Layout/teaser-layout.html.twig',
             [
-                'useDynamicLinks'        => $flags['use_dynamic_links'],
                 'mapParams'              => $request->get('mapParams'),
                 'layoutStore'            => $layoutExtJsStore,
                 'additionalClassesStore' => $addClExtJsStore

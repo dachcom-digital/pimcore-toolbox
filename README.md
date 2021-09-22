@@ -39,7 +39,6 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 - extend, override toolbox bricks 
 - add config elements via yml configuration
 - add consistent and beautiful config elements
-- implement conditions to your config (for example: display a dropdown in config window if another checkbox has been checked)
 - add your custom bricks while using the toolbox config environment
 - removes the default `pimcore_area_*` element wrapper from each brick
 

@@ -47,7 +47,6 @@ class ToolboxBundle extends AbstractPimcoreBundle
             '/bundles/toolbox/js/backend/toolbox.js',
             '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
             '/bundles/toolbox/js/document/editables/areablock.js',
-            '/bundles/toolbox/js/document/editables/dynamiclink.js',
             '/bundles/toolbox/js/document/editables/googlemap.js',
             '/bundles/toolbox/js/document/editables/parallaximage.js',
             '/bundles/toolbox/js/document/editables/columnadjuster.js',

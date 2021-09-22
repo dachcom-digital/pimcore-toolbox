@@ -6,7 +6,6 @@ toolbox:
                     type: select
                     title: 'Section Template'
                     config:
-                        reload: true
                         store:
                             no-template: 'No Template'
                         default: no-template
@@ -14,7 +13,6 @@ toolbox:
                     type: select
                     title: 'Section Wrapper Type'
                     config:
-                        reload: true
                         description: 'If you need to add some content columns, apply a default or fluid container as wrapper.'
                         store:
                             none: 'No Section Wrapper'
@@ -25,7 +23,6 @@ toolbox:
                     type: relation
                     title: 'Background Image'
                     config:
-                        reload: true
                         types:
                           - asset
                         subtypes:
@@ -36,7 +33,6 @@ toolbox:
                     type: select
                     title: 'Background Color'
                     config:
-                        reload: true
                         store:
                             no-background-color: 'No Background Color'
                         default: no-background-color

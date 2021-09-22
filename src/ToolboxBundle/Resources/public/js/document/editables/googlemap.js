@@ -1,5 +1,5 @@
 pimcore.registerNS('pimcore.document.editables.googlemap');
-pimcore.document.editables.googlemap = Class.create(toolbox.abstract.document.editable, {
+pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
     getType: function () {
         return 'googlemap';
@@ -10,12 +10,12 @@ pimcore.document.editables.googlemap = Class.create(toolbox.abstract.document.ed
     },
 
     reload: function () {
-        if (this.options.reload) {
+        if (this.config.reload) {
             this.reloadDocument();
         }
     },
 
-    initialize: function (id, name, options, data) {
+    initialize: function (id, name, config, data) {
 
         if (typeof google === 'undefined') {
             console.warn('toolbox googleMap: google js api is not reachable.');
@@ -25,27 +25,33 @@ pimcore.document.editables.googlemap = Class.create(toolbox.abstract.document.ed
         this.id = id;
         this.name = name;
         this.data = data;
-
-        this.options = this.parseOptions(options);
+        this.config = this.parseConfig(config);
         this.geocoder = new google.maps.Geocoder();
+
+    },
+
+    render: function () {
+
+        if (typeof google === 'undefined') {
+            return;
+        }
 
         this.setupWrapper();
 
-        Ext.get(id).setStyle({
+        Ext.get(this.id).setStyle({
             display: 'inline'
         });
 
-        var buttonHolder = Ext.get(id).up('.toolbox-google-map').prev('.toolbox-element-edit-button'),
-            mapEditButton = new Ext.Button({
-                iconCls: 'pimcore_icon_geopoint',
-                cls: 'googlemap_edit_locations_button',
-                text: t('locations'),
-                listeners: {
-                    'click': this.openEditor.bind(this)
-                }
-            });
+        var mapEditButton = new Ext.Button({
+            iconCls: 'pimcore_icon_geopoint',
+            cls: 'googlemap_edit_locations_button',
+            text: t('locations'),
+            listeners: {
+                'click': this.openEditor.bind(this)
+            }
+        });
 
-        mapEditButton.render(buttonHolder);
+        mapEditButton.render(element.insertHtml("afterBegin", '<div class="pimcore_google_map_edit_button"></div>'));
     },
 
     openEditor: function () {

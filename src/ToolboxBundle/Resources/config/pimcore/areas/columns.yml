@@ -7,6 +7,8 @@ services:
 toolbox:
     areas:
         columns:
+            config_parameter:
+                reload_on_close: true
             config_elements:
                 type:
                     type: select
@@ -24,8 +26,7 @@ toolbox:
                 equal_height:
                     type: checkbox
                     title: 'Equal heights?'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

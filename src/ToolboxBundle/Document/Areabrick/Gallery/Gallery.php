@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Document\Areabrick\Gallery;
 
+use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
@@ -15,7 +16,7 @@ class Gallery extends AbstractAreabrick
      *
      * @throws \Exception
      */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
@@ -23,16 +24,18 @@ class Gallery extends AbstractAreabrick
         if (isset($infoParams['toolboxGalleryId'])) {
             $id = $infoParams['toolboxGalleryId'];
         } else {
-            $id = uniqid('gallery-');
+            $id = uniqid('gallery-', true);
         }
 
-        /** @var \Pimcore\Model\Document\Editable\Relations $imagesField */
-        $imagesField = $this->getDocumentTag($info->getDocument(), 'relations', 'images');
+        /** @var Relations $imagesField */
+        $imagesField = $this->getDocumentEditable($info->getDocument(), 'relations', 'images');
 
-        $info->getView()->getParameters()->add([
+        $info->setParams(array_merge($info->getParams(), [
             'galleryId' => $id,
             'images'    => $this->getAssetArray($imagesField->getElements())
-        ]);
+        ]));
+
+        return null;
     }
 
     /**

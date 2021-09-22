@@ -128,14 +128,12 @@ class AreaConfigurationCommand extends Command
 
         foreach ($configElements as $configName => $configData) {
             $elementConfigData = empty($configData['config']) ? '--' : $this->parseArrayForOutput($configData['config']);
-            $conditionParameter = empty($configData['conditions']) ? '--' : $this->parseArrayForOutput($configData['conditions']);
 
             $rows[] = [
                 $configName,
                 $configData['type'],
                 $configData['title'],
                 $configData['description'],
-                $conditionParameter,
                 $elementConfigData,
             ];
 
@@ -154,7 +152,7 @@ class AreaConfigurationCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements'])
+            ->setHeaders(['name', 'type', 'title', 'description', 'config_elements'])
             ->setRows($rows);
         $table->render();
 

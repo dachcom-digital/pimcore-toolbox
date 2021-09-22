@@ -1,9 +1,8 @@
 pimcore:
     documents:
-        tags:
+        editables:
             map:
-                googlemap: \ToolboxBundle\Model\Document\Tag\GoogleMap
-                parallaximage: \ToolboxBundle\Model\Document\Tag\ParallaxImage
-                vhs: \ToolboxBundle\Model\Document\Tag\Vhs
-                dynamiclink: \ToolboxBundle\Model\Document\Tag\DynamicLink
-                columnadjuster: \ToolboxBundle\Model\Document\Tag\ColumnAdjuster
+                googlemap: \ToolboxBundle\Model\Document\Editable\GoogleMap
+                parallaximage: \ToolboxBundle\Model\Document\Editable\ParallaxImage
+                vhs: \ToolboxBundle\Model\Document\Editable\Vhs
+                columnadjuster: \ToolboxBundle\Model\Document\Editable\ColumnAdjuster

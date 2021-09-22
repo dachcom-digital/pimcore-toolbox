@@ -2,21 +2,15 @@
 
 namespace ToolboxBundle\Document\Areabrick\Image;
 
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
 
 class Image extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
-        parent::action($info);
+       return parent::action($info);
     }
 
     public function getName()

@@ -65,7 +65,7 @@ CKEDITOR.dialog.add('tbGoogleOptOutLinkDialog', function (editor) {
                 element = element.getAscendant('a', true);
             }
 
-            if (!element || element.getName() != 'a' || !element.hasClass('google-opt-out-link')) {
+            if (!element || element.getName() !== 'a' || !element.hasClass('google-opt-out-link')) {
                 element = editor.document.createElement('a');
                 element.setAttribute('class', 'google-opt-out-link');
                 element.setAttribute('href', '#');
@@ -82,7 +82,6 @@ CKEDITOR.dialog.add('tbGoogleOptOutLinkDialog', function (editor) {
         },
 
         onOk: function () {
-            var dialog = this;
             var aLink = this.element;
             this.commitContent(aLink);
 

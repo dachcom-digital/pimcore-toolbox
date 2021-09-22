@@ -59,6 +59,5 @@ final class ToolboxConfig
         'parallaximage',
         'googlemap',
         'vhs',
-        'dynamiclink',
     ];
 }

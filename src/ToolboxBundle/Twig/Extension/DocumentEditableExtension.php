@@ -12,7 +12,7 @@ class DocumentEditableExtension extends \Pimcore\Twig\Extension\DocumentEditable
     public function getFunctions()
     {
         return [
-            new TwigFunction('toolbox_document_tag', [$this, 'renderTag'], [
+            new TwigFunction('toolbox_document_tag', [$this, 'renderEditable'], [
                 'needs_context' => true,
                 'is_safe'       => ['html'],
             ]),

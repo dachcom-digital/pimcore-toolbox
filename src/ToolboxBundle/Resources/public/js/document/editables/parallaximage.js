@@ -1,21 +1,29 @@
 pimcore.registerNS('pimcore.document.editables.parallaximage');
-pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.document.editables.relations, {
+pimcore.document.editables.parallaximage = Class.create(pimcore.document.editables.relations, {
 
-    updateLayout: function() {
+    updateLayout: function () {
         this.element.render(this.id);
     },
 
-    initialize: function(id, name, options, data, inherited) {
-
+    initialize: function (id, name, config, data) {
         this.id = id;
         this.name = name;
-        this.options = this.parseOptions(options);
+        this.config = this.parseConfig(config);
         this.data = data;
+    },
+
+    render: function () {
+
+        var modelName = 'ParallaxImageRelationsEntry',
+            positionStoreElements = [],
+            sizeStoreElements = [],
+            positionStore,
+            sizeStore,
+            elementConfig;
 
         this.setupWrapper();
 
-        var modelName = 'ParallaxImageRelationsEntry';
-        if(!Ext.ClassManager.isCreated(modelName) ) {
+        if (!Ext.ClassManager.isCreated(modelName)) {
             Ext.define(modelName, {
                 extend: 'Ext.data.Model',
                 idProperty: 'rowId',
@@ -35,27 +43,25 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
             model: modelName
         });
 
-        var positionStoreElements = [];
-        Ext.Object.each(this.options.position, function(k,v) {
+        Ext.Object.each(this.config.position, function (k, v) {
             positionStoreElements.push({id: k, name: v});
         });
 
-        var positionStore = Ext.create('Ext.data.Store',{
+        positionStore = Ext.create('Ext.data.Store', {
             fields: ['id', 'name'],
             data: positionStoreElements
         });
 
-        var sizeStoreElements = [];
-        Ext.Object.each(this.options.size, function(k,v) {
+        Ext.Object.each(this.config.size, function (k, v) {
             sizeStoreElements.push({id: k, name: v});
         });
 
-        var sizeStore = Ext.create('Ext.data.Store',{
+        sizeStore = Ext.create('Ext.data.Store', {
             fields: ['id', 'name'],
             data: sizeStoreElements
         });
 
-        var elementConfig = {
+        elementConfig = {
             store: this.store,
             bodyStyle: 'color:#000',
             selModel: Ext.create('Ext.selection.RowModel', {}),
@@ -77,12 +83,12 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                         header: t('position'),
                         dataIndex: 'parallaxPosition',
                         flex: 100,
-                        renderer: function(value, metadata, record) {
+                        renderer: function (value, metadata, record) {
 
                             var val = positionStore.findRecord('id', value);
                             record.set('parallaxPosition', value);
 
-                            if( val ) {
+                            if (val) {
                                 return val.get('name');
                             }
 
@@ -97,12 +103,12 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                             triggerAction: 'all',
                             emptyText: 'Select action',
                             editable: false,
-                            valueField:'id',
-                            displayField:'name',
+                            valueField: 'id',
+                            displayField: 'name',
                             listeners: {
-                                focus: function(obj) {
+                                focus: function (obj) {
                                     obj.expand();
-                                },select:function(obj) {
+                                }, select: function (obj) {
                                     obj.blur();
                                 }
                             },
@@ -113,12 +119,12 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                         header: t('size') + ' (' + t('template') + ')',
                         dataIndex: 'parallaxSize',
                         flex: 100,
-                        renderer: function(value, metadata, record) {
+                        renderer: function (value, metadata, record) {
 
                             var val = sizeStore.findRecord('id', value);
                             record.set('parallaxSize', value);
 
-                            if( val ) {
+                            if (val) {
                                 return val.get('name');
                             }
 
@@ -133,12 +139,12 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                             triggerAction: 'all',
                             emptyText: 'Select action',
                             editable: false,
-                            valueField:'id',
-                            displayField:'name',
+                            valueField: 'id',
+                            displayField: 'name',
                             listeners: {
-                                focus: function(obj) {
+                                focus: function (obj) {
                                     obj.expand();
-                                },select:function(obj) {
+                                }, select: function (obj) {
                                     obj.blur();
                                 }
                             },
@@ -146,13 +152,13 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                         }
                     },
                     {
-                        xtype:'actioncolumn',
-                        width:30,
-                        items:[
+                        xtype: 'actioncolumn',
+                        width: 30,
+                        items: [
                             {
-                                tooltip:t('up'),
-                                icon:'/bundles/toolbox/images/admin/up.svg',
-                                handler:function (grid, rowIndex) {
+                                tooltip: t('up'),
+                                icon: '/bundles/toolbox/images/admin/up.svg',
+                                handler: function (grid, rowIndex) {
                                     if (rowIndex > 0) {
                                         var rec = grid.getStore().getAt(rowIndex);
                                         grid.getStore().removeAt(rowIndex);
@@ -163,13 +169,13 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                         ]
                     },
                     {
-                        xtype:'actioncolumn',
-                        width:30,
-                        items:[
+                        xtype: 'actioncolumn',
+                        width: 30,
+                        items: [
                             {
-                                tooltip:t('down'),
-                                icon:'/bundles/toolbox/images/admin/down.svg',
-                                handler:function (grid, rowIndex) {
+                                tooltip: t('down'),
+                                icon: '/bundles/toolbox/images/admin/down.svg',
+                                handler: function (grid, rowIndex) {
                                     if (rowIndex < (grid.getStore().getCount() - 1)) {
                                         var rec = grid.getStore().getAt(rowIndex);
                                         grid.getStore().removeAt(rowIndex);
@@ -212,15 +218,15 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
         };
 
         // height specifics
-        if(typeof this.options.height !== 'undefined') {
-            elementConfig.height = this.options.height;
+        if (typeof this.config.height !== 'undefined') {
+            elementConfig.height = this.config.height;
         } else {
             elementConfig.autoHeight = true;
         }
 
         // width specifics
-        if(typeof this.options.width !== 'undefined') {
-            elementConfig.width = this.options.width;
+        if (typeof this.config.width !== 'undefined') {
+            elementConfig.width = this.config.width;
         }
 
         this.element = new Ext.grid.GridPanel(elementConfig);
@@ -231,13 +237,15 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                 this.onNodeDrop.bind(this));
 
         }.bind(this));
+
+        this.element.render(this.id);
     },
 
     onNodeDrop: function (target, dd, e, data) {
 
         var record = data.records[0];
 
-        if(!this.dndAllowed(this.getCustomPimcoreDropData(record))){
+        if (!this.dndAllowed(this.getCustomPimcoreDropData(record))) {
             return false;
         }
 
@@ -252,8 +260,7 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
         if (initData.type === 'object') {
             if (data.className) {
                 initData.subtype = data.className;
-            }
-            else {
+            } else {
                 initData.subtype = 'folder';
             }
         }
@@ -274,8 +281,7 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
 
     },
 
-
-    onRowContextmenu: function (grid, record, tr, rowIndex, e, eOpts ) {
+    onRowContextmenu: function (grid, record, tr, rowIndex, e, eOpts) {
 
         var menu = new Ext.menu.Menu();
 
@@ -293,7 +299,7 @@ pimcore.document.editables.parallaximage = Class.create(toolbox.abstract.documen
                 item.parentMenu.destroy();
 
                 var subtype = record.data.subtype;
-                if (record.data.type === 'object' && record.data.subtype != 'folder') {
+                if (record.data.type === 'object' && record.data.subtype !== 'folder') {
                     subtype = 'object';
                 }
                 pimcore.helpers.openElement(record.data.id, record.data.type, subtype);

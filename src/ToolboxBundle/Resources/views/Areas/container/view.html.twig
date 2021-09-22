@@ -1,5 +1,4 @@
 {% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
-{{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-container {{ additionalClassesData|join(' ') }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
     {% include toolbox_area_path(areaId) with { 'containerClass' : pimcore_checkbox('full_width_container').isChecked() ? 'container-fluid' : 'container' } %}

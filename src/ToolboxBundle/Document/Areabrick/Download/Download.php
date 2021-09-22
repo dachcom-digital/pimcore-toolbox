@@ -4,6 +4,7 @@ namespace ToolboxBundle\Document\Areabrick\Download;
 
 use Pimcore\Db\ZendCompatibility\QueryBuilder;
 use Pimcore\Model\Document\Editable\Relations;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
@@ -27,12 +28,12 @@ class Download extends AbstractAreabrick
     /**
      * {@inheritdoc}
      */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
         /** @var Relations $downloadField */
-        $downloadField = $this->getDocumentTag($info->getDocument(), 'relations', 'downloads');
+        $downloadField = $this->getDocumentEditable($info->getDocument(), 'relations', 'downloads');
 
         $assets = [];
         if (!$downloadField->isEmpty()) {
@@ -46,9 +47,7 @@ class Download extends AbstractAreabrick
             }
         }
 
-        $info->getView()->getParameters()->add([
-            'downloads' => $assets
-        ]);
+        $info->setParam('downloads', $assets);
 
         return null;
     }

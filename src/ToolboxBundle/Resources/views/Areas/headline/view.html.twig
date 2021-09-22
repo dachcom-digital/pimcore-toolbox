@@ -1,5 +1,4 @@
 {% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
-{{ elementConfigBar|raw }}
 <div class="toolbox-element toolbox-headline {{ additionalClassesData|join(' ') }}">
     {{ wrap_macro.createWrapHead(elementThemeConfig) }}
     {% if anchorName is not empty %}

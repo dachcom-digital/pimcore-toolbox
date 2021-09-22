@@ -10,8 +10,7 @@ toolbox:
                 full_width_container:
                     type: checkbox
                     title: 'Fluid Container (Full Width)'
-                    config:
-                        reload: true
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

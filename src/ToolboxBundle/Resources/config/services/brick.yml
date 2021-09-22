@@ -6,8 +6,7 @@ services:
         public: true
 
     # toolbox service brick configuration builder
-    ToolboxBundle\Builder\BrickConfigBuilder:
-        shared: false
+    ToolboxBundle\Builder\BrickConfigBuilder: ~
 
     # base brick
     ToolboxBundle\Document\Areabrick\AbstractAreabrick:

@@ -2,217 +2,284 @@
 
 namespace ToolboxBundle\Builder;
 
+use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Checkbox;
-use Pimcore\Templating\Renderer\EditableRenderer;
 use Pimcore\Translation\Translator;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 use Twig\Environment;
 
 class BrickConfigBuilder
 {
-    /**
-     * @var Translator
-     */
-    protected $translator;
+    protected Translator $translator;
+    protected Environment $templating;
+    protected StoreProviderRegistryInterface $storeProvider;
 
-    /**
-     * @var EditableRenderer
-     */
-    protected $editableRenderer;
+    protected string $documentEditableId = '';
+    protected string $documentEditableName = '';
 
-    /**
-     * @var Environment
-     */
-    protected $templating;
-
-    /**
-     * @var string
-     */
-    protected $documentEditableId = '';
-
-    /**
-     * @var string
-     */
-    protected $documentEditableName = '';
-
-    /**
-     * @var \Pimcore\Model\Document\Editable\Area\Info null
-     */
-    protected $info = null;
-
-    /**
-     * @var array
-     */
-    protected $themeOptions = [];
-
-    /**
-     * @var array
-     */
-    protected $configElements = [];
-
-    /**
-     * @var array
-     */
-    protected $configParameter = [];
-
-    /**
-     * @var bool
-     */
-    protected $hasAdditionalClassStore = false;
-
-    /**
-     * @var null|string
-     */
-    protected $configWindowSize = null;
-
-    /**
-     * @var StoreProviderRegistryInterface
-     */
-    protected $storeProvider = null;
-
-    /**
-     * @param Translator                     $translator
-     * @param EditableRenderer               $editableRenderer
-     * @param Environment                    $templating
-     * @param StoreProviderRegistryInterface $storeProvider
-     */
     public function __construct(
         Translator $translator,
-        EditableRenderer $editableRenderer,
         Environment $templating,
         StoreProviderRegistryInterface $storeProvider
     ) {
         $this->translator = $translator;
-        $this->editableRenderer = $editableRenderer;
         $this->templating = $templating;
         $this->storeProvider = $storeProvider;
     }
 
-    /**
-     * @param string $documentEditableId
-     * @param string $documentEditableName
-     * @param Info   $info
-     * @param array  $configNode
-     * @param array  $themeOptions
-     *
-     * @return string
-     *
-     * @throws \Exception
-     */
-    public function buildElementConfig($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
+    public function buildDialogBoxConfiguration(?Info $info, array $configNode = [], array $themeOptions = []): EditableDialogBoxConfiguration
     {
-        $fieldSetArgs = $this->buildElementConfigArguments($documentEditableId, $documentEditableName, $info, $configNode, $themeOptions);
+        $config = new EditableDialogBoxConfiguration();
 
-        if (empty($fieldSetArgs)) {
-            return '';
-        }
+        //$this->themeOptions = $themeOptions;
 
-        return $this->templating->render('@Toolbox/Admin/AreaConfig/fieldSet.html.twig', $fieldSetArgs);
-    }
+        $configParameter = $configNode['config_parameter'] ?? [];
+        $configElements = $configNode['config_elements'] ?? [];
 
-    /**
-     * @param string $documentEditableId
-     * @param string $documentEditableName
-     * @param Info   $info
-     * @param array  $configNode
-     * @param array  $themeOptions
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function buildElementConfigArguments($documentEditableId, $documentEditableName, Info $info, $configNode = [], $themeOptions = [])
-    {
-        $this->reset();
+        $configWindowSize = $this->getConfigWindowSize($configParameter);
 
-        if ($info->getView()->get('editmode') === false) {
-            return [];
-        }
+        $config->setHeight($configWindowSize['height']);
+        $config->setWidth($configWindowSize['width']);
 
-        $this->documentEditableId = $documentEditableId;
-        $this->documentEditableName = $documentEditableName;
-        $this->info = $info;
-        $this->themeOptions = $themeOptions;
-        $this->configElements = isset($configNode['config_elements']) ? $configNode['config_elements'] : [];
-        $this->configParameter = isset($configNode['config_parameter']) ? $configNode['config_parameter'] : [];
-        $this->configWindowSize = $this->getConfigWindowSize();
+        // @todo!
+        $config->setReloadOnClose($configParameter['reload_on_close'] ?? false);
 
         $defaultFields = [];
         $acFields = [];
-        $configElements = $this->parseConfigElements();
+        $configElements = $this->parseConfigElements($info, $themeOptions, $configElements);
 
         foreach ($configElements as $configElement) {
-            if ($configElement['additional_config']['additional_classes_element'] === true) {
+            if ($configElement['additional_classes_element'] === true) {
                 $acFields[] = $configElement;
             } else {
                 $defaultFields[] = $configElement;
             }
         }
 
-        $fieldSetArgs = [
-            'config_elements'        => array_merge($defaultFields, $acFields),
-            'document_editable_name' => $this->translator->trans($this->documentEditableName, [], 'admin'),
-            'window_size'            => $this->configWindowSize,
-            'document'               => $info->getDocument(),
-            'brick_id'               => $info->getId()
+        $config->setItems(array_merge($defaultFields, $acFields));
+
+        return $config;
+    }
+
+    private function getConfigWindowSize(array $configParameter): array
+    {
+        $configWindowSize = $configParameter['window_size'] ?? null;
+
+        if (is_string($configWindowSize)) {
+            return [
+                'width'  => $configWindowSize === 'small' ? 600 : 800,
+                'height' => $configWindowSize === 'small' ? 400 : 600,
+            ];
+
+        }
+
+        if (is_array($configWindowSize)) {
+            return [
+                'width'  => $configWindowSize['width'],
+                'height' => $configWindowSize['height'],
+            ];
+        }
+
+        return [
+            'width'  => 550,
+            'height' => 370,
+        ];
+    }
+
+    private function parseConfigElements(?Info $info, array $themeOptions, array $configElements): array
+    {
+        $editableNodes = [];
+
+        if (empty($configElements)) {
+            return $editableNodes;
+        }
+
+        $acStoreProcessed = false;
+
+        foreach ($configElements as $configElementName => $elementData) {
+
+            $editableNode = $this->parseConfigElement($info, $configElementName, $elementData, $acStoreProcessed);
+
+            //if element need's a store and store is empty: skip field
+            if ($this->needStore($elementData['type']) && $this->hasValidStore($editableNode['config']) === false) {
+                continue;
+            }
+
+            $editableNodes[] = $editableNode;
+
+            $editableNodes = $this->checkColumnAdjusterField($info, $themeOptions, $configElementName, $editableNodes);
+
+            if ($elementData['type'] === 'additionalClasses') {
+                $acStoreProcessed = true;
+            }
+
+        }
+
+        return $editableNodes;
+    }
+
+    private function parseConfigElement(?Info $info, string $elementName, array $elementData, bool $acStoreProcessed): array
+    {
+        $editableConfig = $elementData['config'];
+        $editableType = $elementData['type'];
+
+        //set element config data
+        $parsedNode = $this->parseElementNode($elementName, $elementData, $acStoreProcessed);
+
+        //set width
+        if ($this->canHaveDynamicWidth($editableType)) {
+            $parsedNode['width'] = $parsedNode['width'] ?? '100%';
+        } else {
+            unset($parsedNode['width']);
+        }
+
+        //set height
+        if ($this->canHaveDynamicHeight($editableType)) {
+            $parsedNode['height'] = $parsedNode['height'] ?? 200;
+        } else {
+            unset($parsedNode['height']);
+        }
+
+        //set default
+        $parsedNode['config']['value'] = $this->getSelectedValue($info, $parsedNode, $editableConfig['default'] ?? null);
+
+        //check store
+        if ($this->needStore($editableType) && $this->hasValidStore($editableConfig)) {
+            $parsedNode['config']['store'] = $this->buildStore($editableType, $editableConfig);
+        }
+
+        return $parsedNode;
+    }
+
+    private function parseElementNode(string $configElementName, array $elementData, bool $acStoreProcessed): array
+    {
+        $elementNode = [
+            'type'                       => $elementData['type'],
+            'label'                      => isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : null,
+            'config'                     => $elementData['config'] ?? [],
+            'additional_classes_element' => false,
         ];
 
-        return $fieldSetArgs;
-    }
+        if ($elementData['type'] === 'additionalClasses') {
+            if ($acStoreProcessed === true) {
+                throw new \Exception(
+                    sprintf(
+                        'A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
+                        $this->documentEditableName,
+                        'additionalClasses',
+                        'additionalClassesChained'
+                    )
+                );
+            }
 
-    /**
-     * @return null|string
-     */
-    private function getConfigWindowSize()
-    {
-        $configWindowSize = isset($this->configParameter['window_size']) ? (string) $this->configParameter['window_size'] : null;
+            $elementNode['type'] = 'select';
+            $elementNode['label'] = isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : 'Additional';
+            $elementNode['additional_classes_element'] = true;
+            $elementName = 'add_classes';
+        } elseif ($elementData['type'] === 'additionalClassesChained') {
+            if ($acStoreProcessed === false) {
+                throw new \Exception(
+                    sprintf(
+                        'You need to add a element of type "%s" before adding a "%s" element.',
+                        'additionalClasses',
+                        'additionalClassesChained'
+                    )
+                );
+            } elseif (!str_starts_with($configElementName, 'additional_classes_chain_')) {
+                throw new \Exception(
+                    sprintf(
+                        'Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
+                        'additional_classes_chain_',
+                        $configElementName
+                    )
+                );
+            }
 
-        return !is_null($configWindowSize) ? $configWindowSize : 'small';
-    }
+            $chainedElementName = explode('_', $configElementName);
+            $chainedIncrementor = end($chainedElementName);
+            if (!is_numeric($chainedIncrementor)) {
+                throw new \Exception('Chained AC element name must end with an numeric. "' . $chainedIncrementor . '" given.');
+            }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function needStore($type)
-    {
-        return in_array($type, ['select', 'multiselect', 'additionalClasses', 'additionalClassesChained']);
-    }
-
-    /**
-     * @param array $parsedConfig
-     *
-     * @return bool
-     */
-    private function hasValidStore($parsedConfig)
-    {
-        if (isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0) {
-            return true;
+            $elementNode['type'] = 'select';
+            $elementNode['label'] = isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : 'Additional';
+            $elementNode['additional_classes_element'] = true;
+            $elementName = 'add_cclasses_' . $chainedIncrementor;
+        } else {
+            $elementName = $configElementName;
         }
 
-        if (isset($parsedConfig['store_provider']) && $this->storeProvider->has($parsedConfig['store_provider'])) {
-            return true;
+        //set config element name
+        $elementNode['name'] = $elementName;
+
+        //translate title
+        if (!empty($elementData['label'])) {
+            $elementNode['label'] = $this->translator->trans($elementData['label'], [], 'admin');
         }
 
-        return false;
+        //translate description
+        if (!empty($elementData['description'])) {
+            $elementNode['description'] = $this->translator->trans($elementData['description'], [], 'admin');
+        }
+
+        return $elementNode;
     }
 
-    /**
-     * @param string $type
-     * @param array  $config
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function buildStore($type, $config)
+    private function getSelectedValue(?Info $info, array $config, mixed $defaultConfigValue): mixed
     {
-        $dataConfig = $config;
+        if (!$info instanceof Info) {
+            return $config;
+        }
 
-        unset($dataConfig['store'], $dataConfig['store_provider']);
+        $el = $info->getDocumentElement($config['name'], $config['type']);
 
+        if ($el === null) {
+            return $config;
+        }
+
+        // force default (only if it returns false)
+        // checkboxes may return an empty string and are impossible to track into default mode
+        if (!empty($defaultConfigValue) && (method_exists($el, 'isEmpty') && $el->isEmpty() === true)) {
+            $el->setDataFromResource($defaultConfigValue);
+        }
+
+        $value = $el instanceof Checkbox ? $el->isChecked() : $el->getData();
+
+        return !empty($value) ? $value : $defaultConfigValue;
+    }
+
+    private function checkColumnAdjusterField(?Info $info, array $themeOptions, string $configElementName, array $editableNodes): array
+    {
+        if (!$info instanceof Info) {
+            return $editableNodes;
+        }
+
+        if ($info->getId() !== 'columns') {
+            return $editableNodes;
+        }
+
+        if ($configElementName !== 'type') {
+            return $editableNodes;
+        }
+
+        if (empty($themeOptions['grid']['breakpoints'])) {
+            return $editableNodes;
+        }
+
+        $editableNodes[] = [
+            'type'                       => 'columnadjuster',
+            'label'                      => null,
+            'config'                     => [],
+            'name'                       => 'columnadjuster',
+            'additional_classes_element' => false,
+        ];
+
+        return $editableNodes;
+    }
+
+    private function buildStore($type, $config): array
+    {
         $storeValues = [];
         if (isset($config['store']) && !is_null($config['store'])) {
             $storeValues = $config['store'];
@@ -233,17 +300,28 @@ class BrickConfigBuilder
             $store[] = [$k, $this->translator->trans($v, [], 'admin')];
         }
 
-        $dataConfig['store'] = $store;
-
-        return $dataConfig;
+        return $store;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function canHaveDynamicWidth($type)
+    private function hasValidStore($parsedConfig): bool
+    {
+        if (isset($parsedConfig['store']) && is_array($parsedConfig['store']) && count($parsedConfig['store']) > 0) {
+            return true;
+        }
+
+        if (isset($parsedConfig['store_provider']) && $this->storeProvider->has($parsedConfig['store_provider'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function needStore($type): bool
+    {
+        return in_array($type, ['select', 'multiselect', 'additionalClasses', 'additionalClassesChained']);
+    }
+
+    private function canHaveDynamicWidth($type): bool
     {
         return in_array(
             $type,
@@ -272,12 +350,7 @@ class BrickConfigBuilder
         );
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function canHaveDynamicHeight($type)
+    private function canHaveDynamicHeight($type): bool
     {
         return in_array($type, [
             'multihref',
@@ -293,377 +366,5 @@ class BrickConfigBuilder
             'wysiwyg',
             'parallaximage'
         ]);
-    }
-
-    /**
-     * Reset class for next element to build.
-     */
-    private function reset()
-    {
-        $this->documentEditableId = '';
-        $this->documentEditableName = '';
-        $this->info = null;
-        $this->themeOptions = [];
-        $this->configElements = [];
-        $this->configParameter = [];
-        $this->hasAdditionalClassStore = false;
-        $this->configWindowSize = null;
-    }
-
-    /**
-     * @param string $type
-     * @param array  $config
-     * @param array  $additionalConfig
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getTagConfig($type, $config, $additionalConfig)
-    {
-        if (is_null($config)) {
-            return [];
-        }
-
-        $parsedConfig = $config;
-
-        //override reload
-        $parsedConfig['reload'] = false;
-
-        //set width
-        if ($this->canHaveDynamicWidth($type)) {
-            $parsedConfig['width'] = isset($parsedConfig['width'])
-                ? $parsedConfig['width']
-                : (isset($additionalConfig['col_class']) ? '100%' : ($this->configWindowSize === 'large' ? 760 : 560));
-        } else {
-            unset($parsedConfig['width']);
-        }
-
-        //set height
-        if ($this->canHaveDynamicHeight($type)) {
-            $parsedConfig['height'] = isset($parsedConfig['height']) ? $parsedConfig['height'] : 200;
-        } else {
-            unset($parsedConfig['height']);
-        }
-
-        //check store
-        if ($this->needStore($type) && $this->hasValidStore($parsedConfig)) {
-            $parsedConfig = $this->buildStore($type, $parsedConfig);
-        }
-
-        return $parsedConfig;
-    }
-
-    /**
-     * types: type, title, description, col_class, conditions.
-     *
-     * @param string $configElementName
-     * @param array  $rawConfig
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function getAdditionalConfig($configElementName, $rawConfig)
-    {
-        if (is_null($rawConfig)) {
-            return [];
-        }
-
-        $config = $rawConfig;
-        $defaultConfigValue = isset($config['config']['default']) ? $config['config']['default'] : null;
-
-        //remove tag area config.
-        unset($config['config']);
-
-        //set element config data
-        $parsedConfig = $this->parseElementConfig($configElementName, $config);
-
-        $parsedConfig['edit_reload'] = isset($rawConfig['config']['reload']) ? $rawConfig['config']['reload'] === true : true;
-
-        //set default
-        $parsedConfig = $this->getSelectedValue($parsedConfig, $defaultConfigValue);
-
-        //set conditions to empty array.
-        if (!isset($parsedConfig['conditions'])) {
-            $parsedConfig['conditions'] = [];
-        } elseif (!is_array($parsedConfig['conditions'])) {
-            throw new \Exception('conditions configuration needs to be an array');
-        }
-
-        return $parsedConfig;
-    }
-
-    /**
-     * @param array $config
-     * @param mixed $defaultConfigValue
-     *
-     * @return mixed
-     */
-    private function getSelectedValue($config, $defaultConfigValue)
-    {
-        /** @var \Pimcore\Model\Document\Editable\TagInterface $el */
-        $el = $this->editableRenderer->getEditable($this->info->getDocument(), $config['type'], $config['name']);
-
-        // force default (only if it returns false)
-        // checkboxes may return an empty string and are impossible to track into default mode
-        if (!empty($defaultConfigValue) && (method_exists($el, 'isEmpty') && $el->isEmpty() === true)) {
-            $el->setDataFromResource($defaultConfigValue);
-        }
-
-        $value = null;
-        if ($el instanceof Checkbox) {
-            $value = $el->isChecked();
-        } else {
-            $value = $el->getData();
-        }
-
-        $config['selected_value'] = !empty($value) ? $value : $defaultConfigValue;
-
-        return $config;
-    }
-
-    /**
-     * @param string $configElementName
-     * @param array  $elConf
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function parseElementConfig($configElementName, $elConf)
-    {
-        $elConf['additional_classes_element'] = false;
-
-        if ($elConf['type'] === 'additionalClasses') {
-            if ($this->hasAdditionalClassStore === true) {
-                throw new \Exception(
-                    sprintf(
-                        'A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
-                        $this->documentEditableName,
-                        'additionalClasses',
-                        'additionalClassesChained'
-                    )
-                );
-            }
-
-            $elConf['type'] = 'select';
-            $elConf['title'] = isset($elConf['title']) && !empty($elConf['title']) ? $elConf['title'] : 'Additional';
-            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] : 't-col-third';
-            $elConf['additional_classes_element'] = true;
-            $elementName = 'add_classes';
-            $this->hasAdditionalClassStore = true;
-        } elseif ($elConf['type'] === 'additionalClassesChained') {
-            if ($this->hasAdditionalClassStore === false) {
-                throw new \Exception(
-                    sprintf(
-                        'You need to add a element of type "%s" before adding a "%s" element.',
-                        'additionalClasses',
-                        'additionalClassesChained'
-                    )
-                );
-            } elseif (substr($configElementName, 0, 25) !== 'additional_classes_chain_') {
-                throw new \Exception(
-                    sprintf(
-                        'Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',
-                        'additional_classes_chain_',
-                        $configElementName
-                    )
-                );
-            }
-
-            $chainedElementName = explode('_', $configElementName);
-            $chainedIncrementor = end($chainedElementName);
-            if (!is_numeric($chainedIncrementor)) {
-                throw new \Exception('Chained AC element name must end with an numeric. "' . $chainedIncrementor . '" given.');
-            }
-
-            $elConf['type'] = 'select';
-            $elConf['title'] = isset($elConf['title']) && !empty($elConf['title']) ? $elConf['title'] : 'Additional';
-            $elConf['col_class'] = isset($elConf['col_class']) && !empty($elConf['col_class']) ? $elConf['col_class'] : 't-col-third';
-            $elConf['additional_classes_element'] = true;
-            $elementName = 'add_cclasses_' . $chainedIncrementor;
-        } else {
-            $elementName = $configElementName;
-        }
-
-        //set config element name
-        $elConf['name'] = $elementName;
-
-        //set editmode hidden to false on initial state
-        $elConf['editmode_hidden'] = false;
-
-        //translate title
-        if (!empty($elConf['title'])) {
-            $elConf['title'] = $this->translator->trans($elConf['title'], [], 'admin');
-        }
-
-        //translate description
-        if (!empty($elConf['description'])) {
-            $elConf['description'] = $this->translator->trans($elConf['description'], [], 'admin');
-        }
-
-        return $elConf;
-    }
-
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function parseConfigElements()
-    {
-        $parsedConfig = [];
-        if (empty($this->configElements)) {
-            return $parsedConfig;
-        }
-
-        foreach ($this->configElements as $configElementName => $c) {
-            $tagConfig = $c['config'];
-            $parsedAdditionalConfig = $this->getAdditionalConfig($configElementName, $c);
-            $parsedTagConfig = $this->getTagConfig($c['type'], $tagConfig, $parsedAdditionalConfig);
-
-            //if element need's a store and store is empty: skip field
-            if ($this->needStore($c['type']) && $this->hasValidStore($parsedTagConfig) === false) {
-                continue;
-            }
-
-            $parsedConfig[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $parsedAdditionalConfig];
-            $parsedConfig = $this->checkDependingSystemField($configElementName, $parsedConfig);
-        }
-
-        //condition needs to applied after all elements has been initialized!
-        return $this->checkCondition($parsedConfig);
-    }
-
-    /**
-     * Add possible dynamic fields based on current field (like the column adjuster after the "type" field in field "columns".
-     *
-     * @param string $configElementName
-     * @param array  $configFields
-     *
-     * @return array
-     */
-    private function checkDependingSystemField($configElementName, $configFields)
-    {
-        // add column adjuster (only if breakpoints are defined!
-        if ($this->documentEditableId === 'columns' && $configElementName === 'type') {
-            if (empty($this->themeOptions['grid']['breakpoints'])) {
-                return $configFields;
-            }
-
-            $parsedTagConfig = ['reload' => false];
-            $additionalConfig = [
-                'type'                       => 'columnadjuster',
-                'editmode_hidden'            => false,
-                'col_class'                  => '',
-                'name'                       => 'columnadjuster',
-                'title'                      => null,
-                'edit_reload'                => false,
-                'additional_classes_element' => false
-            ];
-
-            $configFields[] = ['tag_config' => $parsedTagConfig, 'additional_config' => $additionalConfig];
-        }
-
-        return $configFields;
-    }
-
-    /**
-     * @param array $configElements
-     *
-     * @return array
-     */
-    private function checkCondition($configElements)
-    {
-        $filteredData = [];
-
-        if (empty($configElements)) {
-            return $configElements;
-        }
-
-        foreach ($configElements as $configElementName => $el) {
-            //no conditions? add it!
-            if (empty($el['additional_config']['conditions'])) {
-                $filteredData[] = $el;
-
-                continue;
-            }
-
-            $orConditions = $el['additional_config']['conditions'];
-
-            $orGroup = [];
-            $orState = false;
-
-            foreach ($orConditions as $andConditions) {
-                $andGroup = [];
-                $andState = true;
-
-                foreach ($andConditions as $andConditionKey => $andConditionValue) {
-                    $andGroup[] = $this->getElementState($andConditionKey, $configElements) == $andConditionValue;
-                }
-
-                if (in_array(false, $andGroup, true)) {
-                    $andState = false;
-                }
-
-                $orGroup[] = $andState;
-            }
-
-            if (in_array(true, $orGroup, true)) {
-                $orState = true;
-            }
-
-            if ($orState === true) {
-                $filteredData[] = $el;
-            } else {
-                //we need to reset value, if possible!
-                $filteredData[] = $this->resetElement($el);
-            }
-        }
-
-        return $filteredData;
-    }
-
-    /**
-     * @param string $name
-     * @param array  $elements
-     *
-     * @return null|string
-     */
-    private function getElementState($name = '', $elements = [])
-    {
-        if (empty($elements)) {
-            return null;
-        }
-
-        foreach ($elements as $el) {
-            if ($el['additional_config']['name'] === $name) {
-                return $el['additional_config']['selected_value'];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param array $el
-     *
-     * @return mixed
-     */
-    private function resetElement($el)
-    {
-        $value = !empty($el['tag_config']['default']) ? $el['tag_config']['default'] : null;
-
-        $this->editableRenderer->getEditable(
-            $this->info->getDocument(),
-            $el['additional_config']['type'],
-            $el['additional_config']['name']
-        )->setDataFromResource($value);
-
-        $el['additional_config']['selected_value'] = $value;
-        $el['additional_config']['editmode_hidden'] = true;
-
-        return $el;
     }
 }

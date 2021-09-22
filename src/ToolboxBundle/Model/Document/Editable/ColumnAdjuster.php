@@ -1,10 +1,10 @@
 <?php
 
-namespace ToolboxBundle\Model\Document\Tag;
+namespace ToolboxBundle\Model\Document\Editable;
 
 use Pimcore\Model\Document;
 
-class ColumnAdjuster extends Document\Tag
+class ColumnAdjuster extends Document\Editable
 {
     /**
      * Contains the data.
@@ -26,7 +26,7 @@ class ColumnAdjuster extends Document\Tag
     /**
      * @return mixed
      *
-     * @see Document\Tag\TagInterface::getData
+     * @see Document\Editable\TagInterface::getData
      */
     public function getData()
     {
@@ -39,18 +39,6 @@ class ColumnAdjuster extends Document\Tag
     public function frontend()
     {
         return null;
-    }
-
-    /**
-     * @return string
-     *
-     * @see Document\Tag\TagInterface::admin
-     */
-    public function admin()
-    {
-        $html = parent::admin();
-
-        return $html;
     }
 
     /**
@@ -82,7 +70,7 @@ class ColumnAdjuster extends Document\Tag
      *
      * @return $this
      *
-     * @see Document\Tag\TagInterface::setDataFromEditmode
+     * @see Document\Editable\EditableInterface::setDataFromEditmode
      */
     public function setDataFromEditmode($data)
     {

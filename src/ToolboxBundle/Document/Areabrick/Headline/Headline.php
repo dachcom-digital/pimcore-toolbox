@@ -2,31 +2,29 @@
 
 namespace ToolboxBundle\Document\Areabrick\Headline;
 
+use Pimcore\File;
+use Pimcore\Model\Document\Editable\Input;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
 
 class Headline extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
         $anchorName = null;
-        /** @var \Pimcore\Model\Document\Editable\Input $anchorNameElement */
-        $anchorNameElement = $this->getDocumentTag($info->getDocument(), 'input', 'anchor_name');
+        /** @var Input $anchorNameElement */
+        $anchorNameElement = $this->getDocumentEditable($info->getDocument(), 'input', 'anchor_name');
 
         if (!$anchorNameElement->isEmpty()) {
-            $anchorName = \Pimcore\File::getValidFilename($anchorNameElement->getData());
+            $anchorName = File::getValidFilename($anchorNameElement->getData());
         }
 
-        $info->getView()->getParameters()->add(['anchorName' => $anchorName]);
+        $info->setParam('anchorName', $anchorName);
+
+        return null;
     }
 
     public function getName()

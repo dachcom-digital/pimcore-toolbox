@@ -4,29 +4,22 @@ namespace ToolboxBundle\Document\Areabrick\IFrame;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use Pimcore\Model\Document\Editable\Area\Info;
 
 class IFrame extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
-        $view = $info->getView();
-        $iFrameUrl = $this->getDocumentTag($info->getDocument(), 'input', 'url')->getData();
-        $initialHeight = $this->getDocumentTag($info->getDocument(), 'numeric', 'iheight')->getData();
+        $iFrameUrl = $this->getDocumentEditable($info->getDocument(), 'input', 'url')->getData();
+        $initialHeight = $this->getDocumentEditable($info->getDocument(), 'numeric', 'iheight')->getData();
 
         $isValid = true;
         $errorMessage = null;
-        if (!empty($iFrameUrl) && $view->get('editmode') === true) {
+        if (!empty($iFrameUrl) && $info->getParam('editmode') === true) {
             $response = $this->checkIfUrlIsEmbeddable($iFrameUrl);
             if ($response !== true) {
                 $isValid = false;
@@ -34,12 +27,14 @@ class IFrame extends AbstractAreabrick
             }
         }
 
-        $view->getParameters()->add([
+        $info->setParams(array_merge($info->getParams(), [
             'isValid'       => $isValid,
             'errorMessage'  => $errorMessage,
             'initialHeight' => is_numeric($initialHeight) ? (int) $initialHeight : null,
             'iFrameUrl'     => $iFrameUrl
-        ]);
+        ]));
+
+        return null;
     }
 
     /**
