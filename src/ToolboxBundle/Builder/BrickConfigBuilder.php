@@ -15,9 +15,6 @@ class BrickConfigBuilder
     protected Environment $templating;
     protected StoreProviderRegistryInterface $storeProvider;
 
-    protected string $documentEditableId = '';
-    protected string $documentEditableName = '';
-
     public function __construct(
         Translator $translator,
         Environment $templating,
@@ -28,11 +25,9 @@ class BrickConfigBuilder
         $this->storeProvider = $storeProvider;
     }
 
-    public function buildDialogBoxConfiguration(?Info $info, array $configNode = [], array $themeOptions = []): EditableDialogBoxConfiguration
+    public function buildDialogBoxConfiguration(?Info $info, string $brickId, array $configNode = [], array $themeOptions = []): EditableDialogBoxConfiguration
     {
         $config = new EditableDialogBoxConfiguration();
-
-        //$this->themeOptions = $themeOptions;
 
         $configParameter = $configNode['config_parameter'] ?? [];
         $configElements = $configNode['config_elements'] ?? [];
@@ -42,12 +37,11 @@ class BrickConfigBuilder
         $config->setHeight($configWindowSize['height']);
         $config->setWidth($configWindowSize['width']);
 
-        // @todo!
         $config->setReloadOnClose($configParameter['reload_on_close'] ?? false);
 
         $defaultFields = [];
         $acFields = [];
-        $configElements = $this->parseConfigElements($info, $themeOptions, $configElements);
+        $configElements = $this->parseConfigElements($info, $brickId, $themeOptions, $configElements);
 
         foreach ($configElements as $configElement) {
             if ($configElement['additional_classes_element'] === true) {
@@ -87,7 +81,7 @@ class BrickConfigBuilder
         ];
     }
 
-    private function parseConfigElements(?Info $info, array $themeOptions, array $configElements): array
+    private function parseConfigElements(?Info $info, string $brickId, array $themeOptions, array $configElements): array
     {
         $editableNodes = [];
 
@@ -108,7 +102,7 @@ class BrickConfigBuilder
 
             $editableNodes[] = $editableNode;
 
-            $editableNodes = $this->checkColumnAdjusterField($info, $themeOptions, $configElementName, $editableNodes);
+            $editableNodes = $this->checkColumnAdjusterField($brickId, $themeOptions, $configElementName, $editableNodes);
 
             if ($elementData['type'] === 'additionalClasses') {
                 $acStoreProcessed = true;
@@ -166,7 +160,7 @@ class BrickConfigBuilder
                 throw new \Exception(
                     sprintf(
                         'A element of type "additionalClasses" in element "%s" already has been defined. You can only add one field of type "%s" per area. Use "%s" instead.',
-                        $this->documentEditableName,
+                        $configElementName,
                         'additionalClasses',
                         'additionalClassesChained'
                     )
@@ -249,13 +243,9 @@ class BrickConfigBuilder
         return !empty($value) ? $value : $defaultConfigValue;
     }
 
-    private function checkColumnAdjusterField(?Info $info, array $themeOptions, string $configElementName, array $editableNodes): array
+    private function checkColumnAdjusterField(string $brickId, array $themeOptions, string $configElementName, array $editableNodes): array
     {
-        if (!$info instanceof Info) {
-            return $editableNodes;
-        }
-
-        if ($info->getId() !== 'columns') {
+        if ($brickId !== 'columns') {
             return $editableNodes;
         }
 
@@ -289,7 +279,7 @@ class BrickConfigBuilder
         }
 
         if (count($storeValues) === 0) {
-            throw new \Exception($type . ' (' . $this->documentEditableId . ') has no valid configured store');
+            throw new \Exception($type . ' has no valid configured store');
         }
 
         $store = [];

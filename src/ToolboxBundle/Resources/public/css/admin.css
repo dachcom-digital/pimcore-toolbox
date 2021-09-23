@@ -27,6 +27,10 @@
     padding: 10px;
 }
 
+.toolbox-columns .toolbox-column .pimcore_area_entry:first-child .pimcore_area_buttons {
+    margin-top: 0;
+}
+
 /**
 
     Toolbox Columns Adjuster
@@ -405,24 +409,26 @@
     Toolbox .toolbox-element-window Overlay Defaults
 
 **/
-.alert-info {
+.tb-alert-info {
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    background-color: #d9edf7;
-    color: #31708f;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #bce8f1;
+    background-color: #dcd1ea;
+    color: #6428b4;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #6428b4;
     border-radius: 0;
+    font-size: 90%;
 }
 
-.alert-danger {
+.tb-alert-danger {
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     background-color: #f2dede;
     color: #a94442;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ebccd1;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #a94442;
     border-radius: 0;
+    font-size: 90%;
 }
 
 /** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/
@@ -499,7 +505,22 @@ body > .single-teaser img {
     overflow: hidden !important;
 }
 
+/**
+
+    Toolbox Edit Button
+
+**/
+
 .pimcore_area_buttons {
+
+    position: relative;
+    top: 0;
+    margin-top: 20px;
+    left: 0;
+    width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+
     opacity: 0.3;
     -webkit-transition: opacity 0.3s ease;
     -moz-transition: opacity 0.3s ease;
@@ -507,10 +528,80 @@ body > .single-teaser img {
     transition: opacity 0.3s ease;
 }
 
+.pimcore_area_buttons.top {
+    top: 15px !important;
+}
+
 .pimcore_block_entry:hover > div.pimcore_area_buttons {
     opacity: 1;
 }
 
-.toolbox-columns .toolbox-column .pimcore_area_entry:first-child .pimcore_area_buttons {
-    margin-top: 0;
+.pimcore_area_buttons .pimcore_block_label {
+    display: none !important;
+}
+
+/**
+
+    Toolbox Edit Button
+
+**/
+
+.toolbox-element-edit-button {
+    position: relative;
+    display: block;
+    padding: 0;
+    opacity: .8;
+    text-align: left;
+    -webkit-transition: opacity .3s ease;
+    transition: opacity .3s ease;
+
+    background: transparent;
+    border-bottom: 2px solid #6428b4;
+    margin-bottom: 5px;
+}
+
+.toolbox-element-edit-button:before {
+    content: attr(data-title);
+    position: absolute;
+    right: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    color: #6428b4;
+    line-height: 1.5;
+    top: 9px;
+}
+
+.toolbox-element-edit-button:hover {
+    opacity: 1;
+}
+
+.toolbox-element-edit-button.no-interaction {
+    height: 26px;
+}
+
+.toolbox-element-edit-button .x-btn-default-small {
+    border-color: transparent;
+    background: #6428b4;
+    padding: 0 10px;
+    margin: 3px 3px 3px 0;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    color: white;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    font: 400 11px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}
+
+.pimcore_area_buttons .pimcore_area_buttons_inner {
+    background: transparent;
+}
+
+.pimcore_area_buttons::after {
+    content: none;
 }

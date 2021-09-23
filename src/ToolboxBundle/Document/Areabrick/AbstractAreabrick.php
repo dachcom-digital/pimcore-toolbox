@@ -66,7 +66,7 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
         $themeOptions = $this->getConfigManager()->getConfig('theme');
 
-        return $this->brickConfigBuilder->buildDialogBoxConfiguration($info, $configNode, $themeOptions);
+        return $this->brickConfigBuilder->buildDialogBoxConfiguration($info, $this->getId(), $configNode, $themeOptions);
     }
 
     /**

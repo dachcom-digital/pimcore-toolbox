@@ -278,7 +278,6 @@ pimcore.document.editables.parallaximage = Class.create(pimcore.document.editabl
         }
 
         return false;
-
     },
 
     onRowContextmenu: function (grid, record, tr, rowIndex, e, eOpts) {

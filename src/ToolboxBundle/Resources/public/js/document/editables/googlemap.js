@@ -32,6 +32,8 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
     render: function () {
 
+        var buttonHolder, mapEditButton;
+
         if (typeof google === 'undefined') {
             return;
         }
@@ -42,7 +44,8 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
             display: 'inline'
         });
 
-        var mapEditButton = new Ext.Button({
+        buttonHolder = Ext.get(this.id).up('.toolbox-google-map').prev('.toolbox-element-edit-button');
+        mapEditButton = new Ext.Button({
             iconCls: 'pimcore_icon_geopoint',
             cls: 'googlemap_edit_locations_button',
             text: t('locations'),
@@ -51,7 +54,7 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
             }
         });
 
-        mapEditButton.render(element.insertHtml("afterBegin", '<div class="pimcore_google_map_edit_button"></div>'));
+        mapEditButton.render(buttonHolder);
     },
 
     openEditor: function () {

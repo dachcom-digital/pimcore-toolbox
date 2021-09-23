@@ -88,7 +88,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
         checkInitState = function () {
             //there is only 1 column: we don't need a column adjuster...
-            if (this.currentColumnSelection.split('_').length === 2) {
+            if (this.currentColumnSelection === null || this.currentColumnSelection.split('_').length === 2) {
                 this.data = false;
                 this.gridEditButton.setDisabled(true);
                 this.statusButton.setValue(false);

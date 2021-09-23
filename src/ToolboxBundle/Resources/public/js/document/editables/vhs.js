@@ -11,11 +11,13 @@ pimcore.document.editables.vhs = Class.create(pimcore.document.editables.video, 
 
     render: function () {
 
+        var element, emptyContainer, buttonHolder, videoEditButton;
+
         this.setupWrapper();
 
-        var element = Ext.get('pimcore_video_' + this.name),
-            emptyContainer = element.query('.pimcore_editable_video_empty')[0],
-            videoEditbutton = new Ext.Button({
+        element = Ext.get('pimcore_video_' + this.name);
+        emptyContainer = element.query('.pimcore_editable_video_empty')[0];
+        videoEditButton = new Ext.Button({
                 iconCls: 'pimcore_icon_video',
                 cls: 'pimcore_edit_link_button',
                 text: t('settings'),
@@ -24,7 +26,9 @@ pimcore.document.editables.vhs = Class.create(pimcore.document.editables.video, 
                 }
             });
 
-        videoEditbutton.render(element.insertHtml("afterBegin", '<div class="pimcore_video_edit_button"></div>'));
+        buttonHolder = Ext.get(this.id).up('.toolbox-video').prev('.toolbox-element-edit-button');
+        videoEditButton.render(buttonHolder);
+
         if (this.inherited) {
             button.hide();
         }

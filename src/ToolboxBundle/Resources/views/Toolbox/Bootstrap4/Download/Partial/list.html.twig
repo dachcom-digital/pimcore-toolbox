@@ -1,13 +1,15 @@
-{% if downloads is iterable %}
+{% if downloads is iterable and downloads|length > 0 %}
     <div class="download-list{{ showPreviewImages ? ' show-image-preview' : '' }}">
         <ul class="list-unstyled">
             {% for download in downloads %}
                 {% include toolbox_area_path(areaId, '/Partial/item') with {
-                    'download': download,
-                    'showPreviewImages' : showPreviewImages,
-                    'showFileInfo' : showFileInfo,
+                    download: download,
+                    showPreviewImages : showPreviewImages,
+                    showFileInfo : showFileInfo,
                 } %}
             {% endfor %}
         </ul>
     </div>
+{% elseif editmode == true %}
+    <div class="tb-alert-info">No downloads defined yet.</div>
 {% endif %}
