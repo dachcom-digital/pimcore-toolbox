@@ -132,7 +132,7 @@ class ToolboxContextResolver implements ContextResolverInterface
 
     public function getCurrentContextIdentifier()
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
 
         $site = null;
 
