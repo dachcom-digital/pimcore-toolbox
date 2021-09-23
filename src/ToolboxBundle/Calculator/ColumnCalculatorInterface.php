@@ -6,26 +6,15 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 
 interface ColumnCalculatorInterface
 {
-    /**
-     * @param ConfigManagerInterface $configManager
-     *
-     * @return mixed
-     */
-    public function setConfigManager(ConfigManagerInterface $configManager);
+    public function setConfigManager(ConfigManagerInterface $configManager): self;
 
     /**
-     * @param string     $value
-     * @param null|array $customColumnConfiguration
-     *
-     * @return array
+     * @throws \Exception
      */
-    public function calculateColumns($value, $customColumnConfiguration = null);
+    public function calculateColumns(?string $value, ?array $customColumnConfiguration = null): array;
 
     /**
-     * @param string     $value
-     * @param null|array $customColumnConfiguration
-     *
-     * @return mixed
+     * @throws \Exception
      */
-    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null);
+    public function getColumnInfoForAdjuster(?string $value, ?array $customColumnConfiguration = null): bool|array;
 }

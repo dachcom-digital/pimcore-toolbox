@@ -12,10 +12,8 @@ class SlideColumnCalculator implements SlideColumnCalculatorInterface
      *
      * @return string
      */
-    public function calculateSlideColumnClasses($columnType, $columnConfiguration): string
+    public function calculateSlideColumnClasses(int $columnType, array $columnConfiguration): string
     {
-        $columnType = (int) $columnType;
-
         $systemClasses = [
             2 => 'uk-child-width-1-2@s uk-child-width-1-1',
             3 => 'uk-child-width-1-3@m uk-child-width-1-2@s uk-child-width-1-1',
