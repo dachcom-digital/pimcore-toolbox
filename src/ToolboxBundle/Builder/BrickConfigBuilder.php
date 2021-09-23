@@ -150,7 +150,9 @@ class BrickConfigBuilder
     {
         $elementNode = [
             'type'                       => $elementData['type'],
+            'name'                       => $configElementName,
             'label'                      => isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : null,
+            'description'                => isset($elementData['description']) && !empty($elementData['description']) ? $elementData['description'] : null,
             'config'                     => $elementData['config'] ?? [],
             'additional_classes_element' => false,
         ];
@@ -170,7 +172,7 @@ class BrickConfigBuilder
             $elementNode['type'] = 'select';
             $elementNode['label'] = isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : 'Additional';
             $elementNode['additional_classes_element'] = true;
-            $elementName = 'add_classes';
+            $elementNode['name'] = 'add_classes';
         } elseif ($elementData['type'] === 'additionalClassesChained') {
             if ($acStoreProcessed === false) {
                 throw new \Exception(
@@ -199,22 +201,17 @@ class BrickConfigBuilder
             $elementNode['type'] = 'select';
             $elementNode['label'] = isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : 'Additional';
             $elementNode['additional_classes_element'] = true;
-            $elementName = 'add_cclasses_' . $chainedIncrementor;
-        } else {
-            $elementName = $configElementName;
+            $elementNode['name'] = 'add_cclasses_' . $chainedIncrementor;
         }
 
-        //set config element name
-        $elementNode['name'] = $elementName;
-
-        //translate title
-        if (!empty($elementData['label'])) {
-            $elementNode['label'] = $this->translator->trans($elementData['label'], [], 'admin');
+        // translate title
+        if (!empty($elementNode['label'])) {
+            $elementNode['label'] = $this->translator->trans($elementNode['label'], [], 'admin');
         }
 
-        //translate description
-        if (!empty($elementData['description'])) {
-            $elementNode['description'] = $this->translator->trans($elementData['description'], [], 'admin');
+        // translate description
+        if (!empty($elementNode['description'])) {
+            $elementNode['description'] = $this->translator->trans($elementNode['description'], [], 'admin');
         }
 
         return $elementNode;
