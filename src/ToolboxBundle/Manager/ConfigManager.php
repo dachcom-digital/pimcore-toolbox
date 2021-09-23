@@ -127,7 +127,7 @@ class ConfigManager implements ConfigManagerInterface
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
 
-        return $this->config[$this->areaNamespace][$areaName];
+        return $this->config[$this->areaNamespace][$areaName] ?? [];
     }
 
     /**

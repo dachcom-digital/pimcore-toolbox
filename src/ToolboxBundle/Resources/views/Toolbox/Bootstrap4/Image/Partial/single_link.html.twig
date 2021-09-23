@@ -1,9 +1,0 @@
-{% if editmode %}
-    {{ pimcore_image('ci') }}
-{% else %}
-    {% set link_element = pimcore_link('image_link') %}
-    {% set link_element_data = link_element.data %}
-    <a href="{{ link_element.href }}" target="{{ link_element_data.target is defined ? link_element.target : '' }}">
-        {% include toolbox_area_path(areaId, '/Partial/single') with { 'class' : class } %}
-    </a>
-{% endif %}

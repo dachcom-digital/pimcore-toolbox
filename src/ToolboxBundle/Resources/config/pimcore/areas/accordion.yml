@@ -6,6 +6,8 @@ services:
 toolbox:
     areas:
         accordion:
+            config_parameter:
+                reload_on_close: true
             config_elements:
                 type:
                     type: select

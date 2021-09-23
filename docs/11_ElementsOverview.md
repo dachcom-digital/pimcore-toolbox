@@ -269,7 +269,7 @@ toolbox:
 There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
 
 ### Route Link Renderer
-There is a macro in `views/Macro/mapLink.html.twig` (used in `views/Theme/GoogleMap/infoWindow.html.twig`) which will render the map route link:
+There is a macro in `views/Macro/mapLink.html.twig` (used in `views/[THEME NAME]/google-map/info-window.html.twig`) which will render the map route link:
 
 ```twig
 {# default #}

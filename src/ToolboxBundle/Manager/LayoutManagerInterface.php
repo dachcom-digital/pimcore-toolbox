@@ -11,15 +11,15 @@ interface LayoutManagerInterface
     /**
      * @throws \Exception
      */
-    public function getAreaTemplateDir(string $areaId, string $viewName = 'view', string $extension = 'html.twig'): string;
+    public function getAreaTemplateDir(string $areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string;
 
     /**
      * @throws \Exception
      */
-    public function getAreaTemplatePath(string $areaId, string $viewName = 'view', string $extension = 'html.twig'): string;
+    public function getAreaTemplatePath(string $areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string;
 
     /**
      * @throws \Exception
      */
-    public function getAreaThemeConfig(string $areaName = ''): array;
+    public function getAreaThemeConfig(string $areaName): array;
 }

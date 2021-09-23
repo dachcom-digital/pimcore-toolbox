@@ -8,14 +8,8 @@ use Twig\TwigFunction;
 
 class LayoutExtension extends AbstractExtension
 {
-    /**
-     * @var LayoutManager
-     */
-    protected $layoutManager;
+    protected LayoutManager $layoutManager;
 
-    /**
-     * @param LayoutManager $layoutManager
-     */
     public function __construct(LayoutManager $layoutManager)
     {
         $this->layoutManager = $layoutManager;
@@ -24,15 +18,15 @@ class LayoutExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_area_path', [$this, 'getAreaPath'])
         ];
     }
 
-    public function getAreaPath($areaId, $viewName = 'view')
+    public function getAreaPath($areaId, $areaTemplateDir, $viewName = 'view'): string
     {
-        return $this->layoutManager->getAreaTemplatePath($areaId, $viewName);
+        return $this->layoutManager->getAreaTemplatePath($areaId, $areaTemplateDir, $viewName);
     }
 }

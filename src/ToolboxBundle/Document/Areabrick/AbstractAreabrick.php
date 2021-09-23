@@ -87,7 +87,8 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
         $info->setParams([
             'additionalClassesData' => $this->configureAdditionalClasses($info, $configNode),
             'elementThemeConfig'    => $this->layoutManager->getAreaThemeConfig($this->getId()),
-            'areaId'                => $this->getId()
+            'areaId'                => $this->getId(),
+            'areaTemplateDirectory' => $this->getTemplateDirectoryName(),
         ]);
 
         return null;
@@ -124,9 +125,14 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
         return $classesArray;
     }
 
+    public function getTemplateDirectoryName(): string
+    {
+        return $this->getId();
+    }
+
     public function getTemplatePath(string $viewName = 'view'): string
     {
-        return $this->layoutManager->getAreaTemplatePath($this->getId(), $viewName);
+        return $this->layoutManager->getAreaTemplatePath($this->getTemplateDirectoryName(), $viewName);
     }
 
     public function getTemplateLocation(): string
@@ -158,7 +164,7 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
             return null;
         }
 
-        return '/bundles/toolbox/areas/' . $this->getId() . '/icon.svg';
+        return '/bundles/toolbox/areas/' . $this->getTemplateDirectoryName() . '/icon.svg';
     }
 
     public function getHtmlTagOpen(Document\Editable\Area\Info $info): string

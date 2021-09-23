@@ -19,16 +19,16 @@ class LayoutManager implements LayoutManagerInterface
         $this->templating = $templating;
     }
 
-    public function getAreaTemplateDir(string $areaId, string $viewName = 'view', string $extension = 'html.twig'): string
+    public function getAreaTemplateDir(string $areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string
     {
         $elementThemeConfig = $this->getAreaThemeConfig($areaId);
 
-        $pathStructure = '@Toolbox/Toolbox/%s/%s';
+        $pathStructure = '@Toolbox/toolbox/%s/%s';
 
         $defaultDir = sprintf(
             $pathStructure,
-            $elementThemeConfig['layout'],
-            ucfirst($areaId)
+            strtolower($elementThemeConfig['layout']),
+            $areaTemplateDir
         );
 
         //no fallback layout defined. return default.
@@ -44,16 +44,16 @@ class LayoutManager implements LayoutManagerInterface
         return sprintf(
             $pathStructure,
             $elementThemeConfig['default_layout'],
-            ucfirst($areaId)
+            $areaTemplateDir
         );
     }
 
-    public function getAreaTemplatePath($areaId = null, string $viewName = 'view', string $extension = 'html.twig'): string
+    public function getAreaTemplatePath($areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string
     {
-        return $this->getAreaTemplateDir($areaId, $viewName) . DIRECTORY_SEPARATOR . $viewName . '.' . $extension;
+        return $this->getAreaTemplateDir($areaId, $areaTemplateDir, $viewName) . DIRECTORY_SEPARATOR . $viewName . '.' . $extension;
     }
 
-    public function getAreaThemeConfig(string $areaName = ''): array
+    public function getAreaThemeConfig(string $areaName): array
     {
         $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
 

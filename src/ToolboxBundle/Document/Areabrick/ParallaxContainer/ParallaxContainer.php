@@ -98,7 +98,7 @@ class ParallaxContainer extends AbstractAreabrick
             $containerWrapper = $this->getDocumentEditable($info->getDocument(), 'select', 'container_type')->getData();
 
             $areaArgs = ['name' => 'pcs', 'type' => 'parallaxContainer', 'document' => $info->getDocument()];
-            $areaBlock = $this->templating->render('@Toolbox/Helper/areablock.' . $this->getTemplateSuffix(), $areaArgs);
+            $areaBlock = $this->templating->render('@Toolbox/helper/areablock.' . $this->getTemplateSuffix(), $areaArgs);
 
             if ($containerWrapper !== 'none') {
                 $wrapperArgs = ['containerWrapperClass' => $containerWrapper, 'document' => $info->getDocument()];
@@ -109,7 +109,7 @@ class ParallaxContainer extends AbstractAreabrick
             if ($info->getParam('editmode') === true) {
                 if ($containerWrapper === 'none' && str_contains($areaBlock, 'toolbox-columns')) {
                     $message = $this->translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
-                    $messageWrap = $this->templating->render('@Toolbox/Helper/field-alert.' . $this->getTemplateSuffix(), [
+                    $messageWrap = $this->templating->render('@Toolbox/helper/field-alert.' . $this->getTemplateSuffix(), [
                         'type'     => 'danger',
                         'message'  => $message,
                         'document' => $info->getDocument()
@@ -178,14 +178,14 @@ class ParallaxContainer extends AbstractAreabrick
 
         if (count($styles) > 0) {
             $str .= 'style="';
-            $str .= join(' ', array_map(static function ($key) use ($styles) {
+            $str .= implode(' ', array_map(static function ($key) use ($styles) {
                 return $key . ':' . $styles[$key] . ';';
             }, array_keys($styles)));
             $str .= '"';
         }
 
         if (count($data) > 0) {
-            $str .= join(' ', array_map(static function ($key) use ($data) {
+            $str .= implode(' ', array_map(static function ($key) use ($data) {
                 return 'data-' . $key . '="' . $data[$key] . '"';
             }, array_keys($data)));
         }
@@ -210,10 +210,20 @@ class ParallaxContainer extends AbstractAreabrick
         return $backgroundColor;
     }
 
+    public function getTemplateDirectoryName(): string
+    {
+        return 'parallax-container';
+    }
+
+    public function getTemplate(): string
+    {
+        return sprintf('@Toolbox/areas/%s/view.%s', $this->getTemplateDirectoryName(), $this->getTemplateSuffix());
+    }
+
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'Parallax Container';
     }
@@ -221,7 +231,7 @@ class ParallaxContainer extends AbstractAreabrick
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Parallax Container';
     }

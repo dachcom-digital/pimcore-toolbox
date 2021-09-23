@@ -40,7 +40,7 @@ class SnippetController extends FrontendController
         }
 
         return $this->renderTemplate(
-            '@Toolbox/Snippet/Layout/teaser-layout.html.twig',
+            '@Toolbox/snippet/Layout/teaser-layout.html.twig',
             [
                 'mapParams'              => $request->get('mapParams'),
                 'layoutStore'            => $layoutExtJsStore,

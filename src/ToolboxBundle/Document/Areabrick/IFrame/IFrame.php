@@ -37,12 +37,7 @@ class IFrame extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @param string $iFrameUrl
-     *
-     * @return bool|string
-     */
-    private function checkIfUrlIsEmbeddable($iFrameUrl)
+    private function checkIfUrlIsEmbeddable($iFrameUrl): bool|string
     {
         $client = new Client();
 
@@ -67,12 +62,22 @@ class IFrame extends AbstractAreabrick
         return true;
     }
 
-    public function getName()
+    public function getTemplateDirectoryName(): string
+    {
+        return 'iframe';
+    }
+
+    public function getTemplate(): string
+    {
+        return sprintf('@Toolbox/areas/%s/view.%s', $this->getTemplateDirectoryName(), $this->getTemplateSuffix());
+    }
+
+    public function getName(): string
     {
         return 'iFrame';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox iFrame';
     }

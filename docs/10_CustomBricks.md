@@ -78,7 +78,7 @@ class MyBrick extends AbstractAreabrick
 }
 ```
 
-3. Add the view to `/app/Resources/views/Areas/my_brick/view.html.twig`:
+3. Add the view to `/app/Resources/views/areas/my_brick/view.html.twig`:
 
 ```twig
 {{ elementConfigBar|raw }}

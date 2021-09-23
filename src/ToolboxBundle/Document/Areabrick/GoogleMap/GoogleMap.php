@@ -24,18 +24,22 @@ class GoogleMap extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getTemplateDirectoryName(): string
+    {
+        return 'google-map';
+    }
+
+    public function getTemplate(): string
+    {
+        return sprintf('@Toolbox/areas/%s/view.%s', $this->getTemplateDirectoryName(), $this->getTemplateSuffix());
+    }
+
+    public function getName(): string
     {
         return 'Google Map';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Google Map';
     }

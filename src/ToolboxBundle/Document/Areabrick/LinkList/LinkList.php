@@ -2,28 +2,26 @@
 
 namespace ToolboxBundle\Document\Areabrick\LinkList;
 
-use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Editable\Area\Info;
 
 class LinkList extends AbstractAreabrick
 {
-    public function action(Info $info): ?Response
+    public function getTemplateDirectoryName(): string
     {
-        return parent::action($info);
+        return 'link-list';
     }
 
-    public function getViewTemplate()
+    public function getTemplate(): string
     {
-        return 'ToolboxBundle:Areas/linkList:view.' . $this->getTemplateSuffix();
+        return sprintf('@Toolbox/areas/%s/view.%s', $this->getTemplateDirectoryName(), $this->getTemplateSuffix());
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Link List';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Link List';
     }

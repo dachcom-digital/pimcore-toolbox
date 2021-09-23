@@ -74,7 +74,7 @@ class FrontendJsListener
         $optOutCookie = $request->cookies->get('tb-google-opt-out-link');
 
         $codeHead = $this->renderTemplate(
-            '@Toolbox/Admin/Javascript/frontend.html.twig',
+            '@Toolbox/admin/javascript/frontend.html.twig',
             [
                 'translations'       => [
                     'toolbox.goptout_already_opt_out',

@@ -10,14 +10,8 @@ use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class SlideColumns extends AbstractAreabrick
 {
-    /**
-     * @var CalculatorRegistryInterface
-     */
-    private $calculatorRegistry;
+    private CalculatorRegistryInterface $calculatorRegistry;
 
-    /**
-     * @param CalculatorRegistryInterface $calculatorRegistry
-     */
     public function __construct(CalculatorRegistryInterface $calculatorRegistry)
     {
         $this->calculatorRegistry = $calculatorRegistry;
@@ -55,42 +49,37 @@ class SlideColumns extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    private function calculateSlideColumnBreakpoints(int $columnType): array
     {
-        return 'Slide Columns';
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return 'Toolbox Slide Columns';
-    }
-
-    /**
-     * @param int $columnType
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    private function calculateSlideColumnBreakpoints($columnType)
-    {
-        $columnType = (int) $columnType;
         $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
 
         $breakpoints = [];
 
-        if (!empty($configInfo)) {
-            if (isset($configInfo['breakpoints']) && isset($configInfo['breakpoints'][$columnType])) {
-                $breakpoints = $configInfo['breakpoints'][$columnType];
-            }
+        if (!empty($configInfo) && isset($configInfo['breakpoints'], $configInfo['breakpoints'][$columnType])) {
+            $breakpoints = $configInfo['breakpoints'][$columnType];
         }
 
         return $breakpoints;
     }
+
+    public function getTemplateDirectoryName(): string
+    {
+        return 'slide-columns';
+    }
+
+    public function getTemplate(): string
+    {
+        return sprintf('@Toolbox/areas/%s/view.%s', $this->getTemplateDirectoryName(), $this->getTemplateSuffix());
+    }
+
+    public function getName(): string
+    {
+        return 'Slide Columns';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Toolbox Slide Columns';
+    }
+
 }

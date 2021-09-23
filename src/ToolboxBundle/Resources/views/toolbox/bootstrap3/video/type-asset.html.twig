@@ -1,0 +1,15 @@
+<div class="player" data-poster-path="{{ posterPath }}" data-play-in-lightbox="{{ playInLightbox }}" data-video-uri="{{ videoId }}">
+{{ pimcore_vhs('video', {
+    'attributes': {
+        'class': 'video-js vjs-default-skin vjs-big-play-centered',
+        'data-setup': '{}'
+    },
+    'imagethumbnail': toolbox_get_image_thumbnail('video_poster'),
+    'disableProgressReload' : true,
+    'height': 250
+}) }}
+</div>
+
+{% if posterPath is not empty %}
+    {% include toolbox_area_path(areaId, areaTemplateDirectory, '/partial/overlay') with {'posterPath' : posterPath, 'playInLightbox' : playInLightbox} %}
+{% endif %}

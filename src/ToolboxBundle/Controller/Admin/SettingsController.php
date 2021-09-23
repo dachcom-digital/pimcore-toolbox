@@ -26,7 +26,7 @@ class SettingsController extends Controller\AdminController
     {
         $this->setData();
 
-        $response = $this->render('@Toolbox/Admin/Settings/ckeditor-area-style.html.twig', [
+        $response = $this->render('@Toolbox/admin/settings/ckeditor-area-style.html.twig', [
             'globalStyleSets' => $this->globalStyleSets,
             'config'          => $this->ckEditorAreaConfig
         ]);
@@ -45,7 +45,7 @@ class SettingsController extends Controller\AdminController
     {
         $this->setData();
 
-        $response = $this->render('@Toolbox/Admin/Settings/ckeditor-object-style.html.twig', [
+        $response = $this->render('@Toolbox/admin/settings/ckeditor-object-style.html.twig', [
             'globalStyleSets' => $this->globalStyleSets,
             'config'          => $this->ckEditorObjectConfig
         ]);

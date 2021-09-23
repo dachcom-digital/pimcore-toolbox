@@ -20,7 +20,7 @@ class AjaxController extends FrontendController
     public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager)
     {
         return $this->render(
-            $layoutManager->getAreaTemplatePath('googleMap', 'infoWindow'),
+            $layoutManager->getAreaTemplatePath('googleMap', 'google-map', 'info-window'),
             [
                 'mapParams'         => $request->get('mapParams'),
                 'googleMapsHostUrl' => $this->getParameter('toolbox_google_maps_host_url')
