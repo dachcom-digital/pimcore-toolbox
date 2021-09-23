@@ -4,7 +4,10 @@
 ⚠️ If you're still on version `2.x`, you need to install `3.x` first, then [migrate](https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/UPGRADE.md) to `3.3`. After that, you're able to update to `^4.0`.
 
 ### Global Changes
-- All deprecations have been removed:
+- All deprecations have been removed: 
+  - Legacy Service Alias `toolbox.area.brick.base_brick` has been removed 
+  - Config Node `toolbar.x`, `toolbar.y`, `toolbar.xAlign`, `toolbar.yAlign`, `toolbar.title` has been removed
+  - Config Node `area_block_configuration.controlsAlign`, `area_block_configuration.controlsTrigger` has added
   - Config Node `disallowed_subareas`: `areas_appearance`
   - Config Node `disallowed_content_snippet_areas`: `snippet_areas_appearance`
   - Config Node `ToolboxBundle\Calculator\*`: `column_calculator|slide_calculator`
@@ -12,11 +15,14 @@
 - All Folders in `views` are lowercase/dashed now (`areas/google-map`, `areas/iframe`, `areas/link-list`, `areas/paralax-container`, `areas/slide-columns`, `toolbox/bootstrap4`, ...)
 
 ### Editable Changes
-- Always use `$info->setParam(key, value)` instead of `$info->setParams()`, otherwise you'll overwrite given parameters from the toolbox abstract brick.
+- Instead of `pimcore.area.brick` you need to use the `toolbox.area.brick` tag to register your brick. Also remove `setAreaBrickType` call from your service definition 
+- Always use `$info->setParam(key, value)` instead of `$info->setParams()`, otherwise you'll overwrite given parameters from the toolbox abstract brick
 - Remove `{{ elementConfigBar|raw }}` in your templates
 - Conditional Logic Feature for editable has been removed
-- Reload Property in node `config.reload` has been removed. use `config_parameter.reload_on_close: true` instead
+- Reload Property in node `config.reload` has been removed. Use `config_parameter.reload_on_close: true` instead
 - Custom view has been removed, TB is now using the pimcore defaults dialog box configuration
+   - Config Node `col_class` (In`[BRICKNAME].config_elements.[ELEMENT]` has been removed
+
 
 ***
 

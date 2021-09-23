@@ -7,7 +7,7 @@ services:
         arguments:
             $googleMapsHostUrl: '%toolbox_google_maps_host_url%'
         tags:
-            - { name: pimcore.area.brick, id: googleMap }
+            - { name: toolbox.area.brick, id: googleMap }
 toolbox:
     areas:
         googleMap:

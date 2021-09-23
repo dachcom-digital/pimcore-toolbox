@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\LinkList\LinkList:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: linkList }
+            - { name: toolbox.area.brick, id: linkList }
 toolbox:
     areas:
         linkList:

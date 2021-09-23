@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Accordion\Accordion:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: accordion }
+            - { name: toolbox.area.brick, id: accordion }
 toolbox:
     areas:
         accordion:
@@ -21,7 +21,6 @@ toolbox:
                     type: select
                     title: 'Component'
                     description: ~
-                    col_class: ~
                     config:
                         store:
                             accordion: 'Accordion'

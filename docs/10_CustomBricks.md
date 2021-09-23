@@ -14,13 +14,10 @@ There are three simple steps to create a custom Brick with a Toolbox context.
 ```yaml
 # It's always a good idea to add your brick as a service.
 services:
-    AppBundle\Document\Areabrick\MyBrick\MyBrick:
+    App\Document\Areabrick\MyBrick\MyBrick:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
-        calls:
-            # set the brick type to external
-            - [setAreaBrickType, ['external']]
         tags:
-            - { name: pimcore.area.brick, id: my_brick }
+            - { name: toolbox.area.brick, id: my_brick }
 
 toolbox:
     custom_areas:
@@ -30,7 +27,6 @@ toolbox:
                 title1:
                     type: input
                     title: That's a Title
-                    col_class: t-col-half
                     description: Lorem Ipsum
                     # default config for input
                     # see: https://www.pimcore.org/docs/5.0.0/Documents/Editables/Input.html#page_Configuration
@@ -38,7 +34,6 @@ toolbox:
                 title2:
                     type: input
                     title: That's also a Title
-                    col_class: t-col-half
                     description: Lorem Ipsum
                     config: ~
 ```

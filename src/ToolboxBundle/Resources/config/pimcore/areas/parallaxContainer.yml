@@ -5,7 +5,7 @@ services:
             - '@translator'
             - '@pimcore.templating.engine.delegating'
         tags:
-            - { name: pimcore.area.brick, id: parallaxContainer }
+            - { name: toolbox.area.brick, id: parallaxContainer }
 toolbox:
     areas:
         parallaxContainer:

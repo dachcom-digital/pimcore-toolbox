@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Image\Image:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: image }
+            - { name: toolbox.area.brick, id: image }
 toolbox:
     areas:
         image:
@@ -14,12 +14,10 @@ toolbox:
                 use_light_box:
                     type: checkbox
                     title: 'Use Lightbox'
-                    col_class: t-col-half
                     config: ~
                 show_caption:
                     type: checkbox
                     title: 'Display Caption'
-                    col_class: t-col-half
                     config: ~
                 additional_classes:
                     type: additionalClasses

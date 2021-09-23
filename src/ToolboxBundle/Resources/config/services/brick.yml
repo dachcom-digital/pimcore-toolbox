@@ -7,14 +7,3 @@ services:
 
     # toolbox service brick configuration builder
     ToolboxBundle\Builder\BrickConfigBuilder: ~
-
-    # base brick
-    ToolboxBundle\Document\Areabrick\AbstractAreabrick:
-        abstract:  true
-        calls:
-            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
-            - [setBrickConfigBuilder, ['@ToolboxBundle\Builder\BrickConfigBuilder']]
-            - [setLayoutManager, ['@ToolboxBundle\Manager\LayoutManager']]
-
-    # legacy alias
-    toolbox.area.brick.base_brick: '@ToolboxBundle\Document\Areabrick\AbstractAreabrick'

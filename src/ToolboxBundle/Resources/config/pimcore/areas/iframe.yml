@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\IFrame\IFrame:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: iFrame }
+            - { name: toolbox.area.brick, id: iFrame }
 toolbox:
     areas:
         iFrame:

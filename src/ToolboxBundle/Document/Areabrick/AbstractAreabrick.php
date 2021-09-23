@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManager;
-use ToolboxBundle\ToolboxConfig;
 
 abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements EditableDialogBoxInterface
 {
@@ -69,19 +68,8 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
         return $this->brickConfigBuilder->buildDialogBoxConfiguration($info, $this->getId(), $configNode, $themeOptions);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function action(Document\Editable\Area\Info $info): ?Response
     {
-        if (!$this->getConfigManager() instanceof ConfigManagerInterface) {
-            throw new \Exception('Please register your AreaBrick "' . $info->getId() . '" as a service and set "toolbox.area.brick.base_brick" as parent.');
-        } elseif ($this->getAreaBrickType() === self::AREABRICK_TYPE_INTERNAL && !in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
-            throw new \Exception('The "' . $info->getId() . '" AreaBrick has a invalid AreaBrickType. Please set type to "' . self::AREABRICK_TYPE_EXTERNAL . '".');
-        } elseif ($this->getAreaBrickType() === self::AREABRICK_TYPE_EXTERNAL && in_array($info->getId(), ToolboxConfig::TOOLBOX_TYPES)) {
-            throw new \Exception('The "' . $info->getId() . '" AreaBrick is using a reserved id. Please change the id of your custom AreaBrick.');
-        }
-
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
 
         $info->setParams([
@@ -144,12 +132,8 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
         return static::TEMPLATE_LOCATION_GLOBAL;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTemplate()
     {
-        // return null by default = auto-discover
         return null;
     }
 

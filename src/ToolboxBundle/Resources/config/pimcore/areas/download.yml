@@ -3,7 +3,7 @@ services:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         autowire: true
         tags:
-            - { name: pimcore.area.brick, id: download }
+            - { name: toolbox.area.brick, id: download }
 toolbox:
     areas:
         download:

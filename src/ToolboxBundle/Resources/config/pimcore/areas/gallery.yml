@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Gallery\Gallery:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: gallery }
+            - { name: toolbox.area.brick, id: gallery }
 toolbox:
     areas:
         gallery:

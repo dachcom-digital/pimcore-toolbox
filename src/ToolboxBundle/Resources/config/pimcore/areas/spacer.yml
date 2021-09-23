@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Spacer\Spacer:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: spacer }
+            - { name: toolbox.area.brick, id: spacer }
 toolbox:
     areas:
         spacer:
