@@ -8,24 +8,23 @@ use ToolboxBundle\Model\Document\Editable\ColumnAdjuster;
 
 class ColumnsTest extends AbstractAreaTest
 {
-    const TYPE = 'columns';
+    public const TYPE = 'columns';
 
     public function testColumnsBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('type', $configElements[0]['name']);
 
-        $this->assertEquals('columnadjuster', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('columnadjuster', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('columnadjuster', $configElements[1]['type']);
+        $this->assertEquals('columnadjuster', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('equal_height', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('equal_height', $configElements[2]['name']);
     }
 
     public function testDefaultColumns()

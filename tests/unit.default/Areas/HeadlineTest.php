@@ -2,26 +2,25 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Input;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Input;
+use Pimcore\Model\Document\Editable\Select;
 
 class HeadlineTest extends AbstractAreaTest
 {
-    const TYPE = 'headline';
+    public const TYPE = 'headline';
 
     public function testHeadlineBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(2, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('headline_type', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('headline_type', $configElements[0]['name']);
 
-        $this->assertEquals('input', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('anchor_name', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('input', $configElements[1]['type']);
+        $this->assertEquals('anchor_name', $configElements[1]['name']);
     }
 
     public function testHeadline()

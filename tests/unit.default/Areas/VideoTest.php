@@ -2,25 +2,24 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Tests\Util\TestHelper;
-use ToolboxBundle\Model\Document\Tag\Vhs;
+use ToolboxBundle\Model\Document\Editable\Vhs;
 
 class VideoTest extends AbstractAreaTest
 {
-    const TYPE = 'video';
+    public const TYPE = 'video';
 
     public function testVideoBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(1, $configElements);
-        $this->assertEquals('checkbox', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('autoplay', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[0]['type']);
+        $this->assertEquals('autoplay', $configElements[0]['name']);
     }
 
     public function testVideoConfigParameter()

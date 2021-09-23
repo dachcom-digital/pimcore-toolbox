@@ -2,22 +2,21 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Select;
 
 class SpacerTest extends AbstractAreaTest
 {
-    const TYPE = 'spacer';
+    public const TYPE = 'spacer';
 
     public function testSpacerBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(1, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('spacer_class', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('spacer_class', $configElements[0]['name']);
     }
 
     public function testSpacer()

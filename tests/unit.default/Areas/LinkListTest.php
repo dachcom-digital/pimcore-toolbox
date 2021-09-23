@@ -2,18 +2,17 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Dachcom\Codeception\Util\VersionHelper;
+use Pimcore\Model\Document\Editable;
 
 class LinkListTest extends AbstractAreaTest
 {
-    const TYPE = 'linkList';
+    public const TYPE = 'linkList';
 
     public function testLinkListBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(0, $configElements);
     }
@@ -22,21 +21,13 @@ class LinkListTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $blockClass = 'Pimcore\Model\Document\Editable\Block';
-            $linkClass = 'Pimcore\Model\Document\Editable\Link';
-        } else {
-            $blockClass = 'Pimcore\Model\Document\Tag\Block';
-            $linkClass = 'Pimcore\Model\Document\Tag\Link';
-        }
-
-        $link1 = new $linkClass();
+        $link1 = new Editable\Link();
         $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
-        $link2 = new $linkClass();
+        $link2 = new Editable\Link();
         $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
-        $block = new $blockClass();
+        $block = new Editable\Block();
         $block->setName('test-block-name');
         $block->setDataFromEditmode([1, 2]);
 
@@ -56,26 +47,16 @@ class LinkListTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $blockClass = 'Pimcore\Model\Document\Editable\Block';
-            $linkClass = 'Pimcore\Model\Document\Editable\Link';
-            $selectClass = 'Pimcore\Model\Document\Editable\Select';
-        } else {
-            $blockClass = 'Pimcore\Model\Document\Tag\Block';
-            $linkClass = 'Pimcore\Model\Document\Tag\Link';
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-        }
-
-        $combo = new $selectClass();
+        $combo = new Editable\Select();
         $combo->setDataFromResource('additional-class');
 
-        $link1 = new $linkClass();
+        $link1 = new Editable\Link();
         $link1->setDataFromEditmode(['path' => 'https://www.dachcom.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
-        $link2 = new $linkClass();
+        $link2 = new Editable\Link();
         $link2->setDataFromEditmode(['path' => 'https://www.dachcom-digital.com', 'linktype' => 'direct', 'text' => 'dummy']);
 
-        $block = new $blockClass();
+        $block = new Editable\Block();
         $block->setName('test-block-name');
         $block->setDataFromEditmode([1, 2]);
 

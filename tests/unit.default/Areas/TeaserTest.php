@@ -2,34 +2,33 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Image;
-use Pimcore\Model\Document\Tag\Input;
-use Pimcore\Model\Document\Tag\Link;
-use Pimcore\Model\Document\Tag\Select;
-use Pimcore\Model\Document\Tag\Wysiwyg;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Image;
+use Pimcore\Model\Document\Editable\Input;
+use Pimcore\Model\Document\Editable\Link;
+use Pimcore\Model\Document\Editable\Select;
+use Pimcore\Model\Document\Editable\Wysiwyg;
 use Pimcore\Tests\Util\TestHelper;
 
 class TeaserTest extends AbstractAreaTest
 {
-    const TYPE = 'teaser';
+    public const TYPE = 'teaser';
 
     public function testTeaserBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('type', $configElements[0]['name']);
 
-        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('layout', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[1]['type']);
+        $this->assertEquals('layout', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('use_light_box', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('use_light_box', $configElements[2]['name']);
     }
 
     public function testTeaser()

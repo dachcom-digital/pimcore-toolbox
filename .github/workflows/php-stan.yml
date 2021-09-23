@@ -11,7 +11,7 @@ jobs:
         env:
             TEST_BUNDLE_NAME: "ToolboxBundle"
             TEST_BUNDLE_INSTALLER_CLASS: "ToolboxBundle\\Tool\\Install"
-            TEST_BUNDLE_TEST_DIR: "${{ github.workspace }}/tests"
+            TEST_BUNDLE_TEST_DIR: "${{ github.workspace }}/lib/test-bundle/tests"
             TEST_PROJECT_ROOT_DIR: "${{ github.workspace }}"
 
             PIMCORE_CODECEPTION_FRAMEWORK: "${{ github.workspace }}/pimcore-codeception-framework"

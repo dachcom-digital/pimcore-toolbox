@@ -2,31 +2,30 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Numeric;
-use Pimcore\Model\Document\Tag\Select;
-use ToolboxBundle\Model\Document\Tag\GoogleMap;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Numeric;
+use Pimcore\Model\Document\Editable\Select;
+use ToolboxBundle\Model\Document\Editable\GoogleMap;
 
 class GoogleMapTest extends AbstractAreaTest
 {
-    const TYPE = 'googleMap';
+    public const TYPE = 'googleMap';
 
     public function testGoogleMapBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('numeric', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('map_zoom', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('numeric', $configElements[0]['type']);
+        $this->assertEquals('map_zoom', $configElements[0]['name']);
 
-        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('map_type', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[1]['type']);
+        $this->assertEquals('map_type', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('iw_on_init', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('iw_on_init', $configElements[2]['name']);
 
     }
 

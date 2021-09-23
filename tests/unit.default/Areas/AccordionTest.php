@@ -2,25 +2,24 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Select;
 
 class AccordionTest extends AbstractAreaTest
 {
-    const TYPE = 'accordion';
+    public const TYPE = 'accordion';
 
     public function testAccordionBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(2, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('type', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('type', $configElements[0]['name']);
 
-        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('component', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[1]['type']);
+        $this->assertEquals('component', $configElements[1]['name']);
     }
 
     public function testAccordion()

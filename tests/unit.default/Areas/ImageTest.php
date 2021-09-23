@@ -2,27 +2,26 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Image;
-use Pimcore\Model\Document\Tag\Link;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Image;
+use Pimcore\Model\Document\Editable\Link;
+use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Tests\Util\TestHelper;
 
 class ImageTest extends AbstractAreaTest
 {
-    const TYPE = 'image';
+    public const TYPE = 'image';
 
     public function testIframeBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('link', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
+        $this->assertEquals('link', $configElements[0]['type']);
+        $this->assertEquals('checkbox', $configElements[1]['type']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
     }
 
     public function testImage()
