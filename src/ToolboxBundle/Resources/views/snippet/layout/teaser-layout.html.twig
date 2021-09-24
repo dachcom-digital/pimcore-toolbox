@@ -1,7 +1,7 @@
 {% extends '@Toolbox/snippet-layout.html.twig' %}
 {% block snippet_content %}
 {% if editmode %}
-    <div class="tb-alert-info">
+    <div class="snippet-selector tb-alert-info">
         {% if layoutStore|length > 0 %}
             <label>{{ 'Layout'|trans({}, 'admin') }}: </label>
             {{ pimcore_select('ts_type', {'store' : layoutStore, reload: true, width: 300}) }}<br>

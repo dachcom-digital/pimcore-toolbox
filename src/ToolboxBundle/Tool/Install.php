@@ -54,17 +54,12 @@ class Install extends SettingsStoreAwareInstaller
 
         $type = DocType::create();
 
-        $data = [
+        $type->setValues([
             'name'       => $elementName,
-            'module'     => 'ToolboxBundle',
-            'controller' => 'Snippet',
-            'action'     => 'teaser',
-            'template'   => '',
+            'controller' => 'ToolboxBundle\Controller\SnippetController::teaserAction',
             'type'       => 'snippet',
             'priority'   => 0
-        ];
-
-        $type->setValues($data);
+        ]);
 
         try {
             $type->getDao()->save();

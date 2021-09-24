@@ -180,7 +180,7 @@
     padding: 10px;
 }
 
-.toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block:not(.slick-initialized) {
+.toolbox-slide-columns > .row > .slide-columns .pimcore_editable_block:not(.slick-initialized) {
     overflow: hidden;
 }
 
@@ -203,29 +203,29 @@
 }
 
 .toolbox-slide-columns > .row > .slide-columns .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns .pimcore_editable_block > .pimcore_block_entry {
     display: block;
     float: left;
     clear: none;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .pimcore_editable_block > .pimcore_block_entry {
     width: 49%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .pimcore_editable_block > .pimcore_block_entry {
     width: 33%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .pimcore_editable_block > .pimcore_block_entry {
     width: 24%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .pimcore_editable_block > .pimcore_block_entry {
     width: 15%;
 }
 
@@ -331,7 +331,7 @@
     background: rgba(255, 255, 255, 0.5);
 }
 
-.toolbox-parallax-container .parallax-content > .pimcore_tag_block {
+.toolbox-parallax-container .parallax-content > .pimcore_editable_block {
     margin: 10px;
 }
 

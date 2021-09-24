@@ -69,7 +69,7 @@ If the resolver returns `null` the main configuration will be used.
 
 ```yml
 toolbox:
-    context_resolver: 'AppBundle\Services\ToolboxBundle\ContextResolver'
+    context_resolver: 'App\Services\ToolboxBundle\ContextResolver'
 ```
 
 ### Create Context Resolver Class
@@ -77,7 +77,7 @@ toolbox:
 ```php
 <?php
 
-namespace AppBundle\Services\ToolboxBundle;
+namespace App\Services\ToolboxBundle;
 
 use Pimcore\Model\Document;
 use Symfony\Component\HttpFoundation\RequestStack;

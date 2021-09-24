@@ -3,7 +3,7 @@ imports:
     - { resource: 'local/' }
 
 services:
-    AppBundle\Controller\DefaultController:
+    App\Controller\DefaultController:
         public: true
         autowire: true
         autoconfigure: true

@@ -36,10 +36,8 @@ class TeaserSnippetTest extends AbstractAreaTest
         $combo->setName('ts_type');
 
         $document = new Document\Snippet();
-        $document->setModule('ToolboxBundle');
-        $document->setController('Snippet');
-        $document->setElements(['ts_type' => $combo]);
-        $document->setAction('teaser');
+        $document->setController('ToolboxBundle\Controller\SnippetController::teaserAction');
+        $document->setEditables(['ts_type' => $combo]);
         $document->setType('snippet');
         $document->setParentId(1);
         $document->setUserOwner(1);

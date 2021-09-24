@@ -54,7 +54,6 @@ class SlideColumns extends AbstractAreabrick
         $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
 
         $breakpoints = [];
-
         if (!empty($configInfo) && isset($configInfo['breakpoints'], $configInfo['breakpoints'][$columnType])) {
             $breakpoints = $configInfo['breakpoints'][$columnType];
         }

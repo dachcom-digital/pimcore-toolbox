@@ -72,12 +72,12 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
     {
         $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
 
-        $info->setParams([
+        $info->setParams(array_merge($info->getParams(), [
             'additionalClassesData' => $this->configureAdditionalClasses($info, $configNode),
             'elementThemeConfig'    => $this->layoutManager->getAreaThemeConfig($this->getId()),
             'areaId'                => $this->getId(),
             'areaTemplateDirectory' => $this->getTemplateDirectoryName(),
-        ]);
+        ]));
 
         return null;
     }

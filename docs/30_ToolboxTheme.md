@@ -105,14 +105,14 @@ services:
         public: false
 
      # column calculator
-    AppBundle\Calculator\ColumnCalculator:
+    App\Calculator\ColumnCalculator:
         calls:
             - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
         tags:
             - { name: toolbox.calculator, type: column }
     
     # slide column calculator
-    AppBundle\Calculator\SlideColumnCalculator:
+    App\Calculator\SlideColumnCalculator:
         tags:
             - { name: toolbox.calculator, type: slide_column }
 ```
@@ -122,8 +122,8 @@ services:
 toolbox:
     theme:
         calculators:
-            column_calculator: AppBundle\Calculator\ColumnCalculator
-            slide_calculator: AppBundle\Calculator\SlideColumnCalculator
+            column_calculator: App\Calculator\ColumnCalculator
+            slide_calculator: App\Calculator\SlideColumnCalculator
 ```
 
 ### Column Calculator
@@ -131,7 +131,7 @@ toolbox:
 ```php
 <?php
 
-namespace AppBundle\Calculator;
+namespace App\Calculator;
 
 use ToolboxBundle\Calculator\ColumnCalculatorInterface;
 use ToolboxBundle\Manager\ConfigManagerInterface;
@@ -175,7 +175,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
 ```php
 <?php
 
-namespace AppBundle\Calculator;
+namespace App\Calculator;
 
 use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 

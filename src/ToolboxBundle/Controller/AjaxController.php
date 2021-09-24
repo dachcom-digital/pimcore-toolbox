@@ -11,13 +11,7 @@ use ToolboxBundle\Manager\LayoutManagerInterface;
 
 class AjaxController extends FrontendController
 {
-    /**
-     * @param Request                $request
-     * @param LayoutManagerInterface $layoutManager
-     *
-     * @return Response
-     */
-    public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager)
+    public function gmInfoWindowAction(Request $request, LayoutManagerInterface $layoutManager): Response
     {
         return $this->render(
             $layoutManager->getAreaTemplatePath('googleMap', 'google-map', 'info-window'),
@@ -29,14 +23,9 @@ class AjaxController extends FrontendController
     }
 
     /**
-     * @param Request                $request
-     * @param ConfigManagerInterface $configManager
-     *
-     * @return JsonResponse
-     *
      * @throws \Exception
      */
-    public function videoGetTypesAction(Request $request, ConfigManagerInterface $configManager)
+    public function videoGetTypesAction(Request $request, ConfigManagerInterface $configManager): JsonResponse
     {
         $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
 

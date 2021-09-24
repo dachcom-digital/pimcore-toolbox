@@ -85,7 +85,7 @@ class DownloadTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithPreviewImage($asset1->getFullPath(), $asset2->getFullPath())),
+            $this->filter($this->getCompareWithPreviewImage($asset1, $asset2)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -176,20 +176,20 @@ class DownloadTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithPreviewImage($path1, $path2)
+    private function getCompareWithPreviewImage($asset1, $asset2)
     {
         return '<div class="toolbox-element toolbox-download ">
                     <div class="download-list show-image-preview">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="' . $path1 . '"  target="_blank" class="icon-download-jpg">
-                                    <span class="preview-image"><img src="' . $path1 . '" alt="Download"/></span>
+                                <a href="' . $asset1->getFullPath() . '"  target="_blank" class="icon-download-jpg">
+                                    <span class="preview-image"><img src="' . $asset1->getThumbnail('downloadPreviewImage')->getPath() . '" alt="Download"/></span>
                                     <span class="title">Download</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="' . $path2 . '"  target="_blank" class="icon-download-jpg">
-                                    <span class="preview-image"><img src="' . $path2 . '" alt="Download"/></span>
+                                <a href="' . $asset2->getFullPath() . '"  target="_blank" class="icon-download-jpg">
+                                    <span class="preview-image"><img src="' . $asset2->getThumbnail('downloadPreviewImage')->getPath() . '" alt="Download"/></span>
                                     <span class="title">Download</span>
                                 </a>
                             </li>

@@ -78,6 +78,31 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
+        $breakpoints = [
+            4 => [
+                1320 =>
+                    [
+                        'slidesToShow' => 4,
+                    ],
+                992  =>
+                    [
+                        'slidesToShow' => 3,
+                    ],
+                768  =>
+                    [
+                        'slidesToShow' => 2,
+                        'arrows'       => true,
+                        'dots'         => false,
+                    ],
+                0    =>
+                    [
+                        'slidesToShow' => 1,
+                        'arrows'       => true,
+                        'dots'         => false,
+                    ],
+            ]
+        ];
+
         $slidesPerView = new Editable\Select();
         $slidesPerView->setDataFromResource('4');
 
@@ -93,15 +118,17 @@ class SlideColumnsTest extends AbstractAreaTest
             'column_classes' => [
                 4 => 'col-12 col-sm-12 col-lg-2',
             ],
-            'breakpoints'    => [
-                4 => 'col-12 col-sm-12 col-lg-2'
-            ]
+            'breakpoints'    => $breakpoints
         ];
 
         $configManager->setConfig([
             'areas'                    => [self::TYPE => $slideColumns],
             'theme'                    => $theme,
-            'area_block_configuration' => [],
+            'area_block_configuration' => [
+                'toolbar'         => [],
+                'controlsAlign'   => 'top',
+                'controlsTrigger' => 'hover',
+            ],
             'areas_appearance'         => [],
         ]);
 
@@ -111,7 +138,7 @@ class SlideColumnsTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithBreakPoints()),
+            $this->filter($this->getCompareWithBreakPoints($breakpoints[4])),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -141,7 +168,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns  ">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -163,7 +190,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns  equal-height">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -181,11 +208,11 @@ class SlideColumnsTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithBreakPoints()
+    private function getCompareWithBreakPoints(array $breakPoints = [])
     {
         return '<div class="toolbox-element toolbox-slide-columns  equal-height">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="&quot;col-12 col-sm-12 col-lg-2&quot;">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="' . htmlspecialchars(json_encode($breakPoints)) . '">
                             <div class="column col-12 col-sm-12 col-lg-2">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -207,7 +234,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns additional-class ">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>

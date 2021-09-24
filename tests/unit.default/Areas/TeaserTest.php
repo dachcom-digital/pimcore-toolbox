@@ -39,7 +39,7 @@ class TeaserTest extends AbstractAreaTest
         $elements = $this->getDefaultElements($asset);
 
         $this->assertEquals(
-            $this->filter($this->getCompare($asset->getFullPath())),
+            $this->filter($this->getCompare($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -57,7 +57,7 @@ class TeaserTest extends AbstractAreaTest
         $elements['use_light_box'] = $lightBox;
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithLightBox($asset->getFullPath())),
+            $this->filter($this->getCompareWithLightBox($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -75,7 +75,7 @@ class TeaserTest extends AbstractAreaTest
         $elements['add_classes'] = $combo;
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
+            $this->filter($this->getCompareWithAdditionalClass($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -113,14 +113,14 @@ class TeaserTest extends AbstractAreaTest
         ];
     }
 
-    private function getCompare($asset)
+    private function getCompare(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-teaser ">
                     <div class="row">
                         <div class="col-12">
                             <div class="single-teaser default ">
                                 <a href="/test/test2"  class="item">
-                                    <img class="img-responsive" alt="alt text" title="alt text" src="' . $asset . '" />
+                                    ' . $asset->getThumbnail('standardTeaser')->getHtml() . '
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3>
                                 <div class="teaser-text">        teaser text    </div>
@@ -131,14 +131,14 @@ class TeaserTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithLightBox($asset)
+    private function getCompareWithLightBox(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-teaser ">
                     <div class="row">
                         <div class="col-12">
                             <div class="single-teaser default light-box">
-                                <a href="' . $asset . '" class="item">
-                                    <img class="img-responsive" alt="alt text" title="alt text" src="' . $asset . '" />
+                                <a href="' . $asset->getThumbnail('lightBoxImage')->getPath() . '" class="item">
+                                    ' . $asset->getThumbnail('standardTeaser')->getHtml() . '
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3><div class="teaser-text">        teaser text    </div>
                                 <a href="/test/test2" class="btn btn-default teaser-link"></a>
@@ -148,14 +148,14 @@ class TeaserTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithAdditionalClass($asset)
+    private function getCompareWithAdditionalClass(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-teaser additional-class">
                     <div class="row">
                         <div class="col-12">
                             <div class="single-teaser default ">
                                 <a href="/test/test2"  class="item">
-                                    <img class="img-responsive" alt="alt text" title="alt text" src="' . $asset . '" />
+                                    ' . $asset->getThumbnail('standardTeaser')->getHtml() . '
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3>
                                 <div class="teaser-text">        teaser text    </div>

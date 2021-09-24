@@ -43,13 +43,13 @@ class ParallaxContainer extends AbstractAreabrick
 
         $behindElements = !empty($parallaxBehind)
             ? $this->templating->render(
-                $this->getTemplatePath('Partial/behind-front-elements'),
+                $this->getTemplatePath('partial/behind-front-elements'),
                 ['elements' => $parallaxBehind, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
         $frontElements = !empty($parallaxFront)
             ? $this->templating->render(
-                $this->getTemplatePath('Partial/behind-front-elements'),
+                $this->getTemplatePath('partial/behind-front-elements'),
                 ['elements' => $parallaxFront, 'backgroundImageMode' => $backgroundImageMode, 'document' => $info->getDocument()]
             ) : null;
 
