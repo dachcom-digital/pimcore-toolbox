@@ -39,7 +39,7 @@ class ImageTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareDefault($asset->getFullPath())),
+            $this->filter($this->getCompareDefault($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -63,7 +63,7 @@ class ImageTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareCaption($asset->getFullPath())),
+            $this->filter($this->getCompareCaption($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
 
@@ -88,7 +88,7 @@ class ImageTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareLightBox($asset->getFullPath())),
+            $this->filter($this->getCompareLightBox($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -112,7 +112,7 @@ class ImageTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareLink($asset->getFullPath())),
+            $this->filter($this->getCompareLink($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -136,31 +136,31 @@ class ImageTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClass($asset->getFullPath())),
+            $this->filter($this->getCompareWithAdditionalClass($asset)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
-    private function getCompareDefault($fileName)
+    private function getCompareDefault(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-image ">
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img class="img-fluid" alt="" src="' . $fileName . '" />
+                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
                             </div>
                         </div>
                     </div>
                 </div>';
     }
 
-    private function getCompareCaption($fileName)
+    private function getCompareCaption(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-image ">
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img class="img-fluid" alt="" src="' . $fileName . '" />
+                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
                                 <span class="caption">caption</span>
                             </div>
                         </div>
@@ -168,14 +168,14 @@ class ImageTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareLightBox($fileName)
+    private function getCompareLightBox(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-image ">
                     <div class="row">
                         <div class="col-12">
                             <div class="light-box">
-                                <a href="' . $fileName . '" class="item">
-                                    <img class="img-fluid" alt="" src="' . $fileName . '" />
+                                <a href="' . $asset->getThumbnail('lightBoxImage')->getPath() . '" class="item">
+                                    ' . $asset->getThumbnail('contentImage')->getHtml() . '
                                 </a>
                             </div>
                         </div>
@@ -183,14 +183,14 @@ class ImageTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareLink($fileName)
+    private function getCompareLink(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-image ">
                     <div class="row">
                         <div class="col-12">
                             <div >
                                 <a href="/test/test2" target="">
-                                    <img class="img-fluid" alt="" src="' . $fileName . '" />
+                                    ' . $asset->getThumbnail('contentImage')->getHtml() . '
                                 </a>
                             </div>
                         </div>
@@ -198,13 +198,13 @@ class ImageTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithAdditionalClass($fileName)
+    private function getCompareWithAdditionalClass(\Pimcore\Model\Asset\Image $asset)
     {
         return '<div class="toolbox-element toolbox-image additional-class">
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                <img class="img-fluid" alt="" src="' . $fileName . '" />
+                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
                             </div>
                         </div>
                     </div>

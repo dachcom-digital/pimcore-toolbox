@@ -120,7 +120,7 @@ abstract class AbstractAreabrick extends PimcoreAbstractAreabrick implements Edi
 
     public function getTemplatePath(string $viewName = 'view'): string
     {
-        return $this->layoutManager->getAreaTemplatePath($this->getTemplateDirectoryName(), $viewName);
+        return $this->layoutManager->getAreaTemplatePath($this->getId(), $this->getTemplateDirectoryName(), $viewName);
     }
 
     public function getTemplateLocation(): string

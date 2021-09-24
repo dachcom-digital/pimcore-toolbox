@@ -169,4 +169,88 @@ return [
         "preserveAnimation" => FALSE,
         "id" => "standardTeaser"
     ],
+    "contentImage" => [
+        "items" => [
+            [
+                "method" => "scaleByWidth",
+                "arguments" => [
+                    "width" => 500,
+                    "forceResize" => FALSE
+                ]
+            ]
+        ],
+        "medias" => [
+
+        ],
+        "name" => "contentImage",
+        "description" => "",
+        "group" => "",
+        "format" => "JPEG",
+        "quality" => 85,
+        "highResolution" => 0.0,
+        "preserveColor" => FALSE,
+        "preserveMetaData" => FALSE,
+        "rasterizeSVG" => FALSE,
+        "downloadable" => FALSE,
+        "modificationDate" => 1632481410,
+        "creationDate" => 1632406242,
+        "preserveAnimation" => FALSE,
+        "id" => "contentImage"
+    ],
+    "galleryImage" => [
+        "items" => [
+            [
+                "method" => "scaleByWidth",
+                "arguments" => [
+                    "width" => 500,
+                    "forceResize" => FALSE
+                ]
+            ]
+        ],
+        "medias" => [
+
+        ],
+        "name" => "galleryImage",
+        "description" => "",
+        "group" => "",
+        "format" => "JPEG",
+        "quality" => 85,
+        "highResolution" => 0.0,
+        "preserveColor" => FALSE,
+        "preserveMetaData" => FALSE,
+        "rasterizeSVG" => FALSE,
+        "downloadable" => FALSE,
+        "modificationDate" => 1632481410,
+        "creationDate" => 1632406242,
+        "preserveAnimation" => FALSE,
+        "id" => "galleryImage"
+    ],
+    "galleryThumb" => [
+        "items" => [
+            [
+                "method" => "scaleByWidth",
+                "arguments" => [
+                    "width" => 500,
+                    "forceResize" => FALSE
+                ]
+            ]
+        ],
+        "medias" => [
+
+        ],
+        "name" => "galleryThumb",
+        "description" => "",
+        "group" => "",
+        "format" => "JPEG",
+        "quality" => 85,
+        "highResolution" => 0.0,
+        "preserveColor" => FALSE,
+        "preserveMetaData" => FALSE,
+        "rasterizeSVG" => FALSE,
+        "downloadable" => FALSE,
+        "modificationDate" => 1632481410,
+        "creationDate" => 1632406242,
+        "preserveAnimation" => FALSE,
+        "id" => "galleryThumb"
+    ],
 ];
