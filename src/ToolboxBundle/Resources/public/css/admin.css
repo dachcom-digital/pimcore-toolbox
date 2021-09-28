@@ -366,19 +366,6 @@
 }
 
 /**
-
-    Toolbox Googlemap Container
-
-**/
-.toolbox-googlemap-container {
-
-}
-
-.toolbox-google-map .pimcore_area_edit_button {
-    top: -35px !important;
-}
-
-/**
 ##
 ##      ---------------------------------------
 ##      ONLY TOOLBOX INTERNAL STUFF DOWN THERE!
@@ -418,6 +405,7 @@
     border: 1px solid #6428b4;
     border-radius: 0;
     font-size: 90%;
+    width: 100%;
 }
 
 .tb-alert-danger {
@@ -429,6 +417,7 @@
     border: 1px solid #a94442;
     border-radius: 0;
     font-size: 90%;
+    width: 100%;
 }
 
 /** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/

@@ -1,6 +1,10 @@
 pimcore.registerNS('pimcore.document.editables.googlemap');
 pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
+    form: null,
+    element: null,
+    previewData: null,
+
     getType: function () {
         return 'googlemap';
     },
@@ -24,15 +28,15 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
         this.id = id;
         this.name = name;
-        this.data = data;
+        this.data = data.locations;
+        this.previewData = data;
         this.config = this.parseConfig(config);
-        this.geocoder = new google.maps.Geocoder();
 
     },
 
-    render: function () {
+    subRender: function () {
 
-        var buttonHolder, mapEditButton;
+        var mapEditButton;
 
         if (typeof google === 'undefined') {
             return;
@@ -40,11 +44,8 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
         this.setupWrapper();
 
-        Ext.get(this.id).setStyle({
-            display: 'inline'
-        });
+        this.element = Ext.get(this.id);
 
-        buttonHolder = Ext.get(this.id).up('.toolbox-google-map').prev('.toolbox-element-edit-button');
         mapEditButton = new Ext.Button({
             iconCls: 'pimcore_icon_geopoint',
             cls: 'googlemap_edit_locations_button',
@@ -54,7 +55,36 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
             }
         });
 
-        mapEditButton.render(buttonHolder);
+        mapEditButton.render(this.getButtonHolder());
+
+        if (this.previewData['hasValidKey'] === false) {
+
+            Ext.DomHelper.append(this.element, {
+                'tag': 'div',
+                'class': 'tb-alert-info',
+                'html': 'No valid API Key defined'
+            }, true);
+
+        }
+    },
+
+    render: function () {
+
+        // this is a sub render element (append button to toolbox edit bar).
+        if (this.hasButtonHolder() === false) {
+            Ext.get(this.id).up('.pimcore_area_entry').addListener('toolbox.bar.added', this.subRender.bind(this));
+            return;
+        }
+
+        this.subRender();
+    },
+
+    hasButtonHolder: function () {
+        return this.getButtonHolder() !== null;
+    },
+
+    getButtonHolder: function () {
+        return Ext.get(this.id).up('.toolbox-google-map').prev('.toolbox-element-edit-button');
     },
 
     openEditor: function () {
@@ -64,10 +94,24 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
         });
     },
 
-    openGoogleMapEditPanel: function (data, callback) {
+    openGoogleMapEditPanel: function (locations, callback) {
 
-        data = data || [];
-        var addLocation = function (ev, buttonEv, location) {
+        var window, addLocation;
+
+        locations = locations || {};
+
+        window = new Ext.Window({
+            modal: true,
+            autoScroll: true,
+            width: 900,
+            height: 500,
+            title: t('edit_locations'),
+            layout: 'fit'
+        });
+
+        addLocation = function (ev, buttonEv, location) {
+
+            var compositeField;
 
             if (typeof location === 'undefined') {
                 location = {
@@ -81,133 +125,127 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                 }
             }
 
-            var itemRow1 = [{
-                xtype: 'textfield',
-                name: 'location_title',
-                emptyText: t('location_title'),
-                anchor: '100%',
-                summaryDisplay: true,
-                allowBlank: false,
-                blankText: t('field_mandatory'),
-                value: location.title,
-                flex: 1,
-                msgTarget: 'qtip'
-            }];
-
-            var itemRow2 = [{
-                xtype: 'textfield',
-                name: 'location_street',
-                fieldLabel: t('location_street'),
-                labelAlign: 'top',
-                style: 'margin: 0 5px 0 0',
-                anchor: '100%',
-                summaryDisplay: true,
-                allowBlank: false,
-                blankText: t('field_mandatory'),
-                value: location.street,
-                flex: 1,
-                msgTarget: 'qtip'
-            },
-                {
-                    xtype: 'textfield',
-                    name: 'location_zip',
-                    fieldLabel: t('location_zip'),
-                    labelAlign: 'top',
-                    style: 'margin: 0 5px 0 0',
-                    anchor: '100%',
-                    summaryDisplay: true,
-                    allowBlank: false,
-                    blankText: t('field_mandatory'),
-                    value: location.zip,
-                    flex: 1,
-                    msgTarget: 'qtip'
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'location_city',
-                    fieldLabel: t('location_city'),
-                    labelAlign: 'top',
-                    style: 'margin: 0 5px 0 0',
-                    anchor: '100%',
-                    summaryDisplay: true,
-                    allowBlank: false,
-                    blankText: t('field_mandatory'),
-                    value: location.city,
-                    flex: 1,
-                    msgTarget: 'qtip'
-                },
-                {
-                    xtype: 'textfield',
-                    name: 'location_country',
-                    fieldLabel: t('location_country'),
-                    labelAlign: 'top',
-                    anchor: '100%',
-                    summaryDisplay: true,
-                    allowBlank: false,
-                    blankText: t('field_mandatory'),
-                    value: location.country,
-                    flex: 1,
-                    msgTarget: 'qtip'
-                }];
-
-            var itemRow3 = [{
-                xtype: 'checkbox',
-                name: 'location_hide_info_window',
-                labelAlign: 'left',
-                fieldLabel: t('location_hide_info_window'),
-                value: location.hideInfoWindow,
-                anchor: '100%',
-                labelWidth: false,
-                style: 'width: 190px;',
-                labelStyle: 'width: 190px;'
-            }];
-
-            var itemRow4 = [{
-                xtype: 'textarea',
-                name: 'location_add',
-                fieldLabel: t('location_add'),
-                labelAlign: 'top',
-                anchor: '100%',
-                summaryDisplay: true,
-                allowBlank: true,
-                value: location.add,
-                flex: 1,
-                grow: false
-            }];
-
-            var compositeField = new Ext.form.FieldContainer({
-                //layout: 'anchor',
+            compositeField = new Ext.form.FormPanel({
                 hideLabel: true,
-                style: 'margin-bottom: 15px; padding: 10px; background: rgba(214, 221, 230, 0.45);',
+                style: 'margin-bottom: 15px; padding: 5px; background: rgba(214, 221, 230, 0.45);',
                 items: [
-                    Ext.form.FieldContainer({
+                    {
+                        xtype: 'container',
                         layout: 'hbox',
                         hideLabel: true,
                         style: 'padding-bottom:5px;',
                         border: false,
-                        items: itemRow1
-                    }),
-                    Ext.form.FieldContainer({
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                name: 'location_title',
+                                emptyText: t('location_title'),
+                                summaryDisplay: true,
+                                allowBlank: false,
+                                blankText: t('field_mandatory'),
+                                value: location.title,
+                                flex: 1,
+                                msgTarget: 'qtip'
+                            }
+                        ]
+                    },
+                    {
+                        xtype: 'container',
                         layout: 'hbox',
                         hideLabel: true,
                         style: 'padding-bottom:5px;',
                         border: false,
-                        items: itemRow2
-                    }),
-                    Ext.form.FieldContainer({
+                        items: [
+                            {
+                                xtype: 'textfield',
+                                name: 'location_street',
+                                fieldLabel: t('location_street'),
+                                labelAlign: 'top',
+                                style: 'margin: 0 5px 0 0',
+                                summaryDisplay: true,
+                                allowBlank: false,
+                                blankText: t('field_mandatory'),
+                                value: location.street,
+                                flex: 1,
+                                msgTarget: 'qtip'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'location_zip',
+                                fieldLabel: t('location_zip'),
+                                labelAlign: 'top',
+                                style: 'margin: 0 5px 0 0',
+                                summaryDisplay: true,
+                                allowBlank: false,
+                                blankText: t('field_mandatory'),
+                                value: location.zip,
+                                flex: 1,
+                                msgTarget: 'qtip'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'location_city',
+                                fieldLabel: t('location_city'),
+                                labelAlign: 'top',
+                                style: 'margin: 0 5px 0 0',
+                                summaryDisplay: true,
+                                allowBlank: false,
+                                blankText: t('field_mandatory'),
+                                value: location.city,
+                                flex: 1,
+                                msgTarget: 'qtip'
+                            },
+                            {
+                                xtype: 'textfield',
+                                name: 'location_country',
+                                fieldLabel: t('location_country'),
+                                labelAlign: 'top',
+                                anchor: '100%',
+                                summaryDisplay: true,
+                                allowBlank: false,
+                                blankText: t('field_mandatory'),
+                                value: location.country,
+                                flex: 1,
+                                msgTarget: 'qtip'
+                            }]
+                    },
+                    {
+                        xtype: 'container',
                         layout: 'hbox',
                         hideLabel: true,
                         style: 'padding-bottom:5px;',
                         border: false,
-                        items: itemRow3
-                    }),
-                    Ext.form.FieldContainer({
+                        items: [{
+                            xtype: 'checkbox',
+                            name: 'location_hide_info_window',
+                            labelAlign: 'left',
+                            fieldLabel: t('location_hide_info_window'),
+                            value: location.hideInfoWindow,
+                            anchor: '100%',
+                            labelWidth: false,
+                            style: 'width: 190px;',
+                            labelStyle: 'width: 190px;'
+                        }]
+                    },
+                    {
+                        xtype: 'container',
                         layout: 'hbox',
                         hideLabel: true,
                         style: 'padding-bottom:5px;',
                         border: false,
-                        items: itemRow4
-                    })
+                        items: [{
+                            xtype: 'textarea',
+                            name: 'location_add',
+                            fieldLabel: t('location_add'),
+                            labelAlign: 'top',
+                            anchor: '100%',
+                            summaryDisplay: true,
+                            allowBlank: true,
+                            value: location.add,
+                            flex: 1,
+                            grow: false
+                        }]
+                    }
                 ]
             });
 
@@ -216,47 +254,29 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                 iconCls: 'pimcore_icon_delete',
                 text: t('remove'),
                 handler: function (compositeField, el) {
-                    selector.remove(compositeField);
-                    selector.updateLayout();
+                    this.form.remove(compositeField);
+                    this.form.updateLayout();
                 }.bind(this, compositeField)
             }, {
                 xtype: 'box',
                 style: 'clear:both;'
             }]);
 
-            selector.add(compositeField);
-            selector.updateLayout();
+            this.form.add(compositeField);
+            this.form.updateLayout();
 
-        };
+        }.bind(this);
 
-        var selector = new Ext.form.FieldSet({
-            title: t('locations'),
-            collapsible: false,
-            autoHeight: true,
-            items: [{
-                xtype: 'toolbar',
-                style: 'margin-bottom:10px;',
-                items: ['->', {
-                    xtype: 'button',
-                    text: t('location_add_location'),
-                    iconCls: 'pimcore_icon_add',
-                    handler: addLocation
-                }]
-            }]
-        });
-
-        if (data && data.length > 0) {
-            data.forEach(function (location) {
-                addLocation(null, null, location);
-            });
-        }
-
-        var form = new Ext.FormPanel({
+        this.form = new Ext.FormPanel({
             itemId: 'form',
             scrollable: true,
-            items: [
-                selector
-            ],
+            layout: 'form',
+            tbar: ['->', {
+                xtype: 'button',
+                text: t('location_add_location'),
+                iconCls: 'pimcore_icon_add',
+                handler: addLocation.bind(this)
+            }],
             buttons: [
                 {
                     text: t('save'),
@@ -272,24 +292,27 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                     },
                     iconCls: 'pimcore_icon_cancel'
                 }
-            ]
-        });
+            ],
+            listeners: {
+                afterrender: function () {
 
+                    if (locations && locations.length > 0) {
+                        locations.forEach(function (location) {
+                            addLocation(null, null, location);
+                        });
+                    }
 
-        var window = new Ext.Window({
-            modal: false,
-            width: 900,
-            height: 500,
-            title: t('edit_locations'),
-            items: [form],
-            layout: 'fit'
+                }
+            }
         });
 
         document.body.classList.add('toolbox-modal-open');
+
+        window.add(this.form);
+
         window.show();
 
         return window;
-
     },
 
     cancel: function () {
@@ -301,44 +324,49 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
         var form = this.window.getComponent('form').getForm(),
             locations = [],
-            location;
+            location,
+            values;
 
-        if (form.isValid()) {
-            var values = form.getFieldValues();
-            if (typeof values['location_street'] === 'string') {
-                location = {
-                    title: values['location_title'],
-                    street: values['location_street'],
-                    zip: values['location_zip'],
-                    city: values['location_city'],
-                    country: values['location_country'],
-                    hideInfoWindow: values['location_hide_info_window'],
-                    add: values['location_add']
-                };
-                locations.push(location);
-            } else {
-                if (values.hasOwnProperty('location_title') && values['location_title'].length > 0) {
-                    values['location_title'].forEach(function (value, index) {
-                        location = {
-                            title: value,
-                            street: values['location_street'][index],
-                            zip: values['location_zip'][index],
-                            city: values['location_city'][index],
-                            country: values['location_country'][index],
-                            hideInfoWindow: values['location_hide_info_window'][index],
-                            add: values['location_add'][index]
-                        };
-                        locations.push(location);
-                    });
-                }
-            }
-
-            this.data = locations;
-
-            // close window
-            document.body.classList.remove('toolbox-modal-open');
-            this.window.close();
-            this.reload();
+        if (!form.isValid()) {
+            return;
         }
+
+        values = form.getFieldValues();
+
+        if (typeof values['location_street'] === 'string') {
+            location = {
+                title: values['location_title'],
+                street: values['location_street'],
+                zip: values['location_zip'],
+                city: values['location_city'],
+                country: values['location_country'],
+                hideInfoWindow: values['location_hide_info_window'],
+                add: values['location_add']
+            };
+            locations.push(location);
+        } else {
+            if (values.hasOwnProperty('location_title') && values['location_title'].length > 0) {
+                values['location_title'].forEach(function (value, index) {
+                    location = {
+                        title: value,
+                        street: values['location_street'][index],
+                        zip: values['location_zip'][index],
+                        city: values['location_city'][index],
+                        country: values['location_country'][index],
+                        hideInfoWindow: values['location_hide_info_window'][index],
+                        add: values['location_add'][index]
+                    };
+                    locations.push(location);
+                });
+            }
+        }
+
+        this.data = locations;
+
+        // close window
+        document.body.classList.remove('toolbox-modal-open');
+        this.window.close();
+
+        this.reloadDocument();
     }
 });

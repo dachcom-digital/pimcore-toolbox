@@ -3,79 +3,49 @@
 namespace ToolboxBundle\Model\Document\Editable;
 
 use Pimcore\Model\Document;
+use Pimcore\Tool\Serialize;
 
 class ColumnAdjuster extends Document\Editable
 {
-    /**
-     * Contains the data.
-     *
-     * @var bool|array
-     */
-    public $data = false;
+    protected array $data = [];
 
-    /**
-     * Return the type of the element.
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'columnadjuster';
     }
 
-    /**
-     * @return mixed
-     *
-     * @see Document\Editable\TagInterface::getData
-     */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * No frontend available.
-     */
-    public function frontend()
+    public function frontend(): void
     {
-        return null;
+        // nothing to do.
     }
 
-    /**
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
-        return $this->data === false || empty($this->data);
+        return empty($this->data);
     }
 
-    /**
-     * @param mixed $data
-     *
-     * @return string
-     */
-    public function setDataFromResource($data)
+    public function setDataFromResource($data): self
     {
-        $this->data = \Pimcore\Tool\Serialize::unserialize($data);
+        $data = Serialize::unserialize($data);
 
-        if (!is_array($this->data)) {
-            $this->data = false;
+        if (!is_array($data)) {
+            $data = [];
         }
+
+        $this->data = $data;
 
         return $this;
     }
 
-    /**
-     * @param mixed $data
-     *
-     * @return $this
-     *
-     * @see Document\Editable\EditableInterface::setDataFromEditmode
-     */
-    public function setDataFromEditmode($data)
+    public function setDataFromEditmode(mixed $data): self
     {
         if (!is_array($data)) {
-            $data = false;
+            $data = [];
         }
 
         $this->data = $data;

@@ -49,6 +49,8 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
             return;
         }
 
+        console.warn(this.data);
+
         //set current column selection
         this.currentColumnSelection = this.gridSelector.getValue();
         this.currentColumnSelectionName = this.gridSelector.getRawValue();
@@ -56,7 +58,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
         this.statusButton = new Ext.form.Checkbox({
             fieldLabel: t('enable_column_adjuster'),
-            checked: this.data !== false,
+            checked: !Ext.Object.isEmpty(this.data),
             labelWidth: 170,
             labelStyle: 'padding-top:0; font-weight: 300;',
             listeners: {
@@ -73,7 +75,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         this.gridEditButton = new Ext.Button({
             iconCls: 'toolbox_column_adjuster',
             text: t('edit_column_configuration'),
-            hidden: this.data === false,
+            hidden: Ext.Object.isEmpty(this.data),
             style: 'background-color: white;',
             listeners: {
                 'click': function () {
@@ -128,16 +130,20 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
     expandEditor: function () {
 
+        var windowSelector,
+            editWindow,
+            cancelButton;
+
         if (this.gridEditorActive === true) {
             return;
         }
 
-        var windowSelector = Ext.get(this.id).up('.x-window');
+        windowSelector = Ext.get(this.id).up('.x-window');
         if (windowSelector.length === 0) {
             return;
         }
 
-        var editWindow = Ext.getCmp(windowSelector.id);
+        editWindow = Ext.getCmp(windowSelector.id);
         if (!editWindow) {
             return;
         }
@@ -150,7 +156,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         this.editWindowState.w = editWindow.getWidth();
         this.editWindowState.h = editWindow.getHeight();
 
-        var cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
+        cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
         if (cancelButton.length === 1) {
             cancelButton[0].setDisabled(true);
         }
@@ -202,10 +208,8 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
     },
 
-    /**
-     * @returns {null|Ext.FormPanel}
-     */
     populateGridForm: function () {
+
         var _ = this,
             currentDocumentId = null,
             tabPanel = new Ext.TabPanel({
@@ -331,7 +335,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                                 typeAhead: true,
                                 mode: 'local',
                                 forceSelection: true,
-                                disabled: isInherited === true,
+                                disabled: breakpointIndex !== 0 && isInherited === true,
                                 triggerAction: 'all',
                                 labelAlign: 'top',
                                 style: 'margin-right:2px;',
@@ -364,7 +368,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                             typeAhead: true,
                             mode: 'local',
                             forceSelection: true,
-                            disabled: isInherited === true,
+                            disabled: breakpointIndex !== 0 && isInherited === true,
                             triggerAction: 'all',
                             labelAlign: 'top',
                             style: 'margin-right:8px;',
@@ -471,10 +475,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
     },
 
-    /**
-     * @param identifier
-     * @param triggerEl
-     */
     updateData: function (identifier, triggerEl) {
         var form = this.gridForm.getForm(),
             _ = this;
@@ -588,9 +588,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
     },
 
-    /**
-     * @returns {string}
-     */
     mergeCustomGridValue: function () {
 
         if (!this.data.breakpoints) {
@@ -620,12 +617,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         }.bind(this));
     },
 
-    /**
-     * @param currentBreakpointIndex
-     * @param gridIndex
-     * @param returnProperty
-     * @returns {*}
-     */
     findInheritedGridValue: function (currentBreakpointIndex, gridIndex, returnProperty) {
 
         var val = null,
@@ -645,10 +636,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
     },
 
-    /**
-     * @param identifier
-     * @returns {*}
-     */
     findBreakPointDataByIdentifier: function (identifier) {
         var currentBreakpointIndex = null;
         Ext.Array.each(this.breakPoints, function (breakpoint, breakpointIndex) {
@@ -661,11 +648,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         return currentBreakpointIndex;
     },
 
-    /**
-     *
-     * @param gridIndex
-     * @returns {boolean}
-     */
     gridColumnHasOffset: function (gridIndex) {
         var hasOffset = false;
         Ext.Array.each(this.breakPoints, function (breakpoint, breakpointIndex) {
@@ -680,11 +662,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         return hasOffset;
     },
 
-    /**
-     *
-     * @param message
-     * @param startDelayed
-     */
     cancelAdjustment: function (message, startDelayed) {
         this.statusButton.setValue(false);
         this.adjustmentFailed = false;
@@ -695,9 +672,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         }.bind(this), startDelayed ? startDelayed : 0);
     },
 
-    /**
-     * @returns {*|boolean}
-     */
     getValue: function () {
         return this.data;
     }

@@ -9,11 +9,13 @@ pimcore.document.editables.vhs = Class.create(pimcore.document.editables.video, 
         this.data = data;
     },
 
-    render: function () {
+    subRender: function () {
 
-        var element, emptyContainer, buttonHolder, videoEditButton;
+        var element, emptyContainer, videoEditButton;
 
         this.setupWrapper();
+
+        this.element = Ext.get(this.id);
 
         element = Ext.get('pimcore_video_' + this.name);
         emptyContainer = element.query('.pimcore_editable_video_empty')[0];
@@ -26,8 +28,7 @@ pimcore.document.editables.vhs = Class.create(pimcore.document.editables.video, 
                 }
             });
 
-        buttonHolder = Ext.get(this.id).up('.toolbox-video').prev('.toolbox-element-edit-button');
-        videoEditButton.render(buttonHolder);
+        videoEditButton.render(this.getButtonHolder());
 
         if (this.inherited) {
             button.hide();
@@ -37,6 +38,27 @@ pimcore.document.editables.vhs = Class.create(pimcore.document.editables.video, 
             emptyContainer = Ext.get(emptyContainer);
             emptyContainer.on('click', this.openEditor.bind(this));
         }
+
+    },
+
+    render: function () {
+
+        // this is a sub render element (append button to toolbox edit bar).
+        if (this.hasButtonHolder() === false) {
+            Ext.get(this.id).up('.pimcore_area_entry').addListener('toolbox.bar.added', this.subRender.bind(this));
+            return;
+        }
+
+        this.subRender();
+
+    },
+
+    hasButtonHolder: function () {
+        return this.getButtonHolder() !== null;
+    },
+
+    getButtonHolder: function () {
+        return Ext.get(this.id).up('.toolbox-video').prev('.toolbox-element-edit-button');
     },
 
     openEditor: function () {

@@ -1,3 +1,7 @@
-{% if type is not empty %}
+{% if type is not empty and partialName is not empty %}
     {% include toolbox_area_path(areaId, areaTemplateDirectory, 'partial/' ~ partialName) %}
+{% elseif editmode == true %}
+    <div class="tb-alert-info">
+        {{ 'No column size selected.'|trans({}, 'admin') }}
+    </div>
 {% endif %}

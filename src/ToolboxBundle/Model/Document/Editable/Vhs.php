@@ -3,49 +3,24 @@
 namespace ToolboxBundle\Model\Document\Editable;
 
 use Pimcore\Model;
-use Pimcore\Model\Document;
+use Pimcore\Tool\Serialize;
 
 class Vhs extends Model\Document\Editable\Video
 {
-    /**
-     * @var bool
-     */
-    public $showAsLightBox = false;
+    public bool $showAsLightBox = false;
+    public array $videoParameter = [];
 
-    /**
-     * Enum: [asset, youtube, vimeo, dailymotion].
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var array
-     */
-    public $videoParameter;
-
-    /**
-     * Return the type of the element.
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'vhs';
     }
 
-    /**
-     * @return string
-     */
-    public function getShowAsLightBox()
+    public function getShowAsLightBox(): bool
     {
         return $this->showAsLightBox;
     }
 
-    /**
-     * @return array
-     */
-    public function getVideoParameter()
+    public function getVideoParameter(): array
     {
         if (!is_array($this->videoParameter)) {
             return [];
@@ -59,69 +34,49 @@ class Vhs extends Model\Document\Editable\Video
         return $parsedParameter;
     }
 
-    /**
-     * @see Document\Editable\TagInterface::getData
-     *
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         $data = parent::getData();
+
         $data['showAsLightbox'] = $this->showAsLightBox;
         $data['videoParameter'] = $this->videoParameter;
 
         return $data;
     }
 
-    /**
-     * @return array
-     */
-    public function getDataForResource()
+    public function getDataForResource(): array
     {
         $data = parent::getDataForResource();
+
         $data['showAsLightbox'] = $this->showAsLightBox;
         $data['videoParameter'] = $this->videoParameter;
 
         return $data;
     }
 
-    /**
-     * @see Document\Editable\TagInterface::setDataFromResource
-     *
-     * @param mixed $data
-     *
-     * @return $this
-     */
-    public function setDataFromResource($data)
+    public function setDataFromResource(mixed $data): self
     {
         parent::setDataFromResource($data);
 
         if (!empty($data)) {
-            $data = \Pimcore\Tool\Serialize::unserialize($data);
+            $data = Serialize::unserialize($data);
         }
 
-        $this->showAsLightBox = $data['showAsLightbox'];
-        $this->videoParameter = $data['videoParameter'];
+        $this->showAsLightBox = $data['showAsLightbox'] ?? false;
+        $this->videoParameter = $data['videoParameter'] ?? null;
 
         return $this;
     }
 
-    /**
-     * @see Document\Editable\TagInterface::setDataFromEditmode
-     *
-     * @param mixed $data
-     *
-     * @return $this
-     */
-    public function setDataFromEditmode($data)
+    public function setDataFromEditmode($data): self
     {
         parent::setDataFromEditmode($data);
 
-        if ($data['showAsLightbox']) {
+        if (isset($data['showAsLightbox'])) {
             $this->showAsLightBox = $data['showAsLightbox'];
         }
 
-        if ($data['videoParameter']) {
+        if (isset($data['videoParameter'])) {
             $this->videoParameter = $data['videoParameter'];
         }
 

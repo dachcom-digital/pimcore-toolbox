@@ -10,20 +10,12 @@ use Pimcore\Model\DataObject;
 
 class ParallaxImage extends Model\Document\Editable\Relations
 {
-    /**
-     * Return the type of the element.
-     *
-     * @return string
-     */
-    public function getType()
+    public function getType(): string
     {
         return 'parallaximage';
     }
 
-    /**
-     * @return $this
-     */
-    public function setElements()
+    public function setElements(): self
     {
         if (empty($this->elements)) {
             $this->elements = [];
@@ -42,12 +34,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         return $this;
     }
 
-    /**
-     * Converts the data so it's suitable for the editmode.
-     *
-     * @return mixed
-     */
-    public function getDataEditmode()
+    public function getDataEditmode(): array
     {
         $this->setElements();
         $return = [];
@@ -98,12 +85,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         return $return;
     }
 
-    /**
-     * @see Document\Editable\TagInterface::frontend
-     *
-     * @return string
-     */
-    public function frontend()
+    public function frontend(): string
     {
         $this->setElements();
         $return = '';
@@ -117,10 +99,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         return $return;
     }
 
-    /**
-     * @return array
-     */
-    public function resolveDependencies()
+    public function resolveDependencies(): array
     {
         $this->setElements();
         $dependencies = [];
