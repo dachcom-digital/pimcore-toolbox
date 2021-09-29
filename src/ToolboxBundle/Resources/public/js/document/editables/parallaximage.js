@@ -1,6 +1,8 @@
 pimcore.registerNS('pimcore.document.editables.parallaximage');
 pimcore.document.editables.parallaximage = Class.create(pimcore.document.editables.relations, {
 
+    modelName: null,
+
     updateLayout: function () {
         this.element.render(this.id);
     },
@@ -10,21 +12,11 @@ pimcore.document.editables.parallaximage = Class.create(pimcore.document.editabl
         this.name = name;
         this.config = this.parseConfig(config);
         this.data = data;
-    },
 
-    render: function () {
+        this.modelName = 'ParallaxImageRelationsEntry'
 
-        var modelName = 'ParallaxImageRelationsEntry',
-            positionStoreElements = [],
-            sizeStoreElements = [],
-            positionStore,
-            sizeStore,
-            elementConfig;
-
-        this.setupWrapper();
-
-        if (!Ext.ClassManager.isCreated(modelName)) {
-            Ext.define(modelName, {
+        if (!Ext.ClassManager.isCreated(this.modelName)) {
+            Ext.define(this.modelName, {
                 extend: 'Ext.data.Model',
                 idProperty: 'rowId',
                 fields: [
@@ -40,8 +32,20 @@ pimcore.document.editables.parallaximage = Class.create(pimcore.document.editabl
 
         this.store = new Ext.data.ArrayStore({
             data: this.data,
-            model: modelName
+            model: this.modelName
         });
+
+    },
+
+    render: function () {
+
+        var positionStoreElements = [],
+            sizeStoreElements = [],
+            positionStore,
+            sizeStore,
+            elementConfig;
+
+        this.setupWrapper();
 
         Ext.Object.each(this.config.position, function (k, v) {
             positionStoreElements.push({id: k, name: v});
