@@ -39,7 +39,7 @@ class Columns extends AbstractAreabrick
         $partialName = '';
 
         $customColumnConfiguration = null;
-        if ($gridAdjustment !== false) {
+        if (is_array($gridAdjustment) && count($gridAdjustment) > 0) {
             $customColumnConfiguration = [$type => $gridAdjustment];
         }
 
@@ -62,7 +62,7 @@ class Columns extends AbstractAreabrick
         }
 
         $info->setParams(array_merge($info->getParams(), [
-            'type'        => $type . ($gridAdjustment !== false ? '-grid-adjuster' : ''),
+            'type'        => $type . ($customColumnConfiguration !== null ? '-grid-adjuster' : ''),
             'columns'     => $columns,
             'partialName' => $partialName,
             'equalHeight' => $equalHeight

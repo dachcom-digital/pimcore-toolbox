@@ -81,13 +81,6 @@ abstract class AbstractAreaTest extends BundleTestCase
 
         $document->setEditables($indexedEditables);
 
-        //$this->getContainer()->get(BlockStateStack::class)->loadArray([['blocks' => [], 'indexes' => []]]);
-
-        //$this->getContainer()->get('request_stack')->getCurrentRequest()->attributes->set(DynamicRouter::CONTENT_KEY, $document);
-        //$this->getContainer()->get('request_stack')->getMainRequest()->attributes->set(DynamicRouter::CONTENT_KEY, $document);
-        //$this->getContainer()->get(DocumentResolver::class)->setDocument($this->getContainer()->get('request_stack')->getCurrentRequest(), $document);
-        //$this->getContainer()->get(DocumentResolver::class)->setDocument($this->getContainer()->get('request_stack')->getMainRequest(), $document);
-
         return $area->renderIndex(0, true);
     }
 

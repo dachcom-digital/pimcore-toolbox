@@ -70,13 +70,13 @@ class GoogleMap extends Document\Editable
     {
         $this->setId(uniqid('map-', true));
 
-        $parsedData = Serialize::unserialize($data);
+        $parsedLocations = Serialize::unserialize($data);
 
-        if (!is_array($parsedData)) {
-            $parsedData = [];
+        if (!is_array($parsedLocations)) {
+            $parsedLocations = [];
         }
 
-        $this->data = $parsedData;
+        $this->data = $parsedLocations;
 
         return $this;
     }
@@ -86,17 +86,16 @@ class GoogleMap extends Document\Editable
      */
     public function setDataFromEditmode(mixed $data): self
     {
-        $parsedLocations = [];
-
         $this->setId(uniqid('map-', true));
 
         if (!is_array($data)) {
             $data = [];
         }
 
+        $parsedLocations = [];
         $key = $this->detectKey();
 
-        if ($key !== null && count($data) > 0) {
+        if (count($data) > 0) {
             foreach ($data as $i => $location) {
                 $parsedLocations[$i] = $this->geocodeLocation($location, $key);
             }
@@ -124,6 +123,10 @@ class GoogleMap extends Document\Editable
 
     public function setId(string $mapId): void
     {
+        if ($this->mapId !== null) {
+            return;
+        }
+
         $this->mapId = $mapId;
     }
 
@@ -178,10 +181,10 @@ class GoogleMap extends Document\Editable
     /**
      * @throws \Exception
      */
-    protected function geocodeLocation(array $location, string $key): array
+    protected function geocodeLocation(array $location, ?string $key): array
     {
-        if ($this->googleLookUpIsDisabled()) {
-            return $location;
+        if ($key === null || $this->googleLookUpIsDisabled()) {
+            return array_merge($location, ['lat' => null, 'lng' => null]);
         }
 
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
