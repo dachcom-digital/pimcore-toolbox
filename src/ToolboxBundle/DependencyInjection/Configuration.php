@@ -3,7 +3,6 @@
 namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
@@ -14,10 +13,7 @@ use ToolboxBundle\ToolboxConfig;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('toolbox');
         $rootNode = $treeBuilder->getRootNode();
@@ -33,10 +29,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param ArrayNodeDefinition $rootNode
-     */
-    public function addContextNode(ArrayNodeDefinition $rootNode)
+    public function addContextNode(ArrayNodeDefinition $rootNode): void
     {
         $node = $rootNode
             ->children()
@@ -78,10 +71,7 @@ class Configuration implements ConfigurationInterface
         ->end();
     }
 
-    /**
-     * @param NodeDefinition $rootNode
-     */
-    public function getConfigNode(NodeDefinition $rootNode)
+    public function getConfigNode(ArrayNodeDefinition $rootNode): void
     {
         //@todo: get them dynamically!!
         $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);

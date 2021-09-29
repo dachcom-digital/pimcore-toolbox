@@ -11,26 +11,10 @@ use Twig\TwigFunction;
 
 class DownloadExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
+    protected BundleConnector $bundleConnector;
+    protected Translator $translator;
 
-    /**
-     * @var BundleConnector
-     */
-    protected $bundleConnector;
-
-    /**
-     * @var Translator
-     */
-    protected $translator;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     * @param BundleConnector        $bundleConnector
-     * @param Translator             $translator
-     */
     public function __construct(ConfigManagerInterface $configManager, BundleConnector $bundleConnector, Translator $translator)
     {
         $this->configManager = $configManager;
@@ -38,10 +22,7 @@ class DownloadExtension extends AbstractExtension
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_download_info', [$this, 'getDownloadInfo']),
@@ -81,7 +62,7 @@ class DownloadExtension extends AbstractExtension
 
         $str = 'data-tracking="active" ';
 
-        $str .= join(' ', array_map(function ($key) use ($trackerInfo, $element) {
+        $str .= implode(' ', array_map(function ($key) use ($trackerInfo, $element) {
             $val = $trackerInfo[$key];
 
             if (is_bool($val)) {
@@ -133,23 +114,23 @@ class DownloadExtension extends AbstractExtension
 
         $dType = \Pimcore\File::getFileExtension($download->getFilename());
         $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download', [], 'admin');
-        $dName = ($download->getMetadata('title')) ? $download->getMetadata('title') : $downloadTitle;
-        $dAltText = $download->getMetadata('alt') ? $download->getMetadata('alt') : '';
+        $dName = ($download->getMetadata('title')) ?: $downloadTitle;
+        $dAltText = $download->getMetadata('alt') ?: '';
         $dImageAltText = !empty($dAltText) ? $dAltText : $dName;
 
         $dPreviewImage = null;
         $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
 
         if ($showPreviewImage) {
-            $dPreviewImage = $download->getMetadata('previewImage') instanceof Asset\Image
-                ? $download->getMetadata('previewImage')->getThumbnail($previewThumbName)
-                : (
-                $download instanceof Asset\Image
-                    ? $download->getThumbnail($previewThumbName)
-                    : ($download instanceof Asset\Document
-                    ? $download->getImageThumbnail($previewThumbName)
-                    : null)
-                );
+            /** @var Asset|null $metaPreviewImage */
+            $metaPreviewImage = $download->getMetadata('previewImage');
+            if ($metaPreviewImage instanceof Asset\Image) {
+                $dPreviewImage = $metaPreviewImage->getThumbnail($previewThumbName);
+            } elseif ($download instanceof Asset\Image) {
+                $dPreviewImage = $download->getThumbnail($previewThumbName);
+            } elseif ($download instanceof Asset\Document) {
+                $dPreviewImage = $download->getImageThumbnail($previewThumbName);
+            }
         }
 
         $dPreviewImagePath = null;

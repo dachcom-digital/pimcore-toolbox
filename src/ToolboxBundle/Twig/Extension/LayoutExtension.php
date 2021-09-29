@@ -15,9 +15,6 @@ class LayoutExtension extends AbstractExtension
         $this->layoutManager = $layoutManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [

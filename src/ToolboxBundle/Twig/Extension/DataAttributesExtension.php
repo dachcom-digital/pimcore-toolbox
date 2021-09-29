@@ -8,23 +8,14 @@ use Twig\TwigFunction;
 
 class DataAttributesExtension extends AbstractExtension
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @param ConfigManagerInterface $configManager
-     */
     public function __construct(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_data_attributes_generator', [$this, 'generateDataAttributes']),

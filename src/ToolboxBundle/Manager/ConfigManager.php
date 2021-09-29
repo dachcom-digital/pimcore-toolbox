@@ -99,7 +99,7 @@ class ConfigManager implements ConfigManagerInterface
     {
         $contextIdentifierId = $this->getContextIdentifier();
 
-        if ($contextIdentifierId === false) {
+        if ($contextIdentifierId === null) {
             $this->contextResolved = true;
 
             return;
@@ -109,12 +109,10 @@ class ConfigManager implements ConfigManagerInterface
             return;
         }
 
-        if ($contextIdentifierId !== null) {
-            $contextData = $this->parseContextConfig($contextIdentifierId);
-            $this->config = $contextData['config'];
-            $this->contextSettings[$contextIdentifierId] = $contextData['settings'];
-            $this->currentContextId = $contextIdentifierId;
-        }
+        $contextData = $this->parseContextConfig($contextIdentifierId);
+        $this->config = $contextData['config'];
+        $this->contextSettings[$contextIdentifierId] = $contextData['settings'];
+        $this->currentContextId = $contextIdentifierId;
 
         $this->contextResolved = true;
     }

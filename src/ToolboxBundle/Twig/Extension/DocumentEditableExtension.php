@@ -6,10 +6,7 @@ use Twig\TwigFunction;
 
 class DocumentEditableExtension extends \Pimcore\Twig\Extension\DocumentEditableExtension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_document_tag', [$this, 'renderEditable'], [

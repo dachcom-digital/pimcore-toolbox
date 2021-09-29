@@ -2,7 +2,6 @@
 
 namespace ToolboxBundle\Document\Areabrick\Download;
 
-use Pimcore\Db\ZendCompatibility\QueryBuilder;
 use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
@@ -12,22 +11,13 @@ use Pimcore\Model\Asset;
 
 class Download extends AbstractAreabrick
 {
-    /**
-     * @var BundleConnector
-     */
-    protected $bundleConnector;
+    protected BundleConnector $bundleConnector;
 
-    /**
-     * @param BundleConnector $bundleConnector
-     */
     public function __construct(BundleConnector $bundleConnector)
     {
         $this->bundleConnector = $bundleConnector;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function action(Info $info): ?Response
     {
         parent::action($info);
@@ -52,12 +42,7 @@ class Download extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @param Asset $node
-     *
-     * @return Asset[]
-     */
-    protected function getByFile(Asset $node)
+    protected function getByFile(Asset $node): array
     {
         if (!$this->hasMembersBundle()) {
             return [$node];
@@ -72,12 +57,7 @@ class Download extends AbstractAreabrick
         return [];
     }
 
-    /**
-     * @param Asset\Folder $node
-     *
-     * @return Asset[]
-     */
-    protected function getByFolder(Asset\Folder $node)
+    protected function getByFolder(Asset\Folder $node): array
     {
         $assetListing = new Asset\Listing();
         $fullPath = rtrim($node->getFullPath(), '/') . '/';
@@ -85,7 +65,7 @@ class Download extends AbstractAreabrick
         $assetListing->addConditionParam('type != ?', 'folder');
 
         if ($this->hasMembersBundle()) {
-            $assetListing->onCreateQuery(function (QueryBuilder $query) use ($assetListing) {
+            $assetListing->onCreateQueryBuilder(function (\Doctrine\DBAL\Query\QueryBuilder $query) use ($assetListing) {
                 $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
                     ->addRestrictionInjection($query, $assetListing, 'assets.id');
             });
@@ -97,26 +77,17 @@ class Download extends AbstractAreabrick
         return $assetListing->getAssets();
     }
 
-    /**
-     * @return bool
-     */
-    protected function hasMembersBundle()
+    protected function hasMembersBundle(): bool
     {
         return $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Downloads';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Downloads';
     }

@@ -4,7 +4,9 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     symfony:
         container_xml_path: %currentWorkingDirectory%/var/cache/test/TestKernelTestDebugContainer.xml
+        constant_hassers: false
     ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::end\(\)\.#'
         # Bundle dependency calls we need to ignore:
         - '#Class MembersBundle\\Manager\\RestrictionManager not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionUri not found\.#'

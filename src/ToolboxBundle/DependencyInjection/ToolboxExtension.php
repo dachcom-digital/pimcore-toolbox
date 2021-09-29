@@ -115,21 +115,21 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $googleSimpleApiKey = null;
 
         $pimcoreCoreConfig = $container->hasParameter('pimcore.config') ? $container->getParameter('pimcore.config') : [];
-        $pimcoreGoogleServiceConfig = isset($pimcoreCoreConfig['services']) && isset($pimcoreCoreConfig['services']['google']) ? $pimcoreCoreConfig['services']['google'] : [];
+        $pimcoreGoogleServiceConfig = isset($pimcoreCoreConfig['services'], $pimcoreCoreConfig['services']['google']) ? $pimcoreCoreConfig['services']['google'] : [];
 
         // browser api key
-        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === true) {
+        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey')) {
             $googleBrowserApiKey = $container->getParameter('pimcore_system_config.services.google.browserapikey');
-        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key') === true) {
+        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key')) {
             $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
         } elseif (isset($pimcoreGoogleServiceConfig['browser_api_key'])) {
             $googleBrowserApiKey = $pimcoreGoogleServiceConfig['browser_api_key'];
         }
 
         //simple api key
-        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey') === true) {
+        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey')) {
             $googleSimpleApiKey = $container->getParameter('pimcore_system_config.services.google.simpleapikey');
-        } elseif ($container->hasParameter('toolbox_google_service_simple_api_key') === true) {
+        } elseif ($container->hasParameter('toolbox_google_service_simple_api_key')) {
             $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
         } elseif (isset($pimcoreGoogleServiceConfig['simple_api_key'])) {
             $googleSimpleApiKey = $pimcoreGoogleServiceConfig['simple_api_key'];
