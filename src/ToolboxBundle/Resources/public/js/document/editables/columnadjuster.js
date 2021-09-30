@@ -49,8 +49,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
             return;
         }
 
-        console.warn(this.data);
-
         //set current column selection
         this.currentColumnSelection = this.gridSelector.getValue();
         this.currentColumnSelectionName = this.gridSelector.getRawValue();

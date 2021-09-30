@@ -136,7 +136,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         }
 
         //set default
-        $parsedNode['config']['value'] = $this->getSelectedValue($info, $parsedNode, $editableConfig['default'] ?? null);
+        $parsedNode['config']['defaultValue'] = $this->getSelectedValue($info, $parsedNode, $editableConfig['default'] ?? null);
 
         //check store
         if ($this->needStore($editableType) && $this->hasValidStore($editableConfig)) {
@@ -220,7 +220,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
     private function getSelectedValue(?Info $info, array $config, mixed $defaultConfigValue): mixed
     {
         if (!$info instanceof Info) {
-            return $config;
+            return $defaultConfigValue;
         }
 
         $el = $info->getDocumentElement($config['name'], $config['type']);
