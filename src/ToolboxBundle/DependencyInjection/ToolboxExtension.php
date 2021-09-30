@@ -104,9 +104,32 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
 
+        $container->setParameter('toolbox.area_brick.dialog_aware_bricks', $this->determinateConfigDialogAwareBricks($config));
+
         //context resolver
         $definition = $container->getDefinition(ContextResolver::class);
         $definition->setClass($contextResolver);
+    }
+
+    private function determinateConfigDialogAwareBricks(array $config): array
+    {
+        $configDialogAwareBricks = [];
+
+        foreach ($config['custom_areas'] as $areaId => $areaSection) {
+            if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
+                $configDialogAwareBricks[] = $areaId;
+            }
+        }
+
+        foreach ($config['context'] as $context) {
+            foreach ($context['custom_areas'] as $areaId => $areaSection) {
+                if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
+                    $configDialogAwareBricks[] = $areaId;
+                }
+            }
+        }
+
+        return array_unique($configDialogAwareBricks);
     }
 
     private function allocateGoogleMapsApiKey(ContainerBuilder $container): void

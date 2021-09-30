@@ -5,5 +5,5 @@ services:
         autoconfigure: true
         public: true
 
-    # toolbox service brick configuration builder
+    ToolboxBundle\Builder\BrickConfigBuilderInterface: '@ToolboxBundle\Builder\BrickConfigBuilder'
     ToolboxBundle\Builder\BrickConfigBuilder: ~

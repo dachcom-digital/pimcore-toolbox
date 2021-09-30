@@ -9,7 +9,7 @@ use Pimcore\Translation\Translator;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 use Twig\Environment;
 
-class BrickConfigBuilder
+class BrickConfigBuilder implements BrickConfigBuilderInterface
 {
     protected Translator $translator;
     protected Environment $templating;

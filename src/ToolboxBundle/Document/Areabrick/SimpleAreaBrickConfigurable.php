@@ -2,7 +2,7 @@
 
 namespace ToolboxBundle\Document\Areabrick;
 
-class SimpleAreaBrick extends AbstractBaseAreabrick
+class SimpleAreaBrickConfigurable extends AbstractAreabrick
 {
     use SimpleAreaBrickTrait;
 }

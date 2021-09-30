@@ -5,6 +5,7 @@ If you just want to create a simple brick, create a [simple brick](./10_CustomBr
 
 - [Default Brick](./10_CustomBricks.md#default-brick)
 - [Simple Brick](./10_CustomBricks.md#simple-brick)
+- [Bricks without Editables (No Config Dialog)](./10_CustomBricks.md#bricks-without-editables-no-config-dialog)
 
 ## Default Brick
 
@@ -119,7 +120,7 @@ services:
         tags:
             - {  name: toolbox.area.simple_brick, id: my_simple_brick, title: 'My Simple Brick' }
               
-    # you may want to define some more info: description, template path and icon 
+    # OR, you may want to define some more info: description, template path and icon 
     app.brick.my_second_simple_brick:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
@@ -154,3 +155,24 @@ toolbox:
 ```
 
 That's it. If you want to refresh the permission table you also need to execute the `bin/console cache:clear` command.
+
+***
+
+## Bricks without Editables (No Config Dialog)
+Sometimes you need a real simple area brick without any configuration for editors.
+To do so, you only need to change the parent class:
+
+```yaml
+services:
+    # for default bricks
+    App\Document\Areabrick\MyBrick\MyBrick:
+        parent: ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: my_brick_without_configurable_options }
+
+    # for simple bricks
+    app.brick.my_simple_brick_without_configurable_options: 
+        parent: ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick
+        tags:
+            - { name: toolbox.area.simple_brick, id: my_simple_brick_without_configurable_options, title: 'My Simple Brick (Without configurable Options)' }
+```
