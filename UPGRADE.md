@@ -27,9 +27,11 @@
 - `StoreProviderInterface::getValues():array` needs to return an array (return type declaration added)
 - `ContextResolverInterface::getCurrentContextIdentifier():?string` needs to return null|string (return type declaration added)
 
-
 ### New Features
 - ⚠️ [Editable Permissions](https://github.com/dachcom-digital/pimcore-toolbox/issues/161) have been added. Non-Admin Users will **NOT** be able to add editables until you enabled specific permissions for them! 
+- Google Maps Improved: 
+  - Only call API if address has changed
+  - Better Error Reporting: Display some notes (only in editmode), if something went wrong during API call
 
 ***
 

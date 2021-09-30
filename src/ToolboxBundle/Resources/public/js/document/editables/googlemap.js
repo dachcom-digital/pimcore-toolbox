@@ -31,12 +31,11 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
         this.data = data.locations;
         this.previewData = data;
         this.config = this.parseConfig(config);
-
     },
 
     subRender: function () {
 
-        var mapEditButton;
+        var errorCollector = [], mapEditButton;
 
         if (typeof google === 'undefined') {
             return;
@@ -65,6 +64,18 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                 'html': 'No valid API Key defined'
             }, true);
 
+        }
+
+        if (this.data && this.data.length > 0) {
+            Ext.Array.each(this.data, function (location, i) {
+                if (typeof location.status !== 'undefined' && location.status !== null) {
+                    errorCollector.push('[' + i + ']: ' + location.status)
+                }
+            });
+        }
+
+        if (errorCollector.length > 0) {
+            this.element.dom.setAttribute('data-fetch-error', errorCollector.join(','));
         }
     },
 
@@ -127,6 +138,7 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
             compositeField = new Ext.form.FormPanel({
                 hideLabel: true,
+                layout: 'form',
                 style: 'margin-bottom: 15px; padding: 5px; background: rgba(214, 221, 230, 0.45);',
                 items: [
                     {
@@ -245,6 +257,21 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                             flex: 1,
                             grow: false
                         }]
+                    },
+                    {
+                        xtype: 'hidden',
+                        name: 'location_checksum',
+                        value: typeof location.checksum !== 'undefined' ? location.checksum : null,
+                    },
+                    {
+                        xtype: 'hidden',
+                        name: 'location_lat',
+                        value: typeof location.lat !== 'undefined' ? location.lat : null,
+                    },
+                    {
+                        xtype: 'hidden',
+                        name: 'location_lng',
+                        value: typeof location.lng !== 'undefined' ? location.lng : null,
                     }
                 ]
             });
@@ -269,7 +296,7 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
 
         this.form = new Ext.FormPanel({
             itemId: 'form',
-            scrollable: true,
+            scrollable: 'y',
             layout: 'form',
             tbar: ['->', {
                 xtype: 'button',
@@ -341,7 +368,10 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                 city: values['location_city'],
                 country: values['location_country'],
                 hideInfoWindow: values['location_hide_info_window'],
-                add: values['location_add']
+                add: values['location_add'],
+                checksum: values['location_checksum'],
+                lat: values['location_lat'],
+                lng: values['location_lng'],
             };
             locations.push(location);
         } else {
@@ -354,7 +384,10 @@ pimcore.document.editables.googlemap = Class.create(pimcore.document.editable, {
                         city: values['location_city'][index],
                         country: values['location_country'][index],
                         hideInfoWindow: values['location_hide_info_window'][index],
-                        add: values['location_add'][index]
+                        add: values['location_add'][index],
+                        checksum: values['location_checksum'][index],
+                        lat: values['location_lat'][index],
+                        lng: values['location_lng'][index],
                     };
                     locations.push(location);
                 });

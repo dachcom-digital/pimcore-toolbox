@@ -33,6 +33,28 @@
 
 /**
 
+    Toolbox Maps
+
+**/
+div[data-type="googlemap"][data-fetch-error]::before {
+    content: attr(data-fetch-error);
+    position: absolute;
+    z-index: 99;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #a94442;
+    border-radius: 0;
+    font-size: 90%;
+}
+
+/**
+
     Toolbox Columns Adjuster
 
 **/

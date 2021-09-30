@@ -142,7 +142,7 @@ class GoogleMap extends Document\Editable
         }
 
         $dataAttr = [];
-        $dataAttr['data-locations'] = htmlspecialchars(json_encode($this->data), ENT_QUOTES, 'UTF-8');
+        $dataAttr['data-locations'] = htmlspecialchars(json_encode($this->validateLocationValues($this->data)), ENT_QUOTES, 'UTF-8');
         $dataAttr['data-show-info-window-on-load'] = $this->config['iwOnInit'] ?? true;
 
         $dataAttr['data-mapoption-zoom'] = $this->config['mapZoom'] ?? 5;
@@ -178,17 +178,22 @@ class GoogleMap extends Document\Editable
         return $dataAttr;
     }
 
-    /**
-     * @throws \Exception
-     */
     protected function geocodeLocation(array $location, ?string $key): array
     {
         if ($key === null || $this->googleLookUpIsDisabled()) {
-            return array_merge($location, ['lat' => null, 'lng' => null]);
+            return array_merge($location, ['lat' => null, 'lng' => null, 'status' => 'Look-Up has been disabled or Google API Key is empty.']);
         }
 
         $address = $location['street'] . '+' . $location['zip'] . '+' . $location['city'] . '+' . $location['country'];
         $address = urlencode($address);
+
+        $checksum = $location['checksum'] ?? null;
+        $newChecksum = md5($address);
+
+        // we don't need to call api again, nothing have been changed
+        if ($checksum === $newChecksum) {
+            return $location;
+        }
 
         $keyParam = sprintf('&key=%s', $key);
         $url = sprintf('https://maps.google.com/maps/api/geocode/json?address=%s%s', $address, $keyParam);
@@ -199,11 +204,21 @@ class GoogleMap extends Document\Editable
         $response = curl_exec($c);
         curl_close($c);
 
-        $result = json_decode($response, false);
+        try {
+            $result = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            return array_merge($location, ['lat' => null, 'lng' => null, 'status' => $e->getMessage()]);
+        }
 
-        if ($result->status === 'OK') {
-            $location['lat'] = $result->results[0]->geometry->location->lat;
-            $location['lng'] = $result->results[0]->geometry->location->lng;
+        $location['status'] = null;
+
+        if ($result['status'] === 'OK') {
+            $responseLocation = $result['results'][0]['geometry']['location'];
+            $location['lat'] = $responseLocation['lat'];
+            $location['lng'] = $responseLocation['lng'];
+            $location['checksum'] = md5($address);
+        } else {
+            $location['status'] = $result['error_message'] ?? $result['status'];
         }
 
         return $location;
@@ -236,6 +251,33 @@ class GoogleMap extends Document\Editable
         }
 
         return null;
+    }
+
+    protected function validateLocationValues(array $locations): array
+    {
+        $forbiddenFields = [
+            'status',
+            'checksum'
+        ];
+
+        $filteredLocations = [];
+        foreach ($locations as $location) {
+
+            $newLocation = array_filter($location, static function ($data) use ($forbiddenFields) {
+                return !in_array($data, $forbiddenFields, true);
+            }, ARRAY_FILTER_USE_KEY);
+
+            if (isset($newLocation['lat']) && is_numeric($newLocation['lat'])) {
+                $newLocation['lat'] = (float) $newLocation['lat'];
+            }
+            if (isset($newLocation['lng']) && is_numeric($newLocation['lng'])) {
+                $newLocation['lng'] = (float) $newLocation['lng'];
+            }
+
+            $filteredLocations[] = $newLocation;
+        }
+
+        return $filteredLocations;
     }
 
     public function __sleep()
