@@ -34,7 +34,8 @@ class AreaBlockConfigExtension extends AbstractExtension
     public function getAreaBlockConfiguration(array $context = [], $type = null): array
     {
         $document = $context['document'];
+        $editMode = $context['editmode'] ?? false;
 
-        return $this->areaManager->getAreaBlockConfiguration($type, $document instanceof Snippet);
+        return $this->areaManager->getAreaBlockConfiguration($type, $document instanceof Snippet, $editMode);
     }
 }

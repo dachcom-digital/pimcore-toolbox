@@ -18,11 +18,13 @@
 - Instead of `pimcore.area.brick` you need to use the `toolbox.area.brick` tag to register your brick. Also remove `setAreaBrickType` call from your service definition 
 - Always use `$info->setParam(key, value)` instead of `$info->setParams()`, otherwise you'll overwrite given parameters from the toolbox abstract brick
 - Remove `{{ elementConfigBar|raw }}` in your templates
-- Conditional Logic Feature for editable has been removed
-- Reload Property in node `config.reload` has been removed. Use `config_parameter.reload_on_close: true` instead
+- Conditional Logic feature for editable has been removed
+- Reload property in node `config.reload` has been removed. Use `config_parameter.reload_on_close: true` instead
 - Custom view has been removed, TB is now using the pimcore defaults dialog box configuration
    - Config Node `col_class` (In`[BRICKNAME].config_elements.[ELEMENT]` has been removed
 
+### New Features
+- ⚠️ [Editable Permissions](https://github.com/dachcom-digital/pimcore-toolbox/issues/161) have been added. Non-Admin Users will **NOT** be able to add editables until you enabled specific permissions for them! 
 
 ***
 

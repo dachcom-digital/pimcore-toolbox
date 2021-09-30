@@ -594,3 +594,33 @@ body > .single-teaser img {
 .pimcore_area_buttons::after {
     content: none;
 }
+
+/*
+    Editable Permissions
+ */
+.editable-blocked {
+    position: relative;
+}
+
+.editable-blocked:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #c8c8c880;
+    cursor: default;
+    z-index: 9999;
+}
+
+.editable-blocked .pimcore_area_buttons,
+.editable-blocked .toolbox-element-edit-button a {
+    display: none !important;
+}
+
+.editable-blocked .toolbox-element-edit-button {
+    min-height: 35px;
+}

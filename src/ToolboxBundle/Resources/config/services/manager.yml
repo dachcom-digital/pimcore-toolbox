@@ -25,3 +25,8 @@ services:
         public: false
         autowire: true
 
+    ToolboxBundle\Manager\PermissionManagerInterface: '@ToolboxBundle\Manager\PermissionManager'
+    ToolboxBundle\Manager\PermissionManager:
+        public: false
+        autowire: true
+

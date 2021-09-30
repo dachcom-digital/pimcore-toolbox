@@ -9,5 +9,5 @@ interface AreaManagerInterface
     /**
      * @throws \Exception
      */
-    public function getAreaBlockConfiguration(?string $type, bool $fromSnippet = false): array;
+    public function getAreaBlockConfiguration(?string $type, bool $fromSnippet = false, bool $editMode = false): array;
 }

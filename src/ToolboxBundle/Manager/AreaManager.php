@@ -9,11 +9,17 @@ class AreaManager implements AreaManagerInterface
 {
     public ConfigManagerInterface $configManager;
     public AreabrickManager $brickManager;
+    public PermissionManagerInterface $permissionManager;
 
-    public function __construct(ConfigManagerInterface $configManager, AreabrickManager $brickManager)
+    public function __construct(
+        ConfigManagerInterface $configManager,
+        AreabrickManager $brickManager,
+        PermissionManagerInterface $permissionManager
+    )
     {
         $this->configManager = $configManager;
         $this->brickManager = $brickManager;
+        $this->permissionManager = $permissionManager;
     }
 
     public function getAreaBlockName(?string $type = null): string
@@ -25,7 +31,7 @@ class AreaManager implements AreaManagerInterface
         return $this->brickManager->getBrick($type)->getName();
     }
 
-    public function getAreaBlockConfiguration(?string $type, bool $fromSnippet = false): array
+    public function getAreaBlockConfiguration(?string $type, bool $fromSnippet = false, bool $editMode = false): array
     {
         if ($fromSnippet === true) {
             $availableBricks = $this->getAvailableBricksForSnippets($type);
@@ -84,6 +90,10 @@ class AreaManager implements AreaManagerInterface
         $configuration['controlsAlign'] = $areaBlockConfigurationArray['controlsAlign'];
         $configuration['controlsTrigger'] = $areaBlockConfigurationArray['controlsTrigger'];
         $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
+
+        $configuration['toolbox_permissions'] = [
+            'disallowed' => $editMode ? $this->permissionManager->getDisallowedEditables($configuration['allowed']) : []
+        ];
 
         return $configuration;
     }
