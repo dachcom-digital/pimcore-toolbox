@@ -32,7 +32,7 @@
 - Google Maps Improved: 
   - Only call API if address has changed
   - Better Error Reporting: Display some notes (only in editmode), if something went wrong during API call
-
+- Simple Area Brick: Create a simple editable without creating any php classes. Read more about it [here](./docs/10_CustomBricks.md#simple-brick))
 ***
 
 Toolbox 3.x Upgrade Notes: https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/UPGRADE.md

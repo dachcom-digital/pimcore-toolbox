@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\SimpleAreaBrick;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\ToolboxConfig;
@@ -85,6 +86,43 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
 
                 $brickDefinition->addTag('pimcore.area.brick', ['id' => $attributes['id']]);
                 $brickDefinition->addMethodCall('setAreaBrickType', [$type]);
+            }
+        }
+
+        // register simple toolbox bricks
+        $toolboxTaggedServices = $container->findTaggedServiceIds('toolbox.area.simple_brick', true);
+
+        foreach ($toolboxTaggedServices as $id => $tags) {
+            $brickDefinition = $container->getDefinition($id);
+
+            if ($brickDefinition->getClass() !== null) {
+                throw new InvalidDefinitionException(sprintf('Simple Brick "%s" must not have a custom class!', $id));
+            }
+
+            $brickDefinition->setClass(SimpleAreaBrick::class);
+            $brickDefinition->addMethodCall('setAreaBrickType', [AbstractAreabrick::AREABRICK_TYPE_EXTERNAL]);
+
+            foreach ($tags as $attributes) {
+
+                if(!isset($attributes['title']) || empty($attributes['title'])) {
+                    throw new InvalidDefinitionException(sprintf('Simple Brick "%s" has an invalid title', $attributes['id']));
+                }
+
+                $brickDefinition->addMethodCall('setName', [$attributes['title']]);
+
+                if (isset($attributes['description']) && !empty($attributes['description'])) {
+                    $brickDefinition->addMethodCall('setDescription', [$attributes['description']]);
+                }
+
+                if (isset($attributes['template']) && !empty($attributes['template'])) {
+                    $brickDefinition->addMethodCall('setTemplate', [$attributes['template']]);
+                }
+
+                if (isset($attributes['icon']) && !empty($attributes['icon'])) {
+                    $brickDefinition->addMethodCall('setIcon', [$attributes['icon']]);
+                }
+
+                $brickDefinition->addTag('pimcore.area.brick', ['id' => $attributes['id']]);
             }
         }
     }
