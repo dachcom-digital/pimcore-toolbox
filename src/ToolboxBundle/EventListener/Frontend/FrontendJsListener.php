@@ -7,7 +7,6 @@ use Pimcore\Bundle\CoreBundle\EventListener\Traits\EnabledTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -17,32 +16,14 @@ class FrontendJsListener
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
+    private EngineInterface $templatingEngine;
 
-    /**
-     * @var EngineInterface
-     */
-    private $templatingEngine;
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param EngineInterface          $templatingEngine
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        EngineInterface $templatingEngine
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(EngineInterface $templatingEngine)
+    {
         $this->templatingEngine = $templatingEngine;
     }
 
-    /**
-     * @param ResponseEvent $event
-     */
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$this->isEnabled()) {
             return;
@@ -97,12 +78,6 @@ class FrontendJsListener
         $response->setContent($content);
     }
 
-    /**
-     * @param string $template
-     * @param array  $data
-     *
-     * @return string
-     */
     private function renderTemplate(string $template, array $data): string
     {
         $code = $this->templatingEngine->render(

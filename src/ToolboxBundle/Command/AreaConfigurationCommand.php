@@ -15,28 +15,20 @@ use ToolboxBundle\ToolboxConfig;
 
 class AreaConfigurationCommand extends Command
 {
-    /**
-     * @var AdaptiveConfigManagerInterface
-     */
-    protected $adaptiveConfigManager;
+    protected static $defaultName = 'toolbox:check-config';
+    protected static $defaultDescription = 'Check configuration of a given area element.';
 
-    /**
-     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
-     */
+    protected AdaptiveConfigManagerInterface $adaptiveConfigManager;
+
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
         $this->adaptiveConfigManager = $adaptiveConfigManager;
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('toolbox:check-config')
-            ->setDescription('Check configuration of a given area element.')
             ->addOption(
                 'area',
                 'a',
@@ -51,10 +43,7 @@ class AreaConfigurationCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $brickId = $input->getOption('area');
         $contextId = $input->getOption('context');
@@ -67,7 +56,7 @@ class AreaConfigurationCommand extends Command
         if (empty($brickId)) {
             $output->writeln('<error>Please provide a valid Area Brick Id.</error>');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL;
@@ -93,14 +82,14 @@ class AreaConfigurationCommand extends Command
                     $output->writeln('');
                 }
 
-                return 0;
+                return Command::SUCCESS;
             }
 
             $output->writeln('');
             $output->writeln(sprintf('<error>Area Brick with Id "%s" not found.</error>', $brickId));
             $output->writeln('');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $configElements = $brickConfig['config_elements'];
@@ -111,7 +100,7 @@ class AreaConfigurationCommand extends Command
             $output->writeln(sprintf('<comment>Area Brick with Id "%s" does not have any configuration elements.</comment>', $brickId));
             $output->writeln('');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $contextHeadline = $hasContext ? ('in Context "' . $contextId . '"') : '';
@@ -156,17 +145,10 @@ class AreaConfigurationCommand extends Command
             ->setRows($rows);
         $table->render();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    /**
-     * @param array  $array
-     * @param string $string
-     * @param int    $depth
-     *
-     * @return string
-     */
-    private function parseArrayForOutput(array $array = [], $string = '', $depth = 0)
+    private function parseArrayForOutput(array $array = [], string $string = '', int $depth = 0): string
     {
         $depthStr = str_repeat(' ', $depth * 3);
         foreach ($array as $key => $value) {

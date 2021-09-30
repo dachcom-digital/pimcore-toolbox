@@ -12,10 +12,7 @@ final class CalculatorRegistryPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $taggedServices = $container->findTaggedServiceIds('toolbox.calculator', true);
         foreach ($taggedServices as $id => $tags) {

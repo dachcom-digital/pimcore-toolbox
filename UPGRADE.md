@@ -23,6 +23,11 @@
 - Custom view has been removed, TB is now using the pimcore defaults dialog box configuration
    - Config Node `col_class` (In`[BRICKNAME].config_elements.[ELEMENT]` has been removed
 
+### Type Changes
+- `StoreProviderInterface::getValues():array` needs to return an array (return type declaration added)
+- `ContextResolverInterface::getCurrentContextIdentifier():?string` needs to return null|string (return type declaration added)
+
+
 ### New Features
 - ⚠️ [Editable Permissions](https://github.com/dachcom-digital/pimcore-toolbox/issues/161) have been added. Non-Admin Users will **NOT** be able to add editables until you enabled specific permissions for them! 
 

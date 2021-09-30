@@ -55,10 +55,7 @@ use ToolboxBundle\Provider\StoreProviderInterface;
 
 class MyStoreProvider implements StoreProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getValues()
+    public function getValues(): array
     {
         return [
             'my_value' => 'My Value',

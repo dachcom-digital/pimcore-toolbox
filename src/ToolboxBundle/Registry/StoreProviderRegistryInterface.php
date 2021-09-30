@@ -6,25 +6,12 @@ use ToolboxBundle\Provider\StoreProviderInterface;
 
 interface StoreProviderRegistryInterface
 {
-    /**
-     * @param string                 $identifier
-     * @param StoreProviderInterface $service
-     */
-    public function register($identifier, $service);
+    public function register(string $identifier, string $service): void;
+
+    public function has(string $identifier): bool;
 
     /**
-     * @param string $identifier
-     *
-     * @return bool
-     */
-    public function has($identifier);
-
-    /**
-     * @param string $identifier
-     *
-     * @return StoreProviderInterface
-     *
      * @throws \Exception
      */
-    public function get($identifier);
+    public function get(string $identifier): StoreProviderInterface;
 }

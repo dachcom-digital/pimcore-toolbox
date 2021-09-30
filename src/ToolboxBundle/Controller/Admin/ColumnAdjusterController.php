@@ -22,10 +22,6 @@ class ColumnAdjusterController extends Controller\AdminController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
      * @throws \Exception
      */
     public function getColumnInfoAction(Request $request): JsonResponse

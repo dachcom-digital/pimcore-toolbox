@@ -16,10 +16,7 @@ use ToolboxBundle\ToolboxConfig;
 
 final class AreaBrickRegistryPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // create abstract brick definition
         $abstractBrickDefinition = new Definition(AbstractAreabrick::class);

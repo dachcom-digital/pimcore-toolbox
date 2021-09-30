@@ -2,42 +2,28 @@
 
 namespace ToolboxBundle\Registry;
 
+use ToolboxBundle\Calculator\ColumnCalculatorInterface;
+use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
+
 class CalculatorRegistry implements CalculatorRegistryInterface
 {
-    /**
-     * @var array
-     */
-    protected $adapter = [
+    protected array $adapter = [
         'column'       => [],
         'slide_column' => []
     ];
 
-    /**
-     * @var string
-     */
-    private $columnInterface;
+    private string $columnInterface;
+    private string $slideColumnInterface;
 
-    /**
-     * @var string
-     */
-    private $slideColumnInterface;
-
-    /**
-     * @param string $columnInterface
-     * @param string $slideColumnInterface
-     */
-    public function __construct($columnInterface, $slideColumnInterface)
+    public function __construct(string $columnInterface, string $slideColumnInterface)
     {
         $this->columnInterface = $columnInterface;
         $this->slideColumnInterface = $slideColumnInterface;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function register($id, $service, $type)
+    public function register(string $id, string $service, string $type): void
     {
-        $interface = $type == 'column' ? $this->columnInterface : $this->slideColumnInterface;
+        $interface = $type === 'column' ? $this->columnInterface : $this->slideColumnInterface;
 
         if (!in_array($interface, class_implements($service), true)) {
             throw new \InvalidArgumentException(
@@ -48,18 +34,12 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         $this->adapter[$type][$id] = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function has($alias, $type)
+    public function has(string $alias, string $type): bool
     {
         return isset($this->adapter[$type][$alias]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getColumnCalculator($alias)
+    public function getColumnCalculator($alias): ColumnCalculatorInterface
     {
         if (!$this->has($alias, 'column')) {
             throw new \Exception('"' . $alias . '" Column Calculator Identifier does not exist');
@@ -68,10 +48,7 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         return $this->get($alias, 'column');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSlideColumnCalculator($alias)
+    public function getSlideColumnCalculator($alias): SlideColumnCalculatorInterface
     {
         if (!$this->has($alias, 'slide_column')) {
             throw new \Exception('"' . $alias . '" Slide Column Calculator Identifier does not exist');
@@ -80,10 +57,7 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         return $this->get($alias, 'slide_column');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($alias, $type)
+    public function get($alias, $type): SlideColumnCalculatorInterface|ColumnCalculatorInterface
     {
         if (!$this->has($alias, $type)) {
             throw new \Exception('"' . $alias . '" Calculator Identifier does not exist');
