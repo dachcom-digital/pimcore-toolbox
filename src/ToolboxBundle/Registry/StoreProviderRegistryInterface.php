@@ -6,7 +6,7 @@ use ToolboxBundle\Provider\StoreProviderInterface;
 
 interface StoreProviderRegistryInterface
 {
-    public function register(string $identifier, string $service): void;
+    public function register(string $identifier, mixed $service): void;
 
     public function has(string $identifier): bool;
 

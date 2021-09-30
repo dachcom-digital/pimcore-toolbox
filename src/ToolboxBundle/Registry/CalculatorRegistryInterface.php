@@ -7,7 +7,7 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 
 interface CalculatorRegistryInterface
 {
-    public function register(string $id, string $service, string $type): void;
+    public function register(string $id, mixed $service, string $type): void;
 
     public function getSlideColumnCalculator(string $alias): SlideColumnCalculatorInterface;
 

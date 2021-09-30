@@ -8,7 +8,7 @@ class StoreProviderRegistry implements StoreProviderRegistryInterface
 {
     protected array $services = [];
 
-    public function register(string $identifier, string $service): void
+    public function register(string $identifier, mixed $service): void
     {
         if (!in_array(StoreProviderInterface::class, class_implements($service), true)) {
             throw new \InvalidArgumentException(

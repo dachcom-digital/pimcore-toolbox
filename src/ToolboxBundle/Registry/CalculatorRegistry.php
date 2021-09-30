@@ -21,7 +21,7 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         $this->slideColumnInterface = $slideColumnInterface;
     }
 
-    public function register(string $id, string $service, string $type): void
+    public function register(string $id, mixed $service, string $type): void
     {
         $interface = $type === 'column' ? $this->columnInterface : $this->slideColumnInterface;
 
