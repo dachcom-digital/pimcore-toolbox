@@ -122,7 +122,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
             foreach ($tabs as $tabId => $tabName) {
                 $tabbedEditableNodes[] = [
                     'type'  => 'panel',
-                    'title' => $tabName,
+                    'title' => $this->translator->trans($tabName, [], 'admin'),
                     'items' => array_values(
                         array_filter($editableNodes, static function ($editableNode) use ($tabId) {
                             return $editableNode['tab'] === $tabId;

@@ -6,6 +6,7 @@ use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use ToolboxBundle\DependencyInjection\Compiler\AreaBrickAutoloadWatcherPass;
 use ToolboxBundle\DependencyInjection\Compiler\AreaBrickRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
@@ -24,6 +25,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AreaBrickRegistryPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 255);
+        $container->addCompilerPass(new AreaBrickAutoloadWatcherPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -255);
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
         $container->addCompilerPass(new StoreProviderPass());

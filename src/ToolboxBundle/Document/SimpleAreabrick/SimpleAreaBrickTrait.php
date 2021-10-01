@@ -1,6 +1,6 @@
 <?php
 
-namespace ToolboxBundle\Document\Areabrick;
+namespace ToolboxBundle\Document\SimpleAreabrick;
 
 trait SimpleAreaBrickTrait
 {
