@@ -27,8 +27,9 @@
     padding: 10px;
 }
 
-.toolbox-columns .toolbox-column .pimcore_area_entry:first-child .pimcore_area_buttons {
+.toolbox-columns .toolbox-column .pimcore_area_entry .pimcore_area_buttons {
     margin-top: 0;
+    top: 0 !important;
 }
 
 /**

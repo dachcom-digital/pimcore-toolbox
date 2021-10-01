@@ -8,7 +8,8 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 [![Tests](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/Codeception?style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22Codeception%22)
 [![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan?style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22PHP%20Stan%22)
 
-![pimcore-toolbox](https://user-images.githubusercontent.com/700119/27372271-541e6106-5664-11e7-9159-7f4aefa26cb6.png)
+![Pimcore Toolbox](https://user-images.githubusercontent.com/700119/135613598-a9ef2c69-9a44-41cd-8542-596a0322d3da.png)
+
 
 ### Release Plan
 
