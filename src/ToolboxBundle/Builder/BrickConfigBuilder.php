@@ -56,7 +56,6 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
                 'width'  => $configWindowSize === 'small' ? 600 : 800,
                 'height' => $configWindowSize === 'small' ? 400 : 600,
             ];
-
         }
 
         if (is_array($configWindowSize)) {
@@ -83,7 +82,6 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         $acStoreProcessed = false;
 
         foreach ($configElements as $configElementName => $elementData) {
-
             $editableNode = $this->parseConfigElement($info, $configElementName, $elementData, $acStoreProcessed);
 
             //if element need's a store and store is empty: skip field
@@ -98,7 +96,6 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
             if ($elementData['type'] === 'additionalClasses') {
                 $acStoreProcessed = true;
             }
-
         }
 
         // move additional classes to bottom
@@ -117,7 +114,6 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
         // assign tabs, if configured
         if (count($tabs) > 0) {
-
             $tabbedEditableNodes = [];
             foreach ($tabs as $tabId => $tabName) {
                 $tabbedEditableNodes[] = [
@@ -135,7 +131,6 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
                 'type'  => 'tabpanel',
                 'items' => $tabbedEditableNodes
             ];
-
         }
 
         return $editableNodes;

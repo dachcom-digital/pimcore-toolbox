@@ -17,7 +17,6 @@ class AreaConfigurationCommand extends Command
 {
     protected static $defaultName = 'toolbox:check-config';
     protected static $defaultDescription = 'Check configuration of a given area element.';
-
     protected AdaptiveConfigManagerInterface $adaptiveConfigManager;
 
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)

@@ -72,10 +72,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('configure', [
             [
                 'elements' => [
-                    'const'        => 'one',
-                    'property'     => 'one',
+                    'const'        => 'none',
                     'method'       => 'one',
-                    'trait_import' => 'one'
+                    'property'     => 'none',
+                    'trait_import' => 'none'
                 ],
             ]
         ]);

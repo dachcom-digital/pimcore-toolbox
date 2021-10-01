@@ -36,6 +36,5 @@ class PermissionListener implements EventSubscriberInterface
         }
 
         $this->permissionManager->synchroniseEditablePermissions();
-
     }
 }

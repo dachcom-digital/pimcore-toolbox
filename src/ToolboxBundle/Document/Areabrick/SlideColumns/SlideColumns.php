@@ -80,5 +80,4 @@ class SlideColumns extends AbstractAreabrick
     {
         return 'Toolbox Slide Columns';
     }
-
 }

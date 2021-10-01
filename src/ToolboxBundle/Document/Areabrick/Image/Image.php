@@ -10,7 +10,7 @@ class Image extends AbstractAreabrick
 {
     public function action(Info $info): ?Response
     {
-       return parent::action($info);
+        return parent::action($info);
     }
 
     public function getName()

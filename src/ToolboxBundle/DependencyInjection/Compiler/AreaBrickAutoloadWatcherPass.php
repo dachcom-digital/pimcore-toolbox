@@ -21,14 +21,13 @@ final class AreaBrickAutoloadWatcherPass implements CompilerPassInterface
         $possibleNoPimcoreAwareBricks = [];
 
         foreach ($container->getDefinitions() as $definitionId => $definition) {
-
             if (!str_contains((string) $definitionId, '.area.brick.')) {
                 continue;
             }
 
             if (count(array_filter($definition->getTags(), static function ($tag) {
-                    return in_array($tag, ['toolbox.area.brick', 'toolbox.area.simple_brick']);
-                }, ARRAY_FILTER_USE_KEY)) !== 0) {
+                return in_array($tag, ['toolbox.area.brick', 'toolbox.area.simple_brick']);
+            }, ARRAY_FILTER_USE_KEY)) !== 0) {
                 continue;
             }
 
@@ -58,6 +57,5 @@ final class AreaBrickAutoloadWatcherPass implements CompilerPassInterface
             'Please disable the area autoload feature (pimcore.documents.areas.autoload = false), remove the classes or register them by using the toolbox.area.brick tag: %s',
             implode(', ', $possibleNoPimcoreAwareBricks)
         ));
-
     }
 }

@@ -12,10 +12,9 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 {
     public const AREABRICK_TYPE_INTERNAL = 'internal';
     public const AREABRICK_TYPE_EXTERNAL = 'external';
-
     protected ConfigManagerInterface $configManager;
     protected LayoutManager $layoutManager;
-    public string $areaBrickType = 'internal';
+    protected string $areaBrickType = 'internal';
 
     public function setAreaBrickType(string $type = self::AREABRICK_TYPE_INTERNAL): void
     {
@@ -40,7 +39,6 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 
         return $this->configManager->setAreaNameSpace($space);
     }
-
 
     public function setLayoutManager(LayoutManager $layoutManager): void
     {

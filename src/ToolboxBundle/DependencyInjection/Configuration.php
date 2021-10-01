@@ -300,8 +300,7 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder
             ->validate()
-                ->ifTrue(function ($v) use($internalTypes) {
-
+                ->ifTrue(function ($v) use ($internalTypes) {
                     if ($internalTypes === false) {
                         return false;
                     }
@@ -323,9 +322,10 @@ class Configuration implements ConfigurationInterface
                 ->validate()
                     ->ifTrue(function ($v) {
                         $tabs = $v['tabs'];
+
                         return count($tabs) > 0 && count(array_filter($v['config_elements'], function($configElement) use ($tabs) {
-                                return !array_key_exists($configElement['tab'], $tabs);
-                            })) > 0;
+                            return !array_key_exists($configElement['tab'], $tabs);
+                        })) > 0;
                     })
                     ->then(function ($v) {
                         @trigger_error(
@@ -337,9 +337,10 @@ class Configuration implements ConfigurationInterface
                 ->validate()
                     ->ifTrue(function ($v) {
                         $tabs = $v['tabs'];
+
                         return count($tabs) === 0 && count(array_filter($v['config_elements'], function($configElement) {
-                                return $configElement['tab'] !== null;
-                            })) > 0;
+                            return $configElement['tab'] !== null;
+                        })) > 0;
                     })
                     ->then(function ($v) {
                         @trigger_error('Unknown configured area tabs in config_elements. No tabs have been defined', E_USER_ERROR);
@@ -375,8 +376,7 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new ArrayNodeDefinition('config_elements');
 
-        if($internalTypes === true) {
-
+        if ($internalTypes === true) {
             //@todo: get them dynamically!!
             $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
 
@@ -411,5 +411,4 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-
 }

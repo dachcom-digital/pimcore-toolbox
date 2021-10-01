@@ -39,9 +39,10 @@ class GoogleMap extends Document\Editable
     {
         $attributes = $this->buildMapAttributes();
 
-        $dataAttrString = implode(' ', array_map(static function ($v, $k) {
-            return sprintf('%s="%s"', $k, $v);
-        },
+        $dataAttrString = implode(' ', array_map(
+            static function ($v, $k) {
+                return sprintf('%s="%s"', $k, $v);
+            },
             $attributes,
             array_keys($attributes)
         ));
@@ -262,7 +263,6 @@ class GoogleMap extends Document\Editable
 
         $filteredLocations = [];
         foreach ($locations as $location) {
-
             $newLocation = array_filter($location, static function ($data) use ($forbiddenFields) {
                 return !in_array($data, $forbiddenFields, true);
             }, ARRAY_FILTER_USE_KEY);

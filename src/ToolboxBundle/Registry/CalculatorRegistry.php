@@ -11,7 +11,6 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         'column'       => [],
         'slide_column' => []
     ];
-
     private string $columnInterface;
     private string $slideColumnInterface;
 

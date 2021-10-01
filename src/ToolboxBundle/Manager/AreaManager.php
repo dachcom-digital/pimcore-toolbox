@@ -15,8 +15,7 @@ class AreaManager implements AreaManagerInterface
         ConfigManagerInterface $configManager,
         AreabrickManager $brickManager,
         PermissionManagerInterface $permissionManager
-    )
-    {
+    ) {
         $this->configManager = $configManager;
         $this->brickManager = $brickManager;
         $this->permissionManager = $permissionManager;

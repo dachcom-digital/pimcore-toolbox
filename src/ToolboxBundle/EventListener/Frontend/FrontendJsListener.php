@@ -15,7 +15,6 @@ class FrontendJsListener
     use EnabledTrait;
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
-
     private EngineInterface $templatingEngine;
 
     public function __construct(EngineInterface $templatingEngine)

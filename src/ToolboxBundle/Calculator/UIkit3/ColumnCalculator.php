@@ -91,13 +91,12 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 'columnType'  => $value,
                 'name'        => $columnName
             ];
-            
+
             $columnCounter++;
         }
 
         return $columns;
     }
-
 
     public function getColumnInfoForAdjuster(?string $value, ?array $customColumnConfiguration = null): bool|array
     {

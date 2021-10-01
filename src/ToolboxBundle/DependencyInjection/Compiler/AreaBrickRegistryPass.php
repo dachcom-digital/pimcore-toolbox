@@ -75,7 +75,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             }
 
             foreach ($tags as $attributes) {
-
                 $type = AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL;
 
                 if (str_starts_with($id, 'ToolboxBundle')) {
@@ -97,7 +96,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if ($brickDefinition->getParent() === AbstractBaseAreabrick::class) {
                     $notEditDialogAwareBricks[] = $attributes['id'];
                 }
-
             }
         }
 
@@ -122,7 +120,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             $simpleBrickDefinition->addMethodCall('setAreaBrickType', [AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL]);
 
             foreach ($tags as $attributes) {
-
                 if (!isset($attributes['title']) || empty($attributes['title'])) {
                     throw new InvalidDefinitionException(sprintf('Simple Areabrick "%s" has an invalid title', $attributes['id']));
                 }
@@ -146,7 +143,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if ($simpleBrickDefinition->getParent() === AbstractBaseAreabrick::class) {
                     $notEditDialogAwareBricks[] = $attributes['id'];
                 }
-
             }
         }
 
@@ -155,7 +151,8 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             foreach ($requestedEditDialogAwareBricks as $requestedEditDialogAwareBrickId) {
                 if (in_array($requestedEditDialogAwareBrickId, $notEditDialogAwareBricks, true)) {
                     throw new InvalidDefinitionException(
-                        sprintf('Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from custom_areas.%s',
+                        sprintf(
+                            'Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from custom_areas.%s',
                             $requestedEditDialogAwareBrickId,
                             AbstractAreabrick::class,
                             $requestedEditDialogAwareBrickId

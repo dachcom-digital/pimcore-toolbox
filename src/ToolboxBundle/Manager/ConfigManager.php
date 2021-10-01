@@ -161,7 +161,7 @@ class ConfigManager implements ConfigManagerInterface
                 $parsedData['areas'] = $filteredElements['areas'];
                 $parsedData['custom_areas'] = $filteredElements['custom_areas'];
 
-                // remove disabled areas for this context
+            // remove disabled areas for this context
             } elseif (!empty($contextSettings['disabled_areas'])) {
                 foreach ($contextSettings['disabled_areas'] as $areaId) {
                     if (isset($parsedData['areas'][$areaId])) {

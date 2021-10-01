@@ -48,7 +48,6 @@ class PermissionManager implements PermissionManagerInterface
          * @var AreabrickInterface $areaBrick
          */
         foreach ($this->brickManager->getBricks() as $editableId => $areaBrick) {
-
             $permission = $this->generatePermissionName($editableId);
             $definition = User\Permission\Definition::getByKey($permission);
 
@@ -68,7 +67,6 @@ class PermissionManager implements PermissionManagerInterface
         $allowedElements = [];
 
         foreach ($editables as $editableId) {
-
             if ($this->isAllowedEditable($editableId)) {
                 continue;
             }
