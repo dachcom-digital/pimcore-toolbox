@@ -44,8 +44,8 @@ class PermissionManager implements PermissionManagerInterface
         }
 
         /**
-         * @var string             $editableName
-         * @var AreabrickInterface $areabrick
+         * @var string             $editableId
+         * @var AreabrickInterface $areaBrick
          */
         foreach ($this->brickManager->getBricks() as $editableId => $areaBrick) {
 
