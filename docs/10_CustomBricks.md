@@ -6,6 +6,7 @@ If you just want to create a simple brick, create a [simple brick](./10_CustomBr
 - [Default Brick](./10_CustomBricks.md#default-brick)
 - [Simple Brick](./10_CustomBricks.md#simple-brick)
 - [Bricks without Editables (No Config Dialog)](./10_CustomBricks.md#bricks-without-editables-no-config-dialog)
+- [Bricks with tabbed config dialog](./10_CustomBricks.md#tabbed-config-dialog)
 
 ## Default Brick
 
@@ -175,4 +176,39 @@ services:
         parent: ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick
         tags:
             - { name: toolbox.area.simple_brick, id: my_simple_brick_without_configurable_options, title: 'My Simple Brick (Without configurable Options)' }
+```
+
+***
+
+### Tabbed Config Dialog
+![image](https://user-images.githubusercontent.com/700119/135585193-0a3d37df-5492-4b41-b2b2-a97220f53986.png)
+
+To use tabs in your config dialog, you have to define them via the tab config node:
+
+```yaml
+toolbox:
+    custom_areas:
+        dummy_brick:
+            tabs:              # <-- define tabs here first!
+                tab1: 'Tab 1'
+                tab2: 'Tab 2'
+            config_elements:
+                title1:
+                    type: input
+                    title: That's Title I
+                    description: Lorem Ipsum
+                    tab: tab1  # <-- add to tab1
+                    config: ~
+                title2:
+                    type: input
+                    title: That's Title II
+                    description: Lorem Ipsum
+                    tab: tab1  # <-- add to tab1
+                    config: ~
+                title3:
+                    type: input
+                    title: That's Titel III
+                    description: Lorem Ipsum
+                    tab: tab2   # <-- add to tab2
+                    config: ~
 ```

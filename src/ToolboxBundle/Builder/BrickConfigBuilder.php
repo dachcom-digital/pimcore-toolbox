@@ -31,6 +31,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
         $configParameter = $configNode['config_parameter'] ?? [];
         $configElements = $configNode['config_elements'] ?? [];
+        $tabs = $configNode['tabs'] ?? [];
 
         $configWindowSize = $this->getConfigWindowSize($configParameter);
 
@@ -39,19 +40,9 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
         $config->setReloadOnClose($configParameter['reload_on_close'] ?? false);
 
-        $defaultFields = [];
-        $acFields = [];
-        $configElements = $this->parseConfigElements($info, $brickId, $themeOptions, $configElements);
+        $items = $this->parseConfigElements($info, $brickId, $themeOptions, $configElements, $tabs);
 
-        foreach ($configElements as $configElement) {
-            if ($configElement['additional_classes_element'] === true) {
-                $acFields[] = $configElement;
-            } else {
-                $defaultFields[] = $configElement;
-            }
-        }
-
-        $config->setItems(array_merge($defaultFields, $acFields));
+        $config->setItems($items);
 
         return $config;
     }
@@ -81,7 +72,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         ];
     }
 
-    private function parseConfigElements(?Info $info, string $brickId, array $themeOptions, array $configElements): array
+    private function parseConfigElements(?Info $info, string $brickId, array $themeOptions, array $configElements, array $tabs): array
     {
         $editableNodes = [];
 
@@ -102,11 +93,48 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
             $editableNodes[] = $editableNode;
 
-            $editableNodes = $this->checkColumnAdjusterField($brickId, $themeOptions, $configElementName, $editableNodes);
+            $editableNodes = $this->checkColumnAdjusterField($brickId, $elementData['tab'], $themeOptions, $configElementName, $editableNodes);
 
             if ($elementData['type'] === 'additionalClasses') {
                 $acStoreProcessed = true;
             }
+
+        }
+
+        // move additional classes to bottom
+        $defaultFields = [];
+        $acFields = [];
+
+        foreach ($editableNodes as $editableNode) {
+            if ($editableNode['additional_classes_element'] === true) {
+                $acFields[] = $editableNode;
+            } else {
+                $defaultFields[] = $editableNode;
+            }
+        }
+
+        $editableNodes = array_merge($defaultFields, $acFields);
+
+        // assign tabs, if configured
+        if (count($tabs) > 0) {
+
+            $tabbedEditableNodes = [];
+            foreach ($tabs as $tabId => $tabName) {
+                $tabbedEditableNodes[] = [
+                    'type'  => 'panel',
+                    'title' => $tabName,
+                    'items' => array_values(
+                        array_filter($editableNodes, static function ($editableNode) use ($tabId) {
+                            return $editableNode['tab'] === $tabId;
+                        })
+                    )
+                ];
+            }
+
+            return [
+                'type'  => 'tabpanel',
+                'items' => $tabbedEditableNodes
+            ];
 
         }
 
@@ -151,6 +179,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         $elementNode = [
             'type'                       => $elementData['type'],
             'name'                       => $configElementName,
+            'tab'                        => $elementData['tab'],
             'label'                      => isset($elementData['title']) && !empty($elementData['title']) ? $elementData['title'] : null,
             'description'                => isset($elementData['description']) && !empty($elementData['description']) ? $elementData['description'] : null,
             'config'                     => $elementData['config'] ?? [],
@@ -240,7 +269,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         return !empty($value) ? $value : $defaultConfigValue;
     }
 
-    private function checkColumnAdjusterField(string $brickId, array $themeOptions, string $configElementName, array $editableNodes): array
+    private function checkColumnAdjusterField(string $brickId, ?string $tab, array $themeOptions, string $configElementName, array $editableNodes): array
     {
         if ($brickId !== 'columns') {
             return $editableNodes;
@@ -256,9 +285,10 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
         $editableNodes[] = [
             'type'                       => 'columnadjuster',
+            'name'                       => 'columnadjuster',
+            'tab'                        => $tab,
             'label'                      => null,
             'config'                     => [],
-            'name'                       => 'columnadjuster',
             'additional_classes_element' => false,
         ];
 
