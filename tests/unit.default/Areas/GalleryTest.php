@@ -2,31 +2,30 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Relations;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Relations;
+use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Tests\Util\TestHelper;
 
 class GalleryTest extends AbstractAreaTest
 {
-    const TYPE = 'gallery';
+    public const TYPE = 'gallery';
 
     public function testGalleryBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('relations', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('images', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('relations', $configElements[0]['type']);
+        $this->assertEquals('images', $configElements[0]['name']);
 
-        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('use_light_box', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[1]['type']);
+        $this->assertEquals('use_light_box', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('use_thumbnails', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('use_thumbnails', $configElements[2]['name']);
     }
 
     public function testGallery()
@@ -53,7 +52,7 @@ class GalleryTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompare($asset1->getFullPath(), $asset2->getFullPath())),
+            $this->filter($this->getCompare($asset1, $asset2)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
@@ -86,7 +85,7 @@ class GalleryTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithLightBox($asset1->getFullPath(), $asset2->getFullPath())),
+            $this->filter($this->getCompareWithLightBox($asset1, $asset2)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
@@ -119,7 +118,7 @@ class GalleryTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithThumbnails($asset1->getFullPath(), $asset2->getFullPath())),
+            $this->filter($this->getCompareWithThumbnails($asset1, $asset2)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements, ['toolboxGalleryId' => 'test']))
         );
     }
@@ -157,17 +156,17 @@ class GalleryTest extends AbstractAreaTest
         );
     }
 
-    private function getCompare($path1, $path2)
+    private function getCompare(\Pimcore\Model\Asset\Image $asset1, \Pimcore\Model\Asset\Image $asset2)
     {
         return '<div class="toolbox-element toolbox-gallery ">
                     <div class="row">
                         <div class="col-12 col-gallery">
                             <ul class="slick-slider list-unstyled  test-gal responsive-dots "                        data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true"    >
                                 <li class="slide item">
-                                    <img alt="" src="' . $path1 . '" />
+                                    ' . $asset1->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                                 <li class="slide item">
-                                    <img alt="" src="' . $path2 . '" />
+                                   ' . $asset2->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                             </ul>
                         </div>
@@ -175,17 +174,17 @@ class GalleryTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithLightBox($path1, $path2)
+    private function getCompareWithLightBox(\Pimcore\Model\Asset\Image $asset1, \Pimcore\Model\Asset\Image $asset2)
     {
         return '<div class="toolbox-element toolbox-gallery ">
                     <div class="row">
                         <div class="col-12 col-gallery">
                             <ul class="slick-slider list-unstyled  test-gal responsive-dots light-box"                        data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true"    >
-                                <li class="slide item"data-src="' . $path1 . '">
-                                    <img alt="" src="' . $path1 . '" />
+                                <li class="slide item"data-src="' . $asset1->getThumbnail('contentImage')->getPath() . '">
+                                    ' . $asset1->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
-                                <li class="slide item"data-src="' . $path2 . '">
-                                    <img alt="" src="' . $path2 . '" />
+                                <li class="slide item"data-src="' . $asset2->getThumbnail('contentImage')->getPath() . '">
+                                    ' . $asset2->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                             </ul>
                         </div>
@@ -193,25 +192,25 @@ class GalleryTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithThumbnails($path1, $path2)
+    private function getCompareWithThumbnails(\Pimcore\Model\Asset\Image $asset1, \Pimcore\Model\Asset\Image $asset2)
     {
         return '<div class="toolbox-element toolbox-gallery ">
                     <div class="row">
                         <div class="col-12 col-gallery">
                             <ul class="slick-slider list-unstyled thumbnail-slider test-gal responsive-dots "            data-as-nav-for=".test-thumbs"            data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true"    >
                                 <li class="slide item">
-                                    <img alt="" src="' . $path1 . '" />
+                                    ' . $asset1->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                                 <li class="slide item">
-                                    <img alt="" src="' . $path2 . '" />
+                                    ' . $asset2->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                             </ul>
                             <ul class="slick-slider slick-slider-thumbs list-unstyled test-thumbs"            data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="5" data-dots="false" data-arrows="true" data-center-mode="true"            data-as-nav-for=".test-gal"        >
                                 <li class="slide">
-                                    <img alt="" src="' . $path1 . '" />
+                                    ' . $asset1->getThumbnail('galleryThumb')->getHtml() . '
                                 </li>
                                 <li class="slide">
-                                    <img alt="" src="' . $path2 . '" />
+                                    ' . $asset2->getThumbnail('galleryThumb')->getHtml() . '
                                 </li>
                             </ul>
                         </div>
@@ -219,17 +218,17 @@ class GalleryTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithAdditionalClass($path1, $path2)
+    private function getCompareWithAdditionalClass(\Pimcore\Model\Asset\Image $asset1, \Pimcore\Model\Asset\Image $asset2)
     {
         return '<div class="toolbox-element toolbox-gallery additional-class">
                     <div class="row">
                         <div class="col-12 col-gallery">
                             <ul class="slick-slider list-unstyled  test-gal responsive-dots "                        data-lazy-load="false" data-fade="false" data-variable-width="false" data-autoplay="false" data-slides-to-show="1" data-dots="false" data-arrows="true"    >
                                 <li class="slide item">
-                                    <img alt="" src="' . $path1 . '" />
+                                    ' . $asset1->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                                 <li class="slide item">
-                                    <img alt="" src="' . $path2 . '" />
+                                    ' . $asset2->getThumbnail('galleryImage')->getHtml() . '
                                 </li>
                             </ul>
                         </div>

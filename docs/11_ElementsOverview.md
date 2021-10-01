@@ -266,10 +266,10 @@ toolbox:
                 simple_api_key: false
 ```
 ### jQuery Plugin
-There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md#google-maps-extension)
+There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md)
 
 ### Route Link Renderer
-There is a macro in `views/Macro/mapLink.html.twig` (used in `views/Theme/GoogleMap/infoWindow.html.twig`) which will render the map route link:
+There is a macro in `views/Macro/mapLink.html.twig` (used in `views/[THEME NAME]/google-map/info-window.html.twig`) which will render the map route link:
 
 ```twig
 {# default #}
@@ -311,7 +311,7 @@ Create an iFrame field.
 | `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
 
 ### jQuery Plugin
-There is also a jquery plugin for the iFrame element. Read more about it [here](80_Javascript.md#iframe-extension).
+There is also a jquery plugin for the iFrame element. Read more about it [here](80_Javascript.md).
 We can't provide any out-of-the-box solution for changing the iframe height dynamically (cross-domain policy), so you need to take care about that by yourself.
 Possible Solutions to mastering dynamic iFrame heights:
 
@@ -522,7 +522,7 @@ toolbox:
 ```
 
 ### jQuery Plugin
-There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md#video-extension)
+There is also a jquery plugin for the video element. Read more about it [here](80_Javascript.md)
 
 # Element Config Field Overview
 In short, you're able to use all the [pimcore editables](https://www.pimcore.org/docs/5.0.0/Documents/Editables/index.html).

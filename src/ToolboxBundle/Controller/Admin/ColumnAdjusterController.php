@@ -10,20 +10,9 @@ use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class ColumnAdjusterController extends Controller\AdminController
 {
-    /**
-     * @var CalculatorRegistryInterface
-     */
-    private $calculatorRegistry;
+    private CalculatorRegistryInterface $calculatorRegistry;
+    private ConfigManagerInterface $configManager;
 
-    /**
-     * @var ConfigManagerInterface
-     */
-    private $configManager;
-
-    /**
-     * @param ConfigManagerInterface      $configManager
-     * @param CalculatorRegistryInterface $calculatorRegistry
-     */
     public function __construct(
         ConfigManagerInterface $configManager,
         CalculatorRegistryInterface $calculatorRegistry
@@ -33,13 +22,9 @@ class ColumnAdjusterController extends Controller\AdminController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     *
      * @throws \Exception
      */
-    public function getColumnInfoAction(Request $request)
+    public function getColumnInfoAction(Request $request): JsonResponse
     {
         $currentColumn = $request->get('currentColumn');
         $customColumnConfigurationData = $request->get('customColumnConfiguration');
@@ -72,14 +57,7 @@ class ColumnAdjusterController extends Controller\AdminController
         ]);
     }
 
-    /**
-     * @param array  $theme
-     * @param string $node
-     * @param string $expectedType
-     *
-     * @return mixed|null
-     */
-    protected function assertGridConfig(array $theme, string $node, string $expectedType = 'string')
+    protected function assertGridConfig(array $theme, string $node, string $expectedType = 'string'): mixed
     {
         if (!isset($theme['grid'])) {
             return null;

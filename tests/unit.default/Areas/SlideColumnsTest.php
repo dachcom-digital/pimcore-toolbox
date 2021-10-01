@@ -2,25 +2,24 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Dachcom\Codeception\Util\VersionHelper;
+use Pimcore\Model\Document\Editable;
 
 class SlideColumnsTest extends AbstractAreaTest
 {
-    const TYPE = 'slideColumns';
+    public const TYPE = 'slideColumns';
 
     public function testSlideColumnsBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(2, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('slides_per_view', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('slides_per_view', $configElements[0]['name']);
 
-        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('equal_height', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[1]['type']);
+        $this->assertEquals('equal_height', $configElements[1]['name']);
     }
 
     public function testSlideColumnsConfigParameter()
@@ -41,13 +40,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $selectClass = 'Pimcore\Model\Document\Editable\Select';
-        } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-        }
-
-        $slidesPerView = new $selectClass();
+        $slidesPerView = new Editable\Select();
         $slidesPerView->setDataFromResource('4');
 
         $elements = [
@@ -64,18 +57,10 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $selectClass = 'Pimcore\Model\Document\Editable\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
-        } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
-        }
-
-        $slidesPerView = new $selectClass();
+        $slidesPerView = new Editable\Select();
         $slidesPerView->setDataFromResource('4');
 
-        $equalHeight = new $checkboxClass();
+        $equalHeight = new Editable\Checkbox();
         $equalHeight->setDataFromEditmode(1);
 
         $elements = [
@@ -93,18 +78,35 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $selectClass = 'Pimcore\Model\Document\Editable\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Editable\Checkbox';
-        } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-            $checkboxClass = 'Pimcore\Model\Document\Tag\Checkbox';
-        }
+        $breakpoints = [
+            4 => [
+                1320 =>
+                    [
+                        'slidesToShow' => 4,
+                    ],
+                992  =>
+                    [
+                        'slidesToShow' => 3,
+                    ],
+                768  =>
+                    [
+                        'slidesToShow' => 2,
+                        'arrows'       => true,
+                        'dots'         => false,
+                    ],
+                0    =>
+                    [
+                        'slidesToShow' => 1,
+                        'arrows'       => true,
+                        'dots'         => false,
+                    ],
+            ]
+        ];
 
-        $slidesPerView = new $selectClass();
+        $slidesPerView = new Editable\Select();
         $slidesPerView->setDataFromResource('4');
 
-        $equalHeight = new $checkboxClass();
+        $equalHeight = new Editable\Checkbox();
         $equalHeight->setDataFromEditmode(1);
 
         $configManager = $this->getToolboxConfig();
@@ -116,15 +118,17 @@ class SlideColumnsTest extends AbstractAreaTest
             'column_classes' => [
                 4 => 'col-12 col-sm-12 col-lg-2',
             ],
-            'breakpoints'    => [
-                4 => 'col-12 col-sm-12 col-lg-2'
-            ]
+            'breakpoints'    => $breakpoints
         ];
 
         $configManager->setConfig([
             'areas'                    => [self::TYPE => $slideColumns],
             'theme'                    => $theme,
-            'area_block_configuration' => [],
+            'area_block_configuration' => [
+                'toolbar'         => [],
+                'controlsAlign'   => 'top',
+                'controlsTrigger' => 'hover',
+            ],
             'areas_appearance'         => [],
         ]);
 
@@ -134,7 +138,7 @@ class SlideColumnsTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithBreakPoints()),
+            $this->filter($this->getCompareWithBreakPoints($breakpoints[4])),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -143,16 +147,10 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $selectClass = 'Pimcore\Model\Document\Editable\Select';
-        } else {
-            $selectClass = 'Pimcore\Model\Document\Tag\Select';
-        }
-
-        $combo = new $selectClass();
+        $combo = new Editable\Select();
         $combo->setDataFromResource('additional-class');
 
-        $slidesPerView = new $selectClass();
+        $slidesPerView = new Editable\Select();
         $slidesPerView->setDataFromResource('4');
 
         $elements = [
@@ -170,7 +168,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns  ">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -192,7 +190,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns  equal-height">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -210,11 +208,11 @@ class SlideColumnsTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithBreakPoints()
+    private function getCompareWithBreakPoints(array $breakPoints = [])
     {
         return '<div class="toolbox-element toolbox-slide-columns  equal-height">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="&quot;col-12 col-sm-12 col-lg-2&quot;">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="' . htmlspecialchars(json_encode($breakPoints)) . '">
                             <div class="column col-12 col-sm-12 col-lg-2">
                                 <div class="slide-column slide-1"></div>
                             </div>
@@ -236,7 +234,7 @@ class SlideColumnsTest extends AbstractAreaTest
     {
         return '<div class="toolbox-element toolbox-slide-columns additional-class ">
                     <div class="row">
-                        <div class="slide-columns slide-elements-4 slideColumns-1" data-slides="4" data-breakpoints="[]">
+                        <div class="slide-columns slide-elements-4 slideColumns-0" data-slides="4" data-breakpoints="[]">
                             <div class="column col-12 col-sm-3">
                                 <div class="slide-column slide-1"></div>
                             </div>

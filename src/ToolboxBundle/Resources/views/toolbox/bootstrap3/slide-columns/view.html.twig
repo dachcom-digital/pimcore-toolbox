@@ -1,0 +1,14 @@
+<div class="slide-columns slide-elements-{{ slidesPerView }} {{ id }}" data-slides="{{ slidesPerView }}" data-breakpoints="{{ breakpoints|json_encode }}">
+    {% set c = 1 %}
+    {% for i in pimcore_iterate_block(slideElements) %}
+        <div class="col {{ slidesPerViewClasses }}">
+            {% if editmode == true %}
+                <span class="count">{{ c }} / {{ slideElements.count }}</span>
+            {% endif %}
+            <div class="slide-column slide-{{ slideElements.currentIndex }}">
+                {% include '@Toolbox/helper/areablock.html.twig' with {'name': 'slideCol', 'type' : 'slideColumns'} %}
+            </div>
+        </div>
+        {% set c = c+1 %}
+    {% endfor %}
+</div>

@@ -6,15 +6,9 @@ use ToolboxBundle\Provider\StoreProviderInterface;
 
 class StoreProviderRegistry implements StoreProviderRegistryInterface
 {
-    /**
-     * @var array
-     */
-    protected $services = [];
+    protected array $services = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function register($identifier, $service)
+    public function register(string $identifier, mixed $service): void
     {
         if (!in_array(StoreProviderInterface::class, class_implements($service), true)) {
             throw new \InvalidArgumentException(
@@ -25,18 +19,12 @@ class StoreProviderRegistry implements StoreProviderRegistryInterface
         $this->services[$identifier] = $service;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function has($identifier)
+    public function has(string $identifier): bool
     {
         return isset($this->services[$identifier]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($identifier)
+    public function get(string $identifier): StoreProviderInterface
     {
         if (!$this->has($identifier)) {
             throw new \Exception('"' . $identifier . '" Store provider does not exist.');

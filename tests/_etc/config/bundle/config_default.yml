@@ -3,19 +3,15 @@ toolbox:
         grid:
             grid_size: 12
             breakpoints:
-                -
-                    identifier: 'xs'
+                -   identifier: 'xs'
                     name: 'Breakpoint: XS'
                     description: 'Your Description'
-                -
-                    identifier: 'sm'
+                -   identifier: 'sm'
                     name: 'Breakpoint: SM'
                     description: 'Your Description'
-                -
-                    identifier: 'md'
+                -   identifier: 'md'
                     name: 'Breakpoint: MD'
                     description: 'Your Description'
-                -
-                    identifier: 'lg'
+                -   identifier: 'lg'
                     name: 'Breakpoint: LG'
                     description: 'Your Description'

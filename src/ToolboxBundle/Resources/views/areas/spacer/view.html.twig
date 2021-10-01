@@ -1,0 +1,6 @@
+{% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}
+<div class="toolbox-element toolbox-spacer {{ additionalClassesData|join(' ') }}" {{ editmode ? 'data-type="' ~ pimcore_select('spacer_class').getData() ~ '"' : '' }}>
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include toolbox_area_path(areaId, areaTemplateDirectory) with {'spacerClass' : pimcore_select('spacer_class').getData()} %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
+</div>

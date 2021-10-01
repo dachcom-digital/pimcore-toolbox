@@ -7,7 +7,7 @@ services:
         arguments:
             $googleMapsHostUrl: '%toolbox_google_maps_host_url%'
         tags:
-            - { name: pimcore.area.brick, id: googleMap }
+            - { name: toolbox.area.brick, id: googleMap }
 toolbox:
     areas:
         googleMap:
@@ -21,12 +21,10 @@ toolbox:
                         maxValue: 19
                         decimalPrecision: 0
                         default: 12
-                        reload: false
                 map_type:
                     type: select
                     title: 'Map type'
                     config:
-                        reload: true
                         store:
                             roadmap: ROADMAP
                             satellite: SATELLITE
@@ -36,8 +34,7 @@ toolbox:
                 iw_on_init:
                     type: checkbox
                     title: 'Open Info Window by Default'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

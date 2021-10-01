@@ -2,7 +2,7 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Input;
+use Pimcore\Model\Document\Editable\Input;
 
 class AnchorTest extends AbstractAreaTest
 {
@@ -12,15 +12,14 @@ class AnchorTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(2, $configElements);
-        $this->assertEquals('input', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('anchor_name', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('input', $configElements[0]['type']);
+        $this->assertEquals('anchor_name', $configElements[0]['name']);
 
-        $this->assertEquals('input', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('anchor_title', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('input', $configElements[1]['type']);
+        $this->assertEquals('anchor_title', $configElements[1]['name']);
     }
 
     public function testAccordion()

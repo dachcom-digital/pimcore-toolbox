@@ -12,9 +12,8 @@ class SnippetControllerCest
     public function testSnippetController(FunctionalTester $I)
     {
         $snippetParams = [
-            'module'     => 'ToolboxBundle',
-            'controller' => 'Snippet',
-            'action'     => 'teaser'
+            'controller' => 'ToolboxBundle\Controller\SnippetController',
+            'action'     => 'teaserAction'
         ];
 
         $I->haveAUserWithAdminRights('dachcom_test');
@@ -32,9 +31,8 @@ class SnippetControllerCest
     public function testSnippetWithDefaultTeaserController(FunctionalTester $I)
     {
         $snippetParams = [
-            'module'     => 'ToolboxBundle',
-            'controller' => 'Snippet',
-            'action'     => 'teaser'
+            'controller' => 'ToolboxBundle\Controller\SnippetController',
+            'action'     => 'teaserAction'
         ];
 
         $snippetEditables = [
@@ -73,6 +71,6 @@ class SnippetControllerCest
         $I->seeElement('.single-teaser.default');
         $I->seeElement('.teaser-headline');
         $I->seeElement('.teaser-text');
-        $I->seeElement('.pimcore_tag_link');
+        $I->seeElement('.pimcore_editable_link');
     }
 }

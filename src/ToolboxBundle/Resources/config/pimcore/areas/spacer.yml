@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Spacer\Spacer:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: spacer }
+            - { name: toolbox.area.brick, id: spacer }
 toolbox:
     areas:
         spacer:
@@ -11,7 +11,6 @@ toolbox:
                     type: select
                     title: 'Space Class'
                     config:
-                        reload: false
                         store:
                             spacer-none: 'No Space'
                             spacer-50: '50 Pixel'

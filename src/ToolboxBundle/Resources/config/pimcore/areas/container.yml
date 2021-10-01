@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Container\Container:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: container }
+            - { name: toolbox.area.brick, id: container }
 toolbox:
     areas:
         container:
@@ -10,8 +10,7 @@ toolbox:
                 full_width_container:
                     type: checkbox
                     title: 'Fluid Container (Full Width)'
-                    config:
-                        reload: true
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

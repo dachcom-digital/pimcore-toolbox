@@ -2,61 +2,43 @@
 
 namespace ToolboxBundle\Document\Areabrick\Gallery;
 
+use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
+use Pimcore\Model\Asset;
 
 class Gallery extends AbstractAreabrick
 {
-    /**
-     * @param Info $info
-     *
-     * @return Response|void|null
-     *
-     * @throws \Exception
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
         $infoParams = $info->getParams();
-        if (isset($infoParams['toolboxGalleryId'])) {
-            $id = $infoParams['toolboxGalleryId'];
-        } else {
-            $id = uniqid('gallery-');
-        }
+        $id = $infoParams['toolboxGalleryId'] ?? uniqid('gallery-', true);
 
-        /** @var \Pimcore\Model\Document\Tag\Relations $imagesField */
-        $imagesField = $this->getDocumentTag($info->getDocument(), 'relations', 'images');
+        /** @var Relations $imagesField */
+        $imagesField = $this->getDocumentEditable($info->getDocument(), 'relations', 'images');
 
-        $info->getView()->getParameters()->add([
+        $info->setParams(array_merge($info->getParams(), [
             'galleryId' => $id,
             'images'    => $this->getAssetArray($imagesField->getElements())
-        ]);
+        ]));
+
+        return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Gallery';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Gallery';
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function getAssetArray($data)
+    public function getAssetArray(array $data): array
     {
         if (empty($data)) {
             return [];
@@ -65,11 +47,11 @@ class Gallery extends AbstractAreabrick
         $assets = [];
 
         foreach ($data as $element) {
-            if ($element instanceof \Pimcore\Model\Asset\Image) {
+            if ($element instanceof Asset\Image) {
                 $assets[] = $element;
-            } elseif ($element instanceof \Pimcore\Model\Asset\Folder) {
+            } elseif ($element instanceof Asset\Folder) {
                 foreach ($element->getChildren() as $child) {
-                    if ($child instanceof \Pimcore\Model\Asset\Image) {
+                    if ($child instanceof Asset\Image) {
                         $assets[] = $child;
                     }
                 }

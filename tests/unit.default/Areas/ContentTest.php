@@ -2,18 +2,17 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Select;
 
 class ContentTest extends AbstractAreaTest
 {
-    const TYPE = 'content';
+    public const TYPE = 'content';
 
     public function testContentBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(0, $configElements);
     }

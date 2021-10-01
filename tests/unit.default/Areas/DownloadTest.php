@@ -2,31 +2,30 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Relations;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Relations;
+use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Tests\Util\TestHelper;
 
 class DownloadTest extends AbstractAreaTest
 {
-    const TYPE = 'download';
+    public const TYPE = 'download';
 
     public function testDownloadBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('relations', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('downloads', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('relations', $configElements[0]['type']);
+        $this->assertEquals('downloads', $configElements[0]['name']);
 
-        $this->assertEquals('checkbox', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('show_preview_images', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[1]['type']);
+        $this->assertEquals('show_preview_images', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('show_file_info', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('show_file_info', $configElements[2]['name']);
     }
 
     public function testDownload()
@@ -86,7 +85,7 @@ class DownloadTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithPreviewImage($asset1->getFullPath(), $asset2->getFullPath())),
+            $this->filter($this->getCompareWithPreviewImage($asset1, $asset2)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -177,20 +176,20 @@ class DownloadTest extends AbstractAreaTest
                 </div>';
     }
 
-    private function getCompareWithPreviewImage($path1, $path2)
+    private function getCompareWithPreviewImage($asset1, $asset2)
     {
         return '<div class="toolbox-element toolbox-download ">
                     <div class="download-list show-image-preview">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="' . $path1 . '"  target="_blank" class="icon-download-jpg">
-                                    <span class="preview-image"><img src="' . $path1 . '" alt="Download"/></span>
+                                <a href="' . $asset1->getFullPath() . '"  target="_blank" class="icon-download-jpg">
+                                    <span class="preview-image"><img src="' . $asset1->getThumbnail('downloadPreviewImage')->getPath() . '" alt="Download"/></span>
                                     <span class="title">Download</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="' . $path2 . '"  target="_blank" class="icon-download-jpg">
-                                    <span class="preview-image"><img src="' . $path2 . '" alt="Download"/></span>
+                                <a href="' . $asset2->getFullPath() . '"  target="_blank" class="icon-download-jpg">
+                                    <span class="preview-image"><img src="' . $asset2->getThumbnail('downloadPreviewImage')->getPath() . '" alt="Download"/></span>
                                     <span class="title">Download</span>
                                 </a>
                             </li>

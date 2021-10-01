@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Video\Video:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: video }
+            - { name: toolbox.area.brick, id: video }
 toolbox:
     areas:
         video:
@@ -10,8 +10,7 @@ toolbox:
                 autoplay:
                     type: checkbox
                     title: 'Autoplay?'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

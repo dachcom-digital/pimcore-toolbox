@@ -22,7 +22,7 @@ services:
         autowire: true
         public: false
 
-    AppBundle\EventListener\ObjectUrlListener:
+    App\EventListener\ObjectUrlListener:
         tags:
             - { name: kernel.event_listener, event: toolbox.dynamiclink.object.url, method: checkUrl }
 ```
@@ -35,7 +35,7 @@ You also need to setup a static route (in this case the `news_detail` route).
 ```php
 <?php
 
-namespace AppBundle\EventListener;
+namespace App\EventListener;
 
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

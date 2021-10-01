@@ -2,7 +2,7 @@ pimcore.registerNS('pimcore.document.edit');
 pimcore.document.edit = Class.create(pimcore.document.edit, {
 
     /**
-     * Because pimocore does a sloppy job in this method, we need to override it:
+     * Because pimcore does a sloppy job in this method, we need to override it:
      * maskFrames will trigger to early => all iframe masks will have a wrong position!
      */
     maskFrames: function () {

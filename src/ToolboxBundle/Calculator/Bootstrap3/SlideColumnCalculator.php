@@ -6,16 +6,8 @@ use ToolboxBundle\Calculator\SlideColumnCalculatorInterface;
 
 class SlideColumnCalculator implements SlideColumnCalculatorInterface
 {
-    /**
-     * @param int   $columnType
-     * @param array $columnConfiguration
-     *
-     * @return string
-     */
-    public function calculateSlideColumnClasses($columnType, $columnConfiguration)
+    public function calculateSlideColumnClasses(int $columnType, array $columnConfiguration): string
     {
-        $columnType = (int) $columnType;
-
         $systemClasses = [
             2 => 'col-xs-12 col-sm-6',
             3 => 'col-xs-12 col-sm-4',
@@ -24,11 +16,11 @@ class SlideColumnCalculator implements SlideColumnCalculatorInterface
         ];
 
         if (empty($columnConfiguration)) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
+            return $systemClasses[$columnType] ?? 'col-xs-12';
         }
 
         if (!isset($columnConfiguration['column_classes']) || !isset($columnConfiguration['column_classes'][$columnType])) {
-            return isset($systemClasses[$columnType]) ? $systemClasses[$columnType] : 'col-xs-12';
+            return $systemClasses[$columnType] ?? 'col-xs-12';
         }
 
         return $columnConfiguration['column_classes'][$columnType];

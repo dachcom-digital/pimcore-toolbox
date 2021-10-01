@@ -1,9 +1,8 @@
 services:
     ToolboxBundle\Document\Areabrick\Anchor\Anchor:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
-        autowire: true
         tags:
-            - { name: pimcore.area.brick, id: anchor }
+            - { name: toolbox.area.brick, id: anchor }
 toolbox:
     areas:
         anchor:

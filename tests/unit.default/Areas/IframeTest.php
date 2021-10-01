@@ -2,27 +2,26 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Input;
-use Pimcore\Model\Document\Tag\Numeric;
-use Pimcore\Model\Document\Tag\Select;
+use Pimcore\Model\Document\Editable\Input;
+use Pimcore\Model\Document\Editable\Numeric;
+use Pimcore\Model\Document\Editable\Select;
 
 class IframeTest extends AbstractAreaTest
 {
-    const TYPE = 'iFrame';
+    public const TYPE = 'iFrame';
 
     public function testIframeBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(2, $configElements);
-        $this->assertEquals('input', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('url', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('input', $configElements[0]['type']);
+        $this->assertEquals('url', $configElements[0]['name']);
 
-        $this->assertEquals('numeric', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('iheight', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('numeric', $configElements[1]['type']);
+        $this->assertEquals('iheight', $configElements[1]['name']);
     }
 
     public function testIframe()

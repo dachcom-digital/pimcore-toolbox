@@ -2,15 +2,16 @@
 
 namespace ToolboxBundle\Document\Areabrick\Accordion;
 
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Accordion extends AbstractAreabrick
 {
     /**
      * {@inheritdoc}
      */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
@@ -18,10 +19,10 @@ class Accordion extends AbstractAreabrick
         if (isset($infoParams['toolboxAccordionId'])) {
             $id = $infoParams['toolboxAccordionId'];
         } else {
-            $id = uniqid('accordion-');
+            $id = uniqid('accordion-', true);
         }
 
-        $info->getView()->getParameters()->add(['id' => $id]);
+        $info->setParam('id', $id);
 
         return null;
     }

@@ -2,36 +2,26 @@
 
 namespace ToolboxBundle\Manager;
 
+use Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick;
 use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 
 class AreaManager implements AreaManagerInterface
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    public $configManager;
+    public ConfigManagerInterface $configManager;
+    public AreabrickManager $brickManager;
+    public PermissionManagerInterface $permissionManager;
 
-    /**
-     * @var AreabrickManager
-     */
-    public $brickManager;
-
-    /**
-     * @param ConfigManagerInterface $configManager
-     * @param AreabrickManager       $brickManager
-     */
-    public function __construct(ConfigManagerInterface $configManager, AreabrickManager $brickManager)
-    {
+    public function __construct(
+        ConfigManagerInterface $configManager,
+        AreabrickManager $brickManager,
+        PermissionManagerInterface $permissionManager
+    ) {
         $this->configManager = $configManager;
         $this->brickManager = $brickManager;
+        $this->permissionManager = $permissionManager;
     }
 
-    /**
-     * @param null $type
-     *
-     * @return string
-     */
-    public function getAreaBlockName($type = null)
+    public function getAreaBlockName(?string $type = null): string
     {
         if ($type === 'parallaxContainerSection') {
             return 'Parallax Container Section';
@@ -40,15 +30,7 @@ class AreaManager implements AreaManagerInterface
         return $this->brickManager->getBrick($type)->getName();
     }
 
-    /**
-     * @param null $type
-     * @param bool $fromSnippet
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getAreaBlockConfiguration($type = null, $fromSnippet = false)
+    public function getAreaBlockConfiguration(?string $type, bool $fromSnippet = false, bool $editMode = false): array
     {
         if ($fromSnippet === true) {
             $availableBricks = $this->getAvailableBricksForSnippets($type);
@@ -85,7 +67,7 @@ class AreaManager implements AreaManagerInterface
             $cleanedGroup = [];
 
             foreach ($groupData['elements'] as $element) {
-                if (in_array($element, $availableBricks['allowed'])) {
+                if (in_array($element, $availableBricks['allowed'], true)) {
                     $cleanedGroup[] = $element;
                 }
             }
@@ -104,28 +86,28 @@ class AreaManager implements AreaManagerInterface
             $configuration['group'] = $cleanedGroups;
         }
 
-        if (isset($areaBlockConfigurationArray['toolbar']) && is_array($areaBlockConfigurationArray['toolbar'])) {
-            $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
-        }
+        $configuration['controlsAlign'] = $areaBlockConfigurationArray['controlsAlign'];
+        $configuration['controlsTrigger'] = $areaBlockConfigurationArray['controlsTrigger'];
+        $configuration['areablock_toolbar'] = $areaBlockConfigurationArray['toolbar'];
+
+        $configuration['toolbox_permissions'] = [
+            'disallowed' => $editMode ? $this->permissionManager->getDisallowedEditables($configuration['allowed']) : []
+        ];
 
         return $configuration;
     }
 
     /**
-     * @param bool $arrayKeys
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getActiveBricks($arrayKeys = true)
+    private function getActiveBricks(bool $arrayKeys = true): array
     {
         $areaElements = $this->brickManager->getBricks();
 
         //sort area elements by key => area name
         ksort($areaElements);
 
-        /** @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData */
+        /** @var AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
             if (!$this->brickManager->isEnabled($areaElementName)) {
                 unset($areaElements[$areaElementName]);
@@ -139,13 +121,13 @@ class AreaManager implements AreaManagerInterface
             if ($contextConfiguration['merge_with_root'] === true) {
                 if (!empty($contextConfiguration['enabled_areas'])) {
                     foreach ($areaElements as $areaElementName => $areaElementData) {
-                        if (!in_array($areaElementName, $contextConfiguration['enabled_areas'])) {
+                        if (!in_array($areaElementName, $contextConfiguration['enabled_areas'], true)) {
                             unset($areaElements[$areaElementName]);
                         }
                     }
                 } elseif (!empty($contextConfiguration['disabled_areas'])) {
                     foreach ($areaElements as $areaElementName => $areaElementData) {
-                        if (in_array($areaElementName, $contextConfiguration['disabled_areas'])) {
+                        if (in_array($areaElementName, $contextConfiguration['disabled_areas'], true)) {
                             unset($areaElements[$areaElementName]);
                         }
                     }
@@ -154,8 +136,8 @@ class AreaManager implements AreaManagerInterface
                 foreach ($areaElements as $areaElementName => $areaElementData) {
                     $coreAreas = $this->configManager->getConfig('areas');
                     $customAreas = $this->configManager->getConfig('custom_areas');
-                    if (!in_array($areaElementName, array_keys($coreAreas)) &&
-                        !in_array($areaElementName, array_keys($customAreas))) {
+                    if (!array_key_exists($areaElementName, $coreAreas) &&
+                        !array_key_exists($areaElementName, $customAreas)) {
                         unset($areaElements[$areaElementName]);
                     }
                 }
@@ -170,25 +152,11 @@ class AreaManager implements AreaManagerInterface
     }
 
     /**
-     * @param string $type
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getAvailableBricks($type = null)
+    private function getAvailableBricks(string $type): array
     {
         $areaElements = $this->getActiveBricks();
-
-        try {
-            // @deprecated: remove in 4.0
-            $disallowedSubAreas = $this->configManager->getConfig('disallowed_subareas');
-        } catch (\Exception $e) {
-            // skip notice exceptions: this node is allowed to be missed!
-            $disallowedSubAreas = [];
-        }
-
-        $depElementDisallowed = isset($disallowedSubAreas[$type]) ? $disallowedSubAreas[$type]['disallowed'] : [];
 
         $areaAppearance = $this->configManager->getConfig('areas_appearance');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
@@ -197,96 +165,62 @@ class AreaManager implements AreaManagerInterface
         // strict fill means: only add defined elements.
         $strictFill = !empty($elementAllowed);
 
-        // merge disallowed with deprecated disallowed
-        $elementDisallowed = array_merge($elementDisallowed, $depElementDisallowed);
-
         $bricks = [];
         foreach ($areaElements as $a) {
             // allowed rule comes first!
             if ($strictFill === true) {
-                if (in_array($a, $elementAllowed)) {
+                if (in_array($a, $elementAllowed, true)) {
                     $bricks[] = $a;
                 }
             } else {
-                if (!in_array($a, $elementDisallowed)) {
+                if (!in_array($a, $elementDisallowed, true)) {
                     $bricks[] = $a;
                 }
             }
         }
 
-        $params = [];
-        foreach ($bricks as $brick) {
-            $params[$brick] = [
-                'forceEditInView' => true
-            ];
-        }
-
-        return ['allowed' => $bricks, 'params' => $params];
+        return ['allowed' => $bricks, 'params' => []];
     }
 
     /**
-     * @param string $type
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getAvailableBricksForSnippets($type)
+    private function getAvailableBricksForSnippets(string $type): array
     {
         $areaElements = $this->getActiveBricks();
-
-        try {
-            // @deprecated: remove in 4.0
-            $disallowedSubAreas = $this->configManager->getConfig('disallowed_content_snippet_areas');
-        } catch (\Exception $e) {
-            // skip notice exceptions: this node is allowed to be missed!
-            $disallowedSubAreas = [];
-        }
 
         $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 
-        // merge disallowed with deprecated disallowed
-        $elementDisallowed = array_merge($elementDisallowed, is_array($disallowedSubAreas) ? $disallowedSubAreas : []);
-
         $bricks = [];
         foreach ($areaElements as $a) {
             // allowed rule comes first!
             if (!empty($elementAllowed)) {
-                if (in_array($a, $elementAllowed)) {
+                if (in_array($a, $elementAllowed, true)) {
                     $bricks[] = $a;
                 }
             } else {
-                if (!in_array($a, $elementDisallowed)) {
+                if (!in_array($a, $elementDisallowed, true)) {
                     $bricks[] = $a;
                 }
             }
         }
 
-        $params = [];
-        foreach ($bricks as $brick) {
-            $params[$brick] = [
-                'forceEditInView' => true
-            ];
-        }
-
-        return ['allowed' => $bricks, 'params' => $params];
+        return ['allowed' => $bricks, 'params' => []];
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
      */
-    private function getToolboxBricks()
+    private function getToolboxBricks(): array
     {
         $areaElements = $this->getActiveBricks(false);
         $toolboxBricks = [];
 
-        /** @var \Pimcore\Extension\Document\Areabrick\AbstractTemplateAreabrick $areaElementData */
+        /** @var AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
-            if (substr($areaElementData->getDescription(), 0, 7) === 'Toolbox') {
+            if (str_starts_with($areaElementData->getDescription(), 'Toolbox')) {
                 $toolboxBricks[$areaElementName] = $areaElementData;
             }
         }

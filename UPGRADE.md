@@ -1,52 +1,38 @@
 # Upgrade Notes
-![upgrade](https://user-images.githubusercontent.com/700119/31535145-3c01a264-affa-11e7-8d86-f04c33571f65.png)  
 
+## Migrating from Version 3.x to Version 4.0.0
+⚠️ If you're still on version `2.x`, you need to install `3.x` first, then [migrate](https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/UPGRADE.md) to `3.3`. After that, you're able to update to `^4.0`.
+
+### Global Changes
+- All deprecations have been removed: 
+  - Legacy Service Alias `toolbox.area.brick.base_brick` has been removed 
+  - Config Node `toolbar.x`, `toolbar.y`, `toolbar.xAlign`, `toolbar.yAlign`, `toolbar.title` has been removed
+  - Config Node `area_block_configuration.controlsAlign`, `area_block_configuration.controlsTrigger` has added
+  - Config Node `disallowed_subareas`: `areas_appearance`
+  - Config Node `disallowed_content_snippet_areas`: `snippet_areas_appearance`
+  - Config Node `ToolboxBundle\Calculator\*`: `column_calculator|slide_calculator`
+  - ⚠️ Element `pimcore_dynamiclink` has been removed: If you're still using this element in your project, you need to [migrate](https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/docs/70_ConfigurationFlags.md#-use_dynamic_links-flag) to pimcore_link first (via TB 3.x)!
+- All Folders in `views` are lowercase/dashed now (`areas/google-map`, `areas/iframe`, `areas/link-list`, `areas/paralax-container`, `areas/slide-columns`, `toolbox/bootstrap4`, ...)
+
+### Editable Changes
+- Instead of `pimcore.area.brick` you need to use the `toolbox.area.brick` tag to register your brick. Also remove `setAreaBrickType` call from your service definition 
+- Always use `$info->setParam(key, value)` instead of `$info->setParams()`, otherwise you'll overwrite given parameters from the toolbox abstract brick
+- Remove `{{ elementConfigBar|raw }}` in your templates
+- Conditional Logic feature for editable has been removed
+- Reload property in node `config.reload` has been removed. Use `config_parameter.reload_on_close: true` instead
+- Custom view has been removed, TB is now using the pimcore defaults dialog box configuration
+   - Config Node `col_class` (In`[BRICKNAME].config_elements.[ELEMENT]` has been removed
+
+### Type Changes
+- `StoreProviderInterface::getValues():array` needs to return an array (return type declaration added)
+- `ContextResolverInterface::getCurrentContextIdentifier():?string` needs to return null|string (return type declaration added)
+
+### New Features
+- ⚠️ [Editable Permissions](https://github.com/dachcom-digital/pimcore-toolbox/issues/161) have been added. Non-Admin Users will **NOT** be able to add editables until you enabled specific permissions for them! 
+- Google Maps Improved: 
+  - Only call API if address has changed
+  - Better Error Reporting: Display some notes (only in editmode), if something went wrong during API call
+- Simple Area Brick: Create a simple editable without creating any php classes. Read more about it [here](./docs/10_CustomBricks.md#simple-brick))
 ***
 
-After every update you should check the pimcore extension manager. 
-Just click the "update" button or execute the migration command to finish the bundle update.
-
-#### Update from Version 3.2.5 to Version 3.3.0
-- **[NEW FEATURE]**: Pimcore 6.9.0 ready
-- **[IMPROVEMENT]**: use no-cookie domain for youtube videos [@ghettopro](https://github.com/dachcom-digital/pimcore-toolbox/pull/153)
-- **[BUG FIX]**: Fix invalid asset video markup [@gpalmisano](https://github.com/dachcom-digital/pimcore-toolbox/pull/154)
-- **[BUG FIX]**: Fix google maps locations with single quotes [#151](https://github.com/dachcom-digital/pimcore-toolbox/issues/151)
-- **[BUG FIX]**: Fix wrong container parameter concatenation [#150](https://github.com/dachcom-digital/pimcore-toolbox/issues/150)
-
-#### Update from Version 3.2.4 to Version 3.2.5
-- **[BUG FIX]**: Fix column adjuster column_store availability check
-
-#### Update from Version 3.2.3 to Version 3.2.4
-- **[IMPROVEMENT]**: Assert correct order in download listing when members join is active
-
-#### Update from Version 3.2.2 to Version 3.2.3
-- **[NEW FEATURE]**: Pimcore 6.8.0 ready
-- **[BUGFIX]**: Use `config` property on Pimcore >= 6.8 [#146](https://github.com/dachcom-digital/pimcore-toolbox/issues/146)
-
-#### Update from Version 3.2.1 to Version 3.2.2
-- **[NEW FEATURE]** : UIkit3 theme added [@AndiKeiser](https://github.com/dachcom-digital/pimcore-toolbox/pull/138)
-
-#### Update from Version 3.2.0 to Version 3.2.1
-- **[NEW FEATURE]**: Pimcore 6.6.0 ready
-- **[NEW FEATURE]** : Fix rendering of multiple t-col-half elements [@christopher-siegel](https://github.com/dachcom-digital/pimcore-toolbox/pull/135)
-
-#### Update from Version 3.1.x to Version 3.2.0
-- **[NEW FEATURE]**: Pimcore 6.4.0 and Pimcore 6.5.0 ready
-- **[NEW FEATURE]**: Store Provider added (https://github.com/dachcom-digital/pimcore-toolbox/pull/128)
-- **[IMPROVEMENT]**: Better Google API Key Fetching: Introduces `toolbox.google_maps.browser_api_key` and `toolbox.google_maps.simple_api_key`. Read more about it [here](./docs/11_ElementsOverview.md#google-map)
-- **[BUG FIX]**: Video Autoplay Fix (https://github.com/dachcom-digital/pimcore-toolbox/issues/129)
-
-#### Update from Version 3.x to Version 3.1.0
-- **[NEW FEATURE]**: Pimcore 6.3.0 ready
-- **[BUG FIX]**: [Fix wrong index in bootstrap tabs for active element](https://github.com/dachcom-digital/pimcore-toolbox/issues/119)
-
-***
-
-#### Update from Version 2.x to Version 3.0.0
-- **[NEW FEATURE]**: Pimcore 6.0.0 ready
-- **[BC BREAK]**: All Controllers are registered as services now!
-- **[ATTENTION]**: All `href`, `multihref` elements has been replaced by `relation`, `relations`
-
-***
-
-Toolbox 2.x Upgrade Notes: https://github.com/dachcom-digital/pimcore-toolbox/blob/2.8/UPGRADE.md
+Toolbox 3.x Upgrade Notes: https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/UPGRADE.md

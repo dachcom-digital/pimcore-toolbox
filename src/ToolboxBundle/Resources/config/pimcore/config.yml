@@ -1,3 +1,7 @@
+doctrine_migrations:
+    migrations_paths:
+        'ToolboxBundle\Migrations': '@ToolboxBundle/Migrations'
+
 imports:
     - { resource: areas/*.yml }
     - { resource: ckeditor/*.yml }
@@ -6,5 +10,4 @@ imports:
     - { resource: area_restrictions.yml }
     - { resource: data_attributes.yml }
     - { resource: image_thumbnails.yml }
-    - { resource: toolbar.yml }
     - { resource: document/editables.yml }

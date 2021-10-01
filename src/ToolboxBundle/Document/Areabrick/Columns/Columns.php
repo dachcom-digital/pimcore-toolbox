@@ -2,43 +2,36 @@
 
 namespace ToolboxBundle\Document\Areabrick\Columns;
 
+use Pimcore\Model\Document\Editable\Checkbox;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class Columns extends AbstractAreabrick
 {
-    /**
-     * @var CalculatorRegistryInterface
-     */
-    private $calculatorRegistry;
+    private CalculatorRegistryInterface $calculatorRegistry;
+    private EngineInterface $templating;
 
-    /**
-     * @param CalculatorRegistryInterface $calculatorRegistry
-     */
-    public function __construct(CalculatorRegistryInterface $calculatorRegistry)
-    {
+    public function __construct(
+        CalculatorRegistryInterface $calculatorRegistry,
+        EngineInterface $templating
+    ) {
         $this->calculatorRegistry = $calculatorRegistry;
+        $this->templating = $templating;
     }
 
-    /**
-     * @param Info $info
-     *
-     * @return null|\Symfony\Component\HttpFoundation\Response|void
-     *
-     * @throws \Exception
-     */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         parent::action($info);
 
-        $view = $info->getView();
-        $editMode = $view->get('editmode');
+        $editMode = $info->getParam('editmode');
 
-        /** @var \Pimcore\Model\Document\Tag\Checkbox $equalHeightElement */
-        $equalHeightElement = $this->getDocumentTag($info->getDocument(), 'checkbox', 'equal_height');
-        $typeElement = $this->getDocumentTag($info->getDocument(), 'select', 'type');
-        $gridAdjustment = $this->getDocumentTag($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();
+        /** @var Checkbox $equalHeightElement */
+        $equalHeightElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'equal_height');
+        $typeElement = $this->getDocumentEditable($info->getDocument(), 'select', 'type');
+        $gridAdjustment = $this->getDocumentEditable($info->getDocument(), 'columnadjuster', 'columnadjuster')->getData();
 
         $equalHeight = $equalHeightElement->isChecked() && $editMode === false;
         $type = $typeElement->getData();
@@ -46,7 +39,7 @@ class Columns extends AbstractAreabrick
         $partialName = '';
 
         $customColumnConfiguration = null;
-        if ($gridAdjustment !== false) {
+        if (is_array($gridAdjustment) && count($gridAdjustment) > 0) {
             $customColumnConfiguration = [$type => $gridAdjustment];
         }
 
@@ -56,7 +49,7 @@ class Columns extends AbstractAreabrick
             ->calculateColumns($type, $customColumnConfiguration);
 
         if (!empty($columns)) {
-            if ($this->container->get('templating')->exists($this->getTemplatePath($type))) {
+            if ($this->templating->exists($this->getTemplatePath($type))) {
                 $partialName = $type;
             } else {
                 $t = explode('_', $type);
@@ -68,12 +61,14 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $view->getParameters()->add([
-            'type'        => $type . ($gridAdjustment !== false ? '-grid-adjuster' : ''),
+        $info->setParams(array_merge($info->getParams(), [
+            'type'        => $type . ($customColumnConfiguration !== null ? '-grid-adjuster' : ''),
             'columns'     => $columns,
             'partialName' => $partialName,
             'equalHeight' => $equalHeight
-        ]);
+        ]));
+
+        return null;
     }
 
     public function getName()

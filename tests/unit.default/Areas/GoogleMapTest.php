@@ -2,31 +2,30 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Model\Document\Tag\Checkbox;
-use Pimcore\Model\Document\Tag\Numeric;
-use Pimcore\Model\Document\Tag\Select;
-use ToolboxBundle\Model\Document\Tag\GoogleMap;
+use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Numeric;
+use Pimcore\Model\Document\Editable\Select;
+use ToolboxBundle\Model\Document\Editable\GoogleMap;
 
 class GoogleMapTest extends AbstractAreaTest
 {
-    const TYPE = 'googleMap';
+    public const TYPE = 'googleMap';
 
     public function testGoogleMapBackendConfig()
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(3, $configElements);
-        $this->assertEquals('numeric', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('map_zoom', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('numeric', $configElements[0]['type']);
+        $this->assertEquals('map_zoom', $configElements[0]['name']);
 
-        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('map_type', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[1]['type']);
+        $this->assertEquals('map_type', $configElements[1]['name']);
 
-        $this->assertEquals('checkbox', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('iw_on_init', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('checkbox', $configElements[2]['type']);
+        $this->assertEquals('iw_on_init', $configElements[2]['name']);
 
     }
 
@@ -54,24 +53,27 @@ class GoogleMapTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $googleMapElement = new GoogleMap();
-        $googleMapElement->setId('test');
-        $googleMapElement->disableGoogleLookup();
-
-        $googleMapElement->setDataFromEditmode([
+        $locations = [
             [
                 'street'  => 'Rorschacherstrasse 15',
                 'zip'     => '9424',
                 'city'    => 'Rheineck',
-                'country' => 'Schweiz'
+                'country' => 'Schweiz',
+                'lat' => null,
+                'lng' => null,
             ]
-        ]);
+        ];
+
+        $googleMapElement = new GoogleMap();
+        $googleMapElement->setId('test');
+        $googleMapElement->disableGoogleLookup();
+        $googleMapElement->setDataFromEditmode($locations);
 
         $mapZoom = new Numeric();
         $mapZoom->setDataFromResource(5);
 
         $mapType = new Select();
-        $mapZoom->setDataFromResource('roadmap');
+        $mapType->setDataFromResource('roadmap');
 
         $iwOnInit = new Checkbox();
         $iwOnInit->setDataFromResource(1);
@@ -83,11 +85,11 @@ class GoogleMapTest extends AbstractAreaTest
             'googlemap'  => $googleMapElement,
             'map_zoom'   => $mapZoom,
             'map_type'   => $mapType,
-            'iw_on_init' => $iwOnInit
+            'iw_on_init' => $iwOnInit,
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompare()),
+            $this->filter($this->getCompare($locations)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
@@ -96,24 +98,28 @@ class GoogleMapTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $googleMapElement = new GoogleMap();
-        $googleMapElement->setId('test');
-        $googleMapElement->disableGoogleLookup();
-
-        $googleMapElement->setDataFromEditmode([
+        $locations = [
             [
                 'street'  => 'Rorschacherstrasse 15',
                 'zip'     => '9424',
                 'city'    => 'Rheineck',
-                'country' => 'Schweiz'
+                'country' => 'Schweiz',
+                'lat'     => null,
+                'lng'     => null,
+
             ]
-        ]);
+        ];
+
+        $googleMapElement = new GoogleMap();
+        $googleMapElement->setId('test');
+        $googleMapElement->disableGoogleLookup();
+        $googleMapElement->setDataFromEditmode($locations);
 
         $mapZoom = new Numeric();
-        $mapZoom->setDataFromResource(5);
+        $mapZoom->setDataFromResource(12);
 
         $mapType = new Select();
-        $mapZoom->setDataFromResource('roadmap');
+        $mapType->setDataFromResource('satellite');
 
         $iwOnInit = new Checkbox();
         $iwOnInit->setDataFromResource(1);
@@ -136,25 +142,25 @@ class GoogleMapTest extends AbstractAreaTest
         ];
 
         $this->assertEquals(
-            $this->filter($this->getCompareWithAdditionalClass()),
+            $this->filter($this->getCompareWithAdditionalClass($locations)),
             $this->filter($this->generateRenderedArea(self::TYPE, $elements))
         );
     }
 
-    private function getCompare()
+    private function getCompare(array $locations)
     {
         return '<div class="toolbox-element toolbox-google-map ">
                     <div class="toolbox-google-map-container">
-                        <div class="embed-responsive-item toolbox-googlemap" id="test" data-locations=\'[{"street":"Rorschacherstrasse 15","zip":"9424","city":"Rheineck","country":"Schweiz"}]\' data-show-info-window-on-load=\'1\' data-mapoption-zoom=\'roadmap\' data-mapoption-map-type-id=\'\' data-mapoption-street-view-control=\'true\' data-mapoption-map-type-control=\'false\' data-mapoption-pan-control=\'false\' data-mapoption-scrollwheel=\'false\'></div>
+                        <div class="embed-responsive-item toolbox-googlemap" id="test" data-locations="' . htmlspecialchars(json_encode($locations), ENT_QUOTES, 'UTF-8') . '" data-show-info-window-on-load="1" data-mapoption-zoom="5" data-mapoption-map-type-id="roadmap" data-mapoption-street-view-control="true" data-mapoption-map-type-control="false" data-mapoption-pan-control="false" data-mapoption-scrollwheel="false"></div>
                     </div>
                 </div>';
     }
 
-    private function getCompareWithAdditionalClass()
+    private function getCompareWithAdditionalClass(array $locations)
     {
         return '<div class="toolbox-element toolbox-google-map additional-class">
                     <div class="toolbox-google-map-container">
-                        <div class="embed-responsive-item toolbox-googlemap" id="test" data-locations=\'[{"street":"Rorschacherstrasse 15","zip":"9424","city":"Rheineck","country":"Schweiz"}]\' data-show-info-window-on-load=\'1\' data-mapoption-zoom=\'roadmap\' data-mapoption-map-type-id=\'\' data-mapoption-street-view-control=\'true\' data-mapoption-map-type-control=\'false\' data-mapoption-pan-control=\'false\' data-mapoption-scrollwheel=\'false\'></div>
+                        <div class="embed-responsive-item toolbox-googlemap" id="test" data-locations="' . htmlspecialchars(json_encode($locations), ENT_QUOTES, 'UTF-8') . '" data-show-info-window-on-load="1" data-mapoption-zoom="12" data-mapoption-map-type-id="satellite" data-mapoption-street-view-control="true" data-mapoption-map-type-control="false" data-mapoption-pan-control="false" data-mapoption-scrollwheel="false"></div>
                     </div>
                 </div>';
     }

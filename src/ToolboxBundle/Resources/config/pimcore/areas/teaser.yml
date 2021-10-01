@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Teaser\Teaser:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: teaser }
+            - { name: toolbox.area.brick, id: teaser }
 toolbox:
     areas:
         teaser:
@@ -18,8 +18,6 @@ toolbox:
                 layout:
                     type: select
                     title: 'Layout'
-                    conditions:
-                        - type: direct
                     config:
                         store:
                             default: 'Default'
@@ -27,12 +25,8 @@ toolbox:
                 use_light_box:
                     type: checkbox
                     title: 'use Lightbox?'
-                    conditions:
-                        - type: direct
                     config: ~
                 additional_classes:
                     type: additionalClasses
-                    conditions:
-                        - type: direct
                     config:
                         store: ~

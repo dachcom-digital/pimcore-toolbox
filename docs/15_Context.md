@@ -69,7 +69,7 @@ If the resolver returns `null` the main configuration will be used.
 
 ```yml
 toolbox:
-    context_resolver: 'AppBundle\Services\ToolboxBundle\ContextResolver'
+    context_resolver: 'App\Services\ToolboxBundle\ContextResolver'
 ```
 
 ### Create Context Resolver Class
@@ -77,7 +77,7 @@ toolbox:
 ```php
 <?php
 
-namespace AppBundle\Services\ToolboxBundle;
+namespace App\Services\ToolboxBundle;
 
 use Pimcore\Model\Document;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -90,34 +90,11 @@ use Pimcore\Tool;
 
 class ToolboxContextResolver implements ContextResolverInterface
 {
-    /**
-     * @var SiteResolver
-     */
-    protected $siteResolver;
+    protected SiteResolver $siteResolver;
+    protected RequestStack $requestStack;
+    private EditmodeResolver $editModeResolver;
+    private DocumentResolver $documentResolver;
 
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
-
-    /**
-     * @var EditmodeResolver
-     */
-    private $editModeResolver;
-
-    /**
-     * @var DocumentResolver
-     */
-    private $documentResolver;
-
-    /**
-     * ToolboxContextResolver constructor.
-     *
-     * @param RequestStack     $requestStack
-     * @param SiteResolver     $siteResolver
-     * @param EditmodeResolver $editModeResolver
-     * @param DocumentResolver $documentResolver
-     */
     public function __construct(
         RequestStack $requestStack,
         SiteResolver $siteResolver,
@@ -130,9 +107,9 @@ class ToolboxContextResolver implements ContextResolverInterface
         $this->documentResolver = $documentResolver;
     }
 
-    public function getCurrentContextIdentifier()
+    public function getCurrentContextIdentifier(): ?string
     {
-        $request = $this->requestStack->getMasterRequest();
+        $request = $this->requestStack->getMainRequest();
 
         $site = null;
 

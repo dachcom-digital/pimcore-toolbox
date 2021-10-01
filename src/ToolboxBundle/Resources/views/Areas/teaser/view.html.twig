@@ -1,7 +1,0 @@
-{% import '@Toolbox/Macro/wrap.html.twig' as wrap_macro %}
-{{ elementConfigBar|raw }}
-<div class="toolbox-element toolbox-teaser {{ additionalClassesData|join(' ') }}">
-    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {% include toolbox_area_path(areaId) %}
-    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
-</div>

@@ -27,6 +27,33 @@
     padding: 10px;
 }
 
+.toolbox-columns .toolbox-column .pimcore_area_entry .pimcore_area_buttons {
+    margin-top: 0;
+    top: 0 !important;
+}
+
+/**
+
+    Toolbox Maps
+
+**/
+div[data-type="googlemap"][data-fetch-error]::before {
+    content: attr(data-fetch-error);
+    position: absolute;
+    z-index: 99;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #a94442;
+    border-radius: 0;
+    font-size: 90%;
+}
+
 /**
 
     Toolbox Columns Adjuster
@@ -176,7 +203,7 @@
     padding: 10px;
 }
 
-.toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block:not(.slick-initialized) {
+.toolbox-slide-columns > .row > .slide-columns .pimcore_editable_block:not(.slick-initialized) {
     overflow: hidden;
 }
 
@@ -199,29 +226,29 @@
 }
 
 .toolbox-slide-columns > .row > .slide-columns .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns .pimcore_editable_block > .pimcore_block_entry {
     display: block;
     float: left;
     clear: none;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-2 .pimcore_editable_block > .pimcore_block_entry {
     width: 49%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-3 .pimcore_editable_block > .pimcore_block_entry {
     width: 33%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-4 .pimcore_editable_block > .pimcore_block_entry {
     width: 24%;
 }
 
 .toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .slick-track > .pimcore_block_entry,
-.toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .pimcore_tag_block > .pimcore_block_entry {
+.toolbox-slide-columns > .row > .slide-columns.slide-elements-6 .pimcore_editable_block > .pimcore_block_entry {
     width: 15%;
 }
 
@@ -327,7 +354,7 @@
     background: rgba(255, 255, 255, 0.5);
 }
 
-.toolbox-parallax-container .parallax-content > .pimcore_tag_block {
+.toolbox-parallax-container .parallax-content > .pimcore_editable_block {
     margin: 10px;
 }
 
@@ -362,19 +389,6 @@
 }
 
 /**
-
-    Toolbox Googlemap Container
-
-**/
-.toolbox-googlemap-container {
-
-}
-
-.toolbox-google-map .pimcore_area_edit_button {
-    top: -35px !important;
-}
-
-/**
 ##
 ##      ---------------------------------------
 ##      ONLY TOOLBOX INTERNAL STUFF DOWN THERE!
@@ -405,200 +419,33 @@
     Toolbox .toolbox-element-window Overlay Defaults
 
 **/
-.alert-info {
+.tb-alert-info {
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    background-color: #d9edf7;
-    color: #31708f;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #bce8f1;
+    background-color: #dcd1ea;
+    color: #6428b4;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #6428b4;
     border-radius: 0;
+    font-size: 90%;
+    width: 100%;
 }
 
-.alert-danger {
+.tb-alert-danger {
     font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
     background-color: #f2dede;
     color: #a94442;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ebccd1;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 1px solid #a94442;
     border-radius: 0;
+    font-size: 90%;
+    width: 100%;
 }
 
 /** Fix Pimcore Bug: If Toolbar is above .pimcore_iframe_mask, z-index will catch accessibility. **/
 .pimcore_iframe_mask {
     z-index: 199 !important;
-}
-
-.toolbox-element-edit-button {
-    position: relative;
-    display: block;
-    margin: 3px 0 0 0;
-    padding: 4px;
-    background: #7b7b7b;
-    opacity: .8;
-    text-align: left;
-    -webkit-transition: opacity .3s ease;
-    -ms-transition: opacity .3s ease;
-    transition: opacity .3s ease;
-}
-
-.toolbox-element-edit-button.no-interaction {
-    height: 35px;
-}
-
-.toolbox-element-edit-button:before {
-    content: attr(data-title);
-    position: absolute;
-    right: 0;
-    padding: 4px 30px 0 0;
-    text-transform: uppercase;
-    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    font-size: 12px;
-    font-weight: normal;
-    letter-spacing: 0.1em;
-    color: #bfbfbf;
-    line-height: 1.5;
-}
-
-.toolbox-element-edit-button:hover {
-    opacity: 1;
-}
-
-.toolbox-element-edit-button .x-btn-default-small {
-    border-color: transparent;
-    background: #000;
-    padding: 5px 7px 4px 7px;
-    border-radius: 2px;
-}
-
-.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
-    color: white;
-}
-
-.toolbox-element-window {
-}
-
-/* move window element out of scope, because display none won't work because of extjs rendering issues */
-.toolbox-element-window-hidden {
-    visibility: hidden;
-    position: absolute;
-    top: -50000px;
-    left: -50000px;
-}
-
-.toolbox-edit-overlay label {
-    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    padding-right: 10px;
-}
-
-.toolbox-edit-overlay {
-    min-height: 150px; /* always force min height! */
-    margin: 0;
-}
-
-.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.small {
-    max-width: 560px;
-}
-
-.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large {
-    max-width: 760px;
-}
-
-.toolbox-edit-overlay .t-row {
-
-    margin: 0 0 10px 0;
-    padding: 0 0 10px 0;
-    border-bottom: 1px dashed #d8d8d8;
-
-}
-
-.toolbox-edit-overlay .t-row:empty {
-    display: none;
-}
-
-.toolbox-edit-overlay .t-row.editmode-hidden,
-.toolbox-edit-overlay .t-row .toolbox-element > .editmode-hidden {
-    display: none;
-}
-
-.toolbox-edit-overlay .t-row:after {
-    content: ".";
-    clear: both;
-    display: block;
-    visibility: hidden;
-    height: 0;
-}
-
-.toolbox-edit-overlay .t-row .x-form-type-checkbox {
-    position: relative;
-    top: 12px;
-    left: 5px;
-}
-
-.toolbox-edit-overlay .t-row .t-col-full {
-    float: none;
-    width: 100%;
-    position: relative;
-    min-height: 1px;
-}
-
-.toolbox-edit-overlay .t-row .t-col-half {
-    float: left;
-    width: 50%;
-    position: relative;
-    min-height: 1px;
-}
-
-.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-half {
-    padding-right: 5px;
-}
-
-.toolbox-edit-overlay .t-row .t-col-third {
-    float: left;
-    width: 33.3333%;
-    position: relative;
-    min-height: 1px;
-}
-
-.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(1) > .t-col-third {
-    padding-right: 5px;
-}
-
-.toolbox-edit-overlay .t-row > .toolbox-element:nth-child(2) > .t-col-third {
-    padding-right: 5px;
-}
-
-.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.large .t-row .pimcore_editable .x-panel-default {
-    width: 760px;
-}
-
-.x-window:not(.grid-adjuster-active) .toolbox-edit-overlay.small .t-row .pimcore_editable .x-panel-default {
-    width: 560px;
-}
-
-.toolbox-edit-overlay .pimcore_tag_input {
-    border: 1px solid #b7b7b7;
-    padding: 5px;
-    box-shadow: none;
-    display: block !important;
-}
-
-.toolbox-edit-overlay .t-row .description {
-    display: block;
-    margin: 10px 0;
-    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
-    font-size: 13px;
-    line-height: 20px;
-    background: #f7f7f7;
-    padding: 10px;
-    border: 1px solid #eee;
-}
-
-.toolbox-edit-overlay .t-row .pimcore_tag_select {
-    display: block;
 }
 
 /**
@@ -670,7 +517,133 @@ body > .single-teaser img {
     overflow: hidden !important;
 }
 
-/* Modal Fix */
-.toolbox-modal-open {
-    overflow: hidden;
+/**
+
+    Toolbox Edit Button
+
+**/
+
+.pimcore_area_buttons {
+
+    position: relative;
+    top: 0;
+    margin-top: 20px;
+    left: 0;
+    width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+
+    opacity: 0.3;
+    -webkit-transition: opacity 0.3s ease;
+    -moz-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+
+.pimcore_area_buttons.top {
+    top: 15px !important;
+}
+
+.pimcore_block_entry:hover > div.pimcore_area_buttons {
+    opacity: 1;
+}
+
+.pimcore_area_buttons .pimcore_block_label {
+    display: none !important;
+}
+
+/**
+
+    Toolbox Edit Button
+
+**/
+
+.toolbox-element-edit-button {
+    position: relative;
+    display: block;
+    padding: 0;
+    opacity: .8;
+    text-align: left;
+    -webkit-transition: opacity .3s ease;
+    transition: opacity .3s ease;
+
+    background: transparent;
+    border-bottom: 2px solid #6428b4;
+    margin-bottom: 5px;
+}
+
+.toolbox-element-edit-button:before {
+    content: attr(data-title);
+    position: absolute;
+    right: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-family: 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    color: #6428b4;
+    line-height: 1.5;
+    top: 9px;
+}
+
+.toolbox-element-edit-button:hover {
+    opacity: 1;
+}
+
+.toolbox-element-edit-button.no-interaction {
+    height: 26px;
+}
+
+.toolbox-element-edit-button .x-btn-default-small {
+    border-color: transparent;
+    background: #6428b4;
+    padding: 0 10px;
+    margin: 3px 3px 3px 0;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    color: white;
+}
+
+.toolbox-element-edit-button .x-btn-default-small .x-btn-inner-default-small {
+    font: 400 11px/16px 'Open Sans', 'Helvetica Neue', helvetica, arial, verdana, sans-serif;
+}
+
+.pimcore_area_buttons .pimcore_area_buttons_inner {
+    background: transparent;
+}
+
+.pimcore_area_buttons::after {
+    content: none;
+}
+
+/*
+    Editable Permissions
+ */
+.editable-blocked {
+    position: relative;
+}
+
+.editable-blocked:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #c8c8c880;
+    cursor: default;
+    z-index: 9999;
+}
+
+.editable-blocked .pimcore_area_buttons,
+.editable-blocked .toolbox-element-edit-button a {
+    display: none !important;
+}
+
+.editable-blocked .toolbox-element-edit-button {
+    min-height: 35px;
 }

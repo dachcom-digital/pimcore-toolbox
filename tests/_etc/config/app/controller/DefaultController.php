@@ -1,23 +1,20 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
 use Pimcore\Controller\FrontendController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends FrontendController
 {
-    public function onKernelController(FilterControllerEvent $event)
+    public function defaultAction(Request $request): Response
     {
-        $this->setViewAutoRender($event->getRequest(), true, 'twig');
+        return $this->renderTemplate('default/default.html.twig');
     }
 
-    public function defaultAction(Request $request)
+    public function snippetAction(Request $request): Response
     {
-    }
-
-    public function snippetAction(Request $request)
-    {
+        return $this->renderTemplate('default/snippet.html.twig');
     }
 }

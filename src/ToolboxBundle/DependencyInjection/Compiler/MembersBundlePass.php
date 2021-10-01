@@ -10,11 +10,9 @@ use ToolboxBundle\Connector\BundleConnector;
 class MembersBundlePass implements CompilerPassInterface
 {
     /**
-     * @param ContainerBuilder $container
-     *
      * @throws \Exception
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition('MembersBundle\Manager\RestrictionManager')) {
             return;
@@ -29,10 +27,7 @@ class MembersBundlePass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getRequiredServices()
+    private function getRequiredServices(): array
     {
         return [
             \MembersBundle\Manager\RestrictionManager::class,

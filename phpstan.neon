@@ -3,14 +3,10 @@ includes:
 parameters:
     reportUnmatchedIgnoredErrors: false
     symfony:
-        container_xml_path: %currentWorkingDirectory%/var/cache/test/appTestKernelTestDebugContainer.xml
+        container_xml_path: %currentWorkingDirectory%/var/cache/test/TestKernelTestDebugContainer.xml
+        constant_hassers: false
     ignoreErrors:
-        # There is no global constants definition file we could include, ignore it:
-        - '#Constant PIMCORE_[A-Z\\_]+ not found\.#'
-        # Symfony DI (remove this line with symfony 4.2):
-        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
-        # Symfony DI (remove this line after symfony 4 support only):
-        - '#Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::end\(\)\.#'
         # Bundle dependency calls we need to ignore:
         - '#Class MembersBundle\\Manager\\RestrictionManager not found\.#'
         - '#Class MembersBundle\\Security\\RestrictionUri not found\.#'

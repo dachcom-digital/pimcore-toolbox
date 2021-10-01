@@ -2,15 +2,16 @@
 
 namespace ToolboxBundle\Document\Areabrick\Container;
 
+use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
-use Pimcore\Model\Document\Tag\Area\Info;
+use Pimcore\Model\Document\Editable\Area\Info;
 
 class Container extends AbstractAreabrick
 {
     /**
      * {@inheritdoc}
      */
-    public function action(Info $info)
+    public function action(Info $info): ?Response
     {
         return parent::action($info);
     }

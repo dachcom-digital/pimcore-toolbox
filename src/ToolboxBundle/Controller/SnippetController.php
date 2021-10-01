@@ -10,21 +10,17 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 class SnippetController extends FrontendController
 {
     /**
-     * @param Request                $request
-     * @param ConfigManagerInterface $configManager
-     *
-     * @return Response
-     *
      * @throws \Exception
      */
-    public function teaserAction(Request $request, ConfigManagerInterface $configManager)
+    public function teaserAction(Request $request, ConfigManagerInterface $configManager): Response
     {
         $layoutStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'layout');
         $addClStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'additional_classes');
-        $flags = $configManager->getConfig('flags');
+
+        $layoutExtJsStore = [];
+        $addClExtJsStore = [];
 
         $store = $layoutStore['config']['store'];
-        $layoutExtJsStore = [];
         if (is_array($store)) {
             foreach ($store as $key => $item) {
                 $layoutExtJsStore[] = [$key, $item];
@@ -32,7 +28,6 @@ class SnippetController extends FrontendController
         }
 
         $store = $addClStore['config']['store'];
-        $addClExtJsStore = [];
         if (is_array($store)) {
             foreach ($store as $key => $item) {
                 $addClExtJsStore[] = [$key, $item];
@@ -40,9 +35,8 @@ class SnippetController extends FrontendController
         }
 
         return $this->renderTemplate(
-            '@Toolbox/Snippet/Layout/teaser-layout.html.twig',
+            '@Toolbox/snippet/layout/teaser-layout.html.twig',
             [
-                'useDynamicLinks'        => $flags['use_dynamic_links'],
                 'mapParams'              => $request->get('mapParams'),
                 'layoutStore'            => $layoutExtJsStore,
                 'additionalClassesStore' => $addClExtJsStore

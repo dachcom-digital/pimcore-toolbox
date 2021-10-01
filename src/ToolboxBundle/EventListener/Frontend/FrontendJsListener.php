@@ -7,8 +7,7 @@ use Pimcore\Bundle\CoreBundle\EventListener\Traits\EnabledTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Templating\EngineInterface;
 
 class FrontendJsListener
@@ -16,35 +15,14 @@ class FrontendJsListener
     use EnabledTrait;
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
+    private EngineInterface $templatingEngine;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var EngineInterface
-     */
-    private $templatingEngine;
-
-    /**
-     * FrontendJsTranslationsListener constructor.
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param EngineInterface          $templatingEngine
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        EngineInterface $templatingEngine
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(EngineInterface $templatingEngine)
+    {
         $this->templatingEngine = $templatingEngine;
     }
 
-    /**
-     * @param FilterResponseEvent $event
-     */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$this->isEnabled()) {
             return;
@@ -76,7 +54,7 @@ class FrontendJsListener
         $optOutCookie = $request->cookies->get('tb-google-opt-out-link');
 
         $codeHead = $this->renderTemplate(
-            '@Toolbox/Admin/Javascript/frontend.html.twig',
+            '@Toolbox/admin/javascript/frontend.html.twig',
             [
                 'translations'       => [
                     'toolbox.goptout_already_opt_out',
@@ -99,12 +77,6 @@ class FrontendJsListener
         $response->setContent($content);
     }
 
-    /**
-     * @param string $template
-     * @param array  $data
-     *
-     * @return string
-     */
     private function renderTemplate(string $template, array $data): string
     {
         $code = $this->templatingEngine->render(

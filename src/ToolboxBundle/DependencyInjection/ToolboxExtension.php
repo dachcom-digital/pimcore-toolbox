@@ -12,20 +12,10 @@ use ToolboxBundle\Resolver\ContextResolver;
 
 class ToolboxExtension extends Extension implements PrependExtensionInterface
 {
-    /**
-     * @var array
-     */
-    protected $contextMergeData = [];
+    protected array $contextMergeData = [];
+    protected array $contextConfigData = [];
 
-    /**
-     * @var array
-     */
-    protected $contextConfigData = [];
-
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
@@ -81,13 +71,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $this->contextMergeData = $data;
     }
 
-    /**
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     *
-     * @throws \Exception
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         //append merge data
         foreach ($this->contextMergeData as $append) {
@@ -109,7 +93,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->validateToolboxContextConfig($config);
-
         $this->allocateGoogleMapsApiKey($container);
 
         $contextResolver = $config['context_resolver'];
@@ -119,41 +102,57 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $loader->load('services.yml');
 
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
-        $configManagerDefinition->setPublic(true);
-
-        $config = $this->handleCalculatorDeprecation($config, $container);
-
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
+
+        $container->setParameter('toolbox.area_brick.dialog_aware_bricks', $this->determinateConfigDialogAwareBricks($config));
 
         //context resolver
         $definition = $container->getDefinition(ContextResolver::class);
         $definition->setClass($contextResolver);
     }
 
-    /**
-     * @param ContainerBuilder $container
-     */
-    private function allocateGoogleMapsApiKey(ContainerBuilder $container)
+    private function determinateConfigDialogAwareBricks(array $config): array
+    {
+        $configDialogAwareBricks = [];
+
+        foreach ($config['custom_areas'] as $areaId => $areaSection) {
+            if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
+                $configDialogAwareBricks[] = $areaId;
+            }
+        }
+
+        foreach ($config['context'] as $context) {
+            foreach ($context['custom_areas'] as $areaId => $areaSection) {
+                if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
+                    $configDialogAwareBricks[] = $areaId;
+                }
+            }
+        }
+
+        return array_unique($configDialogAwareBricks);
+    }
+
+    private function allocateGoogleMapsApiKey(ContainerBuilder $container): void
     {
         $googleBrowserApiKey = null;
         $googleSimpleApiKey = null;
 
         $pimcoreCoreConfig = $container->hasParameter('pimcore.config') ? $container->getParameter('pimcore.config') : [];
-        $pimcoreGoogleServiceConfig = isset($pimcoreCoreConfig['services']) && isset($pimcoreCoreConfig['services']['google']) ? $pimcoreCoreConfig['services']['google'] : [];
+        $pimcoreGoogleServiceConfig = isset($pimcoreCoreConfig['services'], $pimcoreCoreConfig['services']['google']) ? $pimcoreCoreConfig['services']['google'] : [];
 
         // browser api key
-        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey') === true) {
+        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey')) {
             $googleBrowserApiKey = $container->getParameter('pimcore_system_config.services.google.browserapikey');
-        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key') === true) {
+        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key')) {
             $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
         } elseif (isset($pimcoreGoogleServiceConfig['browser_api_key'])) {
             $googleBrowserApiKey = $pimcoreGoogleServiceConfig['browser_api_key'];
         }
 
         //simple api key
-        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey') === true) {
+        if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey')) {
             $googleSimpleApiKey = $container->getParameter('pimcore_system_config.services.google.simpleapikey');
-        } elseif ($container->hasParameter('toolbox_google_service_simple_api_key') === true) {
+        } elseif ($container->hasParameter('toolbox_google_service_simple_api_key')) {
             $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
         } elseif (isset($pimcoreGoogleServiceConfig['simple_api_key'])) {
             $googleSimpleApiKey = $pimcoreGoogleServiceConfig['simple_api_key'];
@@ -163,10 +162,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('toolbox.google_maps.simple_api_key', $googleSimpleApiKey);
     }
 
-    /**
-     * @param array $config
-     */
-    private function validateToolboxContextConfig($config)
+    private function validateToolboxContextConfig(array $config): void
     {
         foreach ($config['context'] as $contextId => $contextConfig) {
             //check if theme is same since it's not possible to merge different themes
@@ -179,49 +175,5 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
                 ), E_USER_ERROR);
             }
         }
-    }
-
-    /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
-     * @return mixed
-     *
-     * @deprecated since 2.3. gets removed in 4.0
-     */
-    private function handleCalculatorDeprecation($config, ContainerBuilder $container)
-    {
-        $taggedCalculator = $container->findTaggedServiceIds('toolbox.calculator', true);
-
-        $defaultColumnCalc = 'ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator';
-        $defaultSlideColumnCalc = 'ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator';
-
-        $calculators = $config['theme']['calculators'];
-        $missingTags = [];
-        foreach ($calculators as $confName => $confValue) {
-            if ($confName === 'ToolboxBundle\Calculator\ColumnCalculator') {
-                if ($calculators['column_calculator'] !== $confValue && $confValue !== $defaultColumnCalc) {
-                    $calculators['column_calculator'] = $confValue;
-                }
-                if (!in_array($confValue, array_keys($taggedCalculator))) {
-                    $missingTags[] = [$confValue, 'column'];
-                }
-            } elseif ($confName === 'ToolboxBundle\Calculator\SlideColumnCalculator') {
-                if ($calculators['slide_calculator'] !== $confValue && $confValue !== $defaultSlideColumnCalc) {
-                    $calculators['slide_calculator'] = $confValue;
-                }
-                if (!in_array($confValue, array_keys($taggedCalculator))) {
-                    $missingTags[] = [$confValue, 'slide_column'];
-                }
-            }
-        }
-
-        $config['theme']['calculators'] = $calculators;
-
-        if (!empty($missingTags)) {
-            $container->setParameter('toolbox.deprecation.calculator_tags', $missingTags);
-        }
-
-        return $config;
     }
 }

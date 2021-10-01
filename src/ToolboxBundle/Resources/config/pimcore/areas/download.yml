@@ -3,7 +3,7 @@ services:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         autowire: true
         tags:
-            - { name: pimcore.area.brick, id: download }
+            - { name: toolbox.area.brick, id: download }
 toolbox:
     areas:
         download:
@@ -11,18 +11,15 @@ toolbox:
                 downloads:
                     type: relations
                     title: 'Files'
-                    config:
-                        reload: true
+                    config: ~
                 show_preview_images:
                     type: checkbox
                     title: 'Show preview images'
-                    config:
-                        reload: false
+                    config: ~
                 show_file_info:
                     type: checkbox
                     title: 'Show file info'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

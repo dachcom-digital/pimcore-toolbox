@@ -8,20 +8,9 @@ use Twig\TwigFunction;
 
 class GoogleAPIKeysExtension extends AbstractExtension
 {
-    /**
-     * @var string
-     */
-    protected $fallbackBrowserKey;
+    protected ?string $fallbackBrowserKey;
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
-
-    /**
-     * @param string|null            $fallbackBrowserKey
-     * @param ConfigManagerInterface $configManager
-     */
     public function __construct(
         ?string $fallbackBrowserKey,
         ConfigManagerInterface $configManager
@@ -30,10 +19,7 @@ class GoogleAPIKeysExtension extends AbstractExtension
         $this->configManager = $configManager;
     }
 
-    /**
-     * @return array|\Twig_Function[]
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('toolbox_google_map_api_key', [$this, 'getGoogleMapAPIKey'])
@@ -52,7 +38,9 @@ class GoogleAPIKeysExtension extends AbstractExtension
 
         if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
             return $configNode['map_api_key'];
-        } elseif (!empty($this->fallbackBrowserKey)) {
+        }
+
+        if (!empty($this->fallbackBrowserKey)) {
             return $this->fallbackBrowserKey;
         }
 

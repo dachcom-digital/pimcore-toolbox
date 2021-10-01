@@ -4,7 +4,7 @@ namespace ToolboxBundle;
 
 final class ToolboxConfig
 {
-    const TOOLBOX_TYPES = [
+    public const TOOLBOX_TYPES = [
         'accordion',
         'anchor',
         'columns',
@@ -27,7 +27,7 @@ final class ToolboxConfig
         'video'
     ];
 
-    const CORE_TYPES = [
+    public const CORE_TYPES = [
         'areablock',
         'area',
         'block',
@@ -53,12 +53,11 @@ final class ToolboxConfig
         'wysiwyg'
     ];
 
-    const CUSTOM_TYPES = [
+    public const CUSTOM_TYPES = [
         'additionalClasses',
         'additionalClassesChained',
         'parallaximage',
         'googlemap',
         'vhs',
-        'dynamiclink',
     ];
 }

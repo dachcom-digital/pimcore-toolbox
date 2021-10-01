@@ -10,21 +10,20 @@ class ParallaxContainerSectionTest extends AbstractAreaTest
     {
         $this->setupRequest();
 
-        $areaConfig = $this->generateBackendArea(self::TYPE);
-        $configElements = $areaConfig['config_elements'];
+        $configElements = $this->generateBackendArea(self::TYPE);
 
         $this->assertCount(4, $configElements);
-        $this->assertEquals('select', $configElements[0]['additional_config']['type']);
-        $this->assertEquals('template', $configElements[0]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[0]['type']);
+        $this->assertEquals('template', $configElements[0]['name']);
 
-        $this->assertEquals('select', $configElements[1]['additional_config']['type']);
-        $this->assertEquals('container_type', $configElements[1]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[1]['type']);
+        $this->assertEquals('container_type', $configElements[1]['name']);
 
-        $this->assertEquals('relation', $configElements[2]['additional_config']['type']);
-        $this->assertEquals('background_image', $configElements[2]['additional_config']['name']);
+        $this->assertEquals('relation', $configElements[2]['type']);
+        $this->assertEquals('background_image', $configElements[2]['name']);
 
-        $this->assertEquals('select', $configElements[3]['additional_config']['type']);
-        $this->assertEquals('background_color', $configElements[3]['additional_config']['name']);
+        $this->assertEquals('select', $configElements[3]['type']);
+        $this->assertEquals('background_color', $configElements[3]['name']);
     }
 
     public function testParallaxContainerConfigParameter()

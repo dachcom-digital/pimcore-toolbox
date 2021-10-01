@@ -4,9 +4,9 @@ namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Codeception\Exception\ModuleException;
 use Dachcom\Codeception\Test\BundleTestCase;
-use Dachcom\Codeception\Util\VersionHelper;
-use Pimcore\Document\Editable\EditableHandlerInterface;
-use Pimcore\Model\Document\Tag\Area;
+use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
+use Pimcore\Model\Document\Editable;
+use Pimcore\Model\Document\Editable\Area;
 use Pimcore\Tests\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Builder\BrickConfigBuilder;
@@ -28,31 +28,82 @@ abstract class AbstractAreaTest extends BundleTestCase
     }
 
     /**
-     * @param       $id
-     * @param       $documentElements
-     * @param array $infoParams
+     * @param string $id
+     * @param array  $editables
+     * @param array  $infoParams
      *
      * @return string
      */
-    public function generateRenderedArea($id, $documentElements, $infoParams = [])
+    public function generateRenderedArea($id, $editables, $infoParams = [])
     {
-        $info = $this->generateAreaInfo($id, $infoParams);
-        $info->getView()->getParameters()->add(['editmode' => false]);
-        $info->getTag()->getView()->get('document')->setElements($documentElements);
+        $index = 1;
 
-        return $this->getAreaOutput($info);
+        $document = TestHelper::createEmptyDocumentPage('', false);
+        $document->setMissingRequiredEditable(false);
+
+        $blockData = [];
+        $blockData[] = [
+            'key'    => $index,
+            'type'   => $id,
+            'hidden' => false
+        ];
+
+        $infoParams['document'] = $document;
+        $infoParams['editmode'] = false;
+
+        $area = new Editable\Areablock();
+        $area->setName('test');
+        $area->setRealName('test');
+        $area->setDocument($document);
+        $area->setEditmode(false);
+        $area->setDataFromResource(serialize($blockData));
+        $area->setConfig([
+            'indexes'      => [],
+            'globalParams' => $infoParams
+        ]);
+
+        $editables[] = $area;
+
+        $indexedEditables = [];
+
+        foreach ($editables as $editableName => $editable) {
+
+            if ($editable instanceof Editable\Areablock) {
+                $indexedEditables[$editable->getName()] = $editable;
+                continue;
+            }
+
+            $key = sprintf('test:%d.%s', $index, $editableName);
+
+            $editable->setName($key);
+            $indexedEditables[$key] = $editable;
+        }
+
+        $document->setEditables($indexedEditables);
+
+        return $area->renderIndex(0, true);
     }
 
     /**
-     * @param $id
+     * @param string $id
      *
-     * @return mixed
+     * @return EditableDialogBoxConfiguration
      * @throws \Exception
      */
     public function generateBackendArea($id)
     {
-        $info = $this->generateAreaInfo($id);
-        $info->getView()->getParameters()->add(['editmode' => true]);
+        $document = TestHelper::createEmptyDocumentPage('', false);
+        $document->setMissingRequiredEditable(false);
+
+        $area = new Area();
+        $area->setName($id);
+        $area->setDocument($document);
+
+        $info = new Area\Info();
+        $info->setId($id);
+        $info->setIndex(1);
+        $info->setParams(['editmode' => true]);
+        $info->setEditable($area);
 
         $builder = $this->getContainer()->get(BrickConfigBuilder::class);
         $configManager = $this->getContainer()->get(ConfigManager::class);
@@ -61,76 +112,18 @@ abstract class AbstractAreaTest extends BundleTestCase
         $configNode = $configManager->getAreaConfig($info->getId());
         $themeOptions = $configManager->getConfig('theme');
 
-        return $builder->buildElementConfigArguments($info->getId(), $info->getTag()->getName(), $info, $configNode, $themeOptions);
+        return $builder->buildDialogBoxConfiguration($info, $info->getId(), $configNode, $themeOptions)->getItems();
     }
 
     /**
-     * @param       $id
-     * @param array $infoParams
-     *
-     * @return Area\Info
-     */
-    public function generateAreaInfo($id, $infoParams = [])
-    {
-        $document = TestHelper::createEmptyDocumentPage('', true);
-
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $areaClass = '\Pimcore\Model\Document\Editable\Area';
-            $infoClass = '\Pimcore\Model\Document\Editable\Area\Info';
-        } else {
-            $areaClass = '\Pimcore\Model\Document\Tag\Area';
-            $infoClass = '\Pimcore\Model\Document\Tag\Area\Info';
-        }
-
-        $view = new \Pimcore\Templating\Model\ViewModel([
-            'editmode' => false,
-            'document' => $document
-        ]);
-
-        $area = new $areaClass();
-        $area->setName($id);
-        $area->setView($view);
-
-        $info = new $infoClass();
-        $info->setId($id);
-        $info->setIndex(1);
-        $info->setParams($infoParams);
-        $info->setTag($area);
-        $info->setView($view);
-
-        return $info;
-    }
-
-    /**
-     * @param Area\Info $info
-     *
-     * @return string
-     */
-    public function getAreaOutput(Area\Info $info)
-    {
-        if (VersionHelper::pimcoreVersionIsGreaterOrEqualThan('6.8.0')) {
-            $tagHandler = \Pimcore::getContainer()->get(EditableHandlerInterface::class);
-        } else {
-            $tagHandler = \Pimcore::getContainer()->get('pimcore.document.tag.handler');
-        }
-
-        ob_start();
-        $tagHandler->renderAreaFrontend($info);
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        return $output;
-
-    }
-
-    /**
-     * @param $output
+     * @param string $output
      *
      * @return string
      */
     public function filter($output)
     {
         $output = preg_replace('/\r|\n/', '', $output);
+
         return trim(preg_replace('/(\>)\s*(\<)/m', '$1$2', $output));
     }
 

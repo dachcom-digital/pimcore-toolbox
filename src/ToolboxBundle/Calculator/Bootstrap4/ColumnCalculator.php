@@ -7,17 +7,9 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class ColumnCalculator implements ColumnCalculatorInterface
 {
-    /**
-     * @var ConfigManagerInterface
-     */
-    protected $configManager;
+    protected ConfigManagerInterface $configManager;
 
-    /**
-     * @param ConfigManagerInterface $configManager
-     *
-     * @return $this
-     */
-    public function setConfigManager(ConfigManagerInterface $configManager)
+    public function setConfigManager(ConfigManagerInterface $configManager): self
     {
         $this->configManager = $configManager;
         $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
@@ -26,14 +18,9 @@ class ColumnCalculator implements ColumnCalculatorInterface
     }
 
     /**
-     * @param string     $value
-     * @param null|array $customColumnConfiguration
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    public function calculateColumns($value, $customColumnConfiguration = null)
+    public function calculateColumns(?string $value, ?array $customColumnConfiguration = null): array
     {
         $themeSettings = $this->configManager->getConfig('theme');
         $gridSettings = $themeSettings['grid'];
@@ -118,7 +105,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
             $columnName = $strictColumnCounter ? 'column_' . $i : 'column_' . $columnCounter;
             $columns[] = [
-                'columnClass' => join(' ', $bootstrapClassConfig) . ' ' . join(' ', $bootstrapOffsetConfig),
+                'columnClass' => implode(' ', $bootstrapClassConfig) . ' ' . join(' ', $bootstrapOffsetConfig),
                 'columnData'  => [
                     'grid'       => $gridConfig,
                     'gridOffset' => $gridOffsetConfig
@@ -135,15 +122,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
         return $columns;
     }
 
-    /**
-     * @param string     $value
-     * @param null|array $customColumnConfiguration
-     *
-     * @return bool|mixed
-     *
-     * @throws \Exception
-     */
-    public function getColumnInfoForAdjuster($value, $customColumnConfiguration = null)
+    public function getColumnInfoForAdjuster(?string $value, ?array $customColumnConfiguration = null): bool|array
     {
         $columnData = $this->calculateColumns($value, $customColumnConfiguration);
 

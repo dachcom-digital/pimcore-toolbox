@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Gallery\Gallery:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: gallery }
+            - { name: toolbox.area.brick, id: gallery }
 toolbox:
     areas:
         gallery:
@@ -10,18 +10,15 @@ toolbox:
                 images:
                     type: relations
                     title: 'Images or Folder'
-                    config:
-                        reload: true
+                    config: ~
                 use_light_box:
                     type: checkbox
                     title: 'Use Lightbox'
-                    config:
-                        reload: false
+                    config: ~
                 use_thumbnails:
                     type: checkbox
                     title: 'Use Thumbnails'
-                    config:
-                        reload: false
+                    config: ~
                 additional_classes:
                     type: additionalClasses
                     config:

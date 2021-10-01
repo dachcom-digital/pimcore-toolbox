@@ -4,86 +4,47 @@ namespace ToolboxBundle\Manager;
 
 interface ConfigManagerInterface
 {
-    const AREABRICK_NAMESPACE_INTERNAL = 'areas';
+    public const AREABRICK_NAMESPACE_INTERNAL = 'areas';
+    public const AREABRICK_NAMESPACE_EXTERNAL = 'custom_areas';
 
-    const AREABRICK_NAMESPACE_EXTERNAL = 'custom_areas';
+    public function setConfig(array $config = []): void;
 
-    /**
-     * @param array $config
-     *
-     * @throws \Exception
-     */
-    public function setConfig($config = []);
-
-    /**
-     * @param string $namespace
-     *
-     * @return $this
-     */
-    public function setAreaNameSpace($namespace = self::AREABRICK_NAMESPACE_INTERNAL);
-
-    /**
-     * @param string $section
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getConfig($section);
+    public function setAreaNameSpace(string $namespace = self::AREABRICK_NAMESPACE_INTERNAL): self;
 
     /**
      * @throws \Exception
-     *
-     * @return bool
      */
-    public function isContextConfig();
+    public function getConfig(string $section): mixed;
 
     /**
-     * @return false|array
-     *
      * @throws \Exception
      */
-    public function getCurrentContextSettings();
+    public function isContextConfig(): bool;
 
     /**
-     * @param string $areaName
-     *
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getAreaConfig($areaName = '');
+    public function getCurrentContextSettings(): array;
 
     /**
-     * @param string $areaName
-     * @param string $configElementName
-     *
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getAreaElementConfig($areaName = '', $configElementName = '');
+    public function getAreaConfig(string $areaName): mixed;
 
     /**
-     * @param string $areaName
-     *
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getAreaParameterConfig($areaName = '');
+    public function getAreaElementConfig(string $areaName, string $configElementName): mixed;
 
     /**
-     * @param string $thumbnailName
-     *
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getImageThumbnailFromConfig($thumbnailName = '');
+    public function getAreaParameterConfig(string $areaName): mixed;
 
     /**
-     * @return string|null|false
+     * @throws \Exception
      */
-    public function getContextIdentifier();
+    public function getImageThumbnailFromConfig(string $thumbnailName): ?string;
+
+    public function getContextIdentifier(): ?string;
 }

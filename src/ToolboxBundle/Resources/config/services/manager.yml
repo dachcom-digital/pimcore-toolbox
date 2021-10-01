@@ -6,7 +6,7 @@ services:
         autowire: true
         autoconfigure: true
         calls:
-            - [setTemplating, ['@templating']]
+            - [setTemplating, ['@pimcore.templating.engine.delegating']]
 
     ToolboxBundle\Manager\AreaManagerInterface: '@ToolboxBundle\Manager\AreaManager'
     ToolboxBundle\Manager\AreaManager:
@@ -22,6 +22,11 @@ services:
     ToolboxBundle\Manager\AdaptiveConfigManagerInterface: '@ToolboxBundle\Manager\AdaptiveConfigManager'
     ToolboxBundle\Manager\AdaptiveConfigManager:
         parent: ToolboxBundle\Manager\ConfigManager
+        public: false
+        autowire: true
+
+    ToolboxBundle\Manager\PermissionManagerInterface: '@ToolboxBundle\Manager\PermissionManager'
+    ToolboxBundle\Manager\PermissionManager:
         public: false
         autowire: true
 

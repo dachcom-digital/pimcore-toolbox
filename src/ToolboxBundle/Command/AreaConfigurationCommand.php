@@ -15,28 +15,19 @@ use ToolboxBundle\ToolboxConfig;
 
 class AreaConfigurationCommand extends Command
 {
-    /**
-     * @var AdaptiveConfigManagerInterface
-     */
-    protected $adaptiveConfigManager;
+    protected static $defaultName = 'toolbox:check-config';
+    protected static $defaultDescription = 'Check configuration of a given area element.';
+    protected AdaptiveConfigManagerInterface $adaptiveConfigManager;
 
-    /**
-     * @param AdaptiveConfigManagerInterface $adaptiveConfigManager
-     */
     public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
         $this->adaptiveConfigManager = $adaptiveConfigManager;
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('toolbox:check-config')
-            ->setDescription('Check configuration of a given area element.')
             ->addOption(
                 'area',
                 'a',
@@ -51,10 +42,7 @@ class AreaConfigurationCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $brickId = $input->getOption('area');
         $contextId = $input->getOption('context');
@@ -67,7 +55,7 @@ class AreaConfigurationCommand extends Command
         if (empty($brickId)) {
             $output->writeln('<error>Please provide a valid Area Brick Id.</error>');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL;
@@ -93,14 +81,14 @@ class AreaConfigurationCommand extends Command
                     $output->writeln('');
                 }
 
-                return 0;
+                return Command::SUCCESS;
             }
 
             $output->writeln('');
             $output->writeln(sprintf('<error>Area Brick with Id "%s" not found.</error>', $brickId));
             $output->writeln('');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $configElements = $brickConfig['config_elements'];
@@ -111,7 +99,7 @@ class AreaConfigurationCommand extends Command
             $output->writeln(sprintf('<comment>Area Brick with Id "%s" does not have any configuration elements.</comment>', $brickId));
             $output->writeln('');
 
-            return 0;
+            return Command::SUCCESS;
         }
 
         $contextHeadline = $hasContext ? ('in Context "' . $contextId . '"') : '';
@@ -128,14 +116,12 @@ class AreaConfigurationCommand extends Command
 
         foreach ($configElements as $configName => $configData) {
             $elementConfigData = empty($configData['config']) ? '--' : $this->parseArrayForOutput($configData['config']);
-            $conditionParameter = empty($configData['conditions']) ? '--' : $this->parseArrayForOutput($configData['conditions']);
 
             $rows[] = [
                 $configName,
                 $configData['type'],
                 $configData['title'],
                 $configData['description'],
-                $conditionParameter,
                 $elementConfigData,
             ];
 
@@ -154,21 +140,14 @@ class AreaConfigurationCommand extends Command
 
         $table = new Table($output);
         $table
-            ->setHeaders(['name', 'type', 'title', 'description', 'conditions', 'config_elements'])
+            ->setHeaders(['name', 'type', 'title', 'description', 'config_elements'])
             ->setRows($rows);
         $table->render();
 
-        return 0;
+        return Command::SUCCESS;
     }
 
-    /**
-     * @param array  $array
-     * @param string $string
-     * @param int    $depth
-     *
-     * @return string
-     */
-    private function parseArrayForOutput(array $array = [], $string = '', $depth = 0)
+    private function parseArrayForOutput(array $array = [], string $string = '', int $depth = 0): string
     {
         $depthStr = str_repeat(' ', $depth * 3);
         foreach ($array as $key => $value) {

@@ -1,8 +1,11 @@
 services:
     ToolboxBundle\Document\Areabrick\ParallaxContainer\ParallaxContainer:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        arguments:
+            - '@translator'
+            - '@pimcore.templating.engine.delegating'
         tags:
-            - { name: pimcore.area.brick, id: parallaxContainer }
+            - { name: toolbox.area.brick, id: parallaxContainer }
 toolbox:
     areas:
         parallaxContainer:
@@ -11,7 +14,6 @@ toolbox:
                     type: select
                     title: 'Parallax Template'
                     config:
-                        reload: true
                         store:
                             no-template: 'No Template'
                         default: no-template
@@ -25,12 +27,10 @@ toolbox:
                             asset:
                               - image
                               - video
-                        reload: true
                 background_color:
                     type: select
                     title: Background Color
                     config:
-                        reload: true
                         store:
                             no-background-color: 'No Background Color'
                         default: no-background-color
@@ -52,7 +52,6 @@ toolbox:
                             half-window-width: 'Half Window Width'
                             third-window-width: 'Third Window Width'
                             quarter-window-width: 'Quarter Window Width'
-                        reload: true
                 image_behind:
                     type: parallaximage
                     title: 'Images Behind Main Container'
@@ -71,7 +70,6 @@ toolbox:
                             half-window-width: 'Half Window Width'
                             third-window-width: 'Third Window Width'
                             quarter-window-width: 'Quarter Window Width'
-                        reload: true
                 additional_classes:
                     type: additionalClasses
                     config:

@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\Areabrick\Content\Content:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: pimcore.area.brick, id: content }
+            - { name: toolbox.area.brick, id: content }
 toolbox:
     areas:
         content:

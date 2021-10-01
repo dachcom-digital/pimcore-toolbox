@@ -1,11 +1,11 @@
 pimcore.registerNS('pimcore.document.editables.columnadjuster');
-pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.document.editable, {
+pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editable, {
 
     getType: function () {
         return 'columnadjuster';
     },
 
-    initialize: function (id, name, options, data, inherited) {
+    initialize: function (id, name, config, data) {
 
         this.id = id;
         this.name = name;
@@ -20,7 +20,7 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         this.gridForm = null;
         this.toolbar = null;
         this.gridPreview = {};
-        this.options = this.parseOptions(options);
+        this.config = this.parseConfig(config);
         this.editWindowState = {w: 0, h: 0};
 
         this.combos = {};
@@ -29,10 +29,17 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
         this.gridAmount = 0;
         this.gridSize = 0;
+    },
+
+    render: function () {
+
+        var columnSelector,
+            checkInitState;
 
         this.setupWrapper();
 
-        var columnSelector = Ext.get(this.id).up('.t-row').prev('.t-row').query('.pimcore_tag_select');
+        columnSelector = Ext.get(this.id).up('.x-fieldset').prev('.x-fieldset').query('.pimcore_editable_select');
+
         if (columnSelector.length === 0 || !columnSelector[0].firstChild) {
             return;
         }
@@ -45,11 +52,11 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         //set current column selection
         this.currentColumnSelection = this.gridSelector.getValue();
         this.currentColumnSelectionName = this.gridSelector.getRawValue();
-        this.buttonHolder = Ext.get(id);
+        this.buttonHolder = Ext.get(this.id);
 
         this.statusButton = new Ext.form.Checkbox({
             fieldLabel: t('enable_column_adjuster'),
-            checked: this.data !== false,
+            checked: !Ext.Object.isEmpty(this.data),
             labelWidth: 170,
             labelStyle: 'padding-top:0; font-weight: 300;',
             listeners: {
@@ -66,7 +73,7 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         this.gridEditButton = new Ext.Button({
             iconCls: 'toolbox_column_adjuster',
             text: t('edit_column_configuration'),
-            hidden: this.data === false,
+            hidden: Ext.Object.isEmpty(this.data),
             style: 'background-color: white;',
             listeners: {
                 'click': function () {
@@ -79,9 +86,9 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
             }
         });
 
-        var checkInitState = function () {
+        checkInitState = function () {
             //there is only 1 column: we don't need a column adjuster...
-            if (this.currentColumnSelection.split('_').length === 2) {
+            if (this.currentColumnSelection === null || this.currentColumnSelection.split('_').length === 2) {
                 this.data = false;
                 this.gridEditButton.setDisabled(true);
                 this.statusButton.setValue(false);
@@ -121,16 +128,20 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
     expandEditor: function () {
 
+        var windowSelector,
+            editWindow,
+            cancelButton;
+
         if (this.gridEditorActive === true) {
             return;
         }
 
-        var windowSelector = Ext.get(this.id).up('.x-window');
+        windowSelector = Ext.get(this.id).up('.x-window');
         if (windowSelector.length === 0) {
             return;
         }
 
-        var editWindow = Ext.getCmp(windowSelector.id);
+        editWindow = Ext.getCmp(windowSelector.id);
         if (!editWindow) {
             return;
         }
@@ -143,7 +154,7 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         this.editWindowState.w = editWindow.getWidth();
         this.editWindowState.h = editWindow.getHeight();
 
-        var cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
+        cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
         if (cancelButton.length === 1) {
             cancelButton[0].setDisabled(true);
         }
@@ -195,10 +206,8 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
     },
 
-    /**
-     * @returns {null|Ext.FormPanel}
-     */
     populateGridForm: function () {
+
         var _ = this,
             currentDocumentId = null,
             tabPanel = new Ext.TabPanel({
@@ -289,8 +298,8 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
                             inherited = grid.value === null,
                             realValue = grid.value === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'value') : grid.value;
 
-                        if(_.columnStore) {
-                            Ext.Object.each(_.columnStore, function(k, v) {
+                        if (_.columnStore) {
+                            Ext.Object.each(_.columnStore, function (k, v) {
                                 storeData.push([k, v]);
                             });
                         } else {
@@ -324,7 +333,7 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
                                 typeAhead: true,
                                 mode: 'local',
                                 forceSelection: true,
-                                disabled: isInherited === true,
+                                disabled: breakpointIndex !== 0 && isInherited === true,
                                 triggerAction: 'all',
                                 labelAlign: 'top',
                                 style: 'margin-right:2px;',
@@ -357,7 +366,7 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
                             typeAhead: true,
                             mode: 'local',
                             forceSelection: true,
-                            disabled: isInherited === true,
+                            disabled: breakpointIndex !== 0 && isInherited === true,
                             triggerAction: 'all',
                             labelAlign: 'top',
                             style: 'margin-right:8px;',
@@ -464,10 +473,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
     },
 
-    /**
-     * @param identifier
-     * @param triggerEl
-     */
     updateData: function (identifier, triggerEl) {
         var form = this.gridForm.getForm(),
             _ = this;
@@ -581,9 +586,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
     },
 
-    /**
-     * @returns {string}
-     */
     mergeCustomGridValue: function () {
 
         if (!this.data.breakpoints) {
@@ -613,12 +615,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         }.bind(this));
     },
 
-    /**
-     * @param currentBreakpointIndex
-     * @param gridIndex
-     * @param returnProperty
-     * @returns {*}
-     */
     findInheritedGridValue: function (currentBreakpointIndex, gridIndex, returnProperty) {
 
         var val = null,
@@ -638,10 +634,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
 
     },
 
-    /**
-     * @param identifier
-     * @returns {*}
-     */
     findBreakPointDataByIdentifier: function (identifier) {
         var currentBreakpointIndex = null;
         Ext.Array.each(this.breakPoints, function (breakpoint, breakpointIndex) {
@@ -654,11 +646,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         return currentBreakpointIndex;
     },
 
-    /**
-     *
-     * @param gridIndex
-     * @returns {boolean}
-     */
     gridColumnHasOffset: function (gridIndex) {
         var hasOffset = false;
         Ext.Array.each(this.breakPoints, function (breakpoint, breakpointIndex) {
@@ -673,11 +660,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         return hasOffset;
     },
 
-    /**
-     *
-     * @param message
-     * @param startDelayed
-     */
     cancelAdjustment: function (message, startDelayed) {
         this.statusButton.setValue(false);
         this.adjustmentFailed = false;
@@ -688,9 +670,6 @@ pimcore.document.editables.columnadjuster = Class.create(toolbox.abstract.docume
         }.bind(this), startDelayed ? startDelayed : 0);
     },
 
-    /**
-     * @returns {*|boolean}
-     */
     getValue: function () {
         return this.data;
     }

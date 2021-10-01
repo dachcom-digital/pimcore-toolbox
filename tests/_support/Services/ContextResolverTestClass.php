@@ -4,15 +4,12 @@ namespace DachcomBundle\Test\Services;
 
 use ToolboxBundle\Resolver\ContextResolverInterface;
 
-/**
- * @group dataTypeOut
- */
 class ContextResolverTestClass implements ContextResolverInterface
 {
-    public function getCurrentContextIdentifier()
+    public function getCurrentContextIdentifier(): ?string
     {
         $requestStack = \Pimcore::getContainer()->get('request_stack');
-        $mainRequest = $requestStack->getMasterRequest();
+        $mainRequest = $requestStack->getMainRequest();
 
         if ($mainRequest->query->has('mock_toolbox_context')) {
             if ($mainRequest->query->get('mock_toolbox_context') === 'disabled') {

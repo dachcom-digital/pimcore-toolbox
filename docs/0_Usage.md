@@ -27,11 +27,11 @@ Of course, you're able to extend/modify the toolbar configuration:
 ```yaml
 area_block_configuration:
     toolbar:
-        title: 'Your Toolbar Title'
         width: 200
-        x: 10
-        y: 125
         buttonWidth: 200
+        buttonMaxCharacters: 40
+    controlsAlign: 'top'
+    controlsTrigger: 'hover'
         
     # define custom groups. Note: The "toolbox" group will be generated automatically.
     groups:
@@ -50,7 +50,7 @@ Use the `snippet_areas_appearance`  config node to disable bricks in specific sn
 ```yaml
 # define which elements should not appear in snippet documents
 toolbox:
-    disallowed_content_snippet_areas:
+    snippet_areas_appearance:
         snippet_c:
             disallowed:
                 - parallaxContainer

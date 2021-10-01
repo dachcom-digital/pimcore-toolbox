@@ -5,17 +5,5 @@ services:
         autoconfigure: true
         public: true
 
-    # toolbox service brick configuration builder
-    ToolboxBundle\Builder\BrickConfigBuilder:
-        shared: false
-
-    # base brick
-    ToolboxBundle\Document\Areabrick\AbstractAreabrick:
-        abstract:  true
-        calls:
-            - [setConfigManager, ['@ToolboxBundle\Manager\ConfigManager']]
-            - [setBrickConfigBuilder, ['@ToolboxBundle\Builder\BrickConfigBuilder']]
-            - [setLayoutManager, ['@ToolboxBundle\Manager\LayoutManager']]
-
-    # legacy alias
-    toolbox.area.brick.base_brick: '@ToolboxBundle\Document\Areabrick\AbstractAreabrick'
+    ToolboxBundle\Builder\BrickConfigBuilderInterface: '@ToolboxBundle\Builder\BrickConfigBuilder'
+    ToolboxBundle\Builder\BrickConfigBuilder: ~

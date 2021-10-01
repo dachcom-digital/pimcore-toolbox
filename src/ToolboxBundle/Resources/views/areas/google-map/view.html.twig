@@ -1,0 +1,10 @@
+{% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}
+<div class="toolbox-element toolbox-google-map {{ additionalClassesData|join(' ') }}">
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include toolbox_area_path(areaId, areaTemplateDirectory) with {
+        'mapZoom': pimcore_numeric('map_zoom').getData(),
+        'mapType': pimcore_select('map_type').getData(),
+        'iwOnInit': pimcore_checkbox('iw_on_init').isChecked()
+    } %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
+</div>

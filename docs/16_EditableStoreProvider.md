@@ -38,7 +38,7 @@ Now we need to register our new service:
 ```yml
 # app/config.yml
 services:
-    AppBundle\Toolbox\MyStoreProvider:
+    App\Toolbox\MyStoreProvider:
         tags:
             - { name: toolbox.editable.store_provider, identifier: 'my_awesome_store_provider' }
 
@@ -49,16 +49,13 @@ services:
 ```php
 <?php
 
-namespace AppBundle\Toolbox;
+namespace App\Toolbox;
 
 use ToolboxBundle\Provider\StoreProviderInterface;
 
 class MyStoreProvider implements StoreProviderInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getValues()
+    public function getValues(): array
     {
         return [
             'my_value' => 'My Value',

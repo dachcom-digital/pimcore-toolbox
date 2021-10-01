@@ -1,0 +1,6 @@
+{% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}
+<div class="toolbox-element toolbox-linklist {{ additionalClassesData|join(' ') }}">
+    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+    {% include toolbox_area_path(areaId, areaTemplateDirectory) %}
+    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
+</div>

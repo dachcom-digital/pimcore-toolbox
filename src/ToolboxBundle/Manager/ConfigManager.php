@@ -6,139 +6,65 @@ use ToolboxBundle\Resolver\ContextResolverInterface;
 
 class ConfigManager implements ConfigManagerInterface
 {
-    /**
-     * @var ContextResolverInterface
-     */
-    private $contextResolver;
+    private ContextResolverInterface $contextResolver;
+    private bool $contextResolved = false;
+    protected array $config;
+    protected array $context = [];
+    protected array $contextSettings = [];
+    protected ?string $currentContextId = null;
+    private ?string $areaNamespace = null;
 
-    /**
-     * @var bool
-     */
-    private $contextResolved = false;
-
-    /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * @var array
-     */
-    protected $context = [];
-
-    /**
-     * @var array
-     */
-    protected $contextSettings = [];
-
-    /**
-     * @var null|string
-     */
-    protected $currentContextId = null;
-
-    /**
-     * @var string
-     */
-    private $areaNamespace = null;
-
-    /**
-     * ConfigManager constructor.
-     *
-     * @param ContextResolverInterface $contextResolver
-     */
     public function __construct(ContextResolverInterface $contextResolver)
     {
         $this->contextResolver = $contextResolver;
     }
 
-    /**
-     * @param array $config
-     *
-     * @throws \Exception
-     */
-    public function setConfig($config = [])
+    public function setConfig(array $config = []): void
     {
         $this->config = $config;
     }
 
-    /**
-     * @param string $namespace
-     *
-     * @return $this
-     */
-    public function setAreaNameSpace($namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)
+    public function setAreaNameSpace(string $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL): self
     {
         $this->areaNamespace = $namespace;
 
         return $this;
     }
 
-    /**
-     * @param string $section
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getConfig($section)
+    public function getConfig(string $section): mixed
     {
         $this->ensureCoreConfig();
 
         return $this->config[$section];
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return bool
-     */
-    public function isContextConfig()
+    public function isContextConfig(): bool
     {
         $this->ensureCoreConfig();
 
-        return $this->currentContextId != null;
+        return $this->currentContextId !== null;
     }
 
-    /**
-     * @return false|array
-     *
-     * @throws \Exception
-     */
-    public function getCurrentContextSettings()
+    public function getCurrentContextSettings(): array
     {
         $this->ensureCoreConfig();
 
         if ($this->currentContextId === null) {
-            return false;
+            return [];
         }
 
         return $this->contextSettings[$this->currentContextId];
     }
 
-    /**
-     * @param string $areaName
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getAreaConfig($areaName = '')
+    public function getAreaConfig(string $areaName): mixed
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
 
-        return $this->config[$this->areaNamespace][$areaName];
+        return $this->config[$this->areaNamespace][$areaName] ?? [];
     }
 
-    /**
-     * @param string $areaName
-     * @param string $configElementName
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getAreaElementConfig($areaName = '', $configElementName = '')
+    public function getAreaElementConfig(string $areaName, string $configElementName): mixed
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
@@ -146,14 +72,7 @@ class ConfigManager implements ConfigManagerInterface
         return $this->config[$this->areaNamespace][$areaName]['config_elements'][$configElementName];
     }
 
-    /**
-     * @param string $areaName
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getAreaParameterConfig($areaName = '')
+    public function getAreaParameterConfig(string $areaName): mixed
     {
         $this->ensureCoreConfig();
         $this->ensureConfigNamespace();
@@ -161,24 +80,14 @@ class ConfigManager implements ConfigManagerInterface
         return $this->config[$this->areaNamespace][$areaName]['config_parameter'];
     }
 
-    /**
-     * @param string $thumbnailName
-     *
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getImageThumbnailFromConfig($thumbnailName = '')
+    public function getImageThumbnailFromConfig(string $thumbnailName = ''): ?string
     {
         $this->ensureCoreConfig();
 
-        return $this->config['image_thumbnails'][$thumbnailName];
+        return $this->config['image_thumbnails'][$thumbnailName] ?? null;
     }
 
-    /**
-     * @return string|null|false
-     */
-    public function getContextIdentifier()
+    public function getContextIdentifier(): ?string
     {
         return $this->contextResolver->getCurrentContextIdentifier();
     }
@@ -186,11 +95,11 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * @throws \Exception
      */
-    private function ensureCoreConfig()
+    private function ensureCoreConfig(): void
     {
         $contextIdentifierId = $this->getContextIdentifier();
 
-        if ($contextIdentifierId === false) {
+        if ($contextIdentifierId === null) {
             $this->contextResolved = true;
 
             return;
@@ -200,12 +109,10 @@ class ConfigManager implements ConfigManagerInterface
             return;
         }
 
-        if ($contextIdentifierId !== null) {
-            $contextData = $this->parseContextConfig($contextIdentifierId);
-            $this->config = $contextData['config'];
-            $this->contextSettings[$contextIdentifierId] = $contextData['settings'];
-            $this->currentContextId = $contextIdentifierId;
-        }
+        $contextData = $this->parseContextConfig($contextIdentifierId);
+        $this->config = $contextData['config'];
+        $this->contextSettings[$contextIdentifierId] = $contextData['settings'];
+        $this->currentContextId = $contextIdentifierId;
 
         $this->contextResolved = true;
     }
@@ -213,7 +120,7 @@ class ConfigManager implements ConfigManagerInterface
     /**
      * @throws \Exception
      */
-    private function ensureConfigNamespace()
+    private function ensureConfigNamespace(): void
     {
         if (is_null($this->areaNamespace)) {
             throw new \Exception('ConfigManager has no defined namespace.');
@@ -221,19 +128,15 @@ class ConfigManager implements ConfigManagerInterface
     }
 
     /**
-     * @param string $currentContextId
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    private function parseContextConfig($currentContextId)
+    private function parseContextConfig(string $currentContextId): array
     {
-        if (!is_string($currentContextId) || !isset($this->config['context'][$currentContextId])) {
-            @trigger_error(sprintf(
+        if (!isset($this->config['context'][$currentContextId])) {
+            throw new \Exception(sprintf(
                 'toolbox context conflict: context with identifier "%s" is not configured.',
                 $currentContextId
-            ), E_USER_ERROR);
+            ));
         }
 
         $contextData = $this->config['context'][$currentContextId];
