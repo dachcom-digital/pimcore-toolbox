@@ -98,6 +98,7 @@ abstract class AbstractAreaTest extends BundleTestCase
         $area = new Area();
         $area->setName($id);
         $area->setDocument($document);
+        $area->setEditmode(false);
 
         $info = new Area\Info();
         $info->setId($id);

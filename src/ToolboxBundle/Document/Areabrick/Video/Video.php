@@ -23,7 +23,7 @@ class Video extends AbstractAreabrick
         $playInLightBox = $videoTag->getShowAsLightBox() === true ? 'true' : 'false';
         /** @var Checkbox $autoPlayElement */
         $autoPlayElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'autoplay');
-        $autoPlay = $autoPlayElement->isChecked() === true && !$info->getParam('editmode');
+        $autoPlay = $autoPlayElement->isChecked() === true && !$info->getEditable()->getEditmode();
         $videoType = $videoTag->getVideoType();
         $posterPath = null;
         $poster = $videoTag->getPosterAsset();

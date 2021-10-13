@@ -106,7 +106,7 @@ class ParallaxContainer extends AbstractAreabrick
                 $areaBlock = sprintf($wrapContent, $areaBlock);
             }
 
-            if ($info->getParam('editmode') === true) {
+            if ($info->getEditable()->getEditmode() === true) {
                 if ($containerWrapper === 'none' && str_contains($areaBlock, 'toolbox-columns')) {
                     $message = $this->translator->trans('You\'re using columns without a valid container wrapper.', [], 'admin');
                     $messageWrap = $this->templating->render('@Toolbox/helper/field-alert.' . $this->getTemplateSuffix(), [

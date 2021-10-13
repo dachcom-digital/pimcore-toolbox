@@ -26,7 +26,7 @@ class Columns extends AbstractAreabrick
     {
         parent::action($info);
 
-        $editMode = $info->getParam('editmode');
+        $editMode = $info->getEditable()->getEditmode();
 
         /** @var Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'equal_height');
