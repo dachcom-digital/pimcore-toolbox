@@ -23,7 +23,7 @@ class SlideColumns extends AbstractAreabrick
 
         /** @var Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'equal_height');
-        $equalHeight = $equalHeightElement->isChecked() && !$info->getParam('editmode');
+        $equalHeight = $equalHeightElement->isChecked() && !$info->getEditable()->getEditmode();
 
         $id = sprintf('%s-%s', $info->getId(), $info->getIndex());
 

@@ -5,8 +5,8 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 [![Join the chat at https://gitter.im/pimcore/pimcore](https://img.shields.io/gitter/room/pimcore/pimcore.svg?style=flat-square)](https://gitter.im/pimcore/pimcore)
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Release](https://img.shields.io/packagist/v/dachcom-digital/toolbox.svg?style=flat-square)](https://packagist.org/packages/dachcom-digital/toolbox)
-[![Tests](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/Codeception?style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22Codeception%22)
-[![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan?style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A%22PHP%20Stan%22)
+[![Tests](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/Codeception/master?style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3ACodeception+branch%3Amaster)
+[![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-toolbox/PHP%20Stan/master?style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A"PHP+Stan"+branch%3Amaster)
 
 ![Pimcore Toolbox](https://user-images.githubusercontent.com/700119/135613598-a9ef2c69-9a44-41cd-8542-596a0322d3da.png)
 
@@ -28,12 +28,11 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 }
 ```
 
-### Installation
 - Execute: `$ bin/console pimcore:bundle:enable ToolboxBundle`
 - Execute: `$ bin/console pimcore:bundle:install ToolboxBundle`
 
 ## Upgrading
-- Execute: `$ bin/console doctrine:migrations:version --add --all --prefix 'ToolboxBundle\Migrations'`
+- Execute: `$ bin/console doctrine:migrations:migrate --prefix 'ToolboxBundle\Migrations'`
 
 ## What's the meaning of Toolbox?
 - create often used bricks in a second
@@ -97,7 +96,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Javascript Plugins](docs/80_Javascript.md)
 
 ## Pimcore Fixes / Overrides
-- Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js#L8) bug (in some cases the iframe overlay field does not apply to the right position)
+- Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js) bug (in some cases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license

@@ -19,7 +19,7 @@ class IFrame extends AbstractAreabrick
 
         $isValid = true;
         $errorMessage = null;
-        if (!empty($iFrameUrl) && $info->getParam('editmode') === true) {
+        if (!empty($iFrameUrl) && $info->getEditable()->getEditmode() === true) {
             $response = $this->checkIfUrlIsEmbeddable($iFrameUrl);
             if ($response !== true) {
                 $isValid = false;
