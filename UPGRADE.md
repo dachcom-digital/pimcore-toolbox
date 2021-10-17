@@ -1,5 +1,11 @@
 # Upgrade Notes
 
+## Version 4.0.2
+- [FEATURE] PIMCORE 10.2 Support
+
+## Version 4.0.1
+- [BUGFIX] Fetching edit mode state from editable instead of checking area param
+ 
 ## Migrating from Version 3.x to Version 4.0.0
 ⚠️ If you're still on version `2.x`, you need to install `3.x` first, then [migrate](https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/UPGRADE.md) to `3.3`. After that, you're able to update to `^4.0`.
 

@@ -34,7 +34,6 @@ class Install extends SettingsStoreAwareInstaller
     {
         // get list of types
         $list = new DocType\Listing();
-        $list->getDao()->load();
 
         $skipInstall = false;
         $elementName = 'Teaser Snippet';
