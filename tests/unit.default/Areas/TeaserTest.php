@@ -94,7 +94,7 @@ class TeaserTest extends AbstractAreaTest
         $image = new Image();
         $image->setDataFromEditmode([
             'id'  => $asset->getId(),
-            'alt' => 'alt text'
+            'alt' => ''
         ]);
 
         $text = new Wysiwyg();
