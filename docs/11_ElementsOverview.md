@@ -202,7 +202,7 @@ Head into the pimcore backend, open system settings, navigate to Google Credenti
 If you want to define them via parameters, you're able to define them like this:
 
 ```yaml
-# app/config/parameters.yml
+# config/config.yaml
 parameters:
     toolbox_google_service_browser_api_key: YOUR_BROWSER_KEY
     toolbox_google_service_simple_api_key: YOUR_SIMPLE_KEY

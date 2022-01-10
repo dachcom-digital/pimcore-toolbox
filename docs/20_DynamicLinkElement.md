@@ -15,7 +15,7 @@ Of course it's impossible to generate a valid url from objects, so you need to d
 
 #### Service
 ```yaml
-# /app/config/services.yml
+# config/services.yaml
 services:
 
     _defaults:

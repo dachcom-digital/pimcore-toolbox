@@ -8,7 +8,7 @@ There are two predefined nodes: `gallery` and `gallery_thumbs`. You may want to 
 ### Define Attributes
  
 ```yaml
-# add this to your app/config/config.yml
+# add this to your config/packages/toolbox.yaml
 toolbox:
     data_attributes:
     

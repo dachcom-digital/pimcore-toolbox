@@ -83,7 +83,7 @@ So let's assume that you want to add your own custom grid framework:
 
 
 ```yaml
-# /app/config/config.yml
+# config/packages/toolbox.yaml
 toolbox:
     theme:
         layout: 'YourGridSystem'
@@ -97,8 +97,7 @@ From now on, the Toolbox Bundle will search every element view in `@ToolboxBundl
 Now implement the calculators (don't forget the tags):
 
 ```yaml
-# /app/config/services.yml
-
+# config/services.yaml
 services:
     _defaults:
         autowire: true
@@ -118,7 +117,7 @@ services:
 ```
 
 ```yaml
-# /app/config/config.yml
+# config/packages/toolbox.yaml
 toolbox:
     theme:
         calculators:
