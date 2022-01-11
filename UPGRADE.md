@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.3
+- [BUGFIX] return correct default value if editable is null
+
 ## Version 4.0.2
 - [FEATURE] PIMCORE 10.2 Support
 

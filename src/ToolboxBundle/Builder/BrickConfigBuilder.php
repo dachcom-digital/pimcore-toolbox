@@ -250,7 +250,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
         $el = $info->getDocumentElement($config['name'], $config['type']);
 
         if ($el === null) {
-            return $config;
+            return $defaultConfigValue;
         }
 
         // force default (only if it returns false)
