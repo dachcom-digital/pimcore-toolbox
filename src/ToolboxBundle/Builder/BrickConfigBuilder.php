@@ -282,7 +282,7 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
             'type'                       => 'columnadjuster',
             'name'                       => 'columnadjuster',
             'tab'                        => $tab,
-            'label'                      => null,
+            'label'                      => $this->translator->trans('Column adjuster', [], 'admin'),
             'config'                     => [],
             'additional_classes_element' => false,
         ];
