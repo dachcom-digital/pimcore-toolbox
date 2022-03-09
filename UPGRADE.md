@@ -2,6 +2,7 @@
 
 ## Version 4.0.4
 - [BUGFIX] fix file size calculation
+- [BUGFIX] add label for column adjuster [@blankse](https://github.com/dachcom-digital/pimcore-toolbox/pull/170)
 
 ## Version 4.0.3
 - [BUGFIX] return correct default value if editable is null
