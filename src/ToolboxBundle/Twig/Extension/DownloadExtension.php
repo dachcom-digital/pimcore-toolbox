@@ -167,8 +167,6 @@ class DownloadExtension extends AbstractExtension
      */
     public function getOptimizedFileSize($bytes, $precision)
     {
-        $format = '';
-
         if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, 2);
             $format = 'gb';
@@ -183,7 +181,7 @@ class DownloadExtension extends AbstractExtension
         } elseif ($bytes == 1) {
             $format = 'byte';
         } else {
-            $bytes = '0 bytes';
+            $format = 'bytes';
         }
 
         return round($bytes, $precision) . ' ' . $format;
