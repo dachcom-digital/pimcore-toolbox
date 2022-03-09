@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.4
+- [BUGFIX] fix file size calculation
+
 ## Version 4.0.3
 - [BUGFIX] return correct default value if editable is null
 
