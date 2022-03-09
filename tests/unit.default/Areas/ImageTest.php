@@ -147,7 +147,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
+                                ' . $asset->getThumbnail('contentImage')->getHtml(['imgAttributes' => ['class' => 'img-fluid']]) . '
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
+                                ' . $asset->getThumbnail('contentImage')->getHtml(['imgAttributes' => ['class' => 'img-fluid']]) . '
                                 <span class="caption">caption</span>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ class ImageTest extends AbstractAreaTest
                         <div class="col-12">
                             <div class="light-box">
                                 <a href="' . $asset->getThumbnail('lightBoxImage')->getPath() . '" class="item">
-                                    ' . $asset->getThumbnail('contentImage')->getHtml() . '
+                                    ' . $asset->getThumbnail('contentImage')->getHtml(['imgAttributes' => ['class' => 'img-fluid']]) . '
                                 </a>
                             </div>
                         </div>
@@ -190,7 +190,7 @@ class ImageTest extends AbstractAreaTest
                         <div class="col-12">
                             <div >
                                 <a href="/test/test2" target="">
-                                    ' . $asset->getThumbnail('contentImage')->getHtml() . '
+                                    ' . $asset->getThumbnail('contentImage')->getHtml(['imgAttributes' => ['class' => 'img-fluid']]) . '
                                 </a>
                             </div>
                         </div>
@@ -204,7 +204,7 @@ class ImageTest extends AbstractAreaTest
                     <div class="row">
                         <div class="col-12">
                             <div >
-                                ' . $asset->getThumbnail('contentImage')->getHtml() . '
+                                ' . $asset->getThumbnail('contentImage')->getHtml(['imgAttributes' => ['class' => 'img-fluid']]) . '
                             </div>
                         </div>
                     </div>
