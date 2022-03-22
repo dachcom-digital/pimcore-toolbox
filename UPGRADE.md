@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.5
+- [BUGFIX] fix type error in `Vhs:setDataFromResource`
+
 ## Version 4.0.4
 - [BUGFIX] fix file size calculation
 - [BUGFIX] add label for column adjuster [@blankse](https://github.com/dachcom-digital/pimcore-toolbox/pull/170)
