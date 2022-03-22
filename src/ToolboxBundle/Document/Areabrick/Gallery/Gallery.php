@@ -15,7 +15,7 @@ class Gallery extends AbstractAreabrick
         parent::action($info);
 
         $infoParams = $info->getParams();
-        $id = $infoParams['toolboxGalleryId'] ?? uniqid('gallery-', true);
+        $id = $infoParams['toolboxGalleryId'] ?? str_replace('.', '', uniqid('gallery-', true));
 
         /** @var Relations $imagesField */
         $imagesField = $this->getDocumentEditable($info->getDocument(), 'relations', 'images');

@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.6
+- [BUGFIX] fix id for Accordion and Gallery: save class names
+
 ## Version 4.0.5
 - [BUGFIX] fix type error in `Vhs:setDataFromResource`
 

@@ -19,7 +19,7 @@ class Accordion extends AbstractAreabrick
         if (isset($infoParams['toolboxAccordionId'])) {
             $id = $infoParams['toolboxAccordionId'];
         } else {
-            $id = uniqid('accordion-', true);
+            $id = str_replace('.', '', uniqid('accordion-', true));
         }
 
         $info->setParam('id', $id);
