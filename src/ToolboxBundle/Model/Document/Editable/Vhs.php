@@ -63,7 +63,7 @@ class Vhs extends Model\Document\Editable\Video
         }
 
         $this->showAsLightBox = $data['showAsLightbox'] ?? false;
-        $this->videoParameter = $data['videoParameter'] ?? null;
+        $this->videoParameter = $data['videoParameter'] ?? [];
 
         return $this;
     }
