@@ -56,7 +56,7 @@ class MyBrick extends AbstractAreabrick
     public function action(Info $info): ?Response
     {
         //call this to activate all the toolbox magic.
-        parent::action($info);
+        return parent::action($info);
     }
 
     public function getTemplateDirectoryName():string
