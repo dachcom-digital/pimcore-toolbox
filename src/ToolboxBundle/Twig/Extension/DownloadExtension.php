@@ -184,6 +184,6 @@ class DownloadExtension extends AbstractExtension
             $format = 'bytes';
         }
 
-        return round($bytes, $precision) . ' ' . $format;
+        return round((float)$bytes, $precision) . ' ' . $format;
     }
 }
