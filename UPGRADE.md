@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.7
+- [BUGFIX] prevent type error in `DownloadExtension:getOptimizedFileSize`
+
 ## Version 4.0.6
 - [BUGFIX] fix id for Accordion and Gallery: save class names
 
