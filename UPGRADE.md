@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.8
+- [BUGFIX] Fix wrong query identifier for MembersBundle connector [@scrummer](https://github.com/dachcom-digital/pimcore-toolbox/pull/179)
+
 ## Version 4.0.7
 - [BUGFIX] prevent type error in `DownloadExtension:getOptimizedFileSize`
 
