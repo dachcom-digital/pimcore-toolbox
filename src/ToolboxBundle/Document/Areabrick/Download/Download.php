@@ -67,7 +67,7 @@ class Download extends AbstractAreabrick
         if ($this->hasMembersBundle()) {
             $assetListing->onCreateQueryBuilder(function (\Doctrine\DBAL\Query\QueryBuilder $query) use ($assetListing) {
                 $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
-                    ->addRestrictionInjection($query, $assetListing, 'assets.id');
+                    ->addRestrictionInjection($query, $assetListing, 'id');
             });
         }
 
