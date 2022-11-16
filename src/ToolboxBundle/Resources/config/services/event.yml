@@ -5,10 +5,6 @@ services:
         autoconfigure: true
         public: false
 
-    ToolboxBundle\EventListener\PermissionListener:
-        tags:
-            - { name: kernel.event_subscriber }
-
     ToolboxBundle\EventListener\Frontend\FrontendJsListener:
         public: true
         tags:
