@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.9
+- [BUGFIX] Missing area layout for bricks without configuration [#182](https://github.com/dachcom-digital/pimcore-toolbox/issues/182)
+
 ## Version 4.0.8
 - [BUGFIX] Fix wrong query identifier for MembersBundle connector [@scrummer](https://github.com/dachcom-digital/pimcore-toolbox/pull/179)
 
