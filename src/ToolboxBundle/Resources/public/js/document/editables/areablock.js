@@ -102,9 +102,9 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
                     $areaEl.addCls('editable-blocked');
                 }
 
-                if ($labelDiv && !$labelDiv.classList.contains('toolbox-initialized')) {
+                if ($labelDiv && !$areaEl.hasCls('toolbox-initialized')) {
 
-                    $labelDiv.classList.add('toolbox-initialized');
+                    $areaEl.addCls('toolbox-initialized');
 
                     $el = Ext.DomHelper.insertAfter($areaButtonsEl, {
                         'tag': 'div',
@@ -121,7 +121,7 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
                             cls: 'pimcore_block_button_plus',
                             iconCls: 'pimcore_icon_edit',
                             text: t('edit'),
-                            handler: this.openEditableDialogBox.bind(this, this.elements[i], $labelDiv),
+                            handler: this.openEditableDialogBox.bind(this, this.elements[i], $editDiv),
                             listeners: {
                                 afterrender: function(ev) {
                                     $areaEl.fireEvent('toolbox.bar.added', $areaEl);
