@@ -1,0 +1,10 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ToolboxBundle\Maintenance\AreaPermissionTask:
+        tags:
+            - { name: pimcore.maintenance.task, type: toolbox_area_sync_permissions }
