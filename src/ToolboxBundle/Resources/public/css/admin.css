@@ -591,6 +591,10 @@ body > .single-teaser img {
     opacity: 1;
 }
 
+.toolbox-element-edit-button.not-configurable {
+    padding: 3px 0 0 0;
+}
+
 .toolbox-element-edit-button.no-interaction {
     height: 26px;
 }
