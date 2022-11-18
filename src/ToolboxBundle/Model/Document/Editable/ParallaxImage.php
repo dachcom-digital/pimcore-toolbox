@@ -103,12 +103,11 @@ class ParallaxImage extends Model\Document\Editable\Relations
 
         if (is_array($this->elements) && count($this->elements) > 0) {
             foreach ($this->elements as $element) {
-                $obj = $element['obj'];
-                if ($obj instanceof Element\ElementInterface) {
-                    $elementType = Element\Service::getElementType($obj);
-                    $key = $elementType . '_' . $obj->getId();
+                if ($element instanceof Element\ElementInterface) {
+                    $elementType = Element\Service::getElementType($element);
+                    $key = $elementType . '_' . $element->getId();
                     $dependencies[$key] = [
-                        'id'   => $obj->getId(),
+                        'id'   => $element->getId(),
                         'type' => $elementType
                     ];
                 }
