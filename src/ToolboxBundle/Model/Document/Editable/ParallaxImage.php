@@ -10,6 +10,18 @@ use Pimcore\Model\DataObject;
 
 class ParallaxImage extends Model\Document\Editable\Relations
 {
+    protected array $parallaxProperties = [];
+
+    public function getParallaxProperties(): array
+    {
+        return $this->parallaxProperties;
+    }
+
+    public function getParallaxPropertyByIndex(int $index)
+    {
+        return $this->parallaxProperties[$index] ?? [];
+    }
+
     public function getType(): string
     {
         return 'parallaximage';
@@ -22,9 +34,11 @@ class ParallaxImage extends Model\Document\Editable\Relations
             foreach ($this->elementIds as $elementId) {
                 $el = Element\Service::getElementById($elementId['type'], $elementId['id']);
                 if ($el instanceof Element\ElementInterface) {
-                    $el->setProperty('parallaxPosition', 'text', $elementId['parallaxPosition']);
-                    $el->setProperty('parallaxSize', 'text', $elementId['parallaxSize']);
                     $this->elements[] = $el;
+                    $this->parallaxProperties[] = [
+                        'parallaxPosition' => $elementId['parallaxPosition'],
+                        'parallaxSize'     => $elementId['parallaxSize']
+                    ];
                 }
             }
         }
@@ -38,15 +52,15 @@ class ParallaxImage extends Model\Document\Editable\Relations
         $return = [];
 
         if (is_array($this->elements) && count($this->elements) > 0) {
-            foreach ($this->elements as $element) {
+            foreach ($this->elements as $index => $element) {
                 if ($element instanceof DataObject\Concrete) {
                     $return[] = [
                         $element->getId(),
                         $element->getRealFullPath(),
                         'object',
                         $element->getClassName(),
-                        $element->getProperty('parallaxPosition'),
-                        $element->getProperty('parallaxSize'),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
                 } elseif ($element instanceof DataObject\AbstractObject) {
                     $return[] = [
@@ -54,8 +68,8 @@ class ParallaxImage extends Model\Document\Editable\Relations
                         $element->getRealFullPath(),
                         'object',
                         'folder',
-                        $element->getProperty('parallaxPosition'),
-                        $element->getProperty('parallaxSize'),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
                 } elseif ($element instanceof Asset) {
                     $return[] = [
@@ -63,8 +77,8 @@ class ParallaxImage extends Model\Document\Editable\Relations
                         $element->getRealFullPath(),
                         'asset',
                         $element->getType(),
-                        $element->getProperty('parallaxPosition'),
-                        $element->getProperty('parallaxSize'),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
                 } elseif ($element instanceof Document) {
                     $return[] = [
@@ -72,8 +86,8 @@ class ParallaxImage extends Model\Document\Editable\Relations
                         $element->getRealFullPath(),
                         'document',
                         $element->getType(),
-                        $element->getProperty('parallaxPosition'),
-                        $element->getProperty('parallaxSize'),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
                 }
             }
