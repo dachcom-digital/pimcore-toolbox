@@ -22,11 +22,9 @@ class ParallaxImage extends Model\Document\Editable\Relations
             foreach ($this->elementIds as $elementId) {
                 $el = Element\Service::getElementById($elementId['type'], $elementId['id']);
                 if ($el instanceof Element\ElementInterface) {
-                    $this->elements[] = [
-                        'obj'              => $el,
-                        'parallaxPosition' => $elementId['parallaxPosition'],
-                        'parallaxSize'     => $elementId['parallaxSize']
-                    ];
+                    $el->setProperty('parallaxPosition', 'text', $elementId['parallaxPosition']);
+                    $el->setProperty('parallaxSize', 'text', $elementId['parallaxSize']);
+                    $this->elements[] = $el;
                 }
             }
         }
@@ -41,42 +39,41 @@ class ParallaxImage extends Model\Document\Editable\Relations
 
         if (is_array($this->elements) && count($this->elements) > 0) {
             foreach ($this->elements as $element) {
-                $obj = $element['obj'];
-                if ($obj instanceof DataObject\Concrete) {
+                if ($element instanceof DataObject\Concrete) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'object',
-                        $obj->getClassName(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getClassName(),
+                        $element->getProperty('parallaxPosition'),
+                        $element->getProperty('parallaxSize'),
                     ];
-                } elseif ($obj instanceof DataObject\AbstractObject) {
+                } elseif ($element instanceof DataObject\AbstractObject) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'object',
                         'folder',
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getProperty('parallaxPosition'),
+                        $element->getProperty('parallaxSize'),
                     ];
-                } elseif ($obj instanceof Asset) {
+                } elseif ($element instanceof Asset) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'asset',
-                        $obj->getType(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getType(),
+                        $element->getProperty('parallaxPosition'),
+                        $element->getProperty('parallaxSize'),
                     ];
-                } elseif ($obj instanceof Document) {
+                } elseif ($element instanceof Document) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'document',
-                        $obj->getType(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getType(),
+                        $element->getProperty('parallaxPosition'),
+                        $element->getProperty('parallaxSize'),
                     ];
                 }
             }
@@ -110,7 +107,6 @@ class ParallaxImage extends Model\Document\Editable\Relations
                 if ($obj instanceof Element\ElementInterface) {
                     $elementType = Element\Service::getElementType($obj);
                     $key = $elementType . '_' . $obj->getId();
-
                     $dependencies[$key] = [
                         'id'   => $obj->getId(),
                         'type' => $elementType
