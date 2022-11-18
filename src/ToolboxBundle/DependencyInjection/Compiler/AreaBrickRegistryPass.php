@@ -146,7 +146,7 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             }
         }
 
-        if (count($notEditDialogAwareBricks) > 0 && $container->hasParameter('toolbox.area_brick.dialog_aware_bricks')) {
+        if (count($notEditDialogAwareBricks) > 0) {
             $requestedEditDialogAwareBricks = $container->getParameter('toolbox.area_brick.dialog_aware_bricks');
             foreach ($requestedEditDialogAwareBricks as $requestedEditDialogAwareBrickId) {
                 if (in_array($requestedEditDialogAwareBrickId, $notEditDialogAwareBricks, true)) {
