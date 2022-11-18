@@ -10,6 +10,18 @@ use Pimcore\Model\DataObject;
 
 class ParallaxImage extends Model\Document\Editable\Relations
 {
+    protected array $parallaxProperties = [];
+
+    public function getParallaxProperties(): array
+    {
+        return $this->parallaxProperties;
+    }
+
+    public function getParallaxPropertyByIndex(int $index)
+    {
+        return $this->parallaxProperties[$index] ?? [];
+    }
+
     public function getType(): string
     {
         return 'parallaximage';
@@ -22,8 +34,8 @@ class ParallaxImage extends Model\Document\Editable\Relations
             foreach ($this->elementIds as $elementId) {
                 $el = Element\Service::getElementById($elementId['type'], $elementId['id']);
                 if ($el instanceof Element\ElementInterface) {
-                    $this->elements[] = [
-                        'obj'              => $el,
+                    $this->elements[] = $el;
+                    $this->parallaxProperties[] = [
                         'parallaxPosition' => $elementId['parallaxPosition'],
                         'parallaxSize'     => $elementId['parallaxSize']
                     ];
@@ -40,43 +52,42 @@ class ParallaxImage extends Model\Document\Editable\Relations
         $return = [];
 
         if (is_array($this->elements) && count($this->elements) > 0) {
-            foreach ($this->elements as $element) {
-                $obj = $element['obj'];
-                if ($obj instanceof DataObject\Concrete) {
+            foreach ($this->elements as $index => $element) {
+                if ($element instanceof DataObject\Concrete) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'object',
-                        $obj->getClassName(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getClassName(),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
-                } elseif ($obj instanceof DataObject\AbstractObject) {
+                } elseif ($element instanceof DataObject\AbstractObject) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'object',
                         'folder',
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
-                } elseif ($obj instanceof Asset) {
+                } elseif ($element instanceof Asset) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'asset',
-                        $obj->getType(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getType(),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
-                } elseif ($obj instanceof Document) {
+                } elseif ($element instanceof Document) {
                     $return[] = [
-                        $obj->getId(),
-                        $obj->getRealFullPath(),
+                        $element->getId(),
+                        $element->getRealFullPath(),
                         'document',
-                        $obj->getType(),
-                        $element['parallaxPosition'],
-                        $element['parallaxSize']
+                        $element->getType(),
+                        $this->parallaxProperties[$index]['parallaxPosition'] ?? null,
+                        $this->parallaxProperties[$index]['parallaxSize'] ?? null,
                     ];
                 }
             }
@@ -106,13 +117,11 @@ class ParallaxImage extends Model\Document\Editable\Relations
 
         if (is_array($this->elements) && count($this->elements) > 0) {
             foreach ($this->elements as $element) {
-                $obj = $element['obj'];
-                if ($obj instanceof Element\ElementInterface) {
-                    $elementType = Element\Service::getElementType($obj);
-                    $key = $elementType . '_' . $obj->getId();
-
+                if ($element instanceof Element\ElementInterface) {
+                    $elementType = Element\Service::getElementType($element);
+                    $key = $elementType . '_' . $element->getId();
                     $dependencies[$key] = [
-                        'id'   => $obj->getId(),
+                        'id'   => $element->getId(),
                         'type' => $elementType
                     ];
                 }

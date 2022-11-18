@@ -1,23 +1,25 @@
-{% for element in elements.elements %}
+{% for index, element in elements.elements %}
 
-    {% set imageUrl = element.obj is instanceof('\Pimcore\Model\Asset')
-        ? element.obj.thumbnail(toolbox_get_image_thumbnail('parallax_container_element'))
+    {% set parallaxProperties = elements.getParallaxPropertyByIndex(index) %}
+
+    {% set imageUrl = element is instanceof('\Pimcore\Model\Asset')
+        ? element.thumbnail(toolbox_get_image_thumbnail('parallax_container_element'))
         : '' %}
 
     {% set parallaxImageTag = backgroundImageMode == 'style'
         ? 'style="background-image:url('~imageUrl~');"'
         : 'data-background-image="'~imageUrl~'"' %}
 
-    {% set orgWidth = element['obj'].width %}
-    {% set width = element['obj'].thumbnail(toolbox_get_image_thumbnail('parallax_container_element')).width() %}
-    {% set orgHeight = element['obj'].height() %}
-    {% set height = element['obj'].thumbnail(toolbox_get_image_thumbnail('parallax_container_element')).height() %}
+    {% set orgWidth = element.width %}
+    {% set width = element.thumbnail(toolbox_get_image_thumbnail('parallax_container_element')).width %}
+    {% set orgHeight = element.height %}
+    {% set height = element.thumbnail(toolbox_get_image_thumbnail('parallax_container_element')).height %}
 
-    <div class="element position-{{ element.parallaxPosition }} size-{{ element.parallaxSize }}"
+    <div class="element position-{{ parallaxProperties.parallaxPosition ?? '' }} size-{{ parallaxProperties.parallaxSize ?? '' }}"
         {{ parallaxImageTag }}
         data-width="{{ width is empty ? orgWidth : width }}" data-height="{{ height is empty ? orgHeight : height }}"
-        data-element-position="{{ element.parallaxPosition }}"
-        data-element-size="{{ element.parallaxSize }}">
+        data-element-position="{{ parallaxProperties.parallaxPosition ?? '' }}"
+        data-element-size="{{ parallaxProperties.parallaxSize ?? '' }}">
     </div>
 
 {% endfor %}
