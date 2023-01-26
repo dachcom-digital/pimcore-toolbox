@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.0.10
+- [BUGFIX] fix case sensitivity for accordion in bootstrap3 theme `Resources/views/toolbox/bootstrap3/accordion/partial/Accordion => Resources/views/toolbox/bootstrap3/accordion/partial/accordion`
+
 ## Version 4.0.9
 - [BUGFIX] Missing area layout for bricks without configuration [#182](https://github.com/dachcom-digital/pimcore-toolbox/issues/182)
 - [IMPROVEMENT] Move permission command listener to maintenance task [#181](https://github.com/dachcom-digital/pimcore-toolbox/issues/181)
