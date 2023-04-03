@@ -293,9 +293,9 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
     private function buildStore($type, $config): array
     {
         $storeValues = [];
-        if (isset($config['store']) && !is_null($config['store'])) {
+        if (isset($config['store'])) {
             $storeValues = $config['store'];
-        } elseif (isset($config['store_provider']) && !is_null($config['store_provider'])) {
+        } elseif (isset($config['store_provider'])) {
             $storeProvider = $this->storeProvider->get($config['store_provider']);
             $storeValues = $storeProvider->getValues();
         }
