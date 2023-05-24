@@ -114,6 +114,7 @@ class DownloadExtension extends AbstractExtension
 
         if ($showPreviewImage) {
             $metaPreviewImage = $download->getMetadata('previewImage');
+            /** @phpstan-ignore-next-line */
             if ($metaPreviewImage instanceof Asset\Image) {
                 $dPreviewImage = $metaPreviewImage->getThumbnail($previewThumbName);
             } elseif ($download instanceof Asset\Image) {
