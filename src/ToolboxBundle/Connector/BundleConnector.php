@@ -2,17 +2,16 @@
 
 namespace ToolboxBundle\Connector;
 
-use Pimcore\Extension\Bundle\PimcoreBundleManager;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class BundleConnector
 {
-    protected PimcoreBundleManager $bundleManager;
+    protected array $activeBundles = [];
     protected array $services = [];
 
-    public function __construct(PimcoreBundleManager $bundleManager)
+    public function addActiveBundle(string $bundleName): void
     {
-        $this->bundleManager = $bundleManager;
+        $this->activeBundles[$bundleName] = true;
     }
 
     public function registerBundleService(string $serviceId, mixed $service): void
@@ -29,14 +28,8 @@ class BundleConnector
         return $this->services[$serviceId];
     }
 
-    public function hasBundle(string $bundleName = 'ExtensionBundle\ExtensionBundle'): bool
+    public function hasBundle(string $bundleName): bool
     {
-        try {
-            $hasExtension = $this->bundleManager->isEnabled($bundleName);
-        } catch (\Exception $e) {
-            $hasExtension = false;
-        }
-
-        return $hasExtension;
+        return array_key_exists($bundleName, $this->activeBundles);
     }
 }
