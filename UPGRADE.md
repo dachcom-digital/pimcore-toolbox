@@ -3,6 +3,8 @@
 ## Version 4.1.0
 - [FEATURE] PIMCORE 10.5 support only
 - [IMPROVEMENT] Compatibility with Members 4.1 added
+- [IMPROVEMENT] Remove unused js classes
+- [BUGFIX] [VHS Element] Use right element context in video type selector
 
 ## Version 4.0.10
 - [BUGFIX] fix case sensitivity for accordion in bootstrap3 theme `Resources/views/toolbox/bootstrap3/accordion/partial/Accordion => Resources/views/toolbox/bootstrap3/accordion/partial/accordion`

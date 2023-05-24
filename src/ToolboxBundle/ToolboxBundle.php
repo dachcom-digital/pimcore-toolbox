@@ -41,15 +41,13 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return [
             '/admin/toolbox-ckeditor-object-style.js',
             '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
-            '/bundles/toolbox/js/document/edit.js',
-            '/bundles/toolbox/js/startup.js',
+            '/bundles/toolbox/js/document/edit.js'
         ];
     }
 
     public function getEditmodeJsPaths(): array
     {
         return [
-            '/bundles/toolbox/js/backend/toolbox.js',
             '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
             '/bundles/toolbox/js/document/editables/areablock.js',
             '/bundles/toolbox/js/document/editables/googlemap.js',
