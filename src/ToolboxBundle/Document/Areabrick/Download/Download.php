@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Document\Areabrick\Download;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
@@ -11,11 +12,8 @@ use Pimcore\Model\Asset;
 
 class Download extends AbstractAreabrick
 {
-    protected BundleConnector $bundleConnector;
-
-    public function __construct(BundleConnector $bundleConnector)
+    public function __construct(protected BundleConnector $bundleConnector)
     {
-        $this->bundleConnector = $bundleConnector;
     }
 
     public function action(Info $info): ?Response
@@ -44,7 +42,7 @@ class Download extends AbstractAreabrick
 
     protected function getByFile(Asset $node): array
     {
-        if (!$this->hasMembersBundle()) {
+        if (!$this->bundleConnector->hasBundle('MembersBundle')) {
             return [$node];
         }
 
@@ -64,9 +62,10 @@ class Download extends AbstractAreabrick
         $assetListing->addConditionParam('path LIKE ?', $fullPath . '%');
         $assetListing->addConditionParam('type != ?', 'folder');
 
-        if ($this->hasMembersBundle()) {
-            $assetListing->onCreateQueryBuilder(function (\Doctrine\DBAL\Query\QueryBuilder $query) use ($assetListing) {
-                $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
+        if ($this->bundleConnector->hasBundle('MembersBundle')) {
+            $assetListing->onCreateQueryBuilder(function (QueryBuilder $query) use ($assetListing) {
+                $this->bundleConnector
+                    ->getBundleService(\MembersBundle\Security\RestrictionQuery::class)
                     ->addRestrictionInjection($query, $assetListing, 'id');
             });
         }
@@ -75,11 +74,6 @@ class Download extends AbstractAreabrick
         $assetListing->setOrder('asc');
 
         return $assetListing->getAssets();
-    }
-
-    protected function hasMembersBundle(): bool
-    {
-        return $this->bundleConnector->hasBundle('MembersBundle\MembersBundle');
     }
 
     public function getName(): string

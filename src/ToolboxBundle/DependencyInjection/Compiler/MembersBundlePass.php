@@ -18,21 +18,17 @@ class MembersBundlePass implements CompilerPassInterface
             return;
         }
 
-        $toolboxBundleConnector = $container->getDefinition(BundleConnector::class);
-        foreach ($this->getRequiredServices() as $service) {
-            $toolboxBundleConnector->addMethodCall(
-                'registerBundleService',
-                [$service, new Reference($service)]
-            );
-        }
-    }
-
-    private function getRequiredServices(): array
-    {
-        return [
+        $requiredServices = [
             \MembersBundle\Manager\RestrictionManager::class,
             \MembersBundle\Security\RestrictionUri::class,
             \MembersBundle\Security\RestrictionQuery::class,
         ];
+
+        $toolboxBundleConnector = $container->getDefinition(BundleConnector::class);
+        $toolboxBundleConnector->addMethodCall('addActiveBundle', ['MembersBundle']);
+
+        foreach ($requiredServices as $service) {
+            $toolboxBundleConnector->addMethodCall('registerBundleService', [$service, new Reference($service)]);
+        }
     }
 }

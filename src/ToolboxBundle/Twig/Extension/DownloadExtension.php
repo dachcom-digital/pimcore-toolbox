@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\Twig\Extension;
 
+use Pimcore\File;
 use Pimcore\Model\Asset;
 use ToolboxBundle\Connector\BundleConnector;
 use Pimcore\Translation\Translator;
@@ -11,15 +12,11 @@ use Twig\TwigFunction;
 
 class DownloadExtension extends AbstractExtension
 {
-    protected ConfigManagerInterface $configManager;
-    protected BundleConnector $bundleConnector;
-    protected Translator $translator;
-
-    public function __construct(ConfigManagerInterface $configManager, BundleConnector $bundleConnector, Translator $translator)
-    {
-        $this->configManager = $configManager;
-        $this->bundleConnector = $bundleConnector;
-        $this->translator = $translator;
+    public function __construct(
+        protected ConfigManagerInterface $configManager,
+        protected BundleConnector $bundleConnector,
+        protected Translator $translator
+    ) {
     }
 
     public function getFunctions(): array
@@ -35,14 +32,9 @@ class DownloadExtension extends AbstractExtension
     }
 
     /**
-     * @param string|array $areaType toolbox element or custom config
-     * @param null|object  $element  related element to track
-     *
-     * @return string
-     *
      * @throws \Exception
      */
-    public function getDownloadTracker($areaType, $element = null)
+    public function getDownloadTracker(mixed $areaType, mixed $element = null): string
     {
         if (empty($areaType)) {
             return '';
@@ -62,7 +54,7 @@ class DownloadExtension extends AbstractExtension
 
         $str = 'data-tracking="active" ';
 
-        $str .= implode(' ', array_map(function ($key) use ($trackerInfo, $element) {
+        $str .= implode(' ', array_map(static function ($key) use ($trackerInfo, $element) {
             $val = $trackerInfo[$key];
 
             if (is_bool($val)) {
@@ -85,20 +77,19 @@ class DownloadExtension extends AbstractExtension
     }
 
     /**
-     * @param Asset  $download
-     * @param bool   $showPreviewImage
-     * @param string $fileSizeUnit
-     * @param int    $fileSizePrecision
-     * @param bool   $showFileNameIfTitleEmpty
-     *
-     * @return array
-     *
      * @throws \Exception
      */
-    public function getDownloadInfo($download, $showPreviewImage = false, $fileSizeUnit = 'optimized', $fileSizePrecision = 0, $showFileNameIfTitleEmpty = false)
-    {
-        if ($this->bundleConnector->hasBundle('MembersBundle\MembersBundle') === true
-            && strpos($download->getFullPath(), \MembersBundle\Security\RestrictionUri::PROTECTED_ASSET_FOLDER) !== false
+    public function getDownloadInfo(
+        Asset $download,
+        bool $showPreviewImage = false,
+        string $fileSizeUnit = 'optimized',
+        int $fileSizePrecision = 0,
+        bool $showFileNameIfTitleEmpty = false
+    ): array {
+
+        if (
+            $this->bundleConnector->hasBundle('MembersBundle') === true &&
+            $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->elementIsInProtectedStorageFolder($download)
         ) {
             $dPath = $this->bundleConnector->getBundleService(\MembersBundle\Security\RestrictionUri::class)->generateAssetUrl($download);
         } else {
@@ -112,7 +103,7 @@ class DownloadExtension extends AbstractExtension
             $dSize = $download->getFileSize($fileSizeUnit, $fileSizePrecision);
         }
 
-        $dType = \Pimcore\File::getFileExtension($download->getFilename());
+        $dType = File::getFileExtension($download->getFilename());
         $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download', [], 'admin');
         $dName = ($download->getMetadata('title')) ?: $downloadTitle;
         $dAltText = $download->getMetadata('alt') ?: '';
@@ -122,8 +113,8 @@ class DownloadExtension extends AbstractExtension
         $previewThumbName = $this->configManager->getImageThumbnailFromConfig('download_preview_thumbnail');
 
         if ($showPreviewImage) {
-            /** @var Asset|null $metaPreviewImage */
             $metaPreviewImage = $download->getMetadata('previewImage');
+            /** @phpstan-ignore-next-line */
             if ($metaPreviewImage instanceof Asset\Image) {
                 $dPreviewImage = $metaPreviewImage->getThumbnail($previewThumbName);
             } elseif ($download instanceof Asset\Image) {
@@ -157,15 +148,7 @@ class DownloadExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * Get optimized file size.
-     *
-     * @param int $bytes
-     * @param int $precision
-     *
-     * @return string
-     */
-    public function getOptimizedFileSize($bytes, $precision)
+    public function getOptimizedFileSize(mixed $bytes, int $precision): string
     {
         if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, 2);
@@ -184,6 +167,6 @@ class DownloadExtension extends AbstractExtension
             $format = 'bytes';
         }
 
-        return round((float)$bytes, $precision) . ' ' . $format;
+        return round((float) $bytes, $precision) . ' ' . $format;
     }
 }
