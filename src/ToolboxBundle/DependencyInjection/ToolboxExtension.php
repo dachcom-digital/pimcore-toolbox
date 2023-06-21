@@ -137,9 +137,11 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $googleBrowserApiKey = null;
         $googleSimpleApiKey = null;
 
-        $pimcoreCoreConfig = $container->getParameter('pimcore.config');
-        /** @phpstan-ignore-next-line */
-        $pimcoreGoogleServiceConfig = $pimcoreCoreConfig['services']['google'] ?? [];
+        if ($container->hasParameter('pimcore.config')) {
+            $pimcoreCoreConfig = $container->getParameter('pimcore.config');
+            /** @phpstan-ignore-next-line */
+            $pimcoreGoogleServiceConfig = $pimcoreCoreConfig['services']['google'] ?? [];
+        }
 
         // browser api key
         /** @phpstan-ignore-next-line */
