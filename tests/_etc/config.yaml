@@ -11,4 +11,4 @@ setup_files:
     - { path: app/templates/snippet.html.twig, dest: ./templates/default/ }
 additional_composer_packages:
     - { package: pimcore/admin-ui-classic-bundle, version: ^1.0 }
-    - { package: pimcore/google-marketing-bundle, version: '*' }
+    - { package: pimcore/google-marketing-bundle, version: ^1.0 }
