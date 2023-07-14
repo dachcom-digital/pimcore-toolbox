@@ -9,13 +9,13 @@ modules:
             port: 4444
             restart: true
     enabled:
-        - \Dachcom\Codeception\Helper\PimcoreCore:
+        - \Dachcom\Codeception\Support\Helper\PimcoreCore:
             part: SERVICES
             connect_db: true
             rebootable_client: true
-        - \Dachcom\Codeception\Helper\PimcoreBundleCore:
+        - \Dachcom\Codeception\Support\Helper\PimcoreBundleCore:
             run_installer: true
-        - \DachcomBundle\Test\Helper\Toolbox
-        - \Dachcom\Codeception\Helper\Browser\WebDriver
-        - \Dachcom\Codeception\Helper\PimcoreBackend
-        - \Dachcom\Codeception\Helper\PimcoreUser
+        - \DachcomBundle\Test\Support\Helper\Toolbox
+        - \Dachcom\Codeception\Support\Helper\Browser\WebDriver
+        - \Dachcom\Codeception\Support\Helper\PimcoreBackend
+        - \Dachcom\Codeception\Support\Helper\PimcoreUser
