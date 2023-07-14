@@ -13,12 +13,12 @@ class Spacer extends AbstractAreabrick
         return parent::action($info);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Spacer';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Spacer';
     }

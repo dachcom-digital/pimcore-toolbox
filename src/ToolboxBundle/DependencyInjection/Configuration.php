@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
                             ->append($this->buildFlagsConfiguration())
                             ->append($this->buildAreasSection(true))
                             ->append($this->buildAreasSection())
-                            ->append($this->buildCkEditorConfigSection())
+                            ->append($this->buildWysiwygEditorConfigSection())
                             ->append($this->buildImageThumbnailSection())
                             ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
                             ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
@@ -63,7 +63,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->buildFlagsConfiguration())
                 ->append($this->buildAreasSection(true))
                 ->append($this->buildAreasSection())
-                ->append($this->buildCkEditorConfigSection())
+                ->append($this->buildWysiwygEditorConfigSection())
                 ->append($this->buildImageThumbnailSection())
                 ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
                 ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
@@ -119,16 +119,16 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildCkEditorConfigSection(): ArrayNodeDefinition
+    protected function buildWysiwygEditorConfigSection(): ArrayNodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition('ckeditor');
+        $treeBuilder = new ArrayNodeDefinition('wysiwyg_editor');
 
         $treeBuilder
             ->addDefaultsIfNotSet()
             ->children()
                 ->variableNode('config')->defaultValue([])->end()
-                ->variableNode('global_style_sets')->defaultValue([])->end()
                 ->arrayNode('area_editor')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('config')
                             ->validate()->ifEmpty()->thenUnset()->end()
@@ -136,6 +136,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('object_editor')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('config')
                             ->validate()->ifEmpty()->thenUnset()->end()
@@ -301,6 +302,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder
             ->validate()
                 ->ifTrue(function ($v) use ($internalTypes) {
+
                     if ($internalTypes === false) {
                         return false;
                     }
@@ -321,9 +323,10 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
                 ->validate()
                     ->ifTrue(function ($v) {
+
                         $tabs = $v['tabs'];
 
-                        return count($tabs) > 0 && count(array_filter($v['config_elements'], function($configElement) use ($tabs) {
+                        return count($tabs) > 0 && count(array_filter($v['config_elements'], static function($configElement) use ($tabs) {
                             return !array_key_exists($configElement['tab'], $tabs);
                         })) > 0;
                     })
@@ -336,9 +339,10 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->validate()
                     ->ifTrue(function ($v) {
+
                         $tabs = $v['tabs'];
 
-                        return count($tabs) === 0 && count(array_filter($v['config_elements'], function($configElement) {
+                        return count($tabs) === 0 && count(array_filter($v['config_elements'], static function($configElement) {
                             return $configElement['tab'] !== null;
                         })) > 0;
                     })
@@ -347,6 +351,7 @@ class Configuration implements ConfigurationInterface
                     })
                 ->end()
                 ->children()
+                    ->booleanNode('enabled')->defaultTrue()->end()
                     ->append($this->buildConfigElementsTabSection())
                     ->append($this->buildConfigElementsSection($internalTypes))
                     ->variableNode('config_parameter')->end()

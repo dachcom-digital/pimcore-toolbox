@@ -24,6 +24,21 @@ class ConfigManager implements ConfigManagerInterface
         $this->config = $config;
     }
 
+    public function addAdditionalAreaConfig(array $additionalAreaConfig = []): void
+    {
+        foreach ($additionalAreaConfig as $additionalAreaId) {
+
+            if (array_key_exists($additionalAreaId, $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL])) {
+                continue;
+            }
+
+            $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL][$additionalAreaId] = [
+                'enabled' => true
+            ];
+
+        }
+    }
+
     public function setAreaNameSpace(string $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL): self
     {
         $this->areaNamespace = $namespace;
@@ -54,6 +69,22 @@ class ConfigManager implements ConfigManagerInterface
         }
 
         return $this->contextSettings[$this->currentContextId];
+    }
+
+    public function areaIsEnabled(string $areaName): bool
+    {
+        $this->ensureCoreConfig();
+        $this->ensureConfigNamespace();
+
+        if (array_key_exists($areaName, $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL])) {
+            return $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL][$areaName]['enabled'] === true;
+        }
+
+        if (array_key_exists($areaName, $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL])) {
+            return $this->config[ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL][$areaName]['enabled'] === true;
+        }
+
+        return true;
     }
 
     public function getAreaConfig(string $areaName): mixed
@@ -161,7 +192,7 @@ class ConfigManager implements ConfigManagerInterface
                 $parsedData['areas'] = $filteredElements['areas'];
                 $parsedData['custom_areas'] = $filteredElements['custom_areas'];
 
-            // remove disabled areas for this context
+                // remove disabled areas for this context
             } elseif (!empty($contextSettings['disabled_areas'])) {
                 foreach ($contextSettings['disabled_areas'] as $areaId) {
                     if (isset($parsedData['areas'][$areaId])) {

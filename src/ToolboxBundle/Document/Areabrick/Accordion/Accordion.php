@@ -27,18 +27,12 @@ class Accordion extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Accordion';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Accordion / Tabs';
     }

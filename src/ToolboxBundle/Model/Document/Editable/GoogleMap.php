@@ -55,9 +55,6 @@ class GoogleMap extends Document\Editable
         return empty($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function admin()
     {
         $html = parent::admin();
@@ -67,7 +64,7 @@ class GoogleMap extends Document\Editable
         return str_replace('</div>', $this->frontend() . '</div>', $html);
     }
 
-    public function setDataFromResource(mixed $data): self
+    public function setDataFromResource(mixed $data): static
     {
         $this->setId(uniqid('map-', true));
 
@@ -85,7 +82,7 @@ class GoogleMap extends Document\Editable
     /**
      * @throws \Exception
      */
-    public function setDataFromEditmode(mixed $data): self
+    public function setDataFromEditmode(mixed $data): static
     {
         $this->setId(uniqid('map-', true));
 

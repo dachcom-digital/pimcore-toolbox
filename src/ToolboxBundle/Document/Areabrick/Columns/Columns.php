@@ -71,12 +71,12 @@ class Columns extends AbstractAreabrick
         return null;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Columns';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Grid Columns';
     }

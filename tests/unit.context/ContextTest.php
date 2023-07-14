@@ -80,63 +80,59 @@ class ContextTest extends BundleTestCase
     /**
      * @throws \Codeception\Exception\ModuleException
      */
-    public function testCkEditorSettingsOnNoneContextConfiguration()
+    public function testWysiwygEditorSettingsOnNoneContextConfiguration()
     {
         $this->setupRequest(['mock_toolbox_context' => 'disabled']);
 
         /** @var ConfigManagerInterface $configManager */
         $configManager = $this->getContainer()->get(ConfigManager::class);
-        $ckEditorSettings = $configManager->getConfig('ckeditor');
+        $wysiwygSettings = $configManager->getConfig('wysiwyg_editor');
 
-        $this->assertArrayHasKey('config', $ckEditorSettings);
-        $this->assertArrayHasKey('global_style_sets', $ckEditorSettings);
-        $globalStyleSets = $ckEditorSettings['global_style_sets'];
-
-        $this->assertArrayHasKey('default', $globalStyleSets);
+        $this->assertArrayHasKey('config', $wysiwygSettings);
+        $this->assertArrayHasKey('style_formats', $wysiwygSettings);
+        $styleFormats = $wysiwygSettings['style_formats'];
 
         $data = [
             [
-                'name'       => 'Lead Global',
-                'element'    => 'p',
-                'attributes' => ['class' => 'lead'],
+                'title'    => 'Lead Global',
+                'selector' => 'p',
+                'classes'  => 'lead',
 
             ]
         ];
 
-        $this->assertEquals($data, $globalStyleSets['default']);
+        $this->assertEquals($data, $styleFormats[0]);
     }
 
     /**
      * @throws \Codeception\Exception\ModuleException
      */
-    public function testCkEditorSettingsOnContextConfiguration()
+    public function testWysiwygEditorSettingsOnContextConfiguration()
     {
         $this->setupRequest(['mock_toolbox_context' => 'context_a']);
 
         /** @var ConfigManagerInterface $configManager */
         $configManager = $this->getContainer()->get(ConfigManager::class);
-        $ckEditorSettings = $configManager->getConfig('ckeditor');
+        $wysiwygSettings = $configManager->getConfig('wysiwyg_editor');
 
-        $this->assertArrayHasKey('config', $ckEditorSettings);
-        $this->assertArrayHasKey('global_style_sets', $ckEditorSettings);
-        $globalStyleSets = $ckEditorSettings['global_style_sets'];
-
-        $this->assertArrayHasKey('default', $globalStyleSets);
+        $this->assertArrayHasKey('config', $wysiwygSettings);
+        $this->assertArrayHasKey('style_formats', $wysiwygSettings);
+        $styleFormats = $wysiwygSettings['style_formats'];
 
         $data = [
             [
-                'name'       => 'Lead For Portal1',
-                'element'    => 'p',
-                'attributes' => ['class' => 'lead-portal']
+                'title'    => 'Lead For Portal1',
+                'selector'  => 'p',
+                'classes' => 'lead-portal'
             ],
             [
-                'name'       => 'Dark Grey',
-                'element'    => 'h1',
-                'attributes' => ['class' => 'grey-1']
+                'title'    => 'Dark Grey',
+                'selector'  => 'h1',
+                'classes' => 'grey-1'
             ]
         ];
 
-        $this->assertEquals($data, $globalStyleSets['default']);
+        $this->assertEquals($data, $styleFormats);
     }
 
     /**
@@ -158,7 +154,6 @@ class ContextTest extends BundleTestCase
         $this->assertCount(2, $themeSettings['grid']['breakpoints']);
 
     }
-
 
     /**
      * @param array $query

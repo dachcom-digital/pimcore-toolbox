@@ -27,12 +27,12 @@ class Headline extends AbstractAreabrick
         return null;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Headline';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Headline';
     }

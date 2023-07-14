@@ -36,35 +36,6 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return $this->container->get(Install::class);
     }
 
-    public function getJsPaths(): array
-    {
-        return [
-            '/admin/toolbox-ckeditor-object-style.js',
-            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
-            '/bundles/toolbox/js/document/edit.js'
-        ];
-    }
-
-    public function getEditmodeJsPaths(): array
-    {
-        return [
-            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
-            '/bundles/toolbox/js/document/editables/areablock.js',
-            '/bundles/toolbox/js/document/editables/googlemap.js',
-            '/bundles/toolbox/js/document/editables/parallaximage.js',
-            '/bundles/toolbox/js/document/editables/columnadjuster.js',
-            '/bundles/toolbox/js/document/editables/vhs.js',
-            '/bundles/toolbox/js/document/editables/vhs/editor.js',
-        ];
-    }
-
-    public function getEditmodeCssPaths(): array
-    {
-        return [
-            '/bundles/toolbox/css/admin.css',
-            '/bundles/toolbox/css/admin_uikit.css'
-        ];
-    }
 
     protected function getComposerPackageName(): string
     {

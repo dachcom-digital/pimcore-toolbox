@@ -1,12 +1,11 @@
 toolbox:
 
-    ckeditor:
-        global_style_sets:
-            default:
-            -   name: 'Lead Global'
-                element: p
-                attributes:
-                    class: 'lead'
+    wysiwyg_editor:
+        config:
+            style_formats:
+                -   title: 'Lead Global'
+                    classes: 'lead'
+                    selector: ' p'
 
     context_resolver: 'DachcomBundle\Test\Services\ContextResolverTestClass'
     context:
@@ -15,17 +14,16 @@ toolbox:
                 merge_with_root: true
                 enabled_areas:
                 - 'headline'
-            ckeditor:
-                global_style_sets:
-                    default:
-                    -   name: 'Lead For Portal1'
-                        element: p
-                        attributes:
-                            class: 'lead-portal'
-                    -   name: 'Dark Grey'
-                        element: h1
-                        attributes:
-                            class: 'grey-1'
+            wysiwyg_editor:
+                config:
+                    style_formats:
+                        -   title: 'Lead For Portal1'
+                            classes: 'lead-portal'
+                            selector: 'p'
+                        -   title: 'Dark Grey'
+                            classes: 'grey-1'
+                            selector: 'h1'
+
         context_b:
             settings:
                 merge_with_root: true

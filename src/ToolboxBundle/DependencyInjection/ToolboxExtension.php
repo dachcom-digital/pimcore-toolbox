@@ -17,6 +17,13 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
     public function prepend(ContainerBuilder $container): void
     {
+        $wysiwygEditor = null;
+        if($container->hasExtension('pimcore_tinymce') === true) {
+            $wysiwygEditor = 'tiny_mce';
+        }
+
+        $container->setParameter('toolbox.wysiwyg_editor', $wysiwygEditor);
+
         $selfConfigs = $container->getExtensionConfig($this->getAlias());
 
         $rootConfigs = [];
@@ -137,20 +144,22 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $googleBrowserApiKey = null;
         $googleSimpleApiKey = null;
 
-        $pimcoreCoreConfig = $container->getParameter('pimcore.config');
-        /** @phpstan-ignore-next-line */
-        $pimcoreGoogleServiceConfig = $pimcoreCoreConfig['services']['google'] ?? [];
+        $pimcoreGoogleBrowserApiKey = null;
+        $pimcoreGoogleSimpleApiKey = null;
+
+        if($container->hasParameter('pimcore_google_marketing')) {
+            $pimcoreGoogleMarketingSettings = $container->getParameter('pimcore_google_marketing');
+            $pimcoreGoogleBrowserApiKey = $pimcoreGoogleMarketingSettings['browser_api_key'] ?? null;
+            $pimcoreGoogleSimpleApiKey = $pimcoreGoogleMarketingSettings['simple_api_key'] ?? null;
+        }
 
         // browser api key
         /** @phpstan-ignore-next-line */
-        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey')) {
-            $googleBrowserApiKey = $container->getParameter('pimcore_system_config.services.google.browserapikey');
-            /** @phpstan-ignore-next-line */
-        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key')) {
+        if ($container->hasParameter('toolbox_google_service_browser_api_key')) {
             $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
             /** @phpstan-ignore-next-line */
-        } elseif (isset($pimcoreGoogleServiceConfig['browser_api_key'])) {
-            $googleBrowserApiKey = $pimcoreGoogleServiceConfig['browser_api_key'];
+        } elseif ($pimcoreGoogleBrowserApiKey !== null) {
+            $googleBrowserApiKey = $pimcoreGoogleBrowserApiKey;
         }
 
         //simple api key
@@ -161,8 +170,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         } elseif ($container->hasParameter('toolbox_google_service_simple_api_key')) {
             $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
             /** @phpstan-ignore-next-line */
-        } elseif (isset($pimcoreGoogleServiceConfig['simple_api_key'])) {
-            $googleSimpleApiKey = $pimcoreGoogleServiceConfig['simple_api_key'];
+        } elseif ($pimcoreGoogleSimpleApiKey !== null) {
+            $googleSimpleApiKey = $pimcoreGoogleSimpleApiKey;
         }
 
         $container->setParameter('toolbox.google_maps.browser_api_key', $googleBrowserApiKey);

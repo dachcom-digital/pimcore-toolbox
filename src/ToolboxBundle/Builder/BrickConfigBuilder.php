@@ -11,18 +11,11 @@ use Twig\Environment;
 
 class BrickConfigBuilder implements BrickConfigBuilderInterface
 {
-    protected Translator $translator;
-    protected Environment $templating;
-    protected StoreProviderRegistryInterface $storeProvider;
-
     public function __construct(
-        Translator $translator,
-        Environment $templating,
-        StoreProviderRegistryInterface $storeProvider
+        protected Translator $translator,
+        protected Environment $templating,
+        protected StoreProviderRegistryInterface $storeProvider
     ) {
-        $this->translator = $translator;
-        $this->templating = $templating;
-        $this->storeProvider = $storeProvider;
     }
 
     public function buildDialogBoxConfiguration(?Info $info, string $brickId, array $configNode = [], array $themeOptions = []): EditableDialogBoxConfiguration
@@ -206,7 +199,9 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
                         'additionalClassesChained'
                     )
                 );
-            } elseif (!str_starts_with($configElementName, 'additional_classes_chain_')) {
+            }
+
+            if (!str_starts_with($configElementName, 'additional_classes_chain_')) {
                 throw new \Exception(
                     sprintf(
                         'Chained AC element name needs to start with "%s" followed by a numeric. "%s" given.',

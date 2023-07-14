@@ -26,7 +26,7 @@ class Video extends AbstractAreabrick
         $autoPlay = $autoPlayElement->isChecked() === true && !$info->getEditable()->getEditmode();
         $videoType = $videoTag->getVideoType();
         $posterPath = null;
-        $poster = $videoTag->getPosterAsset();
+        $poster = $videoTag->getPoster() ? $videoTag->getPosterAsset() : null;
 
         if ($poster instanceof Asset\Image) {
             $imageThumbnail = $this->getConfigManager()->getImageThumbnailFromConfig('video_poster');
@@ -45,18 +45,12 @@ class Video extends AbstractAreabrick
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Video';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Video';
     }

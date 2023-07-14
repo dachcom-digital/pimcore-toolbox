@@ -113,7 +113,7 @@ class ToolboxContextResolver implements ContextResolverInterface
 
         $site = null;
 
-        //if request is coming from a ckeditor configuration request (/admin/*.js)
+        //if request is coming from a wysiwyg configuration request (/admin/*.js)
         if ($request->query->has('tb_document_request_id')) {
             try {
                 $currentDocument = Document::getById($request->query->get('tb_document_request_id'));

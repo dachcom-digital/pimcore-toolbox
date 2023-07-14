@@ -16,18 +16,12 @@ class Content extends AbstractAreabrick
         return parent::action($info);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'WYSIWYG Editor';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox wysiwyg';
     }

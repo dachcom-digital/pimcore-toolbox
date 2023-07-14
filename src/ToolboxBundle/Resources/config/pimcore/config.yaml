@@ -4,7 +4,6 @@ doctrine_migrations:
 
 imports:
     - { resource: areas/*.yml }
-    - { resource: ckeditor/*.yml }
     - { resource: registry.yml }
     - { resource: theme.yml }
     - { resource: area_restrictions.yml }

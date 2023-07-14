@@ -13,12 +13,12 @@ class Snippet extends AbstractAreabrick
         return parent::action($info);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Snippet';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Snippet';
     }

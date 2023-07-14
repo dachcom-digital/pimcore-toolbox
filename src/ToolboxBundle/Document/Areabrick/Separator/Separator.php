@@ -13,12 +13,12 @@ class Separator extends AbstractAreabrick
         return parent::action($info);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Separator';
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Separator';
     }

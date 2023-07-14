@@ -29,6 +29,11 @@ interface ConfigManagerInterface
     /**
      * @throws \Exception
      */
+    public function areaIsEnabled(string $areaName,): bool;
+
+    /**
+     * @throws \Exception
+     */
     public function getAreaConfig(string $areaName): mixed;
 
     /**

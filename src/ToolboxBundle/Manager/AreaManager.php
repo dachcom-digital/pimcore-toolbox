@@ -7,18 +7,11 @@ use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 
 class AreaManager implements AreaManagerInterface
 {
-    public ConfigManagerInterface $configManager;
-    public AreabrickManager $brickManager;
-    public PermissionManagerInterface $permissionManager;
-
     public function __construct(
-        ConfigManagerInterface $configManager,
-        AreabrickManager $brickManager,
-        PermissionManagerInterface $permissionManager
+        protected ConfigManagerInterface $configManager,
+        protected AreabrickManager $brickManager,
+        protected PermissionManagerInterface $permissionManager
     ) {
-        $this->configManager = $configManager;
-        $this->brickManager = $brickManager;
-        $this->permissionManager = $permissionManager;
     }
 
     public function getAreaBlockName(?string $type = null): string
@@ -109,7 +102,7 @@ class AreaManager implements AreaManagerInterface
 
         /** @var AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
-            if (!$this->brickManager->isEnabled($areaElementName)) {
+            if (!$this->configManager->areaIsEnabled($areaElementName)) {
                 unset($areaElements[$areaElementName]);
             }
         }

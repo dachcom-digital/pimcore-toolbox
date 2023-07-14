@@ -109,12 +109,12 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
         return static::TEMPLATE_LOCATION_GLOBAL;
     }
 
-    public function getTemplate()
+    public function getTemplate(): ?string
     {
         return null;
     }
 
-    public function getTemplateSuffix()
+    public function getTemplateSuffix(): string
     {
         return static::TEMPLATE_SUFFIX_TWIG;
     }

@@ -1,24 +1,23 @@
-toolbox_ckeditor_area_style:
-    path: /admin/toolbox-ckeditor-style.js
-    controller: ToolboxBundle\Controller\Admin\SettingsController::ckEditorAreaStyleAction
-    defaults: { }
+toolbox_wysiwyg_document_style:
+    path: /admin/toolbox-wysiwyg-document-style.js
+    controller: ToolboxBundle\Controller\Admin\SettingsController::wysiwygAreaStyleAction
     options:
         expose: true
-toolbox_ckeditor_object_style:
-    path: /admin/toolbox-ckeditor-object-style.js
-    controller: ToolboxBundle\Controller\Admin\SettingsController::ckEditorObjectStyleAction
-    defaults: { }
+
+toolbox_wysiwyg_object_style:
+    path: /admin/toolbox-wysiwyg-object-style.js
+    controller: ToolboxBundle\Controller\Admin\SettingsController::wysiwygObjectStyleAction
     options:
         expose: true
+
 toolbox_frontend_ajax_google_maps_iw:
     path: /toolbox/ajax/gm-info-window
     controller: ToolboxBundle\Controller\AjaxController::gmInfoWindowAction
-    defaults: { }
+
 toolbox_frontend_ajax_video_types:
     path: /toolbox/ajax/video-allowed-video-types
     controller: ToolboxBundle\Controller\AjaxController::videoGetTypesAction
-    defaults: { }
+
 toolbox_column_adjuster:
     path: /admin/toolbox-get-column-info
     controller: ToolboxBundle\Controller\Admin\ColumnAdjusterController::getColumnInfoAction
-    defaults: { }

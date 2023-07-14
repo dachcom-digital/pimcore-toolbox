@@ -16,18 +16,12 @@ class Container extends AbstractAreabrick
         return parent::action($info);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'Container';
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Toolbox Container';
     }

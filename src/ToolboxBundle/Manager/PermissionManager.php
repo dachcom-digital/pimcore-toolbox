@@ -2,23 +2,18 @@
 
 namespace ToolboxBundle\Manager;
 
-use Pimcore\Bundle\AdminBundle\Security\User\UserLoader;
 use Pimcore\Extension\Document\Areabrick\AreabrickInterface;
 use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 use Pimcore\Model\User;
 use Pimcore\Model\Translation;
+use Pimcore\Security\User\UserLoader;
 
 class PermissionManager implements PermissionManagerInterface
 {
-    protected UserLoader $userLoader;
-    protected AreabrickManager $brickManager;
-
     public function __construct(
-        AreabrickManager $brickManager,
-        UserLoader $userLoader
+        protected AreabrickManager $brickManager,
+        protected UserLoader $userLoader
     ) {
-        $this->brickManager = $brickManager;
-        $this->userLoader = $userLoader;
     }
 
     public function synchroniseEditablePermissions(): void

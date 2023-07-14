@@ -13,6 +13,7 @@ use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick;
 use ToolboxBundle\Document\SimpleAreabrick\SimpleAreaBrick;
 use ToolboxBundle\Document\SimpleAreabrick\SimpleAreaBrickConfigurable;
+use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\ToolboxConfig;
@@ -39,9 +40,11 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
 
         $container->setDefinition(AbstractAreabrick::class, $abstractConfigurableBrickDefinition);
 
+        $additionalAreaBricksConfig = [];
+
         // check for legacy naming
-        $pimcoreTaggedServices = $container->findTaggedServiceIds('pimcore.area.brick', true);
-        foreach ($pimcoreTaggedServices as $legacyId => $legacyTags) {
+        $pimcoreTaggedAreaBricksServices = $container->findTaggedServiceIds('pimcore.area.brick', true);
+        foreach ($pimcoreTaggedAreaBricksServices as $legacyId => $legacyTags) {
             $legacyBrickDefinition = $container->getDefinition($legacyId);
             if ($legacyBrickDefinition instanceof ChildDefinition && $legacyBrickDefinition->getParent() === AbstractAreabrick::class) {
                 throw new InvalidDefinitionException(sprintf(
@@ -51,11 +54,16 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     $legacyId
                 ));
             }
+
+            foreach ($legacyTags as $pimcoreAreaBrickAttributes) {
+                $additionalAreaBricksConfig[] = $pimcoreAreaBrickAttributes['id'];
+            }
+
         }
 
         // register toolbox bricks
-        $toolboxTaggedServices = $container->findTaggedServiceIds('toolbox.area.brick', true);
-        foreach ($toolboxTaggedServices as $id => $tags) {
+        $toolboxTaggedAreaBricksServices = $container->findTaggedServiceIds('toolbox.area.brick', true);
+        foreach ($toolboxTaggedAreaBricksServices as $id => $tags) {
             $brickDefinition = $container->getDefinition($id);
 
             if (!$brickDefinition instanceof ChildDefinition) {
@@ -100,8 +108,8 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
         }
 
         // register simple toolbox bricks
-        $toolboxTaggedServices = $container->findTaggedServiceIds('toolbox.area.simple_brick', true);
-        foreach ($toolboxTaggedServices as $id => $tags) {
+        $toolboxTaggedSimpleAreaBricksServices = $container->findTaggedServiceIds('toolbox.area.simple_brick', true);
+        foreach ($toolboxTaggedSimpleAreaBricksServices as $id => $tags) {
             $simpleBrickDefinition = $container->getDefinition($id);
 
             if (!$simpleBrickDefinition instanceof ChildDefinition) {
@@ -120,21 +128,22 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             $simpleBrickDefinition->addMethodCall('setAreaBrickType', [AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL]);
 
             foreach ($tags as $attributes) {
-                if (!isset($attributes['title']) || empty($attributes['title'])) {
+
+                if (empty($attributes['title'])) {
                     throw new InvalidDefinitionException(sprintf('Simple Areabrick "%s" has an invalid title', $attributes['id']));
                 }
 
                 $simpleBrickDefinition->addMethodCall('setName', [$attributes['title']]);
 
-                if (isset($attributes['description']) && !empty($attributes['description'])) {
+                if (!empty($attributes['description'])) {
                     $simpleBrickDefinition->addMethodCall('setDescription', [$attributes['description']]);
                 }
 
-                if (isset($attributes['template']) && !empty($attributes['template'])) {
+                if (!empty($attributes['template'])) {
                     $simpleBrickDefinition->addMethodCall('setTemplate', [$attributes['template']]);
                 }
 
-                if (isset($attributes['icon']) && !empty($attributes['icon'])) {
+                if (!empty($attributes['icon'])) {
                     $simpleBrickDefinition->addMethodCall('setIcon', [$attributes['icon']]);
                 }
 
@@ -143,6 +152,8 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if ($simpleBrickDefinition->getParent() === AbstractBaseAreabrick::class) {
                     $notEditDialogAwareBricks[] = $attributes['id'];
                 }
+
+                $additionalAreaBricksConfig[] = $attributes['id'];
             }
         }
 
@@ -160,6 +171,11 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     );
                 }
             }
+        }
+
+        if(count($additionalAreaBricksConfig) > 0) {
+            $configManagerDefinition = $container->getDefinition(ConfigManager::class);
+            $configManagerDefinition->addMethodCall('addAdditionalAreaConfig', [$additionalAreaBricksConfig]);
         }
     }
 }
