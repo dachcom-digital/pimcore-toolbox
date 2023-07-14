@@ -27,7 +27,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         return 'parallaximage';
     }
 
-    public function setElements(): self
+    public function setElements(): static
     {
         if (empty($this->elements)) {
             $this->elements = [];

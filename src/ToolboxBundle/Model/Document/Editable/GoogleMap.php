@@ -7,7 +7,7 @@ use Pimcore\Tool\Serialize;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class GoogleMap extends Document\Editable
+class GoogleMap extends Document\Editable implements Document\Editable\EditmodeDataInterface
 {
     private bool $disableGoogleLookUp = false;
     private ?string $mapId = null;
@@ -232,7 +232,7 @@ class GoogleMap extends Document\Editable
         $fallbackBrowserKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.browser_api_key');
 
         // first try to get server-api-key
-        if (!empty($configNode) && isset($configNode['simple_api_key']) && !empty($configNode['simple_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['simple_api_key'])) {
             return $configNode['simple_api_key'];
         }
 
@@ -240,7 +240,7 @@ class GoogleMap extends Document\Editable
             return $fallbackSimpleKey;
         }
 
-        if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['map_api_key'])) {
             return $configNode['map_api_key'];
         }
 
@@ -277,7 +277,7 @@ class GoogleMap extends Document\Editable
         return $filteredLocations;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         $parentVars = parent::__sleep();
 

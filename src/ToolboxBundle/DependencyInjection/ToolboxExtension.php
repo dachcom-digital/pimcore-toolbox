@@ -106,7 +106,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         unset($config['context_resolver']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->addMethodCall('setConfig', [$config]);

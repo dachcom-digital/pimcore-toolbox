@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class DataAttributesExtension extends AbstractExtension
 {
-    protected ConfigManagerInterface $configManager;
-
-    public function __construct(ConfigManagerInterface $configManager)
+    public function __construct(protected ConfigManagerInterface $configManager)
     {
-        $this->configManager = $configManager;
     }
 
     public function getFunctions(): array

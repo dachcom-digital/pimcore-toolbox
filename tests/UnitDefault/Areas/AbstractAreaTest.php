@@ -3,11 +3,11 @@
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Codeception\Exception\ModuleException;
-use Dachcom\Codeception\Test\BundleTestCase;
+use Dachcom\Codeception\Support\Test\BundleTestCase;
 use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
 use Pimcore\Model\Document\Editable;
 use Pimcore\Model\Document\Editable\Area;
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManager;

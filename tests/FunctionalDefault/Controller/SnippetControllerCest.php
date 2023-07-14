@@ -2,13 +2,10 @@
 
 namespace DachcomBundle\Test\FunctionalDefault\Controller;
 
-use DachcomBundle\Test\FunctionalTester;
+use DachcomBundle\Test\Support\FunctionalTester;
 
 class SnippetControllerCest
 {
-    /**
-     * @param FunctionalTester $I
-     */
     public function testSnippetController(FunctionalTester $I)
     {
         $snippetParams = [

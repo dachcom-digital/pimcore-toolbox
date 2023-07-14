@@ -38,7 +38,6 @@ class Install extends SettingsStoreAwareInstaller
         $skipInstall = false;
         $elementName = 'Teaser Snippet';
 
-        /** @var DocType $type */
         foreach ($list->getDocTypes() as $type) {
             if ($type->getName() === $elementName) {
                 $skipInstall = true;

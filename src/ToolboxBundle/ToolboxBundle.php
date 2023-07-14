@@ -19,10 +19,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
 
     public const PACKAGE_NAME = 'dachcom-digital/toolbox';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new AreaBrickRegistryPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 255);
         $container->addCompilerPass(new AreaBrickAutoloadWatcherPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -255);
@@ -36,17 +33,8 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return $this->container->get(Install::class);
     }
 
-
     protected function getComposerPackageName(): string
     {
         return self::PACKAGE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getPimcoreVersion()
-    {
-        return preg_replace('/[^0-9.]/', '', \Pimcore\Version::getVersion());
     }
 }

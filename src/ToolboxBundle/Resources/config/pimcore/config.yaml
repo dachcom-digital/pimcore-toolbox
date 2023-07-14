@@ -3,10 +3,10 @@ doctrine_migrations:
         'ToolboxBundle\Migrations': '@ToolboxBundle/Migrations'
 
 imports:
-    - { resource: areas/*.yml }
-    - { resource: registry.yml }
-    - { resource: theme.yml }
-    - { resource: area_restrictions.yml }
-    - { resource: data_attributes.yml }
-    - { resource: image_thumbnails.yml }
-    - { resource: document/editables.yml }
+    - { resource: areas/*.yaml }
+    - { resource: registry.yaml }
+    - { resource: theme.yaml }
+    - { resource: area_restrictions.yaml }
+    - { resource: data_attributes.yaml }
+    - { resource: image_thumbnails.yaml }
+    - { resource: document/editables.yaml }

@@ -2,13 +2,10 @@
 
 namespace DachcomBundle\Test\FunctionalDefault\Controller;
 
-use DachcomBundle\Test\FunctionalTester;
+use DachcomBundle\Test\Support\FunctionalTester;
 
 class AjaxControllerCest
 {
-    /**
-     * @param FunctionalTester $I
-     */
     public function testGoogleMapInfoWindow(FunctionalTester $I)
     {
         $query = [

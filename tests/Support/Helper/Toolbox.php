@@ -1,6 +1,6 @@
 <?php
 
-namespace DachcomBundle\Test\Helper;
+namespace DachcomBundle\Test\Support\Helper;
 
 use Codeception\Module;
 

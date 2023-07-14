@@ -2,13 +2,10 @@
 
 namespace DachcomBundle\Test\FunctionalDefault\Controller;
 
-use DachcomBundle\Test\FunctionalTester;
+use DachcomBundle\Test\Support\FunctionalTester;
 
 class AdminColumnAdjusterControllerCest
 {
-    /**
-     * @param FunctionalTester $I
-     */
     public function testToolboxColumnInfoWithoutCustomInfo(FunctionalTester $I)
     {
         $I->haveAUser('dachcom_test');

@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class LayoutExtension extends AbstractExtension
 {
-    protected LayoutManager $layoutManager;
-
-    public function __construct(LayoutManager $layoutManager)
+    public function __construct(protected LayoutManager $layoutManager)
     {
-        $this->layoutManager = $layoutManager;
     }
 
     public function getFunctions(): array

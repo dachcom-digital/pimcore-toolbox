@@ -5,6 +5,7 @@ namespace ToolboxBundle\Builder;
 use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Checkbox;
+use Pimcore\Model\Document\Editable\Numeric;
 use Pimcore\Translation\Translator;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 use Twig\Environment;
@@ -239,13 +240,13 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
     private function getSelectedValue(?Info $info, array $config, mixed $defaultConfigValue): mixed
     {
         if (!$info instanceof Info) {
-            return $defaultConfigValue;
+            return $this->castPimcoreEditableValue($config['type'], $defaultConfigValue);
         }
 
         $el = $info->getDocumentElement($config['name'], $config['type']);
 
         if ($el === null) {
-            return $defaultConfigValue;
+            return $this->castPimcoreEditableValue($config['type'], $defaultConfigValue);;
         }
 
         // force default (only if it returns false)
@@ -256,7 +257,9 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
 
         $value = $el instanceof Checkbox ? $el->isChecked() : $el->getData();
 
-        return !empty($value) ? $value : $defaultConfigValue;
+        $fallbackeAwareValue = !empty($value) ? $value : $defaultConfigValue;
+
+        return $this->castPimcoreEditableValue($config['type'], $defaultConfigValue);
     }
 
     private function checkColumnAdjusterField(string $brickId, ?string $tab, array $themeOptions, string $configElementName, array $editableNodes): array
@@ -373,5 +376,15 @@ class BrickConfigBuilder implements BrickConfigBuilderInterface
             'wysiwyg',
             'parallaximage'
         ]);
+    }
+
+    private function castPimcoreEditableValue(string $type, mixed $value): mixed
+    {
+        // pimcore numeric editable requires string type
+        if ($type === 'numeric') {
+            return $value === null ? null : (string) $value;
+        }
+
+        return $value;
     }
 }

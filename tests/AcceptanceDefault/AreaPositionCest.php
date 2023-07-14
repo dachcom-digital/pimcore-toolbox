@@ -2,13 +2,11 @@
 
 namespace DachcomBundle\Test\AcceptanceDefault;
 
-use DachcomBundle\Test\AcceptanceTester;
+use DachcomBundle\Test\Support\AcceptanceTester;
 
 class AreaPositionCest
 {
     /**
-     * @param AcceptanceTester $I
-     *
      * @throws \Exception
      */
     public function testAreaButtonsPosition(AcceptanceTester $I)

@@ -1,0 +1,13 @@
+bundles:
+    - { namespace: \Pimcore\Bundle\AdminBundle\PimcoreAdminBundle, priority: 60 }
+    - { namespace: \Pimcore\Bundle\GoogleMarketingBundle\PimcoreGoogleMarketingBundle, priority: 0, execute_installer: true }
+    - { namespace: \ToolboxBundle\ToolboxBundle }
+setup_files:
+    - { path: app/config.ymal, dest: ./config/ }
+    - { path: app/system_settings.yaml, dest: ./var/config/system_settings/ }
+    - { path: app/image-thumbnails.php, dest: ./var/config/ }
+    - { path: app/controller/DefaultController.php, dest: ./src/Controller/ }
+    - { path: app/templates/default.html.twig, dest: ./templates/default/ }
+    - { path: app/templates/snippet.html.twig, dest: ./templates/default/ }
+additional_composer_packages:
+    - { package: pimcore/admin-ui-classic-bundle, version: ^1.0 }
