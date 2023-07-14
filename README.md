@@ -35,6 +35,7 @@ return [
     ToolboxBundle\ToolboxBundle::class => ['all' => true],
 ];
 ```
+
 - Execute: `$ bin/console pimcore:bundle:install ToolboxBundle`
 
 ## Upgrading
