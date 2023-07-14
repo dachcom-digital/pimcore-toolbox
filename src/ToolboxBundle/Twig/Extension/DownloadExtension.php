@@ -103,7 +103,7 @@ class DownloadExtension extends AbstractExtension
             $dSize = $download->getFileSize($fileSizeUnit, $fileSizePrecision);
         }
 
-        $dType = File::getFileExtension($download->getFilename());
+        $dType = pathinfo($download->getFilename(), PATHINFO_EXTENSION);
         $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download', [], 'admin');
         $dName = ($download->getMetadata('title')) ?: $downloadTitle;
         $dAltText = $download->getMetadata('alt') ?: '';

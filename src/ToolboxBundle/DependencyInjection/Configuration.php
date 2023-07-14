@@ -7,7 +7,7 @@ use Symfony\Component\Config\Definition\Builder\EnumNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Form\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator;
 use ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator;
 use ToolboxBundle\Resolver\ContextResolver;
