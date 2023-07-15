@@ -12,7 +12,7 @@ If you just want to create a simple brick, create a [simple brick](./10_CustomBr
 
 There are three simple steps to create a custom brick:
 
-1. Add this configuration to `/config/packages/toolbox.yml`:
+1. Add this configuration to `/config/packages/toolbox.yaml`:
 
 ```yaml
 services:
@@ -109,7 +109,7 @@ That's it. If you want to refresh the permission table you also need to execute 
 
 Two steps to create a simple brick:
 
-1. Add this configuration to `/config/packages/toolbox.yml`:
+1. Add this configuration to `/config/packages/toolbox.yaml`:
 
 ```yaml
 services:
