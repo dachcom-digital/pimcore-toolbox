@@ -1,0 +1,26 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    videoPoster:
+                        items:
+                            -
+                                method: resize
+                                arguments:
+                                    width: 800
+                                    height: 600
+                        medias: {  }
+                        name: videoPoster
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: 0.0
+                        preserveColor: false
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1684751200
+                        creationDate: 1684751193
+                        preserveAnimation: false

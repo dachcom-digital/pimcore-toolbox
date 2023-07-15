@@ -5,7 +5,7 @@ bundles:
 setup_files:
     - { path: app/config.yaml, dest: ./config/ }
     - { path: app/system_settings.yaml, dest: ./var/config/system_settings/ }
-    - { path: app/image-thumbnails.php, dest: ./var/config/ }
+    - { path: app/image_thumbnails/, dest: ./var/config/image_thumbnails/ }
     - { path: app/controller/DefaultController.php, dest: ./src/Controller/ }
     - { path: app/templates/default.html.twig, dest: ./templates/default/ }
     - { path: app/templates/snippet.html.twig, dest: ./templates/default/ }
