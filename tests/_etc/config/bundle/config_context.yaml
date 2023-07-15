@@ -7,7 +7,7 @@ toolbox:
                     classes: 'lead'
                     selector: ' p'
 
-    context_resolver: 'DachcomBundle\Test\Services\ContextResolverTestClass'
+    context_resolver: 'DachcomBundle\Test\Support\Services\ContextResolverTestClass'
     context:
         context_a:
             settings:
