@@ -2,7 +2,7 @@
 
 namespace DachcomBundle\Test\UnitDefault\Areas;
 
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 use Pimcore\Model\Document\Editable;
 use ToolboxBundle\Model\Document\Editable\ParallaxImage;
 

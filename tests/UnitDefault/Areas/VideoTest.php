@@ -4,7 +4,7 @@ namespace DachcomBundle\Test\UnitDefault\Areas;
 
 use Pimcore\Model\Document\Editable\Checkbox;
 use Pimcore\Model\Document\Editable\Select;
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 use ToolboxBundle\Model\Document\Editable\Vhs;
 
 class VideoTest extends AbstractAreaTest

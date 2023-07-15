@@ -5,7 +5,7 @@ namespace DachcomBundle\Test\UnitDefault\Areas;
 use Pimcore\Model\Document\Editable\Checkbox;
 use Pimcore\Model\Document\Editable\Relations;
 use Pimcore\Model\Document\Editable\Select;
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 
 class GalleryTest extends AbstractAreaTest
 {

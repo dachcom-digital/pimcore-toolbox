@@ -6,7 +6,7 @@ use Pimcore\Model\Document\Editable\Checkbox;
 use Pimcore\Model\Document\Editable\Image;
 use Pimcore\Model\Document\Editable\Link;
 use Pimcore\Model\Document\Editable\Select;
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 
 class ImageTest extends AbstractAreaTest
 {

@@ -8,7 +8,7 @@ use Pimcore\Model\Document\Editable\Input;
 use Pimcore\Model\Document\Editable\Link;
 use Pimcore\Model\Document\Editable\Select;
 use Pimcore\Model\Document\Editable\Wysiwyg;
-use Pimcore\Tests\Util\TestHelper;
+use Pimcore\Tests\Support\Util\TestHelper;
 
 class TeaserTest extends AbstractAreaTest
 {
