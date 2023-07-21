@@ -37,8 +37,8 @@ class AssetListener implements EventSubscriberInterface
     public function addEditModeJsFiles(PathsEvent $event): void
     {
         $event->addPaths([
-            '/admin/toolbox-wysiwyg-document-style.js',
             '/bundles/toolbox/js/toolbox-wysiwyg-plugins.js',
+            '/bundles/toolbox/js/document/editables/manager.js',
             '/bundles/toolbox/js/document/editables/areablock.js',
             '/bundles/toolbox/js/document/editables/googlemap.js',
             '/bundles/toolbox/js/document/editables/parallaximage.js',

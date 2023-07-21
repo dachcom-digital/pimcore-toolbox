@@ -9,6 +9,10 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    ToolboxBundle\EventListener\Admin\EditmodeListener:
+        tags:
+            - { name: kernel.event_subscriber }
+
     ToolboxBundle\EventListener\Frontend\FrontendJsListener:
         public: true
         tags:
