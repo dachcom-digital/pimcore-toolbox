@@ -16,15 +16,11 @@ use ToolboxBundle\Manager\ConfigManagerInterface;
 abstract class AbstractAreaTest extends BundleTestCase
 {
     /**
-     * @return object|ConfigManager
      * @throws ModuleException
      */
-    public function getToolboxConfig()
+    public function getToolboxConfig(): ConfigManager
     {
-        $configManager = $this->getContainer()->get(ConfigManager::class);
-        $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
-
-        return $configManager;
+        return $this->getContainer()->get(ConfigManager::class);
     }
 
     /**
@@ -108,7 +104,6 @@ abstract class AbstractAreaTest extends BundleTestCase
 
         $builder = $this->getContainer()->get(BrickConfigBuilder::class);
         $configManager = $this->getContainer()->get(ConfigManager::class);
-        $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
 
         $configNode = $configManager->getAreaConfig($info->getId());
         $themeOptions = $configManager->getConfig('theme');

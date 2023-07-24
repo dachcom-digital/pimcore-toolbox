@@ -27,9 +27,9 @@ class GoogleAPIKeysExtension extends AbstractExtension
     public function getGoogleMapAPIKey(): mixed
     {
         $browserKey = 'please_configure_key_in_systemsettings';
-        $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $this->configManager->getAreaParameterConfig('googleMap');
 
-        if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['map_api_key'])) {
             return $configNode['map_api_key'];
         }
 

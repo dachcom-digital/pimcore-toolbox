@@ -12,7 +12,6 @@ class ColumnCalculator implements ColumnCalculatorInterface
     public function setConfigManager(ConfigManagerInterface $configManager): self
     {
         $this->configManager = $configManager;
-        $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL);
 
         return $this;
     }

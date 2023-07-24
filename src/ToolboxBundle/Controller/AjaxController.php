@@ -27,7 +27,7 @@ class AjaxController extends FrontendController
      */
     public function videoGetTypesAction(Request $request, ConfigManagerInterface $configManager): JsonResponse
     {
-        $videoAreaSettings = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('video');
+        $videoAreaSettings = $configManager->getAreaParameterConfig('video');
 
         $videoOptions = $videoAreaSettings['video_types'];
         $allowedVideoTypes = [];

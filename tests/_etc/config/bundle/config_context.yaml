@@ -5,7 +5,7 @@ toolbox:
             style_formats:
                 -   title: 'Lead Global'
                     classes: 'lead'
-                    selector: ' p'
+                    selector: 'p'
 
     context_resolver: 'DachcomBundle\Test\Support\Services\ContextResolverTestClass'
     context:

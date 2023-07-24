@@ -70,7 +70,7 @@ class GoogleMapTest extends AbstractAreaTest
         $googleMapElement->setDataFromEditmode($locations);
 
         $mapZoom = new Numeric();
-        $mapZoom->setDataFromResource(5);
+        $mapZoom->setDataFromResource('5');
 
         $mapType = new Select();
         $mapType->setDataFromResource('roadmap');
@@ -116,7 +116,7 @@ class GoogleMapTest extends AbstractAreaTest
         $googleMapElement->setDataFromEditmode($locations);
 
         $mapZoom = new Numeric();
-        $mapZoom->setDataFromResource(12);
+        $mapZoom->setDataFromResource('12');
 
         $mapType = new Select();
         $mapType->setDataFromResource('satellite');

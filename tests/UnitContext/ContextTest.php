@@ -89,8 +89,8 @@ class ContextTest extends BundleTestCase
         $wysiwygSettings = $configManager->getConfig('wysiwyg_editor');
 
         $this->assertArrayHasKey('config', $wysiwygSettings);
-        $this->assertArrayHasKey('style_formats', $wysiwygSettings);
-        $styleFormats = $wysiwygSettings['style_formats'];
+        $this->assertArrayHasKey('style_formats', $wysiwygSettings['config']);
+        $styleFormats = $wysiwygSettings['config']['style_formats'];
 
         $data = [
             [
@@ -101,7 +101,7 @@ class ContextTest extends BundleTestCase
             ]
         ];
 
-        $this->assertEquals($data, $styleFormats[0]);
+        $this->assertEquals($data, $styleFormats);
     }
 
     /**
@@ -116,8 +116,8 @@ class ContextTest extends BundleTestCase
         $wysiwygSettings = $configManager->getConfig('wysiwyg_editor');
 
         $this->assertArrayHasKey('config', $wysiwygSettings);
-        $this->assertArrayHasKey('style_formats', $wysiwygSettings);
-        $styleFormats = $wysiwygSettings['style_formats'];
+        $this->assertArrayHasKey('style_formats', $wysiwygSettings['config']);
+        $styleFormats = $wysiwygSettings['config']['style_formats'];
 
         $data = [
             [

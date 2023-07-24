@@ -104,7 +104,7 @@ class ImageTest extends AbstractAreaTest
         $imageTag->setText('caption');
 
         $link = new Link();
-        $link->setDataFromResource(['path' => '/test/test2']);
+        $link->setDataFromResource(serialize(['path' => '/test/test2']));
 
         $elements = [
             'ci'         => $imageTag,

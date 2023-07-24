@@ -122,14 +122,14 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     {
         $configDialogAwareBricks = [];
 
-        foreach ($config['custom_areas'] as $areaId => $areaSection) {
+        foreach ($config['areas'] as $areaId => $areaSection) {
             if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
                 $configDialogAwareBricks[] = $areaId;
             }
         }
 
         foreach ($config['context'] as $context) {
-            foreach ($context['custom_areas'] as $areaId => $areaSection) {
+            foreach ($context['areas'] as $areaId => $areaSection) {
                 if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
                     $configDialogAwareBricks[] = $areaId;
                 }

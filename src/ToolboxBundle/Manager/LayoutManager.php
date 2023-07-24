@@ -55,7 +55,7 @@ class LayoutManager implements LayoutManagerInterface
 
     public function getAreaThemeConfig(string $areaName): array
     {
-        $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
+        $layoutConfiguration = $this->configManager->getConfig('theme');
 
         $theme = [
             'layout'         => $layoutConfiguration['layout'],

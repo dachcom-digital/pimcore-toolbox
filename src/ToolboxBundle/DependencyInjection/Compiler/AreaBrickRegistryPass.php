@@ -163,7 +163,7 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if (in_array($requestedEditDialogAwareBrickId, $notEditDialogAwareBricks, true)) {
                     throw new InvalidDefinitionException(
                         sprintf(
-                            'Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from custom_areas.%s',
+                            'Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from areas.%s',
                             $requestedEditDialogAwareBrickId,
                             AbstractAreabrick::class,
                             $requestedEditDialogAwareBrickId

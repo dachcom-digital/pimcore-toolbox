@@ -89,7 +89,7 @@ class TeaserTest extends AbstractAreaTest
         $layout->setDataFromResource('default');
 
         $link = new Link();
-        $link->setDataFromResource(['path' => '/test/test2', 'linktype' => 'direct', 'text' => '']);
+        $link->setDataFromResource(serialize(['path' => '/test/test2', 'linktype' => 'direct', 'text' => '']));
 
         $image = new Image();
         $image->setDataFromEditmode([

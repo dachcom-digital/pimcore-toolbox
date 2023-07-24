@@ -61,7 +61,6 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->append($this->buildFlagsConfiguration())
-                ->append($this->buildAreasSection(true))
                 ->append($this->buildAreasSection())
                 ->append($this->buildWysiwygEditorConfigSection())
                 ->append($this->buildImageThumbnailSection())
@@ -297,28 +296,9 @@ class Configuration implements ConfigurationInterface
 
     protected function buildAreasSection(bool $internalTypes = false): ArrayNodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition($internalTypes ? 'areas' : 'custom_areas');
+        $treeBuilder = new ArrayNodeDefinition('areas');
 
         $treeBuilder
-            ->validate()
-                ->ifTrue(function ($v) use ($internalTypes) {
-
-                    if ($internalTypes === false) {
-                        return false;
-                    }
-
-                    return count(array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES)) > 0;
-                })
-                ->then(function ($v) {
-                    $invalidTags = array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES);
-
-                    throw new InvalidConfigurationException(sprintf(
-                        'Invalid elements in toolbox "area" configuration: %s. to add custom areas, use the "custom_area" node. allowed tags for "area" are: %s',
-                        implode(', ', $invalidTags),
-                        implode(', ', ToolboxConfig::TOOLBOX_TYPES)
-                    ));
-                })
-            ->end()
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->validate()

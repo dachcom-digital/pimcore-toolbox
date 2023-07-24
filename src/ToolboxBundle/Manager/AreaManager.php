@@ -127,10 +127,8 @@ class AreaManager implements AreaManagerInterface
                 }
             } else {
                 foreach ($areaElements as $areaElementName => $areaElementData) {
-                    $coreAreas = $this->configManager->getConfig('areas');
-                    $customAreas = $this->configManager->getConfig('custom_areas');
-                    if (!array_key_exists($areaElementName, $coreAreas) &&
-                        !array_key_exists($areaElementName, $customAreas)) {
+                    $areas = $this->configManager->getConfig('areas');
+                    if (!array_key_exists($areaElementName, $areas)) {
                         unset($areaElements[$areaElementName]);
                     }
                 }

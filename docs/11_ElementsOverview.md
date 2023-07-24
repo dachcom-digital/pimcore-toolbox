@@ -530,7 +530,7 @@ In short, you're able to use all the [pimcore editables](https://www.pimcore.org
 **Example** 
 ```yaml
 toolbox:
-    custom_areas:
+    areas:
         container:
             config_elements:
                 awesome_fields:

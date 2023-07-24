@@ -148,7 +148,7 @@ class GoogleMap extends Document\Editable implements Document\Editable\EditmodeD
 
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {
             $mapOptions = $configNode['map_options'];
@@ -226,7 +226,7 @@ class GoogleMap extends Document\Editable implements Document\Editable\EditmodeD
     {
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->getAreaParameterConfig('googleMap');
 
         $fallbackSimpleKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.simple_api_key');
         $fallbackBrowserKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.browser_api_key');

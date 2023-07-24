@@ -43,7 +43,7 @@ class DownloadExtension extends AbstractExtension
         if (is_array($areaType)) {
             $trackerInfo = $areaType;
         } else {
-            $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig($areaType);
+            $configNode = $this->configManager->getAreaParameterConfig($areaType);
 
             if (empty($configNode) || !isset($configNode['event_tracker'])) {
                 return '';

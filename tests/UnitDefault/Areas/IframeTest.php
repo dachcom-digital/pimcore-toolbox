@@ -49,7 +49,7 @@ class IframeTest extends AbstractAreaTest
         $url->setDataFromResource('https://www.dachcom.com');
 
         $height = new Numeric();
-        $height->setDataFromResource(200);
+        $height->setDataFromResource('200');
 
         $elements = [
             'url'     => $url,

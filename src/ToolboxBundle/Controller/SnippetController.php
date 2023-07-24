@@ -14,8 +14,8 @@ class SnippetController extends FrontendController
      */
     public function teaserAction(Request $request, ConfigManagerInterface $configManager): Response
     {
-        $layoutStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'layout');
-        $addClStore = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaElementConfig('teaser', 'additional_classes');
+        $layoutStore = $configManager->getAreaElementConfig('teaser', 'layout');
+        $addClStore = $configManager->getAreaElementConfig('teaser', 'additional_classes');
 
         $layoutExtJsStore = [];
         $addClExtJsStore = [];

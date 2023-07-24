@@ -11,7 +11,7 @@ All Configuration Elements are written in underscore:
 
 ```yaml
 toolbox:
-    custom_areas:
+    areas:
         anchor:
             config_elements:
                 anchor_name: # underscore: in view, you'll call it with pimcore_input('anchor_name');
