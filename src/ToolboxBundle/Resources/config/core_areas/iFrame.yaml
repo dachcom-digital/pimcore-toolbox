@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\ToolboxAreabrick\IFrame\IFrame:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         tags:
-            - { name: toolbox.area.brick, id: iframe }
+            - { name: toolbox.area.brick, id: iFrame }
 
 toolbox:
     areas:

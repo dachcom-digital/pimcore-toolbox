@@ -37,6 +37,7 @@ toolbox:
         - googleMap
         - headline
         - iframe
+        - image
         - linkList
         - parallaxContainer
         - parallaxContainerSection

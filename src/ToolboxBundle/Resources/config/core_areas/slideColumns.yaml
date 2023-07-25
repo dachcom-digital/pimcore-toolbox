@@ -3,7 +3,7 @@ services:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         autowire: true
         tags:
-            - { name: toolbox.area.brick, id: slide_columns }
+            - { name: toolbox.area.brick, id: slideColumns }
 
 toolbox:
     areas:
