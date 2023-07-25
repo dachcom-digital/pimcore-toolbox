@@ -161,43 +161,51 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
     private function parseContextConfigs(array $configs): array
     {
+        $data = [];
         $rootConfigs = [];
+        $contextConfigData = [];
+        $contextMergeCandidates = [];
+
         foreach ($configs as $rootConfig) {
             unset($rootConfig['context'], $rootConfig['context_resolver'], $rootConfig['enabled_core_areas']);
             $rootConfigs[] = $rootConfig;
         }
 
-        $contextMerge = [];
         foreach ($configs as $config) {
-            if (isset($config['context'])) {
-                foreach ($config['context'] as $contextName => $contextConfig) {
-                    if (isset($contextConfig['settings']['merge_with_root'])) {
-                        $contextMerge[$contextName] = $contextConfig['settings']['merge_with_root'];
-                    }
-                }
+
+            if (!isset($config['context'])) {
+                continue;
+            }
+
+            foreach ($config['context'] as $contextName => $contextConfig) {
+                $contextMergeCandidates[$contextName] = $contextConfig['settings']['merge_with_root'] ?? false;
             }
         }
-
-        $data = [];
-        $contextConfigData = [];
 
         //get context data
         foreach ($configs as $config) {
-            if (isset($config['context'])) {
-                foreach ($config['context'] as $contextName => $contextConfig) {
-                    if (!isset($contextMerge[$contextName]) || $contextMerge[$contextName] !== true) {
-                        continue;
-                    }
 
-                    $cleanContextConfig = $contextConfig;
-                    unset($cleanContextConfig['settings']);
-                    $contextConfigData[$contextName][] = $cleanContextConfig;
+            if (!isset($config['context'])) {
+                continue;
+            }
+
+            foreach ($config['context'] as $contextName => $contextConfig) {
+
+                if ($contextMergeCandidates[$contextName] === false) {
+                    continue;
                 }
+
+                $cleanContextConfig = $contextConfig;
+
+                unset($cleanContextConfig['settings']);
+
+                $contextConfigData[$contextName][] = $cleanContextConfig;
             }
         }
 
-        //get context merge data
-        foreach ($contextMerge as $contextName => $merge) {
+        // get context merge data
+        foreach ($contextMergeCandidates as $contextName => $merge) {
+
             if ($merge === false) {
                 continue;
             }
@@ -211,12 +219,12 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
             }
         }
 
-        //append merge data
+        // append merge data
         foreach ($data as $append) {
             $configs[] = $append;
         }
 
-        //append custom context data
+        // append custom context data
         foreach ($contextConfigData as $contextName => $contextConfigs) {
             foreach ($contextConfigs as $el) {
                 $configs[] = [

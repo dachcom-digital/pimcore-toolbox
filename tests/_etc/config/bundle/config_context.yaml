@@ -72,6 +72,10 @@ toolbox:
             settings:
                 merge_with_root: false
             theme:
+                layout: 'Bootstrap4'
+                calculators:
+                    column_calculator: ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator
+                    slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator
                 grid:
                     grid_size: 8
                     breakpoints:
