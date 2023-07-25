@@ -1,0 +1,14 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\LinkList\LinkList:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: linkList }
+
+toolbox:
+    areas:
+        linkList:
+            config_elements:
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~

@@ -149,7 +149,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        $areaAppearance = $this->configManager->getConfig('areas_appearance');
+        $areaAppearance = $this->configManager->getConfig('areablock_restriction');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 
@@ -180,7 +180,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');
+        $areaAppearance = $this->configManager->getConfig('snippet_areablock_restriction');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 

@@ -20,7 +20,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('toolbox');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->getConfigNode($rootNode);
+        $this->addRootNode($rootNode);
         $this->addContextNode($rootNode);
 
         $rootNode
@@ -41,12 +41,11 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->append($this->buildContextSettingsNode())
                             ->append($this->buildFlagsConfiguration())
-                            ->append($this->buildAreasSection(true))
                             ->append($this->buildAreasSection())
                             ->append($this->buildWysiwygEditorConfigSection())
                             ->append($this->buildImageThumbnailSection())
-                            ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
-                            ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
+                            ->append($this->buildAreasAppearanceConfiguration('areablock_restriction'))
+                            ->append($this->buildAreasAppearanceConfiguration('snippet_areablock_restriction'))
                             ->append($this->buildAreaBlockConfiguration())
                             ->append($this->buildThemeConfiguration())
                             ->append($this->buildDataAttributeConfiguration())
@@ -56,22 +55,47 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    public function getConfigNode(ArrayNodeDefinition $rootNode): void
+    public function addRootNode(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
+                ->append($this->buildCoreAreasConfiguration())
                 ->append($this->buildFlagsConfiguration())
                 ->append($this->buildAreasSection())
                 ->append($this->buildWysiwygEditorConfigSection())
                 ->append($this->buildImageThumbnailSection())
-                ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
-                ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
+                ->append($this->buildAreasAppearanceConfiguration('areablock_restriction'))
+                ->append($this->buildAreasAppearanceConfiguration('snippet_areablock_restriction'))
                 ->append($this->buildAreaBlockConfiguration())
                 ->append($this->buildThemeConfiguration())
                 ->append($this->buildDataAttributeConfiguration())
             ->end();
     }
 
+    protected function buildCoreAreasConfiguration(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('enabled_core_areas');
+
+        $treeBuilder
+            ->prototype('scalar')
+                ->defaultValue([])
+                ->validate()
+                    ->ifTrue(function ($areaName) {
+                        return !in_array($areaName, ToolboxConfig::TOOLBOX_AREA_TYPES, true);
+                    })
+                    ->then(function ($areaName) {
+                        throw new InvalidConfigurationException(sprintf(
+                            'Invalid core element "%s" in toolbox "enabled_core_areas" configuration". Available types for "enabled_core_areas" are: %s',
+                            $areaName,
+                            implode(', ', ToolboxConfig::TOOLBOX_AREA_TYPES)
+                        ));
+                    })
+                ->end()
+            ->end();
+
+        return $treeBuilder;
+
+    }
     protected function buildContextSettingsNode(): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition('settings');
@@ -362,8 +386,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new ArrayNodeDefinition('config_elements');
 
         if ($internalTypes === true) {
-            //@todo: get them dynamically!!
-            $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
+            $allowedTypes = array_merge(ToolboxConfig::PIMCORE_EDITABLE_TYPES, ToolboxConfig::TOOLBOX_EDITABLE_TYPES);
 
             $typeNode = new EnumNodeDefinition('type');
             $typeNode->isRequired()->values($allowedTypes)->end();

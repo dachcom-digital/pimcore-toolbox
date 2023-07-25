@@ -1,12 +1,3 @@
 doctrine_migrations:
     migrations_paths:
         'ToolboxBundle\Migrations': '@ToolboxBundle/Migrations'
-
-imports:
-    - { resource: areas/*.yaml }
-    - { resource: registry.yaml }
-    - { resource: theme.yaml }
-    - { resource: area_restrictions.yaml }
-    - { resource: data_attributes.yaml }
-    - { resource: image_thumbnails.yaml }
-    - { resource: document/editables.yaml }

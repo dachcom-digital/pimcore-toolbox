@@ -19,7 +19,7 @@ toolbox:
                     identifier: 'lg'
                     name: 'Breakpoint: LG'
                     description: 'Your Description'
-    areas_appearance:
+    areablock_restriction:
         disallowed_content:
             disallowed:
                 - image
@@ -31,7 +31,7 @@ toolbox:
                 - image
             disallowed:
                 - image
-    snippet_areas_appearance:
+    snippet_areablock_restriction:
         disallowed_content:
             disallowed:
                 - headline

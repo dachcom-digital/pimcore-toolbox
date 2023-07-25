@@ -43,11 +43,8 @@ use Pimcore\Model\DataObject;
 
 class ObjectUrlListener
 {
-    protected $generator;
-
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(protected UrlGeneratorInterface $generator)
     {
-        $this->generator = $generator;
     }
 
     public function checkUrl(GenericEvent $e)

@@ -1,0 +1,30 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Container\Container:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: container }
+
+toolbox:
+    areas:
+        container:
+            config_elements:
+                full_width_container:
+                    type: checkbox
+                    title: 'Fluid Container (Full Width)'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+
+    areablock_restriction:
+        container:
+            disallowed:
+                - container
+                - parallaxContainer
+
+    snippet_areablock_restriction:
+        container:
+            disallowed:
+                - container
+                - parallaxContainer

@@ -1,0 +1,18 @@
+toolbox:
+    theme:
+        layout: 'Bootstrap4'
+        default_layout: false
+        wrapper:
+            image:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12' }
+            columns:
+                - { tag: 'div', class: 'row' }
+            gallery:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12 col-gallery' }
+            slideColumns:
+                - { tag: 'div', class: 'row' }
+            teaser:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12' }

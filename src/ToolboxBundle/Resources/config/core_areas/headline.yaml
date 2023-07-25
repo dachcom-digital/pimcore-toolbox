@@ -1,0 +1,31 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Headline\Headline:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: headline }
+
+toolbox:
+    areas:
+        headline:
+            config_elements:
+                headline_type:
+                    type: select
+                    title: 'Headline Size'
+                    config:
+                        name: headlineType
+                        store:
+                            h1: Headline 1
+                            h2: Headline 2
+                            h3: Headline 3
+                            h4: Headline 4
+                            h5: Headline 5
+                            h6: Headline 6
+                        default: h3
+                anchor_name:
+                    type: input
+                    title: 'Anchor Name'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~

@@ -47,9 +47,7 @@ toolbox:
 
 namespace App\Document\Areabrick\MyBrick;
 
-use Pimcore\Model\Document\Editable\Area\Info;
-use Symfony\Component\HttpFoundation\Response;
-use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use Pimcore\Model\Document\Editable\Area\Info;use Symfony\Component\HttpFoundation\Response;use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 
 class MyBrick extends AbstractAreabrick
 {

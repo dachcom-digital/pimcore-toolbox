@@ -18,6 +18,6 @@
             {% include toolbox_area_path(areaId, areaTemplateDirectory, '/partial/overlay') with {'posterPath' : posterPath, 'playInLightbox': playInLightbox} %}
         {% endif %}
 
-        {% include toolbox_area_path(areaId, areaTemplateDirectory, 'type-' ~ videoType) %}
+        {% include toolbox_area_path(areaId, areaTemplateDirectory, 'type_' ~ videoType) %}
     </div>
 {% endif %}

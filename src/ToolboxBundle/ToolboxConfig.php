@@ -4,7 +4,7 @@ namespace ToolboxBundle;
 
 final class ToolboxConfig
 {
-    public const TOOLBOX_TYPES = [
+    public const TOOLBOX_AREA_TYPES = [
         'accordion',
         'anchor',
         'columns',
@@ -14,7 +14,7 @@ final class ToolboxConfig
         'gallery',
         'googleMap',
         'headline',
-        'iFrame',
+        'iframe',
         'image',
         'linkList',
         'parallaxContainer',
@@ -27,7 +27,7 @@ final class ToolboxConfig
         'video'
     ];
 
-    public const CORE_TYPES = [
+    public const PIMCORE_EDITABLE_TYPES = [
         'areablock',
         'area',
         'block',
@@ -53,7 +53,7 @@ final class ToolboxConfig
         'wysiwyg'
     ];
 
-    public const CUSTOM_TYPES = [
+    public const TOOLBOX_EDITABLE_TYPES = [
         'additionalClasses',
         'additionalClassesChained',
         'parallaximage',

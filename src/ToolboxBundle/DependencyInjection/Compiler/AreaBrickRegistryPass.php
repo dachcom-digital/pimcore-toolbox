@@ -74,14 +74,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 ));
             }
 
-            if ($brickDefinition->hasMethodCall('setAreaBrickType')) {
-                throw new InvalidDefinitionException(sprintf(
-                    'Please remove methodCall "%s" from your brick "%s". The type declaration will be processed internally.',
-                    'setAreaBrickType',
-                    $id
-                ));
-            }
-
             foreach ($tags as $attributes) {
                 $type = AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL;
 
@@ -89,12 +81,12 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     $type = AbstractBaseAreabrick::AREABRICK_TYPE_INTERNAL;
                 }
 
-                if ($type === AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL && in_array($attributes['id'], ToolboxConfig::TOOLBOX_TYPES, true)) {
+                if ($type === AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL && in_array($attributes['id'], ToolboxConfig::TOOLBOX_AREA_TYPES, true)) {
                     throw new InvalidDefinitionException(sprintf(
                         'ID "%s" for AreaBrick "%s is a reserved identifier. Please change the id of your custom AreaBrick. Internal IDs are: %s.',
                         $attributes['id'],
                         $id,
-                        implode(', ', ToolboxConfig::TOOLBOX_TYPES)
+                        implode(', ', ToolboxConfig::TOOLBOX_AREA_TYPES)
                     ));
                 }
 

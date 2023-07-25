@@ -1,0 +1,18 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Anchor\Anchor:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: anchor }
+
+toolbox:
+    areas:
+        anchor:
+            config_elements:
+                anchor_name:
+                    type: input
+                    title: 'Anchor Name'
+                    config: ~
+                anchor_title:
+                    type: input
+                    title: 'Anchor Title'
+                    config: ~

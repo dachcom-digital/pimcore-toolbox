@@ -129,7 +129,7 @@ class SlideColumnsTest extends AbstractAreaTest
                 'controlsAlign'   => 'top',
                 'controlsTrigger' => 'hover',
             ],
-            'areas_appearance'         => [],
+            'areablock_restriction'    => [],
         ]);
 
         $elements = [

@@ -1,0 +1,28 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Download\Download:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        autowire: true
+        tags:
+            - { name: toolbox.area.brick, id: download }
+
+toolbox:
+    areas:
+        download:
+            config_elements:
+                downloads:
+                    type: relations
+                    title: 'Files'
+                    config: ~
+                show_preview_images:
+                    type: checkbox
+                    title: 'Show preview images'
+                    config: ~
+                show_file_info:
+                    type: checkbox
+                    title: 'Show file info'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            config_parameter: ~

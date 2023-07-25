@@ -45,12 +45,12 @@ area_block_configuration:
 
 #### In snippets
 
-Use the `snippet_areas_appearance`  config node to disable bricks in specific snippets.
+Use the `snippet_areablock_restriction` config node to disable bricks in specific snippets.
 
 ```yaml
 # define which elements should not appear in snippet documents
 toolbox:
-    snippet_areas_appearance:
+    snippet_areablock_restriction:
         snippet_c:
             disallowed:
                 - parallaxContainer
@@ -69,12 +69,12 @@ toolbox:
 
 #### In Area-Blocks
 
-Use the `areas_appearance` config node to disable bricks in specific areas.
+Use the `areablock_restriction` config node to disable bricks in specific areas.
 
 **Example**  
 ```yaml
 toolbox:
-    areas_appearance:
+    areablock_restriction:
         container:
             allowed: # if "allowed" is configured the "disallowed" node will be ignored
                 - container
