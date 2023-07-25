@@ -1,4 +1,26 @@
 toolbox:
+
+    enabled_core_areas:
+        - accordion
+        - anchor
+        - columns
+        - container
+        - content
+        - download
+        - gallery
+        - googleMap
+        - headline
+        - iframe
+        - linkList
+        - parallaxContainer
+        - parallaxContainerSection
+        - separator
+        - slideColumns
+        - snippet
+        - spacer
+        - teaser
+        - video
+
     theme:
         grid:
             grid_size: 12

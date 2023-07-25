@@ -5,6 +5,7 @@
 ### Global Changes
 - All folders and sub-folders in views are lowercase/underscore now (areas/accordion/accordion_tab, areas/google_map, areas/iframe, areas/link_list, areas/parallax_container, areas/parallax_container_section, areas/parallax_container_section, areas/slide_columns)
 - All views are lowercase/underscore now (areas/video/type_*, areas/google_map/info_window, parallax_container/partial/*, parallax_container/wrapper/container_wrapper)
+- `dynamiclink` feature has finally been removed! If you're still using it, stay on v4 and [migrate first](https://github.com/dachcom-digital/pimcore-toolbox/blob/3.x/docs/70_ConfigurationFlags.md#-use_dynamic_links-flag)
 
 ### WYSIWYG Config Changes
 - CK Editor support has been removed from PIMCORE. Toolbox currently only supports the new TinyMCE Editor. Read more about it [here](./docs/13_Wysiwyg_Editor.md)
