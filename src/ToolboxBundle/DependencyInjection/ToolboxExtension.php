@@ -229,5 +229,4 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
         return $configs;
     }
-
 }

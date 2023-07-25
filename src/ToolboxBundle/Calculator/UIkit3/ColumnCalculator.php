@@ -41,10 +41,10 @@ class ColumnCalculator implements ColumnCalculatorInterface
         $t = explode('_', $value);
 
         // remove "column" in string.
-        $_columns = array_splice($t, 1);
+        $rawColumns = array_splice($t, 1);
         $columnCounter = 0;
 
-        foreach ($_columns as $i => $columnClass) {
+        foreach ($rawColumns as $i => $columnClass) {
             // set when no custom config exists
             $gridConfig = $customColumnConfiguration ? [] : [
                 's' => $gridSize,

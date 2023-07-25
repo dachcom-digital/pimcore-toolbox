@@ -32,7 +32,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
             $columnConfiguration = $customColumnConfiguration;
         } else {
             $columnConfigNode = $this->configManager->getAreaElementConfig('columns', 'type');
-            $columnConfiguration = isset($columnConfigNode['config']['store']) ? $columnConfigNode['config']['store'] : [];
+            $columnConfiguration = $columnConfigNode['config']['store'] ?? [];
         }
 
         $columns = [];
@@ -72,7 +72,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                 }
             }
 
-            if (substr($columnClass, 0, 1) === 'o') {
+            if (str_starts_with($columnClass, 'o')) {
                 $offset = (int) substr($columnClass, 1);
 
                 $gridOffsetConfig = $customColumnConfiguration ? [] : [
@@ -89,7 +89,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                     foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                         $customBreakPointDataColumns = explode('_', $customBreakPointData);
                         $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : $gridSize;
-                        if (substr($customColAmount, 0, 1) === 'o') {
+                         if (str_starts_with($customColAmount, 'o')) {
                             $customOffset = (int) substr($customColAmount, 1);
                             $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
                             $bootstrapOffsetConfig[$customBreakPointName] = 'offset-' . $bpPrefix . $customOffset;

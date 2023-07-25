@@ -44,8 +44,8 @@ class Configuration implements ConfigurationInterface
                             ->append($this->buildAreasSection())
                             ->append($this->buildWysiwygEditorConfigSection())
                             ->append($this->buildImageThumbnailSection())
-                            ->append($this->buildAreasAppearanceConfiguration('areablock_restriction'))
-                            ->append($this->buildAreasAppearanceConfiguration('snippet_areablock_restriction'))
+                            ->append($this->buildAreaBlockRestrictionConfiguration('areablock_restriction'))
+                            ->append($this->buildAreaBlockRestrictionConfiguration('snippet_areablock_restriction'))
                             ->append($this->buildAreaBlockConfiguration())
                             ->append($this->buildThemeConfiguration())
                             ->append($this->buildDataAttributeConfiguration())
@@ -64,8 +64,8 @@ class Configuration implements ConfigurationInterface
                 ->append($this->buildAreasSection())
                 ->append($this->buildWysiwygEditorConfigSection())
                 ->append($this->buildImageThumbnailSection())
-                ->append($this->buildAreasAppearanceConfiguration('areablock_restriction'))
-                ->append($this->buildAreasAppearanceConfiguration('snippet_areablock_restriction'))
+                ->append($this->buildAreaBlockRestrictionConfiguration('areablock_restriction'))
+                ->append($this->buildAreaBlockRestrictionConfiguration('snippet_areablock_restriction'))
                 ->append($this->buildAreaBlockConfiguration())
                 ->append($this->buildThemeConfiguration())
                 ->append($this->buildDataAttributeConfiguration())
@@ -181,7 +181,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildAreasAppearanceConfiguration(string $type): ArrayNodeDefinition
+    protected function buildAreaBlockRestrictionConfiguration(string $type): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition($type);
 
@@ -231,17 +231,16 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder
             ->children()
-                ->scalarNode('layout')
-                    ->cannotBeEmpty()
-                ->end()
+                ->scalarNode('layout')->cannotBeEmpty()->end()
                 ->scalarNode('default_layout')
                     ->defaultValue(false)
                 ->end()
                 ->arrayNode('calculators')
                     ->addDefaultsIfNotSet()
+                    ->isRequired()
                     ->children()
-                        ->scalarNode('column_calculator')->defaultValue(ColumnCalculator::class)->end()
-                        ->scalarNode('slide_calculator')->defaultValue(SlideColumnCalculator::class)->end()
+                        ->scalarNode('column_calculator')->isRequired()->end()
+                        ->scalarNode('slide_calculator')->isRequired()->end()
                     ->end()
                 ->end()
                 ->arrayNode('grid')

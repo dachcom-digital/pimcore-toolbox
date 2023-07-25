@@ -1,7 +1,9 @@
 toolbox:
     theme:
         layout: 'Bootstrap4'
-        default_layout: false
+        calculators:
+            column_calculator: ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator
+            slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator
         wrapper:
             image:
                 - { tag: 'div', class: 'row' }

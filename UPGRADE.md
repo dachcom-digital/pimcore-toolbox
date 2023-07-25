@@ -13,7 +13,6 @@
   - Config node `global_style_sets` has been removed (will be set via `wysiwyg_editor.config`)
   - Twig Helper `toolbox_get_wysiwyg_config_path()` has been removed (will be added globally via edit mode js file injection)
 
-
 ### Areas Restriction Changes
 - `areas_appearance` has been renamed to `areablock_restriction`, `snippet_areas_appearance` has been renamed to `snippet_areablock_restriction`.
 
@@ -67,13 +66,8 @@ If you want to disable any area from third party bundles (for example the member
 
 ### Theme
 The default theme section will be loaded, **only** if **no** `toolbox.theme.layout` has been defined.
-If you're using the `Bootstrap4` layout and is explicitly configured in your project, you need to adopt the config from toolbox core `config/theme/bootstrap4_theme.yaml`
-
-### Type Changes
-TBD
-
-### New Features
-TBD
+If you're using the `Bootstrap4` layout, and it's explicitly configured in your project, you need to adopt the config from toolbox core `config/theme/bootstrap4_theme.yaml`
+You also must configure `toolbox.calculators.*` explicitly, if you're using custom layout frameworks.
 
 ***
 
