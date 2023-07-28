@@ -6,17 +6,10 @@ use Symfony\Component\Templating\EngineInterface;
 
 class LayoutManager implements LayoutManagerInterface
 {
-    protected ConfigManager $configManager;
-    protected EngineInterface $templating;
-
-    public function __construct(ConfigManager $configManager)
-    {
-        $this->configManager = $configManager;
-    }
-
-    public function setTemplating(EngineInterface $templating): void
-    {
-        $this->templating = $templating;
+    public function __construct(
+        protected ConfigManagerInterface $configManager,
+        protected EngineInterface $templating
+    ) {
     }
 
     public function getAreaTemplateDir(string $areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string

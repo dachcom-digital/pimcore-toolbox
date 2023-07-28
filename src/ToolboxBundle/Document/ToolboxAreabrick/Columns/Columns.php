@@ -7,26 +7,35 @@ use Pimcore\Model\Document\Editable\Checkbox;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
-class Columns extends AbstractAreabrick
+class Columns extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
-    private CalculatorRegistryInterface $calculatorRegistry;
-    private EngineInterface $templating;
-
     public function __construct(
-        CalculatorRegistryInterface $calculatorRegistry,
-        EngineInterface $templating
+        private CalculatorRegistryInterface $calculatorRegistry,
+        private EngineInterface $templating
     ) {
-        $this->calculatorRegistry = $calculatorRegistry;
-        $this->templating = $templating;
     }
 
     public function action(Info $info): ?Response
     {
-        parent::action($info);
+        $this->buildInfoParameters($info);
 
-        $editMode = $info->getEditable()->getEditmode();
+        return parent::action($info);
+    }
+
+    public function headlessAction(Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->buildInfoParameters($info, $headlessResponse);
+
+        parent::headlessAction($info, $headlessResponse);
+    }
+
+    private function buildInfoParameters(Info $info, ?HeadlessResponse $headlessResponse = null): void
+    {
+        $editMode = $info->getEditable()?->getEditmode() === true;
 
         /** @var Checkbox $equalHeightElement */
         $equalHeightElement = $this->getDocumentEditable($info->getDocument(), 'checkbox', 'equal_height');
@@ -61,14 +70,22 @@ class Columns extends AbstractAreabrick
             }
         }
 
-        $info->setParams(array_merge($info->getParams(), [
+        $info->setParam('columns', $columns);
+
+        $brickParams = [
             'type'        => $type . ($customColumnConfiguration !== null ? '-grid-adjuster' : ''),
             'columns'     => $columns,
             'partialName' => $partialName,
             'equalHeight' => $equalHeight
-        ]));
+        ];
 
-        return null;
+        if ($headlessResponse instanceof HeadlessResponse) {
+            $headlessResponse->setAdditionalConfigData($brickParams);
+
+            return;
+        }
+
+        $info->setParams(array_merge($info->getParams(), $brickParams));
     }
 
     public function getName(): string

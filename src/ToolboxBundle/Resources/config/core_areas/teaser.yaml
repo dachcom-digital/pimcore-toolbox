@@ -27,7 +27,20 @@ toolbox:
                     type: checkbox
                     title: 'use Lightbox?'
                     config: ~
+
                 additional_classes:
                     type: additionalClasses
                     config:
                         store: ~
+
+            inline_config_elements:
+                teaser_image:
+                    type: image
+                teaser_headline:
+                    type: input
+                    title: 'Headline'
+                teaser_text:
+                    type: wysiwyg
+                    title: 'Text'
+                teaser_link:
+                    type: link

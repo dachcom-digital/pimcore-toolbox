@@ -101,6 +101,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Column Adjuster](docs/60_ColumnAdjuster.md)
 - [Configuration Flags](docs/70_ConfigurationFlags.md)
 - [Javascript Plugins](docs/80_Javascript.md)
+- [Headless Mode](docs/90_Headless.md)
 
 ## Pimcore Fixes / Overrides
 - Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js) bug (in some cases the iframe overlay field does not apply to the right position)

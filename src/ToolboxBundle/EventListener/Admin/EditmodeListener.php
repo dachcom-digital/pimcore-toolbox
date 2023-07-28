@@ -31,7 +31,6 @@ class EditmodeListener implements EventSubscriberInterface
 
         $scripts = [
             'head'   => sprintf('<script src="%s?_dc=%s"></script>', '/admin/toolbox-wysiwyg-document-style.js', Version::getRevision()),
-            'footer' => sprintf('<script src="%s?_dc=%s"></script>', '/bundles/toolbox/js/document/editables/startup.js', Version::getRevision()),
         ];
 
         if (!$event->isMainRequest()) {
@@ -54,12 +53,6 @@ class EditmodeListener implements EventSubscriberInterface
         $html = str_replace(
             '<!-- /pimcore editmode -->',
             sprintf("%s%s<!-- /pimcore editmode -->", $scripts['head'], PHP_EOL),
-            $html
-        );
-
-        $html = str_replace(
-            '</body>',
-            sprintf("%s%s</body>%s", $scripts['footer'], PHP_EOL, PHP_EOL),
             $html
         );
 

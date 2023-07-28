@@ -7,14 +7,28 @@ use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Checkbox;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 use ToolboxBundle\Model\Document\Editable\Vhs;
 
-class Video extends AbstractAreabrick
+class Video extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
     public function action(Info $info): ?Response
     {
-        parent::action($info);
+        $this->buildInfoParameters($info);
 
+        return parent::action($info);
+    }
+
+    public function headlessAction(Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->buildInfoParameters($info, $headlessResponse);
+
+        parent::headlessAction($info, $headlessResponse);
+    }
+
+    protected function buildInfoParameters(Info $info, ?HeadlessResponse $headlessResponse = null): void
+    {
         /** @var Vhs $videoTag */
         $videoTag = $this->getDocumentEditable($info->getDocument(), 'vhs', 'video');
 
@@ -33,16 +47,22 @@ class Video extends AbstractAreabrick
             $posterPath = $poster->getThumbnail($imageThumbnail);
         }
 
-        $info->setParams(array_merge($info->getParams(), [
+        $brickParams = [
             'autoPlay'       => $autoPlay,
             'posterPath'     => $posterPath,
             'videoType'      => $videoType,
             'playInLightbox' => $playInLightBox,
             'videoParameter' => $videoParameter,
             'videoId'        => $videoTag->getId()
-        ]));
+        ];
 
-        return null;
+        if ($headlessResponse instanceof HeadlessResponse) {
+            $headlessResponse->setAdditionalConfigData($brickParams);
+
+            return;
+        }
+
+        $info->setParams(array_merge($info->getParams(), $brickParams));
     }
 
     public function getName(): string

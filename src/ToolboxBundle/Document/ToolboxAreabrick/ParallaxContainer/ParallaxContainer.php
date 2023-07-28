@@ -12,13 +12,10 @@ use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 
 class ParallaxContainer extends AbstractAreabrick
 {
-    private Translator $translator;
-    private EngineInterface $templating;
-
-    public function __construct(Translator $translator, EngineInterface $templating)
-    {
-        $this->translator = $translator;
-        $this->templating = $templating;
+    public function __construct(
+        private Translator $translator,
+        private EngineInterface $templating
+    ) {
     }
 
     public function action(Editable\Area\Info $info): ?Response
@@ -67,13 +64,9 @@ class ParallaxContainer extends AbstractAreabrick
     }
 
     /**
-     * @param Editable\Area\Info $info
-     *
-     * @return string
-     *
      * @throws \Exception
      */
-    private function buildSectionContent(Editable\Area\Info $info)
+    private function buildSectionContent(Editable\Area\Info $info): string
     {
         ob_start();
 

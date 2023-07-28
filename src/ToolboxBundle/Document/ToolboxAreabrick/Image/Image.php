@@ -2,17 +2,11 @@
 
 namespace ToolboxBundle\Document\ToolboxAreabrick\Image;
 
-use Pimcore\Model\Document\Editable\Area\Info;
-use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
 
-class Image extends AbstractAreabrick
+class Image extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
-    public function action(Info $info): ?Response
-    {
-        return parent::action($info);
-    }
-
     public function getName(): string
     {
         return 'Image';

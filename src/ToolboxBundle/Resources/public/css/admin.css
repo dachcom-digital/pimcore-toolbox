@@ -651,3 +651,92 @@ body > .single-teaser img {
 .editable-blocked .toolbox-element-edit-button {
     min-height: 35px;
 }
+
+
+/*
+    Inline Editables
+*/
+
+.toolbox-headless  .pimcore_area_buttons {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.toolbox-headless .pimcore_area_entry {
+    border: 1px dashed #d6d6d6;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.toolbox-headless .toolbox-inline-editable-panel {
+    background: #7891b92b;
+    border-radius: 3px;
+    padding: 5px;
+    position: relative;
+}
+
+.toolbox-headless .toolbox-inline-editable-panel .x-fieldset {
+    border: 0;
+    border-top: 0 !important;
+    padding: 3px;
+    margin: 0 0 10px 0;
+}
+
+.toolbox-headless .toolbox-inline-editable-panel .x-fieldset-header-text {
+    color: black;
+    font-size: 13px;
+}
+
+.toolbox-headless .toolbox-inline-editable-panel label {
+    margin: 0;
+}
+
+.toolbox-headless .toolbox-inline-editable-panel .x-fieldset-header {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.toolbox-headless .pimcore_editable_input {
+    background: white;
+    padding: 2px 4px;
+    border: 1px dashed #d6d6d6;
+    font-size: 14px;
+}
+
+.toolbox-headless .toolbox-columns .toolbox-column {
+    background: transparent;
+    border: none;
+}
+
+/*
+    Inline Editables [Config Node]
+*/
+
+.toolbox-headless {
+    margin: 10px;
+}
+
+.toolbox-headless .inline-config-area {
+    background: #efefef;
+    padding: 10px;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node {
+    margin: 0;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node:first-child .inline-config-label {
+    margin: 0;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node .inline-config-label {
+    display: block;
+    margin: 10px 0 0 0;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node .inline-config-description {
+    font-size: 12px;
+    display: block;
+    font-style: italic;
+}

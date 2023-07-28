@@ -2,17 +2,11 @@
 
 namespace ToolboxBundle\Document\ToolboxAreabrick\Teaser;
 
-use Pimcore\Model\Document\Editable\Area\Info;
-use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
 
-class Teaser extends AbstractAreabrick
+class Teaser extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
-    public function action(Info $info): ?Response
-    {
-        return parent::action($info);
-    }
-
     public function getName(): string
     {
         return 'Teaser';

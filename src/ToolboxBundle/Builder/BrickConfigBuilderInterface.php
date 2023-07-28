@@ -7,5 +7,7 @@ use Pimcore\Model\Document\Editable\Area\Info;
 
 interface BrickConfigBuilderInterface
 {
-    public function buildDialogBoxConfiguration(?Info $info, string $brickId, array $configNode = [], array $themeOptions = []): EditableDialogBoxConfiguration;
+    public function buildConfiguration(?Info $info, string $brickId, array $areaConfig = [], array $themeOptions = []): EditableDialogBoxConfiguration;
+
+    public function buildConfigurationData(Info $info, string $brickId, array $areaConfig = [], array $themeOptions = []): array;
 }

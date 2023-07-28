@@ -24,6 +24,11 @@ interface ConfigManagerInterface
     /**
      * @throws \Exception
      */
+    public function getHeadlessDocumentConfig(string $headlessDocumentName): array;
+
+    /**
+     * @throws \Exception
+     */
     public function areaIsEnabled(string $areaName,): bool;
 
     /**

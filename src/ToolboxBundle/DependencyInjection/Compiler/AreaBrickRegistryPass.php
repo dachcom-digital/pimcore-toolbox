@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use ToolboxBundle\Builder\BrickConfigBuilderInterface;
+use ToolboxBundle\Builder\InlineConfigBuilderInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick;
 use ToolboxBundle\Document\SimpleAreabrick\SimpleAreaBrick;
@@ -28,6 +29,7 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
         $abstractBrickDefinition = new Definition(AbstractBaseAreabrick::class);
         $abstractBrickDefinition->setAbstract(true);
         $abstractBrickDefinition->addMethodCall('setLayoutManager', [new Reference(LayoutManagerInterface::class)]);
+        $abstractBrickDefinition->addMethodCall('setInlineConfigBuilder', [new Reference(InlineConfigBuilderInterface::class)]);
         $abstractBrickDefinition->addMethodCall('setConfigManager', [new Reference(ConfigManagerInterface::class)]);
 
         $container->setDefinition(AbstractBaseAreabrick::class, $abstractBrickDefinition);

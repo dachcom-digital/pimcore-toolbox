@@ -1,8 +1,6 @@
 pimcore.registerNS('pimcore.document.editables.areablock');
 pimcore.document.editables.areablock = Class.create(pimcore.document.editables.areablock, {
 
-    enableInlineEditableConfig: false,
-
     initialize: function ($super, id, name, config, data, inherited) {
 
         var setupToolbar;
@@ -118,15 +116,9 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
                 }, true);
 
                 if (isConfigurable === true) {
-
                     // remove pimcore default edit button!
                     Ext.get($editDiv).setVisible(false);
-
-                    if (this.enableInlineEditableConfig === true) {
-                        this.dispatchToolboxInlineEditing(i, $areaEl, $el, $editDiv);
-                    } else {
-                        this.dispatchToolboxDialogBoxEditing(i, $areaEl, $el, $editDiv);
-                    }
+                    this.dispatchToolboxDialogBoxEditing(i, $areaEl, $el, $editDiv);
                 }
             }
 
@@ -150,70 +142,6 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
         });
 
         $editButton.render($el);
-    },
-
-    dispatchToolboxInlineEditing: function (i, $areaEl, $el, $editDiv) {
-
-        let configPanel = new Ext.Panel({
-            header: false,
-            autoSize: true,
-            listeners: {
-                afterrender: function (panel) {
-                    $areaEl.fireEvent('toolbox.bar.added', $areaEl, true);
-                }.bind(this)
-            }
-        });
-
-        configPanel.render($areaEl);
-
-        if (toolboxEditableManager.isInitialized()) {
-            this.loadInlineEditables(configPanel, $editDiv);
-        } else {
-            toolboxEditableManager.add(this, configPanel, $editDiv);
-        }
-
-    },
-
-    loadInlineEditables: function (configPanel, $editDiv) {
-
-        let id = $editDiv.dataset.dialogId;
-        let jsonConfig = document.getElementById('dialogBoxConfig-' + id).innerHTML;
-        let config = JSON.parse(jsonConfig);
-
-        let editablesInBox = this.getEditablesInDialogBox(id);
-        let items = this.buildEditableDialogLayout(config.items, editablesInBox, 1);
-
-        items = this.adjustInlineEditables(items);
-
-        configPanel.add(items);
-
-        Object.keys(editablesInBox).forEach(function (editableName) {
-
-            if (typeof editablesInBox[editableName]['renderInDialogBox'] === "function") {
-                editablesInBox[editableName].renderInDialogBox();
-            } else {
-                editablesInBox[editableName].render();
-            }
-
-            editablesInBox[editableName].setInherited(editablesInBox[editableName].inherited);
-        }.bind(this));
-
-        configPanel.updateLayout();
-    },
-
-    adjustInlineEditables: function (component) {
-
-        if (Ext.isObject(component)) {
-            component.autoSize = true;
-            component.layout = 'fit';
-            if (component.hasOwnProperty('items')) {
-                Ext.Array.each(component.items, function (item, i) {
-                    component.items[i] = this.adjustInlineEditables(item);
-                }.bind(this))
-            }
-        }
-
-        return component;
     }
 
 });

@@ -10,11 +10,8 @@ use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
 class SlideColumns extends AbstractAreabrick
 {
-    private CalculatorRegistryInterface $calculatorRegistry;
-
-    public function __construct(CalculatorRegistryInterface $calculatorRegistry)
+    public function __construct(private CalculatorRegistryInterface $calculatorRegistry)
     {
-        $this->calculatorRegistry = $calculatorRegistry;
     }
 
     public function action(Info $info): ?Response
@@ -54,7 +51,7 @@ class SlideColumns extends AbstractAreabrick
         $configInfo = $this->getConfigManager()->getAreaParameterConfig('slideColumns');
 
         $breakpoints = [];
-        if (!empty($configInfo) && isset($configInfo['breakpoints'], $configInfo['breakpoints'][$columnType])) {
+        if (isset($configInfo['breakpoints'][$columnType]) && !empty($configInfo)) {
             $breakpoints = $configInfo['breakpoints'][$columnType];
         }
 

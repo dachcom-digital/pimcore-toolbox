@@ -26,3 +26,5 @@ toolbox:
                     config:
                         store: ~
             config_parameter: ~
+            inline_config_elements:
+                downloads: '<'

@@ -79,8 +79,8 @@ toolbox:
 
 namespace App\Services\ToolboxBundle;
 
+use Pimcore\Http\RequestHelper;
 use Pimcore\Model\Document;
-use Symfony\Component\HttpFoundation\RequestStack;
 use ToolboxBundle\Resolver\ContextResolverInterface;
 use Pimcore\Http\Request\Resolver\DocumentResolver;
 use Pimcore\Http\Request\Resolver\EditmodeResolver;
@@ -91,8 +91,8 @@ use Pimcore\Tool;
 class ToolboxContextResolver implements ContextResolverInterface
 {
     public function __construct(
-        protected RequestStack $requestStack,
         protected SiteResolver $siteResolver,
+        protected RequestHelper $requestHelper,
         protected EditmodeResolver $editModeResolver,
         protected DocumentResolver $documentResolver
     ) {
@@ -100,32 +100,32 @@ class ToolboxContextResolver implements ContextResolverInterface
 
     public function getCurrentContextIdentifier(): ?string
     {
-        $request = $this->requestStack->getMainRequest();
+        if (!$this->requestHelper->hasMainRequest()) {
+            return null;
+        }
 
-        $site = null;
+        $request = $this->requestHelper->getMainRequest();
 
         //if request is coming from a wysiwyg configuration request (/admin/*.js)
         if ($request->query->has('tb_document_request_id')) {
+        
             try {
                 $currentDocument = Document::getById($request->query->get('tb_document_request_id'));
             } catch (\Exception $e) {
                 $currentDocument = null;
             }
 
-            if ($currentDocument instanceof Document) {
-                $site = Tool\Frontend::getSiteForDocument($currentDocument);
-            }
+            $site = $currentDocument instanceof Document ? Tool\Frontend::getSiteForDocument($currentDocument) : null;
+              
+        } elseif (
+            $this->editModeResolver->isEditmode($request) || 
+            $this->requestHelper->isFrontendRequestByAdmin($request)
+        ) {
+            // in backend, we don't have any site request, we need to fetch it via document
+            $currentDocument = $this->documentResolver->getDocument();
+            $site = Tool\Frontend::getSiteForDocument($currentDocument);
         } else {
-            //if request is not in edit mode we can determinate site by site resolver
-            if (!$this->editModeResolver->isEditmode($request)) {
-                if ($this->siteResolver->isSiteRequest($request)) {
-                    $site = $this->siteResolver->getSite($request);
-                }
-                // in backend, we don't have any site request, we need to fetch it via document
-            } else {
-                $currentDocument = $this->documentResolver->getDocument();
-                $site = Tool\Frontend::getSiteForDocument($currentDocument);
-            }
+            $site = $this->siteResolver->isSiteRequest($request) ? $this->siteResolver->getSite($request) : null;
         }
 
         if (!$site instanceof Site) {

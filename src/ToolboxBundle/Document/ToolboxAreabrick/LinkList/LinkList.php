@@ -3,8 +3,9 @@
 namespace ToolboxBundle\Document\ToolboxAreabrick\LinkList;
 
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
 
-class LinkList extends AbstractAreabrick
+class LinkList extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
     public function getTemplateDirectoryName(): string
     {

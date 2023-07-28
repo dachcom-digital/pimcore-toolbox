@@ -7,25 +7,45 @@ use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 
-class Gallery extends AbstractAreabrick
+class Gallery extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
     public function action(Info $info): ?Response
     {
-        parent::action($info);
+        $this->buildInfoParameters($info);
 
+        return parent::action($info);
+    }
+
+    public function headlessAction(Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->buildInfoParameters($info, $headlessResponse);
+
+        parent::headlessAction($info, $headlessResponse);
+    }
+
+    protected function buildInfoParameters(Info $info, ?HeadlessResponse $headlessResponse = null): void
+    {
         $infoParams = $info->getParams();
         $id = $infoParams['toolboxGalleryId'] ?? str_replace('.', '', uniqid('gallery-', true));
 
         /** @var Relations $imagesField */
         $imagesField = $this->getDocumentEditable($info->getDocument(), 'relations', 'images');
 
-        $info->setParams(array_merge($info->getParams(), [
+        $brickParams = [
             'galleryId' => $id,
             'images'    => $this->getAssetArray($imagesField->getElements())
-        ]));
+        ];
 
-        return null;
+        if ($headlessResponse instanceof HeadlessResponse) {
+            $headlessResponse->setAdditionalConfigData($brickParams);
+
+            return;
+        }
+
+        $info->setParams(array_merge($info->getParams(), $brickParams));
     }
 
     public function getName(): string
@@ -38,7 +58,7 @@ class Gallery extends AbstractAreabrick
         return 'Toolbox Gallery';
     }
 
-    public function getAssetArray(array $data): array
+    protected function getAssetArray(array $data): array
     {
         if (empty($data)) {
             return [];

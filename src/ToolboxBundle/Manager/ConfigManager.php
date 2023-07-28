@@ -63,6 +63,13 @@ class ConfigManager implements ConfigManagerInterface
         return $this->contextSettings[$this->currentContextId];
     }
 
+    public function getHeadlessDocumentConfig(string $headlessDocumentName): array
+    {
+        $this->ensureCoreConfig();
+
+        return $this->config['theme']['headless_documents'][$headlessDocumentName] ?? [];
+    }
+
     public function areaIsEnabled(string $areaName): bool
     {
         $this->ensureCoreConfig();

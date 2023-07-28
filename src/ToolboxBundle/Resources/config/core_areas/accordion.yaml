@@ -31,6 +31,16 @@ toolbox:
                     type: additionalClasses
                     config:
                         store: ~
+            inline_config_elements:
+                ac_panel:
+                    type: block
+                    children:
+                        ac_name:
+                            type: input
+                            title: 'Name'
+                        ac_data:
+                            type: areablock
+                            title: 'Content'
 
     areablock_restriction:
         accordion:

@@ -30,3 +30,11 @@ toolbox:
                     dailymotion:
                         active: false
                         allow_lightbox: true
+
+            inline_config_elements:
+                video:
+                    type: vhs
+                    config:
+                        height: 250
+                        disableProgressReload: true
+

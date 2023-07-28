@@ -5,23 +5,38 @@ namespace ToolboxBundle\Document\ToolboxAreabrick\GoogleMap;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 
-class GoogleMap extends AbstractAreabrick
+class GoogleMap extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
-    protected string $googleMapsHostUrl;
-
-    public function __construct(string $googleMapsHostUrl = '')
+    public function __construct(protected string $googleMapsHostUrl = '')
     {
-        $this->googleMapsHostUrl = $googleMapsHostUrl;
     }
 
     public function action(Info $info): ?Response
     {
-        parent::action($info);
+        $this->buildInfoParameters($info);
+
+        return parent::action($info);
+    }
+
+    public function headlessAction(Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->buildInfoParameters($info, $headlessResponse);
+
+        parent::headlessAction($info, $headlessResponse);
+    }
+
+    protected function buildInfoParameters(Info $info, ?HeadlessResponse $headlessResponse = null): void
+    {
+        if ($headlessResponse instanceof HeadlessResponse) {
+            $headlessResponse->addAdditionalConfigData('googleMapsHostUrl', $this->googleMapsHostUrl);
+
+            return;
+        }
 
         $info->setParam('googleMapsHostUrl', $this->googleMapsHostUrl);
-
-        return null;
     }
 
     public function getTemplateDirectoryName(): string

@@ -5,7 +5,6 @@ namespace ToolboxBundle\Model\Document\Editable;
 use Pimcore\Model\Document;
 use Pimcore\Tool\Serialize;
 use ToolboxBundle\Manager\ConfigManager;
-use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class GoogleMap extends Document\Editable implements Document\Editable\EditmodeDataInterface
 {

@@ -1,6 +1,10 @@
-{% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}
-<div class="toolbox-element toolbox-snippet">
-    {{ wrap_macro.createWrapHead(elementThemeConfig) }}
-    {{ pimcore_snippet('snippet') }}
-    {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
-</div>
+{% if isHeadless %}
+    {{ editmode ? inlineConfigElements|raw : '' }}
+{% else %}
+    {% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}
+    <div class="toolbox-element toolbox-snippet">
+        {{ wrap_macro.createWrapHead(elementThemeConfig) }}
+        {{ pimcore_snippet('snippet') }}
+        {{ wrap_macro.createWrapFoot(elementThemeConfig) }}
+    </div>
+{% endif %}

@@ -9,8 +9,10 @@ use Pimcore\Model\Document\Editable\Relations;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Connector\BundleConnector;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 
-class Download extends AbstractAreabrick
+class Download extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
     public function __construct(protected BundleConnector $bundleConnector)
     {
@@ -18,8 +20,20 @@ class Download extends AbstractAreabrick
 
     public function action(Info $info): ?Response
     {
-        parent::action($info);
+        $this->buildInfoParameters($info);
 
+        return parent::action($info);
+    }
+
+    public function headlessAction(Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->buildInfoParameters($info, $headlessResponse);
+
+        parent::headlessAction($info, $headlessResponse);
+    }
+
+    protected function buildInfoParameters(Info $info, ?HeadlessResponse $headlessResponse = null): void
+    {
         /** @var Relations $downloadField */
         $downloadField = $this->getDocumentEditable($info->getDocument(), 'relations', 'downloads');
 
@@ -35,9 +49,13 @@ class Download extends AbstractAreabrick
             }
         }
 
-        $info->setParam('downloads', $assets);
+        if ($headlessResponse instanceof HeadlessResponse) {
+            $headlessResponse->addAdditionalConfigData('downloads', $assets);
 
-        return null;
+            return;
+        }
+
+        $info->setParam('downloads', $assets);
     }
 
     protected function getByFile(Asset $node): array

@@ -1,0 +1,11 @@
+<div class="inline-config-node">
+    {% if item.label is not empty %}
+        <span class="inline-config-label">{{ item.label }}</span>
+    {% endif %}
+    {% if editable is not null %}
+        {{ editable|raw }}
+    {% endif %}
+    {% if item.description is not empty %}
+        <span class="inline-config-description">{{ item.description }}</span>
+    {% endif %}
+</div>

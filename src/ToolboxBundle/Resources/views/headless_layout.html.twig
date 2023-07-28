@@ -1,0 +1,13 @@
+{% block headless_document %}
+    <div class="toolbox-headless" data-headless-document-name="{{ headless_document_name }}">
+        {% block headless_document_content %}
+            {% for editable_name, editable_config in editables %}
+                {% if editable_config.0 == 'areablock' %}
+                    {{ pimcore_areablock(editable_name, editable_config.1) }}
+                {% elseif editable_config.0 == 'area' %}
+                    {{ pimcore_area(editable_name, editable_config.1) }}
+                {% endif %}
+            {% endfor %}
+        {% endblock headless_document_content %}
+    </div>
+{% endblock headless_document %}

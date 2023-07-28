@@ -5,85 +5,66 @@ namespace ToolboxBundle\Document\Areabrick;
 use Pimcore\Extension\Document\Areabrick\AbstractAreabrick as PimcoreAbstractAreabrick;
 use Pimcore\Model\Document;
 use Symfony\Component\HttpFoundation\Response;
+use ToolboxBundle\Builder\InlineConfigBuilderInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
 use ToolboxBundle\Manager\ConfigManagerInterface;
-use ToolboxBundle\Manager\LayoutManager;
+use ToolboxBundle\Manager\LayoutManagerInterface;
 
 abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 {
     public const AREABRICK_TYPE_INTERNAL = 'internal';
     public const AREABRICK_TYPE_EXTERNAL = 'external';
+
     protected ConfigManagerInterface $configManager;
-    protected LayoutManager $layoutManager;
+    protected LayoutManagerInterface $layoutManager;
+    protected InlineConfigBuilderInterface $inlineConfigBuilder;
+
     protected string $areaBrickType = 'internal';
-
-    public function setAreaBrickType(string $type = self::AREABRICK_TYPE_INTERNAL): void
-    {
-        $this->areaBrickType = $type;
-    }
-
-    public function getAreaBrickType(): string
-    {
-        return $this->areaBrickType;
-    }
-
-    public function setConfigManager(ConfigManagerInterface $configManager): void
-    {
-        $this->configManager = $configManager;
-    }
-
-    public function getConfigManager(): ConfigManagerInterface
-    {
-        return $this->configManager;
-    }
-
-    public function setLayoutManager(LayoutManager $layoutManager): void
-    {
-        $this->layoutManager = $layoutManager;
-    }
+    protected ?array $areaConfig = null;
+    protected ?array $areaThemeConfig = null;
+    protected ?array $areaThemeOptions = null;
 
     public function action(Document\Editable\Area\Info $info): ?Response
     {
-        $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
+        $info->setParams(
+            array_merge(
+                $info->getParams(),
+                [
+                    'areaId'                => $this->getId(),
+                    'areaTemplateDirectory' => $this->getTemplateDirectoryName(),
+                    'additionalClassesData' => $this->configureAdditionalClasses($info),
+                    'elementThemeConfig'    => $this->getAreaThemeConfig(),
+                ]
+            )
+        );
 
-        $info->setParams(array_merge($info->getParams(), [
-            'additionalClassesData' => $this->configureAdditionalClasses($info, $configNode),
-            'elementThemeConfig'    => $this->layoutManager->getAreaThemeConfig($this->getId()),
-            'areaId'                => $this->getId(),
-            'areaTemplateDirectory' => $this->getTemplateDirectoryName(),
-        ]));
+        $this->checkInlineConfigElements($info);
 
         return null;
     }
 
-    private function configureAdditionalClasses(Document\Editable\Area\Info $info, array $configNode): array
+    public function headlessAction(Document\Editable\Area\Info $info, HeadlessResponse $headlessResponse): void
     {
-        $classesArray = [];
+        $configNode = $this->getAreaConfig();
+        $themeOptions = $this->getAreaThemeOptions();
 
-        if (!isset($configNode['config_elements'])) {
-            return $classesArray;
+        $headlessResponse->setBrickConfiguration([
+            'areaId'                => $this->getId(),
+            'additionalClassesData' => $this->configureAdditionalClasses($info),
+        ]);
+
+        if ($headlessResponse->loadInlineConfigElementData() === false) {
+            return;
         }
 
-        foreach ($configNode['config_elements'] as $name => $configElement) {
-            if (!isset($configElement['type'])) {
-                continue;
-            }
-
-            if ($configElement['type'] === 'additionalClasses') {
-                $addClassField = $this->getDocumentEditable($info->getDocument(), 'select', 'add_classes');
-                if ($addClassField instanceof Document\Editable\Select && !empty($addClassField->getValue())) {
-                    $classesArray[] = (string) $addClassField->getValue();
-                }
-            } elseif ($configElement['type'] === 'additionalClassesChained') {
-                $chainedElementName = explode('_', $name);
-                $chainedIncrementor = end($chainedElementName);
-                $addChainedClassField = $this->getDocumentEditable($info->getDocument(), 'select', 'add_cclasses_' . $chainedIncrementor);
-                if ($addChainedClassField instanceof Document\Editable\Select && !empty($addChainedClassField->getValue())) {
-                    $classesArray[] = (string) $addChainedClassField->getValue();
-                }
-            }
-        }
-
-        return $classesArray;
+        $headlessResponse->setInlineConfigElementData(
+            $this->inlineConfigBuilder->buildInlineConfigurationData(
+                $info,
+                $this->getId(),
+                $configNode,
+                $themeOptions
+            )
+        );
     }
 
     public function getTemplateDirectoryName(): string
@@ -133,4 +114,114 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
     {
         return '';
     }
+
+    public function isHeadlessLayoutAware(): bool
+    {
+        $themeConfig = $this->getAreaThemeConfig();
+
+        return $themeConfig['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
+    }
+
+    private function checkInlineConfigElements(Document\Editable\Area\Info $info): void
+    {
+        $areaConfig = $this->getAreaConfig();
+        $areaThemeOptions = $this->getAreaThemeOptions();
+
+        if ($this->isHeadlessLayoutAware() === false) {
+            return;
+        }
+
+        if ($info->getEditable()?->getEditmode() === false) {
+            return;
+        }
+
+        $info->setParam(
+            'inlineConfigElements',
+            $this->inlineConfigBuilder->buildInlineConfiguration(
+                $info,
+                $this->getId(),
+                $areaConfig,
+                $areaThemeOptions,
+                true
+            )
+        );
+    }
+
+    private function configureAdditionalClasses(Document\Editable\Area\Info $info): array
+    {
+        $classesArray = [];
+        $areaConfig = $this->getAreaConfig();
+
+        if (!isset($areaConfig['config_elements'])) {
+            return $classesArray;
+        }
+
+        foreach ($areaConfig['config_elements'] as $name => $configElement) {
+            if (!isset($configElement['type'])) {
+                continue;
+            }
+
+            if ($configElement['type'] === 'additionalClasses') {
+                $addClassField = $this->getDocumentEditable($info->getDocument(), 'select', 'add_classes');
+                if ($addClassField instanceof Document\Editable\Select && !empty($addClassField->getValue())) {
+                    $classesArray[] = (string) $addClassField->getValue();
+                }
+            } elseif ($configElement['type'] === 'additionalClassesChained') {
+                $chainedElementName = explode('_', $name);
+                $chainedIncrementor = end($chainedElementName);
+                $addChainedClassField = $this->getDocumentEditable($info->getDocument(), 'select', 'add_cclasses_' . $chainedIncrementor);
+                if ($addChainedClassField instanceof Document\Editable\Select && !empty($addChainedClassField->getValue())) {
+                    $classesArray[] = (string) $addChainedClassField->getValue();
+                }
+            }
+        }
+
+        return $classesArray;
+    }
+
+    protected function getAreaConfig(): array
+    {
+        return $this->areaConfig ?? ($this->areaConfig = $this->getConfigManager()->getAreaConfig($this->getId()));
+    }
+
+    protected function getAreaThemeConfig(): array
+    {
+        return $this->areaThemeConfig ?? ($this->areaThemeConfig = $this->layoutManager->getAreaThemeConfig($this->getId()));
+    }
+
+    protected function getAreaThemeOptions(): array
+    {
+        return $this->areaThemeOptions ?? ($this->areaThemeOptions = $this->getConfigManager()->getConfig('theme'));
+    }
+
+    public function setAreaBrickType(string $type = self::AREABRICK_TYPE_INTERNAL): void
+    {
+        $this->areaBrickType = $type;
+    }
+
+    public function getAreaBrickType(): string
+    {
+        return $this->areaBrickType;
+    }
+
+    public function setConfigManager(ConfigManagerInterface $configManager): void
+    {
+        $this->configManager = $configManager;
+    }
+
+    public function getConfigManager(): ConfigManagerInterface
+    {
+        return $this->configManager;
+    }
+
+    public function setLayoutManager(LayoutManagerInterface $layoutManager): void
+    {
+        $this->layoutManager = $layoutManager;
+    }
+
+    public function setInlineConfigBuilder(InlineConfigBuilderInterface $inlineConfigBuilder): void
+    {
+        $this->inlineConfigBuilder = $inlineConfigBuilder;
+    }
+
 }

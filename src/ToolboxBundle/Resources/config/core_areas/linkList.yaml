@@ -12,3 +12,13 @@ toolbox:
                     type: additionalClasses
                     config:
                         store: ~
+
+            inline_config_elements:
+                linklistblock:
+                    type: block
+                    children:
+                        linklist:
+                            type: link
+                            title: 'Link'
+                            config:
+                                class: 'list-link'

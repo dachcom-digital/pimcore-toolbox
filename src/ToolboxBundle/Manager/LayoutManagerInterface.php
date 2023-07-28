@@ -2,11 +2,12 @@
 
 namespace ToolboxBundle\Manager;
 
-use Symfony\Component\Templating\EngineInterface;
-
 interface LayoutManagerInterface
 {
-    public function setTemplating(EngineInterface $templating): void;
+    public const TOOLBOX_LAYOUT_BOOTSTRAP3 = 'Bootstrap3';
+    public const TOOLBOX_LAYOUT_BOOTSTRAP4 = 'Bootstrap4';
+    public const TOOLBOX_LAYOUT_UIKIT3 = 'UIkit3';
+    public const TOOLBOX_LAYOUT_HEADLESS = 'Headless';
 
     /**
      * @throws \Exception

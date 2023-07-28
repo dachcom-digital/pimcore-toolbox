@@ -7,7 +7,7 @@ This is the legacy setup for bootstrap 3.
 
 toolbox:
     theme:
-        layout: 'Bootstrap3'
+        layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP3
         calculators:
             column_calculator: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
             slide_calculator: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator

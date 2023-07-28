@@ -43,13 +43,13 @@ class ColumnCalculator implements ColumnCalculatorInterface
         $t = explode('_', $value);
 
         //remove "column" in string.
-        $_columns = array_splice($t, 1);
+        $rawColumns = array_splice($t, 1);
 
         $bootstrapOffsetConfig = [];
         $gridOffsetConfig = [];
 
         $columnCounter = 0;
-        foreach ($_columns as $i => $columnClass) {
+        foreach ($rawColumns as $i => $columnClass) {
             $gridConfig = $customColumnConfiguration ? [] : [
                 'xs' => $gridSize,
                 'sm' => (int) $columnClass
@@ -88,7 +88,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
                     $customBreakPoints = $columnConfiguration[$value]['breakpoints'];
                     foreach ($customBreakPoints as $customBreakPointName => $customBreakPointData) {
                         $customBreakPointDataColumns = explode('_', $customBreakPointData);
-                        $customColAmount = isset($customBreakPointDataColumns[$i]) ? $customBreakPointDataColumns[$i] : $gridSize;
+                        $customColAmount = $customBreakPointDataColumns[$i] ?? $gridSize;
                          if (str_starts_with($customColAmount, 'o')) {
                             $customOffset = (int) substr($customColAmount, 1);
                             $bpPrefix = $customBreakPointName === 'xs' ? '' : $customBreakPointName . '-';
@@ -104,7 +104,7 @@ class ColumnCalculator implements ColumnCalculatorInterface
 
             $columnName = $strictColumnCounter ? 'column_' . $i : 'column_' . $columnCounter;
             $columns[] = [
-                'columnClass' => implode(' ', $bootstrapClassConfig) . ' ' . join(' ', $bootstrapOffsetConfig),
+                'columnClass' => implode(' ', $bootstrapClassConfig) . ' ' . implode(' ', $bootstrapOffsetConfig),
                 'columnData'  => [
                     'grid'       => $gridConfig,
                     'gridOffset' => $gridOffsetConfig

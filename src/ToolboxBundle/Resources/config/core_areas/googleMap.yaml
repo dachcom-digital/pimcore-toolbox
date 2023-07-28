@@ -50,3 +50,8 @@ toolbox:
                 marker_icon: false
                 map_api_key: null
                 simple_api_key: null
+
+            inline_config_elements:
+                googlemap:
+                    type: googlemap
+                    config:

@@ -6,7 +6,7 @@
 
 toolbox:
     theme:
-        layout: 'UIkit3'
+        layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_UIKIT3
         calculators:
             column_calculator: ToolboxBundle\Calculator\UIkit3\ColumnCalculator
             slide_calculator: ToolboxBundle\Calculator\UIkit3\SlideColumnCalculator

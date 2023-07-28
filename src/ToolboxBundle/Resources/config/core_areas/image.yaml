@@ -24,3 +24,9 @@ toolbox:
                     type: additionalClasses
                     config:
                         store: ~
+            inline_config_elements:
+                image:
+                    type: image
+                    title: 'Image'
+                    # toolbox_get_image_thumbnail('image_element')
+                    # imgAttributes: {'class' : class (img-fluid)

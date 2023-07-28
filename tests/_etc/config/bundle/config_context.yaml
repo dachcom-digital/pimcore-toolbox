@@ -72,7 +72,7 @@ toolbox:
             settings:
                 merge_with_root: false
             theme:
-                layout: 'Bootstrap4'
+                layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP4
                 calculators:
                     column_calculator: ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator
                     slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator

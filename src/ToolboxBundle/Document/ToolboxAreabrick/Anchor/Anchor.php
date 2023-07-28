@@ -2,20 +2,11 @@
 
 namespace ToolboxBundle\Document\ToolboxAreabrick\Anchor;
 
-use Pimcore\Model\Document\Editable\Area\Info;
-use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
 
-class Anchor extends AbstractAreabrick
+class Anchor extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function action(Info $info): ?Response
-    {
-        return parent::action($info);
-    }
-
     public function getName(): string
     {
         return 'Anchor';

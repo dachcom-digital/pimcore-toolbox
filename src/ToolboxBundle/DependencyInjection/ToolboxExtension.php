@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\Resolver\ContextResolver;
 
 class ToolboxExtension extends Extension implements PrependExtensionInterface
@@ -15,6 +16,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container): void
     {
         $hasTheme = false;
+        $headlessAware = false;
 
         $wysiwygEditor = null;
         if ($container->hasExtension('pimcore_tinymce') === true) {
@@ -30,6 +32,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
             if (!empty($toolboxConfigNode['theme']['layout'])) {
                 $hasTheme = true;
+                $headlessAware = $toolboxConfigNode['theme']['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
             }
 
             if (($toolboxConfigNode['enabled_core_areas'] ?? null) === null) {
@@ -53,6 +56,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         $container->setParameter('toolbox.wysiwyg_editor', $wysiwygEditor);
+        $container->setParameter('toolbox.headless_aware', $headlessAware);
     }
 
     public function load(array $configs, ContainerBuilder $container): void

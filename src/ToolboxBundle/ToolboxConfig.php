@@ -26,38 +26,4 @@ final class ToolboxConfig
         'teaser',
         'video'
     ];
-
-    public const PIMCORE_EDITABLE_TYPES = [
-        'areablock',
-        'area',
-        'block',
-        'checkbox',
-        'date',
-        'href',
-        'image',
-        'input',
-        'link',
-        'multihref',
-        'multiselect',
-        'numeric',
-        'embed',
-        'pdf',
-        'relation',
-        'relations',
-        'renderlet',
-        'select',
-        'snippet',
-        'table',
-        'textarea',
-        'video',
-        'wysiwyg'
-    ];
-
-    public const TOOLBOX_EDITABLE_TYPES = [
-        'additionalClasses',
-        'additionalClassesChained',
-        'parallaximage',
-        'googlemap',
-        'vhs',
-    ];
 }

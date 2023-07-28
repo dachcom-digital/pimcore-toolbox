@@ -3,13 +3,12 @@
 namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\EnumNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\BooleanNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator;
-use ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator;
 use ToolboxBundle\Resolver\ContextResolver;
 use ToolboxBundle\ToolboxConfig;
 
@@ -232,6 +231,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder
             ->children()
                 ->scalarNode('layout')->cannotBeEmpty()->end()
+                ->append($this->buildHeadlessDocumentsSection())
                 ->scalarNode('default_layout')
                     ->defaultValue(false)
                 ->end()
@@ -316,7 +316,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildAreasSection(bool $internalTypes = false): ArrayNodeDefinition
+    protected function buildAreasSection(): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition('areas');
 
@@ -352,10 +352,33 @@ class Configuration implements ConfigurationInterface
                         @trigger_error('Unknown configured area tabs in config_elements. No tabs have been defined', E_USER_ERROR);
                     })
                 ->end()
+                ->beforeNormalization()
+                    ->ifTrue(function ($v) {
+                        foreach($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
+                            if($inlineConfigElement === '<') {
+                                return true;
+                            }
+                        }
+                        return false;
+                    })
+                    ->then(function ($v) {
+
+                        foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
+                            if ($inlineConfigElement === '<') {
+                                $v['inline_config_elements'][$inlineConfigId] = $v['config_elements'][$inlineConfigId];
+                                unset($v['config_elements'][$inlineConfigId]);
+                            }
+                        }
+
+                        return $v;
+
+                    })
+                ->end()
                 ->children()
                     ->booleanNode('enabled')->defaultTrue()->end()
                     ->append($this->buildConfigElementsTabSection())
-                    ->append($this->buildConfigElementsSection($internalTypes))
+                    ->append($this->buildConfigElementsSection('config_elements'))
+                    ->append($this->buildConfigElementsSection('inline_config_elements'))
                     ->variableNode('config_parameter')->end()
                 ->end()
             ->end()
@@ -379,23 +402,28 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildConfigElementsSection(bool $internalTypes = false): ArrayNodeDefinition
+    protected function buildConfigElementsSection(string $configType = 'config_elements', ?string $parent = null): NodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition('config_elements');
-
-        if ($internalTypes === true) {
-            $allowedTypes = array_merge(ToolboxConfig::PIMCORE_EDITABLE_TYPES, ToolboxConfig::TOOLBOX_EDITABLE_TYPES);
-
-            $typeNode = new EnumNodeDefinition('type');
-            $typeNode->isRequired()->values($allowedTypes)->end();
-        } else {
-            $typeNode = new ScalarNodeDefinition('type');
-            $typeNode->isRequired()->end();
+        if ($parent === 'config_elements') {
+            return (new BooleanNodeDefinition($configType))->defaultFalse()->cannotBeOverwritten();
         }
+
+        $treeBuilder = new ArrayNodeDefinition($configType);
+
+        $typeNode = new ScalarNodeDefinition('type');
+        $typeNode->isRequired()->end();
 
         $treeBuilder
             ->useAttributeAsKey('name')
             ->prototype('array')
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return $v['type'] !== 'block' && is_array($v['children']) && count($v['children']) > 0;
+                })
+                ->then(function($v) {
+                    @trigger_error(sprintf('Type "%s" cannot have child elements', $v['type']), E_USER_ERROR);
+                })
+            ->end()
             ->addDefaultsIfNotSet()
                 ->children()
                     ->append($typeNode)
@@ -403,12 +431,44 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('description')->defaultValue(null)->end()
                     ->scalarNode('tab')->defaultValue(null)->end()
                     ->variableNode('config')->defaultValue([])->end()
+                    ->append(
+                        $parent !== null
+                            ? (new BooleanNodeDefinition($configType))->defaultFalse()->cannotBeOverwritten()
+                            : $this->buildConfigElementsSection('children', $configType)
+                    )
                 ->end()
                 ->validate()
                     ->ifTrue(function ($v) {
                         return $v['enabled'] === false;
                     })
                     ->thenUnset()
+                ->end()
+                ->canBeUnset()
+                ->canBeDisabled()
+                ->treatnullLike(['enabled' => false])
+            ->end();
+
+        return $treeBuilder;
+    }
+
+    protected function buildHeadlessDocumentsSection(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('headless_documents');
+
+        $treeBuilder
+            ->prototype('array')
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('name')->defaultValue(null)->end()
+                    ->arrayNode('areas')
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                            ->children()
+                                ->enumNode('type')->values(['areablock', 'area'])->isRequired()->end()
+                                ->scalarNode('areaType')->defaultNull()->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
                 ->canBeUnset()
                 ->canBeDisabled()
