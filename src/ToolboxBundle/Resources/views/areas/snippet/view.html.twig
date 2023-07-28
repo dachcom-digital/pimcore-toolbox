@@ -1,4 +1,4 @@
-{% if isHeadless %}
+{% if isHeadless is defined and isHeadless == true %}
     {{ editmode ? inlineConfigElements|raw : '' }}
 {% else %}
     {% import '@Toolbox/macro/wrap.html.twig' as wrap_macro %}

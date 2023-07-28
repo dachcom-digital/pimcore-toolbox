@@ -3,6 +3,7 @@
 namespace ToolboxBundle\Builder;
 
 use Pimcore\Extension\Document\Areabrick\Exception\ConfigurationException;
+use Pimcore\Model\Document\Editable;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Block;
 use Pimcore\Model\Document\PageSnippet;
@@ -160,7 +161,7 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
             $options['default'] = 1;
         }
 
-        /** @var Block $sectionBlock */
+        /** @var Block $blockEditable */
         $blockEditable = $this->editableRenderer->getEditable($document, 'block', $inputName, $options, $editMode);
 
         foreach ($blockEditable->getIterator() as $blockIndex) {
@@ -207,7 +208,7 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
                     $simpleHeadlessResponse,
                     $editable->getType(),
                     $editable->getType(),
-                    $editable->getName(),
+                    $editable instanceof Editable ? $editable->getName() : '',
                     true
                 );
 

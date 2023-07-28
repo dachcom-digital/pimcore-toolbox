@@ -20,12 +20,10 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
 
     public function onEditableResponse(GenericEvent $event): void
     {
+        $name = $event->getArgument('name');
         $brickId = $event->getArgument('brickId');
         $indexes = $event->getArgument('indexes');
         $blocks = $event->getArgument('blocks');
-
-        $name = $event->getArgument('name');
-
         $isSimpleEditable = $event->getArgument('isSimpleEditable');
 
         $hierarchicalName = $isSimpleEditable
@@ -60,6 +58,7 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
             $currentArray = &$nestedArray;
 
             foreach ($keys as $nestedKey) {
+                /** @phpstan-ignore-next-line */
                 if (!isset($currentArray['elements'][$nestedKey])) {
                     $currentArray['elements'][$nestedKey] = [];
                 }
@@ -71,6 +70,7 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
             $currentArray['data'] = $value[1];
         }
 
+        /** @phpstan-ignore-next-line */
         return $nestedArray['elements'] ?? [];
     }
 

@@ -108,7 +108,7 @@ abstract class AbstractAreaTest extends BundleTestCase
         $configNode = $configManager->getAreaConfig($info->getId());
         $themeOptions = $configManager->getConfig('theme');
 
-        return $builder->buildDialogBoxConfiguration($info, $info->getId(), $configNode, $themeOptions)->getItems();
+        return $builder->buildConfiguration($info, $info->getId(), $configNode, $themeOptions)->getItems();
     }
 
     /**
