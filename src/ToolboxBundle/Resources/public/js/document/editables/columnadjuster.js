@@ -21,6 +21,9 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         this.toolbar = null;
         this.gridPreview = {};
         this.config = this.parseConfig(config);
+
+        this.editWindow = null;
+        this.editWindowInline = false;
         this.editWindowState = {w: 0, h: 0};
 
         this.combos = {};
@@ -116,6 +119,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         this.gridForm = new Ext.FormPanel({
             itemId: 'form',
             scrollable: true,
+            autoSize: true,
             hidden: true,
             layout: 'fit',
             style: 'margin: 10px 0;'
@@ -123,7 +127,6 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
         this.toolbar.render(this.buttonHolder);
         this.gridForm.render(this.buttonHolder);
-
     },
 
     expandEditor: function () {
@@ -137,7 +140,13 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         }
 
         windowSelector = Ext.get(this.id).up('.x-window');
-        if (windowSelector.length === 0) {
+
+        if (windowSelector === null) {
+            windowSelector = Ext.get(this.id).up('.toolbox-inline-editable-panel');
+            this.editWindowInline = true;
+        }
+
+        if (windowSelector === null) {
             return;
         }
 
@@ -146,42 +155,41 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
             return;
         }
 
+        this.editWindow = editWindow;
         this.gridEditorActive = true;
         this.gridEditButton.setText(t('close_column_configuration'));
         this.statusButton.setDisabled(true);
         this.gridSelector.setDisabled(true);
 
-        this.editWindowState.w = editWindow.getWidth();
-        this.editWindowState.h = editWindow.getHeight();
+        this.editWindowState.w = this.editWindow.getWidth();
+        this.editWindowState.h = this.editWindow.getHeight();
 
-        cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
+        cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', this.editWindow);
         if (cancelButton.length === 1) {
             cancelButton[0].setDisabled(true);
         }
 
-        editWindow.addCls('grid-adjuster-active');
-        editWindow.setWidth(900);
-        editWindow.setHeight(600).center();
+        this.editWindow.addCls('grid-adjuster-active');
+
+        if (this.editWindowInline === false) {
+            this.editWindow.setWidth(900);
+            this.editWindow.setHeight(600).center();
+        }
 
         this.populateGridForm();
         this.toolbar.updateLayout();
         this.gridForm.setHidden(false);
-
     },
 
     closeEditor: function () {
+
+        var cancelButton;
 
         if (this.gridEditorActive === false) {
             return;
         }
 
-        var windowSelector = Ext.get(this.id).up('.x-window');
-        if (windowSelector.length === 0) {
-            return;
-        }
-
-        var editWindow = Ext.getCmp(windowSelector.id);
-        if (!editWindow) {
+        if (!this.editWindow) {
             return;
         }
 
@@ -190,20 +198,29 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
         this.statusButton.setDisabled(false);
         this.gridSelector.setDisabled(false);
 
-        var cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', editWindow);
+        cancelButton = Ext.ComponentQuery.query('button[iconCls=pimcore_icon_cancel]', this.editWindow);
         if (cancelButton.length === 1) {
             cancelButton[0].setDisabled(false);
         }
 
-        editWindow.removeCls('grid-adjuster-active');
-        editWindow.setWidth(this.editWindowState.w);
-        editWindow.setHeight(this.editWindowState.h).center();
+        if (this.editWindowInline === false) {
+            this.editWindow.setWidth(this.editWindowState.w);
+            this.editWindow.setHeight(this.editWindowState.h).center();
+        }
+
+        this.editWindow.removeCls('grid-adjuster-active');
 
         this.gridForm.removeAll(true);
         this.gridForm.updateLayout();
         this.toolbar.updateLayout();
         this.gridForm.setHidden(true);
 
+        if (this.editWindowInline === true) {
+            this.editWindow.updateLayout();
+        }
+
+        this.editWindowInline = false;
+        this.editWindow = null;
     },
 
     populateGridForm: function () {
@@ -253,6 +270,10 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
                 Ext.Array.each(_.breakPoints, function (breakpoint, breakpointIndex) {
 
+                    var title,
+                        compositeField,
+                        gridLayoutForPreview;
+
                     //invalid grid configuration
                     if (!breakpoint.grid || breakpoint.grid.length === 0) {
                         validResponse = false;
@@ -270,7 +291,7 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                         return false;
                     }
 
-                    var title = breakpoint.name ? breakpoint.name : 'Breakpoint: ' + breakpoint.identifier,
+                    title = breakpoint.name ? breakpoint.name : 'Breakpoint: ' + breakpoint.identifier,
                         tab = new Ext.Panel({
                             title: title,
                             autoScroll: true,
@@ -278,13 +299,13 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                             border: false
                         });
 
-                    var compositeField = new Ext.form.FieldContainer({
+                    compositeField = new Ext.form.FieldContainer({
                         layout: 'hbox',
                         hideLabel: true,
                         style: 'padding:5px 10px;'
                     });
 
-                    var gridLayoutForPreview = [],
+                    gridLayoutForPreview = [],
                         isInherited = breakpoint.grid.filter(function (grid) {
                             return grid.value === null
                         }).length > 0;
@@ -293,7 +314,10 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                     _.combos[breakpoint.identifier] = [];
 
                     Ext.Array.each(breakpoint.grid, function (grid, gridIndex) {
-                        var storeData = [],
+
+                        var store,
+                            columnIndex = gridIndex + 1,
+                            storeData = [],
                             hasOffset = _.gridColumnHasOffset(gridIndex),
                             inherited = grid.value === null,
                             realValue = grid.value === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'value') : grid.value;
@@ -308,23 +332,24 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                             }
                         }
 
-                        var store = new Ext.data.ArrayStore({
+                        store = new Ext.data.ArrayStore({
                             fields: ['index', 'name'],
                             data: storeData
                         });
 
-                        var columnIndex = gridIndex + 1;
                         //if offset available in index, add element!
                         if (hasOffset) {
 
                             var offsetStoreData = [],
+                                combo,
+                                offsetCombo,
                                 realOffset = grid.offset === null ? _.findInheritedGridValue(breakpointIndex, gridIndex, 'offset') : grid.offset;
 
                             for (var oi = 0; oi < grid.amount; oi++) {
                                 offsetStoreData.push([oi, ((100 / grid.amount) * oi).toFixed(2) + '% (' + oi + ')'])
                             }
 
-                            var offsetCombo = new Ext.form.ComboBox({
+                            offsetCombo = new Ext.form.ComboBox({
                                 flex: 1,
                                 width: '120px',
                                 padding: '1px',
@@ -355,10 +380,9 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
 
                             _.combos[breakpoint.identifier].push(offsetCombo);
                             compositeField.add(offsetCombo);
-
                         }
 
-                        var combo = new Ext.form.ComboBox({
+                        combo = new Ext.form.ComboBox({
                             flex: 1,
                             width: '135px',
                             name: 'breakpoint_' + breakpoint.identifier + '_' + columnIndex,
@@ -463,6 +487,10 @@ pimcore.document.editables.columnadjuster = Class.create(pimcore.document.editab
                     tabPanel.setActiveTab(0);
                     _.toolbar.updateLayout();
                     _.gridForm.updateLayout();
+
+                    if (_.editWindowInline === true) {
+                        _.editWindow.updateLayout();
+                    }
                 }
 
 
