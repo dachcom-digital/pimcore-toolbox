@@ -11,6 +11,12 @@ class HeadlessController extends FrontendController
 {
     public function headlessDocumentAction(Request $request, HeadlessDocumentResolver $headlessDocumentResolver): Response
     {
-        return $headlessDocumentResolver->resolveDocument($request, $this->document, 'index');
+        $headlessDocumentName = $this->document->getProperty('headless_document');
+
+        if ($headlessDocumentName === null) {
+            $headlessDocumentName = 'index';
+        }
+
+        return $headlessDocumentResolver->resolveDocument($request, $this->document, $headlessDocumentName);
     }
 }

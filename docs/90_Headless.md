@@ -73,6 +73,8 @@ toolbox:
             slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator # or your custom headless calculator. slide columns aren't supported right now, so it doesn't matter which service you're using
 ```
 
+***
+
 ## Headless Documents
 It's possible to create simple headless documents:
 
@@ -97,7 +99,10 @@ toolbox:
                         type: areablock
 ```
 
-Add `ToolboxBundle\Controller\HeadlessController::headlessDocumentAction` as action to your document.
+- Add `ToolboxBundle\Controller\HeadlessController::headlessDocumentAction` as action to your document.
+- Add a text property to the document called `headless_document` and set `index` as value. You can create multiple documents that way.
+
+***
 
 ## Extend existing headless editables
 Just register an event listener to `ToolboxBundle::HEADLESS_EDITABLE_ACTION` which will provide you an `HeadlessEditableActionEvent` object 

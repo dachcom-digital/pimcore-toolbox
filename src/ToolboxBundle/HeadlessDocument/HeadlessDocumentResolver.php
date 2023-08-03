@@ -29,6 +29,15 @@ class HeadlessDocumentResolver
         $editMode = $this->editmodeResolver->isEditmode($request);
         $headlessDocumentConfig = $this->configManager->getHeadlessDocumentConfig($headlessDocumentName);
 
+        if (empty($headlessDocumentConfig)) {
+
+            $message = sprintf('Headless document definition "%s" not found', $headlessDocumentName);
+
+            return $editMode
+                ? new Response($message, 500)
+                : new JsonResponse(['message' => $message], 500);
+        }
+
         if ($editMode === true) {
             return $this->buildEditModeOutput($document, $headlessDocumentName, $headlessDocumentConfig['areas']);
         }

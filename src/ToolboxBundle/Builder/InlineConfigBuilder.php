@@ -29,7 +29,10 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
 
         foreach ($items as $item) {
             $configurationView[] = $this->templating->render(
-                '@Toolbox/admin/inline_config/editable.html.twig',
+                $this->templating->resolveTemplate([
+                    sprintf('@Toolbox/admin/inline_config/editable_%s.html.twig', $item['type']),
+                    '@Toolbox/admin/inline_config/editable.html.twig'
+                ]),
                 [
                     'item'     => $item,
                     'editable' => $this->buildEditable($info, $item, $editMode)

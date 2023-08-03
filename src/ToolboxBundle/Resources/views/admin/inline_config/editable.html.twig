@@ -1,4 +1,5 @@
-<div class="inline-config-node">
+{% set additinal_node_classes = config_node_classes|default('') %}
+<div class="inline-config-node {{ additinal_node_classes }}">
     {% if item.label is not empty %}
         <span class="inline-config-label"><i class="inline-config-icon"></i>{{ item.label }}</span>
     {% endif %}
