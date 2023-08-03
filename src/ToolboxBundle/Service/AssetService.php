@@ -18,6 +18,10 @@ class AssetService
     {
         $thumbnail = $image->getThumbnail($thumbnailName);
 
+        if ($thumbnail === '') {
+            $thumbnail = null;
+        }
+
         return $this->buildAssetData($image->getImage(), $thumbnail, $thumbnailOptions);
     }
 
@@ -28,8 +32,12 @@ class AssetService
         return $this->buildAssetData($asset, $thumbnail, $thumbnailOptions);
     }
 
-    private function buildAssetData(Asset $asset, Image\Thumbnail $thumbnail, array $options): array
+    private function buildAssetData(?Asset\Image $asset, ?Image\Thumbnail $thumbnail, array $options): array
     {
+        if(!$asset instanceof Asset\Image) {
+            return [];
+        }
+
         $title = $asset->getMetadata('title');
         $description = $asset->getMetadata('description');
         $copyright = $asset->getMetadata('copyright');
@@ -38,9 +46,9 @@ class AssetService
             'title'                 => $title,
             'description'           => $description,
             'copyright'             => $copyright,
-            'markup'                => $thumbnail->getHtml($options),
-            'mediaList'             => $this->parseThumbnailPictureList($thumbnail, $options),
-            'path'                  => $thumbnail->getFrontendPath(),
+            'markup'                => $thumbnail?->getHtml($options),
+            'mediaList'             => $thumbnail === null ? null : $this->parseThumbnailPictureList($thumbnail, $options),
+            'path'                  => $thumbnail?->getFrontendPath(),
             'lowQualityPlaceholder' => $this->parseLowQualityPlaceholder($asset),
         ];
     }
