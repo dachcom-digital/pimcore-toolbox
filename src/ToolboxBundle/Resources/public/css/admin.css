@@ -654,18 +654,16 @@ body > .single-teaser img {
 
 
 /*
-    Inline Editables
+    [TOOLBOX HEADLESS] Inline Editables
 */
 
-.toolbox-headless  .pimcore_area_buttons {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.toolbox-headless {
+    margin: 10px;
 }
 
-.toolbox-headless .pimcore_area_entry {
-    border: 1px dashed #d6d6d6;
-    padding: 5px;
-    border-radius: 3px;
+.toolbox-headless .pimcore_area_buttons {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .toolbox-headless .toolbox-inline-editable-panel {
@@ -710,29 +708,54 @@ body > .single-teaser img {
 }
 
 /*
-    Inline Editables [Config Node]
+    [TOOLBOX HEADLESS] Inline Editables - Config Node
 */
 
-.toolbox-headless {
-    margin: 10px;
-}
-
 .toolbox-headless .inline-config-area {
-    background: #efefef;
+    border: 1px dashed #d6d6d6;
     padding: 10px;
+    border-radius: 3px;
 }
 
 .toolbox-headless .inline-config-area .inline-config-node {
-    margin: 0;
+    margin: 0 0 10px 0;
 }
 
 .toolbox-headless .inline-config-area .inline-config-node:first-child .inline-config-label {
-    margin: 0;
+    margin: 0 0 5px 0;
 }
 
 .toolbox-headless .inline-config-area .inline-config-node .inline-config-label {
+    padding: 3px;
+    margin: 5px 0;
     display: block;
-    margin: 10px 0 0 0;
+    color: #645081;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node .inline-config-label .inline-config-icon {
+    box-sizing: border-box;
+    display: inline-block;
+    font-style: normal;
+    position: relative;
+    text-indent: -9999px;
+    vertical-align: middle;
+    font-size: 7px;
+    transform: scale(1);
+    margin: 0 10px 0 0;
+}
+
+.toolbox-headless .inline-config-area .inline-config-node .inline-config-label .inline-config-icon::before {
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    border: .1rem solid currentColor;
+    border-bottom: 0;
+    border-right: 0;
+    height: .65em;
+    width: .65em;
+    transform: translate(-75%, -50%) rotate(135deg);
 }
 
 .toolbox-headless .inline-config-area .inline-config-node .inline-config-description {

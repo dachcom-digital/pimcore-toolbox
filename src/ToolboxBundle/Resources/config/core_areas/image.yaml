@@ -27,6 +27,6 @@ toolbox:
             inline_config_elements:
                 image:
                     type: image
-                    title: 'Image'
-                    # toolbox_get_image_thumbnail('image_element')
-                    # imgAttributes: {'class' : class (img-fluid)
+                    property_normalizer: ToolboxBundle\Normalizer\ImageEditableNormalizer
+                    config:
+                        width: 300

@@ -1,0 +1,10 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    ToolboxBundle\Service\DownloadInfoService: ~
+    ToolboxBundle\Service\DataAttributeService: ~
+    ToolboxBundle\Service\AssetService: ~

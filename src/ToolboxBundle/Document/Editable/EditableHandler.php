@@ -34,21 +34,15 @@ class EditableHandler extends \Pimcore\Document\Editable\EditableHandler
 
         $request = $this->requestHelper->getCurrentRequest();
         $brickInfoRestoreValue = $request->attributes->get(self::ATTRIBUTE_AREABRICK_INFO);
-
         $request->attributes->set(self::ATTRIBUTE_AREABRICK_INFO, $info);
 
         $info->setRequest($request);
 
-        $headlessResponse = new HeadlessResponse('editable');
+        $headlessResponse = new HeadlessResponse(HeadlessResponse::TYPE_BRICK);
 
         $brick->headlessAction($info, $headlessResponse);
 
-        \Pimcore::getContainer()->get(EditableWorker::class)->dispatch(
-            $headlessResponse,
-            $brick->getId(),
-            $info->getType(),
-            $info->getEditable()->getRealName()
-        );
+        \Pimcore::getContainer()->get(EditableWorker::class)->processBrick($headlessResponse, $brick);
 
         if ($brickInfoRestoreValue === null) {
             $request->attributes->remove(self::ATTRIBUTE_AREABRICK_INFO);
@@ -57,6 +51,7 @@ class EditableHandler extends \Pimcore\Document\Editable\EditableHandler
         }
 
         // just return nothing
+
         return '';
     }
 

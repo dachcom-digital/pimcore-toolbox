@@ -6,39 +6,31 @@ namespace ToolboxBundle\Document\Response;
 
 class HeadlessResponse
 {
-    protected string $type;
+    public const TYPE_BRICK = 'brick';
+    public const TYPE_EDITABLE = 'editable';
 
-    protected bool $loadConfigElementData = true;
-    protected bool $loadInlineConfigElementData = true;
+    protected string $type;
+    protected ?string $parent;
 
     protected array $configElementData = [];
     protected array $inlineConfigElementData = [];
     protected array $additionalConfigData = [];
     protected array $brickConfiguration = [];
 
-    public function __construct(string $type)
+    public function __construct(string $type, ?string $parent = null)
     {
         $this->type = $type;
+        $this->parent = $parent;
     }
 
-    public function loadConfigElementData(): bool
+    public function getType(): string
     {
-        return $this->loadConfigElementData;
+        return $this->type;
     }
 
-    public function setLoadConfigElementData(bool $loadConfigElementData): void
+    public function getParent(): ?string
     {
-        $this->loadConfigElementData = $loadConfigElementData;
-    }
-
-    public function loadInlineConfigElementData(): bool
-    {
-        return $this->loadInlineConfigElementData;
-    }
-
-    public function setLoadInlineConfigElementData(bool $loadInlineConfigElementData): void
-    {
-        $this->loadInlineConfigElementData = $loadInlineConfigElementData;
+        return $this->parent;
     }
 
     public function getConfigElementData(): array
@@ -46,14 +38,36 @@ class HeadlessResponse
         return $this->configElementData;
     }
 
+    public function getConfigElementDataItem(string $key): mixed
+    {
+        if (!array_key_exists($key, $this->configElementData)) {
+            return null;
+        }
+
+        return $this->configElementData[$key];
+    }
+
     public function setConfigElementData(array $configElementData): void
     {
+        if ($this->getType() === self::TYPE_EDITABLE) {
+            throw new \Exception('Editables cannot contain config data');
+        }
+
         $this->configElementData = $configElementData;
     }
 
     public function getInlineConfigElementData(): array
     {
         return $this->inlineConfigElementData;
+    }
+
+    public function getInlineConfigElementDataItem(string $key): mixed
+    {
+        if (!array_key_exists($key, $this->inlineConfigElementData)) {
+            return null;
+        }
+
+        return $this->inlineConfigElementData[$key];
     }
 
     public function setInlineConfigElementData(array $inlineConfigElementData): void
@@ -68,6 +82,10 @@ class HeadlessResponse
 
     public function setAdditionalConfigData(array $additionalConfigData): void
     {
+        if ($this->getType() === self::TYPE_EDITABLE) {
+            throw new \Exception('Editables cannot contain additional config data');
+        }
+
         $this->additionalConfigData = $additionalConfigData;
     }
 
@@ -84,18 +102,5 @@ class HeadlessResponse
     public function setBrickConfiguration(array $brickConfiguration): void
     {
         $this->brickConfiguration = $brickConfiguration;
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'type'               => $this->type,
-            'brickConfiguration' => $this->getBrickConfiguration(),
-            'editableData'       => array_merge(
-                $this->getConfigElementData(),
-                $this->getInlineConfigElementData(),
-                $this->getAdditionalConfigData()
-            ),
-        ];
     }
 }

@@ -4,11 +4,15 @@ namespace ToolboxBundle\Document\Areabrick;
 
 use Pimcore\Extension\Document\Areabrick\AbstractAreabrick as PimcoreAbstractAreabrick;
 use Pimcore\Model\Document;
+use Pimcore\Model\Document\PageSnippet;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use ToolboxBundle\Builder\InlineConfigBuilderInterface;
 use ToolboxBundle\Document\Response\HeadlessResponse;
+use ToolboxBundle\Event\HeadlessEditableActionEvent;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManagerInterface;
+use ToolboxBundle\ToolboxEvents;
 
 abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 {
@@ -18,6 +22,7 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
     protected ConfigManagerInterface $configManager;
     protected LayoutManagerInterface $layoutManager;
     protected InlineConfigBuilderInterface $inlineConfigBuilder;
+    protected EventDispatcherInterface $eventDispatcher;
 
     protected string $areaBrickType = 'internal';
     protected ?array $areaConfig = null;
@@ -53,10 +58,6 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
             'additionalClassesData' => $this->configureAdditionalClasses($info),
         ]);
 
-        if ($headlessResponse->loadInlineConfigElementData() === false) {
-            return;
-        }
-
         $headlessResponse->setInlineConfigElementData(
             $this->inlineConfigBuilder->buildInlineConfigurationData(
                 $info,
@@ -65,6 +66,11 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
                 $themeOptions
             )
         );
+
+        if (!$this instanceof AbstractAreabrick) {
+            $this->triggerHeadlessEditableActionEvent($info, $headlessResponse);
+        }
+
     }
 
     public function getTemplateDirectoryName(): string
@@ -121,6 +127,7 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 
         return $themeConfig['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
     }
+
 
     private function checkInlineConfigElements(Document\Editable\Area\Info $info): void
     {
@@ -179,6 +186,31 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
         return $classesArray;
     }
 
+    protected function triggerHeadlessEditableActionEvent(Document\Editable\Area\Info $info, HeadlessResponse $headlessResponse): void
+    {
+        $this->eventDispatcher->dispatch(
+            new HeadlessEditableActionEvent($info, $headlessResponse, function (PageSnippet $document, string $type, string $inputName, array $options = []) {
+                return $this->getDocumentEditable($document, $type, $inputName, $options);
+            }),
+            ToolboxEvents::HEADLESS_EDITABLE_ACTION
+        );
+    }
+
+    protected function getAreaConfigNode(string $node, string $configProperty): mixed
+    {
+        $config = $this->getAreaConfig();
+
+        if (isset($config['config_elements'][$node]['config'][$configProperty])) {
+            return $config['config_elements'][$node]['config'][$configProperty];
+        }
+
+        if (isset($config['inline_config_elements'][$node]['config'][$configProperty])) {
+            return $config['inline_config_elements'][$node]['config'][$configProperty];
+        }
+
+        return null;
+    }
+
     protected function getAreaConfig(): array
     {
         return $this->areaConfig ?? ($this->areaConfig = $this->getConfigManager()->getAreaConfig($this->getId()));
@@ -224,4 +256,8 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
         $this->inlineConfigBuilder = $inlineConfigBuilder;
     }
 
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 }

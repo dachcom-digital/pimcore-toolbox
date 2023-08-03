@@ -9,9 +9,15 @@ use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Document\Areabrick\ToolboxHeadlessAwareBrickInterface;
 use ToolboxBundle\Document\Response\HeadlessResponse;
+use ToolboxBundle\Service\DataAttributeService;
 
 class Gallery extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInterface
 {
+    public function __construct(protected DataAttributeService $dataAttributeService)
+    {
+
+    }
+
     public function action(Info $info): ?Response
     {
         $this->buildInfoParameters($info);
@@ -40,6 +46,12 @@ class Gallery extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInte
         ];
 
         if ($headlessResponse instanceof HeadlessResponse) {
+
+            $brickParams = array_merge($brickParams, [
+                'galleryDataAttributes' => $this->dataAttributeService->generateDataAttributesAsArray('gallery'),
+                'thumbsDataAttributes'  => $this->dataAttributeService->generateDataAttributesAsArray('gallery_thumbs'),
+            ]);
+
             $headlessResponse->setAdditionalConfigData($brickParams);
 
             return;

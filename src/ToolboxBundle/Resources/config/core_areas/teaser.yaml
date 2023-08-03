@@ -36,6 +36,9 @@ toolbox:
             inline_config_elements:
                 teaser_image:
                     type: image
+                    property_normalizer: ToolboxBundle\Normalizer\ImageEditableNormalizer
+                    config:
+                        width: 300
                 teaser_headline:
                     type: input
                     title: 'Headline'

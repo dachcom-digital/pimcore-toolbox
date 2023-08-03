@@ -8,18 +8,24 @@ use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Block;
 use Pimcore\Model\Document\PageSnippet;
 use Pimcore\Model\Document\Snippet;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use ToolboxBundle\Document\Editable\EditableWorker;
 use ToolboxBundle\Document\Response\HeadlessResponse;
 
 class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigBuilderInterface
 {
+    protected EditableWorker $editableWorker;
+
+    public function setEditableWorker(EditableWorker $editableWorker)
+    {
+        $this->editableWorker = $editableWorker;
+    }
+
     public function buildInlineConfiguration(Info $info, string $brickId, array $areaConfig = [], array $themeOptions = [], bool $editMode = false): string
     {
         $configurationView = [];
         $inlineConfigElements = $areaConfig['inline_config_elements'] ?? [];
 
-        $items = $this->parseConfigElements($info, $brickId, $themeOptions, $inlineConfigElements, []);
+        $items = $this->parseConfigElements($info, $brickId, $themeOptions, $inlineConfigElements, [], false);
 
         foreach ($items as $item) {
             $configurationView[] = $this->templating->render(
@@ -69,7 +75,7 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
         return $data;
     }
 
-    private function buildEditable(Info $info, array $item, bool $editMode): string|array
+    private function buildEditable(Info $info, array $item, bool $editMode): Editable|string|array
     {
         if ($item['type'] === 'block') {
             return $this->buildBlockEditable($info, $item['name'], $item['config'], $item['children'] ?? [], $editMode);
@@ -86,12 +92,12 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
         return $this->buildStandardEditable($info, $item['type'], $item['name'], $item['config'], $editMode);
     }
 
-    private function buildStandardEditable(Info $info, string $type, string $inputName, array $options, bool $editMode): string|array
+    private function buildStandardEditable(Info $info, string $type, string $inputName, array $config, bool $editMode): Editable|string|array
     {
-        return $this->processEditable($info->getDocument(), $type, $inputName, $options, $editMode);
+        return $this->processEditable($info->getDocument(), $type, $inputName, $config, $editMode);
     }
 
-    private function buildColumnEditable(Info $info, array $options, bool $editMode): string|array
+    private function buildColumnEditable(Info $info, array $config, bool $editMode): string|array
     {
         $data = [];
         $document = $info->getDocument();
@@ -106,21 +112,19 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
             );
         }
 
-        if ($editMode === true) {
-            $options = $this->areaManager->getAreaBlockConfiguration($info->getId(), $document instanceof Snippet, true);
-        }
-
         foreach ($columns as $column) {
 
             $areaBlockDataResponse = null;
             $columnName = sprintf('c%s', $column['name']);
 
+            $config['areablock_config_name'] = $info->getId();
+
             ob_start();
 
-            echo $this->processEditable($document, 'areablock', $columnName, $options, $editMode, true, false);
+            echo $this->processEditable($document, 'areablock', $columnName, $config, $editMode, true);
 
             if ($editMode === false) {
-                $areaBlockDataResponse = $this->processEditable($document, 'areablock', $columnName, $options, false);
+                $areaBlockDataResponse = $this->processEditable($document, 'areablock', $columnName, $config, false);
             }
 
             $areaBlockHtmlResponse = ob_get_clean();
@@ -133,36 +137,39 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
         return $editMode ? implode(PHP_EOL, $data) : $data;
     }
 
-    private function buildAreaBlockEditable(Info $info, string $inputName, array $options, bool $editMode): string|array
+    private function buildAreaBlockEditable(Info $info, string $inputName, array $config, bool $editMode): string|array
     {
         $areaBlockDataResponse = '';
         $document = $info->getDocument();
 
+        $config['areablock_config_name'] = $info->getId();
+
         ob_start();
 
-        echo $this->processEditable($document, 'areablock', $inputName, $options, $editMode, true, false);
+        echo $this->processEditable($document, 'areablock', $inputName, $config, $editMode, true);
 
         if ($editMode === false) {
-            $areaBlockDataResponse = $this->processEditable($document, 'areablock', $inputName, $options, false);
+            $areaBlockDataResponse = $this->processEditable($document, 'areablock', $inputName, $config, false);
         }
 
         $areaBlockHtmlResponse = ob_get_clean();
 
         return $editMode ? $areaBlockHtmlResponse : $areaBlockDataResponse;
     }
-    private function buildBlockEditable(Info $info, string $inputName, array $options, array $blockElements, bool $editMode): string|array
+
+    private function buildBlockEditable(Info $info, string $inputName, array $config, array $blockElements, bool $editMode): string|array
     {
         $data = [];
         $document = $info->getDocument();
 
         ob_start();
 
-        if (!array_key_exists('default', $options)) {
-            $options['default'] = 1;
+        if (!array_key_exists('default', $config)) {
+            $config['default'] = 1;
         }
 
         /** @var Block $blockEditable */
-        $blockEditable = $this->editableRenderer->getEditable($document, 'block', $inputName, $options, $editMode);
+        $blockEditable = $this->editableRenderer->getEditable($document, 'block', $inputName, $config, $editMode);
 
         foreach ($blockEditable->getIterator() as $blockIndex) {
             foreach ($blockElements as $blockElement) {
@@ -174,7 +181,7 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
                 echo $this->processEditable($document, $beType, $beName, $beConfig, $editMode, true);
 
                 if ($editMode === false) {
-                    $data[] = $this->processEditable($document, $beType, $beName, $beConfig, false, false, true);
+                    $data[] = $this->processEditable($document, $beType, $beName, $beConfig, false, false, $info->getId());
                 }
             }
         }
@@ -191,43 +198,50 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
         array $config,
         bool $editMode,
         bool $forceRendering = false,
-        bool $allowStandalone = false
-    ) {
+        ?string $brickParent = null,
+    ): mixed {
 
         $isSimple = !$this->isBlockEditable($type);
+
+        // override config with area block config
+        if ($type === 'areablock' && $editMode === true) {
+
+            $areaBlockConfigurationName = $name;
+            if (array_key_exists('areablock_config_name', $config)) {
+                $areaBlockConfigurationName = $config['areablock_config_name'];
+                unset($config['areablock_config_name']);
+            }
+
+            $config = $this->areaManager->getAreaBlockConfiguration($areaBlockConfigurationName, $document instanceof Snippet, true);
+        }
+
+        /** @var Editable $editable */
         $editable = $this->editableRenderer->getEditable($document, $type, $name, $config, $editMode);
 
-        if ($isSimple === true && $allowStandalone === true) {
+        if ($isSimple === true && $brickParent !== null) {
 
             if ($editMode === false) {
 
-                $simpleHeadlessResponse = new HeadlessResponse('simple');
-                $simpleHeadlessResponse->addAdditionalConfigData('value', $editable->getData());
+                $simpleHeadlessResponse = new HeadlessResponse(HeadlessResponse::TYPE_EDITABLE, $brickParent);
+                $simpleHeadlessResponse->setInlineConfigElementData([$editable->getRealName() => $editable]);
 
-                $this->getEditableWorker()->dispatch(
-                    $simpleHeadlessResponse,
-                    $editable->getType(),
-                    $editable->getType(),
-                    $editable instanceof Editable ? $editable->getName() : '',
-                    true
-                );
+                $this->editableWorker->processEditable($simpleHeadlessResponse, $editable);
 
-                return $editable->getData();
+                return $editable;
             }
 
             return $editable->render();
         }
 
         if ($forceRendering === false && $editMode === false) {
-            return $editable->getData();
+            return $editable;
         }
 
-        // yes.
+        // simple editables output can be returned
         if ($isSimple === true) {
             return $editable->render();
         }
 
-        // yes.
         echo $editable->render();
 
         return '';
@@ -236,10 +250,5 @@ class InlineConfigBuilder extends AbstractConfigBuilder implements InlineConfigB
     private function isBlockEditable(string $type): bool
     {
         return in_array($type, ['area', 'block', 'areablock', 'scheduledblock'], true);
-    }
-
-    private function getEditableWorker(): EditableWorker
-    {
-        return \Pimcore::getContainer()->get(EditableWorker::class);
     }
 }

@@ -9,8 +9,11 @@ services:
     ToolboxBundle\Builder\BrickConfigBuilder: ~
 
     ToolboxBundle\Builder\InlineConfigBuilderInterface: '@ToolboxBundle\Builder\InlineConfigBuilder'
-    ToolboxBundle\Builder\InlineConfigBuilder: ~
+    ToolboxBundle\Builder\InlineConfigBuilder:
+        calls:
+            - [ setEditableWorker, [ '@ToolboxBundle\Document\Editable\EditableWorker' ] ]
 
     ToolboxBundle\Document\Editable\EditableJsonFetcher: ~
+
     ToolboxBundle\Document\Editable\EditableWorker:
         public: true

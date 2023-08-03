@@ -11,6 +11,7 @@ use ToolboxBundle\DependencyInjection\Compiler\AreaBrickRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\EditableHandlerPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
+use ToolboxBundle\DependencyInjection\Compiler\NormalizerRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\StoreProviderPass;
 use ToolboxBundle\Tool\Install;
 
@@ -28,6 +29,7 @@ class ToolboxBundle extends AbstractPimcoreBundle
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
         $container->addCompilerPass(new StoreProviderPass());
+        $container->addCompilerPass(new NormalizerRegistryPass());
     }
 
     public function getInstaller(): Install

@@ -7,6 +7,8 @@ use Pimcore\Extension\Document\Areabrick\EditableDialogBoxInterface;
 use Pimcore\Model\Document;
 use ToolboxBundle\Builder\BrickConfigBuilderInterface;
 use ToolboxBundle\Document\Response\HeadlessResponse;
+use ToolboxBundle\Event\HeadlessEditableActionEvent;
+use ToolboxBundle\ToolboxEvents;
 
 abstract class AbstractAreabrick extends AbstractBaseAreabrick implements EditableDialogBoxInterface
 {
@@ -21,18 +23,17 @@ abstract class AbstractAreabrick extends AbstractBaseAreabrick implements Editab
     {
         parent::headlessAction($info, $headlessResponse);
 
-        if ($headlessResponse->loadConfigElementData() === false) {
-            return;
-        }
-
         $headlessResponse->setConfigElementData(
             $this->brickConfigBuilder->buildConfigurationData(
                 $info,
                 $this->getId(),
                 $this->getAreaConfig(),
-                $this->getAreaThemeOptions()
+                $this->getAreaThemeOptions(),
+                $this->isHeadlessLayoutAware()
             )
         );
+
+        $this->triggerHeadlessEditableActionEvent($info, $headlessResponse);
     }
 
     public function getEditableDialogBoxConfiguration(Document\Editable $area, ?Document\Editable\Area\Info $info): EditableDialogBoxConfiguration
@@ -41,7 +42,8 @@ abstract class AbstractAreabrick extends AbstractBaseAreabrick implements Editab
             $info,
             $this->getId(),
             $this->getAreaConfig(),
-            $this->getAreaThemeOptions()
+            $this->getAreaThemeOptions(),
+            $this->isHeadlessLayoutAware()
         );
     }
 }

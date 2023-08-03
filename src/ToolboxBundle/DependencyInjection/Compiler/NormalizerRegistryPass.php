@@ -6,21 +6,19 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use ToolboxBundle\Registry\CalculatorRegistry;
+use ToolboxBundle\Registry\NormalizerRegistry;
 
-final class CalculatorRegistryPass implements CompilerPassInterface
+final class NormalizerRegistryPass implements CompilerPassInterface
 {
     use PriorityTaggedServiceTrait;
 
     public function process(ContainerBuilder $container): void
     {
-        $definition = $container->getDefinition(CalculatorRegistry::class);
-        $taggedServices = $container->findTaggedServiceIds('toolbox.calculator', true);
+        $definition = $container->getDefinition(NormalizerRegistry::class);
+        $taggedServices = $container->findTaggedServiceIds('toolbox.property.normalizer', true);
 
         foreach ($taggedServices as $id => $tags) {
-            foreach ($tags as $attributes) {
-                $definition->addMethodCall('register', [$id, new Reference($id), $attributes['type']]);
-            }
+            $definition->addMethodCall('register', [$id, new Reference($id)]);
         }
     }
 }

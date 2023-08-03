@@ -28,3 +28,5 @@ toolbox:
             config_parameter: ~
             inline_config_elements:
                 downloads: '<'
+            additional_property_normalizer:
+                downloads: ToolboxBundle\Normalizer\DownloadRelationsNormalizer

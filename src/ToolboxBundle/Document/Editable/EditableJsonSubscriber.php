@@ -5,47 +5,38 @@ declare(strict_types=1);
 namespace ToolboxBundle\Document\Editable;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\GenericEvent;
+use ToolboxBundle\Event\HeadlessElementEvent;
+use ToolboxBundle\ToolboxEvents;
 
 final class EditableJsonSubscriber implements EventSubscriberInterface
 {
+    protected const ELEMENTS_IDENTIFIER = 'elements';
+    protected const ELEMENT_TYPE_IDENTIFIER = 'elementType';
+    protected const ELEMENT_SUB_TYPE_IDENTIFIER = 'elementSubType';
+    protected const ELEMENT_DATA_IDENTIFIER = 'elementContext';
+
     protected array $jsonEditables = [];
 
     public static function getSubscribedEvents(): array
     {
         return [
-            EditableWorker::EDITABLE_JSON_RESPONSE => 'onEditableResponse',
+            ToolboxEvents::HEADLESS_ELEMENT_STACK_ADD => 'onHeadlessElementAdd',
         ];
     }
 
-    public function onEditableResponse(GenericEvent $event): void
+    public function onHeadlessElementAdd(HeadlessElementEvent $event): void
     {
-        $name = $event->getArgument('name');
-        $brickId = $event->getArgument('brickId');
-        $indexes = $event->getArgument('indexes');
-        $blocks = $event->getArgument('blocks');
-        $isSimpleEditable = $event->getArgument('isSimpleEditable');
-
-        $hierarchicalName = $isSimpleEditable
-            ? str_replace('.', ':', $name)
-            : $this->buildHierarchicalName($blocks, $indexes);
-
-        $this->jsonEditables[$hierarchicalName] = [$brickId, $event->getSubject()];
+        $this->jsonEditables[$event->getElementNamespace()] = [$event->getElementType(), $event->getElementSubType(), $event->getData()];
     }
 
-    private function buildHierarchicalName(array $blocks, array $indexes): string
+    public function getJsonEditables(): array
     {
-        $parts = [];
-        for ($i = 0, $iMax = count($blocks); $i < $iMax; $i++) {
-            $part = $blocks[$i]->getRealName();
-            if (isset($indexes[$i])) {
-                $part = sprintf('%s:%d', $part, $indexes[$i]);
-            }
+        $convertedEditables = $this->convertNestedArray($this->jsonEditables);
 
-            $parts[] = $part;
-        }
+        $this->sortNestedArray($convertedEditables);
+        $this->simplifyNestedArray($convertedEditables);
 
-        return implode(':', $parts);
+        return $convertedEditables;
     }
 
     private function convertNestedArray($flatArray): array
@@ -59,19 +50,20 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
 
             foreach ($keys as $nestedKey) {
                 /** @phpstan-ignore-next-line */
-                if (!isset($currentArray['elements'][$nestedKey])) {
-                    $currentArray['elements'][$nestedKey] = [];
+                if (!isset($currentArray[self::ELEMENTS_IDENTIFIER][$nestedKey])) {
+                    $currentArray[self::ELEMENTS_IDENTIFIER][$nestedKey] = [];
                 }
 
-                $currentArray = &$currentArray['elements'][$nestedKey];
+                $currentArray = &$currentArray[self::ELEMENTS_IDENTIFIER][$nestedKey];
             }
 
-            $currentArray['name'] = $value[0];
-            $currentArray['data'] = $value[1];
+            $currentArray[self::ELEMENT_TYPE_IDENTIFIER] = $value[0];
+            $currentArray[self::ELEMENT_SUB_TYPE_IDENTIFIER] = $value[1];
+            $currentArray[self::ELEMENT_DATA_IDENTIFIER] = $value[2];
         }
 
         /** @phpstan-ignore-next-line */
-        return $nestedArray['elements'] ?? [];
+        return $nestedArray[self::ELEMENTS_IDENTIFIER] ?? [];
     }
 
     private function simplifyNestedArray(&$array): void
@@ -80,17 +72,18 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
             return;
         }
 
-        foreach ($array as &$item) {
+        foreach ($array as &$value) {
 
-            if(!is_array($item)) {
-                continue;
+            if (
+                is_array($value) &&
+                count($value) === 1 &&
+                isset($value[self::ELEMENTS_IDENTIFIER]) &&
+                !array_is_list($value[self::ELEMENTS_IDENTIFIER])
+            ) {
+                $value = $value[self::ELEMENTS_IDENTIFIER];
             }
 
-            if (isset($item['elements']) && array_is_list($item['elements']) && count($item['elements']) === 1) {
-                $item['elements'] = $item['elements'][0]['elements'] ?? $item['elements'][0];
-            }
-
-            $this->simplifyNestedArray($item);
+            $this->simplifyNestedArray($value);
         }
     }
 
@@ -102,32 +95,24 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
 
         foreach ($array as &$item) {
 
-            if(!is_array($item)) {
+            if (!is_array($item)) {
                 continue;
             }
 
-            if (isset($item['elements']) && is_array($item['elements'])) {
-                $item['elements'] = array_values($item['elements']);
+            if (isset($item[self::ELEMENTS_IDENTIFIER]) && is_array($item[self::ELEMENTS_IDENTIFIER])) {
+                $isNumericKeyedArray = array_unique(array_map('is_numeric', array_keys($item[self::ELEMENTS_IDENTIFIER]))) === [true];
+                if ($isNumericKeyedArray) {
+                    $item[self::ELEMENTS_IDENTIFIER] = array_values($item[self::ELEMENTS_IDENTIFIER]);
+                }
             }
 
             $this->sortNestedArray($item);
 
-            if (isset($item['elements'])) {
-                $elements = $item['elements'];
-                unset($item['elements']);
-                $item['elements'] = $elements;
+            if (isset($item[self::ELEMENTS_IDENTIFIER])) {
+                $elements = $item[self::ELEMENTS_IDENTIFIER];
+                unset($item[self::ELEMENTS_IDENTIFIER]);
+                $item[self::ELEMENTS_IDENTIFIER] = $elements;
             }
         }
     }
-
-    public function getJsonEditables(): array
-    {
-        $convertedEditables = $this->convertNestedArray($this->jsonEditables);
-
-        $this->sortNestedArray($convertedEditables);
-        $this->simplifyNestedArray($convertedEditables);
-
-        return $convertedEditables;
-    }
-
 }

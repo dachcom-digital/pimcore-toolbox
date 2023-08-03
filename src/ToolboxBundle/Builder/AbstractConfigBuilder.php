@@ -21,8 +21,15 @@ abstract class AbstractConfigBuilder
     ) {
     }
 
-    protected function parseConfigElements(?Info $info, string $brickId, array $themeOptions, array $configElements, array $tabs): array
-    {
+    protected function parseConfigElements(
+        ?Info $info,
+        string $brickId,
+        array $themeOptions,
+        array $configElements,
+        array $tabs,
+        bool $allowTabs = true,
+        bool $isInlineContext = false
+    ): array {
         $editableNodes = [];
 
         if (empty($configElements)) {
@@ -32,6 +39,12 @@ abstract class AbstractConfigBuilder
         $acStoreProcessed = false;
 
         foreach ($configElements as $configElementName => $elementData) {
+
+            // skip inline rendered config elements
+            if ($isInlineContext === true && array_key_exists('inline_rendered', $elementData) && $elementData['inline_rendered'] === true) {
+                continue;
+            }
+
             $editableNode = $this->parseConfigElement($info, $configElementName, $elementData, $acStoreProcessed, $brickId, $themeOptions);
 
             //if element need's a store and store is empty: skip field
@@ -63,7 +76,7 @@ abstract class AbstractConfigBuilder
         $editableNodes = array_merge($defaultFields, $acFields);
 
         // assign tabs, if configured
-        if (count($tabs) > 0) {
+        if ($allowTabs === true && count($tabs) > 0) {
             $tabbedEditableNodes = [];
             foreach ($tabs as $tabId => $tabName) {
                 $tabbedEditableNodes[] = [

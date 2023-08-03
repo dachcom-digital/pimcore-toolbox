@@ -7,7 +7,7 @@ use Pimcore\Model\Document\Editable\Area\Info;
 
 class BrickConfigBuilder extends AbstractConfigBuilder implements BrickConfigBuilderInterface
 {
-    public function buildConfiguration(?Info $info, string $brickId, array $areaConfig = [], array $themeOptions = []): EditableDialogBoxConfiguration
+    public function buildConfiguration(?Info $info, string $brickId, array $areaConfig = [], array $themeOptions = [], bool $isInlineContext = false): EditableDialogBoxConfiguration
     {
         $config = new EditableDialogBoxConfiguration();
 
@@ -21,26 +21,30 @@ class BrickConfigBuilder extends AbstractConfigBuilder implements BrickConfigBui
         $config->setWidth($configWindowSize['width']);
         $config->setReloadOnClose($configParameter['reload_on_close'] ?? false);
 
-        $items = $this->parseConfigElements($info, $brickId, $themeOptions, $configElements, $tabs);
+        $items = $this->parseConfigElements($info, $brickId, $themeOptions, $configElements, $tabs, true, $isInlineContext);
 
         $config->setItems($items);
 
         return $config;
     }
 
-    public function buildConfigurationData(Info $info, string $brickId, array $areaConfig = [], array $themeOptions = []): array
+    public function buildConfigurationData(Info $info, string $brickId, array $areaConfig = [], array $themeOptions = [], bool $isInlineContext = false): array
     {
         $data = [];
         $invalidTypes = ['additionalClasses', 'additionalClassesChained'];
         $configElements = $areaConfig['config_elements'] ?? [];
 
-        foreach ($configElements as $itemName => $itemData) {
+        foreach ($configElements as $itemName => $elementData) {
 
-            if (in_array($itemData['type'], $invalidTypes, true)) {
+            if ($isInlineContext === true && array_key_exists('inline_rendered', $elementData) && $elementData['inline_rendered'] === true) {
                 continue;
             }
 
-            $data[$itemName] = $this->editableRenderer->getEditable($info->getDocument(), $itemData['type'], $itemName, [], false)->getData();
+            if (in_array($elementData['type'], $invalidTypes, true)) {
+                continue;
+            }
+
+            $data[$itemName] = $this->editableRenderer->getEditable($info->getDocument(), $elementData['type'], $itemName, [], false)->getData();
         }
 
         return $data;

@@ -75,12 +75,15 @@ class HeadlessDocumentResolver
             ];
 
             if ($areaConfig['type'] === 'areablock') {
+                // override config with area block config
                 $areaBlockConfig = $this->areaManager->getAreaBlockConfiguration($areaName, $document instanceof Snippet, true);
                 $editableConfig['config'] = $areaBlockConfig;
-            } else {
+            } elseif ($areaConfig['type'] === 'area') {
                 $editableConfig['config'] = [
                     'type' => $areaConfig['areaType']
                 ];
+            } else {
+                throw new \Exception(sprintf('Invalid type "%s" in headless document', $areaConfig['type']));
             }
 
             $editables[] = $editableConfig;

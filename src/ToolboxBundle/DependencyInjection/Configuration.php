@@ -354,8 +354,8 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->beforeNormalization()
                     ->ifTrue(function ($v) {
-                        foreach($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
-                            if($inlineConfigElement === '<') {
+                        foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
+                            if ($inlineConfigElement === '<') {
                                 return true;
                             }
                         }
@@ -366,12 +366,11 @@ class Configuration implements ConfigurationInterface
                         foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
                             if ($inlineConfigElement === '<') {
                                 $v['inline_config_elements'][$inlineConfigId] = $v['config_elements'][$inlineConfigId];
-                                unset($v['config_elements'][$inlineConfigId]);
+                                $v['config_elements'][$inlineConfigId]['inline_rendered'] = true;
                             }
                         }
 
                         return $v;
-
                     })
                 ->end()
                 ->children()
@@ -379,6 +378,7 @@ class Configuration implements ConfigurationInterface
                     ->append($this->buildConfigElementsTabSection())
                     ->append($this->buildConfigElementsSection('config_elements'))
                     ->append($this->buildConfigElementsSection('inline_config_elements'))
+                    ->append($this->buildConfigPropertyNormalizerSection())
                     ->variableNode('config_parameter')->end()
                 ->end()
             ->end()
@@ -429,8 +429,10 @@ class Configuration implements ConfigurationInterface
                     ->append($typeNode)
                     ->scalarNode('title')->defaultValue(null)->end()
                     ->scalarNode('description')->defaultValue(null)->end()
+                    ->scalarNode('property_normalizer')->defaultValue(null)->end()
                     ->scalarNode('tab')->defaultValue(null)->end()
                     ->variableNode('config')->defaultValue([])->end()
+                    ->booleanNode('inline_rendered')->cannotBeOverwritten()->defaultFalse()->end()
                     ->append(
                         $parent !== null
                             ? (new BooleanNodeDefinition($configType))->defaultFalse()->cannotBeOverwritten()
@@ -447,6 +449,17 @@ class Configuration implements ConfigurationInterface
                 ->canBeDisabled()
                 ->treatnullLike(['enabled' => false])
             ->end();
+
+        return $treeBuilder;
+    }
+
+    protected function buildConfigPropertyNormalizerSection(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('additional_property_normalizer');
+
+        $treeBuilder
+             ->useAttributeAsKey('name')
+             ->prototype('scalar')->end();
 
         return $treeBuilder;
     }
