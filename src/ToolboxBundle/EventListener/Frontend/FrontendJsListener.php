@@ -3,7 +3,6 @@
 namespace ToolboxBundle\EventListener\Frontend;
 
 use Pimcore\Tool;
-use Pimcore\Bundle\CoreBundle\EventListener\Traits\EnabledTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
@@ -12,7 +11,6 @@ use Symfony\Component\Templating\EngineInterface;
 
 class FrontendJsListener
 {
-    use EnabledTrait;
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
     private EngineInterface $templatingEngine;
@@ -24,10 +22,6 @@ class FrontendJsListener
 
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$this->isEnabled()) {
-            return;
-        }
-
         $request = $event->getRequest();
         if (!$event->isMainRequest()) {
             return;

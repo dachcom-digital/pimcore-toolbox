@@ -1,0 +1,49 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Teaser\Teaser:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: teaser }
+
+toolbox:
+    areas:
+        teaser:
+            config_elements:
+                type:
+                    type: select
+                    title: 'Type'
+                    config:
+                        store:
+                            direct: 'Direct'
+                            snippet: 'Snippet'
+                        default: direct
+                layout:
+                    type: select
+                    title: 'Layout'
+                    config:
+                        store:
+                            default: 'Default'
+                        default: default
+                use_light_box:
+                    type: checkbox
+                    title: 'use Lightbox?'
+                    config: ~
+
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+
+            inline_config_elements:
+                teaser_image:
+                    type: image
+                    property_normalizer: ToolboxBundle\Normalizer\ImageEditableNormalizer
+                    config:
+                        width: 300
+                teaser_headline:
+                    type: input
+                    title: 'Headline'
+                teaser_text:
+                    type: wysiwyg
+                    title: 'Text'
+                teaser_link:
+                    type: link

@@ -17,11 +17,9 @@ class AreaConfigurationCommand extends Command
 {
     protected static $defaultName = 'toolbox:check-config';
     protected static $defaultDescription = 'Check configuration of a given area element.';
-    protected AdaptiveConfigManagerInterface $adaptiveConfigManager;
 
-    public function __construct(AdaptiveConfigManagerInterface $adaptiveConfigManager)
+    public function __construct(protected AdaptiveConfigManagerInterface $adaptiveConfigManager)
     {
-        $this->adaptiveConfigManager = $adaptiveConfigManager;
         parent::__construct();
     }
 
@@ -58,12 +56,6 @@ class AreaConfigurationCommand extends Command
             return Command::SUCCESS;
         }
 
-        $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL;
-        if (!in_array($brickId, ToolboxConfig::TOOLBOX_TYPES)) {
-            $namespace = ConfigManagerInterface::AREABRICK_NAMESPACE_EXTERNAL;
-        }
-
-        $this->adaptiveConfigManager->setAreaNameSpace($namespace);
         $this->adaptiveConfigManager->setContextNameSpace($contextId);
 
         $brickConfig = $this->adaptiveConfigManager->getAreaConfig($brickId);

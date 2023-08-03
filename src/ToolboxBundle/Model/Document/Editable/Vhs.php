@@ -54,7 +54,7 @@ class Vhs extends Model\Document\Editable\Video
         return $data;
     }
 
-    public function setDataFromResource(mixed $data): self
+    public function setDataFromResource(mixed $data): static
     {
         parent::setDataFromResource($data);
 
@@ -68,7 +68,7 @@ class Vhs extends Model\Document\Editable\Video
         return $this;
     }
 
-    public function setDataFromEditmode($data): self
+    public function setDataFromEditmode(mixed $data): static
     {
         parent::setDataFromEditmode($data);
 

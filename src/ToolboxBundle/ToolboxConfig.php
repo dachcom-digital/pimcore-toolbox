@@ -4,7 +4,7 @@ namespace ToolboxBundle;
 
 final class ToolboxConfig
 {
-    public const TOOLBOX_TYPES = [
+    public const TOOLBOX_AREA_TYPES = [
         'accordion',
         'anchor',
         'columns',
@@ -25,39 +25,5 @@ final class ToolboxConfig
         'spacer',
         'teaser',
         'video'
-    ];
-
-    public const CORE_TYPES = [
-        'areablock',
-        'area',
-        'block',
-        'checkbox',
-        'date',
-        'href',
-        'image',
-        'input',
-        'link',
-        'multihref',
-        'multiselect',
-        'numeric',
-        'embed',
-        'pdf',
-        'relation',
-        'relations',
-        'renderlet',
-        'select',
-        'snippet',
-        'table',
-        'textarea',
-        'video',
-        'wysiwyg'
-    ];
-
-    public const CUSTOM_TYPES = [
-        'additionalClasses',
-        'additionalClassesChained',
-        'parallaximage',
-        'googlemap',
-        'vhs',
     ];
 }

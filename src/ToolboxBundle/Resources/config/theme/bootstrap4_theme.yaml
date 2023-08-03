@@ -1,0 +1,20 @@
+toolbox:
+    theme:
+        layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP4
+        calculators:
+            column_calculator: ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator
+            slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator
+        wrapper:
+            image:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12' }
+            columns:
+                - { tag: 'div', class: 'row' }
+            gallery:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12 col-gallery' }
+            slideColumns:
+                - { tag: 'div', class: 'row' }
+            teaser:
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-12' }

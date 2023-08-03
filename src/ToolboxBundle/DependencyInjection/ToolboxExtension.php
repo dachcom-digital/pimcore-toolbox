@@ -8,89 +8,63 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use ToolboxBundle\Manager\ConfigManager;
+use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\Resolver\ContextResolver;
 
 class ToolboxExtension extends Extension implements PrependExtensionInterface
 {
-    protected array $contextMergeData = [];
-    protected array $contextConfigData = [];
-
     public function prepend(ContainerBuilder $container): void
     {
-        $selfConfigs = $container->getExtensionConfig($this->getAlias());
+        $hasTheme = false;
+        $headlessAware = false;
 
-        $rootConfigs = [];
-        foreach ($selfConfigs as $rootConfig) {
-            unset($rootConfig['context'], $rootConfig['context_resolver']);
-            $rootConfigs[] = $rootConfig;
+        $wysiwygEditor = null;
+        if ($container->hasExtension('pimcore_tinymce') === true) {
+            $wysiwygEditor = 'tiny_mce';
         }
 
-        $contextMerge = [];
-        foreach ($selfConfigs as $config) {
-            if (isset($config['context'])) {
-                foreach ($config['context'] as $contextName => $contextConfig) {
-                    if (isset($contextConfig['settings']['merge_with_root'])) {
-                        $contextMerge[$contextName] = $contextConfig['settings']['merge_with_root'];
-                    }
-                }
+        $coreLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $coreLoader->load('config.yaml');
+
+        $loaded = [];
+
+        foreach ($container->getExtensionConfig($this->getAlias()) as $toolboxConfigNode) {
+
+            if (!empty($toolboxConfigNode['theme']['layout'])) {
+                $hasTheme = true;
+                $headlessAware = $toolboxConfigNode['theme']['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
             }
-        }
 
-        $data = [];
-
-        //get context data
-        foreach ($selfConfigs as $config) {
-            if (isset($config['context'])) {
-                foreach ($config['context'] as $contextName => $contextConfig) {
-                    if (!isset($contextMerge[$contextName]) || $contextMerge[$contextName] !== true) {
-                        continue;
-                    }
-
-                    $cleanContextConfig = $contextConfig;
-                    unset($cleanContextConfig['settings']);
-                    $this->contextConfigData[$contextName][] = $cleanContextConfig;
-                }
-            }
-        }
-
-        //get context merge data
-        foreach ($contextMerge as $contextName => $merge) {
-            if ($merge === false) {
+            if (($toolboxConfigNode['enabled_core_areas'] ?? null) === null) {
                 continue;
             }
 
-            foreach ($rootConfigs as $rootConfig) {
-                $data[] = [
-                    'context' => [
-                        $contextName => $rootConfig
-                    ]
-                ];
+            foreach ($toolboxConfigNode['enabled_core_areas'] as $areaName) {
+
+                if (in_array($areaName, $loaded, true)) {
+                    continue;
+                }
+
+                $coreLoader->load(sprintf('core_areas/%s.yaml', $areaName));
+                $loaded[] = $areaName;
             }
         }
 
-        $this->contextMergeData = $data;
+        // add default theme (b4) if not set
+        if ($hasTheme === false) {
+            $coreLoader->load('theme/bootstrap4_theme.yaml');
+        }
+
+        $container->setParameter('toolbox.wysiwyg_editor', $wysiwygEditor);
+        $container->setParameter('toolbox.headless_aware', $headlessAware);
     }
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        //append merge data
-        foreach ($this->contextMergeData as $append) {
-            $configs[] = $append;
-        }
-
-        //append custom context data
-        foreach ($this->contextConfigData as $contextName => $contextConfigs) {
-            foreach ($contextConfigs as $el) {
-                $configs[] = [
-                    'context' => [
-                        $contextName => $el
-                    ]
-                ];
-            }
-        }
+        $contextAwareConfigs = $this->parseContextConfigs($configs);
 
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $contextAwareConfigs);
 
         $this->validateToolboxContextConfig($config);
         $this->allocateGoogleMapsApiKey($container);
@@ -99,7 +73,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         unset($config['context_resolver']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
@@ -115,14 +89,14 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
     {
         $configDialogAwareBricks = [];
 
-        foreach ($config['custom_areas'] as $areaId => $areaSection) {
+        foreach ($config['areas'] as $areaId => $areaSection) {
             if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
                 $configDialogAwareBricks[] = $areaId;
             }
         }
 
         foreach ($config['context'] as $context) {
-            foreach ($context['custom_areas'] as $areaId => $areaSection) {
+            foreach ($context['areas'] as $areaId => $areaSection) {
                 if (isset($areaSection['config_elements']) && count($areaSection['config_elements']) > 0) {
                     $configDialogAwareBricks[] = $areaId;
                 }
@@ -137,20 +111,25 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $googleBrowserApiKey = null;
         $googleSimpleApiKey = null;
 
-        $pimcoreCoreConfig = $container->getParameter('pimcore.config');
+        $pimcoreGoogleBrowserApiKey = null;
+        $pimcoreGoogleSimpleApiKey = null;
+
         /** @phpstan-ignore-next-line */
-        $pimcoreGoogleServiceConfig = $pimcoreCoreConfig['services']['google'] ?? [];
+        if ($container->hasParameter('pimcore_google_marketing')) {
+            $pimcoreGoogleMarketingSettings = $container->getParameter('pimcore_google_marketing');
+            /** @phpstan-ignore-next-line */
+            $pimcoreGoogleBrowserApiKey = $pimcoreGoogleMarketingSettings['browser_api_key'] ?? null;
+            /** @phpstan-ignore-next-line */
+            $pimcoreGoogleSimpleApiKey = $pimcoreGoogleMarketingSettings['simple_api_key'] ?? null;
+        }
 
         // browser api key
         /** @phpstan-ignore-next-line */
-        if ($container->hasParameter('pimcore_system_config.services.google.browserapikey')) {
-            $googleBrowserApiKey = $container->getParameter('pimcore_system_config.services.google.browserapikey');
-            /** @phpstan-ignore-next-line */
-        } elseif ($container->hasParameter('toolbox_google_service_browser_api_key')) {
+        if ($container->hasParameter('toolbox_google_service_browser_api_key')) {
             $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
             /** @phpstan-ignore-next-line */
-        } elseif (isset($pimcoreGoogleServiceConfig['browser_api_key'])) {
-            $googleBrowserApiKey = $pimcoreGoogleServiceConfig['browser_api_key'];
+        } elseif ($pimcoreGoogleBrowserApiKey !== null) {
+            $googleBrowserApiKey = $pimcoreGoogleBrowserApiKey;
         }
 
         //simple api key
@@ -161,8 +140,8 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         } elseif ($container->hasParameter('toolbox_google_service_simple_api_key')) {
             $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
             /** @phpstan-ignore-next-line */
-        } elseif (isset($pimcoreGoogleServiceConfig['simple_api_key'])) {
-            $googleSimpleApiKey = $pimcoreGoogleServiceConfig['simple_api_key'];
+        } elseif ($pimcoreGoogleSimpleApiKey !== null) {
+            $googleSimpleApiKey = $pimcoreGoogleSimpleApiKey;
         }
 
         $container->setParameter('toolbox.google_maps.browser_api_key', $googleBrowserApiKey);
@@ -182,5 +161,84 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
                 ), E_USER_ERROR);
             }
         }
+    }
+
+    private function parseContextConfigs(array $configs): array
+    {
+        $data = [];
+        $rootConfigs = [];
+        $contextConfigData = [];
+        $contextMergeCandidates = [];
+
+        foreach ($configs as $rootConfig) {
+            unset($rootConfig['context'], $rootConfig['context_resolver'], $rootConfig['enabled_core_areas']);
+            $rootConfigs[] = $rootConfig;
+        }
+
+        foreach ($configs as $config) {
+
+            if (!isset($config['context'])) {
+                continue;
+            }
+
+            foreach ($config['context'] as $contextName => $contextConfig) {
+                $contextMergeCandidates[$contextName] = $contextConfig['settings']['merge_with_root'] ?? false;
+            }
+        }
+
+        //get context data
+        foreach ($configs as $config) {
+
+            if (!isset($config['context'])) {
+                continue;
+            }
+
+            foreach ($config['context'] as $contextName => $contextConfig) {
+
+                if ($contextMergeCandidates[$contextName] === false) {
+                    continue;
+                }
+
+                $cleanContextConfig = $contextConfig;
+
+                unset($cleanContextConfig['settings']);
+
+                $contextConfigData[$contextName][] = $cleanContextConfig;
+            }
+        }
+
+        // get context merge data
+        foreach ($contextMergeCandidates as $contextName => $merge) {
+
+            if ($merge === false) {
+                continue;
+            }
+
+            foreach ($rootConfigs as $rootConfig) {
+                $data[] = [
+                    'context' => [
+                        $contextName => $rootConfig
+                    ]
+                ];
+            }
+        }
+
+        // append merge data
+        foreach ($data as $append) {
+            $configs[] = $append;
+        }
+
+        // append custom context data
+        foreach ($contextConfigData as $contextName => $contextConfigs) {
+            foreach ($contextConfigs as $el) {
+                $configs[] = [
+                    'context' => [
+                        $contextName => $el
+                    ]
+                ];
+            }
+        }
+
+        return $configs;
     }
 }

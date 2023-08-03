@@ -36,7 +36,7 @@ toolbox:
 Now we need to register our new service:
 
 ```yml
-# app/config.yml
+# app/config.yaml
 services:
     App\Toolbox\MyStoreProvider:
         tags:

@@ -6,17 +6,10 @@ use Symfony\Component\Templating\EngineInterface;
 
 class LayoutManager implements LayoutManagerInterface
 {
-    protected ConfigManager $configManager;
-    protected EngineInterface $templating;
-
-    public function __construct(ConfigManager $configManager)
-    {
-        $this->configManager = $configManager;
-    }
-
-    public function setTemplating(EngineInterface $templating): void
-    {
-        $this->templating = $templating;
+    public function __construct(
+        protected ConfigManagerInterface $configManager,
+        protected EngineInterface $templating
+    ) {
     }
 
     public function getAreaTemplateDir(string $areaId, string $areaTemplateDir, string $viewName = 'view', string $extension = 'html.twig'): string
@@ -31,8 +24,8 @@ class LayoutManager implements LayoutManagerInterface
             $areaTemplateDir
         );
 
-        //no fallback layout defined. return default.
-        if ($elementThemeConfig['default_layout'] === false || empty($elementThemeConfig['default_layout'])) {
+        // no fallback layout defined, return default
+        if (empty($elementThemeConfig['default_layout'])) {
             return $defaultDir;
         }
 
@@ -40,7 +33,7 @@ class LayoutManager implements LayoutManagerInterface
             return $defaultDir;
         }
 
-        //return fallback layout.
+        // return fallback layout
         return sprintf(
             $pathStructure,
             $elementThemeConfig['default_layout'],
@@ -55,7 +48,7 @@ class LayoutManager implements LayoutManagerInterface
 
     public function getAreaThemeConfig(string $areaName): array
     {
-        $layoutConfiguration = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getConfig('theme');
+        $layoutConfiguration = $this->configManager->getConfig('theme');
 
         $theme = [
             'layout'         => $layoutConfiguration['layout'],

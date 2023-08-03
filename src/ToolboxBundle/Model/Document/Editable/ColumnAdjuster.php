@@ -29,7 +29,7 @@ class ColumnAdjuster extends Document\Editable
         return empty($this->data);
     }
 
-    public function setDataFromResource($data): self
+    public function setDataFromResource(mixed $data): static
     {
         $data = Serialize::unserialize($data);
 
@@ -42,7 +42,7 @@ class ColumnAdjuster extends Document\Editable
         return $this;
     }
 
-    public function setDataFromEditmode(mixed $data): self
+    public function setDataFromEditmode(mixed $data): static
     {
         if (!is_array($data)) {
             $data = [];

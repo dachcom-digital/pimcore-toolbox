@@ -13,22 +13,29 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ### Release Plan
 
-| Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
-|---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **4.x** | `10.5`, `10.6`                    | `5.4`                      | 01.10.2021   | Feature Branch | master     |
-| **3.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 16.07.2019   | Unsupported    | 3.x        |
-| **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Unsupported    | 2.8        |
-| **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4   |
+| Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch   |
+|---------|-----------------------------------|----------------------------|--------------|----------------|----------|
+| **5.x** | `11.0`                            | `6.2`                      | --           | Feature Branch | master   |
+| **4.x** | `10.5`, `10.6`                    | `5.4`                      | 01.10.2021   | Bugfixes       | 4.x      |
+| **3.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 16.07.2019   | Unsupported    | 3.x      |
+| **2.8** | `5.4`, `5.5`, `5.6`, `5.7`, `5.8` | `3.4`                      | 30.06.2019   | Unsupported    | 2.8      |
+| **1.8** | `4.0`                             | --                         | 28.04.2017   | Unsupported    | pimcore4 |
 
 ### Installation  
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~4.1.0"
+    "dachcom-digital/toolbox" : "~5.0.0"
 }
 ```
 
-- Execute: `$ bin/console pimcore:bundle:enable ToolboxBundle`
+Add Bundle to `bundles.php`:
+```php
+return [
+    ToolboxBundle\ToolboxBundle::class => ['all' => true],
+];
+```
+
 - Execute: `$ bin/console pimcore:bundle:install ToolboxBundle`
 
 ## Upgrading
@@ -83,7 +90,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Code Style](docs/1_CodeStyle.md)
 - [Helper Commands](docs/2_Commands.md)
 - [Toolbox Elements Overview](docs/11_ElementsOverview.md)
-- [CK-Editor Configuration](docs/13_CkEditor.md)
+- [Wysiwyg Configuration](docs/13_Wysiwyg_Editor.md)
 - [Image Thumbnails Strategy](docs/14_ImageThumbnails.md)
 - [Configuration Context](docs/15_Context.md)
 - [Editable Store Provider](docs/16_EditableStoreProvider.md)
@@ -94,6 +101,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Column Adjuster](docs/60_ColumnAdjuster.md)
 - [Configuration Flags](docs/70_ConfigurationFlags.md)
 - [Javascript Plugins](docs/80_Javascript.md)
+- [Headless Mode](docs/90_Headless.md)
 
 ## Pimcore Fixes / Overrides
 - Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js) bug (in some cases the iframe overlay field does not apply to the right position)

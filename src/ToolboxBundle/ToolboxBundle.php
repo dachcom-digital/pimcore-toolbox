@@ -9,7 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ToolboxBundle\DependencyInjection\Compiler\AreaBrickAutoloadWatcherPass;
 use ToolboxBundle\DependencyInjection\Compiler\AreaBrickRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\CalculatorRegistryPass;
+use ToolboxBundle\DependencyInjection\Compiler\EditableHandlerPass;
 use ToolboxBundle\DependencyInjection\Compiler\MembersBundlePass;
+use ToolboxBundle\DependencyInjection\Compiler\NormalizerRegistryPass;
 use ToolboxBundle\DependencyInjection\Compiler\StoreProviderPass;
 use ToolboxBundle\Tool\Install;
 
@@ -19,16 +21,15 @@ class ToolboxBundle extends AbstractPimcoreBundle
 
     public const PACKAGE_NAME = 'dachcom-digital/toolbox';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new AreaBrickRegistryPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 255);
         $container->addCompilerPass(new AreaBrickAutoloadWatcherPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -255);
+        $container->addCompilerPass(new EditableHandlerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, -255);
         $container->addCompilerPass(new MembersBundlePass());
         $container->addCompilerPass(new CalculatorRegistryPass());
         $container->addCompilerPass(new StoreProviderPass());
+        $container->addCompilerPass(new NormalizerRegistryPass());
     }
 
     public function getInstaller(): Install
@@ -36,46 +37,8 @@ class ToolboxBundle extends AbstractPimcoreBundle
         return $this->container->get(Install::class);
     }
 
-    public function getJsPaths(): array
-    {
-        return [
-            '/admin/toolbox-ckeditor-object-style.js',
-            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
-            '/bundles/toolbox/js/document/edit.js'
-        ];
-    }
-
-    public function getEditmodeJsPaths(): array
-    {
-        return [
-            '/bundles/toolbox/js/toolbox-ckeditor-plugins.js',
-            '/bundles/toolbox/js/document/editables/areablock.js',
-            '/bundles/toolbox/js/document/editables/googlemap.js',
-            '/bundles/toolbox/js/document/editables/parallaximage.js',
-            '/bundles/toolbox/js/document/editables/columnadjuster.js',
-            '/bundles/toolbox/js/document/editables/vhs.js',
-            '/bundles/toolbox/js/document/editables/vhs/editor.js',
-        ];
-    }
-
-    public function getEditmodeCssPaths(): array
-    {
-        return [
-            '/bundles/toolbox/css/admin.css',
-            '/bundles/toolbox/css/admin_uikit.css'
-        ];
-    }
-
     protected function getComposerPackageName(): string
     {
         return self::PACKAGE_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    protected static function getPimcoreVersion()
-    {
-        return preg_replace('/[^0-9.]/', '', \Pimcore\Version::getVersion());
     }
 }

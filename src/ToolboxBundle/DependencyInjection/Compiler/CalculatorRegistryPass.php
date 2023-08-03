@@ -14,9 +14,10 @@ final class CalculatorRegistryPass implements CompilerPassInterface
 
     public function process(ContainerBuilder $container): void
     {
+        $definition = $container->getDefinition(CalculatorRegistry::class);
         $taggedServices = $container->findTaggedServiceIds('toolbox.calculator', true);
+
         foreach ($taggedServices as $id => $tags) {
-            $definition = $container->getDefinition(CalculatorRegistry::class);
             foreach ($tags as $attributes) {
                 $definition->addMethodCall('register', [$id, new Reference($id), $attributes['type']]);
             }

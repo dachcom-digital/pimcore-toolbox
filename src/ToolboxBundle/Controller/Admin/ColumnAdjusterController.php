@@ -2,23 +2,18 @@
 
 namespace ToolboxBundle\Controller\Admin;
 
-use Pimcore\Bundle\AdminBundle\Controller;
+use Pimcore\Bundle\AdminBundle\Controller\AdminAbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Registry\CalculatorRegistryInterface;
 
-class ColumnAdjusterController extends Controller\AdminController
+class ColumnAdjusterController extends AdminAbstractController
 {
-    private CalculatorRegistryInterface $calculatorRegistry;
-    private ConfigManagerInterface $configManager;
-
     public function __construct(
-        ConfigManagerInterface $configManager,
-        CalculatorRegistryInterface $calculatorRegistry
+        private ConfigManagerInterface $configManager,
+        private CalculatorRegistryInterface $calculatorRegistry
     ) {
-        $this->configManager = $configManager;
-        $this->calculatorRegistry = $calculatorRegistry;
     }
 
     /**

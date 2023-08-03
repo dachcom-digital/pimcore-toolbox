@@ -1,0 +1,17 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Content\Content:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: content }
+
+toolbox:
+    areas:
+        content:
+            config_elements:
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            inline_config_elements:
+                wysiwyg:
+                    type: wysiwyg

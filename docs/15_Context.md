@@ -11,11 +11,11 @@ If your client opens the document in the backend in a specific site tree for exa
 
 ## Context Configuration
 
-| Name | Type | Description
-|------|------|------------|
-| `merge_with_root` | bool | Use the main toolbox configuration as base configuration and reconfigure them in the new context. **Note**: If you disable this note, you need to provide every single configuration by your own. |
-| `enabled_areas` | array | Enable specific Areas |
-| `disabled_areas` | array | Disable specific Areas. **Note:** If you have configured `enabled_areas` this option will be ignored. |
+| Name              | Type  | Description                                                                                                                                                                                       |
+|-------------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `merge_with_root` | bool  | Use the main toolbox configuration as base configuration and reconfigure them in the new context. **Note**: If you disable this note, you need to provide every single configuration by your own. |
+| `enabled_areas`   | array | Enable specific Areas                                                                                                                                                                             |
+| `disabled_areas`  | array | Disable specific Areas. **Note:** If you have configured `enabled_areas` this option will be ignored.                                                                                             |
 
 > **Note**: If you have enabled `merge_with_root` you cannot use a different theme in sub context since there would be a layout mismatch.
 
@@ -79,8 +79,8 @@ toolbox:
 
 namespace App\Services\ToolboxBundle;
 
+use Pimcore\Http\RequestHelper;
 use Pimcore\Model\Document;
-use Symfony\Component\HttpFoundation\RequestStack;
 use ToolboxBundle\Resolver\ContextResolverInterface;
 use Pimcore\Http\Request\Resolver\DocumentResolver;
 use Pimcore\Http\Request\Resolver\EditmodeResolver;
@@ -90,51 +90,42 @@ use Pimcore\Tool;
 
 class ToolboxContextResolver implements ContextResolverInterface
 {
-    protected SiteResolver $siteResolver;
-    protected RequestStack $requestStack;
-    private EditmodeResolver $editModeResolver;
-    private DocumentResolver $documentResolver;
-
     public function __construct(
-        RequestStack $requestStack,
-        SiteResolver $siteResolver,
-        EditmodeResolver $editModeResolver,
-        DocumentResolver $documentResolver
+        protected SiteResolver $siteResolver,
+        protected RequestHelper $requestHelper,
+        protected EditmodeResolver $editModeResolver,
+        protected DocumentResolver $documentResolver
     ) {
-        $this->requestStack = $requestStack;
-        $this->siteResolver = $siteResolver;
-        $this->editModeResolver = $editModeResolver;
-        $this->documentResolver = $documentResolver;
     }
 
     public function getCurrentContextIdentifier(): ?string
     {
-        $request = $this->requestStack->getMainRequest();
+        if (!$this->requestHelper->hasMainRequest()) {
+            return null;
+        }
 
-        $site = null;
+        $request = $this->requestHelper->getMainRequest();
 
-        //if request is coming from a ckeditor configuration request (/admin/*.js)
+        //if request is coming from a wysiwyg configuration request (/admin/*.js)
         if ($request->query->has('tb_document_request_id')) {
+        
             try {
                 $currentDocument = Document::getById($request->query->get('tb_document_request_id'));
             } catch (\Exception $e) {
                 $currentDocument = null;
             }
 
-            if ($currentDocument instanceof Document) {
-                $site = Tool\Frontend::getSiteForDocument($currentDocument);
-            }
+            $site = $currentDocument instanceof Document ? Tool\Frontend::getSiteForDocument($currentDocument) : null;
+              
+        } elseif (
+            $this->editModeResolver->isEditmode($request) || 
+            $this->requestHelper->isFrontendRequestByAdmin($request)
+        ) {
+            // in backend, we don't have any site request, we need to fetch it via document
+            $currentDocument = $this->documentResolver->getDocument();
+            $site = Tool\Frontend::getSiteForDocument($currentDocument);
         } else {
-            //if request is not in editmode we can determinate site by site resolver
-            if (!$this->editModeResolver->isEditmode($request)) {
-                if ($this->siteResolver->isSiteRequest($request)) {
-                    $site = $this->siteResolver->getSite($request);
-                }
-                // in backend we don't have any site request, we need to fetch it via document
-            } else {
-                $currentDocument = $this->documentResolver->getDocument();
-                $site = Tool\Frontend::getSiteForDocument($currentDocument);
-            }
+            $site = $this->siteResolver->isSiteRequest($request) ? $this->siteResolver->getSite($request) : null;
         }
 
         if (!$site instanceof Site) {

@@ -12,7 +12,7 @@ If you just want to create a simple brick, create a [simple brick](./10_CustomBr
 
 There are three simple steps to create a custom brick:
 
-1. Add this configuration to `/config/packages/toolbox.yml`:
+1. Add this configuration to `/config/packages/toolbox.yaml`:
 
 ```yaml
 services:
@@ -22,7 +22,7 @@ services:
             - { name: toolbox.area.brick, id: my_brick }
 
 toolbox:
-    custom_areas:
+    areas:
         # that's the name of your brick. 
         my_brick:
             config_elements:
@@ -47,9 +47,7 @@ toolbox:
 
 namespace App\Document\Areabrick\MyBrick;
 
-use Pimcore\Model\Document\Editable\Area\Info;
-use Symfony\Component\HttpFoundation\Response;
-use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
+use Pimcore\Model\Document\Editable\Area\Info;use Symfony\Component\HttpFoundation\Response;use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 
 class MyBrick extends AbstractAreabrick
 {
@@ -109,7 +107,7 @@ That's it. If you want to refresh the permission table you also need to execute 
 
 Two steps to create a simple brick:
 
-1. Add this configuration to `/config/packages/toolbox.yml`:
+1. Add this configuration to `/config/packages/toolbox.yaml`:
 
 ```yaml
 services:
@@ -135,7 +133,7 @@ services:
             } 
                 
 toolbox:
-    custom_areas:
+    areas:
         # that's the name of your simple brick. 
         # configuration behaves the same as a default brick 
         my_simple_brick:
@@ -187,7 +185,7 @@ To use tabs in your config dialog, you have to define them via the tab config no
 
 ```yaml
 toolbox:
-    custom_areas:
+    areas:
         dummy_brick:
             tabs:              # <-- define tabs here first!
                 tab1: 'Tab 1'

@@ -1,0 +1,40 @@
+toolbox:
+
+    enabled_core_areas:
+        - accordion
+        - anchor
+        - columns
+        - container
+        - content
+        - download
+        - gallery
+        - googleMap
+        - headline
+        - iFrame
+        - image
+        - linkList
+        - parallaxContainer
+        - parallaxContainerSection
+        - separator
+        - slideColumns
+        - snippet
+        - spacer
+        - teaser
+        - video
+
+    theme:
+        grid:
+            grid_size: 12
+            breakpoints:
+                -   identifier: 'xs'
+                    name: 'Breakpoint: XS'
+                    description: 'Your Description'
+                -   identifier: 'sm'
+                    name: 'Breakpoint: SM'
+                    description: 'Your Description'
+                -   identifier: 'md'
+                    name: 'Breakpoint: MD'
+                    description: 'Your Description'
+                -   identifier: 'lg'
+                    name: 'Breakpoint: LG'
+                    description: 'Your Description'

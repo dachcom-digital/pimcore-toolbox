@@ -1,0 +1,94 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\ParallaxContainer\ParallaxContainer:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        arguments:
+            - '@translator'
+            - '@pimcore.templating.engine.delegating'
+        tags:
+            - { name: toolbox.area.brick, id: parallaxContainer }
+
+toolbox:
+    areas:
+        parallaxContainer:
+            config_elements:
+                template:
+                    type: select
+                    title: 'Parallax Template'
+                    config:
+                        store:
+                            no-template: 'No Template'
+                        default: no-template
+                background_image:
+                    type: relation
+                    title: 'Background Image'
+                    config:
+                        types:
+                          - asset
+                        subtypes:
+                            asset:
+                              - image
+                              - video
+                background_color:
+                    type: select
+                    title: Background Color
+                    config:
+                        store:
+                            no-background-color: 'No Background Color'
+                        default: no-background-color
+                image_front:
+                    type: parallaximage
+                    title: 'Images In Front Of Main Container'
+                    config:
+                        position:
+                            top-left: 'Top Left'
+                            top-center: 'Top Center'
+                            top-right: 'Top Right'
+                            bottom-left: 'Bottom Left'
+                            bottom-center: 'Bottom Center'
+                            bottom-right: 'Bottom Right'
+                            center-left: 'Center Left'
+                            center-center: 'Center Center'
+                            center-right: 'Center Right'
+                        size:
+                            half-window-width: 'Half Window Width'
+                            third-window-width: 'Third Window Width'
+                            quarter-window-width: 'Quarter Window Width'
+                image_behind:
+                    type: parallaximage
+                    title: 'Images Behind Main Container'
+                    config:
+                        position:
+                            top-left: 'Top Left'
+                            top-center: 'Top Center'
+                            top-right: 'Top Right'
+                            bottom-left: 'Bottom Left'
+                            bottom-center: 'Bottom Center'
+                            bottom-right: 'Bottom Right'
+                            center-left: 'Center Left'
+                            center-center: 'Center Center'
+                            center-right: 'Center Right'
+                        size:
+                            half-window-width: 'Half Window Width'
+                            third-window-width: 'Third Window Width'
+                            quarter-window-width: 'Quarter Window Width'
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            config_parameter:
+                window_size: large
+                background_mode: wrap
+                background_image_mode: data
+                background_color_mode: data
+
+    areablock_restriction:
+        parallaxContainer:
+            disallowed:
+                - container
+                - parallaxContainer
+
+    snippet_areablock_restriction:
+        parallaxContainer:
+            disallowed:
+                - container
+                - parallaxContainer

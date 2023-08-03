@@ -8,11 +8,14 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use ToolboxBundle\Builder\BrickConfigBuilderInterface;
+use ToolboxBundle\Builder\InlineConfigBuilderInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 use ToolboxBundle\Document\Areabrick\AbstractBaseAreabrick;
 use ToolboxBundle\Document\SimpleAreabrick\SimpleAreaBrick;
 use ToolboxBundle\Document\SimpleAreabrick\SimpleAreaBrickConfigurable;
+use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\ToolboxConfig;
@@ -27,7 +30,9 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
         $abstractBrickDefinition = new Definition(AbstractBaseAreabrick::class);
         $abstractBrickDefinition->setAbstract(true);
         $abstractBrickDefinition->addMethodCall('setLayoutManager', [new Reference(LayoutManagerInterface::class)]);
+        $abstractBrickDefinition->addMethodCall('setInlineConfigBuilder', [new Reference(InlineConfigBuilderInterface::class)]);
         $abstractBrickDefinition->addMethodCall('setConfigManager', [new Reference(ConfigManagerInterface::class)]);
+        $abstractBrickDefinition->addMethodCall('setEventDispatcher', [new Reference(EventDispatcherInterface::class)]);
 
         $container->setDefinition(AbstractBaseAreabrick::class, $abstractBrickDefinition);
 
@@ -39,9 +44,11 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
 
         $container->setDefinition(AbstractAreabrick::class, $abstractConfigurableBrickDefinition);
 
+        $additionalAreaBricksConfig = [];
+
         // check for legacy naming
-        $pimcoreTaggedServices = $container->findTaggedServiceIds('pimcore.area.brick', true);
-        foreach ($pimcoreTaggedServices as $legacyId => $legacyTags) {
+        $pimcoreTaggedAreaBricksServices = $container->findTaggedServiceIds('pimcore.area.brick', true);
+        foreach ($pimcoreTaggedAreaBricksServices as $legacyId => $legacyTags) {
             $legacyBrickDefinition = $container->getDefinition($legacyId);
             if ($legacyBrickDefinition instanceof ChildDefinition && $legacyBrickDefinition->getParent() === AbstractAreabrick::class) {
                 throw new InvalidDefinitionException(sprintf(
@@ -51,11 +58,16 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     $legacyId
                 ));
             }
+
+            foreach ($legacyTags as $pimcoreAreaBrickAttributes) {
+                $additionalAreaBricksConfig[] = $pimcoreAreaBrickAttributes['id'];
+            }
+
         }
 
         // register toolbox bricks
-        $toolboxTaggedServices = $container->findTaggedServiceIds('toolbox.area.brick', true);
-        foreach ($toolboxTaggedServices as $id => $tags) {
+        $toolboxTaggedAreaBricksServices = $container->findTaggedServiceIds('toolbox.area.brick', true);
+        foreach ($toolboxTaggedAreaBricksServices as $id => $tags) {
             $brickDefinition = $container->getDefinition($id);
 
             if (!$brickDefinition instanceof ChildDefinition) {
@@ -66,14 +78,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 ));
             }
 
-            if ($brickDefinition->hasMethodCall('setAreaBrickType')) {
-                throw new InvalidDefinitionException(sprintf(
-                    'Please remove methodCall "%s" from your brick "%s". The type declaration will be processed internally.',
-                    'setAreaBrickType',
-                    $id
-                ));
-            }
-
             foreach ($tags as $attributes) {
                 $type = AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL;
 
@@ -81,12 +85,12 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     $type = AbstractBaseAreabrick::AREABRICK_TYPE_INTERNAL;
                 }
 
-                if ($type === AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL && in_array($attributes['id'], ToolboxConfig::TOOLBOX_TYPES, true)) {
+                if ($type === AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL && in_array($attributes['id'], ToolboxConfig::TOOLBOX_AREA_TYPES, true)) {
                     throw new InvalidDefinitionException(sprintf(
                         'ID "%s" for AreaBrick "%s is a reserved identifier. Please change the id of your custom AreaBrick. Internal IDs are: %s.',
                         $attributes['id'],
                         $id,
-                        implode(', ', ToolboxConfig::TOOLBOX_TYPES)
+                        implode(', ', ToolboxConfig::TOOLBOX_AREA_TYPES)
                     ));
                 }
 
@@ -100,8 +104,8 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
         }
 
         // register simple toolbox bricks
-        $toolboxTaggedServices = $container->findTaggedServiceIds('toolbox.area.simple_brick', true);
-        foreach ($toolboxTaggedServices as $id => $tags) {
+        $toolboxTaggedSimpleAreaBricksServices = $container->findTaggedServiceIds('toolbox.area.simple_brick', true);
+        foreach ($toolboxTaggedSimpleAreaBricksServices as $id => $tags) {
             $simpleBrickDefinition = $container->getDefinition($id);
 
             if (!$simpleBrickDefinition instanceof ChildDefinition) {
@@ -120,21 +124,22 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             $simpleBrickDefinition->addMethodCall('setAreaBrickType', [AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL]);
 
             foreach ($tags as $attributes) {
-                if (!isset($attributes['title']) || empty($attributes['title'])) {
+
+                if (empty($attributes['title'])) {
                     throw new InvalidDefinitionException(sprintf('Simple Areabrick "%s" has an invalid title', $attributes['id']));
                 }
 
                 $simpleBrickDefinition->addMethodCall('setName', [$attributes['title']]);
 
-                if (isset($attributes['description']) && !empty($attributes['description'])) {
+                if (!empty($attributes['description'])) {
                     $simpleBrickDefinition->addMethodCall('setDescription', [$attributes['description']]);
                 }
 
-                if (isset($attributes['template']) && !empty($attributes['template'])) {
+                if (!empty($attributes['template'])) {
                     $simpleBrickDefinition->addMethodCall('setTemplate', [$attributes['template']]);
                 }
 
-                if (isset($attributes['icon']) && !empty($attributes['icon'])) {
+                if (!empty($attributes['icon'])) {
                     $simpleBrickDefinition->addMethodCall('setIcon', [$attributes['icon']]);
                 }
 
@@ -143,6 +148,8 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if ($simpleBrickDefinition->getParent() === AbstractBaseAreabrick::class) {
                     $notEditDialogAwareBricks[] = $attributes['id'];
                 }
+
+                $additionalAreaBricksConfig[] = $attributes['id'];
             }
         }
 
@@ -152,7 +159,7 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                 if (in_array($requestedEditDialogAwareBrickId, $notEditDialogAwareBricks, true)) {
                     throw new InvalidDefinitionException(
                         sprintf(
-                            'Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from custom_areas.%s',
+                            'Areabrick "%s" has some dialog editables but has been registered as a non-configurable brick. Please set "%s" as parent class or remove the config node from areas.%s',
                             $requestedEditDialogAwareBrickId,
                             AbstractAreabrick::class,
                             $requestedEditDialogAwareBrickId
@@ -160,6 +167,11 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
                     );
                 }
             }
+        }
+
+        if(count($additionalAreaBricksConfig) > 0) {
+            $configManagerDefinition = $container->getDefinition(ConfigManager::class);
+            $configManagerDefinition->addMethodCall('addAdditionalAreaConfig', [$additionalAreaBricksConfig]);
         }
     }
 }

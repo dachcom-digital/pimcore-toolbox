@@ -1,0 +1,94 @@
+toolbox:
+
+    enabled_core_areas:
+        - accordion
+        - anchor
+        - columns
+        - container
+        - content
+        - download
+        - gallery
+        - googleMap
+        - headline
+        - iFrame
+        - image
+        - linkList
+        - parallaxContainer
+        - parallaxContainerSection
+        - separator
+        - slideColumns
+        - snippet
+        - spacer
+        - teaser
+        - video
+
+    wysiwyg_editor:
+        config:
+            style_formats:
+                -   title: 'Lead Global'
+                    classes: 'lead'
+                    selector: 'p'
+
+    context_resolver: 'DachcomBundle\Test\Support\Services\ContextResolverTestClass'
+    context:
+        context_a:
+            settings:
+                merge_with_root: true
+                enabled_areas:
+                - 'headline'
+            wysiwyg_editor:
+                config:
+                    style_formats:
+                        -   title: 'Lead For Portal1'
+                            classes: 'lead-portal'
+                            selector: 'p'
+                        -   title: 'Dark Grey'
+                            classes: 'grey-1'
+                            selector: 'h1'
+
+        context_b:
+            settings:
+                merge_with_root: true
+                disabled_areas:
+                - 'accordion'
+                - 'anchor'
+                - 'columns'
+                - 'container'
+                - 'content'
+                - 'download'
+                - 'gallery'
+                - 'googleMap'
+                - 'iFrame'
+                - 'image'
+                - 'linkList'
+                - 'parallaxContainer'
+                - 'separator'
+                - 'slideColumns'
+                - 'snippet'
+                - 'spacer'
+                - 'teaser'
+                - 'video'
+        context_c:
+            settings:
+                merge_with_root: false
+            theme:
+                layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP4
+                calculators:
+                    column_calculator: ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator
+                    slide_calculator: ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator
+                grid:
+                    grid_size: 8
+                    breakpoints:
+                        -   identifier: 'xs-c'
+                            name: 'Breakpoint: XS for Context C'
+                            description: 'Your Description'
+                        -   identifier: 'lg-c'
+                            name: 'Breakpoint: LG for Context C'
+                            description: 'Your Description'
+            areas:
+                content:
+                    config_elements:
+                        additional_classes:
+                            type: additionalClasses
+                            config:
+                                store: ~

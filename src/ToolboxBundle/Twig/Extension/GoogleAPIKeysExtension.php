@@ -8,15 +8,10 @@ use Twig\TwigFunction;
 
 class GoogleAPIKeysExtension extends AbstractExtension
 {
-    protected ?string $fallbackBrowserKey;
-    protected ConfigManagerInterface $configManager;
-
     public function __construct(
-        ?string $fallbackBrowserKey,
-        ConfigManagerInterface $configManager
+        protected ?string $fallbackBrowserKey,
+        protected ConfigManagerInterface $configManager
     ) {
-        $this->fallbackBrowserKey = $fallbackBrowserKey;
-        $this->configManager = $configManager;
     }
 
     public function getFunctions(): array
@@ -27,16 +22,14 @@ class GoogleAPIKeysExtension extends AbstractExtension
     }
 
     /**
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getGoogleMapAPIKey()
+    public function getGoogleMapAPIKey(): mixed
     {
         $browserKey = 'please_configure_key_in_systemsettings';
-        $configNode = $this->configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $this->configManager->getAreaParameterConfig('googleMap');
 
-        if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['map_api_key'])) {
             return $configNode['map_api_key'];
         }
 

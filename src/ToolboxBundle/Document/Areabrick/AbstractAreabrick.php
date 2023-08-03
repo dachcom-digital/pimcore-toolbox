@@ -6,6 +6,9 @@ use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
 use Pimcore\Extension\Document\Areabrick\EditableDialogBoxInterface;
 use Pimcore\Model\Document;
 use ToolboxBundle\Builder\BrickConfigBuilderInterface;
+use ToolboxBundle\Document\Response\HeadlessResponse;
+use ToolboxBundle\Event\HeadlessEditableActionEvent;
+use ToolboxBundle\ToolboxEvents;
 
 abstract class AbstractAreabrick extends AbstractBaseAreabrick implements EditableDialogBoxInterface
 {
@@ -16,11 +19,31 @@ abstract class AbstractAreabrick extends AbstractBaseAreabrick implements Editab
         $this->brickConfigBuilder = $brickConfigBuilder;
     }
 
+    public function headlessAction(Document\Editable\Area\Info $info, HeadlessResponse $headlessResponse): void
+    {
+        parent::headlessAction($info, $headlessResponse);
+
+        $headlessResponse->setConfigElementData(
+            $this->brickConfigBuilder->buildConfigurationData(
+                $info,
+                $this->getId(),
+                $this->getAreaConfig(),
+                $this->getAreaThemeOptions(),
+                $this->isHeadlessLayoutAware()
+            )
+        );
+
+        $this->triggerHeadlessEditableActionEvent($info, $headlessResponse);
+    }
+
     public function getEditableDialogBoxConfiguration(Document\Editable $area, ?Document\Editable\Area\Info $info): EditableDialogBoxConfiguration
     {
-        $configNode = $this->getConfigManager()->getAreaConfig($this->getId());
-        $themeOptions = $this->getConfigManager()->getConfig('theme');
-
-        return $this->brickConfigBuilder->buildDialogBoxConfiguration($info, $this->getId(), $configNode, $themeOptions);
+        return $this->brickConfigBuilder->buildConfiguration(
+            $info,
+            $this->getId(),
+            $this->getAreaConfig(),
+            $this->getAreaThemeOptions(),
+            $this->isHeadlessLayoutAware()
+        );
     }
 }

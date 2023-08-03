@@ -11,13 +11,9 @@ class CalculatorRegistry implements CalculatorRegistryInterface
         'column'       => [],
         'slide_column' => []
     ];
-    private string $columnInterface;
-    private string $slideColumnInterface;
 
-    public function __construct(string $columnInterface, string $slideColumnInterface)
+    public function __construct(protected string $columnInterface, protected string $slideColumnInterface)
     {
-        $this->columnInterface = $columnInterface;
-        $this->slideColumnInterface = $slideColumnInterface;
     }
 
     public function register(string $id, mixed $service, string $type): void

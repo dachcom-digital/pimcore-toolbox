@@ -3,32 +3,25 @@
 namespace ToolboxBundle\Controller\Admin;
 
 use Exception;
-use Pimcore\Bundle\AdminBundle\Controller;
+use Pimcore\Bundle\AdminBundle\Controller\AdminAbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class SettingsController extends Controller\AdminController
+class SettingsController extends AdminAbstractController
 {
-    protected array $globalStyleSets = [];
-    protected array $ckEditorObjectConfig = [];
-    protected array $ckEditorAreaConfig = [];
-    protected ConfigManagerInterface $configManager;
-
-    public function __construct(ConfigManagerInterface $configManager)
+    public function __construct(protected ConfigManagerInterface $configManager)
     {
-        $this->configManager = $configManager;
     }
 
     /**
      * @throws Exception
      */
-    public function ckEditorAreaStyleAction(): Response
+    public function wysiwygAreaStyleAction(): Response
     {
-        $this->setData();
+        [$wysiwygObjectConfig, $wysiwygAreaConfig] = $this->parseData();
 
-        $response = $this->render('@Toolbox/admin/settings/ckeditor-area-style.html.twig', [
-            'globalStyleSets' => $this->globalStyleSets,
-            'config'          => $this->ckEditorAreaConfig
+        $response = $this->render('@Toolbox/admin/settings/wysiwyg-area-style.html.twig', [
+            'config' => $wysiwygAreaConfig
         ]);
 
         $response->headers->set('Content-Type', 'application/javascript');
@@ -41,13 +34,12 @@ class SettingsController extends Controller\AdminController
     /**
      * @throws Exception
      */
-    public function ckEditorObjectStyleAction(): Response
+    public function wysiwygObjectStyleAction(): Response
     {
-        $this->setData();
+        [$wysiwygObjectConfig, $wysiwygAreaConfig] = $this->parseData();
 
-        $response = $this->render('@Toolbox/admin/settings/ckeditor-object-style.html.twig', [
-            'globalStyleSets' => $this->globalStyleSets,
-            'config'          => $this->ckEditorObjectConfig
+        $response = $this->render('@Toolbox/admin/settings/wysiwyg-object-style.html.twig', [
+            'config' => $wysiwygObjectConfig
         ]);
 
         $response->headers->set('Content-Type', 'application/javascript');
@@ -60,31 +52,28 @@ class SettingsController extends Controller\AdminController
     /**
      * @throws Exception
      */
-    private function setData(): void
+    private function parseData(): array
     {
-        $ckEditorSettings = $this->configManager->getConfig('ckeditor');
+        $wysiwygSettings = $this->configManager->getConfig('wysiwyg_editor');
 
-        $ckEditorGlobalConfig = $ckEditorSettings['config'];
+        $wysiwygEditorConfig = $wysiwygSettings['config'];
 
         //object config
-        $userCkEditorObjectConfig = [];
-        if (isset($ckEditorSettings['object_editor']['config'])) {
-            $userCkEditorObjectConfig = $ckEditorSettings['object_editor']['config'];
+        $userWysiwygEditorObjectConfig = [];
+        if (isset($wysiwygSettings['object_editor']['config'])) {
+            $userWysiwygEditorObjectConfig = $wysiwygSettings['object_editor']['config'];
         }
 
         //area config
-        $userCkEditorAreaConfig = [];
-        if (isset($ckEditorSettings['area_editor']['config'])) {
-            $userCkEditorAreaConfig = $ckEditorSettings['area_editor']['config'];
+        $userWysiwygEditorAreaConfig = [];
+        if (isset($wysiwygSettings['area_editor']['config'])) {
+            $userWysiwygEditorAreaConfig = $wysiwygSettings['area_editor']['config'];
         }
 
-        //global style sets config
-        if (isset($ckEditorSettings['global_style_sets'])) {
-            $this->globalStyleSets = $ckEditorSettings['global_style_sets'];
-        }
-
-        $this->ckEditorObjectConfig = $this->parseToolbarConfig($ckEditorGlobalConfig, $userCkEditorObjectConfig);
-        $this->ckEditorAreaConfig = $this->parseToolbarConfig($ckEditorGlobalConfig, $userCkEditorAreaConfig);
+        return [
+            $this->parseToolbarConfig($wysiwygEditorConfig, $userWysiwygEditorObjectConfig),
+            $this->parseToolbarConfig($wysiwygEditorConfig, $userWysiwygEditorAreaConfig)
+        ];
     }
 
     private function parseToolbarConfig(array $defaultConfig, array $userConfig): array

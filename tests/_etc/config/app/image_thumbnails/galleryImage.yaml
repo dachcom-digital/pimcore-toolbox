@@ -1,0 +1,24 @@
+pimcore:
+    assets:
+        image:
+            thumbnails:
+                definitions:
+                    galleryImage:
+                        items:
+                            -
+                                method: grayscale
+                                arguments: {  }
+                        medias: {  }
+                        name: galleryImage
+                        description: ''
+                        group: ''
+                        format: SOURCE
+                        quality: 85
+                        highResolution: 0.0
+                        preserveColor: false
+                        preserveMetaData: false
+                        rasterizeSVG: false
+                        downloadable: false
+                        modificationDate: 1684761377
+                        creationDate: 1684761361
+                        preserveAnimation: false

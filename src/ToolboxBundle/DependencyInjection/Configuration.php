@@ -3,13 +3,12 @@
 namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\EnumNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\BooleanNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\ScalarNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\Form\Exception\InvalidConfigurationException;
-use ToolboxBundle\Calculator\Bootstrap4\ColumnCalculator;
-use ToolboxBundle\Calculator\Bootstrap4\SlideColumnCalculator;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use ToolboxBundle\Resolver\ContextResolver;
 use ToolboxBundle\ToolboxConfig;
 
@@ -20,7 +19,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('toolbox');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->getConfigNode($rootNode);
+        $this->addRootNode($rootNode);
         $this->addContextNode($rootNode);
 
         $rootNode
@@ -41,12 +40,11 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->append($this->buildContextSettingsNode())
                             ->append($this->buildFlagsConfiguration())
-                            ->append($this->buildAreasSection(true))
                             ->append($this->buildAreasSection())
-                            ->append($this->buildCkEditorConfigSection())
+                            ->append($this->buildWysiwygEditorConfigSection())
                             ->append($this->buildImageThumbnailSection())
-                            ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
-                            ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
+                            ->append($this->buildAreaBlockRestrictionConfiguration('areablock_restriction'))
+                            ->append($this->buildAreaBlockRestrictionConfiguration('snippet_areablock_restriction'))
                             ->append($this->buildAreaBlockConfiguration())
                             ->append($this->buildThemeConfiguration())
                             ->append($this->buildDataAttributeConfiguration())
@@ -56,23 +54,47 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    public function getConfigNode(ArrayNodeDefinition $rootNode): void
+    public function addRootNode(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()
+                ->append($this->buildCoreAreasConfiguration())
                 ->append($this->buildFlagsConfiguration())
-                ->append($this->buildAreasSection(true))
                 ->append($this->buildAreasSection())
-                ->append($this->buildCkEditorConfigSection())
+                ->append($this->buildWysiwygEditorConfigSection())
                 ->append($this->buildImageThumbnailSection())
-                ->append($this->buildAreasAppearanceConfiguration('areas_appearance'))
-                ->append($this->buildAreasAppearanceConfiguration('snippet_areas_appearance'))
+                ->append($this->buildAreaBlockRestrictionConfiguration('areablock_restriction'))
+                ->append($this->buildAreaBlockRestrictionConfiguration('snippet_areablock_restriction'))
                 ->append($this->buildAreaBlockConfiguration())
                 ->append($this->buildThemeConfiguration())
                 ->append($this->buildDataAttributeConfiguration())
             ->end();
     }
 
+    protected function buildCoreAreasConfiguration(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('enabled_core_areas');
+
+        $treeBuilder
+            ->prototype('scalar')
+                ->defaultValue([])
+                ->validate()
+                    ->ifTrue(function ($areaName) {
+                        return !in_array($areaName, ToolboxConfig::TOOLBOX_AREA_TYPES, true);
+                    })
+                    ->then(function ($areaName) {
+                        throw new InvalidConfigurationException(sprintf(
+                            'Invalid core element "%s" in toolbox "enabled_core_areas" configuration". Available types for "enabled_core_areas" are: %s',
+                            $areaName,
+                            implode(', ', ToolboxConfig::TOOLBOX_AREA_TYPES)
+                        ));
+                    })
+                ->end()
+            ->end();
+
+        return $treeBuilder;
+
+    }
     protected function buildContextSettingsNode(): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition('settings');
@@ -113,22 +135,21 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->booleanNode('strict_column_counter')->defaultValue(false)->end()
-                ->booleanNode('use_dynamic_links')->defaultValue(false)->end()
             ->end();
 
         return $treeBuilder;
     }
 
-    protected function buildCkEditorConfigSection(): ArrayNodeDefinition
+    protected function buildWysiwygEditorConfigSection(): ArrayNodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition('ckeditor');
+        $treeBuilder = new ArrayNodeDefinition('wysiwyg_editor');
 
         $treeBuilder
             ->addDefaultsIfNotSet()
             ->children()
                 ->variableNode('config')->defaultValue([])->end()
-                ->variableNode('global_style_sets')->defaultValue([])->end()
                 ->arrayNode('area_editor')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('config')
                             ->validate()->ifEmpty()->thenUnset()->end()
@@ -136,6 +157,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('object_editor')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->variableNode('config')
                             ->validate()->ifEmpty()->thenUnset()->end()
@@ -158,7 +180,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildAreasAppearanceConfiguration(string $type): ArrayNodeDefinition
+    protected function buildAreaBlockRestrictionConfiguration(string $type): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition($type);
 
@@ -208,17 +230,17 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder
             ->children()
-                ->scalarNode('layout')
-                    ->cannotBeEmpty()
-                ->end()
+                ->scalarNode('layout')->cannotBeEmpty()->end()
+                ->append($this->buildHeadlessDocumentsSection())
                 ->scalarNode('default_layout')
                     ->defaultValue(false)
                 ->end()
                 ->arrayNode('calculators')
                     ->addDefaultsIfNotSet()
+                    ->isRequired()
                     ->children()
-                        ->scalarNode('column_calculator')->defaultValue(ColumnCalculator::class)->end()
-                        ->scalarNode('slide_calculator')->defaultValue(SlideColumnCalculator::class)->end()
+                        ->scalarNode('column_calculator')->isRequired()->end()
+                        ->scalarNode('slide_calculator')->isRequired()->end()
                     ->end()
                 ->end()
                 ->arrayNode('grid')
@@ -294,36 +316,19 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildAreasSection(bool $internalTypes = false): ArrayNodeDefinition
+    protected function buildAreasSection(): ArrayNodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition($internalTypes ? 'areas' : 'custom_areas');
+        $treeBuilder = new ArrayNodeDefinition('areas');
 
         $treeBuilder
-            ->validate()
-                ->ifTrue(function ($v) use ($internalTypes) {
-                    if ($internalTypes === false) {
-                        return false;
-                    }
-
-                    return count(array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES)) > 0;
-                })
-                ->then(function ($v) {
-                    $invalidTags = array_diff(array_keys($v), ToolboxConfig::TOOLBOX_TYPES);
-
-                    throw new InvalidConfigurationException(sprintf(
-                        'Invalid elements in toolbox "area" configuration: %s. to add custom areas, use the "custom_area" node. allowed tags for "area" are: %s',
-                        implode(', ', $invalidTags),
-                        implode(', ', ToolboxConfig::TOOLBOX_TYPES)
-                    ));
-                })
-            ->end()
             ->useAttributeAsKey('name')
             ->prototype('array')
                 ->validate()
                     ->ifTrue(function ($v) {
+
                         $tabs = $v['tabs'];
 
-                        return count($tabs) > 0 && count(array_filter($v['config_elements'], function($configElement) use ($tabs) {
+                        return count($tabs) > 0 && count(array_filter($v['config_elements'], static function($configElement) use ($tabs) {
                             return !array_key_exists($configElement['tab'], $tabs);
                         })) > 0;
                     })
@@ -336,9 +341,10 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->validate()
                     ->ifTrue(function ($v) {
+
                         $tabs = $v['tabs'];
 
-                        return count($tabs) === 0 && count(array_filter($v['config_elements'], function($configElement) {
+                        return count($tabs) === 0 && count(array_filter($v['config_elements'], static function($configElement) {
                             return $configElement['tab'] !== null;
                         })) > 0;
                     })
@@ -346,9 +352,33 @@ class Configuration implements ConfigurationInterface
                         @trigger_error('Unknown configured area tabs in config_elements. No tabs have been defined', E_USER_ERROR);
                     })
                 ->end()
+                ->beforeNormalization()
+                    ->ifTrue(function ($v) {
+                        foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
+                            if ($inlineConfigElement === '<') {
+                                return true;
+                            }
+                        }
+                        return false;
+                    })
+                    ->then(function ($v) {
+
+                        foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
+                            if ($inlineConfigElement === '<') {
+                                $v['inline_config_elements'][$inlineConfigId] = $v['config_elements'][$inlineConfigId];
+                                $v['config_elements'][$inlineConfigId]['inline_rendered'] = true;
+                            }
+                        }
+
+                        return $v;
+                    })
+                ->end()
                 ->children()
+                    ->booleanNode('enabled')->defaultTrue()->end()
                     ->append($this->buildConfigElementsTabSection())
-                    ->append($this->buildConfigElementsSection($internalTypes))
+                    ->append($this->buildConfigElementsSection('config_elements'))
+                    ->append($this->buildConfigElementsSection('inline_config_elements'))
+                    ->append($this->buildConfigPropertyNormalizerSection())
                     ->variableNode('config_parameter')->end()
                 ->end()
             ->end()
@@ -372,37 +402,86 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    protected function buildConfigElementsSection(bool $internalTypes = false): ArrayNodeDefinition
+    protected function buildConfigElementsSection(string $configType = 'config_elements', ?string $parent = null): NodeDefinition
     {
-        $treeBuilder = new ArrayNodeDefinition('config_elements');
-
-        if ($internalTypes === true) {
-            //@todo: get them dynamically!!
-            $allowedTypes = array_merge(ToolboxConfig::CORE_TYPES, ToolboxConfig::CUSTOM_TYPES);
-
-            $typeNode = new EnumNodeDefinition('type');
-            $typeNode->isRequired()->values($allowedTypes)->end();
-        } else {
-            $typeNode = new ScalarNodeDefinition('type');
-            $typeNode->isRequired()->end();
+        if ($parent === 'config_elements') {
+            return (new BooleanNodeDefinition($configType))->defaultFalse()->cannotBeOverwritten();
         }
+
+        $treeBuilder = new ArrayNodeDefinition($configType);
+
+        $typeNode = new ScalarNodeDefinition('type');
+        $typeNode->isRequired()->end();
 
         $treeBuilder
             ->useAttributeAsKey('name')
             ->prototype('array')
+            ->validate()
+                ->ifTrue(function ($v) {
+                    return $v['type'] !== 'block' && is_array($v['children']) && count($v['children']) > 0;
+                })
+                ->then(function($v) {
+                    @trigger_error(sprintf('Type "%s" cannot have child elements', $v['type']), E_USER_ERROR);
+                })
+            ->end()
             ->addDefaultsIfNotSet()
                 ->children()
                     ->append($typeNode)
                     ->scalarNode('title')->defaultValue(null)->end()
                     ->scalarNode('description')->defaultValue(null)->end()
+                    ->scalarNode('property_normalizer')->defaultValue(null)->end()
                     ->scalarNode('tab')->defaultValue(null)->end()
                     ->variableNode('config')->defaultValue([])->end()
+                    ->booleanNode('inline_rendered')->cannotBeOverwritten()->defaultFalse()->end()
+                    ->append(
+                        $parent !== null
+                            ? (new BooleanNodeDefinition($configType))->defaultFalse()->cannotBeOverwritten()
+                            : $this->buildConfigElementsSection('children', $configType)
+                    )
                 ->end()
                 ->validate()
                     ->ifTrue(function ($v) {
                         return $v['enabled'] === false;
                     })
                     ->thenUnset()
+                ->end()
+                ->canBeUnset()
+                ->canBeDisabled()
+                ->treatnullLike(['enabled' => false])
+            ->end();
+
+        return $treeBuilder;
+    }
+
+    protected function buildConfigPropertyNormalizerSection(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('additional_property_normalizer');
+
+        $treeBuilder
+             ->useAttributeAsKey('name')
+             ->prototype('scalar')->end();
+
+        return $treeBuilder;
+    }
+
+    protected function buildHeadlessDocumentsSection(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('headless_documents');
+
+        $treeBuilder
+            ->prototype('array')
+            ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('name')->defaultValue(null)->end()
+                    ->arrayNode('areas')
+                        ->useAttributeAsKey('name')
+                        ->prototype('array')
+                            ->children()
+                                ->enumNode('type')->values(['areablock', 'area'])->isRequired()->end()
+                                ->scalarNode('areaType')->defaultNull()->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
                 ->canBeUnset()
                 ->canBeDisabled()

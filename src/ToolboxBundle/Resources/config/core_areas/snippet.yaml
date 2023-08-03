@@ -1,0 +1,12 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Snippet\Snippet:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: snippet }
+
+toolbox:
+    areas:
+        snippet:
+            inline_config_elements:
+                snippet:
+                    type: snippet

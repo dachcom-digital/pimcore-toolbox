@@ -5,9 +5,8 @@ namespace ToolboxBundle\Model\Document\Editable;
 use Pimcore\Model\Document;
 use Pimcore\Tool\Serialize;
 use ToolboxBundle\Manager\ConfigManager;
-use ToolboxBundle\Manager\ConfigManagerInterface;
 
-class GoogleMap extends Document\Editable
+class GoogleMap extends Document\Editable implements Document\Editable\EditmodeDataInterface
 {
     private bool $disableGoogleLookUp = false;
     private ?string $mapId = null;
@@ -55,9 +54,6 @@ class GoogleMap extends Document\Editable
         return empty($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function admin()
     {
         $html = parent::admin();
@@ -67,7 +63,7 @@ class GoogleMap extends Document\Editable
         return str_replace('</div>', $this->frontend() . '</div>', $html);
     }
 
-    public function setDataFromResource(mixed $data): self
+    public function setDataFromResource(mixed $data): static
     {
         $this->setId(uniqid('map-', true));
 
@@ -85,7 +81,7 @@ class GoogleMap extends Document\Editable
     /**
      * @throws \Exception
      */
-    public function setDataFromEditmode(mixed $data): self
+    public function setDataFromEditmode(mixed $data): static
     {
         $this->setId(uniqid('map-', true));
 
@@ -151,7 +147,7 @@ class GoogleMap extends Document\Editable
 
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->getAreaParameterConfig('googleMap');
 
         if (!empty($configNode)) {
             $mapOptions = $configNode['map_options'];
@@ -229,13 +225,13 @@ class GoogleMap extends Document\Editable
     {
         /** @var ConfigManager $configManager */
         $configManager = \Pimcore::getContainer()->get(ConfigManager::class);
-        $configNode = $configManager->setAreaNameSpace(ConfigManagerInterface::AREABRICK_NAMESPACE_INTERNAL)->getAreaParameterConfig('googleMap');
+        $configNode = $configManager->getAreaParameterConfig('googleMap');
 
         $fallbackSimpleKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.simple_api_key');
         $fallbackBrowserKey = \Pimcore::getContainer()->getParameter('toolbox.google_maps.browser_api_key');
 
         // first try to get server-api-key
-        if (!empty($configNode) && isset($configNode['simple_api_key']) && !empty($configNode['simple_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['simple_api_key'])) {
             return $configNode['simple_api_key'];
         }
 
@@ -243,7 +239,7 @@ class GoogleMap extends Document\Editable
             return $fallbackSimpleKey;
         }
 
-        if (!empty($configNode) && isset($configNode['map_api_key']) && !empty($configNode['map_api_key'])) {
+        if (!empty($configNode) && !empty($configNode['map_api_key'])) {
             return $configNode['map_api_key'];
         }
 
@@ -280,7 +276,7 @@ class GoogleMap extends Document\Editable
         return $filteredLocations;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         $parentVars = parent::__sleep();
 

@@ -7,28 +7,28 @@ This is the legacy setup for bootstrap 3.
 
 toolbox:
     theme:
-        layout: 'Bootstrap3'
+        layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP3
         calculators:
             column_calculator: ToolboxBundle\Calculator\Bootstrap3\ColumnCalculator
             slide_calculator: ToolboxBundle\Calculator\Bootstrap3\SlideColumnCalculator
         wrapper:
             googleMap:
-            - {tag: 'div', class: 'embed-responsive embed-responsive-16by9'}
+                - { tag: 'div', class: 'embed-responsive embed-responsive-16by9' }
             video:
-            - {tag: 'div', class: 'embed-responsive embed-responsive-16by9'}
+                - { tag: 'div', class: 'embed-responsive embed-responsive-16by9' }
             image:
-            - {tag: 'div', class: 'row'}
-            - {tag: 'div', class: 'col-xs-12'}
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-xs-12' }
             columns:
-            - {tag: 'div', class: 'row'}
+                - { tag: 'div', class: 'row' }
             gallery:
-            - {tag: 'div', class: 'row'}
-            - {tag: 'div', class: 'col-xs-12 col-gallery'}
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-xs-12 col-gallery' }
             slideColumns:
-            - {tag: 'div', class: 'row'}
+                - { tag: 'div', class: 'row' }
             teaser:
-            - {tag: 'div', class: 'row'}
-            - {tag: 'div', class: 'col-xs-12'}
+                - { tag: 'div', class: 'row' }
+                - { tag: 'div', class: 'col-xs-12' }
 ```
 
 ## Layout
@@ -47,7 +47,6 @@ toolbox:
 <body>
     
     <div id="site">
-    
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
@@ -57,7 +56,6 @@ toolbox:
                 </div>
             </div>
         </div>
-    
     </div>
         
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

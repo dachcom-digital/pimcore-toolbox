@@ -7,18 +7,11 @@ use Pimcore\Extension\Document\Areabrick\AreabrickManager;
 
 class AreaManager implements AreaManagerInterface
 {
-    public ConfigManagerInterface $configManager;
-    public AreabrickManager $brickManager;
-    public PermissionManagerInterface $permissionManager;
-
     public function __construct(
-        ConfigManagerInterface $configManager,
-        AreabrickManager $brickManager,
-        PermissionManagerInterface $permissionManager
+        protected ConfigManagerInterface $configManager,
+        protected AreabrickManager $brickManager,
+        protected PermissionManagerInterface $permissionManager
     ) {
-        $this->configManager = $configManager;
-        $this->brickManager = $brickManager;
-        $this->permissionManager = $permissionManager;
     }
 
     public function getAreaBlockName(?string $type = null): string
@@ -109,7 +102,7 @@ class AreaManager implements AreaManagerInterface
 
         /** @var AbstractTemplateAreabrick $areaElementData */
         foreach ($areaElements as $areaElementName => $areaElementData) {
-            if (!$this->brickManager->isEnabled($areaElementName)) {
+            if (!$this->configManager->areaIsEnabled($areaElementName)) {
                 unset($areaElements[$areaElementName]);
             }
         }
@@ -134,10 +127,8 @@ class AreaManager implements AreaManagerInterface
                 }
             } else {
                 foreach ($areaElements as $areaElementName => $areaElementData) {
-                    $coreAreas = $this->configManager->getConfig('areas');
-                    $customAreas = $this->configManager->getConfig('custom_areas');
-                    if (!array_key_exists($areaElementName, $coreAreas) &&
-                        !array_key_exists($areaElementName, $customAreas)) {
+                    $areas = $this->configManager->getConfig('areas');
+                    if (!array_key_exists($areaElementName, $areas)) {
                         unset($areaElements[$areaElementName]);
                     }
                 }
@@ -158,7 +149,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        $areaAppearance = $this->configManager->getConfig('areas_appearance');
+        $areaAppearance = $this->configManager->getConfig('areablock_restriction');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 
@@ -189,7 +180,7 @@ class AreaManager implements AreaManagerInterface
     {
         $areaElements = $this->getActiveBricks();
 
-        $areaAppearance = $this->configManager->getConfig('snippet_areas_appearance');
+        $areaAppearance = $this->configManager->getConfig('snippet_areablock_restriction');
         $elementAllowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['allowed'] : [];
         $elementDisallowed = isset($areaAppearance[$type]) ? $areaAppearance[$type]['disallowed'] : [];
 

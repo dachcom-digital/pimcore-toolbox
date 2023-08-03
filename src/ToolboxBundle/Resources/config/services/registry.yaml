@@ -1,0 +1,18 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ToolboxBundle\Registry\CalculatorRegistryInterface: '@ToolboxBundle\Registry\CalculatorRegistry'
+    ToolboxBundle\Registry\CalculatorRegistry:
+        arguments:
+            $columnInterface: 'ToolboxBundle\Calculator\ColumnCalculatorInterface'
+            $slideColumnInterface: 'ToolboxBundle\Calculator\SlideColumnCalculatorInterface'
+
+    ToolboxBundle\Registry\StoreProviderRegistryInterface: '@ToolboxBundle\Registry\StoreProviderRegistry'
+    ToolboxBundle\Registry\StoreProviderRegistry: ~
+
+    ToolboxBundle\Registry\NormalizerRegistryInterface: '@ToolboxBundle\Registry\NormalizerRegistry'
+    ToolboxBundle\Registry\NormalizerRegistry: ~

@@ -1,0 +1,32 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Image\Image:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: image }
+
+toolbox:
+    areas:
+        image:
+            config_elements:
+                image_link:
+                    type: link
+                    title: 'Link'
+                    config: ~
+                use_light_box:
+                    type: checkbox
+                    title: 'Use Lightbox'
+                    config: ~
+                show_caption:
+                    type: checkbox
+                    title: 'Display Caption'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            inline_config_elements:
+                image:
+                    type: image
+                    property_normalizer: ToolboxBundle\Normalizer\ImageEditableNormalizer
+                    config:
+                        width: 300

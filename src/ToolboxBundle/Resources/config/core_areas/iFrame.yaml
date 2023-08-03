@@ -1,0 +1,22 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\IFrame\IFrame:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: iFrame }
+
+toolbox:
+    areas:
+        iFrame:
+            config_elements:
+                url:
+                    type: input
+                    title: 'iFrame Url'
+                iheight:
+                    type: numeric
+                    title: 'Initial Height'
+                    config:
+                        default: 200
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~

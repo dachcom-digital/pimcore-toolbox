@@ -1,0 +1,57 @@
+parameters:
+    toolbox_google_maps_host_url: 'https://maps.google.ch'
+
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\GoogleMap\GoogleMap:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        arguments:
+            $googleMapsHostUrl: '%toolbox_google_maps_host_url%'
+        tags:
+            - { name: toolbox.area.brick, id: googleMap }
+
+toolbox:
+    areas:
+        googleMap:
+            config_elements:
+                map_zoom:
+                    type: numeric
+                    title: 'Map zoom'
+                    config:
+                        width: 100
+                        minValue: 0
+                        maxValue: 19
+                        decimalPrecision: 0
+                        default: 12
+                map_type:
+                    type: select
+                    title: 'Map type'
+                    config:
+                        store:
+                            roadmap: ROADMAP
+                            satellite: SATELLITE
+                            hybrid: HYBRID
+                            terrain: TERRAIN
+                        default: roadmap
+                iw_on_init:
+                    type: checkbox
+                    title: 'Open Info Window by Default'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            config_parameter:
+                map_options:
+                    streetViewControl: true
+                    mapTypeControl: false
+                    panControl: false
+                    scrollwheel: false
+                map_style_url: false
+                marker_icon: false
+                map_api_key: null
+                simple_api_key: null
+
+            inline_config_elements:
+                googlemap:
+                    type: googlemap
+                    config:

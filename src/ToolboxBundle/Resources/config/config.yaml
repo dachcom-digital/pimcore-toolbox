@@ -1,0 +1,4 @@
+imports:
+    - { resource: data_attributes.yaml }
+    - { resource: image_thumbnails.yaml }
+    - { resource: document_editables.yaml }

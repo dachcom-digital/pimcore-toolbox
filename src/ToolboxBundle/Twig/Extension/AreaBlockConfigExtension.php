@@ -10,13 +10,8 @@ use Twig\TwigFunction;
 
 class AreaBlockConfigExtension extends AbstractExtension
 {
-    protected ConfigManagerInterface $configManager;
-    protected AreaManagerInterface $areaManager;
-
-    public function __construct(ConfigManagerInterface $configManager, AreaManagerInterface $areaManager)
+    public function __construct(protected ConfigManagerInterface $configManager, protected AreaManagerInterface $areaManager)
     {
-        $this->configManager = $configManager;
-        $this->areaManager = $areaManager;
     }
 
     public function getFunctions(): array

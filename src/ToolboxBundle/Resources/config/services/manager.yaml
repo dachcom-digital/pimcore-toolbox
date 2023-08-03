@@ -1,0 +1,33 @@
+services:
+
+    ToolboxBundle\Manager\LayoutManagerInterface: '@ToolboxBundle\Manager\LayoutManager'
+    ToolboxBundle\Manager\LayoutManager:
+        public: true
+        autowire: true
+        autoconfigure: true
+        arguments:
+            $configManager: '@ToolboxBundle\Manager\ConfigManagerInterface'
+            $templating: '@pimcore.templating.engine.delegating'
+
+    ToolboxBundle\Manager\AreaManagerInterface: '@ToolboxBundle\Manager\AreaManager'
+    ToolboxBundle\Manager\AreaManager:
+        public: false
+        autowire: true
+        autoconfigure: true
+
+    ToolboxBundle\Manager\ConfigManagerInterface: '@ToolboxBundle\Manager\ConfigManager'
+    ToolboxBundle\Manager\ConfigManager:
+        public: true
+        autowire: true
+
+    ToolboxBundle\Manager\AdaptiveConfigManagerInterface: '@ToolboxBundle\Manager\AdaptiveConfigManager'
+    ToolboxBundle\Manager\AdaptiveConfigManager:
+        parent: ToolboxBundle\Manager\ConfigManager
+        public: false
+        autowire: true
+
+    ToolboxBundle\Manager\PermissionManagerInterface: '@ToolboxBundle\Manager\PermissionManager'
+    ToolboxBundle\Manager\PermissionManager:
+        public: false
+        autowire: true
+

@@ -1,0 +1,40 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Video\Video:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: video }
+
+toolbox:
+    areas:
+        video:
+            config_elements:
+                autoplay:
+                    type: checkbox
+                    title: 'Autoplay?'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            config_parameter:
+                video_types:
+                    asset:
+                        active: false
+                        allow_lightbox: true
+                    youtube:
+                        active: true
+                        allow_lightbox: true
+                    vimeo:
+                        active: false
+                        allow_lightbox: true
+                    dailymotion:
+                        active: false
+                        allow_lightbox: true
+
+            inline_config_elements:
+                video:
+                    type: vhs
+                    config:
+                        height: 250
+                        disableProgressReload: true
+

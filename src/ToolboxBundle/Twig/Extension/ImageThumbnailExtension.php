@@ -8,11 +8,8 @@ use Twig\TwigFunction;
 
 class ImageThumbnailExtension extends AbstractExtension
 {
-    protected ConfigManagerInterface $configManager;
-
-    public function __construct(ConfigManagerInterface $configManager)
+    public function __construct(protected ConfigManagerInterface $configManager)
     {
-        $this->configManager = $configManager;
     }
 
     public function getFunctions(): array
@@ -23,13 +20,9 @@ class ImageThumbnailExtension extends AbstractExtension
     }
 
     /**
-     * @param null $thumbnailName
-     *
-     * @return mixed
-     *
      * @throws \Exception
      */
-    public function getImageThumbnail($thumbnailName = null)
+    public function getImageThumbnail(string $thumbnailName): ?string
     {
         return $this->configManager->getImageThumbnailFromConfig($thumbnailName);
     }

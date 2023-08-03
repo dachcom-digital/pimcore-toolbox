@@ -5,6 +5,7 @@ The Toolbox Bundle is currently using Bootstrap 4 as default framework.
 - [Bootstrap 4](./themes/Bootstrap4.md)
 - [Bootstrap 3](./themes/Bootstrap3.md)
 - [UIkit3](./themes/UiKit3.md)
+- [Headless](./themes/Headless.md)
 
 ***
 
@@ -18,7 +19,7 @@ toolbox:
     theme:
         grid: ~
         # defines the view namespace [LAYOUT_NAME]
-        layout: 'Bootstrap4'
+        layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_BOOTSTRAP4
         default_layout: false
         wrapper:
             image:
@@ -142,7 +143,6 @@ class ColumnCalculator implements ColumnCalculatorInterface
     public function setConfigManager(ConfigManagerInterface $configManager)
     {
         $this->configManager = $configManager;
-        $this->configManager->setAreaNameSpace(ConfigManager::AREABRICK_NAMESPACE_INTERNAL);
 
         return $this;
     }

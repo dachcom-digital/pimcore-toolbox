@@ -1,0 +1,72 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Accordion\Accordion:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: accordion }
+
+toolbox:
+    areas:
+        accordion:
+            config_parameter:
+                reload_on_close: true
+            config_elements:
+                type:
+                    type: select
+                    title: 'Type'
+                    config:
+                        store:
+                            panel-default: 'Default'
+                            panel-danger: 'Dangers'
+                        default: panel-default
+                component:
+                    type: select
+                    title: 'Component'
+                    description: ~
+                    config:
+                        store:
+                            accordion: 'Accordion'
+                            tab: 'Tab'
+                        default: accordion
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+            inline_config_elements:
+                ac_panel:
+                    type: block
+                    children:
+                        ac_name:
+                            type: input
+                            title: 'Name'
+                            property_normalizer: ToolboxBundle\Normalizer\DownloadRelationsNormalizer
+                        ac_data:
+                            type: areablock
+                            title: 'Content'
+
+    areablock_restriction:
+        accordion:
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer
+        ac_data:
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer
+
+    snippet_areablock_restriction:
+        accordion:
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer
+        ac_data:
+            disallowed:
+                - accordion
+                - container
+                - slideColumns
+                - parallaxContainer

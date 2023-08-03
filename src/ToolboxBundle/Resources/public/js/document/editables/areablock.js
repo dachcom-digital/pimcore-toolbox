@@ -16,11 +16,9 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
 
         $super(id, name, config, data, inherited);
 
-        if(setupToolbar === true) {
+        if (setupToolbar === true) {
             this.createToolBar();
         }
-
-        this.addToolboxEditBar();
     },
 
     filterEditablesByPermission: function () {
@@ -64,15 +62,13 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
     },
 
     refresh: function ($super) {
-
         $super();
-
         this.addToolboxEditBar();
     },
 
-    hasToolboxPermissionForEditable: function(type) {
+    hasToolboxPermissionForEditable: function (type) {
 
-        if(!this.config.hasOwnProperty('toolbox_permissions')) {
+        if (!this.config.hasOwnProperty('toolbox_permissions')) {
             return true;
         }
 
@@ -81,62 +77,71 @@ pimcore.document.editables.areablock = Class.create(pimcore.document.editables.a
 
     addToolboxEditBar: function () {
 
-        var i, $areaEl, $areaButtonsEl, $editDiv, $labelDiv, $el, $editButton, isConfigurable;
+        var i;
 
         if (this.elements.length === 0) {
             return;
         }
 
         for (i = 0; i < this.elements.length; i++) {
-
-            try {
-
-                $areaEl = Ext.get(this.elements[i]);
-                $areaButtonsEl = $areaEl.query('.pimcore_area_buttons[data-name="' + this.name + '"]')[0];
-                $editDiv = $areaEl.query('.pimcore_block_dialog[data-name="' + this.name + '"]')[0];
-                $labelDiv = $areaEl.query('.pimcore_block_label[data-name="' + this.name + '"] b')[0];
-                isConfigurable = typeof $editDiv !== 'undefined';
-
-                // check for permission
-                if (this.hasToolboxPermissionForEditable($areaEl.getAttribute('type')) === false) {
-                    $areaEl.addCls('editable-blocked');
-                }
-
-                if ($labelDiv && !$areaEl.hasCls('toolbox-initialized')) {
-
-                    $areaEl.addCls('toolbox-initialized');
-
-                    $el = Ext.DomHelper.insertAfter($areaButtonsEl, {
-                        'tag': 'div',
-                        'class': 'toolbox-element-edit-button' + ( isConfigurable ? '' : ' not-configurable'),
-                        'data-title': $labelDiv.innerHTML
-                    }, true);
-
-                    if (isConfigurable === true) {
-
-                        //remove pimcore default edit button!
-                        Ext.get($editDiv).setVisible(false);
-
-                        $editButton = new Ext.Button({
-                            cls: 'pimcore_block_button_plus',
-                            iconCls: 'pimcore_icon_edit',
-                            text: t('edit'),
-                            handler: this.openEditableDialogBox.bind(this, this.elements[i], $editDiv),
-                            listeners: {
-                                afterrender: function(ev) {
-                                    $areaEl.fireEvent('toolbox.bar.added', $areaEl);
-                                }
-                            }
-                        });
-
-                        $editButton.render($el);
-                    }
-                }
-
-            } catch (e) {
-                console.error(e);
-            }
+            this.parseEditable(i);
         }
+    },
 
+    parseEditable: function (i) {
+
+        var $areaEl, $areaButtonsEl, $editDiv, $labelDiv, $el, isConfigurable;
+
+        try {
+
+            $areaEl = Ext.get(this.elements[i]);
+            $areaButtonsEl = $areaEl.query('.pimcore_area_buttons[data-name="' + this.name + '"]')[0];
+            $editDiv = $areaEl.query('.pimcore_block_dialog[data-name="' + this.name + '"]')[0];
+            $labelDiv = $areaEl.query('.pimcore_block_label[data-name="' + this.name + '"] b')[0];
+            isConfigurable = typeof $editDiv !== 'undefined';
+
+            // check for permission
+            if (this.hasToolboxPermissionForEditable($areaEl.getAttribute('type')) === false) {
+                $areaEl.addCls('editable-blocked');
+            }
+
+            if ($labelDiv && !$areaEl.hasCls('toolbox-initialized')) {
+
+                $areaEl.addCls('toolbox-initialized');
+
+                $el = Ext.DomHelper.insertAfter($areaButtonsEl, {
+                    'tag': 'div',
+                    'class': 'toolbox-element-edit-button' + (isConfigurable ? '' : ' not-configurable'),
+                    'data-title': $labelDiv.innerHTML
+                }, true);
+
+                if (isConfigurable === true) {
+                    // remove pimcore default edit button!
+                    Ext.get($editDiv).setVisible(false);
+                    this.dispatchToolboxDialogBoxEditing(i, $areaEl, $el, $editDiv);
+                }
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
+    },
+
+    dispatchToolboxDialogBoxEditing: function (index, $areaEl, $el, $editDiv) {
+
+        var $editButton = new Ext.Button({
+            cls: 'pimcore_block_button_plus',
+            iconCls: 'pimcore_icon_edit',
+            text: t('edit'),
+            handler: this.openEditableDialogBox.bind(this, this.elements[index], $editDiv),
+            listeners: {
+                afterrender: function (ev) {
+                    $areaEl.fireEvent('toolbox.bar.added', $areaEl);
+                }
+            }
+        });
+
+        $editButton.render($el);
     }
+
 });

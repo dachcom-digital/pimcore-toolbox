@@ -7,11 +7,8 @@ use ToolboxBundle\Manager\PermissionManagerInterface;
 
 class AreaPermissionTask implements TaskInterface
 {
-    protected PermissionManagerInterface $permissionManager;
-
-    public function __construct(PermissionManagerInterface $permissionManager)
+    public function __construct(protected PermissionManagerInterface $permissionManager)
     {
-        $this->permissionManager = $permissionManager;
     }
 
     public function execute(): void

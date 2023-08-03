@@ -1,0 +1,32 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Gallery\Gallery:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        autowire: true
+        tags:
+            - { name: toolbox.area.brick, id: gallery }
+
+toolbox:
+    areas:
+        gallery:
+            config_elements:
+                images:
+                    type: relations
+                    title: 'Images or Folder'
+                    config: ~
+                use_light_box:
+                    type: checkbox
+                    title: 'Use Lightbox'
+                    config: ~
+                use_thumbnails:
+                    type: checkbox
+                    title: 'Use Thumbnails'
+                    config: ~
+                additional_classes:
+                    type: additionalClasses
+                    config:
+                        store: ~
+
+            inline_config_elements:
+                images: '<'
+            additional_property_normalizer:
+                images: ToolboxBundle\Normalizer\GalleryRelationsNormalizer

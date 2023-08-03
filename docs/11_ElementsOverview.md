@@ -102,19 +102,19 @@ Create a container element. Useful if you're using a full width layout.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `full_width_container` | checkbox | Adds the `container-fluid` class | false | `pimcore_checkbox('full_width_container')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                   | Type     | Description                      | Default Value | Frontend                                              |
+|------------------------|----------|----------------------------------|---------------|-------------------------------------------------------|
+| `full_width_container` | checkbox | Adds the `container-fluid` class | false         | `pimcore_checkbox('full_width_container')`            |
+| `additional_classes`   | select   | Add custom classes               | -             | see [section additional classes](#additional-classes) |
 
 ## Content
 Create a wysiwyg editor.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description        | Default Value | Frontend                                              |
+|----------------------|--------|--------------------|---------------|-------------------------------------------------------|
+| `additional_classes` | select | Add custom classes | -             | see [section additional classes](#additional-classes) |
 
 
 ## Download
@@ -241,13 +241,13 @@ Now you can include the script tag in your footer:
 
 ### Configuration Parameter
 
-| Name | Type | Description | Default Value | 
-|------|------|-------------|---------------|
-| `map_options` | array | Map Zoom | [] |
-| `map_style_url` | string | Define a custom map style (path to json) | false |
-| `marker_icon` | string | Define a custom marker_icon (path to icon) | false |
-| `map_api_key` | string | Set a custom map api key. To extend the daily request to 2.500 per day. This key is used by frontend-api-requests | `'%toolbox.google_maps.browser_api_key%'` |
-| `simple_api_key` | string | Set a custom simple api key. To extend the daily request to 2.500 per day. This key is used by backend-api-requests | `'%toolbox.google_maps.simple_api_key%'` |
+| Name             | Type   | Description                                                                                                         | Default Value                             | 
+|------------------|--------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| `map_options`    | array  | Map Zoom                                                                                                            | []                                        |
+| `map_style_url`  | string | Define a custom map style (path to json)                                                                            | false                                     |
+| `marker_icon`    | string | Define a custom marker_icon (path to icon)                                                                          | false                                     |
+| `map_api_key`    | string | Set a custom map api key. To extend the daily request to 2.500 per day. This key is used by frontend-api-requests   | `'%toolbox.google_maps.browser_api_key%'` |
+| `simple_api_key` | string | Set a custom simple api key. To extend the daily request to 2.500 per day. This key is used by backend-api-requests | `'%toolbox.google_maps.simple_api_key%'`  |
 
 **Example**  
 ```yaml
@@ -269,7 +269,7 @@ toolbox:
 There is also a jquery plugin for the google maps element. Read more about it [here](80_Javascript.md)
 
 ### Route Link Renderer
-There is a macro in `views/Macro/mapLink.html.twig` (used in `views/[THEME NAME]/google-map/info-window.html.twig`) which will render the map route link:
+There is a macro in `views/Macro/mapLink.html.twig` (used in `views/[THEME NAME]/google_map/info-window.html.twig`) which will render the map route link:
 
 ```twig
 {# default #}
@@ -324,11 +324,11 @@ Create an image field.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
-| `show_caption` | checkbox | Render image caption | false | `pimcore_checkbox('show_caption')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                                 | Default Value | Frontend                                              |
+|----------------------|----------|---------------------------------------------|---------------|-------------------------------------------------------|
+| `use_light_box`      | checkbox | Add a `light-box` class and a wrapping link | false         | `pimcore_checkbox('use_light_box')`                   |
+| `show_caption`       | checkbox | Render image caption                        | false         | `pimcore_checkbox('show_caption')`                    |
+| `additional_classes` | select   | Add custom classes                          | -             | see [section additional classes](#additional-classes) |
 
 
 ## Link List
@@ -336,9 +336,9 @@ Create a link list (via pimcore block element).
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description        | Default Value | Frontend                                              |
+|----------------------|--------|--------------------|---------------|-------------------------------------------------------|
+| `additional_classes` | select | Add custom classes | -             | see [section additional classes](#additional-classes) |
 
 ## Parallax Container
 Build a Parallax Container.
@@ -464,12 +464,12 @@ Create teaser elements.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `type` | select | Define Teaser Type: direct or as snippet | direct | `pimcore_select('type')`. Read more about below in "Teaser Type" Section. |
-| `layout` | select | Define Teaser Layout | default | `pimcore_select('layout')` |
-| `use_light_box` | checkbox | Add a `light-box` class and a wrapping link for teaser image | false | `pimcore_checkbox('use_light_box')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                                                  | Default Value | Frontend                                                                  |
+|----------------------|----------|--------------------------------------------------------------|---------------|---------------------------------------------------------------------------|
+| `type`               | select   | Define Teaser Type: direct or as snippet                     | direct        | `pimcore_select('type')`. Read more about below in "Teaser Type" Section. |
+| `layout`             | select   | Define Teaser Layout                                         | default       | `pimcore_select('layout')`                                                |
+| `use_light_box`      | checkbox | Add a `light-box` class and a wrapping link for teaser image | false         | `pimcore_checkbox('use_light_box')`                                       |
+| `additional_classes` | select   | Add custom classes                                           | -             | see [section additional classes](#additional-classes)                     |
 
 ### Teaser Types
 Like explained above, it's possible to switch between two Types of Teasers:
@@ -530,7 +530,7 @@ In short, you're able to use all the [pimcore editables](https://www.pimcore.org
 **Example** 
 ```yaml
 toolbox:
-    custom_areas:
+    areas:
         container:
             config_elements:
                 awesome_fields:
