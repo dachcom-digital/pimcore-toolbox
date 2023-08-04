@@ -23,7 +23,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
             $wysiwygEditor = 'tiny_mce';
         }
 
-        $coreLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $coreLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $coreLoader->load('config.yaml');
 
         $loaded = [];
@@ -72,7 +72,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $contextResolver = $config['context_resolver'];
         unset($config['context_resolver']);
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.yaml');
 
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);

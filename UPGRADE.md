@@ -6,6 +6,7 @@
 - [Headless Mode](./docs/90_Headless.md)
 
 ### Global Changes
+- Recommended folder structure by symfony adopted
 - All folders and sub-folders in views are lowercase/underscore now (areas/accordion/accordion_tab, areas/google_map, areas/iframe, areas/link_list, areas/parallax_container, areas/parallax_container_section, areas/parallax_container_section, areas/slide_columns)
 - All snippet views are underscore now (snippet_layout.html.twig, snippet/teaser_default, snippet/layout/teaser_layout) - check your views for includes!
 - All views are lowercase/underscore now (areas/video/type_*, areas/google_map/info_window, parallax_container/partial/*, parallax_container/wrapper/container_wrapper)

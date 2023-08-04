@@ -104,7 +104,7 @@ The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md)
 - [Headless Mode](docs/90_Headless.md)
 
 ## Pimcore Fixes / Overrides
-- Fix the pimcore iframe [maskFrames](src/ToolboxBundle/Resources/public/js/document/edit.js) bug (in some cases the iframe overlay field does not apply to the right position)
+- Fix the pimcore iframe [maskFrames](public/js/document/edit.js) bug (in some cases the iframe overlay field does not apply to the right position)
 - Transforms all the brick config buttons (`pimcore_area_edit_button_*`) to more grateful ones.
 
 ## Copyright and license

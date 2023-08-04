@@ -1,7 +1,7 @@
 services:
 
     ToolboxBundle\Controller\:
-        resource: '../../Controller'
+        resource: '../../src/Controller'
         public: true
         autowire: true
         autoconfigure: true
