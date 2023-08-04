@@ -32,6 +32,11 @@ class ToolboxBundle extends AbstractPimcoreBundle
         $container->addCompilerPass(new NormalizerRegistryPass());
     }
 
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
+
     public function getInstaller(): Install
     {
         return $this->container->get(Install::class);

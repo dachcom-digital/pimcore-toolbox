@@ -94,7 +94,7 @@ toolbox:
                 - {tag: 'div', class: 'col 12-columns'}
 ```
 
-From now on, the Toolbox Bundle will search every element view in `@ToolboxBundle/Resources/views/Toolbox/YourGridSystem/*`.
+From now on, the Toolbox Bundle will search every element view in `ToolboxBundle/templates/toolbox/YourGridSystem/*`.
 Now implement the calculators (don't forget the tags):
 
 ```yaml

@@ -21,7 +21,7 @@ class Install extends SettingsStoreAwareInstaller
 
     private function installTranslations(): void
     {
-        $csvAdmin = __DIR__ . '/../Resources/install//admin-translations/data.csv';
+        $csvAdmin = __DIR__ . '/../../config/install/admin-translations/data.csv';
 
         try {
             Translation::importTranslationsFromFile($csvAdmin, Translation::DOMAIN_ADMIN, true, \Pimcore\Tool\Admin::getLanguages());

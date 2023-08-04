@@ -420,7 +420,7 @@ Create a sliding column element.
 
 ### Dependency
 We basically designed this element in combination with the [slick slider](http://kenwheeler.github.io/slick/) plugin.
-Since we want to avoid specific markup in a most possible way, there are still some references if your looking at the toolbox [backend style](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/src/ToolboxBundle/Resources/public/css/admin.css#L47).
+Since we want to avoid specific markup in a most possible way, there are still some references if your looking at the toolbox [backend style](https://github.com/dachcom-digital/pimcore-toolbox/blob/master/public/css/admin.css#L47).
 This is just a hint if you're going to use a different javascript extension: Be sure this element works in your backend too. :)
 
 > Note: You need to implement your own javascript logic. Get some hints [here](50_FrontendTips.md).
