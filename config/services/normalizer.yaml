@@ -16,3 +16,7 @@ services:
     ToolboxBundle\Normalizer\ImageEditableNormalizer:
         tags:
             - { name: toolbox.property.normalizer }
+
+    ToolboxBundle\Normalizer\LinkNormalizer:
+        tags:
+            - { name: toolbox.property.normalizer }

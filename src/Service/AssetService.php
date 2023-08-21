@@ -34,7 +34,7 @@ class AssetService
 
     private function buildAssetData(?Asset\Image $asset, ?Image\Thumbnail $thumbnail, array $options): array
     {
-        if(!$asset instanceof Asset\Image) {
+        if (!$asset instanceof Asset\Image) {
             return [];
         }
 
@@ -97,7 +97,6 @@ class AssetService
         }
 
         return $data;
-
     }
 
     private function getSourceTagAttributes(Asset\Image\Thumbnail $thumbnail, Config $thumbConfig, mixed $mediaQuery, Image $image, array $options): array
@@ -150,7 +149,7 @@ class AssetService
             }
 
             $thumbConfigRes->setHighResolution($highRes);
-            $thumb = $image->getThumbnail($thumbConfigRes, true);
+            $thumb = $image->getThumbnail($thumbConfigRes, true)->getPath();
 
             $descriptor = $highRes . 'x';
             // encode comma in thumbnail path as srcset is a comma separated list

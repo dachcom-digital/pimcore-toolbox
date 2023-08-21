@@ -19,7 +19,14 @@ class DownloadRelationsNormalizer implements PropertyNormalizerInterface
         $normalizedData = [];
 
         foreach ($value as $asset) {
-            $normalizedData[] = $this->downloadInfoService->getDownloadInfo($asset, true, 'optimized');
+
+            $normalizedDownloadInfo = $this->downloadInfoService->getDownloadInfo($asset, true, 'optimized');
+
+            if (array_key_exists('previewImage', $normalizedDownloadInfo)) {
+                unset($normalizedDownloadInfo['previewImage']);
+            }
+
+            $normalizedData[] = $normalizedDownloadInfo;
         }
 
         return $normalizedData;

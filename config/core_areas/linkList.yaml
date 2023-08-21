@@ -19,6 +19,7 @@ toolbox:
                     children:
                         linklist:
                             type: link
+                            property_normalizer: ToolboxBundle\Normalizer\LinkNormalizer
                             title: 'Link'
                             config:
                                 class: 'list-link'
