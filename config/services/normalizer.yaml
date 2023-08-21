@@ -20,3 +20,7 @@ services:
     ToolboxBundle\Normalizer\LinkNormalizer:
         tags:
             - { name: toolbox.property.normalizer }
+
+    ToolboxBundle\Normalizer\ThumbnailNormalizer:
+        tags:
+            - { name: toolbox.property.normalizer }
