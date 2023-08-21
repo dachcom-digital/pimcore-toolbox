@@ -38,3 +38,5 @@ toolbox:
                         height: 250
                         disableProgressReload: true
 
+            additional_property_normalizer:
+                posterPath: ToolboxBundle\Normalizer\ThumbnailNormalizer
