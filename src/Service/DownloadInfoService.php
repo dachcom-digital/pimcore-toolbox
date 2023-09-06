@@ -90,23 +90,17 @@ class DownloadInfoService
 
     public function getOptimizedFileSize(mixed $bytes, int $precision): string
     {
-        if ($bytes >= 1073741824) {
-            $bytes = number_format($bytes / 1073741824, 2);
-            $format = 'gb';
-        } elseif ($bytes >= 1048576) {
-            $bytes = number_format($bytes / 1048576, 2);
-            $format = 'mb';
-        } elseif ($bytes >= 1024) {
-            $bytes = number_format($bytes / 1024, 2);
-            $format = 'kb';
-        } elseif ($bytes > 1) {
-            $format = 'bytes';
-        } elseif ($bytes === 1) {
-            $format = 'byte';
-        } else {
-            $format = 'bytes';
+        if ($bytes === 1) {
+            return '1 Byte';
         }
-
-        return round((float) $bytes, $precision) . ' ' . $format;
+        // https://gist.github.com/liunian/9338301?permalink_comment_id=1804497#gistcomment-1804497
+        static $units = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $step = 1024;
+        $i = 0;
+        while (($bytes / $step) > 0.9) {
+            $bytes = $bytes / $step;
+            $i++;
+        }
+        return round($bytes, $precision) . ' ' . ($units[$i] ?? '');
     }
 }
