@@ -75,7 +75,7 @@ class HeadlessEditableRenderer
 
             ob_start();
 
-            echo $this->processEditable($headlessColumnEditableInfo, true);
+            echo $this->processEditable($headlessColumnEditableInfo);
 
             if ($editMode === false) {
                 $areaBlockDataResponse = $this->processEditable($headlessColumnEditableInfo);
@@ -103,7 +103,7 @@ class HeadlessEditableRenderer
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo, true);
+        echo $this->processEditable($headlessEditableInfo);
 
         if ($editMode === false) {
             $areaDataResponse = $this->processEditable($headlessEditableInfo);
@@ -121,7 +121,7 @@ class HeadlessEditableRenderer
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo, true);
+        echo $this->processEditable($headlessEditableInfo);
 
         if ($editMode === false) {
             $areaBlockDataResponse = $this->processEditable($headlessEditableInfo);
@@ -147,7 +147,7 @@ class HeadlessEditableRenderer
         foreach ($blockEditable->getIterator() as $blockIndex) {
             foreach ($headlessEditableInfo->getChildren() as $childHeadlessEditableInfo) {
 
-                echo $this->processEditable($childHeadlessEditableInfo, true);
+                echo $this->processEditable($childHeadlessEditableInfo);
 
                 if ($editMode === false) {
                     $data[] = $this->processEditable($childHeadlessEditableInfo);
