@@ -476,9 +476,21 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('areas')
                         ->useAttributeAsKey('name')
                         ->prototype('array')
+                            ->validate()
+                                ->ifTrue(function ($v) {
+                                    return $v['type'] !== 'block' && is_array($v['children']) && count($v['children']) > 0;
+                                })
+                                ->then(function($v) {
+                                    @trigger_error(sprintf('Type "%s" cannot have child elements', $v['type']), E_USER_ERROR);
+                                })
+                            ->end()
                             ->children()
-                                ->enumNode('type')->values(['areablock', 'area'])->isRequired()->end()
-                                ->scalarNode('areaType')->defaultNull()->end()
+                                ->scalarNode('type')->isRequired()->end()
+                                ->variableNode('config')->defaultNull()->end()
+                                ->scalarNode('title')->defaultValue(null)->end()
+                                ->scalarNode('description')->defaultValue(null)->end()
+                                ->scalarNode('property_normalizer')->defaultValue(null)->end()
+                                ->append($this->buildConfigElementsSection('children', 'headless_documents'))
                             ->end()
                         ->end()
                     ->end()

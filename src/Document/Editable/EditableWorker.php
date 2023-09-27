@@ -86,11 +86,42 @@ class EditableWorker
 
     private function processEditableData(HeadlessResponse $data): array
     {
-        $parentAreaName = $data->getParent();
+        if ($data->hasBrickParent() === true) {
+            // it's a nested simple editable
+            // (e.g. a editable within a block element which can could be the "accordion" element)
+            $parsedData = $this->processElementData($data, $data->getBrickParent());
+            // it's a simple editable without any brick relation
+        } elseif ($data->hasEditableConfiguration() === true) {
+            $parsedData = $this->processSimpleEditableData($data);
+        } else {
+            // unknown, just return the given data
+            $parsedData = $data->getInlineConfigElementData();
+        }
 
-        return [
-            'data' => $parentAreaName === null ? $data->getInlineConfigElementData() : $this->processElementData($data, $parentAreaName)
-        ];
+        return ['data' => $parsedData];
+    }
+
+    private function processSimpleEditableData(HeadlessResponse $data): array
+    {
+        $normalizedData = [];
+
+        $config = $data->getEditableConfiguration();
+        $elementData = $data->getInlineConfigElementData();
+
+        foreach ($elementData as $configName => $configData) {
+
+            if (array_key_exists('property_normalizer', $config) && $config['property_normalizer'] !== null) {
+                $configData = $this->applyNormalizer($config['property_normalizer'], $configData);
+            } elseif ($configData instanceof Editable) {
+                $configData = $configData->render();
+            } else {
+                $configData = null;
+            }
+
+            $normalizedData[$configName] = $configData;
+        }
+
+        return $normalizedData;
     }
 
     private function processElementData(HeadlessResponse $data, string $areaName): array
