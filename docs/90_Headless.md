@@ -78,8 +78,6 @@ toolbox:
 ## Headless Documents
 It's possible to create simple headless documents:
 
-- Only two types are supported: `areablock` and `area`
-
 ```yaml
 toolbox:
     enabled_core_areas:
@@ -90,17 +88,49 @@ toolbox:
     theme:
         layout: !php/const ToolboxBundle\Manager\LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS
         headless_documents:
-            index:
+            
+            default_headless_document:
                 areas:
-                    indexHeadline:
+                    index_headline:
                         type: area
-                        areaType: headline
+                        config:
+                            type: headline
                     myBlock:
                         type: areablock
+
+            another_headless_document:
+                areas:
+                    headline:
+                        type: area
+                        config:
+                            type: headline
+                    wysiwyg:
+                        type: area
+                        config:
+                            type: content
+                    simple_input:
+                        type: input
+                        title: 'My Simple Input'
+                    awesome_blocks:
+                        type: block
+                        children:
+                            block_text:
+                                type: input
+                                title: 'Text'
+                            block_link:
+                                type: link
+                                property_normalizer: ToolboxBundle\Normalizer\LinkNormalizer
+                                title: 'Link'
+                                config:
+                                    class: 'list-link'
+                    special_accordion:
+                        type: area
+                        config:
+                            type: accordion
 ```
 
 - Add `ToolboxBundle\Controller\HeadlessController::headlessDocumentAction` as action to your document.
-- Add a text property to the document called `headless_document` and set `index` as value. You can create multiple documents that way.
+- Add a text property to the document called `headless_document` and set `default_headless_document` as value. You can create multiple documents that way.
 
 ***
 

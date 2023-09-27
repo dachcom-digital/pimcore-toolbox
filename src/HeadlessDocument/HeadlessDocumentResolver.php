@@ -4,23 +4,27 @@ namespace ToolboxBundle\HeadlessDocument;
 
 use Pimcore\Http\Request\Resolver\EditmodeResolver;
 use Pimcore\Model\Document;
-use Pimcore\Model\Document\Snippet;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use ToolboxBundle\Document\Editable\EditableJsonFetcher;
-use ToolboxBundle\Manager\AreaManagerInterface;
+use ToolboxBundle\Document\Editable\EditableJsonSubscriber;
+use ToolboxBundle\Document\Editable\HeadlessEditableRenderer;
+use ToolboxBundle\Factory\HeadlessEditableInfoFactory;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 use Twig\Environment;
 
 class HeadlessDocumentResolver
 {
+    protected ?EditableJsonSubscriber $subscriber = null;
+
     public function __construct(
         protected Environment $environment,
         protected ConfigManagerInterface $configManager,
         protected EditmodeResolver $editmodeResolver,
-        protected EditableJsonFetcher $editableJsonFetcher,
-        protected AreaManagerInterface $areaManager
+        protected EventDispatcherInterface $eventDispatcher,
+        protected HeadlessEditableRenderer $headlessEditableRenderer,
+        protected HeadlessEditableInfoFactory $editableInfoFactory
     ) {
     }
 
@@ -42,30 +46,43 @@ class HeadlessDocumentResolver
             return $this->buildEditModeOutput($document, $headlessDocumentName, $headlessDocumentConfig['areas']);
         }
 
-        return $this->buildJsonOutput($document, $headlessDocumentName, $headlessDocumentConfig['areas']);
+        return $this->buildJsonOutput($document, $headlessDocumentConfig['areas']);
     }
 
     private function buildEditModeOutput(Document $document, string $headlessDocumentName, array $areas): Response
     {
         $editModeEditables = [];
 
-        foreach ($areas as $areaName => $areaConfig) {
-            if ($areaConfig['type'] === 'areablock') {
-                $areaBlockConfig = $this->areaManager->getAreaBlockConfiguration($areaName, $document instanceof Snippet, true);
-                $editModeEditables[$areaName] = [$areaConfig['type'], $areaBlockConfig];
+        foreach ($areas as $itemName => $item) {
+
+            $item['name'] = $itemName;
+
+            $headlessInfo = $this->editableInfoFactory->createViaEditable($document, $itemName, true, $item);
+            $renderedEditable = $this->headlessEditableRenderer->buildEditable($headlessInfo);
+
+            if (in_array($headlessInfo->getType(), ['areablock', 'area'])) {
+                // will be rendered within brick process workflow
+                $configurationView = $renderedEditable;
             } else {
-                $editModeEditables[$areaName] = [
-                    $areaConfig['type'],
-                    [
-                        'type' => $areaConfig['areaType'],
-                    ]
-                ];
+                $configurationView = $this->headlessEditableRenderer->renderStandaloneEditableWithWrapper(
+                    $this->headlessEditableRenderer->renderEditableWithWrapper($item['type'], [
+                        'item'     => array_merge($item, ['label' => $item['title']]),
+                        'editable' => $renderedEditable
+                    ])
+                );
             }
+
+            $editModeEditables[$itemName] = $configurationView;
         }
 
         $response = new Response();
-        $editModeView = sprintf('@Toolbox/headless_document/%s.html.twig', $headlessDocumentName);
-        $response->setContent($this->environment->render($editModeView, [
+
+        $resolvedTemplate = $this->environment->resolveTemplate([
+            sprintf('@Toolbox/headless_document/%s.html.twig', $headlessDocumentName),
+            '@Toolbox/headless_document/default.html.twig'
+        ]);
+
+        $response->setContent($this->environment->render($resolvedTemplate, [
             'headless_document_name' => $headlessDocumentName,
             'editables'              => $editModeEditables,
         ]));
@@ -73,33 +90,37 @@ class HeadlessDocumentResolver
         return $response;
     }
 
-    private function buildJsonOutput(Document $document, string $headlessDocumentName, array $areas): JsonResponse
+    private function buildJsonOutput(Document $document, array $areas): JsonResponse
     {
-        $editables = [];
-        foreach ($areas as $areaName => $areaConfig) {
+        $this->registerEventSubscriber();
 
-            $editableConfig = [
-                'name' => $areaName,
-                'type' => $areaConfig['type'],
-            ];
+        foreach ($areas as $itemName => $item) {
 
-            if ($areaConfig['type'] === 'areablock') {
-                // override config with area block config
-                $areaBlockConfig = $this->areaManager->getAreaBlockConfiguration($areaName, $document instanceof Snippet, true);
-                $editableConfig['config'] = $areaBlockConfig;
-            } elseif ($areaConfig['type'] === 'area') {
-                $editableConfig['config'] = [
-                    'type' => $areaConfig['areaType']
-                ];
-            } else {
-                throw new \Exception(sprintf('Invalid type "%s" in headless document', $areaConfig['type']));
-            }
-
-            $editables[] = $editableConfig;
+            $item['name'] = $itemName;
+            $headlessInfo = $this->editableInfoFactory->createViaEditable($document, $itemName, false, $item);
+            $this->headlessEditableRenderer->buildEditable($headlessInfo);
         }
 
-        $editableResponse = $this->editableJsonFetcher->fetchEditablesAsArray($document, $editables, false);
+        $jsonEditables = $this->subscriber->getJsonEditables();
 
-        return new JsonResponse($editableResponse);
+        $this->unregisterEventSubscriber();
+
+        return new JsonResponse($jsonEditables);
+    }
+
+    private function registerEventSubscriber(): void
+    {
+        if (!$this->subscriber) {
+            $this->subscriber = new EditableJsonSubscriber();
+            $this->eventDispatcher->addSubscriber($this->subscriber);
+        }
+    }
+
+    private function unregisterEventSubscriber(): void
+    {
+        if ($this->subscriber) {
+            $this->eventDispatcher->removeSubscriber($this->subscriber);
+            $this->subscriber = null;
+        }
     }
 }

@@ -11,9 +11,13 @@ services:
     ToolboxBundle\Builder\InlineConfigBuilderInterface: '@ToolboxBundle\Builder\InlineConfigBuilder'
     ToolboxBundle\Builder\InlineConfigBuilder:
         calls:
-            - [ setEditableWorker, [ '@ToolboxBundle\Document\Editable\EditableWorker' ] ]
-
-    ToolboxBundle\Document\Editable\EditableJsonFetcher: ~
+            - [ setHeadlessEditableRenderer, [ '@ToolboxBundle\Document\Editable\HeadlessEditableRenderer' ] ]
+            - [ setHeadlessEditableInfoFactory, [ '@ToolboxBundle\Factory\HeadlessEditableInfoFactory' ] ]
 
     ToolboxBundle\Document\Editable\EditableWorker:
         public: true
+
+    ToolboxBundle\Document\Editable\HeadlessEditableRenderer: ~
+
+    ToolboxBundle\Factory\HeadlessEditableInfoFactory: ~
+

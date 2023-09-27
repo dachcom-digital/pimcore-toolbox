@@ -9,18 +9,16 @@ class HeadlessResponse
     public const TYPE_BRICK = 'brick';
     public const TYPE_EDITABLE = 'editable';
 
-    protected string $type;
-    protected ?string $parent;
-
     protected array $configElementData = [];
     protected array $inlineConfigElementData = [];
     protected array $additionalConfigData = [];
     protected array $brickConfiguration = [];
 
-    public function __construct(string $type, ?string $parent = null)
-    {
-        $this->type = $type;
-        $this->parent = $parent;
+    public function __construct(
+        protected string $type,
+        protected ?string $brickParent = null,
+        protected ?array $editableConfiguration = null
+    ) {
     }
 
     public function getType(): string
@@ -28,9 +26,25 @@ class HeadlessResponse
         return $this->type;
     }
 
-    public function getParent(): ?string
+    public function hasBrickParent(): bool
     {
-        return $this->parent;
+        return $this->brickParent !== null;
+    }
+
+
+    public function getBrickParent(): ?string
+    {
+        return $this->brickParent;
+    }
+
+    public function hasEditableConfiguration(): bool
+    {
+        return $this->editableConfiguration !== null;
+    }
+
+    public function getEditableConfiguration(): ?array
+    {
+        return $this->editableConfiguration;
     }
 
     public function getConfigElementData(): array

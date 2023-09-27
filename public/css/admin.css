@@ -715,6 +715,7 @@ body > .single-teaser img {
     border: 1px dashed #d6d6d6;
     padding: 10px;
     border-radius: 3px;
+    margin: 0 0 5px 0;
 }
 
 .toolbox-headless .inline-config-area .inline-config-node {
@@ -764,4 +765,10 @@ body > .single-teaser img {
     font-size: 12px;
     display: block;
     font-style: italic;
+}
+
+.toolbox-headless .inline-config-area .pimcore_block_entry {
+    margin: 0 0 20px 0;
+    border: 1px dotted #6428b44a;
+    padding: 5px 10px;
 }

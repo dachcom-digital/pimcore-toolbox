@@ -1,0 +1,9 @@
+{% block headless_document %}
+    <div class="toolbox-headless" data-headless-document-name="{{ headless_document_name }}">
+        {% block headless_document_content %}
+            {% for editable in editables %}
+                {{ editable|raw }}
+            {% endfor %}
+        {% endblock headless_document_content %}
+    </div>
+{% endblock headless_document %}
