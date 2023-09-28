@@ -75,7 +75,7 @@ class HeadlessEditableRenderer
 
             ob_start();
 
-            echo $this->processEditable($headlessColumnEditableInfo);
+            echo $this->processEditable($headlessColumnEditableInfo, true);
 
             if ($editMode === false) {
                 $areaBlockDataResponse = $this->processEditable($headlessColumnEditableInfo);
@@ -103,7 +103,7 @@ class HeadlessEditableRenderer
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo);
+        echo $this->processEditable($headlessEditableInfo, true);
 
         if ($editMode === false) {
             $areaDataResponse = $this->processEditable($headlessEditableInfo);
@@ -121,7 +121,7 @@ class HeadlessEditableRenderer
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo);
+        echo $this->processEditable($headlessEditableInfo, true);
 
         if ($editMode === false) {
             $areaBlockDataResponse = $this->processEditable($headlessEditableInfo);
@@ -147,7 +147,7 @@ class HeadlessEditableRenderer
         foreach ($blockEditable->getIterator() as $blockIndex) {
             foreach ($headlessEditableInfo->getChildren() as $childHeadlessEditableInfo) {
 
-                echo $this->processEditable($childHeadlessEditableInfo);
+                echo $this->processEditable($childHeadlessEditableInfo, true);
 
                 if ($editMode === false) {
                     $data[] = $this->processEditable($childHeadlessEditableInfo);
@@ -160,7 +160,7 @@ class HeadlessEditableRenderer
         return $editMode ? $areaBlockHtmlResponse : $data;
     }
 
-    private function processEditable(HeadlessEditableInfo $headlessEditableInfo): mixed
+    private function processEditable(HeadlessEditableInfo $headlessEditableInfo, bool $forceRendering = false): mixed
     {
         $editMode = $headlessEditableInfo->isEditMode();
         $type = $headlessEditableInfo->getType();
@@ -186,10 +186,14 @@ class HeadlessEditableRenderer
 
                 $this->editableWorker->processEditable($simpleHeadlessResponse, $editable);
 
-                return $editable->render();
+                return $editable;
             }
 
             return $editable->render();
+        }
+
+        if ($forceRendering === false && $editMode === false) {
+            return $editable;
         }
 
         if ($isSimple === true) {
