@@ -1,3 +1,8 @@
+imports:
+    - { resource: ../data_attributes.yaml }
+    - { resource: ../image_thumbnails.yaml }
+    - { resource: ../document_editables.yaml }
+
 doctrine_migrations:
     migrations_paths:
         'ToolboxBundle\Migrations': '@ToolboxBundle/src/Migrations'

@@ -24,7 +24,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         $coreLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-        $coreLoader->load('config.yaml');
 
         $loaded = [];
 
@@ -186,7 +185,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
             }
         }
 
-        //get context data
+        // get context data
         foreach ($configs as $config) {
 
             if (!isset($config['context'])) {

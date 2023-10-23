@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.0.1
+- Fix config load priority to allow config overwrites
+
 ## Migrating from Version 4.x to Version 5.0.0
 
 ### New Features
