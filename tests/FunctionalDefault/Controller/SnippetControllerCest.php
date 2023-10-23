@@ -53,7 +53,8 @@ class SnippetControllerCest
                 'type' => 'input',
             ],
             'text'           => [
-                'type' => 'wysiwyg',
+                'type'             => 'wysiwyg',
+                'dataFromResource' => '',
             ],
         ];
 
