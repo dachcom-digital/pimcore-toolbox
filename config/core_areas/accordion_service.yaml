@@ -1,0 +1,5 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Accordion\Accordion:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: accordion }

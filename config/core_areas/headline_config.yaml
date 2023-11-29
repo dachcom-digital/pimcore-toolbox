@@ -1,9 +1,3 @@
-services:
-    ToolboxBundle\Document\ToolboxAreabrick\Headline\Headline:
-        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
-        tags:
-            - { name: toolbox.area.brick, id: headline }
-
 toolbox:
     areas:
         headline:

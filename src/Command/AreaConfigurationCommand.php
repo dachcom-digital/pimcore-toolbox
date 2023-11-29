@@ -84,7 +84,7 @@ class AreaConfigurationCommand extends Command
         }
 
         $configElements = $brickConfig['config_elements'];
-        $configParameter = $brickConfig['config_parameter'];
+        $configParameter = $brickConfig['config_parameter'] ?? [];
 
         if (empty($configElements)) {
             $output->writeln('');

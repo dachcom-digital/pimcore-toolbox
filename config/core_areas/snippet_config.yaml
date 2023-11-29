@@ -1,0 +1,6 @@
+toolbox:
+    areas:
+        snippet:
+            inline_config_elements:
+                snippet:
+                    type: snippet

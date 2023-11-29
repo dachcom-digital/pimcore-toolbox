@@ -1,0 +1,10 @@
+parameters:
+    toolbox_google_maps_host_url: 'https://maps.google.ch'
+
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\GoogleMap\GoogleMap:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        arguments:
+            $googleMapsHostUrl: '%toolbox_google_maps_host_url%'
+        tags:
+            - { name: toolbox.area.brick, id: googleMap }
