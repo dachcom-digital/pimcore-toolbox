@@ -1,0 +1,6 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\SlideColumns\SlideColumns:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        autowire: true
+        tags:
+            - { name: toolbox.area.brick, id: slideColumns }

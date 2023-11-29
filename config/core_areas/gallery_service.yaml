@@ -1,0 +1,6 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Gallery\Gallery:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        autowire: true
+        tags:
+            - { name: toolbox.area.brick, id: gallery }

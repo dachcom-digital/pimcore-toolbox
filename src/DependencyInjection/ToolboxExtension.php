@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\LayoutManagerInterface;
 use ToolboxBundle\Resolver\ContextResolver;
@@ -44,7 +45,16 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
                     continue;
                 }
 
-                $coreLoader->load(sprintf('core_areas/%s.yaml', $areaName));
+                $coreLoader->load(sprintf('core_areas/%s_service.yaml', $areaName));
+
+                // @see https://github.com/symfony/symfony/issues/52789
+                $data = $coreLoader->getLocator()->locate(sprintf('core_areas/%s_config.yaml', $areaName));
+                $parsedData = Yaml::parseFile($data);
+
+                if (array_key_exists('toolbox', $parsedData)) {
+                    $container->prependExtensionConfig('toolbox', $parsedData['toolbox']);
+                }
+
                 $loaded[] = $areaName;
             }
         }

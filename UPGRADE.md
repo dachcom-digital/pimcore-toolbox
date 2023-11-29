@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.0.2
+- Fix element config load priority to allow config overwrites
+
 ## 5.0.1
 - Fix config load priority to allow config overwrites
 

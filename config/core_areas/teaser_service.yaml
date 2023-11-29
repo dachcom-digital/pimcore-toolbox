@@ -1,0 +1,5 @@
+services:
+    ToolboxBundle\Document\ToolboxAreabrick\Teaser\Teaser:
+        parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
+        tags:
+            - { name: toolbox.area.brick, id: teaser }
