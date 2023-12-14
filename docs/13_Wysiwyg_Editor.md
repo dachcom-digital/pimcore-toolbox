@@ -1,4 +1,4 @@
-# CK-Editor Configuration
+# Wysiwyg Editor Configuration
 
 The Toolbox Bundle allows you to override and specify the wysiwyg configuration.
 There are several reasons for that:
@@ -34,6 +34,9 @@ toolbox:
             toolbar2: 'blocks | styles'
 
 ```
+> [!IMPORTANT]  
+> If your extending style formats, you also have to extend the [html sanitize](https://pimcore.com/docs/platform/Pimcore/Documents/Editables/WYSIWYG/#extending-symfony-html-sanitizer-configuration)
+> otherwise you're applied data will be removed after persisting!
 
 ### Area Editor Configuration
 If you only need to modify the toolbar configuration for document areas, add this to your configuration:
@@ -51,7 +54,8 @@ toolbox:
 ### Object Editor Configuration
 If you only need to modify the toolbar configuration for objects, add this to your configuration:
 
-> **Note!** The object configuration does not respect different toolbox context environments at the moment. 
+> [!NOTE]  
+> The object configuration does not respect different toolbox context environments at the moment. 
 > Objects are not restricted to any sites by nature which makes any context-binding quite impossible.
 
 **Example** 
@@ -66,10 +70,10 @@ toolbox:
 ```
 
 ## TinyMce Editor Plugins
-Toolbox provides some CK-Editor Plugins:
+Toolbox provides some additional Editor Plugins:
 
 ### Google Opt Out
-![ck-editor-google-opt-out](https://user-images.githubusercontent.com/700119/37820009-9dd6a418-2e7f-11e8-94b4-99c7a001a3a9.png)
+![editor-google-opt-out](https://user-images.githubusercontent.com/700119/37820009-9dd6a418-2e7f-11e8-94b4-99c7a001a3a9.png)
 
 Add a link to allow user to disable google analytics tracking.
 There is also a [frontend Javascript Plugin](./80_Javascript.md).
