@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.0.3
+- Respect editable configuration for standalone editables in headless document
+
 ## 5.0.2
 - Fix element config load priority to allow config overwrites
 

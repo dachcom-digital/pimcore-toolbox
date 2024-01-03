@@ -147,7 +147,19 @@ class HeadlessEditableRenderer
         foreach ($blockEditable->getIterator() as $blockIndex) {
             foreach ($headlessEditableInfo->getChildren() as $childHeadlessEditableInfo) {
 
+                ob_start();
+
                 echo $this->processEditable($childHeadlessEditableInfo, true);
+
+                $renderedBlockEditable = ob_get_clean();
+
+                echo $this->renderEditableWithWrapper($childHeadlessEditableInfo->getType(), [
+                    'item'     => [
+                        'label'       => $childHeadlessEditableInfo->getLabel(),
+                        'description' => null
+                    ],
+                    'editable' => $renderedBlockEditable
+                ]);
 
                 if ($editMode === false) {
                     $data[] = $this->processEditable($childHeadlessEditableInfo);

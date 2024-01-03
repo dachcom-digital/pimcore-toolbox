@@ -17,6 +17,7 @@ services:
     ToolboxBundle\Document\Editable\EditableWorker:
         public: true
 
+    ToolboxBundle\Document\Editable\ConfigParser: ~
     ToolboxBundle\Document\Editable\HeadlessEditableRenderer: ~
 
     ToolboxBundle\Factory\HeadlessEditableInfoFactory: ~

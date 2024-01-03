@@ -8,6 +8,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use ToolboxBundle\Document\Editable\ConfigParser;
 use ToolboxBundle\Document\Editable\EditableJsonSubscriber;
 use ToolboxBundle\Document\Editable\HeadlessEditableRenderer;
 use ToolboxBundle\Factory\HeadlessEditableInfoFactory;
@@ -21,6 +22,7 @@ class HeadlessDocumentResolver
     public function __construct(
         protected Environment $environment,
         protected ConfigManagerInterface $configManager,
+        protected ConfigParser $configParser,
         protected EditmodeResolver $editmodeResolver,
         protected EventDispatcherInterface $eventDispatcher,
         protected HeadlessEditableRenderer $headlessEditableRenderer,
@@ -57,6 +59,12 @@ class HeadlessDocumentResolver
 
             $item['name'] = $itemName;
 
+            if (!in_array($item['type'], ['areablock', 'area'])) {
+                // configuration of standalone editables in headless documents needs to be transformed here,
+                // since we don't have any brick action to handle it!
+                $item = $this->parseConfigElement($item, $itemName);
+            }
+
             $headlessInfo = $this->editableInfoFactory->createViaEditable($document, $itemName, true, $item);
             $renderedEditable = $this->headlessEditableRenderer->buildEditable($headlessInfo);
 
@@ -66,7 +74,7 @@ class HeadlessDocumentResolver
             } else {
                 $configurationView = $this->headlessEditableRenderer->renderStandaloneEditableWithWrapper(
                     $this->headlessEditableRenderer->renderEditableWithWrapper($item['type'], [
-                        'item'     => array_merge($item, ['label' => $item['title']]),
+                        'item'     => $item,
                         'editable' => $renderedEditable
                     ])
                 );
@@ -122,5 +130,26 @@ class HeadlessDocumentResolver
             $this->eventDispatcher->removeSubscriber($this->subscriber);
             $this->subscriber = null;
         }
+    }
+
+    protected function parseConfigElement(array $config, string $itemName): array
+    {
+        $editableConfig = $this->configParser->parseConfigElement(null, $itemName, $config, true);
+
+        if ($editableConfig === null) {
+            return [];
+        }
+
+        if (array_key_exists('children', $config) && is_array($config['children']) && count($config['children']) > 0) {
+            $children = [];
+
+            foreach ($config['children'] as $childName => $childConfig) {
+                $children[] = $this->parseConfigElement($childConfig, $childName);
+            }
+
+            $editableConfig['children'] = $children;
+        }
+
+        return $editableConfig;
     }
 }
