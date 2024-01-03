@@ -595,6 +595,10 @@ body > .single-teaser img {
     padding: 3px 0 0 0;
 }
 
+.toolbox-element-edit-button.not-configurable:before {
+    top: -18px;
+}
+
 .toolbox-element-edit-button.no-interaction {
     height: 26px;
 }
@@ -711,6 +715,11 @@ body > .single-teaser img {
     [TOOLBOX HEADLESS] Inline Editables - Config Node
 */
 
+.toolbox-headless .toolbox-container {
+    border: none;
+    padding: 0;
+}
+
 .toolbox-headless .inline-config-area {
     border: 1px dashed #d6d6d6;
     padding: 10px;
@@ -770,5 +779,5 @@ body > .single-teaser img {
 .toolbox-headless .inline-config-area .pimcore_block_entry {
     margin: 0 0 20px 0;
     border: 1px dotted #6428b44a;
-    padding: 5px 10px;
+    padding: 10px;
 }

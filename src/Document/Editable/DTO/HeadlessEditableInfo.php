@@ -13,6 +13,7 @@ class HeadlessEditableInfo
         protected mixed $editableId,
         protected string $name,
         protected string $type,
+        protected ?string $label,
         protected ?string $brickParent = null,
         protected ?array $editableConfiguration = null,
         protected array $config = [],
@@ -36,6 +37,11 @@ class HeadlessEditableInfo
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
     }
 
     public function getType(): string
