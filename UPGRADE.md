@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.0.4
+- Fix default theme config loader priority
+
 ## 5.0.3
 - Respect editable configuration for standalone editables in headless document
 
