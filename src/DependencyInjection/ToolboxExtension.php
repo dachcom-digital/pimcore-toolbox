@@ -46,14 +46,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
                 }
 
                 $coreLoader->load(sprintf('core_areas/%s_service.yaml', $areaName));
-
-                // @see https://github.com/symfony/symfony/issues/52789
-                $data = $coreLoader->getLocator()->locate(sprintf('core_areas/%s_config.yaml', $areaName));
-                $parsedData = Yaml::parseFile($data);
-
-                if (array_key_exists('toolbox', $parsedData)) {
-                    $container->prependExtensionConfig('toolbox', $parsedData['toolbox']);
-                }
+                $this->prependConfigToContainer($coreLoader, $container, sprintf('core_areas/%s_config.yaml', $areaName));
 
                 $loaded[] = $areaName;
             }
@@ -61,7 +54,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
         // add default theme (b4) if not set
         if ($hasTheme === false) {
-            $coreLoader->load('theme/bootstrap4_theme.yaml');
+            $this->prependConfigToContainer($coreLoader, $container, 'theme/bootstrap4_theme.yaml');
         }
 
         $container->setParameter('toolbox.wysiwyg_editor', $wysiwygEditor);
@@ -249,5 +242,19 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         return $configs;
+    }
+
+    private function prependConfigToContainer(YamlFileLoader $loader, ContainerBuilder $container, string $configPath): void
+    {
+        // @see https://github.com/symfony/symfony/issues/52789
+
+        $data = $loader->getLocator()->locate($configPath);
+        $parsedData = Yaml::parseFile($data, Yaml::PARSE_CONSTANT);
+
+        if (!array_key_exists('toolbox', $parsedData)) {
+            return;
+        }
+
+        $container->prependExtensionConfig('toolbox', $parsedData['toolbox']);
     }
 }
