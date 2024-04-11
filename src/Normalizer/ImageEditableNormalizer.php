@@ -28,6 +28,9 @@ class ImageEditableNormalizer implements PropertyNormalizerInterface
         }
 
         return [
+            'caption'  => $value->getText(),
+            'hotspots' => $value->getHotspots(),
+            'marker'   => $value->getMarker(),
             'lightbox' => $this->assetService->generateImageThumbnailFromEditable($value, $imageLightbox),
             'image'    => $this->assetService->generateImageThumbnailFromEditable($value, $imageElement),
         ];
