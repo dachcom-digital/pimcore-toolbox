@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.0.5
+- Add `caption`, `marker` and `hotspots` to image normalizer
+
 ## 5.0.4
 - Fix default theme config loader priority
 
