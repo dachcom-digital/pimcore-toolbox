@@ -20,8 +20,15 @@ class ImageEditableNormalizer implements PropertyNormalizerInterface
             return $value;
         }
 
-        $imageLightbox = $this->configManager->getImageThumbnailFromConfig('image_lightbox');
-        $imageElement = $this->configManager->getImageThumbnailFromConfig('image_element');
+        $config = $value->getConfig();
+
+        $imageLightbox = array_key_exists('lightbox_thumbnail', $config)
+            ? $config['lightbox_thumbnail']
+            : $this->configManager->getImageThumbnailFromConfig('image_lightbox');
+
+        $imageElement = array_key_exists('thumbnail', $config)
+            ? $config['thumbnail']
+            : $this->configManager->getImageThumbnailFromConfig('image_element');
 
         if ($value->getThumbnailConfig()) {
             $imageElement = $value->getThumbnailConfig();

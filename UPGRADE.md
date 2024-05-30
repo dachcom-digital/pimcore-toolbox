@@ -1,5 +1,10 @@
 # Upgrade Notes
 
+## 5.1.0
+- [NEW FEATURE] Add `property_normalizer.default_type_mapping` feature
+- [ENHANCEMENT] Respect thumbnail config in normalizer
+- [BUGFIX] Remove invalid normalizer from accordion config
+
 ## 5.0.5
 - Add `caption`, `marker` and `hotspots` to image normalizer
 

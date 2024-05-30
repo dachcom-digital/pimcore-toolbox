@@ -190,8 +190,9 @@ class HeadlessEditableRenderer
 
                 $simpleHeadlessResponse = new HeadlessResponse(
                     HeadlessResponse::TYPE_EDITABLE,
+                    $type,
                     $headlessEditableInfo->getBrickParent(),
-                    $headlessEditableInfo->getEditableConfiguration()
+                    $headlessEditableInfo->getEditableConfiguration(),
                 );
 
                 $simpleHeadlessResponse->setInlineConfigElementData([$editable->getRealName() => $editable]);
