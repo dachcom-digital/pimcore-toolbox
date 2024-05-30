@@ -32,7 +32,6 @@ toolbox:
                         ac_name:
                             type: input
                             title: 'Name'
-                            property_normalizer: ToolboxBundle\Normalizer\DownloadRelationsNormalizer
                         ac_data:
                             type: areablock
                             title: 'Content'
