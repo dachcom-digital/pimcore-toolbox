@@ -106,12 +106,15 @@ class EditableWorker
         $normalizedData = [];
 
         $config = $data->getEditableConfiguration();
+        $editableType = $data->getEditableType();
         $elementData = $data->getInlineConfigElementData();
 
         foreach ($elementData as $configName => $configData) {
 
             if (array_key_exists('property_normalizer', $config) && $config['property_normalizer'] !== null) {
                 $configData = $this->applyNormalizer($config['property_normalizer'], $configData);
+            } elseif (null !== $defaultNormalizer = $this->getDefaultNormalizer($editableType)) {
+                $configData = $this->applyNormalizer($defaultNormalizer, $configData);
             } elseif ($configData instanceof Editable) {
                 $configData = $configData->render();
             } else {

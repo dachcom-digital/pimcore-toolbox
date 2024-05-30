@@ -16,14 +16,20 @@ class HeadlessResponse
 
     public function __construct(
         protected string $type,
+        protected ?string $editableType = null,
         protected ?string $brickParent = null,
-        protected ?array $editableConfiguration = null
+        protected ?array $editableConfiguration = null,
     ) {
     }
 
     public function getType(): string
     {
         return $this->type;
+    }
+
+    public function getEditableType(): ?string
+    {
+        return $this->editableType;
     }
 
     public function hasBrickParent(): bool
