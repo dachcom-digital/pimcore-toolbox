@@ -152,7 +152,7 @@ This normalizer will transform gallery relations to thumbnail data arrays
 ### ImageEditableNormalizer
 This normalizer will transform the inline image editable to a thumbnail data array
 
-## Custom normalizer
+### Custom normalizer
 First, you need to add your normalizer:
 
 ```yaml
@@ -179,8 +179,8 @@ class MyNormalizer implements PropertyNormalizerInterface
     }
 }
 ```
-Then, assign them:
 
+Then, assign them:
 ```yaml
 toolbox:
     areas:
@@ -199,3 +199,16 @@ toolbox:
             additional_property_normalizer:
                 myAdditionalProperty: App\Normalizer\MyNormalizer # normalize your config property, added in your "headlessAction() method
 ```
+
+### Default normalizer definition
+If you want to apply a normalizer to every element of type `checkbox`, you're able to define it globally:
+
+```yaml
+toolbox:
+    property_normalizer:
+        default_type_mapping:
+            checkbox: App\Normalizer\MyNormalizer
+```
+
+> It is still possible, to override the default mapping by using the `property_normalizer` in your element config
+> since those will be processed with the highest priority!

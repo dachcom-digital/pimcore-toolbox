@@ -144,8 +144,12 @@ class EditableWorker
                     $configData = $this->applyNormalizer($configElements[$configName], $configData);
                 } elseif ($configBlockName !== 'additional_property_normalizer') {
                     $configNode = $this->findBrickConfigNode($configName, $configElements);
-                    if ($configNode !== null && $configNode['property_normalizer'] !== null) {
-                        $configData = $this->applyNormalizer($configNode['property_normalizer'], $configData);
+                    if ($configNode !== null) {
+                        if ($configNode['property_normalizer'] !== null) {
+                            $configData = $this->applyNormalizer($configNode['property_normalizer'], $configData);
+                        } elseif (null !== $defaultNormalizer = $this->getDefaultNormalizer($configNode['type'])) {
+                            $configData = $this->applyNormalizer($defaultNormalizer, $configData);
+                        }
                     }
                 }
 
@@ -179,6 +183,14 @@ class EditableWorker
     private function applyNormalizer(string $normalizerName, mixed $value)
     {
         return $this->normalizerRegistry->get($normalizerName)->normalize($value, $this->configManager->getContextIdentifier());
+    }
+
+    private function getDefaultNormalizer(string $type): ?string
+    {
+        $propertyNormalizerConfig = $this->configManager->getConfig('property_normalizer');
+        $defaultMapping = $propertyNormalizerConfig['default_type_mapping'];
+
+        return $defaultMapping[$type] ?? null;
     }
 
     private function getBlockState(): BlockState

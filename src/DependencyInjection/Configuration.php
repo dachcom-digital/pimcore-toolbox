@@ -48,6 +48,7 @@ class Configuration implements ConfigurationInterface
                             ->append($this->buildAreaBlockConfiguration())
                             ->append($this->buildThemeConfiguration())
                             ->append($this->buildDataAttributeConfiguration())
+                            ->append($this->buildPropertyNormalizerDefaultsConfiguration())
                         ->end()
                     ->end()
                 ->end()
@@ -68,6 +69,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->buildAreaBlockConfiguration())
                 ->append($this->buildThemeConfiguration())
                 ->append($this->buildDataAttributeConfiguration())
+                ->append($this->buildPropertyNormalizerDefaultsConfiguration())
             ->end();
     }
 
@@ -310,6 +312,23 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->variableNode('values')->end()
+            ->end()
+        ->end();
+
+        return $treeBuilder;
+    }
+
+    protected function buildPropertyNormalizerDefaultsConfiguration(): ArrayNodeDefinition
+    {
+        $treeBuilder = new ArrayNodeDefinition('property_normalizer');
+
+        $treeBuilder
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('default_type_mapping')
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')
+                ->end()
             ->end()
         ->end();
 
