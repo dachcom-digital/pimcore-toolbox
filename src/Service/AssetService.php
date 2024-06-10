@@ -49,6 +49,7 @@ class AssetService
             'markup'                => $thumbnail?->getHtml($options),
             'mediaList'             => $thumbnail === null ? null : $this->parseThumbnailPictureList($thumbnail, $options),
             'path'                  => $thumbnail?->getFrontendPath(),
+            'originalPath'          => $asset->getFrontendPath(),
             'lowQualityPlaceholder' => $this->parseLowQualityPlaceholder($asset),
         ];
     }
