@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.1.1
+- [BUGFIX] Use Pimcore AdminUserTranslator in BrickConfigBuilder [#219](https://github.com/dachcom-digital/pimcore-toolbox/issues/219)
+
 ## Version 4.1.0
 - [FEATURE] PIMCORE 10.5 support only
 - [IMPROVEMENT] Compatibility with Members 4.1 added

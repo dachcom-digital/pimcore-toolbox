@@ -5,18 +5,18 @@ namespace ToolboxBundle\Builder;
 use Pimcore\Extension\Document\Areabrick\EditableDialogBoxConfiguration;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Checkbox;
-use Pimcore\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 use Twig\Environment;
 
 class BrickConfigBuilder implements BrickConfigBuilderInterface
 {
-    protected Translator $translator;
+    protected TranslatorInterface $translator;
     protected Environment $templating;
     protected StoreProviderRegistryInterface $storeProvider;
 
     public function __construct(
-        Translator $translator,
+        TranslatorInterface $translator,
         Environment $templating,
         StoreProviderRegistryInterface $storeProvider
     ) {
