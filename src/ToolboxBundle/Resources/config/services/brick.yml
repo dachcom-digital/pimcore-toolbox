@@ -6,4 +6,6 @@ services:
         public: true
 
     ToolboxBundle\Builder\BrickConfigBuilderInterface: '@ToolboxBundle\Builder\BrickConfigBuilder'
-    ToolboxBundle\Builder\BrickConfigBuilder: ~
+    ToolboxBundle\Builder\BrickConfigBuilder:
+        arguments:
+            $translator: '@Pimcore\Bundle\AdminBundle\Translation\AdminUserTranslator'
