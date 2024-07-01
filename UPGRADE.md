@@ -1,7 +1,10 @@
 # Upgrade Notes
 
-## Version 4.1.1
+## Version 4.1.2
 - [BUGFIX] Use Pimcore AdminUserTranslator in BrickConfigBuilder [#219](https://github.com/dachcom-digital/pimcore-toolbox/issues/219)
+
+## Version 4.1.1
+- [BUGFIX] fix human-readable file size [#204](https://github.com/dachcom-digital/pimcore-toolbox/issues/204)
 
 ## Version 4.1.0
 - [FEATURE] PIMCORE 10.5 support only
