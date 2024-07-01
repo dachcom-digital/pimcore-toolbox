@@ -7,8 +7,6 @@ use Pimcore\Extension\Document\Areabrick\EditableDialogBoxInterface;
 use Pimcore\Model\Document;
 use ToolboxBundle\Builder\BrickConfigBuilderInterface;
 use ToolboxBundle\Document\Response\HeadlessResponse;
-use ToolboxBundle\Event\HeadlessEditableActionEvent;
-use ToolboxBundle\ToolboxEvents;
 
 abstract class AbstractAreabrick extends AbstractBaseAreabrick implements EditableDialogBoxInterface
 {

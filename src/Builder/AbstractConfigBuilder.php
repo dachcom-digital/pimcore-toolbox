@@ -4,7 +4,7 @@ namespace ToolboxBundle\Builder;
 
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Templating\Renderer\EditableRenderer;
-use Pimcore\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ToolboxBundle\Document\Editable\ConfigParser;
 use ToolboxBundle\Manager\AreaManagerInterface;
 use Twig\Environment;
@@ -12,7 +12,7 @@ use Twig\Environment;
 abstract class AbstractConfigBuilder
 {
     public function __construct(
-        protected Translator $translator,
+        protected TranslatorInterface $translator,
         protected Environment $templating,
         protected AreaManagerInterface $areaManager,
         protected ConfigParser $configParser,
