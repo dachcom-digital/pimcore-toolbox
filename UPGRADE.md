@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.1.1
+- [BUGFIX] Use Pimcore AdminUserTranslator in BrickConfigBuilder [#219](https://github.com/dachcom-digital/pimcore-toolbox/issues/219)
+
 ## 5.1.0
 - [NEW FEATURE] Add `property_normalizer.default_type_mapping` feature
 - [ENHANCEMENT] Respect thumbnail config in normalizer

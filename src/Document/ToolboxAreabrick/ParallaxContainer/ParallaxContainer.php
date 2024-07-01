@@ -5,15 +5,15 @@ namespace ToolboxBundle\Document\ToolboxAreabrick\ParallaxContainer;
 use Pimcore\Model\Asset;
 use Pimcore\Model\Document\Editable;
 use Pimcore\Model\Element\ElementInterface;
-use Pimcore\Translation\Translator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ToolboxBundle\Document\Areabrick\AbstractAreabrick;
 
 class ParallaxContainer extends AbstractAreabrick
 {
     public function __construct(
-        private Translator $translator,
+        private TranslatorInterface $translator,
         private EngineInterface $templating
     ) {
     }

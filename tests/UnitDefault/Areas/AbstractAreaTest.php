@@ -11,7 +11,6 @@ use Pimcore\Tests\Support\Util\TestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use ToolboxBundle\Builder\BrickConfigBuilder;
 use ToolboxBundle\Manager\ConfigManager;
-use ToolboxBundle\Manager\ConfigManagerInterface;
 
 abstract class AbstractAreaTest extends BundleTestCase
 {

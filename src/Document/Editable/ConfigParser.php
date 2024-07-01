@@ -5,13 +5,13 @@ namespace ToolboxBundle\Document\Editable;
 use Pimcore\Model\Document\Editable\Area\Info;
 use Pimcore\Model\Document\Editable\Checkbox;
 use Pimcore\Templating\Renderer\EditableRenderer;
-use Pimcore\Translation\Translator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ToolboxBundle\Registry\StoreProviderRegistryInterface;
 
 class ConfigParser
 {
     public function __construct(
-        protected Translator $translator,
+        protected TranslatorInterface $translator,
         protected StoreProviderRegistryInterface $storeProvider,
         protected EditableRenderer $editableRenderer
     ) {

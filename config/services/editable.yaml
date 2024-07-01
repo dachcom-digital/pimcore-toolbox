@@ -6,10 +6,14 @@ services:
         public: true
 
     ToolboxBundle\Builder\BrickConfigBuilderInterface: '@ToolboxBundle\Builder\BrickConfigBuilder'
-    ToolboxBundle\Builder\BrickConfigBuilder: ~
+    ToolboxBundle\Builder\BrickConfigBuilder:
+        arguments:
+            $translator: '@Pimcore\Bundle\AdminBundle\Translation\AdminUserTranslator'
 
     ToolboxBundle\Builder\InlineConfigBuilderInterface: '@ToolboxBundle\Builder\InlineConfigBuilder'
     ToolboxBundle\Builder\InlineConfigBuilder:
+        arguments:
+            $translator: '@Pimcore\Bundle\AdminBundle\Translation\AdminUserTranslator'
         calls:
             - [ setHeadlessEditableRenderer, [ '@ToolboxBundle\Document\Editable\HeadlessEditableRenderer' ] ]
             - [ setHeadlessEditableInfoFactory, [ '@ToolboxBundle\Factory\HeadlessEditableInfoFactory' ] ]
@@ -17,7 +21,10 @@ services:
     ToolboxBundle\Document\Editable\EditableWorker:
         public: true
 
-    ToolboxBundle\Document\Editable\ConfigParser: ~
+    ToolboxBundle\Document\Editable\ConfigParser:
+        arguments:
+            $translator: '@Pimcore\Bundle\AdminBundle\Translation\AdminUserTranslator'
+
     ToolboxBundle\Document\Editable\HeadlessEditableRenderer: ~
 
     ToolboxBundle\Factory\HeadlessEditableInfoFactory: ~

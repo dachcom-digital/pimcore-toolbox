@@ -3,8 +3,8 @@
 namespace ToolboxBundle\Service;
 
 use Pimcore\Model\Asset;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use ToolboxBundle\Connector\BundleConnector;
-use Pimcore\Translation\Translator;
 use ToolboxBundle\Manager\ConfigManagerInterface;
 
 class DownloadInfoService
@@ -12,7 +12,7 @@ class DownloadInfoService
     public function __construct(
         protected ConfigManagerInterface $configManager,
         protected BundleConnector $bundleConnector,
-        protected Translator $translator
+        protected TranslatorInterface $translator
     ) {
     }
 
@@ -44,7 +44,7 @@ class DownloadInfoService
         }
 
         $dType = pathinfo($download->getFilename(), PATHINFO_EXTENSION);
-        $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download', [], 'admin');
+        $downloadTitle = $showFileNameIfTitleEmpty ? $download->getFilename() : $this->translator->trans('Download');
         $dName = ($download->getMetadata('title')) ?: $downloadTitle;
         $dAltText = $download->getMetadata('alt') ?: '';
         $dImageAltText = !empty($dAltText) ? $dAltText : $dName;

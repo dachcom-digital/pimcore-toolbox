@@ -2,7 +2,7 @@ services:
     ToolboxBundle\Document\ToolboxAreabrick\ParallaxContainer\ParallaxContainer:
         parent: ToolboxBundle\Document\Areabrick\AbstractAreabrick
         arguments:
-            - '@translator'
+            - '@Pimcore\Bundle\AdminBundle\Translation\AdminUserTranslator'
             - '@pimcore.templating.engine.delegating'
         tags:
             - { name: toolbox.area.brick, id: parallaxContainer }
