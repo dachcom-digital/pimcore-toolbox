@@ -28,9 +28,8 @@ class EditmodeListener implements EventSubscriberInterface
     {
         $request = $event->getRequest();
         $response = $event->getResponse();
-
         $scripts = [
-            'head'   => sprintf('<script src="%s?_dc=%s"></script>', '/admin/toolbox-wysiwyg-document-style.js', Version::getRevision()),
+            'head' => [],
         ];
 
         if (!$event->isMainRequest()) {
@@ -50,9 +49,16 @@ class EditmodeListener implements EventSubscriberInterface
             return;
         }
 
+        $scripts['head'][] = sprintf(
+            '<script src="%s?_dc=%s&tb_document_request_id=%d"></script>',
+            '/admin/toolbox-wysiwyg-document-style.js',
+            Version::getRevision(),
+            $request->attributes->get('contentDocument')?->getId()
+        );
+
         $html = str_replace(
             '<!-- /pimcore editmode -->',
-            sprintf("%s%s<!-- /pimcore editmode -->", $scripts['head'], PHP_EOL),
+            sprintf("%s%s<!-- /pimcore editmode -->", implode(PHP_EOL, $scripts['head']), PHP_EOL),
             $html
         );
 
