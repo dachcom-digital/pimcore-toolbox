@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.1.2
+- [BUGFIX] Enriched injected JS `toolbox-wysiwyg-document-style.js` with toolbox document id param [#223](https://github.com/dachcom-digital/pimcore-toolbox/issues/223)
+
 ## 5.1.1
 - [BUGFIX] Use Pimcore AdminUserTranslator in BrickConfigBuilder [#219](https://github.com/dachcom-digital/pimcore-toolbox/issues/219)
 
