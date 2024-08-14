@@ -13,6 +13,7 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
     protected const ELEMENTS_IDENTIFIER = 'elements';
     protected const ELEMENT_TYPE_IDENTIFIER = 'elementType';
     protected const ELEMENT_SUB_TYPE_IDENTIFIER = 'elementSubType';
+    protected const ELEMENT_HASH = 'elementHash';
     protected const ELEMENT_DATA_IDENTIFIER = 'elementContext';
 
     protected array $jsonEditables = [];
@@ -26,7 +27,7 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
 
     public function onHeadlessElementAdd(HeadlessElementEvent $event): void
     {
-        $this->jsonEditables[$event->getElementNamespace()] = [$event->getElementType(), $event->getElementSubType(), $event->getData()];
+        $this->jsonEditables[$event->getElementNamespace()] = [$event->getElementType(), $event->getElementSubType(), $event->getElementHash(), $event->getData()];
     }
 
     public function getJsonEditables(): array
@@ -59,7 +60,8 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
 
             $currentArray[self::ELEMENT_TYPE_IDENTIFIER] = $value[0];
             $currentArray[self::ELEMENT_SUB_TYPE_IDENTIFIER] = $value[1];
-            $currentArray[self::ELEMENT_DATA_IDENTIFIER] = $value[2];
+            $currentArray[self::ELEMENT_HASH] = $value[2];
+            $currentArray[self::ELEMENT_DATA_IDENTIFIER] = $value[3];
         }
 
         /** @phpstan-ignore-next-line */

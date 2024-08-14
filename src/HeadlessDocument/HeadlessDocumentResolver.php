@@ -67,6 +67,7 @@ class HeadlessDocumentResolver
 
             $headlessInfo = $this->editableInfoFactory->createViaEditable($document, $itemName, true, $item);
             $renderedEditable = $this->headlessEditableRenderer->buildEditable($headlessInfo);
+            $editable = $this->headlessEditableRenderer->getEditable($headlessInfo);
 
             if (in_array($headlessInfo->getType(), ['areablock', 'area'])) {
                 // will be rendered within brick process workflow
@@ -76,7 +77,8 @@ class HeadlessDocumentResolver
                     $this->headlessEditableRenderer->renderEditableWithWrapper($item['type'], [
                         'item'     => $item,
                         'editable' => $renderedEditable
-                    ])
+                    ]),
+                    $editable
                 );
             }
 

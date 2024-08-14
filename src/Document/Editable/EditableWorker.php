@@ -30,6 +30,7 @@ class EditableWorker
         $this->dispatch([
             'elementType'      => $data->getType(),
             'elementSubType'   => $areabrick->getId(),
+            'elementHash'      => $this->buildBrickHash(),
             'elementNamespace' => $this->buildBrickNamespace(),
             'data'             => $this->processBrickData($data, $areabrick->getId())
         ]);
@@ -40,9 +41,36 @@ class EditableWorker
         $this->dispatch([
             'elementType'      => $data->getType(),
             'elementSubType'   => $editable->getType(),
+            'elementHash'      => $this->buildEditableHash($editable),
             'elementNamespace' => $this->buildEditableNamespace($editable),
             'data'             => $this->processEditableData($data)
         ]);
+    }
+
+    public function processVirtualElement(string $type, string $subType, string $hash, string $namespace): void
+    {
+        $this->dispatch([
+            'elementType'      => $type,
+            'elementSubType'   => $subType,
+            'elementHash'      => $hash,
+            'elementNamespace' => $namespace,
+            'data'             => []
+        ]);
+    }
+
+    public function buildBrickHash(): string
+    {
+        return hash('xxh3', sprintf('element_hash_%s', str_replace([':', '.'], '_', $this->buildBrickNamespace())));
+    }
+
+    public function buildEditableHash(Editable $editable): string
+    {
+        return hash('xxh3', sprintf('element_hash_%s', str_replace([':', '.'], '_', $editable->getName())));
+    }
+
+    public function buildBlockHash(string $blockName, int $blockIndex): string
+    {
+        return hash('xxh3', sprintf('element_hash_%s_%d', $blockName, $blockIndex));
     }
 
     private function dispatch(array $arguments): void
