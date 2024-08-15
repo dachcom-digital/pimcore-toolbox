@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.2.2
+- [ENHANCEMENT] Ignore disabled area bricks in autoload watcher pass
+
 ## 5.2.1
 - [BUGFIX] Fix column hash selector
 

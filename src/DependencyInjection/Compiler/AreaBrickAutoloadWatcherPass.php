@@ -12,6 +12,7 @@ final class AreaBrickAutoloadWatcherPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
+        $disabledAreaBricks = $container->getParameter('toolbox.area_brick.disabled_bricks');
         $config = $container->getParameter('pimcore.config');
 
         if (!$config['documents']['areas']['autoload']) {
@@ -21,6 +22,11 @@ final class AreaBrickAutoloadWatcherPass implements CompilerPassInterface
         $possibleNoPimcoreAwareBricks = [];
 
         foreach ($container->getDefinitions() as $definitionId => $definition) {
+
+            if (in_array($definitionId, $disabledAreaBricks, true)) {
+                continue;
+            }
+
             if (!str_contains((string) $definitionId, '.area.brick.')) {
                 continue;
             }

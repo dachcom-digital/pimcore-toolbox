@@ -74,8 +74,11 @@ class ConfigManager implements ConfigManagerInterface
     {
         $this->ensureCoreConfig();
 
-        if (array_key_exists($areaName, $this->config['areas'])) {
-            return $this->config['areas'][$areaName]['enabled'] === true;
+        // keys cannot have dashes in symfony configuration, so replace if given
+        $saveKeyName = str_replace('-', '_', $areaName);
+
+        if (array_key_exists($saveKeyName, $this->config['areas'])) {
+            return $this->config['areas'][$saveKeyName]['enabled'] === true;
         }
 
         return true;
