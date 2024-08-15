@@ -55,9 +55,11 @@ class AreaManager implements AreaManagerInterface
         $cleanedGroups = [];
         $cleanedGroupsSorted = [];
 
-        foreach ($groups as $groupName => $groupData) {
+        foreach ($groups as $groupData) {
             $groupName = $groupData['name'];
             $cleanedGroup = [];
+
+            $sorting = $groupData['sorting'] ?? self::BRICK_GROUP_SORTING_ALPHABETICALLY;
 
             foreach ($groupData['elements'] as $element) {
                 if (in_array($element, $availableBricks['allowed'], true)) {
@@ -65,17 +67,19 @@ class AreaManager implements AreaManagerInterface
                 }
             }
 
-            //ok, group elements found, add them
             if (count($cleanedGroup) > 0) {
                 $cleanedGroups[$groupName] = $cleanedGroup;
-                $cleanedGroupsSorted = array_merge($cleanedGroupsSorted, $cleanedGroup);
-                //sort group by cleaned group
-                sort($cleanedGroupsSorted);
+
+                if ($sorting === self::BRICK_GROUP_SORTING_ALPHABETICALLY) {
+                    sort($cleanedGroup);
+                }
+
+                $cleanedGroupsSorted[] = $cleanedGroup;
             }
         }
 
         if (count($cleanedGroups) > 0) {
-            $configuration['sorting'] = $cleanedGroupsSorted;
+            $configuration['sorting'] = array_merge([], ...$cleanedGroupsSorted);
             $configuration['group'] = $cleanedGroups;
         }
 

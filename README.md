@@ -25,7 +25,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~5.0.0"
+    "dachcom-digital/toolbox" : "~5.1.0"
 }
 ```
 

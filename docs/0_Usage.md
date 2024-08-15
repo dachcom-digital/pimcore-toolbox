@@ -66,6 +66,8 @@ area_block_configuration:
     groups:
         -
             name: Project
+            # optional, set sorting to "manually" to respect given order, otherwise sorting will be alphabetically
+            sorting: !php/const ToolboxBundle\Manager\AreaManagerInterface::BRICK_GROUP_SORTING_MANUALLY
             elements:
                 - your_custom_area_brick
 
