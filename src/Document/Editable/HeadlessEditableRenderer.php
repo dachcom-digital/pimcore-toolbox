@@ -84,7 +84,7 @@ class HeadlessEditableRenderer
         foreach ($headlessEditableInfo->getChildren() as $headlessColumnEditableInfo) {
 
             $areaBlockDataResponse = null;
-            $editable = $this->getEditable($headlessEditableInfo);
+            $editable = $this->getEditable($headlessColumnEditableInfo);
 
             ob_start();
 
