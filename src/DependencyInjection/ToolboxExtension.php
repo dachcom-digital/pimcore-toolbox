@@ -80,6 +80,11 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
 
+        $disabledAreaBricks = array_filter($config['areas'], static function(array $area) {
+            return $area['enabled'] === false;
+        });
+
+        $container->setParameter('toolbox.area_brick.disabled_bricks', array_keys($disabledAreaBricks));
         $container->setParameter('toolbox.area_brick.dialog_aware_bricks', $this->determinateConfigDialogAwareBricks($config));
 
         //context resolver
