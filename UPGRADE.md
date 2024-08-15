@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.2.1
+- [BUGFIX] Fix column hash selector
+
 ## 5.2.0
 - [NEW FEATURE] Add element hash to headless stack
 - [NEW FEATURE] Allow manual brick group sorting [#225](https://github.com/dachcom-digital/pimcore-toolbox/issues/225)
