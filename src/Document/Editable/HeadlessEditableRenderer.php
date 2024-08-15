@@ -21,12 +21,24 @@ class HeadlessEditableRenderer
 
     public function renderBrickWithWrapper(array $contentBlocks): string
     {
-        return sprintf('<div class="inline-config-area">%s</div>', implode(PHP_EOL, $contentBlocks));
+        $brickHash = $this->editableWorker->buildBrickHash();
+
+        return sprintf(
+            '<div class="inline-config-area" data-headless-element-hash="%s">%s</div>',
+            $brickHash,
+            implode(PHP_EOL, $contentBlocks)
+        );
     }
 
-    public function renderStandaloneEditableWithWrapper(string $contentBlock): string
+    public function renderStandaloneEditableWithWrapper(string $contentBlock, Editable $editable): string
     {
-        return sprintf('<div class="inline-config-area">%s</div>', $contentBlock);
+        $editableHash = $this->editableWorker->buildEditableHash($editable);
+
+        return sprintf(
+            '<div class="inline-config-area" data-headless-element-hash="%s">%s</div>',
+            $editableHash,
+            $contentBlock
+        );
     }
 
     public function renderEditableWithWrapper(string $type, array $viewParameters): string
@@ -52,7 +64,7 @@ class HeadlessEditableRenderer
 
     private function buildStandardEditable(HeadlessEditableInfo $headlessEditableInfo): Editable|string|array
     {
-        return $this->processEditable($headlessEditableInfo);
+        return $this->processEditable($headlessEditableInfo, $this->getEditable($headlessEditableInfo));
     }
 
     private function buildColumnEditable(HeadlessEditableInfo $headlessEditableInfo): string|array
@@ -72,13 +84,14 @@ class HeadlessEditableRenderer
         foreach ($headlessEditableInfo->getChildren() as $headlessColumnEditableInfo) {
 
             $areaBlockDataResponse = null;
+            $editable = $this->getEditable($headlessEditableInfo);
 
             ob_start();
 
-            echo $this->processEditable($headlessColumnEditableInfo, true);
+            echo $this->processEditable($headlessColumnEditableInfo, $editable, true);
 
             if ($editMode === false) {
-                $areaBlockDataResponse = $this->processEditable($headlessColumnEditableInfo);
+                $areaBlockDataResponse = $this->processEditable($headlessColumnEditableInfo, $editable);
             }
 
             $areaBlockHtmlResponse = ob_get_clean();
@@ -100,13 +113,14 @@ class HeadlessEditableRenderer
     {
         $areaDataResponse = '';
         $editMode = $headlessEditableInfo->isEditMode();
+        $editable = $this->getEditable($headlessEditableInfo);
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo, true);
+        echo $this->processEditable($headlessEditableInfo, $editable, true);
 
         if ($editMode === false) {
-            $areaDataResponse = $this->processEditable($headlessEditableInfo);
+            $areaDataResponse = $this->processEditable($headlessEditableInfo, $editable);
         }
 
         $areaHtmlResponse = ob_get_clean();
@@ -118,13 +132,14 @@ class HeadlessEditableRenderer
     {
         $areaBlockDataResponse = '';
         $editMode = $headlessEditableInfo->isEditMode();
+        $editable = $this->getEditable($headlessEditableInfo);
 
         ob_start();
 
-        echo $this->processEditable($headlessEditableInfo, true);
+        echo $this->processEditable($headlessEditableInfo, $editable, true);
 
         if ($editMode === false) {
-            $areaBlockDataResponse = $this->processEditable($headlessEditableInfo);
+            $areaBlockDataResponse = $this->processEditable($headlessEditableInfo, $editable);
         }
 
         $areaBlockHtmlResponse = ob_get_clean();
@@ -145,11 +160,23 @@ class HeadlessEditableRenderer
         $blockEditable = $this->editableRenderer->getEditable($document, 'block', $headlessEditableInfo->getName(), $config, $headlessEditableInfo->isEditMode());
 
         foreach ($blockEditable->getIterator() as $blockIndex) {
+
+            $blockHash = $this->editableWorker->buildBlockHash($headlessEditableInfo->getName(), $blockIndex);
+            $blockNamespace = sprintf('%s:%s', $headlessEditableInfo->getName(), $blockIndex);
+
+            if ($editMode === true) {
+                echo sprintf('<a data-headless-element-hash="%s"></a>', $blockHash);
+            }
+
+            $this->editableWorker->processVirtualElement(HeadlessResponse::TYPE_EDITABLE, 'block', $blockHash, $blockNamespace);
+
             foreach ($headlessEditableInfo->getChildren() as $childHeadlessEditableInfo) {
+
+                $editable = $this->getEditable($childHeadlessEditableInfo);
 
                 ob_start();
 
-                echo $this->processEditable($childHeadlessEditableInfo, true);
+                echo $this->processEditable($childHeadlessEditableInfo, $editable, true);
 
                 $renderedBlockEditable = ob_get_clean();
 
@@ -162,7 +189,7 @@ class HeadlessEditableRenderer
                 ]);
 
                 if ($editMode === false) {
-                    $data[] = $this->processEditable($childHeadlessEditableInfo);
+                    $data[] = $this->processEditable($childHeadlessEditableInfo, $editable);
                 }
             }
         }
@@ -172,17 +199,11 @@ class HeadlessEditableRenderer
         return $editMode ? $areaBlockHtmlResponse : $data;
     }
 
-    private function processEditable(HeadlessEditableInfo $headlessEditableInfo, bool $forceRendering = false): mixed
+    private function processEditable(HeadlessEditableInfo $headlessEditableInfo, Editable $editable, bool $forceRendering = false): mixed
     {
         $editMode = $headlessEditableInfo->isEditMode();
         $type = $headlessEditableInfo->getType();
-        $name = $headlessEditableInfo->getName();
-        $config = $headlessEditableInfo->getConfig();
-        $document = $headlessEditableInfo->getDocument();
         $isSimple = !$headlessEditableInfo->isBlockEditable();
-
-        /** @var Editable $editable */
-        $editable = $this->editableRenderer->getEditable($document, $type, $name, $config, $editMode);
 
         if ($headlessEditableInfo->isStandAlone() === true) {
 
@@ -216,5 +237,19 @@ class HeadlessEditableRenderer
         echo $editable->render();
 
         return '';
+    }
+
+    public function getEditable(HeadlessEditableInfo $headlessEditableInfo): Editable
+    {
+        $editMode = $headlessEditableInfo->isEditMode();
+        $type = $headlessEditableInfo->getType();
+        $name = $headlessEditableInfo->getName();
+        $config = $headlessEditableInfo->getConfig();
+        $document = $headlessEditableInfo->getDocument();
+
+        /** @var Editable $editable */
+        $editable = $this->editableRenderer->getEditable($document, $type, $name, $config, $editMode);
+
+        return $editable;
     }
 }

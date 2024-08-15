@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.2.0
+- [NEW FEATURE] Add element hash to headless stack
+
 ## 5.1.2
 - [BUGFIX] Enriched injected JS `toolbox-wysiwyg-document-style.js` with toolbox document id param [#223](https://github.com/dachcom-digital/pimcore-toolbox/issues/223)
 

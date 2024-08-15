@@ -10,6 +10,7 @@ class HeadlessElementEvent extends Event
         protected array $data,
         protected string $elementType,
         protected string $elementSubType,
+        protected ?string $elementHash,
         protected string $elementNamespace
     ) {
     }
@@ -27,6 +28,11 @@ class HeadlessElementEvent extends Event
     public function getElementSubType(): string
     {
         return $this->elementSubType;
+    }
+
+    public function getElementHash(): ?string
+    {
+        return $this->elementHash;
     }
 
     public function getElementNamespace(): string
