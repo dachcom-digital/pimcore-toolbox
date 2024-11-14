@@ -11,6 +11,10 @@ services:
             - [setContainer, ['@service_container']]
 
 doctrine:
+    orm:
+        entity_managers:
+            default:
+                connection: default
     dbal:
         connections:
             default:
