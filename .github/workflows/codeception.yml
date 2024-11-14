@@ -38,14 +38,15 @@ jobs:
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         strategy:
             matrix:
-                php: [ 8.2 ]
-                symfony: [ ^6.2 ]
-                pimcore: [ ~11.0.0 ]
+                php: [ 8.3 ]
+                symfony: [ ^6.4 ]
+                pimcore: [ ~11.4.0 ]
                 include:
-                    -   pimcore: ~11.0.0
-                        template_tag: v11.0.0
+                    -   pimcore: ~11.4.0
+                        template_tag: 2024.3
         steps:
-            -   uses: actions/checkout@v2
+            -   uses: nanasess/setup-chromedriver@v2
+            -   uses: actions/checkout@v4
                 with:
                     path: lib/test-bundle
 
@@ -99,7 +100,7 @@ jobs:
             -   name: Setup Chromium
                 run: |
                     export DISPLAY=:99
-                    chromedriver --url-base=/wd/hub &
+                    chromedriver --url-base=/wd/hub --port=9515 &
                     sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
 
             -   name: Start Symfony Server
@@ -110,10 +111,10 @@ jobs:
             -   name: Get Composer Cache Directory
                 id: composer-cache
                 run: |
-                    echo "::set-output name=dir::$(composer config cache-files-dir)"
+                    echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             -   name: Cache Composer Downloads
-                uses: actions/cache@v1
+                uses: actions/cache@v4
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
@@ -138,7 +139,7 @@ jobs:
                     vendor/bin/codecept run --env github -c ${{ github.workspace }}/lib/test-bundle
 
             -   name: Log Output
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v4
                 if: failure()
                 with:
                     name: "Logs (PHP ${{ matrix.php }}, Pimcore ${{ matrix.pimcore }}, Symfony ${{ matrix.symfony }})"
