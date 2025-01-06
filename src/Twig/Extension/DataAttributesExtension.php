@@ -15,8 +15,9 @@ class DataAttributesExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('toolbox_data_attributes_generator', [$this->dataAttributeService, 'generateDataAttributes']),
+            new TwigFunction('toolbox_data_attributes_generator', [$this->dataAttributeService, 'generateDataAttributes'], [
+                'is_safe' => ['html'],
+            ]),
         ];
     }
-
 }
