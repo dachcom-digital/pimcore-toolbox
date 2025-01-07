@@ -131,7 +131,7 @@ toolbox:
                 toolbar:
                     container: [
                         [ { header: [ 1, 2, false ] } ],
-                        [{ 'size': ['small', false, 'large', 'huge'] }],  # custom dropdown (
+                        [{ 'size': ['small', false, 'large', 'huge'] }],  # custom dropdown
                         [ 'bold' ],
                         [ { align: [ ] } ],
                         [ { list: 'ordered' } ],
@@ -141,7 +141,7 @@ toolbox:
 
 ```
 > [!IMPORTANT]  
-> If your extending style formats, you also have to extend the [html sanitize](https://pimcore.com/docs/platform/Pimcore/Documents/Editables/WYSIWYG/#extending-symfony-html-sanitizer-configuration)
+> If your extending style formats (In this example the "size" dropdown), you also have to extend the [html sanitize](https://pimcore.com/docs/platform/Pimcore/Documents/Editables/WYSIWYG/#extending-symfony-html-sanitizer-configuration)
 > otherwise you're applied data will be removed after persisting!
 
 #### Area Editor Configuration
