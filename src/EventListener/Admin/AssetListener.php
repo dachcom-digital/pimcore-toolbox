@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AssetListener implements EventSubscriberInterface
 {
-    public function __construct(protected string $enabledWysiwygEditorName)
+    public function __construct(protected ?string $enabledWysiwygEditorName)
     {
     }
 
