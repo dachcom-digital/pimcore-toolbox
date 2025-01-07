@@ -81,7 +81,7 @@ class LinkListTest extends AbstractAreaTest
                             <a href="https://www.dachcom.com" path="https://www.dachcom.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom-digital.com" path="https://www.dachcom-digital.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';
@@ -95,7 +95,7 @@ class LinkListTest extends AbstractAreaTest
                             <a href="https://www.dachcom.com" path="https://www.dachcom.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom-digital.com" path="https://www.dachcom-digital.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';
