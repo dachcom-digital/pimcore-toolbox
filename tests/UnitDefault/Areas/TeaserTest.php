@@ -124,7 +124,7 @@ class TeaserTest extends AbstractAreaTest
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3>
                                 <div class="teaser-text">        teaser text    </div>
-                                <a href="/test/test2" class="btn btn-default teaser-link"></a>
+                                <a href="/test/test2" path="/test/test2" linktype="direct" class="btn btn-default teaser-link"></a>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ class TeaserTest extends AbstractAreaTest
                                     ' . $asset->getThumbnail('standardTeaser')->getHtml() . '
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3><div class="teaser-text">        teaser text    </div>
-                                <a href="/test/test2" class="btn btn-default teaser-link"></a>
+                                <a href="/test/test2" path="/test/test2" linktype="direct" class="btn btn-default teaser-link"></a>
                             </div>
                         </div>
                     </div>
@@ -159,7 +159,7 @@ class TeaserTest extends AbstractAreaTest
                                 </a>
                                 <h3 class="teaser-headline">teaser headline</h3>
                                 <div class="teaser-text">        teaser text    </div>
-                                <a href="/test/test2" class="btn btn-default teaser-link"></a>
+                                <a href="/test/test2" path="/test/test2" linktype="direct" class="btn btn-default teaser-link"></a>
                             </div>
                         </div>
                     </div>

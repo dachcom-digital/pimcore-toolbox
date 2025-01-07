@@ -6,6 +6,8 @@ services:
         public: false
 
     ToolboxBundle\EventListener\Admin\AssetListener:
+        arguments:
+            $enabledWysiwygEditorName: '%toolbox.wysiwyg_editor%'
         tags:
             - { name: kernel.event_subscriber }
 

@@ -78,10 +78,10 @@ class LinkListTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-linklist ">
                     <ul>
                         <li>
-                            <a href="https://www.dachcom.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom.com" path="https://www.dachcom.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom-digital.com" path="https://www.dachcom-digital.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';
@@ -92,10 +92,10 @@ class LinkListTest extends AbstractAreaTest
         return '<div class="toolbox-element toolbox-linklist additional-class">
                     <ul>
                         <li>
-                            <a href="https://www.dachcom.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom.com" path="https://www.dachcom.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                         <li>
-                            <a href="https://www.dachcom-digital.com" class="list-link">dummy</a>
+                            <a href="https://www.dachcom-digital.com" path="https://www.dachcom-digital.com" linktype="direct" text="dummy" class="list-link">dummy</a>
                         </li>
                     </ul>
                 </div>';

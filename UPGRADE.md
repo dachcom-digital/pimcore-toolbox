@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.3.0
+- [ENHANCEMENT] [Quill Editor Bundle](https://github.com/pimcore/quill-bundle) Support added. See [Editor Configuration Section](./docs/13_Wysiwyg_Editor.md#quill)
+
 ## 5.2.2
 - [ENHANCEMENT] Ignore disabled area bricks in autoload watcher pass
 

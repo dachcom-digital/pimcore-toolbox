@@ -2,6 +2,7 @@
 
 namespace ToolboxBundle\DependencyInjection;
 
+use Pimcore\Bundle\QuillBundle\PimcoreQuillBundle;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -22,6 +23,9 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $wysiwygEditor = null;
         if ($container->hasExtension('pimcore_tinymce') === true) {
             $wysiwygEditor = 'tiny_mce';
+        } elseif (class_exists(PimcoreQuillBundle::class, false)) {
+            // no extension definition set in quill bundle...
+            $wysiwygEditor = 'quill';
         }
 
         $coreLoader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
@@ -80,7 +84,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $configManagerDefinition = $container->getDefinition(ConfigManager::class);
         $configManagerDefinition->addMethodCall('setConfig', [$config]);
 
-        $disabledAreaBricks = array_filter($config['areas'], static function(array $area) {
+        $disabledAreaBricks = array_filter($config['areas'], static function (array $area) {
             return $area['enabled'] === false;
         });
 
