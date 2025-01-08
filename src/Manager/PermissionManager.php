@@ -1,11 +1,22 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Manager;
 
 use Pimcore\Extension\Document\Areabrick\AreabrickInterface;
 use Pimcore\Extension\Document\Areabrick\AreabrickManager;
-use Pimcore\Model\User;
 use Pimcore\Model\Translation;
+use Pimcore\Model\User;
 use Pimcore\Security\User\UserLoader;
 
 class PermissionManager implements PermissionManagerInterface

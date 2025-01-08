@@ -2,6 +2,17 @@
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\Editable;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,13 +21,13 @@ use ToolboxBundle\ToolboxEvents;
 
 final class EditableJsonSubscriber implements EventSubscriberInterface
 {
-    protected const ELEMENTS_IDENTIFIER = 'elements';
-    protected const ELEMENT_TYPE_IDENTIFIER = 'elementType';
-    protected const ELEMENT_SUB_TYPE_IDENTIFIER = 'elementSubType';
-    protected const ELEMENT_HASH = 'elementHash';
-    protected const ELEMENT_DATA_IDENTIFIER = 'elementContext';
+    private const ELEMENTS_IDENTIFIER = 'elements';
+    private const ELEMENT_TYPE_IDENTIFIER = 'elementType';
+    private const ELEMENT_SUB_TYPE_IDENTIFIER = 'elementSubType';
+    private const ELEMENT_HASH = 'elementHash';
+    private const ELEMENT_DATA_IDENTIFIER = 'elementContext';
 
-    protected array $jsonEditables = [];
+    private array $jsonEditables = [];
 
     public static function getSubscribedEvents(): array
     {
@@ -45,12 +56,11 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
         $nestedArray = [];
 
         foreach ($flatArray as $key => $value) {
-
             $keys = explode(':', $key);
             $currentArray = &$nestedArray;
 
             foreach ($keys as $nestedKey) {
-                /** @phpstan-ignore-next-line */
+                /* @phpstan-ignore-next-line */
                 if (!isset($currentArray[self::ELEMENTS_IDENTIFIER][$nestedKey])) {
                     $currentArray[self::ELEMENTS_IDENTIFIER][$nestedKey] = [];
                 }
@@ -64,7 +74,7 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
             $currentArray[self::ELEMENT_DATA_IDENTIFIER] = $value[3];
         }
 
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         return $nestedArray[self::ELEMENTS_IDENTIFIER] ?? [];
     }
 
@@ -75,7 +85,6 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
         }
 
         foreach ($array as &$value) {
-
             if (
                 is_array($value) &&
                 count($value) === 1 &&
@@ -96,7 +105,6 @@ final class EditableJsonSubscriber implements EventSubscriberInterface
         }
 
         foreach ($array as &$item) {
-
             if (!is_array($item)) {
                 continue;
             }

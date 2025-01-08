@@ -1,11 +1,22 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\EventListener\Frontend;
 
-use Pimcore\Tool;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\PimcoreContextAwareTrait;
 use Pimcore\Bundle\CoreBundle\EventListener\Traits\ResponseInjectionTrait;
 use Pimcore\Http\Request\Resolver\PimcoreContextResolver;
+use Pimcore\Tool;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -13,6 +24,7 @@ class FrontendJsListener
 {
     use ResponseInjectionTrait;
     use PimcoreContextAwareTrait;
+
     private EngineInterface $templatingEngine;
 
     public function __construct(EngineInterface $templatingEngine)

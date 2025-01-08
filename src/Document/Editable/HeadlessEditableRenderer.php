@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\Editable;
 
 use Pimcore\Extension\Document\Areabrick\Exception\ConfigurationException;
@@ -54,11 +65,11 @@ class HeadlessEditableRenderer
     public function buildEditable(HeadlessEditableInfo $headlessEditableInfo): Editable|string|array
     {
         return match ($headlessEditableInfo->getType()) {
-            'block' => $this->buildBlockEditable($headlessEditableInfo),
-            'area' => $this->buildAreaEditable($headlessEditableInfo),
+            'block'     => $this->buildBlockEditable($headlessEditableInfo),
+            'area'      => $this->buildAreaEditable($headlessEditableInfo),
             'areablock' => $this->buildAreaBlockEditable($headlessEditableInfo),
-            'column' => $this->buildColumnEditable($headlessEditableInfo),
-            default => $this->buildStandardEditable($headlessEditableInfo),
+            'column'    => $this->buildColumnEditable($headlessEditableInfo),
+            default     => $this->buildStandardEditable($headlessEditableInfo),
         };
     }
 
@@ -82,7 +93,6 @@ class HeadlessEditableRenderer
         }
 
         foreach ($headlessEditableInfo->getChildren() as $headlessColumnEditableInfo) {
-
             $areaBlockDataResponse = null;
             $editable = $this->getEditable($headlessColumnEditableInfo);
 
@@ -160,7 +170,6 @@ class HeadlessEditableRenderer
         $blockEditable = $this->editableRenderer->getEditable($document, 'block', $headlessEditableInfo->getName(), $config, $headlessEditableInfo->isEditMode());
 
         foreach ($blockEditable->getIterator() as $blockIndex) {
-
             $blockHash = $this->editableWorker->buildBlockHash($headlessEditableInfo->getName(), $blockIndex);
             $blockNamespace = sprintf('%s:%s', $headlessEditableInfo->getName(), $blockIndex);
 
@@ -171,7 +180,6 @@ class HeadlessEditableRenderer
             $this->editableWorker->processVirtualElement(HeadlessResponse::TYPE_EDITABLE, 'block', $blockHash, $blockNamespace);
 
             foreach ($headlessEditableInfo->getChildren() as $childHeadlessEditableInfo) {
-
                 $editable = $this->getEditable($childHeadlessEditableInfo);
 
                 ob_start();
@@ -206,9 +214,7 @@ class HeadlessEditableRenderer
         $isSimple = !$headlessEditableInfo->isBlockEditable();
 
         if ($headlessEditableInfo->isStandAlone() === true) {
-
             if ($editMode === false) {
-
                 $simpleHeadlessResponse = new HeadlessResponse(
                     HeadlessResponse::TYPE_EDITABLE,
                     $type,
