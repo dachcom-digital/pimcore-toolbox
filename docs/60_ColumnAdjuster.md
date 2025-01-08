@@ -31,7 +31,7 @@ toolbox:
 
 ## Parameter
 
-| Name | Type | Description
-|------|------|------------|
-| `grid_size` | integer | Max Grid Columns (Default 12 in Bootstrap) |
-| `breakpoints` | array | Your Grid Breakpoints. **Important (!)**: The Column Adjuster is mobile first! Always start your array with the smallest breakpoint! Otherwise the automatic class inheritance won't work! |
+| Name          | Type    | Description                                                                                                                                                                                |
+|---------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `grid_size`   | integer | Max Grid Columns (Default 12 in Bootstrap)                                                                                                                                                 |
+| `breakpoints` | array   | Your Grid Breakpoints. **Important (!)**: The Column Adjuster is mobile first! Always start your array with the smallest breakpoint! Otherwise the automatic class inheritance won't work! |

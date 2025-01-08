@@ -6,21 +6,21 @@ It's possible to change the layout from accordion to tabs without loosing the co
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `type` | select | Choose accordion type | panel-default | `pimcore_select('type')` |
-| `component` | select | Choose the component type | accordion | `pimcore_select('component')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description               | Default Value | Frontend                                              |
+|----------------------|--------|---------------------------|---------------|-------------------------------------------------------|
+| `type`               | select | Choose accordion type     | panel-default | `pimcore_select('type')`                              |
+| `component`          | select | Choose the component type | accordion     | `pimcore_select('component')`                         |
+| `additional_classes` | select | Add custom classes        | -             | see [section additional classes](#additional-classes) |
 
 ## Anchor
 Create an anchor element.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `anchor_name` | input | Set the anchor name | - | `pimcore_input('anchor_name')` |
-| `anchor_title` | input | Set the anchor title | - | `pimcore_input('anchor_title')` |
+| Name           | Type  | Description          | Default Value | Frontend                        |
+|----------------|-------|----------------------|---------------|---------------------------------|
+| `anchor_name`  | input | Set the anchor name  | -             | `pimcore_input('anchor_name')`  |
+| `anchor_title` | input | Set the anchor title | -             | `pimcore_input('anchor_title')` |
 
 ## Columns
 
@@ -38,12 +38,12 @@ If you're using a different grid system, you probably need to change the [grid c
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `type` | select | Set the column type. see example below. | column_6_6 | `pimcore_input('type')` |
-| `columnadjuster` | section | This element comes by default after the `type` field. Read more about this feature [here](60_ColumnAdjuster.md) | - | - |
-| `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                                                                                                     | Default Value | Frontend                                              |
+|----------------------|----------|-----------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------|
+| `type`               | select   | Set the column type. see example below.                                                                         | column_6_6    | `pimcore_input('type')`                               |
+| `columnadjuster`     | section  | This element comes by default after the `type` field. Read more about this feature [here](60_ColumnAdjuster.md) | -             | -                                                     |
+| `equal_height`       | checkbox | Appends some equal height classes                                                                               | false         | `pimcore_checkbox('equal_height')`                    |
+| `additional_classes` | select   | Add custom classes                                                                                              | -             | see [section additional classes](#additional-classes) |
 
 ### Column Calculation Example
 
@@ -124,12 +124,12 @@ Create download elements.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `downloads` | relations | Add download files / folders | - | `pimcore_relations('downloads')` |
-| `show_preview_images` | checkbox | Display Preview Images | false | `pimcore_checkbox('show_preview_images')` |
-| `show_file_info` | checkbox | Display File Info | false | `pimcore_checkbox('show_file_info')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                  | Type      | Description                  | Default Value | Frontend                                              |
+|-----------------------|-----------|------------------------------|---------------|-------------------------------------------------------|
+| `downloads`           | relations | Add download files / folders | -             | `pimcore_relations('downloads')`                      |
+| `show_preview_images` | checkbox  | Display Preview Images       | false         | `pimcore_checkbox('show_preview_images')`             |
+| `show_file_info`      | checkbox  | Display File Info            | false         | `pimcore_checkbox('show_file_info')`                  |
+| `additional_classes`  | select    | Add custom classes           | -             | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 Use the `event_tracker` Parameter to build a helper markup for google events:
@@ -170,12 +170,12 @@ If you want to use a different extension to generate your galleries, just overri
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `images` | relations | Add images / folders | - | `pimcore_relations('images')` |
-| `use_light_box` | checkbox | Add a `light-box` class and a wrapping link | false | `pimcore_checkbox('use_light_box')` |
-| `use_thumbnails` | checkbox | Add a thumbnail slider | false | `pimcore_checkbox('use_thumbnails')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type      | Description                                 | Default Value | Frontend                                              |
+|----------------------|-----------|---------------------------------------------|---------------|-------------------------------------------------------|
+| `images`             | relations | Add images / folders                        | -             | `pimcore_relations('images')`                         |
+| `use_light_box`      | checkbox  | Add a `light-box` class and a wrapping link | false         | `pimcore_checkbox('use_light_box')`                   |
+| `use_thumbnails`     | checkbox  | Add a thumbnail slider                      | false         | `pimcore_checkbox('use_thumbnails')`                  |
+| `additional_classes` | select    | Add custom classes                          | -             | see [section additional classes](#additional-classes) |
 
 ## Google Map
 Create a Google Map Element. You're able to define one or multiple markers. Toolbox will automatically generate the long/lat information after saving the document.
@@ -232,12 +232,12 @@ Now you can include the script tag in your footer:
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `map_zoom` | numeric | Map Zoom | 12 | `pimcore_numeric('map_zoom')` |
-| `map_type` | select | Map Type (ROADMAP, HYBRID ..) | roadmap | `pimcore_select('map_type')` |
-| `iw_on_init` | checkbox | Open Info Window by Default | false | `pimcore_checkbox('iw_on_init')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                   | Default Value | Frontend                                              |
+|----------------------|----------|-------------------------------|---------------|-------------------------------------------------------|
+| `map_zoom`           | numeric  | Map Zoom                      | 12            | `pimcore_numeric('map_zoom')`                         |
+| `map_type`           | select   | Map Type (ROADMAP, HYBRID ..) | roadmap       | `pimcore_select('map_type')`                          |
+| `iw_on_init`         | checkbox | Open Info Window by Default   | false         | `pimcore_checkbox('iw_on_init')`                      |
+| `additional_classes` | select   | Add custom classes            | -             | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -292,11 +292,11 @@ Create a headline.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `headline_type` | select | Define the headline size | h3 | `pimcore_select('headline_type')` |
-| `anchor_name` | input | Define a anchor name | - | `pimcore_input('anchor_name')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description              | Default Value | Frontend                                              |
+|----------------------|--------|--------------------------|---------------|-------------------------------------------------------|
+| `headline_type`      | select | Define the headline size | h3            | `pimcore_select('headline_type')`                     |
+| `anchor_name`        | input  | Define a anchor name     | -             | `pimcore_input('anchor_name')`                        |
+| `additional_classes` | select | Add custom classes       | -             | see [section additional classes](#additional-classes) |
 
 
 ## iFrame
@@ -304,14 +304,14 @@ Create an iFrame field.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `url` | input | Set a Url which should be loaded. If the Url is not allowed to implement (Source has a `SAMEORIGIN`, `DENY` entry in `x-frame-options` header) you'll receive an error. | - | `pimcore_input('url')` |
-| `iheight` | numeric | Initial Height of the iFrame | 200 | `pimcore_numeric('iheight')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type    | Description                                                                                                                                                             | Default Value | Frontend                                              |
+|----------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------|
+| `url`                | input   | Set a Url which should be loaded. If the Url is not allowed to implement (Source has a `SAMEORIGIN`, `DENY` entry in `x-frame-options` header) you'll receive an error. | -             | `pimcore_input('url')`                                |
+| `iheight`            | numeric | Initial Height of the iFrame                                                                                                                                            | 200           | `pimcore_numeric('iheight')`                          |
+| `additional_classes` | select  | Add custom classes                                                                                                                                                      | -             | see [section additional classes](#additional-classes) |
 
-### jQuery Plugin
-There is also a jquery plugin for the iFrame element. Read more about it [here](80_Javascript.md).
+### Javascript Plugin
+There is also a javascript plugin for the iFrame element. Read more about it [here](80_Javascript.md).
 We can't provide any out-of-the-box solution for changing the iframe height dynamically (cross-domain policy), so you need to take care about that by yourself.
 Possible Solutions to mastering dynamic iFrame heights:
 
@@ -345,14 +345,14 @@ Build a Parallax Container.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `template` | select | Define a Parallax Template | no-template | `pimcore_select('template')` |
-| `background_image` | relation | Define a background image | - | `pimcore_relation('background_image')` |
-| `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
-| `image_front` | parallaximage | Parallax Images behind content | - | *not available* |
-| `image_behind` | parallaximage | Parallax Images in front of content | - | *not available* |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type          | Description                         | Default Value       | Frontend                                              |
+|----------------------|---------------|-------------------------------------|---------------------|-------------------------------------------------------|
+| `template`           | select        | Define a Parallax Template          | no-template         | `pimcore_select('template')`                          |
+| `background_image`   | relation      | Define a background image           | -                   | `pimcore_relation('background_image')`                |
+| `background_color`   | select        | Define a background color           | no-background-color | `pimcore_select('background_color')`                  |
+| `image_front`        | parallaximage | Parallax Images behind content      | -                   | *not available*                                       |
+| `image_behind`       | parallaximage | Parallax Images in front of content | -                   | *not available*                                       |
+| `additional_classes` | select        | Add custom classes                  | -                   | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -381,13 +381,13 @@ Build a Parallax Container Section.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `template` | select | Define a Parallax Section Template | no-template | `pimcore_select('template')` |
-| `container_type` | select | Define a Container Type | none | `pimcore_select('container_type')` |
-| `background_image` | relation | Define a background image | - | `pimcore_relation('background_image')` |
-| `background_color` | select | Define a background color | no-background-color | `pimcore_select('background_color')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                        | Default Value       | Frontend                                              |
+|----------------------|----------|------------------------------------|---------------------|-------------------------------------------------------|
+| `template`           | select   | Define a Parallax Section Template | no-template         | `pimcore_select('template')`                          |
+| `container_type`     | select   | Define a Container Type            | none                | `pimcore_select('container_type')`                    |
+| `background_image`   | relation | Define a background image          | -                   | `pimcore_relation('background_image')`                |
+| `background_color`   | select   | Define a background color          | no-background-color | `pimcore_select('background_color')`                  |
+| `additional_classes` | select   | Add custom classes                 | -                   | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -409,10 +409,10 @@ Create a Separator Element (hr)
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `space` | select | Add some seperator spacer classes | default | `pimcore_select('space')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description                       | Default Value | Frontend                                              |
+|----------------------|--------|-----------------------------------|---------------|-------------------------------------------------------|
+| `space`              | select | Add some seperator spacer classes | default       | `pimcore_select('space')`                             |
+| `additional_classes` | select | Add custom classes                | -             | see [section additional classes](#additional-classes) |
 
 
 ## Slide Columns
@@ -427,11 +427,11 @@ This is just a hint if you're going to use a different javascript extension: Be 
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `slides_per_view` | select | Slides per View | 4 | `pimcore_select('slides_per_view')` |
-| `equal_height` | checkbox | Appends some equal height classes | false | `pimcore_checkbox('equal_height')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                       | Default Value | Frontend                                              |
+|----------------------|----------|-----------------------------------|---------------|-------------------------------------------------------|
+| `slides_per_view`    | select   | Slides per View                   | 4             | `pimcore_select('slides_per_view')`                   |
+| `equal_height`       | checkbox | Appends some equal height classes | false         | `pimcore_checkbox('equal_height')`                    |
+| `additional_classes` | select   | Add custom classes                | -             | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
@@ -454,10 +454,10 @@ Create a spacer element.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `spacer_class` | select | Spacer classes | spacer-none | `pimcore_select('spacer_class')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type   | Description        | Default Value | Frontend                                              |
+|----------------------|--------|--------------------|---------------|-------------------------------------------------------|
+| `spacer_class`       | select | Spacer classes     | spacer-none   | `pimcore_select('spacer_class')`                      |
+| `additional_classes` | select | Add custom classes | -             | see [section additional classes](#additional-classes) |
 
 ## Teaser
 Create teaser elements.
@@ -491,10 +491,10 @@ Create a Video Element.
 
 ### Available Options
 
-| Name | Type | Description | Default Value | Frontend
-|------|------|-----------------------------|---------------|-------------------------------|
-| `autoplay` | checkbox | Start/Stop Video if it's in a visible viewport | false | `pimcore_checkbox('autoplay')` |
-| `additional_classes` | select | Add custom classes | - | see [section additional classes](#additional-classes) |
+| Name                 | Type     | Description                                    | Default Value | Frontend                                              |
+|----------------------|----------|------------------------------------------------|---------------|-------------------------------------------------------|
+| `autoplay`           | checkbox | Start/Stop Video if it's in a visible viewport | false         | `pimcore_checkbox('autoplay')`                        |
+| `additional_classes` | select   | Add custom classes                             | -             | see [section additional classes](#additional-classes) |
 
 ### Configuration Parameter
 
