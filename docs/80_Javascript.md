@@ -8,7 +8,7 @@ All Extensions are available on npmjs.com via [js-pimcore-toolbox](https://www.n
 
 ### Installation
 ```bash
-npm i js-pimcore-formbuilder
+npm i js-pimcore-toolbox
 ```
 
 Read more about installation and usage on [github](https://github.com/dachcom-digital/js-pimcore-toolbox).
