@@ -2,8 +2,8 @@
 
 The Toolbox is a Kickstarter for your every day project. It provides some important bricks and structure basics which allow rapid and quality-oriented web development. 
 
-[![Join the chat at https://gitter.im/pimcore/pimcore](https://img.shields.io/gitter/room/pimcore/pimcore.svg?style=flat-square)](https://gitter.im/pimcore/pimcore)
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-DCL-white.svg?style=flat-square&color=%23ff5c5c)](LICENSE.md)
 [![Latest Release](https://img.shields.io/packagist/v/dachcom-digital/toolbox.svg?style=flat-square)](https://packagist.org/packages/dachcom-digital/toolbox)
 [![Tests](https://img.shields.io/github/actions/workflow/status/dachcom-digital/pimcore-toolbox/.github/workflows/codeception.yml?branch=master&style=flat-square&logo=github&label=codeception)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3ACodeception+branch%3Amaster)
 [![PhpStan](https://img.shields.io/github/actions/workflow/status/dachcom-digital/pimcore-toolbox/.github/workflows/php-stan.yml?branch=master&style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-toolbox/actions?query=workflow%3A"PHP+Stan"+branch%3Amaster)
@@ -25,7 +25,7 @@ The Toolbox is a Kickstarter for your every day project. It provides some import
 
 ```json
 "require" : {
-    "dachcom-digital/toolbox" : "~5.2.0"
+    "dachcom-digital/toolbox" : "~5.3.0"
 }
 ```
 
