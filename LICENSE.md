@@ -5,7 +5,7 @@ This software is available under two different licenses:
 * GNU General Public License version 3 (GPLv3) as Pimcore Community Edition
 * DACHCOM Commercial License (DCL)
 
-The default Social Data Bundle license, without a valid DACHCOM Commercial License agreement, is the Open-Source GPLv3 license.
+The default Toolbox Bundle license, without a valid DACHCOM Commercial License agreement, is the Open-Source GPLv3 license.
 
 ## GNU General Public License version 3 (GPLv3)
 If you decide to choose the GPLv3 license, you must comply with the following terms:
@@ -27,4 +27,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 Alternatively, commercial and supported versions of the program - also known as
 Commercial Distributions - must be used in accordance with the terms and conditions
 contained in a separate written agreement between you and DACHCOM.DIGITAL AG.
-For more information about the Social Data Bundle Commercial License (DCL) please contact dcdi@dachcom.ch.
+For more information about the Toolbox Bundle Commercial License (DCL) please contact dcdi@dachcom.ch.
