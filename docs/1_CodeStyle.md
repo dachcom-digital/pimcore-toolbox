@@ -26,7 +26,7 @@ toolbox:
 ```
 
 ### Underscore Exceptions
-- Google Maps Element, Map Options: Values must to be camelcase because of the google map configuration mapping.
+- Google Maps Element, Map Options: Values must be camelcase because of the Google map configuration mapping.
 - Config Elements `config` Tree: Values must be camelcase because of the pimcore element configuration mapping. 
 
 ### Strings

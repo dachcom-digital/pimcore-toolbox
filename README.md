@@ -50,15 +50,13 @@ return [
 - removes the default `pimcore_area_*` element wrapper from each brick
 
 ## And what's not?
-- It's not an Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
-- Toolbox supports only the twig template engine, so there is no way to activate the php template engine (and there will never be such thing).
+It's not an Avada Theme. While the Toolbox provides some basic Javascript for you, you need to implement and mostly modify them by yourself.
 
 **Frontend JS Implementation**  
 We're providing some helpful Javascript Plugins to simplify your daily work with the ToolboxBundle. 
 Read more about the javascript implementation [here](docs/80_Javascript.md).
 
 ## Available Toolbox Bricks 
-
 The Toolbox provides a lot of [ready-to-use Bricks](docs/11_ElementsOverview.md):
 
 - Accordion
