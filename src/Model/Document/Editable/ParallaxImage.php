@@ -51,7 +51,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         $this->setElements();
         $return = [];
 
-        if (is_array($this->elements) && count($this->elements) > 0) {
+        if (count($this->elements) > 0) {
             foreach ($this->elements as $index => $element) {
                 if ($element instanceof DataObject\Concrete) {
                     $return[] = [
@@ -101,7 +101,7 @@ class ParallaxImage extends Model\Document\Editable\Relations
         $this->setElements();
         $return = '';
 
-        if (is_array($this->elements) && count($this->elements) > 0) {
+        if (count($this->elements) > 0) {
             foreach ($this->elements as $element) {
                 $return .= Element\Service::getElementType($element['obj']) . ': ' . $element['obj']->getFullPath() . '<br />';
             }
@@ -115,16 +115,14 @@ class ParallaxImage extends Model\Document\Editable\Relations
         $this->setElements();
         $dependencies = [];
 
-        if (is_array($this->elements) && count($this->elements) > 0) {
+        if (count($this->elements) > 0) {
             foreach ($this->elements as $element) {
-                if ($element instanceof Element\ElementInterface) {
-                    $elementType = Element\Service::getElementType($element);
-                    $key = $elementType . '_' . $element->getId();
-                    $dependencies[$key] = [
-                        'id'   => $element->getId(),
-                        'type' => $elementType
-                    ];
-                }
+                $elementType = Element\Service::getElementType($element);
+                $key = $elementType . '_' . $element->getId();
+                $dependencies[$key] = [
+                    'id'   => $element->getId(),
+                    'type' => $elementType
+                ];
             }
         }
 

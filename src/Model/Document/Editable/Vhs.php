@@ -22,10 +22,6 @@ class Vhs extends Model\Document\Editable\Video
 
     public function getVideoParameter(): array
     {
-        if (!is_array($this->videoParameter)) {
-            return [];
-        }
-
         $parsedParameter = [];
         foreach ($this->videoParameter as $parameter) {
             $parsedParameter[$parameter['key']] = $parameter['value'];
@@ -76,7 +72,7 @@ class Vhs extends Model\Document\Editable\Video
             $this->showAsLightBox = $data['showAsLightbox'];
         }
 
-        if (isset($data['videoParameter'])) {
+        if (isset($data['videoParameter']) && is_array($data['videoParameter'])) {
             $this->videoParameter = $data['videoParameter'];
         }
 
