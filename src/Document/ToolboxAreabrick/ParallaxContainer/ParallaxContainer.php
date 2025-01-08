@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\ToolboxAreabrick\ParallaxContainer;
 
 use Pimcore\Model\Asset;
@@ -77,7 +88,6 @@ class ParallaxContainer extends AbstractAreabrick
 
         $loopIndex = 1;
         while ($sectionBlock->loop()) {
-
             /** @var Editable\Relation $parallaxBackgroundElement */
             $parallaxBackgroundElement = $this->getDocumentEditable($info->getDocument(), 'relation', 'background_image');
             $parallaxBackgroundColor = $this->getDocumentEditable($info->getDocument(), 'select', 'background_color')->getData();

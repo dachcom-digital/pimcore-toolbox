@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\ToolboxAreabrick\Gallery;
 
 use Pimcore\Model\Asset;
@@ -15,7 +26,6 @@ class Gallery extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInte
 {
     public function __construct(protected DataAttributeService $dataAttributeService)
     {
-
     }
 
     public function action(Info $info): ?Response
@@ -46,7 +56,6 @@ class Gallery extends AbstractAreabrick implements ToolboxHeadlessAwareBrickInte
         ];
 
         if ($headlessResponse instanceof HeadlessResponse) {
-
             $brickParams = array_merge($brickParams, [
                 'galleryDataAttributes' => $this->dataAttributeService->generateDataAttributesAsArray('gallery'),
                 'thumbsDataAttributes'  => $this->dataAttributeService->generateDataAttributesAsArray('gallery_thumbs'),

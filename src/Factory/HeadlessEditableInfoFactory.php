@@ -2,6 +2,17 @@
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Factory;
 
 use Pimcore\Model\Document;
@@ -58,7 +69,6 @@ class HeadlessEditableInfoFactory
         array $parameters = [],
         bool $hasBrickParent = false
     ): array {
-
         if ($item['type'] === 'column') {
             return $this->createColumnChildren($item, $document, $editableId, $editMode, $parameters);
         }
@@ -77,7 +87,6 @@ class HeadlessEditableInfoFactory
         bool $editMode,
         array $parameters = []
     ): array {
-
         $resolvedChildren = [];
         $columns = $parameters['columns'] ?? [];
 
@@ -109,12 +118,10 @@ class HeadlessEditableInfoFactory
         array $parameters = [],
         bool $hasBrickParent = false
     ): array {
-
         $resolvedChildren = [];
         $children = $item['children'] ?? [];
 
         foreach ($children as $childName => $childData) {
-
             $brickParent = null;
             $editableConfiguration = null;
 

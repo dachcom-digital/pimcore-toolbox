@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Service;
 
 use Pimcore\Model\Asset;
@@ -26,7 +37,6 @@ class DownloadInfoService
         int $fileSizePrecision = 0,
         bool $showFileNameIfTitleEmpty = false
     ): array {
-
         if (
             $this->bundleConnector->hasBundle('MembersBundle') === true &&
             $this->bundleConnector->getBundleService(\MembersBundle\Manager\RestrictionManager::class)->elementIsInProtectedStorageFolder($download)
@@ -54,7 +64,7 @@ class DownloadInfoService
 
         if ($showPreviewImage) {
             $metaPreviewImage = $download->getMetadata('previewImage');
-            /** @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
             if ($metaPreviewImage instanceof Asset\Image) {
                 $dPreviewImage = $metaPreviewImage->getThumbnail($previewThumbName);
             } elseif ($download instanceof Asset\Image) {
@@ -101,6 +111,7 @@ class DownloadInfoService
             $bytes = $bytes / $step;
             $i++;
         }
+
         return round($bytes, $precision) . ' ' . ($units[$i] ?? '');
     }
 }

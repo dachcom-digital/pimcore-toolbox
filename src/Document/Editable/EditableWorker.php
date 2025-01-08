@@ -2,6 +2,17 @@
 
 declare(strict_types=1);
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\Editable;
 
 use Pimcore\Document\Editable\Block\BlockState;
@@ -138,7 +149,6 @@ class EditableWorker
         $elementData = $data->getInlineConfigElementData();
 
         foreach ($elementData as $configName => $configData) {
-
             if (array_key_exists('property_normalizer', $config) && $config['property_normalizer'] !== null) {
                 $configData = $this->applyNormalizer($config['property_normalizer'], $configData);
             } elseif (null !== $defaultNormalizer = $this->getDefaultNormalizer($editableType)) {
@@ -167,10 +177,8 @@ class EditableWorker
         ];
 
         foreach ($configBlocks as $configBlockName => $configBlockData) {
-
             $configElements = $brickConfig[$configBlockName] ?? [];
             foreach ($configBlockData as $configName => $configData) {
-
                 if ($configBlockName === 'additional_property_normalizer' && array_key_exists($configName, $configElements)) {
                     $configData = $this->applyNormalizer($configElements[$configName], $configData);
                 } elseif ($configBlockName !== 'additional_property_normalizer') {

@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\Config\Definition\Exception\InvalidDefinitionException;
@@ -62,7 +73,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             foreach ($legacyTags as $pimcoreAreaBrickAttributes) {
                 $additionalAreaBricksConfig[] = $pimcoreAreaBrickAttributes['id'];
             }
-
         }
 
         // register toolbox bricks
@@ -124,7 +134,6 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             $simpleBrickDefinition->addMethodCall('setAreaBrickType', [AbstractBaseAreabrick::AREABRICK_TYPE_EXTERNAL]);
 
             foreach ($tags as $attributes) {
-
                 if (empty($attributes['title'])) {
                     throw new InvalidDefinitionException(sprintf('Simple Areabrick "%s" has an invalid title', $attributes['id']));
                 }
@@ -169,7 +178,7 @@ final class AreaBrickRegistryPass implements CompilerPassInterface
             }
         }
 
-        if(count($additionalAreaBricksConfig) > 0) {
+        if (count($additionalAreaBricksConfig) > 0) {
             $configManagerDefinition = $container->getDefinition(ConfigManager::class);
             $configManagerDefinition->addMethodCall('addAdditionalAreaConfig', [$additionalAreaBricksConfig]);
         }

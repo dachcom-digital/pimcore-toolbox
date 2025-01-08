@@ -1,13 +1,24 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\DependencyInjection;
 
 use Pimcore\Bundle\QuillBundle\PimcoreQuillBundle;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
 use ToolboxBundle\Manager\ConfigManager;
 use ToolboxBundle\Manager\LayoutManagerInterface;
@@ -33,7 +44,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $loaded = [];
 
         foreach ($container->getExtensionConfig($this->getAlias()) as $toolboxConfigNode) {
-
             if (!empty($toolboxConfigNode['theme']['layout'])) {
                 $hasTheme = true;
                 $headlessAware = $toolboxConfigNode['theme']['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
@@ -44,7 +54,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
             }
 
             foreach ($toolboxConfigNode['enabled_core_areas'] as $areaName) {
-
                 if (in_array($areaName, $loaded, true)) {
                     continue;
                 }
@@ -125,7 +134,7 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         $pimcoreGoogleBrowserApiKey = null;
         $pimcoreGoogleSimpleApiKey = null;
 
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         if ($container->hasParameter('pimcore_google_marketing')) {
             $pimcoreGoogleMarketingSettings = $container->getParameter('pimcore_google_marketing');
             /** @phpstan-ignore-next-line */
@@ -135,22 +144,22 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         // browser api key
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         if ($container->hasParameter('toolbox_google_service_browser_api_key')) {
             $googleBrowserApiKey = $container->getParameter('toolbox_google_service_browser_api_key');
-            /** @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
         } elseif ($pimcoreGoogleBrowserApiKey !== null) {
             $googleBrowserApiKey = $pimcoreGoogleBrowserApiKey;
         }
 
         //simple api key
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         if ($container->hasParameter('pimcore_system_config.services.google.simpleapikey')) {
             $googleSimpleApiKey = $container->getParameter('pimcore_system_config.services.google.simpleapikey');
-            /** @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
         } elseif ($container->hasParameter('toolbox_google_service_simple_api_key')) {
             $googleSimpleApiKey = $container->getParameter('toolbox_google_service_simple_api_key');
-            /** @phpstan-ignore-next-line */
+            /* @phpstan-ignore-next-line */
         } elseif ($pimcoreGoogleSimpleApiKey !== null) {
             $googleSimpleApiKey = $pimcoreGoogleSimpleApiKey;
         }
@@ -187,7 +196,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
         }
 
         foreach ($configs as $config) {
-
             if (!isset($config['context'])) {
                 continue;
             }
@@ -199,13 +207,11 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
         // get context data
         foreach ($configs as $config) {
-
             if (!isset($config['context'])) {
                 continue;
             }
 
             foreach ($config['context'] as $contextName => $contextConfig) {
-
                 if ($contextMergeCandidates[$contextName] === false) {
                     continue;
                 }
@@ -220,7 +226,6 @@ class ToolboxExtension extends Extension implements PrependExtensionInterface
 
         // get context merge data
         foreach ($contextMergeCandidates as $contextName => $merge) {
-
             if ($merge === false) {
                 continue;
             }

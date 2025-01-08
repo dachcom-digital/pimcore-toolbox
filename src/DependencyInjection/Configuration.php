@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
@@ -95,8 +106,8 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         return $treeBuilder;
-
     }
+
     protected function buildContextSettingsNode(): ArrayNodeDefinition
     {
         $treeBuilder = new ArrayNodeDefinition('settings');
@@ -274,7 +285,7 @@ class Configuration implements ConfigurationInterface
                             return is_array($v) && !isset($v['wrapper_classes']);
                         })
                         ->then(function ($v) {
-                            return array('wrapper_classes' => $v);
+                            return ['wrapper_classes' => $v];
                         })
                     ->end()
                         ->children()
@@ -307,7 +318,7 @@ class Configuration implements ConfigurationInterface
                     return is_array($v) && !isset($v['values']);
                 })
                 ->then(function ($v) {
-                    return array('values' => $v);
+                    return ['values' => $v];
                 })
             ->end()
             ->children()
@@ -344,10 +355,9 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
                 ->validate()
                     ->ifTrue(function ($v) {
-
                         $tabs = $v['tabs'];
 
-                        return count($tabs) > 0 && count(array_filter($v['config_elements'], static function($configElement) use ($tabs) {
+                        return count($tabs) > 0 && count(array_filter($v['config_elements'], static function ($configElement) use ($tabs) {
                             return !array_key_exists($configElement['tab'], $tabs);
                         })) > 0;
                     })
@@ -360,10 +370,9 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->validate()
                     ->ifTrue(function ($v) {
-
                         $tabs = $v['tabs'];
 
-                        return count($tabs) === 0 && count(array_filter($v['config_elements'], static function($configElement) {
+                        return count($tabs) === 0 && count(array_filter($v['config_elements'], static function ($configElement) {
                             return $configElement['tab'] !== null;
                         })) > 0;
                     })
@@ -378,10 +387,10 @@ class Configuration implements ConfigurationInterface
                                 return true;
                             }
                         }
+
                         return false;
                     })
                     ->then(function ($v) {
-
                         foreach ($v['inline_config_elements'] ?? [] as $inlineConfigId => $inlineConfigElement) {
                             if ($inlineConfigElement === '<') {
                                 $v['inline_config_elements'][$inlineConfigId] = $v['config_elements'][$inlineConfigId];
@@ -439,7 +448,7 @@ class Configuration implements ConfigurationInterface
                 ->ifTrue(function ($v) {
                     return $v['type'] !== 'block' && is_array($v['children']) && count($v['children']) > 0;
                 })
-                ->then(function($v) {
+                ->then(function ($v) {
                     @trigger_error(sprintf('Type "%s" cannot have child elements', $v['type']), E_USER_ERROR);
                 })
             ->end()
@@ -499,7 +508,7 @@ class Configuration implements ConfigurationInterface
                                 ->ifTrue(function ($v) {
                                     return $v['type'] !== 'block' && is_array($v['children']) && count($v['children']) > 0;
                                 })
-                                ->then(function($v) {
+                                ->then(function ($v) {
                                     @trigger_error(sprintf('Type "%s" cannot have child elements', $v['type']), E_USER_ERROR);
                                 })
                             ->end()

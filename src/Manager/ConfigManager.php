@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Manager;
 
 use ToolboxBundle\Resolver\ContextResolverInterface;
@@ -26,7 +37,6 @@ class ConfigManager implements ConfigManagerInterface
     public function addAdditionalAreaConfig(array $additionalAreaConfig = []): void
     {
         foreach ($additionalAreaConfig as $additionalAreaId) {
-
             if (array_key_exists($additionalAreaId, $this->config['areas'])) {
                 continue;
             }
@@ -34,7 +44,6 @@ class ConfigManager implements ConfigManagerInterface
             $this->config['areas'][$additionalAreaId] = [
                 'enabled' => true
             ];
-
         }
     }
 
@@ -186,7 +195,7 @@ class ConfigManager implements ConfigManagerInterface
         }
 
         return [
-            'config' => $parsedData,
+            'config'   => $parsedData,
             'settings' => $contextSettings
         ];
     }

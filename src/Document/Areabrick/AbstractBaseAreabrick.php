@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace ToolboxBundle\Document\Areabrick;
 
 use Pimcore\Extension\Document\Areabrick\AbstractAreabrick as PimcoreAbstractAreabrick;
@@ -23,7 +34,6 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
     protected LayoutManagerInterface $layoutManager;
     protected InlineConfigBuilderInterface $inlineConfigBuilder;
     protected EventDispatcherInterface $eventDispatcher;
-
     protected string $areaBrickType = 'internal';
     protected ?array $areaConfig = null;
     protected ?array $areaThemeConfig = null;
@@ -70,7 +80,6 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
         if (!$this instanceof AbstractAreabrick) {
             $this->triggerHeadlessEditableActionEvent($info, $headlessResponse);
         }
-
     }
 
     public function getTemplateDirectoryName(): string
@@ -127,7 +136,6 @@ abstract class AbstractBaseAreabrick extends PimcoreAbstractAreabrick
 
         return $themeConfig['layout'] === LayoutManagerInterface::TOOLBOX_LAYOUT_HEADLESS;
     }
-
 
     private function checkInlineConfigElements(Document\Editable\Area\Info $info): void
     {
