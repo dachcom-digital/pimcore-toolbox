@@ -134,10 +134,6 @@ class GoogleMap extends Document\Editable implements Document\Editable\EditmodeD
 
     protected function buildMapAttributes(): array
     {
-        if (!is_array($this->config)) {
-            $this->config = [];
-        }
-
         $dataAttr = [];
         $dataAttr['data-locations'] = htmlspecialchars(json_encode($this->validateLocationValues($this->data)), ENT_QUOTES, 'UTF-8');
         $dataAttr['data-show-info-window-on-load'] = $this->config['iwOnInit'] ?? true;

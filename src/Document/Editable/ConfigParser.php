@@ -143,7 +143,7 @@ class ConfigParser
 
         // force default (only if it returns false)
         // checkboxes may return an empty string and are impossible to track into default mode
-        if (!empty($defaultConfigValue) && (method_exists($el, 'isEmpty') && $el->isEmpty() === true)) {
+        if (!empty($defaultConfigValue) && $el->isEmpty() === true) {
             $el->setDataFromResource($defaultConfigValue);
         }
 
