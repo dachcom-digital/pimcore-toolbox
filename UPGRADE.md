@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## 5.3.1
+- [BUGFIX] Improve wrap macro misuse of `defined` test [#243](https://github.com/dachcom-digital/pimcore-toolbox/issues/243)
+
 ## 5.3.0
 - [LICENSE] Dual-License with GPL and Dachcom Commercial License (DCL) added
 - [ENHANCEMENT] [Quill Editor Bundle](https://github.com/pimcore/quill-bundle) Support added. See [Editor Configuration Section](./docs/13_Wysiwyg_Editor.md#quill)
