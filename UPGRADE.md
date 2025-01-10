@@ -1,5 +1,8 @@
 # Upgrade Notes
 
+## Version 4.1.3
+- [BUGFIX] Improve wrap macro misuse of `defined` test [#243](https://github.com/dachcom-digital/pimcore-toolbox/issues/243)
+
 ## Version 4.1.2
 - [BUGFIX] Use Pimcore AdminUserTranslator in BrickConfigBuilder [#219](https://github.com/dachcom-digital/pimcore-toolbox/issues/219)
 
