@@ -92,14 +92,12 @@ class AssetService
                 continue;
             }
 
-            if (!$isAutoFormat) {
-                continue;
-            }
-
-            foreach ($thumbConfig->getAutoFormatThumbnailConfigs() as $autoFormatConfig) {
-                $autoFormatThumbnailAttributes = $this->getSourceTagAttributes($thumbnail, $autoFormatConfig, $mediaQuery, $image, $thumbnailOptions);
-                if (!empty($autoFormatThumbnailAttributes)) {
-                    $data[] = $autoFormatThumbnailAttributes;
+            if ($isAutoFormat) {
+                foreach ($thumbConfig->getAutoFormatThumbnailConfigs() as $autoFormatConfig) {
+                    $autoFormatThumbnailAttributes = $this->getSourceTagAttributes($thumbnail, $autoFormatConfig, $mediaQuery, $image, $thumbnailOptions);
+                    if (!empty($autoFormatThumbnailAttributes)) {
+                        $data[] = $autoFormatThumbnailAttributes;
+                    }
                 }
             }
 
